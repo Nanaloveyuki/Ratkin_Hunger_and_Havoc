@@ -21,5 +21,28 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(HungerIncidentCategory.Plague, HungerIncidentCatalog.GetByDefName("RHAH_PlagueBeggarGroup").Category);
             Assert.Equal(HungerIncidentTarget.Caravan, HungerIncidentCatalog.GetByDisplayId("I-035").Target);
         }
+
+        [Fact]
+        public void OriginalEventsExposeStableDefinitionsAndRoles()
+        {
+            string[] expected =
+            {
+                "RHAH_LargeRefugeeWave", "RHAH_AbandonedRatkinChildren", "RHAH_ShatteredMother",
+                "RHAH_BeggarFamily", "RHAH_BeggarGroup", "RHAH_ThiefRatkinGroup",
+                "RHAH_ThiefRatkinChildGroup", "RHAH_WildRatkinWandersIn", "RHAH_WildRatkinChildWandersIn",
+                "RHAH_WildRatkinGroupWandersIn", "RHAH_FamineRefugees", "RHAH_RatkinTraderCaravan",
+                "RHAH_ChildExchange", "RHAH_BeggarSiege"
+            };
+
+            Assert.Equal(expected, HungerIncidentCatalog.All.Take(14).Select(entry => entry.DefName));
+            Assert.All(HungerIncidentCatalog.All.Take(14), entry =>
+            {
+                Assert.Equal(HungerIncidentOrigin.Original, entry.Origin);
+                Assert.Equal(HungerIncidentCategory.Hunger, entry.Category);
+                Assert.Equal(HungerIncidentTarget.Map, entry.Target);
+                Assert.NotEmpty(entry.LabelKey);
+                Assert.True(entry.DebugPoints > 0f);
+            });
+        }
     }
 }

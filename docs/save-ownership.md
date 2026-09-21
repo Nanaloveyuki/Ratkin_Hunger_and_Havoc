@@ -91,6 +91,18 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | RHAH_HungerMark | HediffDef | Remove。身份标记，不是伤病，不替换成原版 Hediff |
 | RHAH_LargeRefugeeWave | IncidentDef | Remove |
 | RHAH_ThiefRatkinGroup | IncidentDef | Remove |
+| RHAH_AbandonedRatkinChildren | IncidentDef | Remove |
+| RHAH_ShatteredMother | IncidentDef | Remove |
+| RHAH_BeggarFamily | IncidentDef | Remove |
+| RHAH_BeggarGroup | IncidentDef | Remove |
+| RHAH_ThiefRatkinChildGroup | IncidentDef | Remove |
+| RHAH_WildRatkinWandersIn | IncidentDef | Remove |
+| RHAH_WildRatkinChildWandersIn | IncidentDef | Remove |
+| RHAH_WildRatkinGroupWandersIn | IncidentDef | Remove |
+| RHAH_FamineRefugees | IncidentDef | Remove |
+| RHAH_RatkinTraderCaravan | IncidentDef | Remove |
+| RHAH_ChildExchange | IncidentDef | Remove |
+| RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
 | RHAH_Gnaw | JobDef | Remove |
 | RHAH_VisitorSeek | DutyDef | Remove |
