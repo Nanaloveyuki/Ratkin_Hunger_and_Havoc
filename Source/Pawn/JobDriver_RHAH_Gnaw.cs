@@ -20,7 +20,7 @@ namespace HungerAndHavoc.Pawn
             this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
             yield return Toils_General.WaitWith(TargetIndex.A, GnawTicks, true);
-            Toil finish = ToilMaker.MakeToil("GnawFinish");
+            Toil finish = new Toil();
             finish.initAction = delegate
             {
                 Need_Food food = pawn.needs != null ? pawn.needs.food : null;
