@@ -6,7 +6,7 @@ namespace HungerAndHavoc.Identity
 {
     internal sealed class HungerApiHost : IHungerApiHost
     {
-        public IHungerPawn Get(Pawn pawn)
+        public IHungerPawn Get(Verse.Pawn pawn)
         {
             CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
             if (comp == null)
@@ -17,12 +17,12 @@ namespace HungerAndHavoc.Identity
             return comp.ToSnapshot();
         }
 
-        public bool IsRatkin(Pawn pawn)
+        public bool IsRatkin(Verse.Pawn pawn)
         {
             return HungerRace.IsRatkin(pawn?.def);
         }
 
-        public IHungerPawn TryMarkOrigin(Pawn pawn, HungerPawnSeed seed)
+        public IHungerPawn TryMarkOrigin(Verse.Pawn pawn, HungerPawnSeed seed)
         {
             if (pawn?.health == null || seed == null)
             {
@@ -52,7 +52,7 @@ namespace HungerAndHavoc.Identity
             return snapshot;
         }
 
-        public bool ReleaseToColony(Pawn pawn, HungerReleaseReason reason)
+        public bool ReleaseToColony(Verse.Pawn pawn, HungerReleaseReason reason)
         {
             CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
             if (comp == null)
@@ -79,11 +79,12 @@ namespace HungerAndHavoc.Identity
                 return false;
             }
 
+            global::HungerAndHavoc.Pawn.RHAH_VisitorGroup.NotifyReleased(pawn);
             HungerAndHavocApi.RaiseReleasedToColony(pawn, comp.ToSnapshot(), reason);
             return true;
         }
 
-        public void SetLifecycle(Pawn pawn, HungerLifecycle lifecycle)
+        public void SetLifecycle(Verse.Pawn pawn, HungerLifecycle lifecycle)
         {
             CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
             if (comp == null)
@@ -99,7 +100,7 @@ namespace HungerAndHavoc.Identity
             HungerAndHavocApi.RaiseLifecycleChanged(pawn, comp.ToSnapshot(), lifecycle);
         }
 
-        public bool Allows(Pawn pawn, HungerBehaviorGate gate)
+        public bool Allows(Verse.Pawn pawn, HungerBehaviorGate gate)
         {
             CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
             if (comp == null)
@@ -125,7 +126,7 @@ namespace HungerAndHavoc.Identity
             return allowed;
         }
 
-        public void SetGate(Pawn pawn, HungerBehaviorGate gate, bool? allowed)
+        public void SetGate(Verse.Pawn pawn, HungerBehaviorGate gate, bool? allowed)
         {
             CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
             if (comp == null)
@@ -136,7 +137,7 @@ namespace HungerAndHavoc.Identity
             comp.State.SetGate(gate, allowed);
         }
 
-        public void SetExtra(Pawn pawn, string key, string value)
+        public void SetExtra(Verse.Pawn pawn, string key, string value)
         {
             CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
             if (comp == null)
@@ -147,7 +148,7 @@ namespace HungerAndHavoc.Identity
             comp.State.SetExtra(key, value);
         }
 
-        public bool TryGetExtra(Pawn pawn, string key, out string value)
+        public bool TryGetExtra(Verse.Pawn pawn, string key, out string value)
         {
             CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
             if (comp == null)

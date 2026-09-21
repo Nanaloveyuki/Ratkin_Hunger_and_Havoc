@@ -29,13 +29,13 @@ namespace HungerAndHavoc.Identity
             state.ApplySeed(seed);
         }
 
-        internal static CompHungerPawn TryGet(Pawn pawn)
+        internal static CompHungerPawn TryGet(Verse.Pawn pawn)
         {
             Hediff_HungerMark mark = TryGetMark(pawn);
             return mark == null ? null : mark.Hunger;
         }
 
-        internal static Hediff_HungerMark TryGetMark(Pawn pawn)
+        internal static Hediff_HungerMark TryGetMark(Verse.Pawn pawn)
         {
             if (pawn?.health?.hediffSet == null)
             {

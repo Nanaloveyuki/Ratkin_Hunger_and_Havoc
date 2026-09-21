@@ -44,7 +44,19 @@ HungerAndHavocApi.SetGate(pawn, HungerBehaviorGate.Leash, true);
 全局：
 
 ```csharp
-HungerPawnBehaviors.Register(new MyBehavior());
+HungerPawnBehaviors.Register(new MyPolicy());
 ```
 
 私有数据用 `SetExtra(pawn, "your.package.id:key", value)`。
+
+## 运行时层
+
+访客 AI 在 `Source/Pawn`，命名空间 `HungerAndHavoc.Pawn`。Identity 只管标记和闸门数据，不发 Job。
+
+有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `HungerAndHavocApi.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
+
+JobGiver 第一行：非访客返回 null；再问 `HungerAndHavocApi.Allows`。角色规则只在 `HungerPawnDefaults` 和闸门覆盖里。
+
+`ReleaseToColony` 必须拆 Lord、清 duty、停访客 JobGiver。标记 Hediff 保留。
+
+其它模组适配只进 `Source/Pawn/Compat/`。基底只暴露闸门、`IHungerPawnBehavior` 和 `HungerAndHavocApi` 事件。禁止 Harmony 其它模组私有类型。原版缺口补丁也放 Compat，并在 [engineering.md](engineering.md) 登记例外。

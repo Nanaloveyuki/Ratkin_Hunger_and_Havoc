@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <DutyDef>
+    <defName>RHAH_VisitorSeek</defName>
+    <thinkNode Class="HungerAndHavoc.Pawn.JobGiver_RHAH_Visitor" />
+  </DutyDef>
+
+  <DutyDef>
+    <defName>RHAH_VisitorLeave</defName>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="HungerAndHavoc.Pawn.JobGiver_RHAH_Leave" />
+        <li Class="JobGiver_ExitMapBest" />
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+</Defs>

@@ -51,6 +51,17 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 计算属性不入档：`IsReleased`、`IsActiveVisitor`、`RoleLabelKey`。
 
+### LordJob_RHAH_Visitor
+
+类型名：`HungerAndHavoc.Pawn.LordJob_RHAH_Visitor`。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| faction | faction | null | 否 | 访客临时派系引用 |
+| waitSpot | waitSpot | IntVec3.Invalid | 否 | 寻食集合点 |
+| familyRole | familyRole | Unspecified | 否 | `HungerPawnRole` |
+
+
 ## 可序列化类型
 
 | 类型 | 出现位置 | 卸载 |
@@ -58,16 +69,26 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Identity.Hediff_HungerMark | Hediff `Class` / `hediffClass` | Remove，随身份 Hediff 删除 |
 | HungerAndHavoc.Identity.CompHungerPawn | HediffComp `Class` | Remove，随身份 Hediff 删除 |
 | HungerAndHavoc.Identity.CompProperties_HungerPawn | Def XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Pawn.LordJob_RHAH_Visitor | Lord `lordJob` | Remove。卸载后该 Lord 必须消失，pawn 回原版 ThinkTree |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_Beg | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.ThinkNode_ConditionalRHAH_Visitor | ThinkTree XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
 
-尚无 GameComponent、MapComponent、Job、Letter、Lord、Quest、Thing、WorldObject 的存档类型。新增时先加行。
+尚无 GameComponent、MapComponent、Letter、Quest、Thing、WorldObject 的存档类型。新增时先加行。
 
 ## Def
 
 | defName | 种类 | 卸载 |
 | --- | --- | --- |
 | RHAH_HungerMark | HediffDef | Remove。身份标记，不是伤病，不替换成原版 Hediff |
+| RHAH_Beg | JobDef | Remove |
+| RHAH_Gnaw | JobDef | Remove |
+| RHAH_VisitorSeek | DutyDef | Remove |
+| RHAH_VisitorLeave | DutyDef | Remove |
+| RHAH_VisitorFallback | ThinkTreeDef | Remove |
 
-尚无 PawnKind、Backstory、Faction、TraderKind、Site、Thing、Job、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
+尚无 PawnKind、Backstory、Faction、TraderKind、Site、Thing、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
 
 ## 非存档
 

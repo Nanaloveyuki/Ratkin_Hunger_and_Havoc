@@ -96,12 +96,12 @@ namespace HungerAndHavoc.Tests
         {
             public bool? AllowsResult;
 
-            public bool? Allows(Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate)
+            public bool? Allows(Verse.Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate)
             {
                 return AllowsResult;
             }
 
-            public bool? ShouldReleaseToColony(Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
+            public bool? ShouldReleaseToColony(Verse.Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
             {
                 return null;
             }

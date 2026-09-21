@@ -27,14 +27,14 @@
 | `scripts/` | 检查、构建和部署脚本 |
 | `tmp/` | 临时文件，已 gitignore，不当源码或发布输入 |
 
-未出现的层（Generation、Behavior、Narrative、World、Patches、UI）等有第一个类型再建模，不建空目录。
+未出现的层（Generation、Narrative、World、Patches、UI）等有第一个类型再建模，不建空目录。`Source/Pawn` 是访客运行时层，不是空目录。不要再建 `Source/Behavior`。
 
 ## 分层与程序集
 
 目标程序集边界：
 
 - `HungerAndHavoc.Api.dll`：稳定公开契约，不引用实现程序集
-- `HungerAndHavoc.dll`：RimWorld 实现，引用 API 程序集，可包含 Identity、Core、Incidents 和运行时实现
+- `HungerAndHavoc.dll`：RimWorld 实现，引用 API 程序集，可包含 Identity、Core、Incidents、Pawn 和运行时实现
 - `HungerAndHavocGuard.dll`：独立冲突提示程序集，不作为业务 API
 - 测试程序集：仅测试用途，不作为模组运行时依赖
 
@@ -42,7 +42,7 @@
 
 `HungerAndHavoc.Api.dll` 可以引用 `Assembly-CSharp` 与 `UnityEngine.CoreModule`，`Private=False`。API **不得**引用 `HungerAndHavoc.dll`、Harmony、Guard、其它模组程序集。公开方法可以使用 `Pawn`、`ThingDef` 等基础游戏类型。公开表面 **不得**出现 `CompHungerPawn`、`Hediff_HungerMark`、`HungerRace`、Job、Worker、DefOf、实现命名空间类型。
 
-`Source/{Layer}/Foo.cs` 的命名空间必须是 `HungerAndHavoc.{Layer}`。`Source/Core` 使用 `HungerAndHavoc.Core`，`Source/Identity` 使用 `HungerAndHavoc.Identity`，`Source/Incidents` 使用 `HungerAndHavoc.Incidents`，`Source/Tests` 使用 `HungerAndHavoc.Tests`。API 类型使用 `HungerAndHavoc.Api`，并放在 API 项目目录。
+`Source/{Layer}/Foo.cs` 的命名空间必须是 `HungerAndHavoc.{Layer}`。`Source/Core` 使用 `HungerAndHavoc.Core`，`Source/Identity` 使用 `HungerAndHavoc.Identity`，`Source/Incidents` 使用 `HungerAndHavoc.Incidents`，`Source/Pawn` 使用 `HungerAndHavoc.Pawn`，`Source/Pawn/Compat` 使用 `HungerAndHavoc.Pawn.Compat`，`Source/Tests` 使用 `HungerAndHavoc.Tests`。API 类型使用 `HungerAndHavoc.Api`，并放在 API 项目目录。
 
 实现目录中未被 Verse 反射、XML 或 Def 创建要求的类型默认 `internal`。因 Verse 需要跨程序集创建而必须 `public` 的类型，只是反射入口，不因此成为稳定 API。
 
@@ -107,7 +107,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 方法应有单一主要责任；状态转换、校验、事件通知和持久化协同可以保留在同一事务边界内
 - 禁止新增无法命名职责、无法独立测试或承担多个领域决策的万能 Utility
 - 模组协作只走稳定 API，不把私有方法、字段、反射路径或 XML 实现细节当合约
-- 访客行为通过闸门和行为扩展查询，不在 JobGiver 中复制角色规则
+- 访客 JobGiver 只问 `HungerAndHavocApi.Allows`，不在 JobGiver 中复制角色规则
 - 全局运行时组件默认由 `GameComponent_HungerAndHavoc` 与 `MapComponent_HungerAndHavoc` 承担；增加其它全局组件必须登记职责、生命周期和存档范围
 - Tick 热路径包括每 tick 或高频批量执行的 Pawn、Map、组件和 Job 查询
 - Tick 热路径默认避免 LINQ、闭包、装箱、重复字符串拼接和临时集合；使用 `for`、缓存和可复用缓冲区时必须保持可读性
@@ -153,6 +153,17 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Core.HungerAndHavocSettings` | `Mod.GetSettings<T>()` | `HungerAndHavoc.dll` | Verse 按类型参数创建 `ModSettings` |
 | `HungerAndHavoc.Core.HungerAndHavocDefOf` | `[DefOf]` 静态字段 | `HungerAndHavoc.dll` | `DefOfHelper` 反射绑定公开静态 Def 字段 |
 | `HungerAndHavoc.Core.HarmonyBootstrap` | `[StaticConstructorOnStartup]` | `HungerAndHavoc.dll` | Verse 启动扫描公开静态构造入口 |
+| `HungerAndHavoc.Pawn.LordJob_RHAH_Visitor` | Lord `lordJob` / `LordMaker` | `HungerAndHavoc.dll` | Verse 按类型创建并存档 Lord |
+| `HungerAndHavoc.Pawn.JobDriver_RHAH_Beg` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
+| `HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
+| `HungerAndHavoc.Pawn.ThinkNode_ConditionalRHAH_Visitor` | ThinkTree / Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_Visitor` | ThinkTree / Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_Beg` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_Steal` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_Gnaw` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_Feed` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_Leave` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
+| `HungerAndHavoc.Pawn.Compat.RHAH_PawnCompatStartup` | `[StaticConstructorOnStartup]` | `HungerAndHavoc.dll` | Verse 启动扫描公开静态构造入口 |
 
 ## 检查门禁
 

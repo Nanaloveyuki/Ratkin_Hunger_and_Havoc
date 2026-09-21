@@ -68,14 +68,14 @@ namespace HungerAndHavoc.Tests
                 HungerPawnBehaviors.ResetForTests();
             }
 
-            void OnReleased(Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
+            void OnReleased(Verse.Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
             {
                 releasedEvents++;
                 Assert.NotNull(snapshot);
                 Assert.True(snapshot.IsReleased);
             }
 
-            void OnLifecycle(Pawn pawn, IHungerPawn snapshot, HungerLifecycle lifecycle)
+            void OnLifecycle(Verse.Pawn pawn, IHungerPawn snapshot, HungerLifecycle lifecycle)
             {
                 lifecycleEvents++;
                 Assert.Equal(HungerLifecycle.Released, lifecycle);
@@ -107,7 +107,7 @@ namespace HungerAndHavoc.Tests
                 HungerAndHavocApi.LifecycleChanged -= OnLifecycle;
             }
 
-            void OnLifecycle(Pawn pawn, IHungerPawn snapshot, HungerLifecycle lifecycle)
+            void OnLifecycle(Verse.Pawn pawn, IHungerPawn snapshot, HungerLifecycle lifecycle)
             {
                 lifecycleEvents++;
             }
@@ -117,12 +117,12 @@ namespace HungerAndHavoc.Tests
         {
             public bool? ReleaseResult;
 
-            public bool? Allows(Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate)
+            public bool? Allows(Verse.Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate)
             {
                 return null;
             }
 
-            public bool? ShouldReleaseToColony(Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
+            public bool? ShouldReleaseToColony(Verse.Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
             {
                 return ReleaseResult;
             }

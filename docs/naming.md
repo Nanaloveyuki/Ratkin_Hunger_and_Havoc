@@ -28,4 +28,22 @@
 
 禁止再使用 `MouseDisaster`、`RHH_`、事件号 `N-011+`。
 
+## 源码文件
+
+`Source/Pawn` 及 Def XML 文件名用 `RHAH_` 短名，避免 `HungerAndHavocVisitor...` 膨胀。C# 类型名仍是合法标识符，XML `Class=` 写全名。
+
+| 种类 | 文件 | 类型 |
+| --- | --- | --- |
+| Lord | `LordJob_RHAH_Visitor.cs` | `LordJob_RHAH_Visitor` |
+| ThinkNode | `ThinkNode_ConditionalRHAH_Visitor.cs` | `ThinkNode_ConditionalRHAH_Visitor` |
+| 总 JobGiver | `JobGiver_RHAH_Visitor.cs` | `JobGiver_RHAH_Visitor` |
+| 角色 JobGiver | `JobGiver_RHAH_Beg.cs` | `JobGiver_RHAH_Beg` |
+| JobDriver | `JobDriver_RHAH_Beg.cs` | `JobDriver_RHAH_Beg` |
+| 闸门查询 | `RHAH_VisitorGate.cs` | `RHAH_VisitorGate` |
+| 组管理 | `RHAH_VisitorGroup.cs` | `RHAH_VisitorGroup` |
+| Def XML | `1.6/Defs/{Job,Duty,ThinkTree}Defs/RHAH_*.xml` | `defName` 仍是 `RHAH_Beg` 这类可读短名 |
+
+禁止目录或类型名 `Behavior`。其它模组适配放 `Source/Pawn/Compat/`，不进基底 Visitor/Duty。
+
+
 代码分层、字段与方法原则见 [engineering.md](engineering.md)。
