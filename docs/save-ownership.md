@@ -89,6 +89,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | defName | 种类 | 卸载 |
 | --- | --- | --- |
 | RHAH_HungerMark | HediffDef | Remove。身份标记，不是伤病，不替换成原版 Hediff |
+| RHAH_LargeRefugeeWave | IncidentDef | Remove |
+| RHAH_ThiefRatkinGroup | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
 | RHAH_Gnaw | JobDef | Remove |
 | RHAH_VisitorSeek | DutyDef | Remove |
