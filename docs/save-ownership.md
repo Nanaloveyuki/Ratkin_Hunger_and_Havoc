@@ -76,6 +76,13 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
 
 尚无 GameComponent、MapComponent、Letter、Quest、Thing、WorldObject 的存档类型。新增时先加行。
+### Generation runtime
+
+| 类型 | 字段 | 存档键 | 卸载 |
+| --- | --- | --- | --- |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | active generation batches | activeGenerationBatches | Remove |
+
+生成队列和批次保护属于唯一全局运行时组件；未建立组件前，工厂使用进程内批次索引，不能宣称跨保存重载保留。
 
 ## Def
 
