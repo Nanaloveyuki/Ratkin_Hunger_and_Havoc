@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Guard_DuplicateTitle>鼠族: 饥与祸 未加载主体内容</RHAH_Guard_DuplicateTitle>
+  <RHAH_Guard_DuplicateBody>同时启用了旧的“鼠灾-大荒年”或其 Continued / 本地包。本次运行没有加载饥与祸的 Def 和主程序集，也没有自动停用那个旧模组。\n\n请只保留其中一个，然后重启 RimWorld。重启前请勿读档或存档。饥与祸不能读取那些旧存档。</RHAH_Guard_DuplicateBody>
+</LanguageData>

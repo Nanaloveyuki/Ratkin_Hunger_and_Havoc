@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_ModName>鼠族: 饥与祸</RHAH_ModName>
+  <RHAH_Settings_EnableNewContent>启用新内容</RHAH_Settings_EnableNewContent>
+  <RHAH_Settings_EnableNewContent_Tooltip>关闭后不再触发新事件或生成新的饥与祸 pawn。已有标记的角色及其工作逻辑继续运行。</RHAH_Settings_EnableNewContent_Tooltip>
+
+  <RHAH_Role_Unspecified>饥与祸来客</RHAH_Role_Unspecified>
+  <RHAH_Role_Beggar>饥饿的乞食者</RHAH_Role_Beggar>
+  <RHAH_Role_BeggarMother>乞讨的灾荒鼠妈</RHAH_Role_BeggarMother>
+  <RHAH_Role_BeggarChild>跟着乞讨的幼年鼠族</RHAH_Role_BeggarChild>
+  <RHAH_Role_Thief>饥饿的偷窃者</RHAH_Role_Thief>
+  <RHAH_Role_ThiefChild>学着偷东西的幼年鼠族</RHAH_Role_ThiefChild>
+  <RHAH_Role_Wild>游荡的野生鼠族</RHAH_Role_Wild>
+  <RHAH_Role_WildChild>游荡的野生幼年鼠族</RHAH_Role_WildChild>
+  <RHAH_Role_Trader>灾荒商人</RHAH_Role_Trader>
+  <RHAH_Role_Escort>商队护卫</RHAH_Role_Escort>
+  <RHAH_Role_Mother>鼠族母亲</RHAH_Role_Mother>
+  <RHAH_Role_RatkinYoung>幼年鼠族</RHAH_Role_RatkinYoung>
+  <RHAH_Role_Siege>围攻乞食者</RHAH_Role_Siege>
+  <RHAH_Role_Plague>鼠疫来客</RHAH_Role_Plague>
+  <RHAH_Role_Labor>待产流民</RHAH_Role_Labor>
+  <RHAH_Role_Envoy>幸存者使者</RHAH_Role_Envoy>
+  <RHAH_Role_Refugee>灾荒逃难者</RHAH_Role_Refugee>
+</LanguageData>

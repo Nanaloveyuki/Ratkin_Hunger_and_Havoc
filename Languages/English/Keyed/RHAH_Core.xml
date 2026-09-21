@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_ModName>Ratkin: Hunger and Havoc</RHAH_ModName>
+  <RHAH_Settings_EnableNewContent>Enable new content</RHAH_Settings_EnableNewContent>
+  <RHAH_Settings_EnableNewContent_Tooltip>When off, new incidents and newly generated Hunger and Havoc pawns stop. Existing marked pawns keep working.</RHAH_Settings_EnableNewContent_Tooltip>
+
+  <RHAH_Role_Unspecified>Hunger and Havoc visitor</RHAH_Role_Unspecified>
+  <RHAH_Role_Beggar>Hungry beggar</RHAH_Role_Beggar>
+  <RHAH_Role_BeggarMother>Begging famine mother</RHAH_Role_BeggarMother>
+  <RHAH_Role_BeggarChild>Begging Ratkin young</RHAH_Role_BeggarChild>
+  <RHAH_Role_Thief>Hungry thief</RHAH_Role_Thief>
+  <RHAH_Role_ThiefChild>Thieving Ratkin young</RHAH_Role_ThiefChild>
+  <RHAH_Role_Wild>Wild Ratkin wanderer</RHAH_Role_Wild>
+  <RHAH_Role_WildChild>Wild Ratkin young</RHAH_Role_WildChild>
+  <RHAH_Role_Trader>Famine trader</RHAH_Role_Trader>
+  <RHAH_Role_Escort>Trader escort</RHAH_Role_Escort>
+  <RHAH_Role_Mother>Ratkin mother</RHAH_Role_Mother>
+  <RHAH_Role_RatkinYoung>Ratkin young</RHAH_Role_RatkinYoung>
+  <RHAH_Role_Siege>Siege beggar</RHAH_Role_Siege>
+  <RHAH_Role_Plague>Plague visitor</RHAH_Role_Plague>
+  <RHAH_Role_Labor>Laboring refugee</RHAH_Role_Labor>
+  <RHAH_Role_Envoy>Survivor envoy</RHAH_Role_Envoy>
+  <RHAH_Role_Refugee>Famine refugee</RHAH_Role_Refugee>
+</LanguageData>

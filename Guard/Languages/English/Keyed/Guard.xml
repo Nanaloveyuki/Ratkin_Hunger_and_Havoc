@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Guard_DuplicateTitle>Ratkin: Hunger and Havoc was not fully loaded</RHAH_Guard_DuplicateTitle>
+  <RHAH_Guard_DuplicateBody>An older Great Famine Year / Mouse Disaster mod is also enabled. Hunger and Havoc did not load its defs or assembly this session, and it did not disable the other mod.\n\nEnable only one of them, then restart RimWorld. Do not load or save a game in this session. Hunger and Havoc cannot read those older saves.</RHAH_Guard_DuplicateBody>
+</LanguageData>

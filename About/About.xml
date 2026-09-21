@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>鼠族: 饥与祸</name>
+  <author>Nanaloveyuki</author>
+  <packageId>nanaloveyuki.ratkin.hungerandhavoc</packageId>
+  <modVersion>0.1.0</modVersion>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>大荒年里，饥饿的鼠族走到了你的门前。有人乞讨、有人交易，也有人偷窃或带来鼠疫。你可以施舍、收留、雇佣或驱逐。
+
+独立作品，使用新的包名与存档字段，不读取“鼠灾-大荒年”或其 Continued 的旧档。请勿与那些模组同时启用。
+
+需要 NewRatkinPlus、Harmony 和 Biotech。
+
+Ratkin: Hunger and Havoc
+
+Hungry Ratkin arrive at your gates. Some beg, some trade, others steal or bring plague. Offer food, take them in, hire them or send them away.
+
+This is a new mod with its own package ID and save fields. It does not load Great Famine Year / Continued saves. Do not enable those mods together with this one.
+
+Requires NewRatkinPlus, Harmony and Biotech.</description>
+  <modDependencies>
+    <li>
+      <packageId>Solaris.RatkinRaceMod</packageId>
+      <displayName>NewRatkinPlus[1.6]</displayName>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3497673755</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>Ludeon.RimWorld.Biotech</packageId>
+      <displayName>Biotech</displayName>
+    </li>
+  </modDependencies>
+  <incompatibleWith>
+    <li>lezhizhong.mouse.disaster.famine</li>
+    <li>nanaloveyuki.mouse.disaster.famine.continued</li>
+    <li>local.mousedisaster.greatfamine</li>
+  </incompatibleWith>
+  <loadAfter>
+    <li>Nanaloveyuki.IrisMenus</li>
+    <li>brrainz.harmony</li>
+    <li>Ludeon.RimWorld</li>
+    <li>Ludeon.RimWorld.Biotech</li>
+    <li>Solaris.RatkinRaceMod</li>
+    <li>LeZhizhong.PrisonerWorkExpansion</li>
+    <li>cyanobot.toddlers</li>
+    <li>nanaloveyuki.leadyourpet.continued</li>
+  </loadAfter>
+</ModMetaData>
