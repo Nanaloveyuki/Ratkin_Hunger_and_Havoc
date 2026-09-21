@@ -59,14 +59,32 @@ namespace HungerAndHavoc.Pawn
             }
         }
 
-        // 死亡由 Lord 自行摘除
         internal static void NotifyDead(Verse.Pawn pawn)
         {
+            if (pawn == null)
+            {
+                return;
+            }
+
+            NotifyReleased(pawn);
         }
 
-        // 地图拆除由 LordManager 回收
         internal static void NotifyMapTeardown(Map map)
         {
+            if (map == null || map.lordManager == null)
+            {
+                return;
+            }
+
+            List<Lord> lords = map.lordManager.lords;
+            for (int i = lords.Count - 1; i >= 0; i--)
+            {
+                Lord lord = lords[i];
+                if (lord?.LordJob is LordJob_RHAH_Visitor)
+                {
+                    map.lordManager.RemoveLord(lord);
+                }
+            }
         }
 
         static List<Verse.Pawn> CollectPawns(IEnumerable<Verse.Pawn> pawns, Map map)
