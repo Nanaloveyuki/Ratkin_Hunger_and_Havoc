@@ -113,6 +113,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | RHAH_PlagueStrongSiege, RHAH_PlagueAirdropMistake, RHAH_PlagueMisguidedKinship, RHAH_PlagueGreatFamine, RHAH_PlagueRevenge | IncidentDef | Remove |
 | RHAH_RefugeeMassacre | IncidentDef | Remove |
 | RHAH_ChildExchange | IncidentDef | Remove |
+| HungerAndHavoc.Narrative.NarrativeState | revealedCount, trust, rescued, lost, failed | revealedCount, trust, rescued, lost, failed | Remove |
 | RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
 | RHAH_Gnaw | JobDef | Remove |
