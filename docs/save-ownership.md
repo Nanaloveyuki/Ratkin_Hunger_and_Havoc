@@ -103,7 +103,15 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | RHAH_WildRatkinChildWandersIn | IncidentDef | Remove |
 | RHAH_WildRatkinGroupWandersIn | IncidentDef | Remove |
 | RHAH_FamineRefugees | IncidentDef | Remove |
-| RHAH_RatkinTraderCaravan | IncidentDef | Remove |
+| RHAH_AidSimpleMeal, RHAH_AidFineMeal, RHAH_AidMedicine, RHAH_AidSilver, RHAH_AidBaby | IncidentDef | Remove |
+| RHAH_IntelTreasureSimpleMeal, RHAH_IntelTreasureHerbal, RHAH_IntelTreasureSilver | IncidentDef | Remove |
+| RHAH_IntelStructureSimpleMeal, RHAH_IntelStructureHerbal, RHAH_IntelStructureSilver | IncidentDef | Remove |
+| RHAH_IntelSettlementSimpleMeal, RHAH_IntelSettlementHerbal, RHAH_IntelSettlementSilver | IncidentDef | Remove |
+| RHAH_LaboringRefugees, RHAH_StrongSiege, RHAH_Passersby, RHAH_AirdropMistake, RHAH_MisguidedKinship | IncidentDef | Remove |
+| RHAH_GreatFamine, RHAH_PlagueWanderers, RHAH_PlagueAbandonedBabies, RHAH_PlagueTraderCaravan, RHAH_PlaguePassersby | IncidentDef | Remove |
+| RHAH_PlagueRefugees, RHAH_PlagueOrphan, RHAH_PlagueBeggarGroup, RHAH_PlagueThiefGroup, RHAH_PlagueLaboringRefugees | IncidentDef | Remove |
+| RHAH_PlagueStrongSiege, RHAH_PlagueAirdropMistake, RHAH_PlagueMisguidedKinship, RHAH_PlagueGreatFamine, RHAH_PlagueRevenge | IncidentDef | Remove |
+| RHAH_RefugeeMassacre | IncidentDef | Remove |
 | RHAH_ChildExchange | IncidentDef | Remove |
 | RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
