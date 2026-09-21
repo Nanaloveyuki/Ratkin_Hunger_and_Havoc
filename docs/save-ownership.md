@@ -81,8 +81,11 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | 类型 | 字段 | 存档键 | 卸载 |
 | --- | --- | --- | --- |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | active generation batches | activeGenerationBatches | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | pending incident display IDs | pendingIncidentDisplayIds | Remove |
+| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | visitor pawn load IDs | visitorPawnLoadIds | Remove |
+| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | food search ticks | foodSearchTicks | Remove |
 
-生成队列和批次保护属于唯一全局运行时组件；未建立组件前，工厂使用进程内批次索引，不能宣称跨保存重载保留。
+生成队列、批次保护和全局调度属于唯一全局运行时组件；本图访客索引和寻食缓存属于唯一地图组件。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
 
 ## Def
 
