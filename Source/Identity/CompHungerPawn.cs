@@ -29,6 +29,11 @@ namespace HungerAndHavoc.Identity
             state.ApplySeed(seed);
         }
 
+        internal void SetLeaveAfter(int tick)
+        {
+            state.SetLeaveAfter(tick);
+        }
+
         internal static CompHungerPawn TryGet(Verse.Pawn pawn)
         {
             Hediff_HungerMark mark = TryGetMark(pawn);
@@ -56,6 +61,12 @@ namespace HungerAndHavoc.Identity
             Scribe_Values.Look(ref state.leaveAfterGameTick, "leaveAfterGameTick", -1);
             Scribe_Values.Look(ref state.carriesPlague, "carriesPlague", false);
             Scribe_Values.Look(ref state.attitudeAtArrival, "attitudeAtArrival", HungerAttitude.Neutral);
+            Scribe_Values.Look(ref state.attitude, "attitude", HungerAttitude.Neutral);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && state.attitude == HungerAttitude.Neutral &&
+                state.attitudeAtArrival != HungerAttitude.Neutral)
+            {
+                state.attitude = state.attitudeAtArrival;
+            }
             Scribe_Values.Look(ref state.parentPawnLoadId, "parentPawnLoadId", 0);
             Scribe_Collections.Look(ref state.childPawnLoadIds, "childPawnLoadIds", LookMode.Value);
             Scribe_Collections.Look(ref state.gateOverrides, "gateOverrides", LookMode.Value, LookMode.Value);

@@ -56,8 +56,7 @@ namespace HungerAndHavoc.Pawn
             LordToil_RHAH_VisitorLeave leave = new LordToil_RHAH_VisitorLeave();
             graph.AddToil(leave);
 
-            LordToil_ExitMapAndDefendSelf defend = new LordToil_ExitMapAndDefendSelf();
-            graph.AddToil(defend);
+            // 空派系只提供敌对检查 不切原版防守或袭击
 
             Transition arrived = new Transition(travel, seek, false, true);
             arrived.AddTrigger(new Trigger_Memo("TravelArrived"));
@@ -66,16 +65,10 @@ namespace HungerAndHavoc.Pawn
             Transition toLeave = new Transition(seek, leave, false, true);
             toLeave.AddSource(travel);
             toLeave.AddTrigger(new Trigger_Custom(_ => AllReadyToLeave()));
+            toLeave.AddTrigger(new Trigger_Memo("RHAH_Leave"));
             toLeave.AddPostAction(new TransitionAction_EndAllJobs());
             graph.AddTransition(toLeave, false);
 
-            Transition hostile = new Transition(seek, defend, false, true);
-            hostile.AddSource(travel);
-            hostile.AddSource(leave);
-            hostile.AddTrigger(new Trigger_BecamePlayerEnemy());
-            hostile.AddTrigger(new Trigger_PawnKilled());
-            hostile.AddPostAction(new TransitionAction_EndAllJobs());
-            graph.AddTransition(hostile, false);
 
             return graph;
         }
@@ -109,14 +102,42 @@ namespace HungerAndHavoc.Pawn
                     return false;
                 }
 
-                if (snapshot.Lifecycle != HungerLifecycle.Fed &&
-                    snapshot.Lifecycle != HungerLifecycle.Leaving)
+                if (snapshot.Lifecycle == HungerLifecycle.Fed ||
+                    snapshot.Lifecycle == HungerLifecycle.Leaving)
                 {
-                    return false;
+                    continue;
                 }
+
+                if (!Compat.RHAH_ChildMovement.CanWalkOut(pawn) &&
+                    (pawn.CarriedBy != null || HasCarrier(pawn)))
+                {
+                    continue;
+                }
+
+                return false;
             }
 
             return true;
+        }
+
+        bool HasCarrier(Verse.Pawn child)
+        {
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                Verse.Pawn adult = lord.ownedPawns[i];
+                if (adult == null || adult == child || adult.Downed || adult.CarriedBy != null)
+                {
+                    continue;
+                }
+
+                if (HungerAndHavocApi.Allows(adult, HungerBehaviorGate.Carry) &&
+                    Compat.RHAH_ChildMovement.CanWalkOut(adult))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

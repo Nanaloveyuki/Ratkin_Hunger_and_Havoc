@@ -30,7 +30,7 @@ namespace HungerAndHavoc.Incidents
                     CarriesPlague = context.CarriesPlague,
                     Map = context.Map,
                     PawnKind = PawnKindDefOf.Colonist,
-                    Faction = Faction.OfPlayer,
+                    Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(context.Attitude) ?? Faction.OfPlayer,
                     SpawnCell = context.SpawnCell,
                     Profile = context.Profile
                 });

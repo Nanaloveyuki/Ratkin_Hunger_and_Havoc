@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Faction_Hostile.label>敌对的饥荒鼠族</RHAH_Faction_Hostile.label>
+  <RHAH_Faction_Hostile.fixedName>敌对的饥荒鼠族</RHAH_Faction_Hostile.fixedName>
+  <RHAH_Faction_Hostile.description>这些人从毁掉的鼠族定居点里逃出来。他们没有工具，存粮也所剩无几，够得着的东西就会拿走。\n\n他们对殖民地抱有敌意。伤害他们不会引来袭击。</RHAH_Faction_Hostile.description>
+  <RHAH_Faction_Hostile.pawnSingular>鼠族</RHAH_Faction_Hostile.pawnSingular>
+  <RHAH_Faction_Hostile.pawnsPlural>鼠族</RHAH_Faction_Hostile.pawnsPlural>
+
+  <RHAH_Faction_LeaningHostile.label>警惕的饥荒鼠族</RHAH_Faction_LeaningHostile.label>
+  <RHAH_Faction_LeaningHostile.fixedName>警惕的饥荒鼠族</RHAH_Faction_LeaningHostile.fixedName>
+  <RHAH_Faction_LeaningHostile.description>这些人从毁掉的鼠族定居点里逃出来。他们看着殖民地，保持距离。\n\n他们还没有敌对。殖民者打伤其中一只，整批都会转为敌对。他们仍然不会袭击。</RHAH_Faction_LeaningHostile.description>
+  <RHAH_Faction_LeaningHostile.pawnSingular>鼠族</RHAH_Faction_LeaningHostile.pawnSingular>
+  <RHAH_Faction_LeaningHostile.pawnsPlural>鼠族</RHAH_Faction_LeaningHostile.pawnsPlural>
+
+  <RHAH_Faction_Neutral.label>饥荒鼠族</RHAH_Faction_Neutral.label>
+  <RHAH_Faction_Neutral.fixedName>饥荒鼠族</RHAH_Faction_Neutral.fixedName>
+  <RHAH_Faction_Neutral.description>这些人从毁掉的鼠族定居点里逃出来。有的乞讨，有的偷窃，有的只是路过。\n\n殖民者打伤其中一只，他们仍保持中立。把整批赶走，他们会转为敌对。他们不会袭击。</RHAH_Faction_Neutral.description>
+  <RHAH_Faction_Neutral.pawnSingular>鼠族</RHAH_Faction_Neutral.pawnSingular>
+  <RHAH_Faction_Neutral.pawnsPlural>鼠族</RHAH_Faction_Neutral.pawnsPlural>
+
+  <RHAH_Faction_LeaningFriendly.label>愿意靠近的饥荒鼠族</RHAH_Faction_LeaningFriendly.label>
+  <RHAH_Faction_LeaningFriendly.fixedName>愿意靠近的饥荒鼠族</RHAH_Faction_LeaningFriendly.fixedName>
+  <RHAH_Faction_LeaningFriendly.description>这些人从毁掉的鼠族定居点里逃出来。他们会到门口要食物。\n\n殖民者打伤其中一只，整批都会离开。他们不会转为敌对，也不会袭击。</RHAH_Faction_LeaningFriendly.description>
+  <RHAH_Faction_LeaningFriendly.pawnSingular>鼠族</RHAH_Faction_LeaningFriendly.pawnSingular>
+  <RHAH_Faction_LeaningFriendly.pawnsPlural>鼠族</RHAH_Faction_LeaningFriendly.pawnsPlural>
+
+  <RHAH_Faction_Friendly.label>友善的饥荒鼠族</RHAH_Faction_Friendly.label>
+  <RHAH_Faction_Friendly.fixedName>友善的饥荒鼠族</RHAH_Faction_Friendly.fixedName>
+  <RHAH_Faction_Friendly.description>这些人从毁掉的鼠族定居点里逃出来。划出救济区之后，他们只从那里拿食物。\n\n殖民者打伤其中一只，整批都会离开。他们保持友善，也不会袭击。</RHAH_Faction_Friendly.description>
+  <RHAH_Faction_Friendly.pawnSingular>鼠族</RHAH_Faction_Friendly.pawnSingular>
+  <RHAH_Faction_Friendly.pawnsPlural>鼠族</RHAH_Faction_Friendly.pawnsPlural>
+</LanguageData>

@@ -15,6 +15,7 @@ namespace HungerAndHavoc.Identity
         internal int leaveAfterGameTick = -1;
         internal bool carriesPlague;
         internal HungerAttitude attitudeAtArrival = HungerAttitude.Neutral;
+        internal HungerAttitude attitude = HungerAttitude.Neutral;
         internal int parentPawnLoadId;
         internal List<int> childPawnLoadIds = new List<int>();
         internal Dictionary<HungerBehaviorGate, bool> gateOverrides = new Dictionary<HungerBehaviorGate, bool>();
@@ -39,6 +40,7 @@ namespace HungerAndHavoc.Identity
             lifecycle = seed.Lifecycle;
             carriesPlague = seed.CarriesPlague;
             attitudeAtArrival = seed.AttitudeAtArrival;
+            attitude = seed.AttitudeAtArrival;
             leaveAfterGameTick = seed.LeaveAfterGameTick;
             parentPawnLoadId = seed.ParentPawnLoadId;
             childPawnLoadIds = seed.ChildPawnLoadIds == null
@@ -75,6 +77,19 @@ namespace HungerAndHavoc.Identity
             }
 
             return true;
+        }
+
+        internal void SetLeaveAfter(int tick)
+        {
+            if (leaveAfterGameTick < 0)
+            {
+                leaveAfterGameTick = tick;
+            }
+        }
+
+        internal void SetAttitude(HungerAttitude next)
+        {
+            attitude = next;
         }
 
         // 覆盖优先 再行为 再默认 无 Pawn 时行为收到 null
@@ -201,7 +216,7 @@ namespace HungerAndHavoc.Identity
                 hasBeenFed,
                 leaveAfterGameTick,
                 carriesPlague,
-                attitudeAtArrival,
+                attitude,
                 parentPawnLoadId,
                 childPawnLoadIds);
         }

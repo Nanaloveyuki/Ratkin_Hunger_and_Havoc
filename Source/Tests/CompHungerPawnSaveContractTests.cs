@@ -17,6 +17,7 @@ namespace HungerAndHavoc.Tests
             "leaveAfterGameTick",
             "carriesPlague",
             "attitudeAtArrival",
+            "attitude",
             "parentPawnLoadId",
             "childPawnLoadIds",
             "gateOverrides",

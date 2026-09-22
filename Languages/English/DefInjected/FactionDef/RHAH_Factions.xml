@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Faction_Hostile.label>hostile famine ratkin</RHAH_Faction_Hostile.label>
+  <RHAH_Faction_Hostile.fixedName>Hostile famine ratkin</RHAH_Faction_Hostile.fixedName>
+  <RHAH_Faction_Hostile.description>Ratkin driven out of a ruined settlement. They have no tools and little food left, and they take what they can reach.\n\nThey are hostile to the colony. Hurting them does not start a raid.</RHAH_Faction_Hostile.description>
+  <RHAH_Faction_Hostile.pawnSingular>ratkin</RHAH_Faction_Hostile.pawnSingular>
+  <RHAH_Faction_Hostile.pawnsPlural>ratkin</RHAH_Faction_Hostile.pawnsPlural>
+
+  <RHAH_Faction_LeaningHostile.label>wary famine ratkin</RHAH_Faction_LeaningHostile.label>
+  <RHAH_Faction_LeaningHostile.fixedName>Wary famine ratkin</RHAH_Faction_LeaningHostile.fixedName>
+  <RHAH_Faction_LeaningHostile.description>Ratkin driven out of a ruined settlement. They watch the colony and keep their distance.\n\nThey are not hostile yet. If a colonist hurts one of them, that whole group turns hostile. They still do not raid.</RHAH_Faction_LeaningHostile.description>
+  <RHAH_Faction_LeaningHostile.pawnSingular>ratkin</RHAH_Faction_LeaningHostile.pawnSingular>
+  <RHAH_Faction_LeaningHostile.pawnsPlural>ratkin</RHAH_Faction_LeaningHostile.pawnsPlural>
+
+  <RHAH_Faction_Neutral.label>famine ratkin</RHAH_Faction_Neutral.label>
+  <RHAH_Faction_Neutral.fixedName>Famine ratkin</RHAH_Faction_Neutral.fixedName>
+  <RHAH_Faction_Neutral.description>Ratkin driven out of a ruined settlement. They beg, steal, or pass through, depending on the group.\n\nThey stay neutral if a colonist hurts one of them. Forcing the group out makes them hostile. They do not raid.</RHAH_Faction_Neutral.description>
+  <RHAH_Faction_Neutral.pawnSingular>ratkin</RHAH_Faction_Neutral.pawnSingular>
+  <RHAH_Faction_Neutral.pawnsPlural>ratkin</RHAH_Faction_Neutral.pawnsPlural>
+
+  <RHAH_Faction_LeaningFriendly.label>approachable famine ratkin</RHAH_Faction_LeaningFriendly.label>
+  <RHAH_Faction_LeaningFriendly.fixedName>Approachable famine ratkin</RHAH_Faction_LeaningFriendly.fixedName>
+  <RHAH_Faction_LeaningFriendly.description>Ratkin driven out of a ruined settlement. They will come to the gate for food.\n\nIf a colonist hurts one of them, that whole group leaves. They do not turn hostile, and they do not raid.</RHAH_Faction_LeaningFriendly.description>
+  <RHAH_Faction_LeaningFriendly.pawnSingular>ratkin</RHAH_Faction_LeaningFriendly.pawnSingular>
+  <RHAH_Faction_LeaningFriendly.pawnsPlural>ratkin</RHAH_Faction_LeaningFriendly.pawnsPlural>
+
+  <RHAH_Faction_Friendly.label>friendly famine ratkin</RHAH_Faction_Friendly.label>
+  <RHAH_Faction_Friendly.fixedName>Friendly famine ratkin</RHAH_Faction_Friendly.fixedName>
+  <RHAH_Faction_Friendly.description>Ratkin driven out of a ruined settlement. They will take food only from a relief area, if one is marked.\n\nIf a colonist hurts one of them, that whole group leaves. They stay friendly, and they do not raid.</RHAH_Faction_Friendly.description>
+  <RHAH_Faction_Friendly.pawnSingular>ratkin</RHAH_Faction_Friendly.pawnSingular>
+  <RHAH_Faction_Friendly.pawnsPlural>ratkin</RHAH_Faction_Friendly.pawnsPlural>
+</LanguageData>

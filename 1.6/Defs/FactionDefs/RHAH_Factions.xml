@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <FactionDef Name="RHAH_AttitudeFactionBase" Abstract="True">
+    <pawnSingular>ratkin</pawnSingular>
+    <pawnsPlural>ratkin</pawnsPlural>
+    <categoryTag>RHAH_Famine</categoryTag>
+    <humanlikeFaction>true</humanlikeFaction>
+    <hidden>true</hidden>
+    <displayInFactionSelection>false</displayInFactionSelection>
+    <requiredCountAtGameStart>1</requiredCountAtGameStart>
+    <maxConfigurableAtWorldCreation>0</maxConfigurableAtWorldCreation>
+    <startingCountAtWorldCreation>1</startingCountAtWorldCreation>
+    <settlementGenerationWeight>0</settlementGenerationWeight>
+    <canGenerateQuestSites>false</canGenerateQuestSites>
+    <canRequestTraders>false</canRequestTraders>
+    <canRequestMilitaryAid>false</canRequestMilitaryAid>
+    <canRequestOrbitalTrader>false</canRequestOrbitalTrader>
+    <rescueesCanJoin>false</rescueesCanJoin>
+    <mustStartOneEnemy>false</mustStartOneEnemy>
+    <raidsForbidden>true</raidsForbidden>
+    <canSiege>false</canSiege>
+    <canStageAttacks>false</canStageAttacks>
+    <canPsychicRitualSiege>false</canPsychicRitualSiege>
+    <permanentEnemy>false</permanentEnemy>
+    <hostileToFactionlessHumanlikes>false</hostileToFactionlessHumanlikes>
+    <techLevel>Neolithic</techLevel>
+    <basicMemberKind>Colonist</basicMemberKind>
+    <backstoryFilters>
+      <li>
+        <categories>
+          <li>Outlander</li>
+        </categories>
+      </li>
+    </backstoryFilters>
+    <allowedArrivalTemperatureRange>-1000~1000</allowedArrivalTemperatureRange>
+  </FactionDef>
+
+  <FactionDef ParentName="RHAH_AttitudeFactionBase">
+    <defName>RHAH_Faction_Hostile</defName>
+    <label>hostile famine ratkin</label>
+    <fixedName>Hostile famine ratkin</fixedName>
+    <description>Ratkin driven out of a ruined settlement. They have no tools and little food left, and they take what they can reach.\n\nThey are hostile to the colony. Hurting them does not start a raid.</description>
+    <naturalColonyGoodwill>
+      <min>-100</min>
+      <max>-100</max>
+    </naturalColonyGoodwill>
+  </FactionDef>
+
+  <FactionDef ParentName="RHAH_AttitudeFactionBase">
+    <defName>RHAH_Faction_LeaningHostile</defName>
+    <label>wary famine ratkin</label>
+    <fixedName>Wary famine ratkin</fixedName>
+    <description>Ratkin driven out of a ruined settlement. They watch the colony and keep their distance.\n\nThey are not hostile yet. If a colonist hurts one of them, that whole group turns hostile. They still do not raid.</description>
+    <naturalColonyGoodwill>
+      <min>0</min>
+      <max>0</max>
+    </naturalColonyGoodwill>
+  </FactionDef>
+
+  <FactionDef ParentName="RHAH_AttitudeFactionBase">
+    <defName>RHAH_Faction_Neutral</defName>
+    <label>famine ratkin</label>
+    <fixedName>Famine ratkin</fixedName>
+    <description>Ratkin driven out of a ruined settlement. They beg, steal, or pass through, depending on the group.\n\nThey stay neutral if a colonist hurts one of them. Forcing the group out makes them hostile. They do not raid.</description>
+    <naturalColonyGoodwill>
+      <min>0</min>
+      <max>0</max>
+    </naturalColonyGoodwill>
+  </FactionDef>
+
+  <FactionDef ParentName="RHAH_AttitudeFactionBase">
+    <defName>RHAH_Faction_LeaningFriendly</defName>
+    <label>approachable famine ratkin</label>
+    <fixedName>Approachable famine ratkin</fixedName>
+    <description>Ratkin driven out of a ruined settlement. They will come to the gate for food.\n\nIf a colonist hurts one of them, that whole group leaves. They do not turn hostile, and they do not raid.</description>
+    <naturalColonyGoodwill>
+      <min>0</min>
+      <max>0</max>
+    </naturalColonyGoodwill>
+  </FactionDef>
+
+  <FactionDef ParentName="RHAH_AttitudeFactionBase">
+    <defName>RHAH_Faction_Friendly</defName>
+    <label>friendly famine ratkin</label>
+    <fixedName>Friendly famine ratkin</fixedName>
+    <description>Ratkin driven out of a ruined settlement. They will take food only from a relief area, if one is marked.\n\nIf a colonist hurts one of them, that whole group leaves. They stay friendly, and they do not raid.</description>
+    <naturalColonyGoodwill>
+      <min>100</min>
+      <max>100</max>
+    </naturalColonyGoodwill>
+  </FactionDef>
+</Defs>

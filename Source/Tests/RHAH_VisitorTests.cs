@@ -100,9 +100,11 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("LostImportantReferenceDuringLoading", source);
             Assert.Contains("\"faction\"", source);
             Assert.Contains("\"waitSpot\"", source);
-            Assert.Contains("LordToil_ExitMapAndDefendSelf", source);
-            Assert.Contains("Trigger_BecamePlayerEnemy", source);
-            Assert.Contains("Trigger_PawnKilled", source);
+            Assert.Contains("Trigger_Memo(\"RHAH_Leave\")", source);
+            Assert.Contains("LordToil_RHAH_VisitorLeave", source);
+            Assert.DoesNotContain("LordToil_ExitMapAndDefendSelf", source);
+            Assert.DoesNotContain("Trigger_BecamePlayerEnemy", source);
+            Assert.DoesNotContain("Trigger_PawnKilled", source);
             Assert.Contains("HungerAndHavocDefOf.RHAH_VisitorSeek", source);
             Assert.Contains("HungerAndHavocDefOf.RHAH_VisitorLeave", source);
             Assert.DoesNotContain("LordJob_BegForItems", source);
@@ -142,7 +144,7 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("HungerAndHavoc.Pawn.JobGiver_RHAH_Visitor", duty);
             Assert.DoesNotContain("JobGiver_RHAH_Feed", duty);
             Assert.DoesNotContain("JobGiver_RHAH_Beg", duty);
-            Assert.Contains("HungerAndHavocApi.SetLifecycle(pawn, HungerLifecycle.Fed)",
+            Assert.Contains("RHAH_Feeding.TryComplete(pawn)",
                 File.ReadAllText(PawnPath("JobDriver_RHAH_Gnaw.cs")));
             Assert.Contains("HungerAndHavocApi.SetLifecycle(pawn, HungerLifecycle.Leaving)",
                 File.ReadAllText(PawnPath("JobGiver_RHAH_Leave.cs")));
