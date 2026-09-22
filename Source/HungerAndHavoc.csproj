@@ -30,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Tests\**\*.cs" />
+
     <Compile Remove="Api\**\*.cs" />
     <EmbeddedResource Remove="Tests\**\*" />
     <None Remove="Tests\**\*" />
@@ -64,6 +65,7 @@
   </PropertyGroup>
   <ItemGroup Condition="!Exists('$(IrisMenusDll)')">
     <Compile Remove="Pawn\Compat\RHAH_IrisMenusCompat.cs" />
+    <Compile Remove="Pawn\Compat\RHAH_IrisMenusWidgets.cs" />
   </ItemGroup>
   <ItemGroup Condition="Exists('$(IrisMenusDll)')">
     <ReferencePath Include="$(IrisMenusDll)">

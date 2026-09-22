@@ -67,10 +67,12 @@ namespace HungerAndHavoc.Pawn.Compat
 
     internal sealed class RHAH_IrisMenusPages
     {
-        const float RowHeight = 28f;
+        const int WeightChartLimit = 8;
 
         readonly string irisVersion;
         readonly Dictionary<string, string> debugResults = new Dictionary<string, string>();
+        readonly string[] weightLabels = new string[WeightChartLimit];
+        readonly float[] weightShares = new float[WeightChartLimit];
 
         string selectedPawnLabel = string.Empty;
 
@@ -82,6 +84,7 @@ namespace HungerAndHavoc.Pawn.Compat
         internal void Register(Mod owner)
         {
             RegisterPage(owner, "overview", "RHAH_Menu_Overview", DrawOverview, SearchOverview);
+            RegisterPage(owner, "relief", "RHAH_Menu_Relief", DrawRelief, SearchRelief);
             RegisterPage(owner, "events", "RHAH_Menu_Events", DrawEvents, SearchCatalogEvents);
             RegisterPage(owner, "pawns", "RHAH_Menu_Pawns", DrawPawns, SearchPawns);
             RegisterPage(owner, "narrative", "RHAH_Menu_Narrative", DrawNarrative, SearchNarrative);
@@ -150,10 +153,7 @@ namespace HungerAndHavoc.Pawn.Compat
         void DrawIncident(Listing_Standard list, HungerIncidentEntry entry, bool debug)
         {
             string anchor = (debug ? "dev-" : "event-") + entry.DisplayId;
-            MenuControls.Anchor(list, anchor, debug ? 78f : 52f);
-            Rect card = list.GetRect(debug ? 74f : 48f);
-            Widgets.DrawBox(card);
-            Rect inner = card.ContractedBy(4f);
+            Rect inner = RHAH_IrisMenusWidgets.Card(list, anchor, debug ? 74f : 48f);
             Widgets.Label(new Rect(inner.x, inner.y, inner.width, 22f),
                 entry.DisplayId + "  " + entry.LabelKey.Translate());
             Widgets.Label(new Rect(inner.x, inner.y + 20f, inner.width, 22f),
@@ -178,8 +178,6 @@ namespace HungerAndHavoc.Pawn.Compat
                     Widgets.Label(new Rect(button.xMax + 8f, button.y, inner.width - 168f, 24f), result);
                 }
             }
-
-            list.Gap(4f);
         }
 
         static string Queue(HungerIncidentEntry entry)
@@ -271,10 +269,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             string anchor = "pawn-" + pawn.thingIDNumber;
-            MenuControls.Anchor(list, anchor, 72f);
-            Rect card = list.GetRect(68f);
-            Widgets.DrawBox(card);
-            Rect inner = card.ContractedBy(4f);
+            Rect inner = RHAH_IrisMenusWidgets.Card(list, anchor, 68f);
             string name = pawn.LabelShort;
             Widgets.Label(new Rect(inner.x, inner.y, inner.width, 22f), name);
             Widgets.Label(new Rect(inner.x, inner.y + 20f, inner.width, 22f),
@@ -289,7 +284,6 @@ namespace HungerAndHavoc.Pawn.Compat
                     snapshot.ChildPawnLoadIds == null ? 0 : snapshot.ChildPawnLoadIds.Count,
                     snapshot.HasBeenFed ? "RHAH_Menu_Yes".Translate() : "RHAH_Menu_No".Translate(),
                     snapshot.CarriesPlague ? "RHAH_Menu_Yes".Translate() : "RHAH_Menu_No".Translate()));
-            list.Gap(4f);
             selectedPawnLabel = name;
         }
 
@@ -358,6 +352,87 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("enable-new-content", "RHAH_Settings_EnableNewContent", "toggle content");
         }
 
+
+        void DrawRelief(Listing_Standard list)
+        {
+            Section(list, "RHAH_Menu_Relief");
+            Note(list, "RHAH_Menu_Relief_Note");
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            if (settings == null)
+            {
+                Empty(list, "RHAH_Menu_Settings_Missing");
+                return;
+            }
+
+            DrawReliefToggle(list, "relief-enabled", ref settings.reliefEnabled,
+                "RHAH_Settings_ReliefEnabled", settings);
+            DrawReliefToggle(list, "relief-outside", ref settings.allowEatOutsideRelief,
+                "RHAH_Settings_EatOutsideRelief", settings);
+            DrawReliefToggle(list, "relief-ignore", ref settings.ignoreReliefAfterFed,
+                "RHAH_Settings_IgnoreReliefAfterFed", settings);
+            DrawReliefToggle(list, "relief-leave", ref settings.leaveAfterFed,
+                "RHAH_Settings_LeaveAfterFed", settings);
+            DrawFoodList(list, settings);
+        }
+
+        static void DrawReliefToggle(
+            Listing_Standard list,
+            string anchor,
+            ref bool value,
+            string key,
+            HungerAndHavocSettings settings)
+        {
+            bool before = value;
+            MenuControls.Anchor(list, anchor);
+            MenuControls.Checkbox(list, key.Translate(), ref value, (key + "_Tooltip").Translate());
+            if (before != value)
+            {
+                settings.InvalidateReliefSearch();
+            }
+        }
+
+        static void DrawFoodList(Listing_Standard list, HungerAndHavocSettings settings)
+        {
+            MenuControls.Anchor(list, "relief-foods", 52f);
+            Note(list, "RHAH_Settings_ReliefFoods_Tooltip");
+            Rect buttons = list.GetRect(28f);
+            if (Widgets.ButtonText(new Rect(buttons.x, buttons.y, 140f, 26f),
+                "RHAH_Settings_ReliefFoods_All".Translate()))
+            {
+                settings.SetAllReliefFood(true, null);
+            }
+
+            if (Widgets.ButtonText(new Rect(buttons.x + 148f, buttons.y, 140f, 26f),
+                "RHAH_Settings_ReliefFoods_None".Translate()))
+            {
+                List<ThingDef> candidates = RHAH_ReliefFood.CandidateFoods();
+                List<string> names = new List<string>();
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    names.Add(candidates[i].defName);
+                }
+
+                settings.SetAllReliefFood(false, names);
+            }
+
+            list.Gap(4f);
+            List<ThingDef> foods = RHAH_ReliefFood.CandidateFoods();
+            for (int i = 0; i < foods.Count; i++)
+            {
+                ThingDef food = foods[i];
+                bool enabled = settings.IsReliefFoodEnabled(food.defName);
+                MenuControls.Anchor(list, "relief-food-" + food.defName);
+                MenuControls.Checkbox(list, food.LabelCap, ref enabled);
+                settings.SetReliefFoodEnabled(food.defName, enabled);
+            }
+        }
+
+        static IEnumerable<MenuSearchEntry> SearchRelief()
+        {
+            yield return Entry("relief-enabled", "RHAH_Settings_ReliefEnabled");
+            yield return Entry("relief-outside", "RHAH_Settings_EatOutsideRelief");
+            yield return Entry("relief-foods", "RHAH_Settings_ReliefFoods");
+        }
         void DrawCompatibility(Listing_Standard list)
         {
             Section(list, "RHAH_Menu_Compatibility");
@@ -474,23 +549,24 @@ namespace HungerAndHavoc.Pawn.Compat
             float weight = settings.XenotypeWeight(xenotype.defName);
             float share = total <= 0f || weight <= 0f ? 0f : weight / total;
             string label = xenotype.LabelCap + "  " + weight.ToString("0");
-            Rect row = list.GetRect(34f);
-            Widgets.Label(new Rect(row.x, row.y, row.width * 0.42f, row.height), label);
-            Rect bar = new Rect(row.x + row.width * 0.44f, row.y + 8f, row.width * 0.56f, 16f);
-            Widgets.FillableBar(bar, share);
-            if (Mouse.IsOver(bar) && Event.current.type == EventType.MouseDrag)
+            Rect row;
+            float dragged = RHAH_IrisMenusWidgets.ShareBar(list, label, share, 0.42f, out row);
+            if (dragged >= 0f)
             {
-                float next = (Event.current.mousePosition.x - bar.x) / bar.width * HungerXenotypeWeightTable.MaxWeight;
-                settings.SetXenotypeWeight(xenotype.defName, next);
-            }
-
-            if (!HungerGeneCatalog.IsBuiltin(xenotype.defName) && Widgets.ButtonText(new Rect(row.xMax - 72f, row.y, 68f, 24f), "RHAH_Menu_Genes_Remove".Translate()))
-            {
-                settings.SetXenotypeEnabled(xenotype.defName, false);
+                settings.SetXenotypeWeight(xenotype.defName, dragged * HungerXenotypeWeightTable.MaxWeight);
             }
 
             TooltipHandler.TipRegion(row, "RHAH_Menu_Genes_WeightTip".Translate(xenotype.defName, HungerGeneCatalog.SuggestedWeight(xenotype.defName).ToString("0")));
-            list.Gap(4f);
+            if (!HungerGeneCatalog.IsBuiltin(xenotype.defName))
+            {
+                Rect remove = list.GetRect(26f);
+                if (Widgets.ButtonText(new Rect(remove.xMax - 72f, remove.y, 68f, 24f), "RHAH_Menu_Genes_Remove".Translate()))
+                {
+                    settings.SetXenotypeEnabled(xenotype.defName, false);
+                }
+
+                list.Gap(4f);
+            }
         }
 
         static void DrawJoinableXenotypes(Listing_Standard list, HungerAndHavocSettings settings)
@@ -584,7 +660,6 @@ namespace HungerAndHavoc.Pawn.Compat
         void DrawFrequency(Listing_Standard list)
         {
             Section(list, "RHAH_Menu_EventFrequency");
-            Note(list, "RHAH_Menu_Frequency_Gap");
             HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
             if (settings == null)
             {
@@ -616,7 +691,56 @@ namespace HungerAndHavoc.Pawn.Compat
                 (int)HungerIncidentSchedule.MaxDays);
             settings.negativeIncidentDays = HungerIncidentSchedule.ClampDays(negativeDays);
             Status(list, "RHAH_Menu_Frequency_Expression", HungerIncidentSchedule.Expression);
+            DrawWeightChart(list, HungerAttitudePool.Positive, "frequency-weights-positive");
+            DrawWeightChart(list, HungerAttitudePool.Negative, "frequency-weights-negative");
             list.Gap(4f);
+        }
+
+        void DrawWeightChart(Listing_Standard list, HungerAttitudePool pool, string anchor)
+        {
+            IReadOnlyList<HungerIncidentEntry> entries = HungerIncidentCatalog.All;
+            int trust = Current.Game?.GetComponent<NarrativeState>()?.Snapshot().Trust ?? 0;
+            float total = 0f;
+            int shown = 0;
+            for (int i = 0; i < entries.Count && shown < WeightChartLimit; i++)
+            {
+                HungerIncidentEntry entry = entries[i];
+                if (entry.DefaultAttitudePool != pool)
+                {
+                    continue;
+                }
+
+                float weight = HungerIncidentWeight.Evaluate(new HungerIncidentWeightInput(
+                    entry.Family,
+                    entry.Category,
+                    entry.Target,
+                    entry.DefaultAttitudePool,
+                    HungerIncidentSeason.Undefined,
+                    trust,
+                    true,
+                    false));
+                if (weight <= 0f)
+                {
+                    continue;
+                }
+
+                weightLabels[shown] = entry.DisplayId;
+                weightShares[shown] = weight;
+                total += weight;
+                shown++;
+            }
+
+            if (shown == 0 || total <= 0f)
+            {
+                return;
+            }
+
+            for (int i = 0; i < shown; i++)
+            {
+                weightShares[i] /= total;
+            }
+
+            RHAH_IrisMenusWidgets.ShareChart(list, anchor, weightLabels, weightShares, shown);
         }
 
         IEnumerable<MenuSearchEntry> SearchFrequency()
