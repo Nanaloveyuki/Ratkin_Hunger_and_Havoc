@@ -10,6 +10,9 @@ namespace HungerAndHavoc.Core
         public HungerAndHavocMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<HungerAndHavocSettings>();
+#if RHAH_IRISMENUS
+            Pawn.Compat.RHAH_IrisMenusCompat.TryRegister(this);
+#endif
         }
 
         public override string SettingsCategory()

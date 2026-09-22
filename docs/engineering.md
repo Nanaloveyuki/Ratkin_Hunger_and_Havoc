@@ -164,6 +164,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_Feed` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_Leave` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
 | `HungerAndHavoc.Pawn.Compat.RHAH_PawnCompatStartup` | `[StaticConstructorOnStartup]` | `HungerAndHavoc.dll` | Verse 启动扫描公开静态构造入口 |
+| `HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusCompat` 所在文件对 `IrisMenus` 的编译引用 | IrisMenus 1.6 公开 `MenuRegistry.RegisterSubItemListing` | `HungerAndHavoc.dll` 引用，`Private=False`，不随包发布 | 可选依赖。`ModLister` 未启用或 `modVersion` 不是 `1.6` 时不注册页面。类型保持 `internal`，不进入 API 程序集 |
 
 ## 检查门禁
 

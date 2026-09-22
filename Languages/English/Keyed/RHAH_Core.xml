@@ -3,6 +3,97 @@
   <RHAH_ModName>Ratkin: Hunger and Havoc</RHAH_ModName>
   <RHAH_Settings_EnableNewContent>Enable new content</RHAH_Settings_EnableNewContent>
   <RHAH_Settings_EnableNewContent_Tooltip>When off, new incidents and newly generated Hunger and Havoc pawns stop. Existing marked pawns keep working.</RHAH_Settings_EnableNewContent_Tooltip>
+  <RHAH_Menu_Overview>Overview</RHAH_Menu_Overview>
+  <RHAH_Menu_Events>Events</RHAH_Menu_Events>
+  <RHAH_Menu_Pawns>Pawns</RHAH_Menu_Pawns>
+  <RHAH_Menu_Narrative>Narrative</RHAH_Menu_Narrative>
+  <RHAH_Menu_Other>Other</RHAH_Menu_Other>
+  <RHAH_Menu_Compatibility>Compatibility</RHAH_Menu_Compatibility>
+  <RHAH_Menu_Diagnostics>Diagnostics</RHAH_Menu_Diagnostics>
+  <RHAH_Menu_Ending>Ending</RHAH_Menu_Ending>
+  <RHAH_Menu_Genes>Genes</RHAH_Menu_Genes>
+  <RHAH_Menu_DevEvents>Dev events</RHAH_Menu_DevEvents>
+  <RHAH_Menu_EventFrequency>Event frequency</RHAH_Menu_EventFrequency>
+  <RHAH_Menu_PawnHistory>Pawn history</RHAH_Menu_PawnHistory>
+  <RHAH_Menu_Developer>Developer</RHAH_Menu_Developer>
+  <RHAH_Menu_Experimental>Experimental</RHAH_Menu_Experimental>
+  <RHAH_Menu_Field_Mod>Mod</RHAH_Menu_Field_Mod>
+  <RHAH_Menu_Field_Version>Version</RHAH_Menu_Field_Version>
+  <RHAH_Menu_Field_NewContent>New content</RHAH_Menu_Field_NewContent>
+  <RHAH_Menu_Field_Game>Game</RHAH_Menu_Field_Game>
+  <RHAH_Menu_Field_IrisMenus>IrisMenus</RHAH_Menu_Field_IrisMenus>
+  <RHAH_Menu_On>On</RHAH_Menu_On>
+  <RHAH_Menu_Off>Off</RHAH_Menu_Off>
+  <RHAH_Menu_Yes>Yes</RHAH_Menu_Yes>
+  <RHAH_Menu_No>No</RHAH_Menu_No>
+  <RHAH_Menu_None>None</RHAH_Menu_None>
+  <RHAH_Menu_NoGame>No game loaded</RHAH_Menu_NoGame>
+  <RHAH_Menu_GameLoaded>Game loaded</RHAH_Menu_GameLoaded>
+  <RHAH_Menu_Unavailable>Not available</RHAH_Menu_Unavailable>
+  <RHAH_Menu_Settings_Missing>Settings are not loaded.</RHAH_Menu_Settings_Missing>
+  <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}. Broadcast: {4}. Debug points: {5}.</RHAH_Menu_EventMeta>
+  <RHAH_Menu_Queue>Queue</RHAH_Menu_Queue>
+  <RHAH_Menu_Queue_Disabled>New content is off.</RHAH_Menu_Queue_Disabled>
+  <RHAH_Menu_Queue_NoGame>No game is loaded.</RHAH_Menu_Queue_NoGame>
+  <RHAH_Menu_Queue_NoMap>No usable map.</RHAH_Menu_Queue_NoMap>
+  <RHAH_Menu_Queue_Queued>Queued.</RHAH_Menu_Queue_Queued>
+  <RHAH_Menu_Queue_Rejected>Not queued. It is already waiting, or the scheduler refused it.</RHAH_Menu_Queue_Rejected>
+  <RHAH_Menu_DevEvents_Note>Queues the existing debug scheduler. It does not spawn pawns from this page.</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_Pawns_NoMap>No current map.</RHAH_Menu_Pawns_NoMap>
+  <RHAH_Menu_Pawns_None>No Hunger and Havoc pawns on this map.</RHAH_Menu_Pawns_None>
+  <RHAH_Menu_Pawns_Invalid>That pawn is gone.</RHAH_Menu_Pawns_Invalid>
+  <RHAH_Menu_PawnMeta>{0}. {1}. Incident {2}.</RHAH_Menu_PawnMeta>
+  <RHAH_Menu_PawnRelation>Group {0}. Parent {1}. Children {2}. Fed: {3}. Plague: {4}.</RHAH_Menu_PawnRelation>
+  <RHAH_Menu_Narrative_NoGame>Narrative state needs a loaded game.</RHAH_Menu_Narrative_NoGame>
+  <RHAH_Menu_Narrative_Revealed>Revealed</RHAH_Menu_Narrative_Revealed>
+  <RHAH_Menu_Narrative_Trust>Trust</RHAH_Menu_Narrative_Trust>
+  <RHAH_Menu_Narrative_Rescued>Rescued</RHAH_Menu_Narrative_Rescued>
+  <RHAH_Menu_Narrative_Lost>Lost</RHAH_Menu_Narrative_Lost>
+  <RHAH_Menu_Narrative_Failed>Failed</RHAH_Menu_Narrative_Failed>
+  <RHAH_Menu_Narrative_Outcome>Outcome</RHAH_Menu_Narrative_Outcome>
+  <RHAH_Menu_Compat_Active>Active ({0})</RHAH_Menu_Compat_Active>
+  <RHAH_Menu_Compat_Inactive>Not active</RHAH_Menu_Compat_Inactive>
+  <RHAH_Menu_Compat_MissingRequired>Required, not active</RHAH_Menu_Compat_MissingRequired>
+  <RHAH_Menu_Diagnostics_NoGame>Diagnostics need a loaded game.</RHAH_Menu_Diagnostics_NoGame>
+  <RHAH_Menu_Diagnostics_Pending>Pending incidents</RHAH_Menu_Diagnostics_Pending>
+  <RHAH_Menu_Diagnostics_Batches>Active batches</RHAH_Menu_Diagnostics_Batches>
+  <RHAH_Menu_Diagnostics_Map>Resolved map</RHAH_Menu_Diagnostics_Map>
+  <RHAH_Menu_Ending_Gap>Ending switches are not implemented. This page does not write an ending.</RHAH_Menu_Ending_Gap>
+  <RHAH_Menu_Genes_Gap>Biotech gene settings are not implemented. This page does not edit genes.</RHAH_Menu_Genes_Gap>
+  <RHAH_Menu_PawnHistory_Gap>History generation controls are not implemented. This page does not change backstories.</RHAH_Menu_PawnHistory_Gap>
+  <RHAH_Menu_Experimental_Gap>No experimental settings are registered.</RHAH_Menu_Experimental_Gap>
+  <RHAH_Menu_Frequency_Gap>Incident chance over time is not implemented. The curve stays at zero and is not saved.</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Days>Days shown</RHAH_Menu_Frequency_Days>
+  <RHAH_Menu_Frequency_Expression>Expression</RHAH_Menu_Frequency_Expression>
+  <RHAH_Menu_Frequency_Flat>Chance stays at 0% until a frequency function exists.</RHAH_Menu_Frequency_Flat>
+  <RHAH_Menu_Developer_Note>Read-only build markers. Debug queues live under Dev events.</RHAH_Menu_Developer_Note>
+  <RHAH_Menu_Developer_LastPawn>Last listed pawn</RHAH_Menu_Developer_LastPawn>
+  <RHAH_Menu_Family_Beggar>Beggar</RHAH_Menu_Family_Beggar>
+  <RHAH_Menu_Family_Thief>Thief</RHAH_Menu_Family_Thief>
+  <RHAH_Menu_Family_Wild>Wild</RHAH_Menu_Family_Wild>
+  <RHAH_Menu_Family_Aid>Aid</RHAH_Menu_Family_Aid>
+  <RHAH_Menu_Family_Intel>Intel</RHAH_Menu_Family_Intel>
+  <RHAH_Menu_Family_Siege>Siege</RHAH_Menu_Family_Siege>
+  <RHAH_Menu_Family_Trade>Trade</RHAH_Menu_Family_Trade>
+  <RHAH_Menu_Family_Special>Special</RHAH_Menu_Family_Special>
+  <RHAH_Menu_Origin_Original>Original</RHAH_Menu_Origin_Original>
+  <RHAH_Menu_Origin_Sequel>Sequel</RHAH_Menu_Origin_Sequel>
+  <RHAH_Menu_Category_Hunger>Hunger</RHAH_Menu_Category_Hunger>
+  <RHAH_Menu_Category_Plague>Plague</RHAH_Menu_Category_Plague>
+  <RHAH_Menu_Target_Map>Map</RHAH_Menu_Target_Map>
+  <RHAH_Menu_Target_Caravan>Caravan</RHAH_Menu_Target_Caravan>
+  <RHAH_Menu_Lifecycle_Arriving>Arriving</RHAH_Menu_Lifecycle_Arriving>
+  <RHAH_Menu_Lifecycle_SeekingFood>Seeking food</RHAH_Menu_Lifecycle_SeekingFood>
+  <RHAH_Menu_Lifecycle_Fed>Fed</RHAH_Menu_Lifecycle_Fed>
+  <RHAH_Menu_Lifecycle_Leaving>Leaving</RHAH_Menu_Lifecycle_Leaving>
+  <RHAH_Menu_Lifecycle_Released>Released</RHAH_Menu_Lifecycle_Released>
+  <RHAH_Menu_Lifecycle_Dead>Dead</RHAH_Menu_Lifecycle_Dead>
+  <RHAH_Menu_Outcome_Unresolved>Unresolved</RHAH_Menu_Outcome_Unresolved>
+  <RHAH_Menu_Outcome_Rescue>Rescue</RHAH_Menu_Outcome_Rescue>
+  <RHAH_Menu_Outcome_Loss>Loss</RHAH_Menu_Outcome_Loss>
+  <RHAH_Menu_Outcome_Exposure>Exposure</RHAH_Menu_Outcome_Exposure>
+  <RHAH_Menu_Outcome_Failure>Failure</RHAH_Menu_Outcome_Failure>
+  <RHAH_Menu_Outcome_Massacre>Massacre</RHAH_Menu_Outcome_Massacre>
 
   <RHAH_Role_Unspecified>Hunger and Havoc visitor</RHAH_Role_Unspecified>
   <RHAH_Role_Beggar>Hungry beggar</RHAH_Role_Beggar>

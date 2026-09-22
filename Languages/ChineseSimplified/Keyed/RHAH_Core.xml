@@ -3,6 +3,97 @@
   <RHAH_ModName>鼠族: 饥与祸</RHAH_ModName>
   <RHAH_Settings_EnableNewContent>启用新内容</RHAH_Settings_EnableNewContent>
   <RHAH_Settings_EnableNewContent_Tooltip>关闭后不再触发新事件或生成新的饥与祸 pawn。已有标记的角色及其工作逻辑继续运行。</RHAH_Settings_EnableNewContent_Tooltip>
+  <RHAH_Menu_Overview>总览</RHAH_Menu_Overview>
+  <RHAH_Menu_Events>事件</RHAH_Menu_Events>
+  <RHAH_Menu_Pawns>角色</RHAH_Menu_Pawns>
+  <RHAH_Menu_Narrative>叙事</RHAH_Menu_Narrative>
+  <RHAH_Menu_Other>其他</RHAH_Menu_Other>
+  <RHAH_Menu_Compatibility>兼容</RHAH_Menu_Compatibility>
+  <RHAH_Menu_Diagnostics>诊断</RHAH_Menu_Diagnostics>
+  <RHAH_Menu_Ending>结局</RHAH_Menu_Ending>
+  <RHAH_Menu_Genes>基因</RHAH_Menu_Genes>
+  <RHAH_Menu_DevEvents>开发者事件</RHAH_Menu_DevEvents>
+  <RHAH_Menu_EventFrequency>事件频率</RHAH_Menu_EventFrequency>
+  <RHAH_Menu_PawnHistory>角色经历</RHAH_Menu_PawnHistory>
+  <RHAH_Menu_Developer>开发者</RHAH_Menu_Developer>
+  <RHAH_Menu_Experimental>实验性</RHAH_Menu_Experimental>
+  <RHAH_Menu_Field_Mod>模组</RHAH_Menu_Field_Mod>
+  <RHAH_Menu_Field_Version>版本</RHAH_Menu_Field_Version>
+  <RHAH_Menu_Field_NewContent>新内容</RHAH_Menu_Field_NewContent>
+  <RHAH_Menu_Field_Game>游戏</RHAH_Menu_Field_Game>
+  <RHAH_Menu_Field_IrisMenus>IrisMenus</RHAH_Menu_Field_IrisMenus>
+  <RHAH_Menu_On>开</RHAH_Menu_On>
+  <RHAH_Menu_Off>关</RHAH_Menu_Off>
+  <RHAH_Menu_Yes>是</RHAH_Menu_Yes>
+  <RHAH_Menu_No>否</RHAH_Menu_No>
+  <RHAH_Menu_None>无</RHAH_Menu_None>
+  <RHAH_Menu_NoGame>没有已加载的游戏</RHAH_Menu_NoGame>
+  <RHAH_Menu_GameLoaded>游戏已加载</RHAH_Menu_GameLoaded>
+  <RHAH_Menu_Unavailable>不可用</RHAH_Menu_Unavailable>
+  <RHAH_Menu_Settings_Missing>设置尚未加载。</RHAH_Menu_Settings_Missing>
+  <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}。可广播：{4}。调试点：{5}。</RHAH_Menu_EventMeta>
+  <RHAH_Menu_Queue>排队</RHAH_Menu_Queue>
+  <RHAH_Menu_Queue_Disabled>新内容已关闭。</RHAH_Menu_Queue_Disabled>
+  <RHAH_Menu_Queue_NoGame>没有已加载的游戏。</RHAH_Menu_Queue_NoGame>
+  <RHAH_Menu_Queue_NoMap>没有可用地图。</RHAH_Menu_Queue_NoMap>
+  <RHAH_Menu_Queue_Queued>已排队。</RHAH_Menu_Queue_Queued>
+  <RHAH_Menu_Queue_Rejected>未排队。它已在等待，或调度器拒绝了它。</RHAH_Menu_Queue_Rejected>
+  <RHAH_Menu_DevEvents_Note>只调用现有调试调度。此页不会直接生成角色。</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_Pawns_NoMap>没有当前地图。</RHAH_Menu_Pawns_NoMap>
+  <RHAH_Menu_Pawns_None>这张地图上没有饥与祸角色。</RHAH_Menu_Pawns_None>
+  <RHAH_Menu_Pawns_Invalid>这个角色已经不在了。</RHAH_Menu_Pawns_Invalid>
+  <RHAH_Menu_PawnMeta>{0}。{1}。事件 {2}。</RHAH_Menu_PawnMeta>
+  <RHAH_Menu_PawnRelation>关系组 {0}。父母 {1}。子女 {2}。已投喂：{3}。鼠疫：{4}。</RHAH_Menu_PawnRelation>
+  <RHAH_Menu_Narrative_NoGame>叙事状态需要已加载的游戏。</RHAH_Menu_Narrative_NoGame>
+  <RHAH_Menu_Narrative_Revealed>已揭示</RHAH_Menu_Narrative_Revealed>
+  <RHAH_Menu_Narrative_Trust>信任</RHAH_Menu_Narrative_Trust>
+  <RHAH_Menu_Narrative_Rescued>获救</RHAH_Menu_Narrative_Rescued>
+  <RHAH_Menu_Narrative_Lost>失踪</RHAH_Menu_Narrative_Lost>
+  <RHAH_Menu_Narrative_Failed>失败</RHAH_Menu_Narrative_Failed>
+  <RHAH_Menu_Narrative_Outcome>结局</RHAH_Menu_Narrative_Outcome>
+  <RHAH_Menu_Compat_Active>已启用（{0}）</RHAH_Menu_Compat_Active>
+  <RHAH_Menu_Compat_Inactive>未启用</RHAH_Menu_Compat_Inactive>
+  <RHAH_Menu_Compat_MissingRequired>必需，但未启用</RHAH_Menu_Compat_MissingRequired>
+  <RHAH_Menu_Diagnostics_NoGame>诊断需要已加载的游戏。</RHAH_Menu_Diagnostics_NoGame>
+  <RHAH_Menu_Diagnostics_Pending>等待中的事件</RHAH_Menu_Diagnostics_Pending>
+  <RHAH_Menu_Diagnostics_Batches>进行中的批次</RHAH_Menu_Diagnostics_Batches>
+  <RHAH_Menu_Diagnostics_Map>解析到的地图</RHAH_Menu_Diagnostics_Map>
+  <RHAH_Menu_Ending_Gap>结局开关尚未实现。此页不会写入结局。</RHAH_Menu_Ending_Gap>
+  <RHAH_Menu_Genes_Gap>生物科技基因设置尚未实现。此页不会修改基因。</RHAH_Menu_Genes_Gap>
+  <RHAH_Menu_PawnHistory_Gap>经历生成控制尚未实现。此页不会修改背景故事。</RHAH_Menu_PawnHistory_Gap>
+  <RHAH_Menu_Experimental_Gap>没有已登记的实验性设置。</RHAH_Menu_Experimental_Gap>
+  <RHAH_Menu_Frequency_Gap>随时间变化的事件概率尚未实现。曲线保持为零，也不会写入存档。</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Days>显示天数</RHAH_Menu_Frequency_Days>
+  <RHAH_Menu_Frequency_Expression>表达式</RHAH_Menu_Frequency_Expression>
+  <RHAH_Menu_Frequency_Flat>在频率函数存在之前，概率保持 0%。</RHAH_Menu_Frequency_Flat>
+  <RHAH_Menu_Developer_Note>只读的构建标记。调试排队在开发者事件页。</RHAH_Menu_Developer_Note>
+  <RHAH_Menu_Developer_LastPawn>最近列出的角色</RHAH_Menu_Developer_LastPawn>
+  <RHAH_Menu_Family_Beggar>乞食</RHAH_Menu_Family_Beggar>
+  <RHAH_Menu_Family_Thief>偷窃</RHAH_Menu_Family_Thief>
+  <RHAH_Menu_Family_Wild>野生</RHAH_Menu_Family_Wild>
+  <RHAH_Menu_Family_Aid>接济</RHAH_Menu_Family_Aid>
+  <RHAH_Menu_Family_Intel>情报</RHAH_Menu_Family_Intel>
+  <RHAH_Menu_Family_Siege>围攻</RHAH_Menu_Family_Siege>
+  <RHAH_Menu_Family_Trade>交易</RHAH_Menu_Family_Trade>
+  <RHAH_Menu_Family_Special>特殊</RHAH_Menu_Family_Special>
+  <RHAH_Menu_Origin_Original>原作</RHAH_Menu_Origin_Original>
+  <RHAH_Menu_Origin_Sequel>续作</RHAH_Menu_Origin_Sequel>
+  <RHAH_Menu_Category_Hunger>饥荒</RHAH_Menu_Category_Hunger>
+  <RHAH_Menu_Category_Plague>鼠疫</RHAH_Menu_Category_Plague>
+  <RHAH_Menu_Target_Map>地图</RHAH_Menu_Target_Map>
+  <RHAH_Menu_Target_Caravan>商队</RHAH_Menu_Target_Caravan>
+  <RHAH_Menu_Lifecycle_Arriving>抵达中</RHAH_Menu_Lifecycle_Arriving>
+  <RHAH_Menu_Lifecycle_SeekingFood>寻找食物</RHAH_Menu_Lifecycle_SeekingFood>
+  <RHAH_Menu_Lifecycle_Fed>已投喂</RHAH_Menu_Lifecycle_Fed>
+  <RHAH_Menu_Lifecycle_Leaving>离开中</RHAH_Menu_Lifecycle_Leaving>
+  <RHAH_Menu_Lifecycle_Released>已释放</RHAH_Menu_Lifecycle_Released>
+  <RHAH_Menu_Lifecycle_Dead>已死亡</RHAH_Menu_Lifecycle_Dead>
+  <RHAH_Menu_Outcome_Unresolved>未了结</RHAH_Menu_Outcome_Unresolved>
+  <RHAH_Menu_Outcome_Rescue>救援</RHAH_Menu_Outcome_Rescue>
+  <RHAH_Menu_Outcome_Loss>失去</RHAH_Menu_Outcome_Loss>
+  <RHAH_Menu_Outcome_Exposure>暴露</RHAH_Menu_Outcome_Exposure>
+  <RHAH_Menu_Outcome_Failure>失败</RHAH_Menu_Outcome_Failure>
+  <RHAH_Menu_Outcome_Massacre>屠杀</RHAH_Menu_Outcome_Massacre>
 
   <RHAH_Role_Unspecified>饥与祸来客</RHAH_Role_Unspecified>
   <RHAH_Role_Beggar>饥饿的乞食者</RHAH_Role_Beggar>

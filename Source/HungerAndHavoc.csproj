@@ -50,9 +50,27 @@
       <HintPath>$(RimWorldDir)\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(RimWorldDir)\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(RimWorldDir)\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <PropertyGroup>
+    <IrisMenusDll>$(RimWorldDir)\Mods\IrisMenus\1.6\Assemblies\IrisMenus.dll</IrisMenusDll>
+  </PropertyGroup>
+  <ItemGroup Condition="!Exists('$(IrisMenusDll)')">
+    <Compile Remove="Pawn\Compat\RHAH_IrisMenusCompat.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="Exists('$(IrisMenusDll)')">
+    <ReferencePath Include="$(IrisMenusDll)">
+      <Aliases>iris</Aliases>
+    </ReferencePath>
+  </ItemGroup>
+  <PropertyGroup Condition="Exists('$(IrisMenusDll)')">
+    <DefineConstants>$(DefineConstants);RHAH_IRISMENUS</DefineConstants>
+  </PropertyGroup>
 </Project>
