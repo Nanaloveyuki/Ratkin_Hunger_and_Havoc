@@ -50,6 +50,10 @@ namespace HungerAndHavoc.Identity
                     return IsChild(role);
                 case HungerBehaviorGate.JoinColony:
                     return true;
+                case HungerBehaviorGate.Hire:
+                    return true;
+                case HungerBehaviorGate.Transfer:
+                    return true;
                 case HungerBehaviorGate.Imprison:
                     return true;
                 case HungerBehaviorGate.DropOffChild:
@@ -65,6 +69,8 @@ namespace HungerAndHavoc.Identity
         static bool AllowsInactive(HungerBehaviorGate gate)
         {
             return gate == HungerBehaviorGate.JoinColony ||
+                   gate == HungerBehaviorGate.Hire ||
+                   gate == HungerBehaviorGate.Transfer ||
                    gate == HungerBehaviorGate.Imprison ||
                    gate == HungerBehaviorGate.Leash ||
                    gate == HungerBehaviorGate.Carry;

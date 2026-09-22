@@ -12,6 +12,8 @@ namespace HungerAndHavoc.Tests
         public void InactiveVisitor_OnlyColonyControlGates(HungerLifecycle lifecycle)
         {
             Assert.True(Allow(HungerPawnRole.Beggar, lifecycle, HungerAttitude.Neutral, HungerBehaviorGate.JoinColony));
+            Assert.True(Allow(HungerPawnRole.Beggar, lifecycle, HungerAttitude.Neutral, HungerBehaviorGate.Hire));
+            Assert.True(Allow(HungerPawnRole.Beggar, lifecycle, HungerAttitude.Neutral, HungerBehaviorGate.Transfer));
             Assert.True(Allow(HungerPawnRole.Beggar, lifecycle, HungerAttitude.Neutral, HungerBehaviorGate.Imprison));
             Assert.True(Allow(HungerPawnRole.Beggar, lifecycle, HungerAttitude.Neutral, HungerBehaviorGate.Leash));
             Assert.True(Allow(HungerPawnRole.Beggar, lifecycle, HungerAttitude.Neutral, HungerBehaviorGate.Carry));
@@ -131,6 +133,8 @@ namespace HungerAndHavoc.Tests
             Assert.True(AllowVisitor(HungerPawnRole.Unspecified, HungerBehaviorGate.FeedFromRelief));
             Assert.True(AllowVisitor(HungerPawnRole.Unspecified, HungerBehaviorGate.Gnaw));
             Assert.True(AllowVisitor(HungerPawnRole.Unspecified, HungerBehaviorGate.JoinColony));
+            Assert.True(AllowVisitor(HungerPawnRole.Unspecified, HungerBehaviorGate.Hire));
+            Assert.True(AllowVisitor(HungerPawnRole.Unspecified, HungerBehaviorGate.Transfer));
             Assert.True(AllowVisitor(HungerPawnRole.Unspecified, HungerBehaviorGate.Imprison));
             Assert.True(AllowVisitor(HungerPawnRole.Unspecified, HungerBehaviorGate.ExitMap));
             Assert.False(AllowVisitor(HungerPawnRole.Unspecified, HungerBehaviorGate.TailBite));
@@ -140,6 +144,8 @@ namespace HungerAndHavoc.Tests
         public void NullSnapshot_TreatedAsInactive()
         {
             Assert.True(HungerPawnDefaults.Allows((IHungerPawn)null, HungerBehaviorGate.JoinColony));
+            Assert.True(HungerPawnDefaults.Allows((IHungerPawn)null, HungerBehaviorGate.Hire));
+            Assert.True(HungerPawnDefaults.Allows((IHungerPawn)null, HungerBehaviorGate.Transfer));
             Assert.False(HungerPawnDefaults.Allows((IHungerPawn)null, HungerBehaviorGate.Beg));
         }
 

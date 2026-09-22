@@ -37,6 +37,8 @@ GATE_NAMES = (
     "Leash",
     "Carry",
     "JoinColony",
+    "Hire",
+    "Transfer",
     "Imprison",
     "DropOffChild",
     "ExitMap",

@@ -13,8 +13,10 @@ namespace HungerAndHavoc.Api
         Leash = 8,
         Carry = 9,
         JoinColony = 10,
-        Imprison = 11,
-        DropOffChild = 12,
-        ExitMap = 13
+        Hire = 11,
+        Transfer = 12,
+        Imprison = 13,
+        DropOffChild = 14,
+        ExitMap = 15
     }
 }
