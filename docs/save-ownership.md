@@ -77,7 +77,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.Area_RHAH_Relief | AreaManager `areas` | Remove。卸载后区域节点消失，格子不迁到家区 |
 
-尚无 GameComponent、MapComponent、Letter、Quest、Thing、WorldObject 的存档类型。新增时先加行。
+Letter、Quest、Thing、WorldObject 尚无本模组存档类型。GameComponent 与 MapComponent 的键在下一节。新增时先加行。
 ### Generation runtime
 
 | 类型 | 字段 | 存档键 | 卸载 |

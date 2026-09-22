@@ -197,12 +197,12 @@ API 与实现程序集边界正确，Pawn 快照和存档契约稳定，检查�
 
 ## 6. 当前进度
 
-M0 到 M3 已落地：API 与 Identity、原作 `I-001`..`I-014`、续作 `I-015`..`I-051` 的目录和 IncidentDef、生成管线、访客运行时、`GameComponent` / `MapComponent`、IrisMenus 只读与设置页面。
+M0 到 M3 已落地：API 与 Identity、原作 `I-001`..`I-014`、续作 `I-015`..`I-051` 的目录和 IncidentDef、生成管线、访客 Lord 与离场、五个态度派系、赈灾区、鼠疫检疫、`GameComponent` / `MapComponent`、IrisMenus 页面。
 
 未完成，不能写成已实现：
 
-1. M4：`N-001`..`N-010`、`J-001`..`J-014`、`R-01`、`E-01`..`E-05` 的完整内容。现有 `NarrativeState` 只保存计数并计算结局
-2. 结局开关和经历生成概率。事件频率已由 `HungerIncidentWeight` 与正负两个平均天数池计算，IrisMenus 频率页写入 `positiveIncidentDays` / `negativeIncidentDays`。结局和经历页仍只显示不可用。基因页已登记异种权重、回退和 `RHAH_` 基因开关。实验页只登记生成优化开关。事件可通过 `HungerPawnProfile` 覆盖装备、背景、健康和基因，未覆盖时按权重抽取
+1. M4 的剧情内容。`SuiyinLedger` 只保存 `N-001`..`N-010` 与 `R-01` 的开关、开始和期限。`NoteIncident` 与 `NotePlague` 仍是空方法，不推进节点。`J-001`..`J-014` 没有记录。结局仍由 `revealedCount`、`trust`、`rescued`、`lost`、`failed` 计算，结局页不能开关
+2. 经历生成概率。事件频率已由 `HungerIncidentWeight` 与正负两个平均天数池计算，IrisMenus 频率页写入 `positiveIncidentDays` / `negativeIncidentDays`。基因页已登记异种权重、回退和 `RHAH_` 基因开关。实验页只登记生成优化开关。赈灾页写入区开关、区外取食、吃饱后限制、离场和禁用食物。事件可通过 `HungerPawnProfile` 覆盖装备、背景、健康和基因，未覆盖时按权重抽取
 3. M5：真实游戏的新开局、存档重载、事件完成和发布包验收
 
 目录已登记不等于玩法已完成。不要为了补页面去伪造这些缺口的数据。

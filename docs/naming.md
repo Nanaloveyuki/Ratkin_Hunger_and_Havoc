@@ -37,11 +37,13 @@
 | Lord | `LordJob_RHAH_Visitor.cs` | `LordJob_RHAH_Visitor` |
 | ThinkNode | `ThinkNode_ConditionalRHAH_Visitor.cs` | `ThinkNode_ConditionalRHAH_Visitor` |
 | 总 JobGiver | `JobGiver_RHAH_Visitor.cs` | `JobGiver_RHAH_Visitor` |
-| 角色 JobGiver | `JobGiver_RHAH_Beg.cs` | `JobGiver_RHAH_Beg` |
-| JobDriver | `JobDriver_RHAH_Beg.cs` | `JobDriver_RHAH_Beg` |
+| 角色 JobGiver | `JobGiver_RHAH_Beg.cs` 等同名文件 | `JobGiver_RHAH_Beg`、`Feed`、`Gnaw`、`Steal`、`Leave`、`WaitFood` |
+| JobDriver | `JobDriver_RHAH_Beg.cs` | `JobDriver_RHAH_Beg`、`JobDriver_RHAH_Gnaw` |
 | 闸门查询 | `RHAH_VisitorGate.cs` | `RHAH_VisitorGate` |
 | 组管理 | `RHAH_VisitorGroup.cs` | `RHAH_VisitorGroup` |
-| Def XML | `1.6/Defs/{Job,Duty,ThinkTree}Defs/RHAH_*.xml` | `defName` 仍是 `RHAH_Beg` 这类可读短名 |
+| 态度 | `RHAH_AttitudeFactions.cs`、`RHAH_AttitudePolicy.cs`、`RHAH_BatchAttitude.cs` | 五个隐藏派系、批次反应、整批离场 |
+| 赈灾 | `Area_RHAH_Relief.cs`、`RHAH_ReliefFood.cs` | 赈灾区和取食规则 |
+| Def XML | `1.6/Defs/{Job,Duty,ThinkTree,Faction,Hediff}Defs/RHAH_*.xml` | `defName` 仍是 `RHAH_Beg` 这类可读短名 |
 
 禁止目录或类型名 `Behavior`。其它模组适配放 `Source/Pawn/Compat/`，不进基底 Visitor/Duty。
 
