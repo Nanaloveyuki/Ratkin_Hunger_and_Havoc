@@ -1,4 +1,5 @@
 using HungerAndHavoc.Api;
+using HungerAndHavoc.Trade;
 using RimWorld;
 using Verse;
 
@@ -9,22 +10,50 @@ namespace HungerAndHavoc.Incidents
         protected override bool CanFireNowSub(IncidentParms parms)
         {
             HungerIncidentEntry entry = Entry;
-            if (entry == null || entry.Target != HungerIncidentTarget.Map ||
-                !(parms?.target is Map map) || map.mapPawns == null ||
-                !Core.HungerAndHavocRuntime.AllowsNewContent)
+            if (entry == null || !Core.HungerAndHavocRuntime.AllowsNewContent)
             {
                 return false;
             }
 
+            if (entry.DisplayId == "I-038")
+            {
+                return Core.HungerMapResolver.Resolve(parms?.target as Map) != null;
+            }
+
+            if (entry.Target == HungerIncidentTarget.Caravan)
+            {
+                return Caravan.CaravanTargetResolver.ResolvePlayerCaravan() != null;
+            }
+
+            Map map = Core.HungerMapResolver.Resolve(parms?.target as Map);
+            return map != null && FindAnySpawnCell(map);
+        }
+        static bool FindAnySpawnCell(Map map)
+        {
             IntVec3 cell;
             return RCellFinder.TryFindRandomPawnEntryCell(out cell, map, CellFinder.EdgeRoadChance_Animal, false, null);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
-            Map map = parms?.target as Map;
             HungerIncidentEntry entry = Entry;
-            if (entry == null || entry.Target != HungerIncidentTarget.Map || !CanFireNowSub(parms))
+            if (entry == null || !CanFireNowSub(parms))
+            {
+                return false;
+            }
+
+            if (entry.DisplayId == "I-038")
+            {
+                return TradeEventRouter.TrySpawnTraderCaravan(entry, parms);
+            }
+
+            if (entry.Target == HungerIncidentTarget.Caravan)
+            {
+                return TradeEventRouter.TrySpawnCaravanAmbush(entry);
+            }
+
+            Map map = Core.HungerMapResolver.Resolve(parms?.target as Map);
+            if (map == null)
             {
                 return false;
             }

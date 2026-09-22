@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RimWorld;
 using Verse;
 
 namespace HungerAndHavoc.Core
@@ -13,6 +14,40 @@ namespace HungerAndHavoc.Core
 
         public GameComponent_HungerAndHavoc(Game game)
         {
+        }
+
+        public override void GameComponentTick()
+        {
+            if (pendingIncidentDisplayIds.Count == 0 || Current.Game == null)
+            {
+                return;
+            }
+
+            string displayId = pendingIncidentDisplayIds[0];
+            HungerAndHavoc.Incidents.HungerIncidentEntry entry =
+                HungerAndHavoc.Incidents.HungerIncidentCatalog.GetByDisplayId(displayId);
+            if (entry == null)
+            {
+                pendingIncidentDisplayIds.RemoveAt(0);
+                return;
+            }
+
+            Map map = entry.Target == HungerAndHavoc.Incidents.HungerIncidentTarget.Map ? HungerMapResolver.Resolve() : null;
+            if (entry.Target == HungerAndHavoc.Incidents.HungerIncidentTarget.Map && map == null)
+            {
+                return;
+            }
+            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
+            if (def == null)
+            {
+                pendingIncidentDisplayIds.RemoveAt(0);
+                return;
+            }
+
+            if (def.Worker.TryExecute(new IncidentParms { target = map }))
+            {
+                pendingIncidentDisplayIds.RemoveAt(0);
+            }
         }
 
         public void RegisterBatch(string batchKey)

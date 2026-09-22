@@ -20,6 +20,7 @@
   <IncidentDef><defName>RHAH_AirdropMistake</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
   <IncidentDef><defName>RHAH_MisguidedKinship</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
   <IncidentDef><defName>RHAH_GreatFamine</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
+  <IncidentDef><defName>RHAH_CaravanMuggers</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetTags><li>Caravan</li></targetTags><points>320</points></IncidentDef>
   <IncidentDef><defName>RHAH_PlagueWanderers</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
   <IncidentDef><defName>RHAH_PlagueAbandonedBabies</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
   <IncidentDef><defName>RHAH_PlagueTraderCaravan</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
@@ -33,6 +34,7 @@
   <IncidentDef><defName>RHAH_PlagueAirdropMistake</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
   <IncidentDef><defName>RHAH_PlagueMisguidedKinship</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
   <IncidentDef><defName>RHAH_PlagueGreatFamine</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
+  <IncidentDef><defName>RHAH_PlagueCaravanMuggers</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetTags><li>Caravan</li></targetTags><points>320</points></IncidentDef>
   <IncidentDef><defName>RHAH_PlagueRevenge</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
   <IncidentDef><defName>RHAH_RefugeeMassacre</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetDetails>Map_PlayerHome</targetDetails><points>300</points></IncidentDef>
 </Defs>

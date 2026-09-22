@@ -2,7 +2,7 @@
 
 Most in Windows, not WSL.
 
-- Vanilla Game
+- Vanilla Game Decompile
   - DLCs: `D:\References\Rimworld\Vanilla\DLCs\`
   - Game: `D:\References\Rimworld\Vanilla\Game`
 - Mods

@@ -15,13 +15,13 @@ namespace HungerAndHavoc.Incidents
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            return parms?.target is Map map && map.mapPawns != null &&
-                HungerAndHavocRuntimeAllows() && FindAnySpawnCell(map);
+            Map map = ResolveMap(parms);
+            return map != null && HungerAndHavocRuntimeAllows() && FindAnySpawnCell(map);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
-            Map map = parms?.target as Map;
+            Map map = ResolveMap(parms);
             if (map == null || !CanFireNowSub(parms))
             {
                 return false;
@@ -47,6 +47,12 @@ namespace HungerAndHavoc.Incidents
                 PawnCount = PawnCount
             });
         }
+
+        static Map ResolveMap(IncidentParms parms)
+        {
+            return Core.HungerMapResolver.Resolve(parms?.target as Map);
+        }
+
 
         protected abstract bool SubmitFacts(HungerIncidentContext context);
 
