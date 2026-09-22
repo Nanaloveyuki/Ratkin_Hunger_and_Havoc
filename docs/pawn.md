@@ -16,17 +16,20 @@
 
 - `spawnBatchId`：同一批次生成的 pawn。
 - `relationshipGroupId`：同一事件中的家庭或关系组。
-- `carriesPlague`：是否携带鼠疫。
-- `attitudeAtArrival`：到达时态度快照，不表示当前动态态度。
+- `carriesPlague`：到达时是否携带鼠疫。康复后仍为 true，当前是否患病看 `RHAH_Plague`。
+- `attitudeAtArrival`：到达时态度快照，不随批次反应改写。
+- `attitude`：当前态度。缺省或旧档为 Neutral 时，读档后回退到 `attitudeAtArrival`。闸门读这个值。
 - `parentPawnLoadId` / `childPawnLoadIds`：Pawn 存档 Load ID 关系。
 - `gateOverrides`：本 Pawn 的行为闸门覆盖。
 - `extraData`：其它模组使用的私有键值数据。
 
 ## 闸门
 
-`HungerBehaviorGate`：Beg, Steal, Fight, LeaveAfterFed, EatOutsideRelief, FeedFromRelief, Gnaw, TailBite, Leash, Carry, JoinColony, Imprison, DropOffChild, ExitMap。
+`HungerBehaviorGate`：Beg, Steal, Fight, LeaveAfterFed, EatOutsideRelief, FeedFromRelief, Gnaw, TailBite, Leash, Carry, JoinColony, Hire, Transfer, Imprison, DropOffChild, ExitMap。
 
-判定顺序：该 pawn 的 `gateOverrides` → `IHungerPawnBehavior`（后注册优先）→ `HungerPawnDefaults`。无来源标记时 `Allows` 为 false。
+`Hire` 与 `Transfer` 默认允许。检疫名单上的 pawn，`JoinColony`、`Hire`、`Transfer` 为 false，覆盖和行为策略不能放开这三项。
+
+判定顺序：该 pawn 的 `gateOverrides` → `IHungerPawnBehavior`（后注册优先）→ `HungerPawnDefaults`。无来源标记时 `Allows` 为 false。检疫拒绝发生在这三层之后。
 
 `IHungerPawnBehavior`：
 

@@ -27,7 +27,7 @@
 | `scripts/` | 检查、构建和部署脚本 |
 | `tmp/` | 临时文件，已 gitignore，不当源码或发布输入 |
 
-未出现的层（Generation、Narrative、World、Patches、UI）等有第一个类型再建模，不建空目录。`Source/Pawn` 是访客运行时层，不是空目录。不要再建 `Source/Behavior`。
+未出现的层（Generation、Narrative、World、Patches、UI）等有第一个类型再建模，不建空目录。`Source/Pawn` 是访客运行时层，不是空目录。不要再建 `Source/Behavior`。IrisMenus 绘制留在 `Source/Pawn/Compat`，和注册一起在缺少 IrisMenus.dll 时排除。不建 `Source/Settings` 或 `Source/UI`：设置数据仍在 `Core`，函数求值留在对应领域。
 
 ## 分层与程序集
 
@@ -42,7 +42,7 @@
 
 `HungerAndHavoc.Api.dll` 可以引用 `Assembly-CSharp` 与 `UnityEngine.CoreModule`，`Private=False`。API **不得**引用 `HungerAndHavoc.dll`、Harmony、Guard、其它模组程序集。公开方法可以使用 `Pawn`、`ThingDef` 等基础游戏类型。公开表面 **不得**出现 `CompHungerPawn`、`Hediff_HungerMark`、`HungerRace`、Job、Worker、DefOf、实现命名空间类型。
 
-`Source/{Layer}/Foo.cs` 的命名空间必须是 `HungerAndHavoc.{Layer}`。`Source/Core` 使用 `HungerAndHavoc.Core`，`Source/Identity` 使用 `HungerAndHavoc.Identity`，`Source/Incidents` 使用 `HungerAndHavoc.Incidents`，`Source/Pawn` 使用 `HungerAndHavoc.Pawn`，`Source/Pawn/Compat` 使用 `HungerAndHavoc.Pawn.Compat`，`Source/Tests` 使用 `HungerAndHavoc.Tests`。API 类型使用 `HungerAndHavoc.Api`，并放在 API 项目目录。
+`Source/{Layer}/Foo.cs` 的命名空间必须是 `HungerAndHavoc.{Layer}`。`Source/Core` 使用 `HungerAndHavoc.Core`，`Source/Identity` 使用 `HungerAndHavoc.Identity`，`Source/Incidents` 使用 `HungerAndHavoc.Incidents`，`Source/Pawn` 使用 `HungerAndHavoc.Pawn`，`Source/Pawn/Compat` 使用 `HungerAndHavoc.Pawn.Compat`，`Source/Tests` 使用 `HungerAndHavoc.Tests`。API 类型使用 `HungerAndHavoc.Api`，并放在 API 项目目录。`RHAH_IrisMenusWidgets` 只画卡片、可拖拽份额条和只读份额柱，不保存设置，不引用领域求值。
 
 实现目录中未被 Verse 反射、XML 或 Def 创建要求的类型默认 `internal`。因 Verse 需要跨程序集创建而必须 `public` 的类型，只是反射入口，不因此成为稳定 API。
 
@@ -163,10 +163,19 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_Gnaw` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_Feed` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_Leave` | Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_WaitFood` | 访客调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public，Verse 可按类型创建 |
 | `HungerAndHavoc.Pawn.Compat.RHAH_PawnCompatStartup` | `[StaticConstructorOnStartup]` | `HungerAndHavoc.dll` | Verse 启动扫描公开静态构造入口 |
-| `HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusCompat` 所在文件对 `IrisMenus` 的编译引用 | IrisMenus 1.6 公开 `MenuRegistry.RegisterSubItemListing` | `HungerAndHavoc.dll` 引用，`Private=False`，不随包发布 | 可选依赖。`ModLister` 未启用或 `modVersion` 不是 `1.6` 时不注册页面。类型保持 `internal`，不进入 API 程序集 |
+| `HungerAndHavoc.Pawn.Area_RHAH_Relief` | `AreaManager` 深存档 | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 `Area` 并写入 `.rws` |
+| `HungerAndHavoc.Pawn.Designator_AreaRHAH_Relief` | Zone `specialDesignatorClasses` 基类 | `HungerAndHavoc.dll` | 指定器基类必须可被 Verse 反射 |
+| `HungerAndHavoc.Pawn.Designator_AreaRHAH_ReliefExpand` | Zone `specialDesignatorClasses` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建指定器 |
+| `HungerAndHavoc.Pawn.Designator_AreaRHAH_ReliefClear` | Zone `specialDesignatorClasses` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建指定器 |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_WaitFood` | 访客 ThinkTree 调度调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样由 Verse 按公开类型创建 |
+| `HungerAndHavoc.Pawn.RHAH_VisitorExpelMenu` | `FloatMenuMakerMap` 扫描 `FloatMenuOptionProvider` 子类 | `HungerAndHavoc.dll` | 原版只实例化公开子类。菜单只对在场来客提供驱逐，不进入 API |
+| `HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusCompat` 所在文件对 `IrisMenus` 的编译引用 | IrisMenus 1.6 公开 `MenuRegistry.RegisterSubItemListing` | `HungerAndHavoc.dll` 引用，`Private=False`，不随包发布 | 可选依赖。`ModLister` 未启用或 `modVersion` 不是 `1.6` 时不注册页面。类型保持 `internal`，不进入 API 程序集。`RHAH_IrisMenusWidgets.cs` 使用同一条编译排除 |
 
 原版 Harmony 例外不进上表。`HungerIncidentSchedulePatch` 是 `internal`，Postfix `Storyteller.StorytellerTick`。原版讲述者没有本模组事件池，`baseChance` 保持 0。补丁只在 1000 tick 检查点入队，不改类别权重，不替换袭击。
+
+`RHAH_AttitudeHarmPatch` 是 `internal`，Postfix `Thing.PreApplyDamage`。原版伤害只改单只 pawn 的好感，不会按生成批次改态度。补丁只接收玩家派系实施者的外部暴力，调用批次离场或敌对关系，不创建袭击 Lord。目标缺失时不注册。
 
 ## 检查门禁
 

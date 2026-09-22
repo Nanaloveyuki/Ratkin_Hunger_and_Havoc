@@ -38,7 +38,7 @@
 | 入口与设置 | `Source/Core/ModEntry.cs`、`Source/Core/HungerAndHavocSettings.cs` |
 | 事件目录 | `Source/Incidents/HungerIncidentCatalog.cs` |
 | 访客与兼容 | `Source/Pawn/`、`Source/Pawn/Compat/` |
-| IrisMenus 页面 | `Source/Pawn/Compat/RHAH_IrisMenusCompat.cs` |
+| IrisMenus 页面 | `Source/Pawn/Compat/RHAH_IrisMenusCompat.cs`、`Source/Pawn/Compat/RHAH_IrisMenusWidgets.cs` |
 | 叙事状态 | `Source/Narrative/NarrativeState.cs` |
 | Guard | `Guard/Source/` |
 | 测试 | `Source/Tests/` |
@@ -100,7 +100,7 @@ IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `Men
 - 事件目录 `I-001`..`I-051`，Def 在 `1.6/Defs/IncidentDefs/`
 - 访客 Lord、Job、Duty 和 ThinkTree 在 `Source/Pawn/` 与 `1.6/Defs/`
 - `GameComponent_HungerAndHavoc`、`MapComponent_HungerAndHavoc`
-- IrisMenus 1.6 的 14 个 SubItem。可选依赖，缺失时不注册
+- IrisMenus 1.6 的 15 个 SubItem。可选依赖，缺失时不注册
 - Guard 与 `LoadFolders.xml` 在旧鼠灾包启用时跳过主体
 
 不要改 `packageId`、显示名、Harmony Id、Guard 冲突列表，也不要改已登记的 51 个事件显示 ID。

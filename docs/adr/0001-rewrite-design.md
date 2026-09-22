@@ -172,7 +172,7 @@ Worker 只实现一次行为；鼠疫变体是同一 Worker + `infectsWithPlague
 | --- | --- | --- |
 | 种族 | 鼠族 `ThingDef` | 是否鼠族（不靠名字模糊匹配作为唯一依据） |
 | 来源 | `RHAH_HungerMark` + `CompHungerPawn` | 本模组（或经 API 标记的其它模组）生成过，随 pawn 存档 |
-| 访客 | `comp.IsActiveVisitor` | 仍走事件 AI / Lord / 临时派系 |
+| 访客 | `comp.IsActiveVisitor` | 仍走事件 AI / Lord / 五个固定态度派系 |
 | 角色 | `comp.Role` | Beggar、Thief、Mother、RatkinYoung、Trader、Wild、Siege、Plague、Labor、Envoy… |
 | 经历 | BackstoryDef | 只是文本和技能，**不参与身份判定** |
 | 状态 | 少量 Hediff | 鼠疫、已饱食、再喂养、啃树皮、雇佣计时等**有效果**的状态 |
@@ -201,6 +201,7 @@ hasBeenFed
 leaveAfterGameTick
 carriesPlague
 attitudeAtArrival
+attitude              // 当前态度 到达后可按批次改
 behaviorFlags       // 本模组内建开关
 gateOverrides       // per-pawn HungerBehaviorGate overrides
 extraData           // Dictionary<string,string>，其它模组私有状态
@@ -213,7 +214,7 @@ parentPawnLoadId / childPawnLoadIds
 
 默认行为全部经过闸门，不在 JobGiver 里写死。其它模组有三层、由近到远：
 
-1. **单 pawn**：`HungerAndHavocApi.SetGate(pawn, HungerBehaviorGate.Leash, true/false/null)` 写入 `gateOverrides`。牵绳、吞食、离场、加入等都能按只覆盖。
+1. **单 pawn**：`HungerAndHavocApi.SetGate(pawn, HungerBehaviorGate.Leash, true/false/null)` 写入 `gateOverrides`。牵绳、吞食、离场、加入等都能按只覆盖。检疫中的 `JoinColony`、`Hire`、`Transfer` 由疾病层强制拒绝，单 pawn 覆盖不能放开。
 2. **全局策略**：`HungerPawnBehaviors.Register(IHungerPawnBehavior)`。后注册优先；返回 `null` 表示不管。Lead Your Pet、Toddlers、囚犯模组在 `StaticConstructorOnStartup` 里注册即可，不必 Harmony 我们的私有方法。
 3. **事件**：`OriginMarked` / `ReleasedToColony` / `LifecycleChanged` / `GateQueried`。只观察也可以。
 

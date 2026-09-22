@@ -44,6 +44,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | leaveAfterGameTick | leaveAfterGameTick | -1 | 否 | |
 | carriesPlague | carriesPlague | false | 否 | |
 | attitudeAtArrival | attitudeAtArrival | Neutral | 否 | `HungerAttitude` |
+| attitude | attitude | Neutral | 否 | 当前 `HungerAttitude`。旧档缺键且到达态度不是 Neutral 时回退到 `attitudeAtArrival` |
 | parentPawnLoadId | parentPawnLoadId | 0 | 否 | |
 | childPawnLoadIds | childPawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
 | gateOverrides | gateOverrides | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同 |
@@ -57,7 +58,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 | 字段 | 存档键 | 默认值 | 集合 | 说明 |
 | --- | --- | --- | --- | --- |
-| faction | faction | null | 否 | 访客临时派系引用 |
+| faction | faction | null | 否 | 访客 Lord 使用的态度派系引用 |
 | waitSpot | waitSpot | IntVec3.Invalid | 否 | 寻食集合点 |
 | familyRole | familyRole | Unspecified | 否 | `HungerPawnRole` |
 
@@ -74,6 +75,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.ThinkNode_ConditionalRHAH_Visitor | ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Pawn.Area_RHAH_Relief | AreaManager `areas` | Remove。卸载后区域节点消失，格子不迁到家区 |
 
 尚无 GameComponent、MapComponent、Letter、Quest、Thing、WorldObject 的存档类型。新增时先加行。
 ### Generation runtime
@@ -82,8 +84,17 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | --- | --- | --- | --- |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | active generation batches | activeGenerationBatches | Remove |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | pending incident display IDs | pendingIncidentDisplayIds | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return load ID | plagueReturnLoadId | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return map ID | plagueReturnMapId | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return phase | plagueReturnPhase | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return due tick | plagueReturnDueTick | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return leave tick | plagueReturnLeaveTick | Remove |
 | HungerAndHavoc.Core.MapComponent_HungerAndHavoc | visitor pawn load IDs | visitorPawnLoadIds | Remove |
 | HungerAndHavoc.Core.MapComponent_HungerAndHavoc | food search ticks | foodSearchTicks | Remove |
+| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague quarantine load IDs | plagueQuarantineLoadIds | Remove |
+| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague recovered count | plagueRecovered | Remove |
+| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague death count | plagueDied | Remove |
+| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague last spread day | plagueLastSpreadDay | Remove |
 
 生成队列、批次保护和全局调度属于唯一全局运行时组件；本图访客索引和寻食缓存属于唯一地图组件。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
 
@@ -92,6 +103,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | defName | 种类 | 卸载 |
 | --- | --- | --- |
 | RHAH_HungerMark | HediffDef | Remove。身份标记，不是伤病，不替换成原版 Hediff |
+| RHAH_Plague | HediffDef | Remove。不替换成原版 Plague |
+| RHAH_RefeedingSyndrome | HediffDef | Remove。不替换成原版 Hediff |
 | RHAH_LargeRefugeeWave | IncidentDef | Remove |
 | RHAH_ThiefRatkinGroup | IncidentDef | Remove |
 | RHAH_AbandonedRatkinChildren | IncidentDef | Remove |
@@ -114,7 +127,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | RHAH_PlagueStrongSiege, RHAH_PlagueAirdropMistake, RHAH_PlagueMisguidedKinship, RHAH_PlagueGreatFamine, RHAH_PlagueRevenge | IncidentDef | Remove |
 | RHAH_RefugeeMassacre | IncidentDef | Remove |
 | RHAH_ChildExchange | IncidentDef | Remove |
-| HungerAndHavoc.Narrative.NarrativeState | revealedCount, trust, rescued, lost, failed | revealedCount, trust, rescued, lost, failed | Remove |
+| HungerAndHavoc.Narrative.NarrativeState | revealedCount, trust, rescued, lost, failed, suiyinEnabled, suiyinStarted, suiyinDeadlineTick | revealedCount, trust, rescued, lost, failed, suiyinEnabled, suiyinStarted, suiyinDeadlineTick | Remove |
 | RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
 | RHAH_Gnaw | JobDef | Remove |
@@ -124,8 +137,13 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | RHAH_Gene_ThinRations | GeneDef | Remove。不替换成原版基因 |
 | RHAH_Xenotype_Ratkin | XenotypeDef | Remove。不替换成原版异种 |
 | RHAH_XenotypeIcon_Ratkin | XenotypeIconDef | Remove |
+| RHAH_Faction_Hostile | FactionDef | Remove。隐藏空派系，不替换成原版派系 |
+| RHAH_Faction_LeaningHostile | FactionDef | Remove |
+| RHAH_Faction_Neutral | FactionDef | Remove |
+| RHAH_Faction_LeaningFriendly | FactionDef | Remove |
+| RHAH_Faction_Friendly | FactionDef | Remove |
 
-尚无 PawnKind、Backstory、Faction、TraderKind、Site、Thing、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
+尚无 PawnKind、Backstory、TraderKind、Site、Thing、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
 
 ## 非存档
 
@@ -141,6 +159,11 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavocSettings.xenotypeWeights | 全局 ModSettings，默认空字典。缺键用登记建议权重。空字典不是全部禁用 |
 | HungerAndHavocSettings.enabledXenotypeDefNames | 全局 ModSettings，默认空。玩家加入的外部异种 defName |
 | HungerAndHavocSettings.enabledGeneDefNames | 全局 ModSettings，默认空。只允许 `RHAH_` 基因在生成后追加 |
+| HungerAndHavocSettings.reliefEnabled | 全局 ModSettings，默认 true。关闭后访客不受赈灾区限制 |
+| HungerAndHavocSettings.allowEatOutsideRelief | 全局 ModSettings，默认 false。空值不是允许区外取食 |
+| HungerAndHavocSettings.ignoreReliefAfterFed | 全局 ModSettings，默认 false |
+| HungerAndHavocSettings.leaveAfterFed | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.disabledReliefFoodDefNames | 全局 ModSettings，默认空。空名单表示当前食物可用，不是全部禁用 |
 | HungerAndHavoc.Guard.* | Guard 始终加载，无存档类型 |
 | HungerAndHavocMod / HarmonyBootstrap / HungerAndHavocRuntime | 运行时入口，无 ExposeData |
 
