@@ -146,4 +146,41 @@
   <RHAH_Role_Labor>待产流民</RHAH_Role_Labor>
   <RHAH_Role_Envoy>幸存者使者</RHAH_Role_Envoy>
   <RHAH_Role_Refugee>灾荒逃难者</RHAH_Role_Refugee>
+  <RHAH_Settings_AidRequests>启用接济请求</RHAH_Settings_AidRequests>
+  <RHAH_Settings_AidRequests_Tooltip>关闭后，新的接济和婴儿交换不再写信。已经打开的请求仍可交付或拒绝。</RHAH_Settings_AidRequests_Tooltip>
+  <RHAH_Settings_IntelTrades>启用情报交易</RHAH_Settings_IntelTrades>
+  <RHAH_Settings_IntelTrades_Tooltip>关闭后，新的情报不再用来换地点。已经交付的地点留在世界上。</RHAH_Settings_IntelTrades_Tooltip>
+  <RHAH_Settings_VisitorChoices>启用来客选择</RHAH_Settings_VisitorChoices>
+  <RHAH_Settings_VisitorChoices_Tooltip>关闭后，新的来客不再询问收留、雇佣或拒绝。右键菜单仍可处理在场来客。</RHAH_Settings_VisitorChoices_Tooltip>
+  <RHAH_Settings_FamilyDrop>携幼离场时放下孩子</RHAH_Settings_FamilyDrop>
+  <RHAH_Settings_FamilyDrop_Tooltip>关闭后，母亲离场不再单独记下放下的孩子。已经记下的仍留在存档里。</RHAH_Settings_FamilyDrop_Tooltip>
+  <RHAH_Settings_MotherFeed>母亲给孩子喂食</RHAH_Settings_MotherFeed>
+  <RHAH_Settings_MotherFeed_Tooltip>关闭后，母亲不再走到饥饿的孩子身边喂食。</RHAH_Settings_MotherFeed_Tooltip>
+  <RHAH_Settings_PrisonerScavenge>囚犯在地上找吃的</RHAH_Settings_PrisonerScavenge>
+  <RHAH_Settings_PrisonerScavenge_Tooltip>关闭后，饥饿的囚犯不再趴在地上找能吃的东西。</RHAH_Settings_PrisonerScavenge_Tooltip>
+  <RHAH_Settings_TailBite>允许咬尾巴</RHAH_Settings_TailBite>
+  <RHAH_Settings_TailBite_Tooltip>开启后，饥饿的囚犯可能咬睡着的、不满 3 岁的囚犯。默认关闭。</RHAH_Settings_TailBite_Tooltip>
+  <RHAH_Settings_Broadcast>允许广播希望</RHAH_Settings_Broadcast>
+  <RHAH_Settings_Broadcast_Tooltip>关闭后，通讯台不再列出广播。冷却中的广播不会提前结束。</RHAH_Settings_Broadcast_Tooltip>
+  <RHAH_Settings_Stagger>分批生成来客</RHAH_Settings_Stagger>
+  <RHAH_Settings_Stagger_Tooltip>开启后，排队的事件每隔一小段时间生成一批。关闭后，排队事件会尽快连续生成。</RHAH_Settings_Stagger_Tooltip>
+  <RHAH_Choice_Label>来客请求</RHAH_Choice_Label>
+  <RHAH_Choice_Text>他们要 {0} 份{1}。交付后他们离开。拒绝后他们也会离开。忽视则让他们按原样继续。</RHAH_Choice_Text>
+  <RHAH_Choice_Deliver>交付</RHAH_Choice_Deliver>
+  <RHAH_Choice_Reject>拒绝</RHAH_Choice_Reject>
+  <RHAH_Choice_Ignore>忽视</RHAH_Choice_Ignore>
+  <RHAH_Choice_Join>收留</RHAH_Choice_Join>
+  <RHAH_Choice_Hire>雇佣</RHAH_Choice_Hire>
+  <RHAH_Choice_Feed>投喂</RHAH_Choice_Feed>
+  <RHAH_Choice_Short>库存不足，需要 {0}。</RHAH_Choice_Short>
+  <RHAH_Choice_NoBaby>这里没有可交出的囚犯或奴隶婴儿。</RHAH_Choice_NoBaby>
+  <RHAH_Choice_Stale>这封信已经结算过。</RHAH_Choice_Stale>
+  <RHAH_Choice_Delivered>物资已经交出。</RHAH_Choice_Delivered>
+  <RHAH_Choice_Fed>来客吃过了。</RHAH_Choice_Fed>
+  <RHAH_Intel_Label>情报地点</RHAH_Intel_Label>
+  <RHAH_Intel_Text>交换完成。附近出现了一个地点。</RHAH_Intel_Text>
+  <RHAH_Broadcast_Label>广播希望</RHAH_Broadcast_Label>
+  <RHAH_Broadcast_Cooldown>广播仍在冷却</RHAH_Broadcast_Cooldown>
+  <RHAH_Broadcast_Empty>没有可广播的事件</RHAH_Broadcast_Empty>
+  <RHAH_Broadcast_Queued>已排队 {0}</RHAH_Broadcast_Queued>
 </LanguageData>

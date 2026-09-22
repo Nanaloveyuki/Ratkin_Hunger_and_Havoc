@@ -11,4 +11,24 @@
     <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw</driverClass>
     <reportString>啃树皮</reportString>
   </JobDef>
+  <JobDef>
+    <defName>RHAH_DropChild</defName>
+    <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_DropChild</driverClass>
+    <reportString>放下孩子</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>RHAH_MotherFeed</defName>
+    <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_MotherFeed</driverClass>
+    <reportString>给孩子喂食</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>RHAH_Scavenge</defName>
+    <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge</driverClass>
+    <reportString>在地上找能吃的东西</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>RHAH_TailBite</defName>
+    <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite</driverClass>
+    <reportString>咬尾巴</reportString>
+  </JobDef>
 </Defs>

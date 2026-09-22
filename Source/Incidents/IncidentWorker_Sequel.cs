@@ -42,6 +42,10 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
+            if (entry.DisplayId == "I-051")
+            {
+                return RHAH_RefugeeCampQuest.TryOffer(parms);
+            }
             if (entry.DisplayId == "I-038")
             {
                 return TradeEventRouter.TrySpawnTraderCaravan(entry, parms);

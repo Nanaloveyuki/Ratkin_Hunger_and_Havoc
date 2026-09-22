@@ -1,3 +1,4 @@
+using HungerAndHavoc.Incidents;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -13,6 +14,10 @@ namespace HungerAndHavoc.Core
         int plagueReturnPhase;
         int plagueReturnDueTick = -1;
         int plagueReturnLeaveTick = -1;
+        List<HungerChoiceRecord> openChoices = new List<HungerChoiceRecord>();
+        int nextChoiceId = 1;
+        int broadcastCooldownUntilTick = -1;
+        int generationCursor;
 
         public IReadOnlyList<string> ActiveGenerationBatches => activeGenerationBatches;
         public IReadOnlyList<string> PendingIncidentDisplayIds => pendingIncidentDisplayIds;
@@ -21,6 +26,10 @@ namespace HungerAndHavoc.Core
         public int PlagueReturnPhase { get => plagueReturnPhase; set => plagueReturnPhase = value; }
         public int PlagueReturnDueTick { get => plagueReturnDueTick; set => plagueReturnDueTick = value; }
         public int PlagueReturnLeaveTick { get => plagueReturnLeaveTick; set => plagueReturnLeaveTick = value; }
+        public IReadOnlyList<HungerChoiceRecord> OpenChoices => openChoices;
+        public int BroadcastCooldownUntilTick { get => broadcastCooldownUntilTick; set => broadcastCooldownUntilTick = value; }
+        internal int NextChoiceId { get => nextChoiceId; set => nextChoiceId = value; }
+
 
         public GameComponent_HungerAndHavoc(Game game)
         {
@@ -29,6 +38,11 @@ namespace HungerAndHavoc.Core
         public override void GameComponentTick()
         {
             TickPlague();
+            HungerChoiceRuntime.Tick(this, Find.TickManager.TicksGame, HungerAndHavocMod.Settings == null || HungerAndHavocMod.Settings.visitorChoicesEnabled);
+            if (HungerAndHavocMod.Settings != null && HungerAndHavocMod.Settings.staggerGeneration && (Find.TickManager.TicksGame & 63) != 0)
+            {
+                return;
+            }
             if (pendingIncidentDisplayIds.Count == 0 || Current.Game == null)
             {
                 return;
@@ -103,10 +117,25 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref plagueReturnPhase, "plagueReturnPhase", 0);
             Scribe_Values.Look(ref plagueReturnDueTick, "plagueReturnDueTick", -1);
             Scribe_Values.Look(ref plagueReturnLeaveTick, "plagueReturnLeaveTick", -1);
+            Scribe_Collections.Look(ref openChoices, "openChoices", LookMode.Deep);
+            Scribe_Values.Look(ref nextChoiceId, "nextChoiceId", 1);
+            Scribe_Values.Look(ref broadcastCooldownUntilTick, "broadcastCooldownUntilTick", -1);
+            Scribe_Values.Look(ref generationCursor, "generationCursor", 0);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 activeGenerationBatches = activeGenerationBatches ?? new List<string>();
                 pendingIncidentDisplayIds = pendingIncidentDisplayIds ?? new List<string>();
+                openChoices = openChoices ?? new List<HungerChoiceRecord>();
+                for (int i = openChoices.Count - 1; i >= 0; i--)
+                {
+                    if (openChoices[i] == null)
+                    {
+                        openChoices.RemoveAt(i);
+                        continue;
+                    }
+
+                    openChoices[i].PawnLoadIds = openChoices[i].PawnLoadIds ?? new List<int>();
+                }
             }
         }
     }

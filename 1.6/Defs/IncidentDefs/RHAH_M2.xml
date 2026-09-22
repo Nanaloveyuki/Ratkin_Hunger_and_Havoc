@@ -37,4 +37,59 @@
   <IncidentDef><defName>RHAH_PlagueCaravanMuggers</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetTags><li>Caravan</li></targetTags><baseChance>0</baseChance></IncidentDef>
   <IncidentDef><defName>RHAH_PlagueRevenge</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetTags><li>Map_PlayerHome</li></targetTags><baseChance>0</baseChance></IncidentDef>
   <IncidentDef><defName>RHAH_RefugeeMassacre</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetTags><li>Map_PlayerHome</li></targetTags><baseChance>0</baseChance></IncidentDef>
+  <QuestScriptDef>
+    <defName>RHAH_RefugeeMassacre</defName>
+    <root Class="HungerAndHavoc.Incidents.QuestNode_RHAH_RefugeeCamp" />
+    <expireDaysRange>15</expireDaysRange>
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->临时安居点</li>
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->[sponsorName]说附近有一处鼠族临时安居点，可能威胁他们的定居点。接受后 15 天内杀死全部居民，可获得 12 点好感。那里有 2 到 4 名成年鼠族和 8 到 16 名不满 8 岁的幼年鼠族，住在木屋里，没有炮台和电力。击倒或俘虏不算完成。</li>
+      </rulesStrings>
+    </questDescriptionRules>
+  </QuestScriptDef>
+  <WorldObjectDef ParentName="StaticWorldObjectBase">
+    <defName>RHAH_RefugeeCamp</defName>
+    <label>临时安居点</label>
+    <worldObjectClass>HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp</worldObjectClass>
+    <mapGenerator>RHAH_RefugeeCamp</mapGenerator>
+    <expandingIcon>true</expandingIcon>
+    <comps>
+      <li Class="WorldObjectCompProperties_FormCaravan" />
+      <li Class="WorldObjectCompProperties_EnterCooldown" />
+    </comps>
+    <IncidentTargetTags><li>Map_Misc</li></IncidentTargetTags>
+  </WorldObjectDef>
+  <SitePartDef>
+    <defName>RHAH_RefugeeCamp</defName>
+    <label>临时安居点</label>
+    <description>一群鼠族在这里搭了木屋。</description>
+    <siteTexture>World/WorldObjects/DefaultSettlement</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Camp</expandingIconTexture>
+    <disallowsAutomaticDetectionTimerStart>true</disallowsAutomaticDetectionTimerStart>
+    <considerEnteringAsAttack>false</considerEnteringAsAttack>
+  </SitePartDef>
+  <MapGeneratorDef>
+    <defName>RHAH_RefugeeCamp</defName>
+    <genSteps>
+      <li>ElevationFertility</li>
+      <li>Terrain</li>
+      <li>RocksFromGrid_NoMinerals</li>
+      <li>RHAH_RefugeeCamp</li>
+      <li>FindPlayerStartSpot</li>
+      <li>Plants</li>
+      <li>Snow</li>
+      <li>Animals</li>
+      <li>Fog</li>
+    </genSteps>
+  </MapGeneratorDef>
+  <GenStepDef>
+    <defName>RHAH_RefugeeCamp</defName>
+    <order>450</order>
+    <genStep Class="HungerAndHavoc.Incidents.GenStep_RHAH_RefugeeCamp" />
+  </GenStepDef>
 </Defs>

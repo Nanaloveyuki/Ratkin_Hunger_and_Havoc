@@ -49,6 +49,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | childPawnLoadIds | childPawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
 | gateOverrides | gateOverrides | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同 |
 | extraData | extraData | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同；`SetExtra(key, null)` 删除键 |
+| droppedChildLoadIds | droppedChildLoadIds | 空集合 | 是 | 已放下的孩子 Load ID。`PostLoadInit` 补空列表 |
 
 计算属性不入档：`IsReleased`、`IsActiveVisitor`、`RoleLabelKey`。
 
@@ -73,6 +74,13 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.LordJob_RHAH_Visitor | Lord `lordJob` | Remove。卸载后该 Lord 必须消失，pawn 回原版 ThinkTree |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Beg | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_DropChild | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_MotherFeed | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite | Job `driverClass` | Remove |
+| HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Request | Letter `letterClass` | Remove |
+| HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Visitors | Letter `letterClass` | Remove |
+| HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp | WorldObject `Class` | Remove。居民引用随营地删除，不替换成原版 Site |
 | HungerAndHavoc.Pawn.ThinkNode_ConditionalRHAH_Visitor | ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.Area_RHAH_Relief | AreaManager `areas` | Remove。卸载后区域节点消失，格子不迁到家区 |
@@ -80,7 +88,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.Comp_RHAH_Clay | ThingComp `Class` | Remove，随观音土物品删除 |
 | HungerAndHavoc.Pawn.CompProperties_RHAH_Clay | Def XML `Class` | 不单独出现在 `.rws` |
 
-Letter、Quest、WorldObject 尚无本模组存档类型。GameComponent 与 MapComponent 的键在下一节。新增时先加行。
+Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记。GameComponent 与 MapComponent 的键在下一节。
 ### Generation runtime
 
 | 类型 | 字段 | 存档键 | 卸载 |
@@ -92,6 +100,10 @@ Letter、Quest、WorldObject 尚无本模组存档类型。GameComponent 与 Map
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return phase | plagueReturnPhase | Remove |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return due tick | plagueReturnDueTick | Remove |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return leave tick | plagueReturnLeaveTick | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | open choices | openChoices | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | next choice id | nextChoiceId | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | broadcast cooldown tick | broadcastCooldownUntilTick | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | generation cursor | generationCursor | Remove |
 | HungerAndHavoc.Core.MapComponent_HungerAndHavoc | visitor pawn load IDs | visitorPawnLoadIds | Remove |
 | HungerAndHavoc.Core.MapComponent_HungerAndHavoc | food search ticks | foodSearchTicks | Remove |
 | HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague quarantine load IDs | plagueQuarantineLoadIds | Remove |
@@ -141,6 +153,12 @@ Letter、Quest、WorldObject 尚无本模组存档类型。GameComponent 与 Map
 | RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
 | RHAH_Gnaw | JobDef | Remove |
+| RHAH_DropChild | JobDef | Remove |
+| RHAH_MotherFeed | JobDef | Remove |
+| RHAH_Scavenge | JobDef | Remove |
+| RHAH_TailBite | JobDef | Remove |
+| RHAH_RefugeeMassacre | QuestScriptDef | Remove |
+| RHAH_RefugeeCamp | WorldObjectDef / SitePartDef / MapGeneratorDef / GenStepDef | Remove。不替换成原版地点 |
 | RHAH_VisitorSeek | DutyDef | Remove |
 | RHAH_VisitorLeave | DutyDef | Remove |
 | RHAH_VisitorFallback | ThinkTreeDef | Remove |
@@ -183,6 +201,18 @@ Letter、Quest、WorldObject 尚无本模组存档类型。GameComponent 与 Map
 | HungerAndHavocSettings.ignoreReliefAfterFed | 全局 ModSettings，默认 false |
 | HungerAndHavocSettings.leaveAfterFed | 全局 ModSettings，默认 true |
 | HungerAndHavocSettings.disabledReliefFoodDefNames | 全局 ModSettings，默认空。空名单表示当前食物可用，不是全部禁用 |
+| HungerAndHavocSettings.aidRequestsEnabled | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.intelTradesEnabled | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.visitorChoicesEnabled | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.familyDropEnabled | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.motherFeedEnabled | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.prisonerScavengeEnabled | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.tailBiteEnabled | 全局 ModSettings，默认 false |
+| HungerAndHavocSettings.broadcastEnabled | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.broadcastCooldownDays | 全局 ModSettings，默认 3，范围 0 到 10 |
+| HungerAndHavocSettings.staggerGeneration | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.disabledIncidentDisplayIds | 全局 ModSettings，默认空。空名单表示事件可用 |
+| HungerAndHavocSettings.refugeeCampEnabled | 全局 ModSettings，默认 true |
 | HungerAndHavoc.Guard.* | Guard 始终加载，无存档类型 |
 | HungerAndHavocMod / HarmonyBootstrap / HungerAndHavocRuntime | 运行时入口，无 ExposeData |
 

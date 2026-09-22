@@ -3,6 +3,7 @@
 显示 ID 是目录数据，不是列表下标。`I-001`..`I-051` 都有 IncidentDef 和 Worker。`baseChance` 为 0，不进入原版类别池。`HungerIncidentSchedule` 在讲述者每次检查时按正负两个平均天数抽池，再用 `HungerIncidentWeight` 选一条，交给现有 `QueueIncident`。调试排队仍走 `HungerAndHavocScheduler.QueueDebugIncident`，不掷权重。地图事件只打玩家家园，`I-035` 与 `I-050` 只打玩家商队。
 
 权重是 `family × season × plague × trust × target`。族权重：Wild 1.4、Beggar 1、Thief 0.7、Trade 0.5、Siege 0.35、Aid 0.25、Special 0.2、Intel 0.12。春冬 ×1.1，鼠疫 ×0.5。只有负池吃信任：`1 - clamp(trust, -100, 100) / 400`。正池不吃。平均天数默认 15，范围 0 到 60，0 关闭该池。定居未满 1 天不抽。
+接济和情报在生成后来信。交付消耗对应物资；情报交付后再放原版 `ItemStash`、`Outpost` 或 `BanditCamp`。库存不足不结算。拒绝和一天超时让整批离开。忽视只关信。同一批次读档后不会再开第二封未结算的信。`I-051` 仍只生成，不做任务或难民营。
 
 | 显示 ID | defName | 旧 ID | Family | Origin | Category | Target |
 | --- | --- | --- | --- | --- | --- | --- |

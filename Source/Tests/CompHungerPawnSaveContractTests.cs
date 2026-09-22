@@ -20,6 +20,7 @@ namespace HungerAndHavoc.Tests
             "attitude",
             "parentPawnLoadId",
             "childPawnLoadIds",
+            "droppedChildLoadIds",
             "gateOverrides",
             "extraData"
         };

@@ -146,4 +146,41 @@
   <RHAH_Role_Labor>Laboring refugee</RHAH_Role_Labor>
   <RHAH_Role_Envoy>Survivor envoy</RHAH_Role_Envoy>
   <RHAH_Role_Refugee>Famine refugee</RHAH_Role_Refugee>
+  <RHAH_Settings_AidRequests>Enable aid requests</RHAH_Settings_AidRequests>
+  <RHAH_Settings_AidRequests_Tooltip>New aid and baby exchanges stop sending letters. An open request can still be delivered or refused.</RHAH_Settings_AidRequests_Tooltip>
+  <RHAH_Settings_IntelTrades>Enable intel trades</RHAH_Settings_IntelTrades>
+  <RHAH_Settings_IntelTrades_Tooltip>New intel stops being traded for a site. Sites already placed stay on the world.</RHAH_Settings_IntelTrades_Tooltip>
+  <RHAH_Settings_VisitorChoices>Enable visitor choices</RHAH_Settings_VisitorChoices>
+  <RHAH_Settings_VisitorChoices_Tooltip>New visitors stop asking to be taken in, hired, or sent away. The right-click menu still handles people already here.</RHAH_Settings_VisitorChoices_Tooltip>
+  <RHAH_Settings_FamilyDrop>Set children down when leaving</RHAH_Settings_FamilyDrop>
+  <RHAH_Settings_FamilyDrop_Tooltip>Mothers stop recording each child they set down. Records already written stay in the save.</RHAH_Settings_FamilyDrop_Tooltip>
+  <RHAH_Settings_MotherFeed>Mothers feed children</RHAH_Settings_MotherFeed>
+  <RHAH_Settings_MotherFeed_Tooltip>Mothers stop walking over to feed a hungry child.</RHAH_Settings_MotherFeed_Tooltip>
+  <RHAH_Settings_PrisonerScavenge>Prisoners scavenge the ground</RHAH_Settings_PrisonerScavenge>
+  <RHAH_Settings_PrisonerScavenge_Tooltip>Hungry prisoners stop searching the ground for something edible.</RHAH_Settings_PrisonerScavenge_Tooltip>
+  <RHAH_Settings_TailBite>Allow tail bites</RHAH_Settings_TailBite>
+  <RHAH_Settings_TailBite_Tooltip>A hungry prisoner may bite a sleeping prisoner under 3. Off by default.</RHAH_Settings_TailBite_Tooltip>
+  <RHAH_Settings_Broadcast>Allow hope broadcasts</RHAH_Settings_Broadcast>
+  <RHAH_Settings_Broadcast_Tooltip>The comms console stops listing a broadcast. A cooldown already running does not end early.</RHAH_Settings_Broadcast_Tooltip>
+  <RHAH_Settings_Stagger>Generate visitors in batches</RHAH_Settings_Stagger>
+  <RHAH_Settings_Stagger_Tooltip>Queued incidents spawn one batch at a time. Off, queued incidents spawn as soon as they can.</RHAH_Settings_Stagger_Tooltip>
+  <RHAH_Choice_Label>Visitor request</RHAH_Choice_Label>
+  <RHAH_Choice_Text>They want {0} {1}. Delivering sends them off. Refusing sends them off too. Ignoring leaves them as they are.</RHAH_Choice_Text>
+  <RHAH_Choice_Deliver>Deliver</RHAH_Choice_Deliver>
+  <RHAH_Choice_Reject>Refuse</RHAH_Choice_Reject>
+  <RHAH_Choice_Ignore>Ignore</RHAH_Choice_Ignore>
+  <RHAH_Choice_Join>Take in</RHAH_Choice_Join>
+  <RHAH_Choice_Hire>Hire</RHAH_Choice_Hire>
+  <RHAH_Choice_Feed>Feed</RHAH_Choice_Feed>
+  <RHAH_Choice_Short>Not enough in storage. They need {0}.</RHAH_Choice_Short>
+  <RHAH_Choice_NoBaby>No prisoner or slave baby can be handed over.</RHAH_Choice_NoBaby>
+  <RHAH_Choice_Stale>This letter has already been settled.</RHAH_Choice_Stale>
+  <RHAH_Choice_Delivered>The goods have been handed over.</RHAH_Choice_Delivered>
+  <RHAH_Choice_Fed>The visitors have eaten.</RHAH_Choice_Fed>
+  <RHAH_Intel_Label>Intel site</RHAH_Intel_Label>
+  <RHAH_Intel_Text>The trade is done. A site has appeared nearby.</RHAH_Intel_Text>
+  <RHAH_Broadcast_Label>Broadcast hope</RHAH_Broadcast_Label>
+  <RHAH_Broadcast_Cooldown>The broadcast is still cooling down</RHAH_Broadcast_Cooldown>
+  <RHAH_Broadcast_Empty>No incident can be broadcast</RHAH_Broadcast_Empty>
+  <RHAH_Broadcast_Queued>Queued {0}</RHAH_Broadcast_Queued>
 </LanguageData>

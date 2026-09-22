@@ -63,6 +63,24 @@ namespace HungerAndHavoc.Core
                 Settings.leaveAfterFed = leave;
                 Settings.InvalidateReliefSearch();
             }
+            listing.CheckboxLabeled("RHAH_Settings_AidRequests".Translate(), ref Settings.aidRequestsEnabled,
+                "RHAH_Settings_AidRequests_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_IntelTrades".Translate(), ref Settings.intelTradesEnabled,
+                "RHAH_Settings_IntelTrades_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_VisitorChoices".Translate(), ref Settings.visitorChoicesEnabled,
+                "RHAH_Settings_VisitorChoices_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_FamilyDrop".Translate(), ref Settings.familyDropEnabled,
+                "RHAH_Settings_FamilyDrop_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_MotherFeed".Translate(), ref Settings.motherFeedEnabled,
+                "RHAH_Settings_MotherFeed_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_PrisonerScavenge".Translate(), ref Settings.prisonerScavengeEnabled,
+                "RHAH_Settings_PrisonerScavenge_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_TailBite".Translate(), ref Settings.tailBiteEnabled,
+                "RHAH_Settings_TailBite_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_Broadcast".Translate(), ref Settings.broadcastEnabled,
+                "RHAH_Settings_Broadcast_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_Stagger".Translate(), ref Settings.staggerGeneration,
+                "RHAH_Settings_Stagger_Tooltip".Translate());
 
             listing.End();
             Settings.Write();

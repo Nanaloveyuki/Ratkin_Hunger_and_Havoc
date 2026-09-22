@@ -69,6 +69,7 @@ namespace HungerAndHavoc.Identity
             }
             Scribe_Values.Look(ref state.parentPawnLoadId, "parentPawnLoadId", 0);
             Scribe_Collections.Look(ref state.childPawnLoadIds, "childPawnLoadIds", LookMode.Value);
+            Scribe_Collections.Look(ref state.droppedChildLoadIds, "droppedChildLoadIds", LookMode.Value);
             Scribe_Collections.Look(ref state.gateOverrides, "gateOverrides", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref state.extraData, "extraData", LookMode.Value, LookMode.Value);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)

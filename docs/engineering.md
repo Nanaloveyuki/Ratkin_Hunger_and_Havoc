@@ -171,6 +171,22 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.Designator_AreaRHAH_ReliefClear` | Zone `specialDesignatorClasses` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建指定器 |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_WaitFood` | 访客 ThinkTree 调度调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样由 Verse 按公开类型创建 |
 | `HungerAndHavoc.Pawn.RHAH_VisitorExpelMenu` | `FloatMenuMakerMap` 扫描 `FloatMenuOptionProvider` 子类 | `HungerAndHavoc.dll` | 原版只实例化公开子类。菜单只对在场来客提供驱逐，不进入 API |
+| `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Request` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
+| `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Visitors` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
+| `HungerAndHavoc.Pawn.JobDriver_RHAH_DropChild` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
+| `HungerAndHavoc.Pawn.JobDriver_RHAH_MotherFeed` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
+| `HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
+| `HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_DropChild` | 访客调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_MotherFeed` | 访客调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_Scavenge` | 囚犯调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
+| `HungerAndHavoc.Pawn.JobGiver_RHAH_TailBite` | 囚犯调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
+| `HungerAndHavoc.Pawn.RHAH_BroadcastMenu` | `FloatMenuMakerMap` 扫描 `FloatMenuOptionProvider` 子类 | `HungerAndHavoc.dll` | 原版只实例化公开子类 |
+| `HungerAndHavoc.Incidents.HungerRequestKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
+| `HungerAndHavoc.Incidents.HungerIntelSiteKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
+| `HungerAndHavoc.Incidents.HungerChoiceKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
+| `HungerAndHavoc.Incidents.HungerChoiceAction` | 选择记录存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
+| `HungerAndHavoc.Incidents.HungerChoiceRecord` | `openChoices` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
 | `HungerAndHavoc.Pawn.CompProperties_RHAH_Clay` | ThingDef XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Pawn.Comp_RHAH_Clay` | `CompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 ThingComp；类型名写入 `.rws` |

@@ -18,6 +18,7 @@ namespace HungerAndHavoc.Identity
         internal HungerAttitude attitude = HungerAttitude.Neutral;
         internal int parentPawnLoadId;
         internal List<int> childPawnLoadIds = new List<int>();
+        internal List<int> droppedChildLoadIds = new List<int>();
         internal Dictionary<HungerBehaviorGate, bool> gateOverrides = new Dictionary<HungerBehaviorGate, bool>();
         internal Dictionary<string, string> extraData = new Dictionary<string, string>();
 
@@ -193,6 +194,11 @@ namespace HungerAndHavoc.Identity
             {
                 childPawnLoadIds = new List<int>();
             }
+            if (droppedChildLoadIds == null)
+            {
+                droppedChildLoadIds = new List<int>();
+            }
+
 
             if (gateOverrides == null)
             {

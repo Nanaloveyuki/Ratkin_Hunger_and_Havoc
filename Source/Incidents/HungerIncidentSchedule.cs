@@ -98,10 +98,15 @@ namespace HungerAndHavoc.Incidents
             }
 
             string displayId = Select(pool, trust, season, mapHome, playerCaravan, Rand.Range(0f, total));
-            if (displayId != null)
+            if (displayId != null && SettingsEnabled(displayId))
             {
                 game.QueueIncident(displayId);
             }
+        }
+        static bool SettingsEnabled(string displayId)
+        {
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            return settings == null || settings.IsIncidentEnabled(displayId);
         }
 
         internal static float TotalWeight(

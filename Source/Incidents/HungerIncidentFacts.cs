@@ -1,3 +1,4 @@
+using HungerAndHavoc.Core;
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Generation;
@@ -49,6 +50,7 @@ namespace HungerAndHavoc.Incidents
                 context.SpawnBatchId,
                 created.Count,
                 context.CarriesPlague));
+            OpenChoice(context, created);
 
             return true;
         }
@@ -66,6 +68,87 @@ namespace HungerAndHavoc.Incidents
                     }
                 }
             }
+        }
+        static void OpenChoice(HungerIncidentContext context, List<HungerPawnCreationResult> created)
+        {
+            HungerRequestSpec spec = HungerRequestRules.SpecFor(context.DisplayId);
+            HungerChoiceKind choice = spec.Choice;
+            if (choice == HungerChoiceKind.None && HungerRequestRules.OffersVisitorControl(context.DisplayId))
+            {
+                choice = HungerChoiceKind.Visitors;
+            }
+
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            if (choice == HungerChoiceKind.None || (settings != null && !settings.AllowsRequest(choice) && choice != HungerChoiceKind.Visitors))
+            {
+                return;
+            }
+
+            if (choice == HungerChoiceKind.Visitors && settings != null && !settings.visitorChoicesEnabled)
+            {
+                return;
+            }
+
+            GameComponent_HungerAndHavoc game = Current.Game?.GetComponent<GameComponent_HungerAndHavoc>();
+            int amount = HungerRequestRules.Amount(spec.Kind, context.Map.wealthWatcher?.WealthTotal ?? 0f, context.SpawnBatchId % 5);
+            HungerChoiceRecord record = HungerChoiceRuntime.Open(game, new HungerChoiceRecord
+            {
+                DisplayId = context.DisplayId,
+                MapId = context.Map.uniqueID,
+                BatchId = context.SpawnBatchId,
+                Kind = spec.Kind,
+                Site = spec.Site,
+                Choice = choice,
+                Amount = amount,
+                ExpireTick = Find.TickManager.TicksGame + HungerRequestRules.TicksPerDay
+            });
+            if (record == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < created.Count; i++)
+            {
+                for (int j = 0; j < created[i].Pawns.Count; j++)
+                {
+                    Verse.Pawn pawn = created[i].Pawns[j];
+                    if (pawn != null)
+                    {
+                        record.PawnLoadIds.Add(pawn.thingIDNumber);
+                    }
+                }
+            }
+
+            SendLetter(context, record);
+        }
+
+        static void SendLetter(HungerIncidentContext context, HungerChoiceRecord record)
+        {
+            string label = "RHAH_Choice_Label".Translate();
+            string text = "RHAH_Choice_Text".Translate(record.Amount, HungerRequestRules.ThingDefName(record.Kind) ?? record.DisplayId);
+            ChoiceLetter letter;
+            if (record.Kind == HungerRequestKind.None)
+            {
+                ChoiceLetter_RHAH_Visitors visitors = (ChoiceLetter_RHAH_Visitors)LetterMaker.MakeLetter(
+                    label, text, LetterDefOf.NeutralEvent);
+                visitors.choiceId = record.Id;
+                visitors.choice = record.Choice;
+                letter = visitors;
+            }
+            else
+            {
+                ChoiceLetter_RHAH_Request request = (ChoiceLetter_RHAH_Request)LetterMaker.MakeLetter(
+                    label, text, LetterDefOf.NeutralEvent);
+                request.choiceId = record.Id;
+                request.mapId = record.MapId;
+                request.kind = record.Kind;
+                request.site = record.Site;
+                request.amount = record.Amount;
+                request.expireTick = record.ExpireTick;
+                letter = request;
+            }
+
+            Find.LetterStack.ReceiveLetter(letter);
         }
     }
 }

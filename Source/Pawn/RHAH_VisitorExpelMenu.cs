@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using RimWorld;
 using Verse;
@@ -13,25 +14,45 @@ namespace HungerAndHavoc.Pawn
 
         protected override bool Multiselect => false;
 
-        protected override FloatMenuOption GetSingleOptionFor(Verse.Pawn clickedPawn, FloatMenuContext context)
+        public override IEnumerable<FloatMenuOption> GetOptionsFor(Verse.Pawn clickedPawn, FloatMenuContext context)
         {
             if (!HungerAndHavocApi.IsVisitor(clickedPawn))
             {
-                return null;
+                yield break;
             }
 
             Verse.Pawn actor = context.FirstSelectedPawn;
             if (actor == null || actor.Faction != Faction.OfPlayer || actor.Dead)
             {
-                return null;
+                yield break;
             }
 
-            return new FloatMenuOption(
+            yield return new FloatMenuOption(
                 "RHAH_Menu_Expel".Translate(clickedPawn.LabelShort),
                 () => RHAH_BatchAttitude.TryShift(clickedPawn, true),
                 MenuOptionPriority.Default,
                 null,
                 clickedPawn);
+            if (HungerAndHavocApi.Allows(clickedPawn, HungerBehaviorGate.JoinColony))
+            {
+                yield return new FloatMenuOption("RHAH_Choice_Join".Translate(), () =>
+                {
+                    HungerAndHavocApi.ReleaseToColony(clickedPawn, HungerReleaseReason.JoinedPlayerFaction);
+                    clickedPawn.SetFaction(Faction.OfPlayer);
+                });
+            }
+
+            if (HungerAndHavocApi.Allows(clickedPawn, HungerBehaviorGate.Hire))
+            {
+                yield return new FloatMenuOption("RHAH_Choice_Hire".Translate(), () =>
+                    HungerAndHavocApi.ReleaseToColony(clickedPawn, HungerReleaseReason.Recruited));
+            }
+
+            if (HungerAndHavocApi.Allows(clickedPawn, HungerBehaviorGate.FeedFromRelief))
+            {
+                yield return new FloatMenuOption("RHAH_Choice_Feed".Translate(), () =>
+                    HungerAndHavocApi.SetLifecycle(clickedPawn, HungerLifecycle.Fed));
+            }
         }
     }
 }

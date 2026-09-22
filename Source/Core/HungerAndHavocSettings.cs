@@ -18,6 +18,18 @@ namespace HungerAndHavoc.Core
         public bool ignoreReliefAfterFed;
         public bool leaveAfterFed = true;
         List<string> disabledReliefFoodDefNames = new List<string>();
+        public bool aidRequestsEnabled = true;
+        public bool intelTradesEnabled = true;
+        public bool visitorChoicesEnabled = true;
+        public bool familyDropEnabled = true;
+        public bool motherFeedEnabled = true;
+        public bool prisonerScavengeEnabled = true;
+        public bool tailBiteEnabled;
+        public bool broadcastEnabled = true;
+        public int broadcastCooldownDays = 3;
+        public bool staggerGeneration = true;
+        public bool refugeeCampEnabled = true;
+        List<string> disabledIncidentDisplayIds = new List<string>();
 
         public override void ExposeData()
         {
@@ -33,12 +45,26 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref ignoreReliefAfterFed, "ignoreReliefAfterFed", false);
             Scribe_Values.Look(ref leaveAfterFed, "leaveAfterFed", true);
             Scribe_Collections.Look(ref disabledReliefFoodDefNames, "disabledReliefFoodDefNames", LookMode.Value);
+            Scribe_Values.Look(ref aidRequestsEnabled, "aidRequestsEnabled", true);
+            Scribe_Values.Look(ref intelTradesEnabled, "intelTradesEnabled", true);
+            Scribe_Values.Look(ref visitorChoicesEnabled, "visitorChoicesEnabled", true);
+            Scribe_Values.Look(ref familyDropEnabled, "familyDropEnabled", true);
+            Scribe_Values.Look(ref motherFeedEnabled, "motherFeedEnabled", true);
+            Scribe_Values.Look(ref prisonerScavengeEnabled, "prisonerScavengeEnabled", true);
+            Scribe_Values.Look(ref tailBiteEnabled, "tailBiteEnabled", false);
+            Scribe_Values.Look(ref broadcastEnabled, "broadcastEnabled", true);
+            Scribe_Values.Look(ref broadcastCooldownDays, "broadcastCooldownDays", 3);
+            Scribe_Values.Look(ref staggerGeneration, "staggerGeneration", true);
+            Scribe_Values.Look(ref refugeeCampEnabled, "refugeeCampEnabled", true);
+            Scribe_Collections.Look(ref disabledIncidentDisplayIds, "disabledIncidentDisplayIds", LookMode.Value);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 xenotypeWeights = xenotypeWeights ?? new Dictionary<string, float>();
                 enabledXenotypeDefNames = enabledXenotypeDefNames ?? new List<string>();
                 enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
                 disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
+                disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
+                broadcastCooldownDays = HungerAndHavoc.Incidents.HungerBroadcastRules.ClampDays(broadcastCooldownDays);
                 Normalize();
                 positiveIncidentDays = HungerAndHavoc.Incidents.HungerIncidentSchedule.ClampDays(positiveIncidentDays);
                 negativeIncidentDays = HungerAndHavoc.Incidents.HungerIncidentSchedule.ClampDays(negativeIncidentDays);
@@ -236,6 +262,7 @@ namespace HungerAndHavoc.Core
             enabledXenotypeDefNames = Clean(enabledXenotypeDefNames);
             enabledGeneDefNames = Clean(enabledGeneDefNames);
             disabledReliefFoodDefNames = Clean(disabledReliefFoodDefNames);
+            disabledIncidentDisplayIds = Clean(disabledIncidentDisplayIds);
         }
 
         static List<string> Clean(List<string> names)
@@ -258,6 +285,53 @@ namespace HungerAndHavoc.Core
             enabledXenotypeDefNames = enabledXenotypeDefNames ?? new List<string>();
             enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
             disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
+            disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
+        }
+        public bool IsIncidentEnabled(string displayId)
+        {
+            EnsureCollections();
+            return !string.IsNullOrEmpty(displayId) && !disabledIncidentDisplayIds.Contains(displayId);
+        }
+
+        public void SetIncidentEnabled(string displayId, bool enabled)
+        {
+            EnsureCollections();
+            if (string.IsNullOrEmpty(displayId))
+            {
+                return;
+            }
+
+            if (enabled)
+            {
+                disabledIncidentDisplayIds.Remove(displayId);
+                return;
+            }
+
+            if (!disabledIncidentDisplayIds.Contains(displayId))
+            {
+                disabledIncidentDisplayIds.Add(displayId);
+            }
+        }
+
+        public bool AllowsRequest(HungerAndHavoc.Incidents.HungerChoiceKind choice)
+        {
+            if (choice == HungerAndHavoc.Incidents.HungerChoiceKind.Aid ||
+                choice == HungerAndHavoc.Incidents.HungerChoiceKind.ChildExchange)
+            {
+                return aidRequestsEnabled;
+            }
+
+            if (choice == HungerAndHavoc.Incidents.HungerChoiceKind.Intel)
+            {
+                return intelTradesEnabled;
+            }
+
+            if (choice == HungerAndHavoc.Incidents.HungerChoiceKind.None)
+            {
+                return false;
+            }
+
+            return visitorChoicesEnabled;
         }
     }
 }
