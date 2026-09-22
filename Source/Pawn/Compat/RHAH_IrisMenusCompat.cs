@@ -1,6 +1,7 @@
 extern alias iris;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Incidents;
@@ -33,8 +34,11 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
-            string version = string.IsNullOrEmpty(meta.ModVersion) ? "unknown" : meta.ModVersion;
-            if (!string.Equals(version, SupportedVersion, StringComparison.Ordinal))
+            string version = string.IsNullOrEmpty(meta.ModVersion) ? "unspecified" : meta.ModVersion;
+            bool supported = meta.SupportedVersionsReadOnly != null &&
+                meta.SupportedVersionsReadOnly.Any(item => item != null && item.Major == 1 && item.Minor == 6);
+            if (!supported || (!string.IsNullOrEmpty(meta.ModVersion) &&
+                !string.Equals(meta.ModVersion, SupportedVersion, StringComparison.Ordinal)))
             {
                 Log.Warning("[RHAH] IrisMenus version " + version + " does not match supported " +
                     SupportedVersion + ". Menu pages were not registered.");

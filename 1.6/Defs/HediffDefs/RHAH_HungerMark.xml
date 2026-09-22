@@ -8,7 +8,6 @@
     <defaultLabelColor>(0.62, 0.42, 0.28)</defaultLabelColor>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
-    <everVisible>true</everVisible>
     <comps>
       <li Class="HungerAndHavoc.Identity.CompProperties_HungerPawn" />
     </comps>

@@ -5,11 +5,14 @@
     <slot>Childhood</slot>
     <title>famine child</title>
     <titleShort>famine child</titleShort>
-    <baseDescription>[PAWN_nameDef] was small when the famine came to the Ratkin settlements. [PAWN_pronoun] learned to search refuse for food and to distrust anyone promising a full meal.</baseDescription>
+    <description>[PAWN_nameDef] was small when the famine came to the Ratkin settlements. [PAWN_pronoun] learned to search refuse for food and to distrust anyone promising a full meal.</description>
     <skillGains>
       <Cooking>2</Cooking>
       <Plants>1</Plants>
     </skillGains>
+    <spawnCategories>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
     <workDisables>
       <li>Social</li>
     </workDisables>
@@ -19,12 +22,15 @@
     <slot>Adulthood</slot>
     <title>relief trader</title>
     <titleShort>relief trader</titleShort>
-    <baseDescription>[PAWN_nameDef] moved food and medicine between Ratkin settlements during the famine. [PAWN_pronoun] learned which promises could be traded and which ones would leave a caravan empty.</baseDescription>
+    <description>[PAWN_nameDef] moved food and medicine between Ratkin settlements during the famine. [PAWN_pronoun] learned which promises could be traded and which ones would leave a caravan empty.</description>
     <skillGains>
       <Social>2</Social>
       <Animals>1</Animals>
       <Cooking>1</Cooking>
     </skillGains>
+    <spawnCategories>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
     <workDisables>
       <li>Firefighting</li>
     </workDisables>

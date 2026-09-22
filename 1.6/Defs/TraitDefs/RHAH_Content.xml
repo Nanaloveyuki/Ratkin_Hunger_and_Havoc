@@ -9,7 +9,7 @@
         <label>food hoarder</label>
         <description>{PAWN_nameDef} survived the famine by hiding food. {PAWN_pronoun} dislikes seeing food wasted and gets a mood bonus after eating a meal made from stored ingredients.</description>
         <statOffsets>
-          <FoodPoisoningChance>-0.02</FoodPoisoningChance>
+          <FoodPoisonChance>-0.02</FoodPoisonChance>
         </statOffsets>
       </li>
     </degreeDatas>
