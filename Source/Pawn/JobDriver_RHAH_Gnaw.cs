@@ -29,7 +29,7 @@ namespace HungerAndHavoc.Pawn
                     food.CurLevel += TokenNutrition;
                 }
 
-                HungerAndHavocApi.SetLifecycle(pawn, HungerLifecycle.Fed);
+                RHAH_Feeding.TryComplete(pawn);
             };
             finish.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return finish;

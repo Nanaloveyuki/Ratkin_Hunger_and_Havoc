@@ -29,6 +29,12 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
+            IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
+            if (snapshot != null && snapshot.HasBeenFed)
+            {
+                return null;
+            }
+
             if (pawn.Map == null || pawn.Downed)
             {
                 return null;

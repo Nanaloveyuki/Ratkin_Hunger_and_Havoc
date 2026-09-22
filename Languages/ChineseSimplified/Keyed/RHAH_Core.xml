@@ -3,6 +3,26 @@
   <RHAH_ModName>鼠族: 饥与祸</RHAH_ModName>
   <RHAH_Settings_EnableNewContent>启用新内容</RHAH_Settings_EnableNewContent>
   <RHAH_Settings_EnableNewContent_Tooltip>关闭后，新的饥与祸事件和来客不再出现。已经在的来客照常乞讨、交易、偷窃或离开。</RHAH_Settings_EnableNewContent_Tooltip>
+  <RHAH_Menu_Relief>赈灾区</RHAH_Menu_Relief>
+  <RHAH_Menu_Relief_Note>来客先在划出的格子里找能吃到的食物。区外的食物、吃完后的限制和离场由下面的开关决定。</RHAH_Menu_Relief_Note>
+  <RHAH_Settings_ReliefEnabled>启用赈灾区</RHAH_Settings_ReliefEnabled>
+  <RHAH_Settings_ReliefEnabled_Tooltip>关闭后，来客不再受划出的格子限制。已经画好的区域留在地图上。</RHAH_Settings_ReliefEnabled_Tooltip>
+  <RHAH_Settings_EatOutsideRelief>允许取用赈灾区外的食物</RHAH_Settings_EatOutsideRelief>
+  <RHAH_Settings_EatOutsideRelief_Tooltip>关闭后，来客只能吃区内能拿到的食物。区内没有时，他们会乞讨、等待或离开。</RHAH_Settings_EatOutsideRelief_Tooltip>
+  <RHAH_Settings_IgnoreReliefAfterFed>吃完后不再受赈灾区限制</RHAH_Settings_IgnoreReliefAfterFed>
+  <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>开启后，来客吃饱的下一次进食可以取用区外食物。关闭后，吃饱的来客不再由本模组安排进食。</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
+  <RHAH_Settings_LeaveAfterFed>吃完后离开地图</RHAH_Settings_LeaveAfterFed>
+  <RHAH_Settings_LeaveAfterFed_Tooltip>开启后，能走到出口的来客吃饱后离开。太小或走不动的幼年鼠族由大人带出。关闭后，吃饱的来客留在地图上。</RHAH_Settings_LeaveAfterFed_Tooltip>
+  <RHAH_Settings_ReliefFoods>启用的食物</RHAH_Settings_ReliefFoods>
+  <RHAH_Settings_ReliefFoods_Tooltip>未关闭的食物都可以被来客取用。全部禁用只关掉现在已加载的食物，之后新出现的食物仍可用。</RHAH_Settings_ReliefFoods_Tooltip>
+  <RHAH_Settings_ReliefFoods_All>全部启用</RHAH_Settings_ReliefFoods_All>
+  <RHAH_Settings_ReliefFoods_None>全部禁用</RHAH_Settings_ReliefFoods_None>
+  <RHAH_ReliefArea_Label>赈灾区</RHAH_ReliefArea_Label>
+  <RHAH_ReliefArea_Expand>扩展赈灾区</RHAH_ReliefArea_Expand>
+  <RHAH_ReliefArea_Expand_Desc>划出来客可以取食的格子。空区域不会变成整张地图。</RHAH_ReliefArea_Expand_Desc>
+  <RHAH_ReliefArea_Clear>清除赈灾区</RHAH_ReliefArea_Clear>
+  <RHAH_ReliefArea_Clear_Desc>抹掉划出的格子。抹空后，不能出区的来客不再从这里取食。</RHAH_ReliefArea_Clear_Desc>
+  <RHAH_PlagueSpreading>鼠疫开始在殖民地里传播。</RHAH_PlagueSpreading>
   <RHAH_Menu_Overview>总览</RHAH_Menu_Overview>
   <RHAH_Menu_Events>事件</RHAH_Menu_Events>
   <RHAH_Menu_Pawns>角色</RHAH_Menu_Pawns>

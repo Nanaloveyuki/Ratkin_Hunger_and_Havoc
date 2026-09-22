@@ -13,6 +13,11 @@ namespace HungerAndHavoc.Core
         Dictionary<string, float> xenotypeWeights = new Dictionary<string, float>();
         List<string> enabledXenotypeDefNames = new List<string>();
         List<string> enabledGeneDefNames = new List<string>();
+        public bool reliefEnabled = true;
+        public bool allowEatOutsideRelief;
+        public bool ignoreReliefAfterFed;
+        public bool leaveAfterFed = true;
+        List<string> disabledReliefFoodDefNames = new List<string>();
 
         public override void ExposeData()
         {
@@ -23,11 +28,17 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref xenotypeWeights, "xenotypeWeights", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref enabledXenotypeDefNames, "enabledXenotypeDefNames", LookMode.Value);
             Scribe_Collections.Look(ref enabledGeneDefNames, "enabledGeneDefNames", LookMode.Value);
+            Scribe_Values.Look(ref reliefEnabled, "reliefEnabled", true);
+            Scribe_Values.Look(ref allowEatOutsideRelief, "allowEatOutsideRelief", false);
+            Scribe_Values.Look(ref ignoreReliefAfterFed, "ignoreReliefAfterFed", false);
+            Scribe_Values.Look(ref leaveAfterFed, "leaveAfterFed", true);
+            Scribe_Collections.Look(ref disabledReliefFoodDefNames, "disabledReliefFoodDefNames", LookMode.Value);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 xenotypeWeights = xenotypeWeights ?? new Dictionary<string, float>();
                 enabledXenotypeDefNames = enabledXenotypeDefNames ?? new List<string>();
                 enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
+                disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
                 Normalize();
                 positiveIncidentDays = HungerAndHavoc.Incidents.HungerIncidentSchedule.ClampDays(positiveIncidentDays);
                 negativeIncidentDays = HungerAndHavoc.Incidents.HungerIncidentSchedule.ClampDays(negativeIncidentDays);
@@ -146,6 +157,70 @@ namespace HungerAndHavoc.Core
             return missing;
         }
 
+        public bool IsReliefFoodEnabled(string defName)
+        {
+            EnsureCollections();
+            return string.IsNullOrEmpty(defName) || !disabledReliefFoodDefNames.Contains(defName);
+        }
+
+        public void SetReliefFoodEnabled(string defName, bool enabled)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            if (enabled)
+            {
+                disabledReliefFoodDefNames.Remove(defName);
+            }
+            else if (!disabledReliefFoodDefNames.Contains(defName))
+            {
+                disabledReliefFoodDefNames.Add(defName);
+            }
+
+            InvalidateReliefSearch();
+        }
+
+        public void SetAllReliefFood(bool enabled, List<string> candidates)
+        {
+            EnsureCollections();
+            disabledReliefFoodDefNames.Clear();
+            if (!enabled && candidates != null)
+            {
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty(candidates[i]) && !disabledReliefFoodDefNames.Contains(candidates[i]))
+                    {
+                        disabledReliefFoodDefNames.Add(candidates[i]);
+                    }
+                }
+            }
+
+            InvalidateReliefSearch();
+        }
+
+        public void InvalidateReliefSearch()
+        {
+            if (Current.Game == null || Current.Game.Maps == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < Current.Game.Maps.Count; i++)
+            {
+                Map map = Current.Game.Maps[i];
+                MapComponent_HungerAndHavoc component = map != null
+                    ? map.GetComponent<MapComponent_HungerAndHavoc>()
+                    : null;
+                if (component != null)
+                {
+                    component.InvalidateFoodSearch();
+                }
+            }
+        }
+
         void Normalize()
         {
             Dictionary<string, float> normalized = new Dictionary<string, float>();
@@ -160,6 +235,7 @@ namespace HungerAndHavoc.Core
             xenotypeWeights = normalized;
             enabledXenotypeDefNames = Clean(enabledXenotypeDefNames);
             enabledGeneDefNames = Clean(enabledGeneDefNames);
+            disabledReliefFoodDefNames = Clean(disabledReliefFoodDefNames);
         }
 
         static List<string> Clean(List<string> names)
@@ -181,6 +257,7 @@ namespace HungerAndHavoc.Core
             xenotypeWeights = xenotypeWeights ?? new Dictionary<string, float>();
             enabledXenotypeDefNames = enabledXenotypeDefNames ?? new List<string>();
             enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
+            disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
         }
     }
 }

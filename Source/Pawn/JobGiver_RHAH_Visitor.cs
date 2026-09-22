@@ -50,6 +50,15 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
+            if (!HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.EatOutsideRelief))
+            {
+                Job wait = JobGiver_RHAH_WaitFood.TryCreate(pawn);
+                if (wait != null)
+                {
+                    return wait;
+                }
+            }
+
             if (HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.LeaveAfterFed) ||
                 HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.ExitMap))
             {
