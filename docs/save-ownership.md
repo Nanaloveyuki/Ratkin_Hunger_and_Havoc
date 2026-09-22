@@ -136,6 +136,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | nanaloveyuki.ratkin.hungerandhavoc | packageId。清理副本的 meta 里应去掉本包，但不在运行时存档字段中 |
 | HungerAndHavocSettings.enableNewContent | 全局 ModSettings，默认 true |
 | HungerAndHavocSettings.optimizeGeneration | 全局 ModSettings，默认 true。关闭后不套权重异种，事件 Profile 仍生效 |
+| HungerAndHavocSettings.positiveIncidentDays | 全局 ModSettings，默认 15。正池平均天数，0 关闭，上限 60 |
+| HungerAndHavocSettings.negativeIncidentDays | 全局 ModSettings，默认 15。负池平均天数，0 关闭，上限 60 |
 | HungerAndHavocSettings.xenotypeWeights | 全局 ModSettings，默认空字典。缺键用登记建议权重。空字典不是全部禁用 |
 | HungerAndHavocSettings.enabledXenotypeDefNames | 全局 ModSettings，默认空。玩家加入的外部异种 defName |
 | HungerAndHavocSettings.enabledGeneDefNames | 全局 ModSettings，默认空。只允许 `RHAH_` 基因在生成后追加 |

@@ -8,6 +8,8 @@ namespace HungerAndHavoc.Core
     {
         public bool enableNewContent = true;
         public bool optimizeGeneration = true;
+        public float positiveIncidentDays = 15f;
+        public float negativeIncidentDays = 15f;
         Dictionary<string, float> xenotypeWeights = new Dictionary<string, float>();
         List<string> enabledXenotypeDefNames = new List<string>();
         List<string> enabledGeneDefNames = new List<string>();
@@ -16,6 +18,8 @@ namespace HungerAndHavoc.Core
         {
             Scribe_Values.Look(ref enableNewContent, "enableNewContent", true);
             Scribe_Values.Look(ref optimizeGeneration, "optimizeGeneration", true);
+            Scribe_Values.Look(ref positiveIncidentDays, "positiveIncidentDays", 15f);
+            Scribe_Values.Look(ref negativeIncidentDays, "negativeIncidentDays", 15f);
             Scribe_Collections.Look(ref xenotypeWeights, "xenotypeWeights", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref enabledXenotypeDefNames, "enabledXenotypeDefNames", LookMode.Value);
             Scribe_Collections.Look(ref enabledGeneDefNames, "enabledGeneDefNames", LookMode.Value);
@@ -25,6 +29,8 @@ namespace HungerAndHavoc.Core
                 enabledXenotypeDefNames = enabledXenotypeDefNames ?? new List<string>();
                 enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
                 Normalize();
+                positiveIncidentDays = HungerAndHavoc.Incidents.HungerIncidentSchedule.ClampDays(positiveIncidentDays);
+                negativeIncidentDays = HungerAndHavoc.Incidents.HungerIncidentSchedule.ClampDays(negativeIncidentDays);
             }
         }
 

@@ -90,7 +90,7 @@ IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `Men
 
 ## 当前进度
 
-版本 `0.1.0`。M0 到 M3 的目录、生成、访客、调度和 IrisMenus 页面已经落地。叙事只有 `NarrativeState` 的计数和结局计算，结局开关、基因设置、经历概率和事件频率函数还没有。
+版本 `0.1.0`。M0 到 M3 的目录、生成、访客、调度和 IrisMenus 页面已经落地。叙事只有 `NarrativeState` 的计数和结局计算。事件频率函数已落地。结局开关、基因设置和经历概率还没有。
 
 已落地：
 

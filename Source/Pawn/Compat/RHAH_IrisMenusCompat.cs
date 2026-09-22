@@ -68,13 +68,10 @@ namespace HungerAndHavoc.Pawn.Compat
     internal sealed class RHAH_IrisMenusPages
     {
         const float RowHeight = 28f;
-        const int FrequencyDefaultDays = 15;
-        const int FrequencyMaxDays = 60;
 
         readonly string irisVersion;
         readonly Dictionary<string, string> debugResults = new Dictionary<string, string>();
-        string frequencyDaysBuffer = FrequencyDefaultDays.ToString();
-        int frequencyDays = FrequencyDefaultDays;
+
         string selectedPawnLabel = string.Empty;
 
         internal RHAH_IrisMenusPages(string irisVersion)
@@ -588,38 +585,44 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             Section(list, "RHAH_Menu_EventFrequency");
             Note(list, "RHAH_Menu_Frequency_Gap");
-            MenuControls.Anchor(list, "frequency-days");
-            string buffer = frequencyDaysBuffer;
-            int days = frequencyDays;
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            if (settings == null)
+            {
+                Empty(list, "RHAH_Menu_Settings_Missing");
+                return;
+            }
+
+            MenuControls.Anchor(list, "frequency-positive");
+            string positiveBuffer = settings.positiveIncidentDays.ToString("0.#");
+            float positiveDays = settings.positiveIncidentDays;
             MenuControls.Number(
                 list,
-                "RHAH_Menu_Frequency_Days".Translate(),
-                ref days,
-                ref buffer,
-                1,
-                FrequencyMaxDays);
-            frequencyDays = days;
-            frequencyDaysBuffer = buffer;
-            Rect plot = list.GetRect(160f);
-            Widgets.DrawBox(plot);
-            DrawCurve(plot.ContractedBy(8f), frequencyDays);
-            Status(list, "RHAH_Menu_Frequency_Expression", "y = 0");
-            list.Gap(4f);
-        }
+                "RHAH_Menu_Frequency_Positive".Translate(),
+                ref positiveDays,
+                ref positiveBuffer,
+                0,
+                (int)HungerIncidentSchedule.MaxDays);
+            settings.positiveIncidentDays = HungerIncidentSchedule.ClampDays(positiveDays);
 
-        static void DrawCurve(Rect plot, int days)
-        {
-            Widgets.DrawLineHorizontal(plot.x, plot.yMax, plot.width);
-            Widgets.DrawLineVertical(plot.x, plot.y, plot.height);
-            Widgets.Label(new Rect(plot.x + 4f, plot.y, 80f, 22f), "100%");
-            Widgets.Label(new Rect(plot.xMax - 48f, plot.yMax - 22f, 48f, 22f), days + "d");
-            Widgets.Label(new Rect(plot.x + 8f, plot.y + plot.height * 0.35f, plot.width - 16f, 44f),
-                "RHAH_Menu_Frequency_Flat".Translate());
+            MenuControls.Anchor(list, "frequency-negative");
+            string negativeBuffer = settings.negativeIncidentDays.ToString("0.#");
+            float negativeDays = settings.negativeIncidentDays;
+            MenuControls.Number(
+                list,
+                "RHAH_Menu_Frequency_Negative".Translate(),
+                ref negativeDays,
+                ref negativeBuffer,
+                0,
+                (int)HungerIncidentSchedule.MaxDays);
+            settings.negativeIncidentDays = HungerIncidentSchedule.ClampDays(negativeDays);
+            Status(list, "RHAH_Menu_Frequency_Expression", HungerIncidentSchedule.Expression);
+            list.Gap(4f);
         }
 
         IEnumerable<MenuSearchEntry> SearchFrequency()
         {
-            yield return Entry("frequency-days", "RHAH_Menu_Frequency_Days");
+            yield return Entry("frequency-positive", "RHAH_Menu_Frequency_Positive");
+            yield return Entry("frequency-negative", "RHAH_Menu_Frequency_Negative");
         }
 
         void DrawDeveloper(Listing_Standard list)

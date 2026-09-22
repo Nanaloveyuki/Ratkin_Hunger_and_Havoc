@@ -166,6 +166,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.Compat.RHAH_PawnCompatStartup` | `[StaticConstructorOnStartup]` | `HungerAndHavoc.dll` | Verse 启动扫描公开静态构造入口 |
 | `HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusCompat` 所在文件对 `IrisMenus` 的编译引用 | IrisMenus 1.6 公开 `MenuRegistry.RegisterSubItemListing` | `HungerAndHavoc.dll` 引用，`Private=False`，不随包发布 | 可选依赖。`ModLister` 未启用或 `modVersion` 不是 `1.6` 时不注册页面。类型保持 `internal`，不进入 API 程序集 |
 
+原版 Harmony 例外不进上表。`HungerIncidentSchedulePatch` 是 `internal`，Postfix `Storyteller.StorytellerTick`。原版讲述者没有本模组事件池，`baseChance` 保持 0。补丁只在 1000 tick 检查点入队，不改类别权重，不替换袭击。
+
 ## 检查门禁
 
 检查脚本和测试必须与本页保持一致，至少覆盖：

@@ -2,7 +2,7 @@
 <LanguageData>
   <RHAH_ModName>Ratkin: Hunger and Havoc</RHAH_ModName>
   <RHAH_Settings_EnableNewContent>Enable new content</RHAH_Settings_EnableNewContent>
-  <RHAH_Settings_EnableNewContent_Tooltip>When off, new incidents and newly generated Hunger and Havoc pawns stop. Existing marked pawns keep working.</RHAH_Settings_EnableNewContent_Tooltip>
+  <RHAH_Settings_EnableNewContent_Tooltip>New Hunger and Havoc incidents and visitors stop appearing. Visitors already here keep begging, trading, stealing, or leaving.</RHAH_Settings_EnableNewContent_Tooltip>
   <RHAH_Menu_Overview>Overview</RHAH_Menu_Overview>
   <RHAH_Menu_Events>Events</RHAH_Menu_Events>
   <RHAH_Menu_Pawns>Pawns</RHAH_Menu_Pawns>
@@ -30,7 +30,7 @@
   <RHAH_Menu_NoGame>No game loaded</RHAH_Menu_NoGame>
   <RHAH_Menu_GameLoaded>Game loaded</RHAH_Menu_GameLoaded>
   <RHAH_Menu_Unavailable>Not available</RHAH_Menu_Unavailable>
-  <RHAH_Menu_Settings_Missing>Settings are not loaded.</RHAH_Menu_Settings_Missing>
+  <RHAH_Menu_Settings_Missing>Settings are not ready. Reopen this page and try again.</RHAH_Menu_Settings_Missing>
   <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}. Broadcast: {4}. Debug points: {5}.</RHAH_Menu_EventMeta>
   <RHAH_Menu_Queue>Queue</RHAH_Menu_Queue>
   <RHAH_Menu_Queue_Disabled>New content is off.</RHAH_Menu_Queue_Disabled>
@@ -60,26 +60,26 @@
   <RHAH_Menu_Diagnostics_Map>Resolved map</RHAH_Menu_Diagnostics_Map>
   <RHAH_Menu_Ending_Gap>Ending switches are not implemented. This page does not write an ending.</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>Biotech gene settings are not implemented. This page does not edit genes.</RHAH_Menu_Genes_Gap>
-  <RHAH_Menu_Genes_NoBiotech>Biotech is not active. This page does not change xenotypes or write settings.</RHAH_Menu_Genes_NoBiotech>
-  <RHAH_Menu_Genes_Note>Bar length is the current chance, not the raw weight. Drag a bar to set a weight from 0 to 100. Zero stays out of the draw. If every weight is zero, generation uses the base ratkin xenotype, then the famine ratkin xenotype.</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_NoBiotech>Biotech is required. With it, you can set the xenotypes of visitors here.</RHAH_Menu_Genes_NoBiotech>
+  <RHAH_Menu_Genes_Note>Bar length is the current chance. Drag a bar to set a weight from 0 to 100. A xenotype at 0 stays out of the draw. At all zeroes, visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>Reset weights</RHAH_Menu_Genes_Reset>
-  <RHAH_Menu_Genes_Fallback>The enabled weight total is zero. Generation uses the base ratkin xenotype, then the famine ratkin xenotype if that def is missing.</RHAH_Menu_Genes_Fallback>
-  <RHAH_Menu_Genes_WeightTip>Def: {0}. Suggested weight {1}. Chance is this weight divided by the enabled total.</RHAH_Menu_Genes_WeightTip>
-  <RHAH_Menu_Genes_Missing>Not loaded: {0}</RHAH_Menu_Genes_Missing>
+  <RHAH_Menu_Genes_Fallback>The enabled weights add up to 0. Visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Menu_Genes_Fallback>
+  <RHAH_Menu_Genes_WeightTip>Suggested weight {1}. Chance is this weight divided by the sum of enabled weights.</RHAH_Menu_Genes_WeightTip>
+  <RHAH_Menu_Genes_Missing>This xenotype is not loaded: {0}</RHAH_Menu_Genes_Missing>
   <RHAH_Menu_Genes_Switches>Mod genes</RHAH_Menu_Genes_Switches>
   <RHAH_Menu_Genes_Join>Ratkin xenotypes available to join</RHAH_Menu_Genes_Join>
   <RHAH_Menu_Genes_JoinOne>Join {0}</RHAH_Menu_Genes_JoinOne>
   <RHAH_Menu_Genes_Remove>Remove</RHAH_Menu_Genes_Remove>
-  <RHAH_Menu_Genes_NoOwned>No mod genes are available to toggle.</RHAH_Menu_Genes_NoOwned>
+  <RHAH_Menu_Genes_NoOwned>No Hunger and Havoc genes are available to toggle.</RHAH_Menu_Genes_NoOwned>
   <RHAH_Menu_PawnHistory_Gap>History generation controls are not implemented. This page does not change backstories.</RHAH_Menu_PawnHistory_Gap>
   <RHAH_Menu_Experimental_Gap>Generation optimization is registered on this page. Other experiments are not added yet.</RHAH_Menu_Experimental_Gap>
-  <RHAH_Menu_Experimental_Note>These options change generation cost. Turning one off still uses each incident's apparel, backstory, health, and gene profile.</RHAH_Menu_Experimental_Note>
-  <RHAH_Settings_OptimizeGeneration>Optimize incident generation</RHAH_Settings_OptimizeGeneration>
-  <RHAH_Settings_OptimizeGeneration_Tooltip>Skips relations, titles, random apparel, and world pawn redress. Incidents without an explicit xenotype draw from the gene page weights. Missing weights use the base ratkin xenotype, then the famine ratkin xenotype.</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>Incident chance over time is not implemented. The curve stays at zero and is not saved.</RHAH_Menu_Frequency_Gap>
-  <RHAH_Menu_Frequency_Days>Days shown</RHAH_Menu_Frequency_Days>
-  <RHAH_Menu_Frequency_Expression>Expression</RHAH_Menu_Frequency_Expression>
-  <RHAH_Menu_Frequency_Flat>Chance stays at 0% until a frequency function exists.</RHAH_Menu_Frequency_Flat>
+  <RHAH_Menu_Experimental_Note>These options change how long visitors take to generate. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
+  <RHAH_Settings_OptimizeGeneration>Speed up visitor generation</RHAH_Settings_OptimizeGeneration>
+  <RHAH_Settings_OptimizeGeneration_Tooltip>Skips relations, titles, random apparel, and redressing world pawns. Incidents without a set xenotype draw from the gene page weights. If those weights are unavailable, visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Settings_OptimizeGeneration_Tooltip>
+  <RHAH_Menu_Frequency_Gap>Each pool fires on its own average interval. 0 turns that pool off. Weight still changes with season, plague, and trust.</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Positive>Positive incidents, average days</RHAH_Menu_Frequency_Positive>
+  <RHAH_Menu_Frequency_Negative>Negative incidents, average days</RHAH_Menu_Frequency_Negative>
+  <RHAH_Menu_Frequency_Expression>Weight</RHAH_Menu_Frequency_Expression>
   <RHAH_Menu_Developer_Note>Read-only build markers. Debug queues live under Dev events.</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>Last listed pawn</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>Beggar</RHAH_Menu_Family_Beggar>

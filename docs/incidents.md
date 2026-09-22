@@ -1,6 +1,8 @@
 # 事件目录
 
-显示 ID 是目录数据，不是列表下标。`I-001`..`I-051` 都有 IncidentDef 和 Worker。`baseChance` 为 0，随机故事讲述者不会自己抽到。调试排队走 `HungerAndHavocScheduler.QueueDebugIncident`。地图事件的 `targetTags` 是 `Map_PlayerHome`，`I-035` 与 `I-050` 是 `Caravan`。
+显示 ID 是目录数据，不是列表下标。`I-001`..`I-051` 都有 IncidentDef 和 Worker。`baseChance` 为 0，不进入原版类别池。`HungerIncidentSchedule` 在讲述者每次检查时按正负两个平均天数抽池，再用 `HungerIncidentWeight` 选一条，交给现有 `QueueIncident`。调试排队仍走 `HungerAndHavocScheduler.QueueDebugIncident`，不掷权重。地图事件只打玩家家园，`I-035` 与 `I-050` 只打玩家商队。
+
+权重是 `family × season × plague × trust × target`。族权重：Wild 1.4、Beggar 1、Thief 0.7、Trade 0.5、Siege 0.35、Aid 0.25、Special 0.2、Intel 0.12。春冬 ×1.1，鼠疫 ×0.5。只有负池吃信任：`1 - clamp(trust, -100, 100) / 400`。正池不吃。平均天数默认 15，范围 0 到 60，0 关闭该池。定居未满 1 天不抽。
 
 | 显示 ID | defName | 旧 ID | Family | Origin | Category | Target |
 | --- | --- | --- | --- | --- | --- | --- |
