@@ -267,15 +267,20 @@ def main():
         errors.append("Hunger mark missing defName RHAH_HungerMark")
     if "HungerAndHavoc.Identity.Hediff_HungerMark" not in hediff:
         errors.append(
-            "Hunger mark hediffClass must be HungerAndHavoc.Identity.Hediff_HungerMark"
-        )
+            "Hunger mark hediffClass must be HungerAndHavoc.Identity.Hediff_HungerMark")
+    genes = read("Biotech/Defs/GeneDefs/RHAH_Genes.xml")
+    xenotypes = read("Biotech/Defs/GeneDefs/RHAH_Xenotypes.xml")
+    if "RHAH_Gene_ThinRations" not in genes or "canGenerateInGeneSet>false" not in genes:
+        errors.append("Owned hunger gene must stay out of random gene sets")
+    if "RHAH_Xenotype_Ratkin" not in xenotypes:
+        errors.append("Fallback xenotype RHAH_Xenotype_Ratkin is missing")
     if "HungerAndHavoc.Identity.CompProperties_HungerPawn" not in hediff:
         errors.append(
             "Hunger mark Comp Class must be HungerAndHavoc.Identity.CompProperties_HungerPawn"
         )
 
     skip_dirs = {".git", "tmp", "docs", "bin", "obj"}
-    skip_files = {"NOTICE", "README.md", "Agents.md", "verify-scaffold.py"}
+    skip_files = {"NOTICE", "README.md", "Agents.md", "AGENTS.md", "verify-scaffold.py"}
     for path in ROOT.rglob("*"):
         if not path.is_file() or any(part in skip_dirs for part in path.parts):
             continue

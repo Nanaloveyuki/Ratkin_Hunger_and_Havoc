@@ -5,7 +5,7 @@ namespace HungerAndHavoc.Generation
 {
     internal static class HungerGenerationOptimizer
     {
-        internal const string DefaultXenotypeDefName = "RK_XenoType_Ratkin";
+        internal const string DefaultXenotypeDefName = HungerGeneCatalog.DefaultXenotypeDefName;
 
         internal static bool Enabled =>
             Core.HungerAndHavocMod.Settings != null &&
@@ -42,27 +42,7 @@ namespace HungerAndHavoc.Generation
 
         internal static XenotypeDef ResolveXenotype(HungerPawnProfile profile)
         {
-            if (profile != null && profile.UseExplicitXenotype)
-            {
-                if (profile.Xenotype != null)
-                {
-                    return profile.Xenotype;
-                }
-
-                if (string.IsNullOrEmpty(profile.XenotypeDefName))
-                {
-                    return null;
-                }
-
-                return DefDatabase<XenotypeDef>.GetNamedSilentFail(profile.XenotypeDefName);
-            }
-
-            if (!Enabled || !ModsConfig.BiotechActive)
-            {
-                return null;
-            }
-
-            return DefDatabase<XenotypeDef>.GetNamedSilentFail(DefaultXenotypeDefName);
+            return HungerXenotypeResolver.Resolve(profile);
         }
     }
 }

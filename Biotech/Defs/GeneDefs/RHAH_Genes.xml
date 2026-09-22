@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <GeneDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>RHAH_Gene_ThinRations</defName>
+    <label>薄口粮</label>
+    <description>携带此基因的人用更少的食物维持体力。饥饿仍会到来，也仍会饿死。</description>
+    <iconPath>UI/Icons/Genes/Gene_RobustDigestion</iconPath>
+    <displayCategory>Miscellaneous</displayCategory>
+    <displayOrderInCategory>210</displayOrderInCategory>
+    <canGenerateInGeneSet>false</canGenerateInGeneSet>
+    <selectionWeight>0</selectionWeight>
+    <biostatMet>1</biostatMet>
+    <statFactors>
+      <MaxNutrition>0.85</MaxNutrition>
+    </statFactors>
+    <customEffectDescriptions>
+      <li>最大营养需求降至常人的 85%</li>
+      <li>不阻止饥饿，也不阻止饿死</li>
+    </customEffectDescriptions>
+  </GeneDef>
+</Defs>

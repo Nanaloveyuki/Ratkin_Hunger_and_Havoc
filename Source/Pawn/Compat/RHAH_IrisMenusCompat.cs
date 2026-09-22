@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
+using HungerAndHavoc.Generation;
 using HungerAndHavoc.Incidents;
 using HungerAndHavoc.Narrative;
 using iris::IrisMenus;
@@ -424,7 +425,139 @@ namespace HungerAndHavoc.Pawn.Compat
 
         void DrawGenes(Listing_Standard list)
         {
-            Unavailable(list, "RHAH_Menu_Genes", "RHAH_Menu_Genes_Gap");
+            Section(list, "RHAH_Menu_Genes");
+            if (!ModsConfig.BiotechActive)
+            {
+                Empty(list, "RHAH_Menu_Genes_NoBiotech");
+                return;
+            }
+
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            if (settings == null)
+            {
+                Empty(list, "RHAH_Menu_Settings_Missing");
+                return;
+            }
+
+            Note(list, "RHAH_Menu_Genes_Note");
+            if (list.ButtonText("RHAH_Menu_Genes_Reset".Translate()))
+            {
+                settings.ResetXenotypeWeights();
+            }
+
+            List<XenotypeDef> xenotypes = HungerXenotypeResolver.LoadedCandidates(settings);
+            float total = 0f;
+            for (int i = 0; i < xenotypes.Count; i++)
+            {
+                float weight = settings.XenotypeWeight(xenotypes[i].defName);
+                if (weight > 0f)
+                {
+                    total += weight;
+                }
+            }
+
+            if (total <= 0f)
+            {
+                Note(list, "RHAH_Menu_Genes_Fallback");
+            }
+
+            for (int i = 0; i < xenotypes.Count; i++)
+            {
+                DrawXenotypeBar(list, settings, xenotypes[i], total);
+            }
+
+            DrawMissingXenotypes(list, settings, xenotypes);
+            DrawJoinableXenotypes(list, settings);
+            DrawGeneSwitches(list, settings);
+            HungerAndHavocMod.Settings.Write();
+        }
+
+        static void DrawXenotypeBar(Listing_Standard list, HungerAndHavocSettings settings, XenotypeDef xenotype, float total)
+        {
+            float weight = settings.XenotypeWeight(xenotype.defName);
+            float share = total <= 0f || weight <= 0f ? 0f : weight / total;
+            string label = xenotype.LabelCap + "  " + weight.ToString("0");
+            Rect row = list.GetRect(34f);
+            Widgets.Label(new Rect(row.x, row.y, row.width * 0.42f, row.height), label);
+            Rect bar = new Rect(row.x + row.width * 0.44f, row.y + 8f, row.width * 0.56f, 16f);
+            Widgets.FillableBar(bar, share);
+            if (Mouse.IsOver(bar) && Event.current.type == EventType.MouseDrag)
+            {
+                float next = (Event.current.mousePosition.x - bar.x) / bar.width * HungerXenotypeWeightTable.MaxWeight;
+                settings.SetXenotypeWeight(xenotype.defName, next);
+            }
+
+            if (!HungerGeneCatalog.IsBuiltin(xenotype.defName) && Widgets.ButtonText(new Rect(row.xMax - 72f, row.y, 68f, 24f), "RHAH_Menu_Genes_Remove".Translate()))
+            {
+                settings.SetXenotypeEnabled(xenotype.defName, false);
+            }
+
+            TooltipHandler.TipRegion(row, "RHAH_Menu_Genes_WeightTip".Translate(xenotype.defName, HungerGeneCatalog.SuggestedWeight(xenotype.defName).ToString("0")));
+            list.Gap(4f);
+        }
+
+        static void DrawJoinableXenotypes(Listing_Standard list, HungerAndHavocSettings settings)
+        {
+            List<XenotypeDef> available = HungerXenotypeResolver.AvailableToJoin(settings);
+            if (available.Count == 0)
+            {
+                return;
+            }
+
+            Section(list, "RHAH_Menu_Genes_Join");
+            for (int i = 0; i < available.Count; i++)
+            {
+                XenotypeDef xenotype = available[i];
+                if (list.ButtonText("RHAH_Menu_Genes_JoinOne".Translate(xenotype.LabelCap)))
+                {
+                    settings.SetXenotypeEnabled(xenotype.defName, true);
+                }
+            }
+        }
+
+        static void DrawMissingXenotypes(Listing_Standard list, HungerAndHavocSettings settings, List<XenotypeDef> loaded)
+        {
+            List<string> stored = settings.MissingXenotypeNames();
+            for (int i = 0; i < stored.Count; i++)
+            {
+                if (Loaded(loaded, stored[i]) || HungerGeneCatalog.IsBuiltin(stored[i]))
+                {
+                    continue;
+                }
+
+                list.Label("RHAH_Menu_Genes_Missing".Translate(stored[i]));
+            }
+        }
+
+        static bool Loaded(List<XenotypeDef> loaded, string defName)
+        {
+            for (int i = 0; i < loaded.Count; i++)
+            {
+                if (loaded[i].defName == defName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        static void DrawGeneSwitches(Listing_Standard list, HungerAndHavocSettings settings)
+        {
+            Section(list, "RHAH_Menu_Genes_Switches");
+            List<GeneDef> genes = HungerXenotypeResolver.LoadedOwnedGenes();
+            if (genes.Count == 0)
+            {
+                Empty(list, "RHAH_Menu_Genes_NoOwned");
+                return;
+            }
+
+            for (int i = 0; i < genes.Count; i++)
+            {
+                bool enabled = settings.IsGeneEnabled(genes[i].defName);
+                MenuControls.Checkbox(list, genes[i].LabelCap, ref enabled, genes[i].description);
+                settings.SetGeneEnabled(genes[i].defName, enabled);
+            }
         }
 
         void DrawPawnHistory(Listing_Standard list)
@@ -513,7 +646,8 @@ namespace HungerAndHavoc.Pawn.Compat
 
         static IEnumerable<MenuSearchEntry> SearchGenes()
         {
-            yield return Entry("genes-gap", "RHAH_Menu_Genes_Gap");
+            yield return Entry("genes-weights", "RHAH_Menu_Genes");
+            yield return Entry("genes-switches", "RHAH_Menu_Genes_Switches");
         }
 
         static IEnumerable<MenuSearchEntry> SearchPawnHistory()

@@ -4,5 +4,6 @@
     <li>Guard</li>
     <li IfModNotActive="lezhizhong.mouse.disaster.famine,nanaloveyuki.mouse.disaster.famine.continued,local.mousedisaster.greatfamine">/</li>
     <li IfModNotActive="lezhizhong.mouse.disaster.famine,nanaloveyuki.mouse.disaster.famine.continued,local.mousedisaster.greatfamine">1.6</li>
+    <li IfModNotActive="lezhizhong.mouse.disaster.famine,nanaloveyuki.mouse.disaster.famine.continued,local.mousedisaster.greatfamine">Biotech</li>
   </v1.6>
 </loadFolders>

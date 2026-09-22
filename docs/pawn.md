@@ -70,6 +70,6 @@ JobGiver 第一行：非访客返回 null；再问 `HungerAndHavocApi.Allows`。
 - `UseExplicitHealth` 与 `Hediffs`：只追加列表中的 Hediff，不删除生成器已有状态。空列表表示不追加
 - `UseExplicitXenotype` 与 `Xenotype` / `XenotypeDefName`：指定异种。两者都空时不指定基因
 
-`optimizeGeneration` 默认开启，登记在 IrisMenus 实验页和原版设置窗口。开启时跳过关系、头衔、随机装备、成瘾、食物和世界角色重装。事件没有显式基因时，尝试 `RK_XenoType_Ratkin`。生物科技未启用或 Def 不存在时保持原版默认。关闭优化不取消事件 Profile。
+`optimizeGeneration` 默认开启，登记在 IrisMenus 实验页和原版设置窗口。开启时跳过关系、头衔、随机装备、成瘾、食物和世界角色重装。事件没有显式基因时，按基因页权重抽取已启用异种。权重合计为 0、生物科技未开或 Def 丢失时，依次尝试 `RK_XenoType_Ratkin` 和 `RHAH_Xenotype_Ratkin`。两者都不存在时保持原版默认。关闭优化不取消事件 Profile。`RHAH_` 基因开关只在异种套上后追加，冲突则跳过。
 
 商队伏击先生成未入场的 pawn，再交给原版商队地图。地图事件仍在同一 tick 内生成并入场，不做分帧队列。

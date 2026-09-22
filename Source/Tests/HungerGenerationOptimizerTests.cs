@@ -65,6 +65,37 @@ namespace HungerAndHavoc.Tests
             }
         }
 
+        [Fact]
+        public void WeightDrawUsesShareAndSkipsZero()
+        {
+            string[] names = { "RK_XenoType_Ratkin", "Ratkin_OA", "RHAH_Xenotype_Ratkin" };
+            float[] weights = { 100f, 0f, 100f };
+            Assert.Equal("RK_XenoType_Ratkin", HungerXenotypeWeightTable.Choose(names, weights, 0f));
+            Assert.Equal("RK_XenoType_Ratkin", HungerXenotypeWeightTable.Choose(names, weights, 99.9f));
+            Assert.Equal("RHAH_Xenotype_Ratkin", HungerXenotypeWeightTable.Choose(names, weights, 100f));
+            Assert.Null(HungerXenotypeWeightTable.Choose(names, new[] { 0f, 0f, 0f }, 1f));
+        }
+
+        [Fact]
+        public void ResolveFallsBackOnlyAfterEmptyWeightDraw()
+        {
+            Assert.Equal("Ratkin_OA", HungerXenotypeWeightTable.Resolve(true, "Ratkin_OA", true, "RK_XenoType_Ratkin", "RHAH_Xenotype_Ratkin"));
+            Assert.Null(HungerXenotypeWeightTable.Resolve(true, null, true, "RK_XenoType_Ratkin", "RHAH_Xenotype_Ratkin"));
+            Assert.Null(HungerXenotypeWeightTable.Resolve(false, null, false, "RK_XenoType_Ratkin", "RHAH_Xenotype_Ratkin"));
+            Assert.Equal("RK_XenoType_Ratkin", HungerXenotypeWeightTable.Resolve(false, null, true, "RK_XenoType_Ratkin", "RHAH_Xenotype_Ratkin"));
+            Assert.Equal("RHAH_Xenotype_Ratkin", HungerXenotypeWeightTable.Resolve(false, null, true, null, "RHAH_Xenotype_Ratkin"));
+        }
+
+        [Fact]
+        public void ExternalRegistrationDoesNotReplaceBuiltinWeight()
+        {
+            HungerGeneCatalog.ResetForTests();
+            HungerGeneCatalog.RegisterXenotype("Ratkin_OA", 40f, false);
+            HungerGeneCatalog.RegisterXenotype(HungerGeneCatalog.DefaultXenotypeDefName, 1f, false);
+            Assert.Equal(40f, HungerGeneCatalog.SuggestedWeight("Ratkin_OA"));
+            Assert.False(HungerGeneCatalog.IsBuiltin(HungerGeneCatalog.FallbackXenotypeDefName));
+        }
+
         static bool SetOptimization(bool enabled)
         {
             HungerAndHavocSettings settings = HungerAndHavocMod.Settings ?? new HungerAndHavocSettings();

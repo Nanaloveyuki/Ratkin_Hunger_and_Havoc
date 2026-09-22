@@ -121,6 +121,9 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | RHAH_VisitorSeek | DutyDef | Remove |
 | RHAH_VisitorLeave | DutyDef | Remove |
 | RHAH_VisitorFallback | ThinkTreeDef | Remove |
+| RHAH_Gene_ThinRations | GeneDef | Remove。不替换成原版基因 |
+| RHAH_Xenotype_Ratkin | XenotypeDef | Remove。不替换成原版异种 |
+| RHAH_XenotypeIcon_Ratkin | XenotypeIconDef | Remove |
 
 尚无 PawnKind、Backstory、Faction、TraderKind、Site、Thing、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
 
@@ -132,7 +135,10 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | --- | --- |
 | nanaloveyuki.ratkin.hungerandhavoc | packageId。清理副本的 meta 里应去掉本包，但不在运行时存档字段中 |
 | HungerAndHavocSettings.enableNewContent | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.optimizeGeneration | 全局 ModSettings，默认 true。关闭后不套初鼠种默认，事件 Profile 仍生效 |
+| HungerAndHavocSettings.optimizeGeneration | 全局 ModSettings，默认 true。关闭后不套权重异种，事件 Profile 仍生效 |
+| HungerAndHavocSettings.xenotypeWeights | 全局 ModSettings，默认空字典。缺键用登记建议权重。空字典不是全部禁用 |
+| HungerAndHavocSettings.enabledXenotypeDefNames | 全局 ModSettings，默认空。玩家加入的外部异种 defName |
+| HungerAndHavocSettings.enabledGeneDefNames | 全局 ModSettings，默认空。只允许 `RHAH_` 基因在生成后追加 |
 | HungerAndHavoc.Guard.* | Guard 始终加载，无存档类型 |
 | HungerAndHavocMod / HarmonyBootstrap / HungerAndHavocRuntime | 运行时入口，无 ExposeData |
 

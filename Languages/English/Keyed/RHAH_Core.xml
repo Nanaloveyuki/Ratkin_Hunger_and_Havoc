@@ -60,11 +60,22 @@
   <RHAH_Menu_Diagnostics_Map>Resolved map</RHAH_Menu_Diagnostics_Map>
   <RHAH_Menu_Ending_Gap>Ending switches are not implemented. This page does not write an ending.</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>Biotech gene settings are not implemented. This page does not edit genes.</RHAH_Menu_Genes_Gap>
+  <RHAH_Menu_Genes_NoBiotech>Biotech is not active. This page does not change xenotypes or write settings.</RHAH_Menu_Genes_NoBiotech>
+  <RHAH_Menu_Genes_Note>Bar length is the current chance, not the raw weight. Drag a bar to set a weight from 0 to 100. Zero stays out of the draw. If every weight is zero, generation uses the base ratkin xenotype, then the famine ratkin xenotype.</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_Reset>Reset weights</RHAH_Menu_Genes_Reset>
+  <RHAH_Menu_Genes_Fallback>The enabled weight total is zero. Generation uses the base ratkin xenotype, then the famine ratkin xenotype if that def is missing.</RHAH_Menu_Genes_Fallback>
+  <RHAH_Menu_Genes_WeightTip>Def: {0}. Suggested weight {1}. Chance is this weight divided by the enabled total.</RHAH_Menu_Genes_WeightTip>
+  <RHAH_Menu_Genes_Missing>Not loaded: {0}</RHAH_Menu_Genes_Missing>
+  <RHAH_Menu_Genes_Switches>Mod genes</RHAH_Menu_Genes_Switches>
+  <RHAH_Menu_Genes_Join>Ratkin xenotypes available to join</RHAH_Menu_Genes_Join>
+  <RHAH_Menu_Genes_JoinOne>Join {0}</RHAH_Menu_Genes_JoinOne>
+  <RHAH_Menu_Genes_Remove>Remove</RHAH_Menu_Genes_Remove>
+  <RHAH_Menu_Genes_NoOwned>No mod genes are available to toggle.</RHAH_Menu_Genes_NoOwned>
   <RHAH_Menu_PawnHistory_Gap>History generation controls are not implemented. This page does not change backstories.</RHAH_Menu_PawnHistory_Gap>
   <RHAH_Menu_Experimental_Gap>Generation optimization is registered on this page. Other experiments are not added yet.</RHAH_Menu_Experimental_Gap>
   <RHAH_Menu_Experimental_Note>These options change generation cost. Turning one off still uses each incident's apparel, backstory, health, and gene profile.</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>Optimize incident generation</RHAH_Settings_OptimizeGeneration>
-  <RHAH_Settings_OptimizeGeneration_Tooltip>Skips relations, titles, random apparel, and world pawn redress. Uses the NewRatkinPlus base ratkin xenotype when an incident does not choose genes. Missing genes leave the vanilla default.</RHAH_Settings_OptimizeGeneration_Tooltip>
+  <RHAH_Settings_OptimizeGeneration_Tooltip>Skips relations, titles, random apparel, and world pawn redress. Incidents without an explicit xenotype draw from the gene page weights. Missing weights use the base ratkin xenotype, then the famine ratkin xenotype.</RHAH_Settings_OptimizeGeneration_Tooltip>
   <RHAH_Menu_Frequency_Gap>Incident chance over time is not implemented. The curve stays at zero and is not saved.</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Days>Days shown</RHAH_Menu_Frequency_Days>
   <RHAH_Menu_Frequency_Expression>Expression</RHAH_Menu_Frequency_Expression>
