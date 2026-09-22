@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Verse;
 
 namespace HungerAndHavoc.Narrative
@@ -37,6 +38,10 @@ namespace HungerAndHavoc.Narrative
         int rescued;
         int lost;
         bool failed;
+        List<bool> suiyinEnabled = new List<bool>();
+        List<bool> suiyinStarted = new List<bool>();
+        List<int> suiyinDeadlineTick = new List<int>();
+        readonly SuiyinLedger suiyin = new SuiyinLedger();
 
         public NarrativeState(Game game)
         {
@@ -66,6 +71,29 @@ namespace HungerAndHavoc.Narrative
         {
             failed = true;
         }
+        internal bool SuiyinAllows(SuiyinNode node, int tick)
+        {
+            return suiyin.Allows(node, tick);
+        }
+
+        internal void SetSuiyinEnabled(SuiyinNode node, bool enabled)
+        {
+            suiyin.SetEnabled(node, enabled);
+        }
+
+        internal void StartSuiyin(SuiyinNode node, int deadlineTick)
+        {
+            suiyin.Start(node, deadlineTick);
+        }
+
+        internal void NoteIncident(SuiyinIncidentFact fact)
+        {
+        }
+
+        internal void NotePlague(SuiyinPlagueFact fact)
+        {
+        }
+
 
         public NarrativeSnapshot Snapshot()
         {
@@ -84,6 +112,22 @@ namespace HungerAndHavoc.Narrative
             Scribe_Values.Look(ref rescued, "rescued", 0);
             Scribe_Values.Look(ref lost, "lost", 0);
             Scribe_Values.Look(ref failed, "failed", false);
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                suiyin.Export(suiyinEnabled, suiyinStarted, suiyinDeadlineTick);
+            }
+
+            Scribe_Collections.Look(ref suiyinEnabled, "suiyinEnabled", LookMode.Value);
+            Scribe_Collections.Look(ref suiyinStarted, "suiyinStarted", LookMode.Value);
+            Scribe_Collections.Look(ref suiyinDeadlineTick, "suiyinDeadlineTick", LookMode.Value);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                suiyinEnabled = suiyinEnabled ?? new List<bool>();
+                suiyinStarted = suiyinStarted ?? new List<bool>();
+                suiyinDeadlineTick = suiyinDeadlineTick ?? new List<int>();
+                suiyin.Import(suiyinEnabled, suiyinStarted, suiyinDeadlineTick);
+                trust = SuiyinNodes.ClampTrust(trust);
+            }
         }
     }
 

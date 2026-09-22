@@ -43,6 +43,12 @@ namespace HungerAndHavoc.Incidents
 
                 created.Add(result);
             }
+            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new Narrative.SuiyinIncidentFact(
+                context.DisplayId,
+                context.Map.uniqueID,
+                context.SpawnBatchId,
+                created.Count,
+                context.CarriesPlague));
 
             return true;
         }
