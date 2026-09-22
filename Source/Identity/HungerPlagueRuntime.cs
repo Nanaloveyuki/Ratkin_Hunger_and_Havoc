@@ -7,6 +7,12 @@ namespace HungerAndHavoc.Identity
 {
     internal static class HungerPlagueRuntime
     {
+        static readonly Dictionary<int, int> missingSinceTicks = new Dictionary<int, int>();
+        static readonly List<int> recoveredLoadIds = new List<int>();
+        static readonly List<int> pendingReturnLoadIds = new List<int>();
+        static readonly List<PlagueWatchEntry> watchEntries = new List<PlagueWatchEntry>();
+
+
         internal static bool IsQuarantined(Verse.Pawn pawn)
         {
             if (pawn == null)
@@ -32,7 +38,7 @@ namespace HungerAndHavoc.Identity
             }
 
             int absoluteDay = GenLocalDate.Year(map) * 60 + GenLocalDate.DayOfYear(map);
-            SettleQuarantine(component, map);
+            SettleQuarantine(component, map, Find.TickManager.TicksGame);
             TryScheduleReturn(component, map);
             AdvanceReturn(component, map);
             if (!HungerPlague.IsSpreadDay(absoluteDay, component.PlagueLastSpreadDay))
@@ -98,7 +104,7 @@ namespace HungerAndHavoc.Identity
             }
         }
 
-        internal static void SettleQuarantine(MapComponent_HungerAndHavoc component, Map map)
+        internal static void SettleQuarantine(MapComponent_HungerAndHavoc component, Map map, int tick)
         {
             List<int> ids = component.PlagueQuarantineLoadIds;
             if (!HungerPlague.QuarantineOpen(ids))
@@ -106,56 +112,134 @@ namespace HungerAndHavoc.Identity
                 return;
             }
 
-            PlagueWatch watch = new PlagueWatch();
+            watchEntries.Clear();
             for (int i = ids.Count - 1; i >= 0; i--)
             {
                 int loadId = ids[i];
                 Verse.Pawn pawn = FindPawn(loadId);
-                bool dead = pawn == null || pawn.Dead || pawn.Destroyed;
-                bool left = pawn != null && pawn.MapHeld != map;
+                if (pawn == null)
+                {
+                    if (tick - MissingSince(loadId, tick) < GenDate.TicksPerDay)
+                    {
+                        continue;
+                    }
+
+                    watchEntries.Add(new PlagueWatchEntry { LoadId = loadId, Missing = true });
+
+                    ids.RemoveAt(i);
+                    missingSinceTicks.Remove(loadId);
+                    continue;
+                }
+
+                missingSinceTicks.Remove(loadId);
+                bool dead = pawn.Dead || pawn.Destroyed;
+                bool here = !dead && pawn.MapHeld == map;
                 bool sick = HungerPlague.HasActive(pawn);
-                if (!dead && !left && sick)
+                if (here && sick)
                 {
                     continue;
                 }
 
-                watch.Entries.Add(new PlagueWatchEntry
+                watchEntries.Add(new PlagueWatchEntry
                 {
                     LoadId = loadId,
                     Dead = dead,
-                    LeftMap = left && !dead,
-                    StillSick = sick,
-                    Counted = false
+                    LeftMap = !dead && !here,
+                    StillSick = sick
                 });
                 ids.RemoveAt(i);
             }
 
+            PlagueWatch watch = new PlagueWatch { Entries = watchEntries };
             PlagueTally tally = HungerPlague.ResolveQuarantine(watch);
             component.PlagueRecovered += tally.Recovered;
             component.PlagueDied += tally.Died;
+            RememberRecovered();
             if (tally.Recovered > 0 || tally.Died > 0)
             {
                 Current.Game?.GetComponent<Narrative.NarrativeState>()?.NotePlague(
                     new Narrative.SuiyinPlagueFact(map.uniqueID, tally.Recovered, tally.Died));
             }
-            RememberReturnCandidate(watch);
+
+            RememberReturnCandidate();
+            watchEntries.Clear();
         }
 
-        static void RememberReturnCandidate(PlagueWatch watch)
+        static int MissingSince(int loadId, int tick)
         {
+            int since;
+            if (!missingSinceTicks.TryGetValue(loadId, out since))
+            {
+                missingSinceTicks[loadId] = tick;
+                return tick;
+            }
+
+            return since;
+        }
+
+        static void RememberRecovered()
+        {
+            for (int i = 0; i < watchEntries.Count; i++)
+            {
+                PlagueWatchEntry entry = watchEntries[i];
+                if (entry == null || !entry.Counted || entry.Dead || entry.StillSick || entry.LoadId <= 0)
+                {
+                    continue;
+                }
+
+                if (entry.LeftMap)
+                {
+                    if (!recoveredLoadIds.Contains(entry.LoadId))
+                    {
+                        recoveredLoadIds.Add(entry.LoadId);
+                    }
+                }
+                else if (!pendingReturnLoadIds.Contains(entry.LoadId))
+                {
+                    pendingReturnLoadIds.Add(entry.LoadId);
+                }
+            }
+        }
+
+        static void RememberReturnCandidate()
+        {
+            for (int i = pendingReturnLoadIds.Count - 1; i >= 0; i--)
+            {
+                int loadId = pendingReturnLoadIds[i];
+                Verse.Pawn pawn = FindPawn(loadId);
+                if (pawn == null || pawn.Dead || pawn.Destroyed || HungerPlague.HasActive(pawn))
+                {
+                    pendingReturnLoadIds.RemoveAt(i);
+                    continue;
+                }
+
+                if (pawn.MapHeld != null)
+                {
+                    continue;
+                }
+
+                pendingReturnLoadIds.RemoveAt(i);
+                if (!recoveredLoadIds.Contains(loadId))
+                {
+                    recoveredLoadIds.Add(loadId);
+                }
+            }
+
             GameComponent_HungerAndHavoc game = Current.Game?.GetComponent<GameComponent_HungerAndHavoc>();
-            if (game == null || game.PlagueReturnLoadId != 0)
+            if (game == null || game.PlagueReturnLoadId != 0 || Find.TickManager == null)
             {
                 return;
             }
 
-            int chosen = HungerPlague.ChooseReturn(game.PlagueReturnLoadId, watch.Entries);
-            if (chosen > 0)
+            int chosen = HungerPlague.ChooseReturn(game.PlagueReturnLoadId, recoveredLoadIds);
+            if (chosen <= 0)
             {
-                game.PlagueReturnLoadId = chosen;
-                game.PlagueReturnDueTick = Find.TickManager.TicksGame + GenDate.TicksPerDay * HungerPlague.ReturnDelayDays;
-                game.PlagueReturnPhase = 1;
+                return;
             }
+
+            game.PlagueReturnLoadId = chosen;
+            game.PlagueReturnDueTick = Find.TickManager.TicksGame + GenDate.TicksPerDay * HungerPlague.ReturnDelayDays;
+            game.PlagueReturnPhase = 1;
         }
 
         static void TryScheduleReturn(MapComponent_HungerAndHavoc component, Map map)

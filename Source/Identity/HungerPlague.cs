@@ -105,7 +105,7 @@ namespace HungerAndHavoc.Identity
         {
             int recovered = 0;
             int died = 0;
-            if (watch.Entries == null)
+            if (watch?.Entries == null)
             {
                 return new PlagueTally(recovered, died);
             }
@@ -118,22 +118,52 @@ namespace HungerAndHavoc.Identity
                     continue;
                 }
 
-                if (entry.Dead)
+                PlagueOutcome outcome = Classify(entry);
+                if (outcome == PlagueOutcome.Keep)
                 {
-                    entry.Counted = true;
-                    died++;
                     continue;
                 }
 
-                if (entry.LeftMap || !entry.StillSick)
+                entry.Counted = true;
+                if (outcome == PlagueOutcome.Recovered)
                 {
-                    entry.Counted = true;
                     recovered++;
+                }
+                else if (outcome == PlagueOutcome.Died)
+                {
+                    died++;
                 }
             }
 
             return new PlagueTally(recovered, died);
         }
+
+        internal static PlagueOutcome Classify(PlagueWatchEntry entry)
+        {
+            if (entry == null || entry.Keep)
+            {
+                return PlagueOutcome.Keep;
+            }
+
+            if (entry.Dead && entry.StillSick)
+            {
+                return PlagueOutcome.Died;
+            }
+
+            if (entry.Missing || (entry.StillSick && !entry.Dead))
+            {
+                return PlagueOutcome.Released;
+            }
+
+
+            if (!entry.Dead && !entry.StillSick)
+            {
+                return PlagueOutcome.Recovered;
+            }
+
+            return PlagueOutcome.Released;
+        }
+
 
         internal static bool QuarantineOpen(IList<int> loadIds)
         {
@@ -170,29 +200,24 @@ namespace HungerAndHavoc.Identity
                    gate == HungerBehaviorGate.Transfer;
         }
 
-        internal static int ChooseReturn(int alreadyReturnedLoadId, IList<PlagueWatchEntry> entries)
+        internal static int ChooseReturn(int alreadyReturnedLoadId, IList<int> recoveredLoadIds)
         {
-            if (alreadyReturnedLoadId != 0 || entries == null)
+            if (alreadyReturnedLoadId != 0 || recoveredLoadIds == null)
             {
                 return 0;
             }
 
-            for (int i = 0; i < entries.Count; i++)
+            for (int i = 0; i < recoveredLoadIds.Count; i++)
             {
-                PlagueWatchEntry entry = entries[i];
-                if (entry != null &&
-                    entry.Counted &&
-                    !entry.Dead &&
-                    entry.LeftMap &&
-                    !entry.StillSick &&
-                    entry.LoadId > 0)
+                if (recoveredLoadIds[i] > 0)
                 {
-                    return entry.LoadId;
+                    return recoveredLoadIds[i];
                 }
             }
 
             return 0;
         }
+
     }
 
     internal sealed class PlagueWatchEntry
@@ -201,13 +226,27 @@ namespace HungerAndHavoc.Identity
         internal bool Dead;
         internal bool LeftMap;
         internal bool StillSick;
+        internal bool Keep;
+        internal bool Missing;
         internal bool Counted;
+    }
+
+
+
+    internal enum PlagueOutcome
+    {
+        Keep,
+        Recovered,
+        Died,
+        Released
     }
 
     internal sealed class PlagueWatch
     {
         internal List<PlagueWatchEntry> Entries = new List<PlagueWatchEntry>();
+        internal List<int> RecoveredLoadIds = new List<int>();
     }
+
 
     internal readonly struct PlagueTally
     {
