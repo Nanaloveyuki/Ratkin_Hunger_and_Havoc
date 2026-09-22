@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_History_Y001_FamineChild.title>famine child</RHAH_History_Y001_FamineChild.title>
+  <RHAH_History_Y001_FamineChild.titleShort>famine child</RHAH_History_Y001_FamineChild.titleShort>
+  <RHAH_History_Y001_FamineChild.baseDescription>[PAWN_nameDef] was small when the famine came to the Ratkin settlements. [PAWN_pronoun] learned to search refuse for food and to distrust anyone promising a full meal.</RHAH_History_Y001_FamineChild.baseDescription>
+  <RHAH_History_A001_ReliefTrader.title>relief trader</RHAH_History_A001_ReliefTrader.title>
+  <RHAH_History_A001_ReliefTrader.titleShort>relief trader</RHAH_History_A001_ReliefTrader.titleShort>
+  <RHAH_History_A001_ReliefTrader.baseDescription>[PAWN_nameDef] moved food and medicine between Ratkin settlements during the famine. [PAWN_pronoun] learned which promises could be traded and which ones would leave a caravan empty.</RHAH_History_A001_ReliefTrader.baseDescription>
+</LanguageData>

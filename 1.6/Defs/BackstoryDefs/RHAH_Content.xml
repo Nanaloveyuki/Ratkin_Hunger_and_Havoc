@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <BackstoryDef>
+    <defName>RHAH_History_Y001_FamineChild</defName>
+    <slot>Childhood</slot>
+    <title>famine child</title>
+    <titleShort>famine child</titleShort>
+    <baseDescription>[PAWN_nameDef] was small when the famine came to the Ratkin settlements. [PAWN_pronoun] learned to search refuse for food and to distrust anyone promising a full meal.</baseDescription>
+    <skillGains>
+      <Cooking>2</Cooking>
+      <Plants>1</Plants>
+    </skillGains>
+    <workDisables>
+      <li>Social</li>
+    </workDisables>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A001_ReliefTrader</defName>
+    <slot>Adulthood</slot>
+    <title>relief trader</title>
+    <titleShort>relief trader</titleShort>
+    <baseDescription>[PAWN_nameDef] moved food and medicine between Ratkin settlements during the famine. [PAWN_pronoun] learned which promises could be traded and which ones would leave a caravan empty.</baseDescription>
+    <skillGains>
+      <Social>2</Social>
+      <Animals>1</Animals>
+      <Cooking>1</Cooking>
+    </skillGains>
+    <workDisables>
+      <li>Firefighting</li>
+    </workDisables>
+  </BackstoryDef>
+</Defs>
