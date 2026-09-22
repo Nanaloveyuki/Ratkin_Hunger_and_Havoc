@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <HediffDef>
+    <defName>RHAH_ClaySatiety</defName>
+    <label>观音土饱腹</label>
+    <description>观音土在胃里结成硬块，饥饿暂时停了。结块还在时不能再吃。十五天内最多三块，之后会慢慢散开。</description>
+    <hediffClass>HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety</hediffClass>
+    <initialSeverity>0.33</initialSeverity>
+    <minSeverity>0.001</minSeverity>
+    <maxSeverity>1</maxSeverity>
+    <tendable>false</tendable>
+    <isBad>true</isBad>
+    <stages>
+      <li>
+        <label>胃中结块</label>
+        <hungerRateFactor>0</hungerRateFactor>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

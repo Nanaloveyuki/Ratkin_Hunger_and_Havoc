@@ -76,8 +76,11 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.ThinkNode_ConditionalRHAH_Visitor | ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.Area_RHAH_Relief | AreaManager `areas` | Remove。卸载后区域节点消失，格子不迁到家区 |
+| HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety | Hediff `Class` / `hediffClass` | Remove，随饱腹 Hediff 删除 |
+| HungerAndHavoc.Pawn.Comp_RHAH_Clay | ThingComp `Class` | Remove，随观音土物品删除 |
+| HungerAndHavoc.Pawn.CompProperties_RHAH_Clay | Def XML `Class` | 不单独出现在 `.rws` |
 
-Letter、Quest、Thing、WorldObject 尚无本模组存档类型。GameComponent 与 MapComponent 的键在下一节。新增时先加行。
+Letter、Quest、WorldObject 尚无本模组存档类型。GameComponent 与 MapComponent 的键在下一节。新增时先加行。
 ### Generation runtime
 
 | 类型 | 字段 | 存档键 | 卸载 |
@@ -109,6 +112,9 @@ Letter、Quest、Thing、WorldObject 尚无本模组存档类型。GameComponent
 | RHAH_GnawedBark | HediffDef | Remove。不替换成原版 Hediff |
 | RHAH_GnawedWall | HediffDef | Remove。不替换成原版 Hediff |
 | RHAH_OvergnawedWall | HediffDef | Remove。不替换成原版 Hediff |
+| RHAH_ClaySatiety | HediffDef | Remove。不替换成原版 Hediff |
+| RHAH_GuanyinTu | ThingDef | Remove。不替换成原版食物 |
+| RHAH_MakeGuanyinTu | RecipeDef | Remove |
 | RHAH_LargeRefugeeWave | IncidentDef | Remove |
 | RHAH_ThiefRatkinGroup | IncidentDef | Remove |
 | RHAH_AbandonedRatkinChildren | IncidentDef | Remove |
@@ -147,7 +153,16 @@ Letter、Quest、Thing、WorldObject 尚无本模组存档类型。GameComponent
 | RHAH_Faction_LeaningFriendly | FactionDef | Remove |
 | RHAH_Faction_Friendly | FactionDef | Remove |
 
-尚无 PawnKind、Backstory、TraderKind、Site、Thing、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
+尚无 PawnKind、Backstory、TraderKind、Site、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
+
+### Hediff_RHAH_ClaySatiety
+
+类型名：`HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety`。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| windowStartTick | windowStartTick | -1 | 否 | 当前十五天窗口起点。-1 表示没有窗口 |
+| ingestionCount | ingestionCount | 0 | 否 | 本窗口已吃块数，读档后夹到 0..3 |
 
 ## 非存档
 

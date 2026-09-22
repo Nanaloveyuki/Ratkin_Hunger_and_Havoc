@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="MealBaseIngredientless">
+    <defName>RHAH_GuanyinTu</defName>
+    <label>观音土</label>
+    <description>石块磨出来的土团。能暂时把饥饿压住，不能当饭。十五天里吃过三块后，胃里的结块还在，就吃不下去。</description>
+    <graphicData>
+      <texPath>Things/Item/Meal/Simple</texPath>
+      <graphicClass>Graphic_MealVariants</graphicClass>
+      <color>(0.72, 0.68, 0.58)</color>
+    </graphicData>
+    <statBases>
+      <MarketValue>0.2</MarketValue>
+      <Mass>0.2</Mass>
+      <Nutrition>0.1</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>MealAwful</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <defaultNumToIngestAtOnce>1</defaultNumToIngestAtOnce>
+      <optimalityOffsetHumanlikes>-40</optimalityOffsetHumanlikes>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="HungerAndHavoc.Pawn.CompProperties_RHAH_Clay" />
+    </comps>
+    <tradeability>None</tradeability>
+  </ThingDef>
+
+  <RecipeDef>
+    <defName>RHAH_MakeGuanyinTu</defName>
+    <label>磨观音土</label>
+    <description>把一块石块磨成三份观音土。</description>
+    <jobString>磨观音土。</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>CutStone</effectWorking>
+    <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0</workSkillLearnFactor>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>StoneChunks</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>StoneChunks</li>
+      </categories>
+    </fixedIngredientFilter>
+    <products>
+      <RHAH_GuanyinTu>3</RHAH_GuanyinTu>
+    </products>
+    <recipeUsers>
+      <li>TableStonecutter</li>
+    </recipeUsers>
+  </RecipeDef>
+</Defs>

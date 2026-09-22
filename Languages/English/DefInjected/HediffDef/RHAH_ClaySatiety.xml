@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_ClaySatiety.label>clay satiety</RHAH_ClaySatiety.label>
+  <RHAH_ClaySatiety.description>Ground stone has packed into the stomach and stopped hunger for now. More cannot be eaten while the lump remains. Three portions in fifteen days is the limit, then it slowly breaks up.</RHAH_ClaySatiety.description>
+  <RHAH_ClaySatiety.stages.0.label>packed stomach</RHAH_ClaySatiety.stages.0.label>
+</LanguageData>
