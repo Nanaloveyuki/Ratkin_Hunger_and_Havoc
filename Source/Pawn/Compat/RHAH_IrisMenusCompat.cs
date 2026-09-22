@@ -405,21 +405,23 @@ namespace HungerAndHavoc.Pawn.Compat
             if (Widgets.ButtonText(new Rect(buttons.x + 148f, buttons.y, 140f, 26f),
                 "RHAH_Settings_ReliefFoods_None".Translate()))
             {
-                List<ThingDef> candidates = RHAH_ReliefFood.CandidateFoods();
-                List<string> names = new List<string>();
-                for (int i = 0; i < candidates.Count; i++)
+                List<ThingDef> foods = new List<ThingDef>();
+                RHAH_ReliefFood.AppendCandidateFoods(foods);
+                List<string> names = new List<string>(foods.Count);
+                for (int i = 0; i < foods.Count; i++)
                 {
-                    names.Add(candidates[i].defName);
+                    names.Add(foods[i].defName);
                 }
 
                 settings.SetAllReliefFood(false, names);
             }
 
             list.Gap(4f);
-            List<ThingDef> foods = RHAH_ReliefFood.CandidateFoods();
-            for (int i = 0; i < foods.Count; i++)
+            List<ThingDef> listed = new List<ThingDef>();
+            RHAH_ReliefFood.AppendCandidateFoods(listed);
+            for (int i = 0; i < listed.Count; i++)
             {
-                ThingDef food = foods[i];
+                ThingDef food = listed[i];
                 bool enabled = settings.IsReliefFoodEnabled(food.defName);
                 MenuControls.Anchor(list, "relief-food-" + food.defName);
                 MenuControls.Checkbox(list, food.LabelCap, ref enabled);

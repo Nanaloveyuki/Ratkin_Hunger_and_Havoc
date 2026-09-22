@@ -14,6 +14,7 @@ namespace HungerAndHavoc.Identity
         internal const float SpreadChanceCap = 0.30f;
         internal const float BloodPumpingSkipPercent = 120f;
         internal const int SpreadHour = 6;
+        internal const int CheckIntervalTicks = 2500;
         internal const int SpreadDayInterval = 3;
         internal const int ReturnDelayDays = 15;
         internal const int ReturnStayDays = 1;

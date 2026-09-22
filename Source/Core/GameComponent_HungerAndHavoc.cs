@@ -95,7 +95,12 @@ namespace HungerAndHavoc.Core
         }
         void TickPlague()
         {
-            if (Find.Maps == null)
+            if (Find.TickManager == null || Find.Maps == null)
+            {
+                return;
+            }
+
+            if (Find.TickManager.TicksGame % Identity.HungerPlague.CheckIntervalTicks != 0)
             {
                 return;
             }

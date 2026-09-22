@@ -64,6 +64,57 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | familyRole | familyRole | Unspecified | 否 | `HungerPawnRole` |
 
 
+### ChoiceLetter_RHAH_Request
+
+类型名：`HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Request`。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| choiceId | choiceId | 0 | 否 | 对应 `HungerChoiceRecord.id` |
+| mapId | mapId | 0 | 否 | |
+| kind | kind | None | 否 | `HungerRequestKind` |
+| site | site | None | 否 | `HungerIntelSiteKind` |
+| amount | amount | 0 | 否 | |
+| expireTick | expireTick | -1 | 否 | |
+
+### ChoiceLetter_RHAH_Visitors
+
+类型名：`HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Visitors`。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| choiceId | choiceId | 0 | 否 | 对应 `HungerChoiceRecord.id` |
+| choice | choice | Visitors | 否 | `HungerChoiceKind` |
+
+### HungerChoiceRecord
+
+类型名：`HungerAndHavoc.Incidents.HungerChoiceRecord`。嵌在 `openChoices` 里。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| Id | id | 0 | 否 | |
+| DisplayId | displayId | 空字符串 | 否 | `PostLoadInit` 把 null 补成空字符串 |
+| MapId | mapId | 0 | 否 | |
+| BatchId | batchId | 0 | 否 | |
+| Kind | kind | None | 否 | `HungerRequestKind` |
+| Site | site | None | 否 | `HungerIntelSiteKind` |
+| Choice | choice | None | 否 | `HungerChoiceKind` |
+| Amount | amount | 0 | 否 | |
+| ExpireTick | expireTick | -1 | 否 | |
+| Settled | settled | None | 否 | `HungerChoiceAction` |
+| PawnLoadIds | pawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
+
+### WorldObject_RHAH_RefugeeCamp
+
+类型名：`HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp`。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| residents | residents | 空集合 | 是 | 居民引用。`PostLoadInit` 补空列表；null 与空集合语义相同 |
+| cleared | cleared | false | 否 | |
+| nextCheck | nextCheck | -1 | 否 | 下次检查 tick |
+
+
 ## 可序列化类型
 
 | 类型 | 出现位置 | 卸载 |

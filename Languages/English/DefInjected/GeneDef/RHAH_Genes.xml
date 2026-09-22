@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Gene_ThinRations.label>thin rations</RHAH_Gene_ThinRations.label>
+  <RHAH_Gene_ThinRations.description>Carriers of this gene need less food than normal. Hunger still comes, and they can still starve.</RHAH_Gene_ThinRations.description>
+  <RHAH_Gene_ThinRations.customEffectDescriptions.0>Maximum nutrition need is 85% of normal</RHAH_Gene_ThinRations.customEffectDescriptions.0>
+  <RHAH_Gene_ThinRations.customEffectDescriptions.1>Does not stop hunger or starvation</RHAH_Gene_ThinRations.customEffectDescriptions.1>
+</LanguageData>

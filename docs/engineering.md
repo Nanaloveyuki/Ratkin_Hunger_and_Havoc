@@ -214,4 +214,4 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 测试程序集只能通过 `InternalsVisibleTo` 访问内部实现，且不得成为运行时依赖
 - 修 bug 时的范围、Language、存档和卸载门禁见 [bug-handling.md](bug-handling.md)
 
-这些检查属于 CI 阻断级门禁。当前检查脚本或测试尚未覆盖的条目，后续实现迁移必须补齐；不能因为检查缺失而视为符合标准。`scripts/verify-scaffold.py` 已检查中英 Keyed 键集合对称、`sourceIncidentDisplayId` 等 Comp 存档键、Hediff XML 类型名和旧前缀。尚未自动检查：`Translate` 引用是否存在、英文 DefInjected 是否覆盖 Def 正文、卸载归属表是否与代码同步。
+这些检查属于 CI 阻断级门禁。`scripts/verify-scaffold.py` 检查中英 Keyed 对称、源码里的 `Translate` 字面量、中文 Def 正文的英文 DefInjected、`Scribe_*.Look` 键是否出现在卸载归属表、Hediff XML 类型名和旧前缀。动态拼接的翻译键不在字面量扫描里，事件标签另按目录 defName 检查。

@@ -29,6 +29,7 @@ namespace HungerAndHavoc.Pawn
         internal const float SatisfiedLevel = 0.82f;
         internal const float RefeedMalnutrition = 0.4f;
         internal const int RetryBaseTicks = 250;
+        internal const float SearchRadius = 40f;
 
         internal static bool ReliefRulesApply
         {
@@ -113,6 +114,11 @@ namespace HungerAndHavoc.Pawn
             if (!ignoreZone && ReliefRulesApply && !InRequestedZone(pawn.Map, food, insideZone))
             {
                 return RHAH_FoodReject.Zone;
+            }
+
+            if ((food.PositionHeld - pawn.Position).LengthManhattan > SearchRadius)
+            {
+                return RHAH_FoodReject.Unreachable;
             }
 
             if (food.IsForbidden(pawn))
@@ -270,27 +276,32 @@ namespace HungerAndHavoc.Pawn
         internal static List<ThingDef> CandidateFoods()
         {
             List<ThingDef> result = new List<ThingDef>();
-            if (DefDatabase<ThingDef>.AllDefsListForReading == null)
+            AppendCandidateFoods(result);
+            return result;
+        }
+
+        internal static void AppendCandidateFoods(List<ThingDef> result)
+        {
+            if (result == null || DefDatabase<ThingDef>.AllDefsListForReading == null)
             {
-                return result;
+                return;
             }
 
+            HashSet<ThingDef> seen = new HashSet<ThingDef>(result);
             List<ThingDef> defs = DefDatabase<ThingDef>.AllDefsListForReading;
             for (int i = 0; i < defs.Count; i++)
             {
                 ThingDef def = defs[i];
-                if (def != null && def.IsNutritionGivingIngestible && !result.Contains(def))
+                if (def != null && def.IsNutritionGivingIngestible && seen.Add(def))
                 {
                     result.Add(def);
                 }
             }
 
-            if (ThingDefOf.MealNutrientPaste != null && !result.Contains(ThingDefOf.MealNutrientPaste))
+            if (ThingDefOf.MealNutrientPaste != null && seen.Add(ThingDefOf.MealNutrientPaste))
             {
                 result.Add(ThingDefOf.MealNutrientPaste);
             }
-
-            return result;
         }
     }
 }
