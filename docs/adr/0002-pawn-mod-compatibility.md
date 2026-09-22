@@ -1,6 +1,6 @@
 # ADR 0002: Pawn 身份与其它模组可改行为
 
-- Status: Accepted
+- Status: Implemented
 - Date: 2026-09-20
 - Superseded in part by: [0003](0003-engineering-standards.md)（对外身份是 `IHungerPawn`，不是 `CompHungerPawn`）
 

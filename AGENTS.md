@@ -1,89 +1,122 @@
-## References
+## 先读
 
-Most in Windows, not WSL.
+后来的 agent 先打开本页，再按任务打开对应文档。不要在仓库外重新搜索这些路径，也不要把旧鼠灾仓库的源码拷进本仓库。
 
-- Vanilla Game Decompile
-  - DLCs: `D:\References\Rimworld\Vanilla\DLCs\`
-  - Game: `D:\References\Rimworld\Vanilla\Game`
-- Mods
-  - NewRatkinPlus (RaceMod): `D:\References\Rimworld\Mods\NewRatkinPlus`
-  - NewRatkinPlus Chinese Translate: `D:\References\Rimworld\Mods\NewRatkinPlus_zh`
-- Old-Repo: `~/repos/Ratkin-Great-Famine-Year-Continued`
+规范冲突时以 `docs/engineering.md` 为准。玩法只对照旧仓库，禁止拷贝其源码、存档字段或 `MouseDisaster` 命名。
 
-## This mod
+## 本仓库
 
-- Display name: `鼠族: 饥与祸` / `Ratkin: Hunger and Havoc`
-- `packageId`: `nanaloveyuki.ratkin.hungerandhavoc`
-- Def / keyed prefix: `RHAH_`
-- Namespace: `HungerAndHavoc`
-- Game content lives under `1.6/` (add `1.7/` later; do not put Defs/assemblies at repo root)
-- Decisions: `docs/adr/`
-- Engineering standard: `docs/engineering.md`
-- Bug process: `docs/bug-handling.md`
-- Save / uninstall inventory: `docs/save-ownership.md`
-- Play spec only (do not copy source): `/root/repos/Ratkin-Great-Famine-Year-Continued`
-- Other mods must use `HungerAndHavoc.Api`, not Backstory or private jobs
+- 显示名：`鼠族: 饥与祸` / `Ratkin: Hunger and Havoc`
+- `packageId`：`nanaloveyuki.ratkin.hungerandhavoc`
+- Def / Keyed 前缀：`RHAH_`
+- 命名空间：`HungerAndHavoc`
+- 版本目录：`1.6/`。以后加 `1.7/`，不要把 Def 或程序集放到仓库根
+- 部署目录：`/mnt/e/Apps/Steam/steamapps/common/RimWorld/Mods/RatkinHungerAndHavoc`
+- 禁止写入：`/mnt/e/Apps/Steam/steamapps/common/RimWorld/Mods/RatkinGreatFamineYearContinued`
 
-## Comment
+| 要查什么 | 路径 |
+| --- | --- |
+| 工程标准、程序集、public 例外 | `docs/engineering.md` |
+| 名称、显示 ID、文件名 | `docs/naming.md` |
+| 事件目录 `I-001`..`I-051` | `docs/incidents.md` |
+| Pawn 身份、闸门、生命周期 | `docs/pawn.md` |
+| 外部模组兼容 | `docs/compatibility.md` |
+| 存档键与卸载归属 | `docs/save-ownership.md` |
+| 修 bug 的范围 | `docs/bug-handling.md` |
+| 路线与当前进度 | `docs/project-goals.md` |
+| 决策记录 | `docs/adr/` |
+| 面向玩家的说明 | `README.md` |
+| 构建并部署 | `scripts/build-and-deploy.ps1` |
+| 结构检查 | `scripts/verify-scaffold.py` |
 
-### How comment?
+源码：
 
-Use short and clear **Chinese** comment when you need comment somethings.
+| 层 | 路径 |
+| --- | --- |
+| 稳定 API | `Source/Api/` → `HungerAndHavoc.Api.dll` |
+| 实现 | `Source/` → `HungerAndHavoc.dll` |
+| 入口与设置 | `Source/Core/ModEntry.cs`、`Source/Core/HungerAndHavocSettings.cs` |
+| 事件目录 | `Source/Incidents/HungerIncidentCatalog.cs` |
+| 访客与兼容 | `Source/Pawn/`、`Source/Pawn/Compat/` |
+| IrisMenus 页面 | `Source/Pawn/Compat/RHAH_IrisMenusCompat.cs` |
+| 叙事状态 | `Source/Narrative/NarrativeState.cs` |
+| Guard | `Guard/Source/` |
+| 测试 | `Source/Tests/` |
+| 当前 Def | `1.6/Defs/` |
+| 中英 Keyed | `Languages/ChineseSimplified/Keyed/`、`Languages/English/Keyed/` |
 
-DO NOT USE USELESS **Punctuation Marks** IN THE SENTENCE END.
+玩家可见文案先读 `skill://rimworld-writing`。该技能的原版对照在 `/mnt/d/References/Rimworld/Vanilla/`。
 
-example:`建议使用 Ratkin Young 字段而非 Ratkin Egg 字段来表示鼠蛋`
+## 本机路径
 
-NO Chinese Punctuation Marks
+Windows 路径给资源管理器和 PowerShell。WSL 里用 `/mnt/...`。
 
-### When comment?
+| 用途 | Windows | WSL |
+| --- | --- | --- |
+| 游戏本体 | `E:\Apps\Steam\steamapps\common\RimWorld` | `/mnt/e/Apps/Steam/steamapps/common/RimWorld` |
+| 已部署的本模组 | `E:\Apps\Steam\steamapps\common\RimWorld\Mods\RatkinHungerAndHavoc` | `/mnt/e/Apps/Steam/steamapps/common/RimWorld/Mods/RatkinHungerAndHavoc` |
+| 已安装 IrisMenus | `E:\Apps\Steam\steamapps\common\RimWorld\Mods\IrisMenus` | `/mnt/e/Apps/Steam/steamapps/common/RimWorld/Mods/IrisMenus` |
+| 游戏日志 | `C:\Users\miaom\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios\Player.log` | `/mnt/c/Users/miaom/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Player.log` |
+| 原版反编译 | `D:\References\Rimworld\Vanilla\Game` | `/mnt/d/References/Rimworld/Vanilla/Game` |
+| 原版 DLC Def | `D:\References\Rimworld\Vanilla\DLCs` | `/mnt/d/References/Rimworld/Vanilla/DLCs` |
+| NewRatkinPlus | `D:\References\Rimworld\Mods\NewRatkinPlus` | `/mnt/d/References/Rimworld/Mods/NewRatkinPlus` |
+| NewRatkinPlus 简中 | `D:\References\Rimworld\Mods\NewRatkinPlus_zh` | `/mnt/d/References/Rimworld/Mods/NewRatkinPlus_zh` |
+| 旧鼠灾，只对照玩法 |  | `/root/repos/Ratkin-Great-Famine-Year-Continued` |
+| IrisMenus 源码与公开 API |  | `/root/repos/IrisMenus` |
 
-Actually You Real Need or Maybe Lost Memory, Or clarify the facts to the user
+`scripts/build-and-deploy.ps1` 里的默认 `D:\Appdata\...` 不是这台机器的游戏目录。本机用上面的 `E:\Apps\...`，或已导出的 `RIMWORLD_DIR` / `RimWorldDir`。
+
+IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `MenuControls.cs`。接入说明是同仓库的 `guide.md` 与 `guide_agents.md`。它的 About 没有 `modVersion`，用 `supportedVersions` 的 1.6 判断。
+
+## 注释
+
+需要注释时用短中文，句末不加标点。
+
+例：`建议使用 Ratkin Young 字段而非 Ratkin Egg 字段来表示鼠蛋`
+
+只在意图、约束或之后会丢的事实上注释。
 
 ## Bug fix
 
-Follow `docs/bug-handling.md`. Fill the fix card before editing.
+先按 `docs/bug-handling.md` 写修复卡，再改代码。
 
-Allowed in the same change: the root-cause path, its regression test, and Language / save-key / ownership updates that the fix forces.
+同一次改动只包含根因路径、它的回归测试，以及这次修复迫使更新的 Language、存档键和归属表。
 
-Do not drive-by rename save keys, move namespaces, expand API, or format unrelated files.
+不要顺手改存档键、挪命名空间、扩大 API 或格式化无关文件。
 
-Player-facing strings need matching ChineseSimplified and English Keyed keys. Def body text stays Chinese; English uses DefInjected.
+玩家可见字符串必须同时有 ChineseSimplified 和 English Keyed。Def 正文保持中文，英文走 DefInjected。
 
-Save keys and XML type names are contracts. Pre-1.0 rebuilds must be explicit on the fix card. Register new persisted Defs/types in `docs/save-ownership.md`.
+存档键和 XML 类型名是契约。1.0.0 前的破坏性重建必须写在修复卡上。新的持久化 Def 或类型登记到 `docs/save-ownership.md`。
 
-## Current milestone
+## 当前进度
 
-M0 契约基线已完成，版本 `0.1.0`。其它模组只引用 `HungerAndHavoc.Api.dll` 查询来源、访客、闸门、标记和释放，看不到 Comp / Hediff / Job。
+版本 `0.1.0`。M0 到 M3 的目录、生成、访客、调度和 IrisMenus 页面已经落地。叙事只有 `NarrativeState` 的计数和结局计算，结局开关、基因设置、经历概率和事件频率函数还没有。
 
-规范以 `docs/engineering.md` 为准，冲突按该页优先级。玩法对照旧仓库，禁止拷贝旧源码。
+已落地：
 
-### 已落地
+- `HungerAndHavoc.Api.dll` 与实现分离。其它模组只引用 API
+- `IHungerPawn` / `HungerPawnSnapshot`。API 不传 Comp、Hediff 或 Job
+- `CompHungerPawn` 在 `HungerAndHavoc.Identity`。存档键 `sourceIncidentDisplayId`
+- 事件目录 `I-001`..`I-051`，Def 在 `1.6/Defs/IncidentDefs/`
+- 访客 Lord、Job、Duty 和 ThinkTree 在 `Source/Pawn/` 与 `1.6/Defs/`
+- `GameComponent_HungerAndHavoc`、`MapComponent_HungerAndHavoc`
+- IrisMenus 1.6 的 14 个 SubItem。可选依赖，缺失时不注册
+- Guard 与 `LoadFolders.xml` 在旧鼠灾包启用时跳过主体
 
-- 独立 `HungerAndHavoc.Api.dll`，实现 → API，API 不引用实现
-- `IHungerPawn` / `HungerPawnSnapshot`；API 事件不传 Comp
-- `CompHungerPawn` 在 `HungerAndHavoc.Identity`；存档键 `sourceIncidentDisplayId`
-- `RegisterRatkinMatcher` 取代对外的 `HungerRace.Register`
-- 事件目录 `I-001`..`I-051`；中英 Keyed 对称
-- Guard 冲突检测与 `LoadFolders.xml` 主体跳过
+不要改 `packageId`、显示名、Harmony Id、Guard 冲突列表，也不要改已登记的 51 个事件显示 ID。
 
-### 下一目标：M1
+不要再建 `Source/Behavior`。Generation、Narrative、Pawn 已有类型，不要为了规划再建空目录。
 
-最小可玩闭环：一条原作求助事件（先 `I-001`）加一条敌对事件，含生成、行为、救济/冲突、离场和存档重载。
-
-未做：IncidentDef / Worker、生成管线、访客 AI、`GameComponent` / `MapComponent`、Harmony 业务补丁、叙事/结局、经历/特质。
-
-不要建空的 Generation、Behavior、Narrative、World、Patches、UI 目录。不要改 packageId、显示名、Harmony Id、Guard 冲突列表、事件目录 51 条显示 ID。
-
-### 验证
+## 验证
 
 ```
 python3 scripts/verify-scaffold.py
 dotnet build Source/Api/HungerAndHavoc.Api.csproj -p:RimWorldDir=/mnt/e/Apps/Steam/steamapps/common/RimWorld
 dotnet build Source/HungerAndHavoc.csproj -p:RimWorldDir=/mnt/e/Apps/Steam/steamapps/common/RimWorld
+dotnet build Guard/Source/HungerAndHavocGuard.csproj -p:RimWorldDir=/mnt/e/Apps/Steam/steamapps/common/RimWorld
 dotnet test Source/Tests/HungerAndHavoc.Tests.csproj -p:RimWorldDir=/mnt/e/Apps/Steam/steamapps/common/RimWorld
 ```
 
-Windows 默认 RimWorld 目录：`D:\Appdata\Steam\steamapps\common\RimWorld`。
+部署到 `Mods/RatkinHungerAndHavoc`。游戏正在运行时不要覆盖。IrisMenus.dll 是 net48 可选引用，`Private=False`，不要打进 `1.6/Assemblies/`。
 
 不要提交 `bin/`、`obj/`、pdb、`1.6/Assemblies/0Harmony.dll`。Harmony 是模组依赖，不是本仓库程序集。

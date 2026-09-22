@@ -1,6 +1,6 @@
 # ADR 0003: 工程标准
 
-- Status: Accepted
+- Status: Implemented
 - Date: 2026-09-20
 
 ## Context

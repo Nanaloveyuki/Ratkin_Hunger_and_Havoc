@@ -1,6 +1,6 @@
 # 事件目录
 
-显示 ID 是目录数据，不是列表下标。Worker 未实现前，Def 可以缺席；目录项仍保留编号。
+显示 ID 是目录数据，不是列表下标。`I-001`..`I-051` 都有 IncidentDef 和 Worker。`baseChance` 为 0，随机故事讲述者不会自己抽到。调试排队走 `HungerAndHavocScheduler.QueueDebugIncident`。地图事件的 `targetTags` 是 `Map_PlayerHome`，`I-035` 与 `I-050` 是 `Caravan`。
 
 | 显示 ID | defName | 旧 ID | Family | Origin | Category | Target |
 | --- | --- | --- | --- | --- | --- | --- |
