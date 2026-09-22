@@ -10,6 +10,9 @@ namespace HungerAndHavoc.Core
         public static HediffDef RHAH_HungerMark;
         public static HediffDef RHAH_Plague;
         public static HediffDef RHAH_RefeedingSyndrome;
+        public static HediffDef RHAH_GnawedBark;
+        public static HediffDef RHAH_GnawedWall;
+        public static HediffDef RHAH_OvergnawedWall;
         public static JobDef RHAH_Beg;
         public static JobDef RHAH_Gnaw;
         public static DutyDef RHAH_VisitorSeek;

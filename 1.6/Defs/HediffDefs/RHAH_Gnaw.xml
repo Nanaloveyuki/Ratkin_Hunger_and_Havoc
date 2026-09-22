@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <HediffDef>
+    <defName>RHAH_GnawedBark</defName>
+    <label>啃食树皮</label>
+    <description>粗糙树皮划伤了口腔和消化道。会疼，过一阵会自己好。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <initialSeverity>0.2</initialSeverity>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>90000~90000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <painOffset>0.15</painOffset>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>RHAH_GnawedWall</defName>
+    <label>啃食墙皮</label>
+    <description>墙灰和碎屑暂时压住了饿，也划伤了嘴。饥饿变慢，疼痛更重。过一阵会自己好。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <initialSeverity>0.2</initialSeverity>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>90000~90000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <painOffset>0.35</painOffset>
+        <hungerRateFactor>0.5</hungerRateFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>RHAH_OvergnawedWall</defName>
+    <label>过量啃食墙皮</label>
+    <description>吃进太多墙灰后，意识下降，胃几乎装不进东西。疼痛很重。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <initialSeverity>0.3</initialSeverity>
+    <isBad>true</isBad>
+    <stages>
+      <li>
+        <painOffset>0.8</painOffset>
+        <statFactors>
+          <MaxNutrition>0.1</MaxNutrition>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.6</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

@@ -115,6 +115,7 @@ namespace HungerAndHavoc.Core
     {
         List<int> visitorPawnLoadIds = new List<int>();
         Dictionary<int, int> foodSearchTicks = new Dictionary<int, int>();
+        Dictionary<int, int> wallGnawCounts = new Dictionary<int, int>();
         List<int> plagueQuarantineLoadIds = new List<int>();
         int plagueRecovered;
         int plagueDied;
@@ -146,6 +147,7 @@ namespace HungerAndHavoc.Core
         {
             visitorPawnLoadIds.Remove(pawnLoadId);
             foodSearchTicks.Remove(pawnLoadId);
+            wallGnawCounts.Remove(pawnLoadId);
         }
 
         public bool FoodSearchReady(int pawnLoadId, int tick)
@@ -173,6 +175,16 @@ namespace HungerAndHavoc.Core
         {
             foodSearchTicks.Clear();
         }
+
+        public int NextWallGnaw(int pawnLoadId)
+        {
+            return HungerAndHavoc.Pawn.RHAH_GnawHealth.NextWallCount(wallGnawCounts, pawnLoadId);
+        }
+
+        public void ForgetWallGnaw(int pawnLoadId)
+        {
+            HungerAndHavoc.Pawn.RHAH_GnawHealth.Forget(wallGnawCounts, pawnLoadId);
+        }
         public bool IsQuarantined(int pawnLoadId)
         {
             return Identity.HungerPlague.IsQuarantined(plagueQuarantineLoadIds, pawnLoadId);
@@ -197,6 +209,7 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref visitorPawnLoadIds, "visitorPawnLoadIds", LookMode.Value);
             Scribe_Collections.Look(ref foodSearchTicks, "foodSearchTicks", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref plagueQuarantineLoadIds, "plagueQuarantineLoadIds", LookMode.Value);
+            Scribe_Collections.Look(ref wallGnawCounts, "wallGnawCounts", LookMode.Value, LookMode.Value);
             Scribe_Values.Look(ref plagueRecovered, "plagueRecovered", 0);
             Scribe_Values.Look(ref plagueDied, "plagueDied", 0);
             Scribe_Values.Look(ref plagueLastSpreadDay, "plagueLastSpreadDay", -1);
@@ -205,6 +218,7 @@ namespace HungerAndHavoc.Core
                 visitorPawnLoadIds = visitorPawnLoadIds ?? new List<int>();
                 foodSearchTicks = foodSearchTicks ?? new Dictionary<int, int>();
                 plagueQuarantineLoadIds = plagueQuarantineLoadIds ?? new List<int>();
+                wallGnawCounts = wallGnawCounts ?? new Dictionary<int, int>();
             }
         }
     }

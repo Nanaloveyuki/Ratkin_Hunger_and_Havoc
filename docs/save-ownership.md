@@ -95,6 +95,7 @@ Letter、Quest、Thing、WorldObject 尚无本模组存档类型。GameComponent
 | HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague recovered count | plagueRecovered | Remove |
 | HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague death count | plagueDied | Remove |
 | HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague last spread day | plagueLastSpreadDay | Remove |
+| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | wall gnaw counts | wallGnawCounts | Remove |
 
 生成队列、批次保护和全局调度属于唯一全局运行时组件；本图访客索引和寻食缓存属于唯一地图组件。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
 
@@ -105,6 +106,9 @@ Letter、Quest、Thing、WorldObject 尚无本模组存档类型。GameComponent
 | RHAH_HungerMark | HediffDef | Remove。身份标记，不是伤病，不替换成原版 Hediff |
 | RHAH_Plague | HediffDef | Remove。不替换成原版 Plague |
 | RHAH_RefeedingSyndrome | HediffDef | Remove。不替换成原版 Hediff |
+| RHAH_GnawedBark | HediffDef | Remove。不替换成原版 Hediff |
+| RHAH_GnawedWall | HediffDef | Remove。不替换成原版 Hediff |
+| RHAH_OvergnawedWall | HediffDef | Remove。不替换成原版 Hediff |
 | RHAH_LargeRefugeeWave | IncidentDef | Remove |
 | RHAH_ThiefRatkinGroup | IncidentDef | Remove |
 | RHAH_AbandonedRatkinChildren | IncidentDef | Remove |
