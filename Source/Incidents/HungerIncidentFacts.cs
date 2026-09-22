@@ -31,7 +31,8 @@ namespace HungerAndHavoc.Incidents
                     Map = context.Map,
                     PawnKind = PawnKindDefOf.Colonist,
                     Faction = Faction.OfPlayer,
-                    SpawnCell = context.SpawnCell
+                    SpawnCell = context.SpawnCell,
+                    Profile = context.Profile
                 });
 
                 if (!result.Succeeded)

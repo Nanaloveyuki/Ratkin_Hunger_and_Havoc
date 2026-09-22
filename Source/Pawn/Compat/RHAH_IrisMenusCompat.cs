@@ -434,7 +434,21 @@ namespace HungerAndHavoc.Pawn.Compat
 
         void DrawExperimental(Listing_Standard list)
         {
-            Unavailable(list, "RHAH_Menu_Experimental", "RHAH_Menu_Experimental_Gap");
+            Section(list, "RHAH_Menu_Experimental");
+            Note(list, "RHAH_Menu_Experimental_Note");
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            if (settings == null)
+            {
+                Empty(list, "RHAH_Menu_Settings_Missing");
+                return;
+            }
+
+            MenuControls.Anchor(list, "optimize-generation");
+            MenuControls.Checkbox(
+                list,
+                "RHAH_Settings_OptimizeGeneration".Translate(),
+                ref settings.optimizeGeneration,
+                "RHAH_Settings_OptimizeGeneration_Tooltip".Translate());
         }
 
         void DrawFrequency(Listing_Standard list)
@@ -509,7 +523,7 @@ namespace HungerAndHavoc.Pawn.Compat
 
         static IEnumerable<MenuSearchEntry> SearchExperimental()
         {
-            yield return Entry("experimental-gap", "RHAH_Menu_Experimental_Gap");
+            yield return Entry("optimize-generation", "RHAH_Settings_OptimizeGeneration", "generation optimizer");
         }
 
         static void Unavailable(Listing_Standard list, string titleKey, string gapKey)

@@ -1,3 +1,4 @@
+using HungerAndHavoc.Generation;
 using HungerAndHavoc.Api;
 using Verse;
 
@@ -14,5 +15,6 @@ namespace HungerAndHavoc.Incidents
         public Map Map { get; set; }
         public IntVec3 SpawnCell { get; set; }
         public int PawnCount { get; set; }
+        public HungerPawnProfile Profile { get; set; }
     }
 }

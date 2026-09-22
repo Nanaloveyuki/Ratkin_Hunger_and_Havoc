@@ -132,6 +132,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | --- | --- |
 | nanaloveyuki.ratkin.hungerandhavoc | packageId。清理副本的 meta 里应去掉本包，但不在运行时存档字段中 |
 | HungerAndHavocSettings.enableNewContent | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.optimizeGeneration | 全局 ModSettings，默认 true。关闭后不套初鼠种默认，事件 Profile 仍生效 |
 | HungerAndHavoc.Guard.* | Guard 始终加载，无存档类型 |
 | HungerAndHavocMod / HarmonyBootstrap / HungerAndHavocRuntime | 运行时入口，无 ExposeData |
 

@@ -26,6 +26,8 @@ namespace HungerAndHavoc.Core
             listing.Begin(inRect);
             listing.CheckboxLabeled("RHAH_Settings_EnableNewContent".Translate(), ref Settings.enableNewContent,
                 "RHAH_Settings_EnableNewContent_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_OptimizeGeneration".Translate(), ref Settings.optimizeGeneration,
+                "RHAH_Settings_OptimizeGeneration_Tooltip".Translate());
             listing.End();
             Settings.Write();
         }

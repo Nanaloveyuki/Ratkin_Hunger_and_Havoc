@@ -61,7 +61,10 @@
   <RHAH_Menu_Ending_Gap>结局开关尚未实现。此页不会写入结局。</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>生物科技基因设置尚未实现。此页不会修改基因。</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_PawnHistory_Gap>经历生成控制尚未实现。此页不会修改背景故事。</RHAH_Menu_PawnHistory_Gap>
-  <RHAH_Menu_Experimental_Gap>没有已登记的实验性设置。</RHAH_Menu_Experimental_Gap>
+  <RHAH_Menu_Experimental_Gap>生成优化已登记在本页。其它实验项尚未加入。</RHAH_Menu_Experimental_Gap>
+  <RHAH_Menu_Experimental_Note>这些选项会改变生成成本。关闭后仍使用事件自己的装备、背景、健康和基因配置。</RHAH_Menu_Experimental_Note>
+  <RHAH_Settings_OptimizeGeneration>优化事件生成</RHAH_Settings_OptimizeGeneration>
+  <RHAH_Settings_OptimizeGeneration_Tooltip>跳过关系、头衔、随机装备和世界角色重装。事件未指定基因时使用 NewRatkinPlus 的初鼠种。找不到该基因时保持原版默认。</RHAH_Settings_OptimizeGeneration_Tooltip>
   <RHAH_Menu_Frequency_Gap>随时间变化的事件概率尚未实现。曲线保持为零，也不会写入存档。</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Days>显示天数</RHAH_Menu_Frequency_Days>
   <RHAH_Menu_Frequency_Expression>表达式</RHAH_Menu_Frequency_Expression>

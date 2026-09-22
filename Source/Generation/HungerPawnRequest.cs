@@ -20,5 +20,6 @@ namespace HungerAndHavoc.Generation
         public IntVec3 SpawnCell { get; set; }
         public int ParentPawnLoadId { get; set; }
         public int[] ChildPawnLoadIds { get; set; }
+        public HungerPawnProfile Profile { get; set; }
     }
 }

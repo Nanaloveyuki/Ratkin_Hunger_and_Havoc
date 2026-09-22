@@ -61,7 +61,10 @@
   <RHAH_Menu_Ending_Gap>Ending switches are not implemented. This page does not write an ending.</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>Biotech gene settings are not implemented. This page does not edit genes.</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_PawnHistory_Gap>History generation controls are not implemented. This page does not change backstories.</RHAH_Menu_PawnHistory_Gap>
-  <RHAH_Menu_Experimental_Gap>No experimental settings are registered.</RHAH_Menu_Experimental_Gap>
+  <RHAH_Menu_Experimental_Gap>Generation optimization is registered on this page. Other experiments are not added yet.</RHAH_Menu_Experimental_Gap>
+  <RHAH_Menu_Experimental_Note>These options change generation cost. Turning one off still uses each incident's apparel, backstory, health, and gene profile.</RHAH_Menu_Experimental_Note>
+  <RHAH_Settings_OptimizeGeneration>Optimize incident generation</RHAH_Settings_OptimizeGeneration>
+  <RHAH_Settings_OptimizeGeneration_Tooltip>Skips relations, titles, random apparel, and world pawn redress. Uses the NewRatkinPlus base ratkin xenotype when an incident does not choose genes. Missing genes leave the vanilla default.</RHAH_Settings_OptimizeGeneration_Tooltip>
   <RHAH_Menu_Frequency_Gap>Incident chance over time is not implemented. The curve stays at zero and is not saved.</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Days>Days shown</RHAH_Menu_Frequency_Days>
   <RHAH_Menu_Frequency_Expression>Expression</RHAH_Menu_Frequency_Expression>

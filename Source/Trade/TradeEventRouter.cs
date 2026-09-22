@@ -56,20 +56,25 @@ namespace HungerAndHavoc.Trade
             int tick = Find.TickManager.TicksGame;
             for (int i = 0; i < 3; i++)
             {
-                Verse.Pawn pawn = PawnGenerator.GeneratePawn(PawnKindDefOf.Colonist, faction);
-                if (pawn == null || HungerAndHavocApi.TryMarkOrigin(pawn, new HungerPawnSeed(
-                    entry.DisplayId, tick, tick, HungerPawnRole.Thief, HungerLifecycle.Arriving,
-                    entry.Category == HungerIncidentCategory.Plague, HungerAttitude.Hostile, -1, 0, null)) == null)
+                HungerPawnCreationResult result = HungerPawnFactory.Create(new HungerPawnRequest
+                {
+                    SourceIncidentDisplayId = entry.DisplayId,
+                    SpawnBatchId = tick + i + 1,
+                    RelationshipGroupId = tick,
+                    Role = HungerPawnRole.Thief,
+                    AttitudeAtArrival = HungerAttitude.Hostile,
+                    CarriesPlague = entry.Category == HungerIncidentCategory.Plague,
+                    Map = null,
+                    PawnKind = PawnKindDefOf.Colonist,
+                    Faction = faction
+                });
+                if (!result.Succeeded)
                 {
                     Cleanup(attackers);
-                    if (pawn != null && !pawn.Destroyed)
-                    {
-                        pawn.Destroy(DestroyMode.Vanish);
-                    }
                     return false;
                 }
 
-                attackers.Add(pawn);
+                attackers.Add(result.Pawns[0]);
             }
 
             Map map = null;
