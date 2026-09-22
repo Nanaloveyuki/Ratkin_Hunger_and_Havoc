@@ -122,6 +122,11 @@ namespace HungerAndHavoc.Identity
                 allowed = behavior ?? HungerPawnDefaults.Allows(snapshot, gate);
             }
 
+            if (HungerPlague.BlocksGate(gate, HungerPlagueRuntime.IsQuarantined(pawn)))
+            {
+                allowed = false;
+            }
+
             HungerAndHavocApi.RaiseGateQueried(pawn, snapshot, gate, allowed);
             return allowed;
         }

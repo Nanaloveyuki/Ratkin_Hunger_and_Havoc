@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
+using HungerAndHavoc.Identity;
 using HungerAndHavoc.Pawn;
 using RimWorld;
 using Verse;
@@ -47,6 +48,7 @@ namespace HungerAndHavoc.Generation
                 return HungerPawnCreationResult.Failed(HungerPawnCreationFailure.MarkingFailed);
             }
 
+
             if (!TryApplyRelationships(pawn, request))
             {
                 Cleanup(created);
@@ -64,6 +66,11 @@ namespace HungerAndHavoc.Generation
                 return HungerPawnCreationResult.Failed(HungerPawnCreationFailure.GenerationFailed);
             }
 
+            HungerPlague.InfectCarrier(pawn, request.CarriesPlague);
+            if (request.CarriesPlague)
+            {
+                request.Map?.GetComponent<MapComponent_HungerAndHavoc>()?.Quarantine(pawn.thingIDNumber);
+            }
             RHAH_VisitorGroup.TryStart(created, request.Map, request.SpawnCell, request.Role);
             HungerAndHavocRuntime.RegisterBatch(request.Map, request.SpawnBatchId);
             return HungerPawnCreationResult.Success(created);

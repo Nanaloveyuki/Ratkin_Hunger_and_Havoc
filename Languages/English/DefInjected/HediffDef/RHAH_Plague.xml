@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Plague.label>ratkin plague</RHAH_Plague.label>
+  <RHAH_Plague.description>A disease that spreads quickly among crowded, hungry Ratkin. Fever and weakness. It kills if left untreated. Contact with the sick can pass it on.</RHAH_Plague.description>
+  <RHAH_Plague.stages.0.label>minor</RHAH_Plague.stages.0.label>
+  <RHAH_Plague.stages.1.label>major</RHAH_Plague.stages.1.label>
+  <RHAH_Plague.stages.2.label>extreme</RHAH_Plague.stages.2.label>
+</LanguageData>
