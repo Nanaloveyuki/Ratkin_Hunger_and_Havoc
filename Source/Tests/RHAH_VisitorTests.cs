@@ -18,16 +18,16 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void HostBind_NonVisitorGateFalse()
         {
-            HungerAndHavocApi.Bind(new HungerApiHost());
+            RHAH_Api.Bind(new RHAH_ApiHost());
             try
             {
-                Assert.False(HungerAndHavocApi.IsVisitor(null));
+                Assert.False(RHAH_Api.IsVisitor(null));
                 Assert.False(RHAH_VisitorGate.IsVisitor(null));
-                Assert.False(RHAH_VisitorGate.Allows(null, HungerBehaviorGate.Beg));
+                Assert.False(RHAH_VisitorGate.Allows(null, RHAH_BehaviorGate.Beg));
             }
             finally
             {
-                HungerAndHavocApi.Bind(null);
+                RHAH_Api.Bind(null);
             }
         }
 
@@ -51,9 +51,9 @@ namespace HungerAndHavoc.Tests
         {
             string source = File.ReadAllText(HostPath());
             int release = source.IndexOf("public bool ReleaseToColony");
-            Assert.True(release >= 0, "HungerApiHost.ReleaseToColony missing");
+            Assert.True(release >= 0, "RHAH_ApiHost.ReleaseToColony missing");
             string body = source.Substring(release);
-            int set = body.IndexOf("SetLifecycle(pawn, HungerLifecycle.Released)");
+            int set = body.IndexOf("SetLifecycle(pawn, RHAH_Lifecycle.Released)");
             int notify = body.IndexOf("NotifyReleased");
             Assert.True(set >= 0, "ReleaseToColony must SetLifecycle Released");
             Assert.True(notify > set, "NotifyReleased must follow SetLifecycle Released");
@@ -63,8 +63,8 @@ namespace HungerAndHavoc.Tests
         public void JobGiverAsksIsVisitorThenAllowsThenTryCreate()
         {
             string source = File.ReadAllText(PawnPath("JobGiver_RHAH_Visitor.cs"));
-            int visitor = source.IndexOf("HungerAndHavocApi.IsVisitor");
-            int allows = source.IndexOf("HungerAndHavocApi.Allows");
+            int visitor = source.IndexOf("RHAH_Api.IsVisitor");
+            int allows = source.IndexOf("RHAH_Api.Allows");
             Assert.True(visitor >= 0, "JobGiver_RHAH_Visitor must ask IsVisitor");
             Assert.True(allows > visitor, "JobGiver_RHAH_Visitor must ask Allows after IsVisitor");
             Assert.Contains("JobGiver_RHAH_Feed.TryCreate(pawn)", source);
@@ -78,7 +78,7 @@ namespace HungerAndHavoc.Tests
         public void ThinkNodeSatisfiedUsesIsVisitor()
         {
             string source = File.ReadAllText(PawnPath("ThinkNode_ConditionalRHAH_Visitor.cs"));
-            Assert.Contains("HungerAndHavocApi.IsVisitor(pawn)", source);
+            Assert.Contains("RHAH_Api.IsVisitor(pawn)", source);
         }
 
         [Fact]
@@ -105,8 +105,8 @@ namespace HungerAndHavoc.Tests
             Assert.DoesNotContain("LordToil_ExitMapAndDefendSelf", source);
             Assert.DoesNotContain("Trigger_BecamePlayerEnemy", source);
             Assert.DoesNotContain("Trigger_PawnKilled", source);
-            Assert.Contains("HungerAndHavocDefOf.RHAH_VisitorSeek", source);
-            Assert.Contains("HungerAndHavocDefOf.RHAH_VisitorLeave", source);
+            Assert.Contains("RHAH_DefOf.RHAH_VisitorSeek", source);
+            Assert.Contains("RHAH_DefOf.RHAH_VisitorLeave", source);
             Assert.DoesNotContain("LordJob_BegForItems", source);
             Assert.DoesNotContain("CheckIdeology", source);
         }
@@ -131,8 +131,8 @@ namespace HungerAndHavoc.Tests
         public void VisitorGateWrapsIsVisitorThenAllowsWithoutLinq()
         {
             string source = File.ReadAllText(PawnPath("RHAH_VisitorGate.cs"));
-            int visitor = source.IndexOf("HungerAndHavocApi.IsVisitor");
-            int allows = source.IndexOf("HungerAndHavocApi.Allows");
+            int visitor = source.IndexOf("RHAH_Api.IsVisitor");
+            int allows = source.IndexOf("RHAH_Api.Allows");
             Assert.True(visitor >= 0 && allows > visitor);
             Assert.DoesNotContain("System.Linq", source);
         }
@@ -146,14 +146,14 @@ namespace HungerAndHavoc.Tests
             Assert.DoesNotContain("JobGiver_RHAH_Beg", duty);
             Assert.Contains("RHAH_Feeding.TryComplete(pawn)",
                 File.ReadAllText(PawnPath("JobDriver_RHAH_Gnaw.cs")));
-            Assert.Contains("HungerAndHavocApi.SetLifecycle(pawn, HungerLifecycle.Leaving)",
+            Assert.Contains("RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving)",
                 File.ReadAllText(PawnPath("JobGiver_RHAH_Leave.cs")));
         }
 
         static string HostPath([CallerFilePath] string testFile = null)
         {
             string testsDir = Path.GetDirectoryName(testFile);
-            return Path.GetFullPath(Path.Combine(testsDir, "..", "Identity", "HungerApiHost.cs"));
+            return Path.GetFullPath(Path.Combine(testsDir, "..", "Identity", "RHAH_ApiHost.cs"));
         }
 
         static string PawnPath(string fileName, [CallerFilePath] string testFile = null)

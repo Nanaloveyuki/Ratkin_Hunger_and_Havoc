@@ -35,7 +35,7 @@ namespace HungerAndHavoc.Pawn
         {
             get
             {
-                HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+                RHAH_Settings settings = RHAH_Mod.Settings;
                 return settings == null || settings.reliefEnabled;
             }
         }
@@ -47,13 +47,13 @@ namespace HungerAndHavoc.Pawn
                 return true;
             }
 
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings != null && !settings.allowEatOutsideRelief)
             {
                 return false;
             }
 
-            return HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.EatOutsideRelief);
+            return RHAH_Api.Allows(pawn, RHAH_BehaviorGate.EatOutsideRelief);
         }
 
         internal static bool FoodAllowed(ThingDef def)
@@ -63,7 +63,7 @@ namespace HungerAndHavoc.Pawn
                 return true;
             }
 
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             return settings == null || settings.IsReliefFoodEnabled(def.defName);
         }
 

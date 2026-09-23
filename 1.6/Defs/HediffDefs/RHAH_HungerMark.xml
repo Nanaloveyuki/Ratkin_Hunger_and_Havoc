@@ -4,12 +4,12 @@
     <defName>RHAH_HungerMark</defName>
     <label>饥荒来客</label>
     <description>这只鼠族是随饥荒队伍来到殖民地的。不是伤，也不是病。</description>
-    <hediffClass>HungerAndHavoc.Identity.Hediff_HungerMark</hediffClass>
+    <hediffClass>HungerAndHavoc.Identity.Hediff_RHAH_Mark</hediffClass>
     <defaultLabelColor>(0.62, 0.42, 0.28)</defaultLabelColor>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <comps>
-      <li Class="HungerAndHavoc.Identity.CompProperties_HungerPawn" />
+      <li Class="HungerAndHavoc.Identity.CompProperties_RHAH_Pawn" />
     </comps>
   </HediffDef>
 </Defs>

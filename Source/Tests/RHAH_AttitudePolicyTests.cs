@@ -10,48 +10,48 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void DamageAndExpulsion_FollowAttitude()
         {
-            Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(HungerAttitude.Hostile, false));
-            Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(HungerAttitude.LeaningHostile, false));
-            Assert.Equal(RHAH_AttitudeShift.None, RHAH_AttitudePolicy.React(HungerAttitude.Neutral, false));
-            Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(HungerAttitude.Neutral, true));
-            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(HungerAttitude.LeaningFriendly, false));
-            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(HungerAttitude.Friendly, true));
+            Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(RHAH_Attitude.Hostile, false));
+            Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(RHAH_Attitude.LeaningHostile, false));
+            Assert.Equal(RHAH_AttitudeShift.None, RHAH_AttitudePolicy.React(RHAH_Attitude.Neutral, false));
+            Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(RHAH_Attitude.Neutral, true));
+            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.LeaningFriendly, false));
+            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.Friendly, true));
         }
 
 
         [Fact]
         public void CurrentAttitude_DrivesFightGate()
         {
-            HungerPawnState state = new HungerPawnState();
-            state.ApplySeed(new HungerPawnSeed(
+            RHAH_PawnState state = new RHAH_PawnState();
+            state.ApplySeed(new RHAH_PawnSeed(
                 sourceIncidentDisplayId: "I-005",
                 spawnBatchId: 1,
                 relationshipGroupId: 1,
-                role: HungerPawnRole.Wild,
-                lifecycle: HungerLifecycle.SeekingFood,
-                attitudeAtArrival: HungerAttitude.Neutral));
-            Assert.False(state.Allows(HungerBehaviorGate.Fight));
+                role: RHAH_PawnRole.Wild,
+                lifecycle: RHAH_Lifecycle.SeekingFood,
+                attitudeAtArrival: RHAH_Attitude.Neutral));
+            Assert.False(state.Allows(RHAH_BehaviorGate.Fight));
 
-            state.SetAttitude(HungerAttitude.Hostile);
-            Assert.Equal(HungerAttitude.Neutral, state.attitudeAtArrival);
-            Assert.True(state.Allows(HungerBehaviorGate.Fight));
+            state.SetAttitude(RHAH_Attitude.Hostile);
+            Assert.Equal(RHAH_Attitude.Neutral, state.attitudeAtArrival);
+            Assert.True(state.Allows(RHAH_BehaviorGate.Fight));
         }
 
         [Fact]
         public void FriendlyShift_BlocksOutsideRelief()
         {
-            HungerPawnState state = new HungerPawnState();
-            state.ApplySeed(new HungerPawnSeed(
+            RHAH_PawnState state = new RHAH_PawnState();
+            state.ApplySeed(new RHAH_PawnSeed(
                 sourceIncidentDisplayId: "I-005",
                 spawnBatchId: 1,
                 relationshipGroupId: 1,
-                role: HungerPawnRole.Beggar,
-                lifecycle: HungerLifecycle.SeekingFood,
-                attitudeAtArrival: HungerAttitude.Neutral));
-            Assert.True(state.Allows(HungerBehaviorGate.EatOutsideRelief));
+                role: RHAH_PawnRole.Beggar,
+                lifecycle: RHAH_Lifecycle.SeekingFood,
+                attitudeAtArrival: RHAH_Attitude.Neutral));
+            Assert.True(state.Allows(RHAH_BehaviorGate.EatOutsideRelief));
 
-            state.SetAttitude(HungerAttitude.Friendly);
-            Assert.False(state.Allows(HungerBehaviorGate.EatOutsideRelief));
+            state.SetAttitude(RHAH_Attitude.Friendly);
+            Assert.False(state.Allows(RHAH_BehaviorGate.EatOutsideRelief));
         }
     }
 }

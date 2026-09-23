@@ -35,8 +35,8 @@
 | --- | --- |
 | 稳定 API | `Source/Api/` → `HungerAndHavoc.Api.dll` |
 | 实现 | `Source/` → `HungerAndHavoc.dll` |
-| 入口与设置 | `Source/Core/ModEntry.cs`、`Source/Core/HungerAndHavocSettings.cs` |
-| 事件目录 | `Source/Incidents/HungerIncidentCatalog.cs` |
+| 入口与设置 | `Source/Core/ModEntry.cs`、`Source/Core/RHAH_Settings.cs` |
+| 事件目录 | `Source/Incidents/RHAH_IncidentCatalog.cs` |
 | 访客与兼容 | `Source/Pawn/`、`Source/Pawn/Compat/` |
 | IrisMenus 页面 | `Source/Pawn/Compat/RHAH_IrisMenusCompat.cs`、`Source/Pawn/Compat/RHAH_IrisMenusWidgets.cs` |
 | 叙事状态 | `Source/Narrative/NarrativeState.cs` |
@@ -95,11 +95,11 @@ IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `Men
 已落地：
 
 - `HungerAndHavoc.Api.dll` 与实现分离。其它模组只引用 API
-- `IHungerPawn` / `HungerPawnSnapshot`。API 不传 Comp、Hediff 或 Job
-- `CompHungerPawn` 在 `HungerAndHavoc.Identity`。存档键 `sourceIncidentDisplayId`
+- `IRHAH_Pawn` / `RHAH_PawnSnapshot`。API 不传 Comp、Hediff 或 Job
+- `CompRHAH_Pawn` 在 `HungerAndHavoc.Identity`。存档键 `sourceIncidentDisplayId`
 - 事件目录 `I-001`..`I-051`，Def 在 `1.6/Defs/IncidentDefs/`
 - 访客 Lord、Job、Duty 和 ThinkTree 在 `Source/Pawn/` 与 `1.6/Defs/`
-- `GameComponent_HungerAndHavoc`、`MapComponent_HungerAndHavoc`
+- `GameComponent_RHAH_Game`、`MapComponent_RHAH_Map`
 - IrisMenus 1.6 的 14 个 SubItem。可选依赖，缺失时不注册
 - Guard 与 `LoadFolders.xml` 在旧鼠灾包启用时跳过主体
 

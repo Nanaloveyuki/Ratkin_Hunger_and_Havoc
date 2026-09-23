@@ -37,8 +37,8 @@ namespace HungerAndHavoc.Pawn
             }
 
             base.Set(cell, value);
-            MapComponent_HungerAndHavoc component = Map != null
-                ? Map.GetComponent<MapComponent_HungerAndHavoc>()
+            MapComponent_RHAH_Map component = Map != null
+                ? Map.GetComponent<MapComponent_RHAH_Map>()
                 : null;
             if (component != null)
             {

@@ -3,13 +3,13 @@ using Verse;
 
 namespace HungerAndHavoc.Core
 {
-    public class HungerAndHavocMod : Mod
+    public class RHAH_Mod : Mod
     {
-        public static HungerAndHavocSettings Settings;
+        public static RHAH_Settings Settings;
 
-        public HungerAndHavocMod(ModContentPack content) : base(content)
+        public RHAH_Mod(ModContentPack content) : base(content)
         {
-            Settings = GetSettings<HungerAndHavocSettings>();
+            Settings = GetSettings<RHAH_Settings>();
 #if RHAH_IRISMENUS
             Pawn.Compat.RHAH_IrisMenusCompat.TryRegister(this);
 #endif

@@ -172,13 +172,13 @@ namespace HungerAndHavoc.Incidents
         static Verse.Pawn SpawnResident(WorldObject_RHAH_RefugeeCamp site, Map map, IntVec3 center, bool adult, int tick, int index)
         {
             float age = adult ? Rand.Range(18f, 50f) : Rand.Range(0.1f, 8f);
-            HungerPawnCreationResult result = HungerPawnFactory.Create(new HungerPawnRequest
+            RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
             {
                 SourceIncidentDisplayId = "I-051",
                 SpawnBatchId = tick + 1 + index,
                 RelationshipGroupId = tick,
-                Role = adult ? HungerPawnRole.Refugee : HungerPawnRole.RatkinYoung,
-                AttitudeAtArrival = HungerAttitude.Neutral,
+                Role = adult ? RHAH_PawnRole.Refugee : RHAH_PawnRole.RatkinYoung,
+                AttitudeAtArrival = RHAH_Attitude.Neutral,
                 Map = map,
                 PawnKind = PawnKindDefOf.Colonist,
                 Faction = site.Faction,
@@ -232,7 +232,7 @@ namespace HungerAndHavoc.Incidents
         internal static bool TryOffer(IncidentParms parms)
         {
             Map map = parms?.target as Map;
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             bool violent = Find.Storyteller?.difficulty == null || Find.Storyteller.difficulty.allowViolentQuests;
             Faction sponsor = Sponsor();
             PlanetTile tile = PlanetTile.Invalid;
@@ -242,7 +242,7 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
-            Faction residents = RHAH_AttitudeFactions.Resolve(HungerAttitude.Neutral);
+            Faction residents = RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Neutral);
             if (residents == null)
             {
                 return false;

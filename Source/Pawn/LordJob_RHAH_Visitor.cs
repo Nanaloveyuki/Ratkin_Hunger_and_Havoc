@@ -12,13 +12,13 @@ namespace HungerAndHavoc.Pawn
     {
         Faction faction;
         IntVec3 waitSpot = IntVec3.Invalid;
-        HungerPawnRole familyRole;
+        RHAH_PawnRole familyRole;
 
         public LordJob_RHAH_Visitor()
         {
         }
 
-        public LordJob_RHAH_Visitor(Faction faction, IntVec3 waitSpot, HungerPawnRole familyRole)
+        public LordJob_RHAH_Visitor(Faction faction, IntVec3 waitSpot, RHAH_PawnRole familyRole)
         {
             this.faction = faction;
             this.waitSpot = waitSpot;
@@ -77,7 +77,7 @@ namespace HungerAndHavoc.Pawn
         {
             Scribe_References.Look(ref faction, "faction");
             Scribe_Values.Look(ref waitSpot, "waitSpot", IntVec3.Invalid);
-            Scribe_Values.Look(ref familyRole, "familyRole", HungerPawnRole.Unspecified);
+            Scribe_Values.Look(ref familyRole, "familyRole", RHAH_PawnRole.Unspecified);
         }
 
         bool AllReadyToLeave()
@@ -96,14 +96,14 @@ namespace HungerAndHavoc.Pawn
             for (int i = 0; i < count; i++)
             {
                 Verse.Pawn pawn = lord.ownedPawns[i];
-                IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
+                IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
                 if (snapshot == null)
                 {
                     return false;
                 }
 
-                if (snapshot.Lifecycle == HungerLifecycle.Fed ||
-                    snapshot.Lifecycle == HungerLifecycle.Leaving)
+                if (snapshot.Lifecycle == RHAH_Lifecycle.Fed ||
+                    snapshot.Lifecycle == RHAH_Lifecycle.Leaving)
                 {
                     continue;
                 }
@@ -130,7 +130,7 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                if (HungerAndHavocApi.Allows(adult, HungerBehaviorGate.Carry) &&
+                if (RHAH_Api.Allows(adult, RHAH_BehaviorGate.Carry) &&
                     Compat.RHAH_ChildMovement.CanWalkOut(adult))
                 {
                     return true;
@@ -155,7 +155,7 @@ namespace HungerAndHavoc.Pawn
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
                 lord.ownedPawns[i].mindState.duty = new PawnDuty(
-                    HungerAndHavocDefOf.RHAH_VisitorSeek,
+                    RHAH_DefOf.RHAH_VisitorSeek,
                     waitSpot,
                     10f);
             }
@@ -168,7 +168,7 @@ namespace HungerAndHavoc.Pawn
         {
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
-                lord.ownedPawns[i].mindState.duty = new PawnDuty(HungerAndHavocDefOf.RHAH_VisitorLeave);
+                lord.ownedPawns[i].mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
             }
         }
     }

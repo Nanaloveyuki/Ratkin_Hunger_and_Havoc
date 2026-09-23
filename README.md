@@ -15,7 +15,7 @@ RimWorld 1.6 模组。`packageId`：`nanaloveyuki.ratkin.hungerandhavoc`。
 - `docs/adr/`：设计决策
 - `Source/`：SDK-style 工程，输出到 `1.6/Assemblies/`
 
-其它模组请使用 `HungerAndHavoc.Api.HungerAndHavocApi`，不要扫描经历或私有类型。
+其它模组请使用 `HungerAndHavoc.Api.RHAH_Api`，不要扫描经历或私有类型。
 
 ## 构建
 

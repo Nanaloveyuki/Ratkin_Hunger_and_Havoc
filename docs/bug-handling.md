@@ -52,7 +52,7 @@ Language、存档键、卸载归属这三项，功能开发只要碰到玩家文
 - Guard 的中英 Keyed 同样成对
 - Def 正文留中文；英文靠 `Languages/English/DefInjected`。不要删 Def 基础文本，RimWorld 不会按字段回退到 English
 - 不要求中文 DefInjected，只要 Def 正文已经是中文
-- 新增 `HungerPawnRole` 必须补 `RHAH_Role_*` 中英键
+- 新增 `RHAH_PawnRole` 必须补 `RHAH_Role_*` 中英键
 - 代码里不要写死给玩家看的中文或英文
 - About、README、日志、存档键、Def 名、packageId 不是 Language 系统
 

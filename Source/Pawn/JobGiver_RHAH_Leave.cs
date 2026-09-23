@@ -18,20 +18,20 @@ namespace HungerAndHavoc.Pawn
         // 供无 Lord 的总 JobGiver 调度
         internal static Job TryCreate(Verse.Pawn pawn)
         {
-            if (!HungerAndHavocApi.IsVisitor(pawn))
+            if (!RHAH_Api.IsVisitor(pawn))
             {
                 return null;
             }
 
             // 离场走 ExitMap 或饱食后离开闸门
-            bool exit = HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.ExitMap);
-            bool fedLeave = HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.LeaveAfterFed);
+            bool exit = RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap);
+            bool fedLeave = RHAH_Api.Allows(pawn, RHAH_BehaviorGate.LeaveAfterFed);
             if (!exit && !fedLeave)
             {
                 return null;
             }
 
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (fedLeave && !exit && settings != null && !settings.leaveAfterFed)
             {
                 return null;
@@ -53,7 +53,7 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            HungerAndHavocApi.SetLifecycle(pawn, HungerLifecycle.Leaving);
+            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
             Job job = JobMaker.MakeJob(JobDefOf.Goto, spot);
             job.exitMapOnArrival = true;
             job.locomotionUrgency = LocomotionUrgency.Jog;
@@ -62,7 +62,7 @@ namespace HungerAndHavoc.Pawn
 
         static Job CarryDependent(Verse.Pawn pawn)
         {
-            if (pawn.Downed || pawn.CarriedBy != null || !HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.Carry))
+            if (pawn.Downed || pawn.CarriedBy != null || !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Carry))
             {
                 return null;
             }
@@ -81,7 +81,7 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                if (RHAH_ChildMovement.CanWalkOut(child) || !HungerAndHavocApi.IsVisitor(child))
+                if (RHAH_ChildMovement.CanWalkOut(child) || !RHAH_Api.IsVisitor(child))
                 {
                     continue;
                 }

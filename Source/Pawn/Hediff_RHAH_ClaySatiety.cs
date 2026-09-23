@@ -27,7 +27,7 @@ namespace HungerAndHavoc.Pawn
 
         internal static bool CanEat(Verse.Pawn pawn, ThingDef food)
         {
-            if (food == null || food != HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_GuanyinTu)
+            if (food == null || food != HungerAndHavoc.Core.RHAH_DefOf.RHAH_GuanyinTu)
             {
                 return true;
             }
@@ -49,7 +49,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            HediffDef def = HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_ClaySatiety;
+            HediffDef def = HungerAndHavoc.Core.RHAH_DefOf.RHAH_ClaySatiety;
             if (def == null)
             {
                 return;
@@ -135,7 +135,7 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            HediffDef def = HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_ClaySatiety;
+            HediffDef def = HungerAndHavoc.Core.RHAH_DefOf.RHAH_ClaySatiety;
             return def == null ? null : pawn.health.hediffSet.GetFirstHediffOfDef(def) as Hediff_RHAH_ClaySatiety;
         }
 

@@ -21,7 +21,7 @@ namespace HungerAndHavoc.Pawn.Compat
 
         static bool registered;
 
-        internal static void TryRegister(HungerAndHavocMod owner)
+        internal static void TryRegister(RHAH_Mod owner)
         {
             if (registered || owner == null)
             {
@@ -117,7 +117,7 @@ namespace HungerAndHavoc.Pawn.Compat
             Section(list, "RHAH_Menu_Overview");
             Status(list, "RHAH_Menu_Field_Mod", "RHAH_ModName".Translate());
             Status(list, "RHAH_Menu_Field_Version", ContentFinderVersion());
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings == null)
             {
                 Empty(list, "RHAH_Menu_Settings_Missing");
@@ -147,14 +147,14 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             Section(list, "RHAH_Menu_Events");
             Note(list, "RHAH_Menu_Events_Note");
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings == null)
             {
                 Empty(list, "RHAH_Menu_Settings_Missing");
                 return;
             }
 
-            IReadOnlyList<HungerIncidentEntry> entries = HungerIncidentCatalog.All;
+            IReadOnlyList<RHAH_IncidentEntry> entries = RHAH_IncidentCatalog.All;
             for (int i = 0; i < entries.Count; i++)
             {
                 DrawIncident(list, entries[i], false, settings);
@@ -167,8 +167,8 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             Section(list, "RHAH_Menu_DevEvents");
             Note(list, "RHAH_Menu_DevEvents_Note");
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
-            IReadOnlyList<HungerIncidentEntry> entries = HungerIncidentCatalog.All;
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            IReadOnlyList<RHAH_IncidentEntry> entries = RHAH_IncidentCatalog.All;
             for (int i = 0; i < entries.Count; i++)
             {
                 DrawIncident(list, entries[i], true, settings);
@@ -179,7 +179,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
-        void DrawIncident(Listing_Standard list, HungerIncidentEntry entry, bool debug, HungerAndHavocSettings settings)
+        void DrawIncident(Listing_Standard list, RHAH_IncidentEntry entry, bool debug, RHAH_Settings settings)
         {
             string anchor = (debug ? "dev-" : "event-") + entry.DisplayId;
             float height = IncidentMetaHeight + RHAH_IrisMenusWidgets.CardPad * 2f;
@@ -227,7 +227,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
-        void DrawIncidentControls(Rect inner, float y, HungerIncidentEntry entry, HungerAndHavocSettings settings)
+        void DrawIncidentControls(Rect inner, float y, RHAH_IncidentEntry entry, RHAH_Settings settings)
         {
             bool enabled = settings.IsIncidentEnabled(entry.DisplayId);
             Widgets.CheckboxLabeled(
@@ -244,8 +244,8 @@ namespace HungerAndHavoc.Pawn.Compat
                 "RHAH_Menu_DebugPoints".Translate(),
                 points,
                 ref pointBuffer,
-                HungerIncidentTuning.MinDebugPoints,
-                HungerIncidentTuning.MaxDebugPoints,
+                RHAH_IncidentTuning.MinDebugPoints,
+                RHAH_IncidentTuning.MaxDebugPoints,
                 "0",
                 "RHAH_Menu_DebugPoints_Tip".Translate());
             pointBuffers[entry.DisplayId] = pointBuffer;
@@ -259,8 +259,8 @@ namespace HungerAndHavoc.Pawn.Compat
                 "RHAH_Menu_IncidentWeight".Translate(),
                 weight,
                 ref weightBuffer,
-                HungerIncidentTuning.MinWeight,
-                HungerIncidentTuning.MaxWeight,
+                RHAH_IncidentTuning.MinWeight,
+                RHAH_IncidentTuning.MaxWeight,
                 "0",
                 "RHAH_Menu_IncidentWeight_Tip".Translate());
             weightBuffers[entry.DisplayId] = weightBuffer;
@@ -278,9 +278,9 @@ namespace HungerAndHavoc.Pawn.Compat
             return value.ToString(format);
         }
 
-        static string Queue(HungerIncidentEntry entry)
+        static string Queue(RHAH_IncidentEntry entry)
         {
-            if (!HungerAndHavocRuntime.AllowsNewContent)
+            if (!RHAH_Runtime.AllowsNewContent)
             {
                 return "RHAH_Menu_Queue_Disabled".Translate();
             }
@@ -290,18 +290,18 @@ namespace HungerAndHavoc.Pawn.Compat
                 return "RHAH_Menu_Queue_NoGame".Translate();
             }
 
-            if (entry.Target == HungerIncidentTarget.Map && HungerMapResolver.Resolve() == null)
+            if (entry.Target == RHAH_IncidentTarget.Map && RHAH_MapResolver.Resolve() == null)
             {
                 return "RHAH_Menu_Queue_NoMap".Translate();
             }
 
-            if (entry.Target == HungerIncidentTarget.Caravan &&
+            if (entry.Target == RHAH_IncidentTarget.Caravan &&
                 Caravan.CaravanTargetResolver.ResolvePlayerCaravan() == null)
             {
                 return "RHAH_Menu_Queue_NoCaravan".Translate();
             }
 
-            if (HungerAndHavocScheduler.ExecuteDebugIncident(entry.DisplayId))
+            if (RHAH_Scheduler.ExecuteDebugIncident(entry.DisplayId))
             {
                 return "RHAH_Menu_Queue_Fired".Translate();
             }
@@ -321,10 +321,10 @@ namespace HungerAndHavoc.Pawn.Compat
 
         static IEnumerable<MenuSearchEntry> SearchIncidentEntries(string anchorPrefix, string keywordPrefix)
         {
-            IReadOnlyList<HungerIncidentEntry> entries = HungerIncidentCatalog.All;
+            IReadOnlyList<RHAH_IncidentEntry> entries = RHAH_IncidentCatalog.All;
             for (int i = 0; i < entries.Count; i++)
             {
-                HungerIncidentEntry entry = entries[i];
+                RHAH_IncidentEntry entry = entries[i];
                 string keywords = keywordPrefix + entry.DefName + " " + entry.DisplayId;
                 yield return new MenuSearchEntry(
                     anchorPrefix + entry.DisplayId,
@@ -349,13 +349,13 @@ namespace HungerAndHavoc.Pawn.Compat
             for (int i = 0; i < pawns.Count; i++)
             {
                 Verse.Pawn pawn = pawns[i];
-                if (pawn == null || pawn.Destroyed || !HungerAndHavocApi.IsOrigin(pawn))
+                if (pawn == null || pawn.Destroyed || !RHAH_Api.IsOrigin(pawn))
                 {
                     continue;
                 }
 
                 any = true;
-                DrawPawn(list, pawn, HungerAndHavocApi.Get(pawn));
+                DrawPawn(list, pawn, RHAH_Api.Get(pawn));
             }
 
             if (!any)
@@ -364,7 +364,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
-        void DrawPawn(Listing_Standard list, Verse.Pawn pawn, IHungerPawn snapshot)
+        void DrawPawn(Listing_Standard list, Verse.Pawn pawn, IRHAH_Pawn snapshot)
         {
             if (pawn == null || pawn.Destroyed || snapshot == null)
             {
@@ -448,7 +448,7 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             Section(list, "RHAH_Menu_Relief");
             Note(list, "RHAH_Menu_Relief_Note");
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings == null)
             {
                 Empty(list, "RHAH_Menu_Settings_Missing");
@@ -471,7 +471,7 @@ namespace HungerAndHavoc.Pawn.Compat
             string anchor,
             ref bool value,
             string key,
-            HungerAndHavocSettings settings)
+            RHAH_Settings settings)
         {
             bool before = value;
             MenuControls.Anchor(list, anchor);
@@ -482,7 +482,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
-        static void DrawFoodList(Listing_Standard list, HungerAndHavocSettings settings)
+        static void DrawFoodList(Listing_Standard list, RHAH_Settings settings)
         {
             MenuControls.Anchor(list, "relief-foods", 52f);
             Note(list, "RHAH_Settings_ReliefFoods_Tooltip");
@@ -537,7 +537,7 @@ namespace HungerAndHavoc.Pawn.Compat
             DrawModRow(list, "leash", "Lead Your Pet", "nanaloveyuki.leadyourpet.continued", false);
             DrawModRow(list, "prisoner", "Prisoner Work", "LeZhizhong.PrisonerWorkExpansion", false);
             Status(list, "RHAH_Menu_Field_IrisMenus", irisVersion);
-            GameComponent_HungerAndHavoc game = Current.Game?.GetComponent<GameComponent_HungerAndHavoc>();
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
             if (game == null)
             {
                 Empty(list, "RHAH_Menu_Diagnostics_NoGame");
@@ -546,7 +546,7 @@ namespace HungerAndHavoc.Pawn.Compat
 
             Status(list, "RHAH_Menu_Diagnostics_Pending", game.PendingIncidentDisplayIds.Count.ToString());
             Status(list, "RHAH_Menu_Diagnostics_Batches", game.ActiveGenerationBatches.Count.ToString());
-            Map map = HungerMapResolver.Resolve();
+            Map map = RHAH_MapResolver.Resolve();
             Status(list, "RHAH_Menu_Diagnostics_Map",
                 map == null ? "RHAH_Menu_Queue_NoMap".Translate() : map.uniqueID.ToString());
         }
@@ -587,7 +587,7 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings == null)
             {
                 Empty(list, "RHAH_Menu_Settings_Missing");
@@ -600,7 +600,7 @@ namespace HungerAndHavoc.Pawn.Compat
                 settings.ResetXenotypeWeights();
             }
 
-            List<XenotypeDef> xenotypes = HungerXenotypeResolver.LoadedCandidates(settings);
+            List<XenotypeDef> xenotypes = RHAH_XenotypeResolver.LoadedCandidates(settings);
             float total = 0f;
             for (int i = 0; i < xenotypes.Count; i++)
             {
@@ -621,10 +621,10 @@ namespace HungerAndHavoc.Pawn.Compat
             DrawMissingXenotypes(list, settings, xenotypes);
             DrawJoinableXenotypes(list, settings);
             DrawGeneSwitches(list, settings);
-            HungerAndHavocMod.Settings.Write();
+            RHAH_Mod.Settings.Write();
         }
 
-        void DrawXenotypeBar(Listing_Standard list, HungerAndHavocSettings settings, XenotypeDef xenotype, float total)
+        void DrawXenotypeBar(Listing_Standard list, RHAH_Settings settings, XenotypeDef xenotype, float total)
         {
             float weight = settings.XenotypeWeight(xenotype.defName);
             float share = total <= 0f || weight <= 0f ? 0f : weight / total;
@@ -634,13 +634,13 @@ namespace HungerAndHavoc.Pawn.Compat
                 xenotype.LabelCap + "  " + share.ToString("P0"),
                 weight,
                 ref buffer,
-                HungerXenotypeWeightTable.MinWeight,
-                HungerXenotypeWeightTable.MaxWeight,
+                RHAH_XenotypeWeightTable.MinWeight,
+                RHAH_XenotypeWeightTable.MaxWeight,
                 "0",
-                "RHAH_Menu_Genes_WeightTip".Translate(xenotype.defName, HungerGeneCatalog.SuggestedWeight(xenotype.defName).ToString("0")));
+                "RHAH_Menu_Genes_WeightTip".Translate(xenotype.defName, RHAH_GeneCatalog.SuggestedWeight(xenotype.defName).ToString("0")));
             weightBuffers["xeno-" + xenotype.defName] = buffer;
             settings.SetXenotypeWeight(xenotype.defName, weight);
-            if (!HungerGeneCatalog.IsBuiltin(xenotype.defName))
+            if (!RHAH_GeneCatalog.IsBuiltin(xenotype.defName))
             {
                 Rect remove = list.GetRect(26f);
                 if (Widgets.ButtonText(new Rect(remove.xMax - 72f, remove.y, 68f, 24f), "RHAH_Menu_Genes_Remove".Translate()))
@@ -652,9 +652,9 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
-        static void DrawJoinableXenotypes(Listing_Standard list, HungerAndHavocSettings settings)
+        static void DrawJoinableXenotypes(Listing_Standard list, RHAH_Settings settings)
         {
-            List<XenotypeDef> available = HungerXenotypeResolver.AvailableToJoin(settings);
+            List<XenotypeDef> available = RHAH_XenotypeResolver.AvailableToJoin(settings);
             if (available.Count == 0)
             {
                 return;
@@ -671,12 +671,12 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
-        static void DrawMissingXenotypes(Listing_Standard list, HungerAndHavocSettings settings, List<XenotypeDef> loaded)
+        static void DrawMissingXenotypes(Listing_Standard list, RHAH_Settings settings, List<XenotypeDef> loaded)
         {
             List<string> stored = settings.MissingXenotypeNames();
             for (int i = 0; i < stored.Count; i++)
             {
-                if (Loaded(loaded, stored[i]) || HungerGeneCatalog.IsBuiltin(stored[i]))
+                if (Loaded(loaded, stored[i]) || RHAH_GeneCatalog.IsBuiltin(stored[i]))
                 {
                     continue;
                 }
@@ -698,10 +698,10 @@ namespace HungerAndHavoc.Pawn.Compat
             return false;
         }
 
-        static void DrawGeneSwitches(Listing_Standard list, HungerAndHavocSettings settings)
+        static void DrawGeneSwitches(Listing_Standard list, RHAH_Settings settings)
         {
             Section(list, "RHAH_Menu_Genes_Switches");
-            List<GeneDef> genes = HungerXenotypeResolver.LoadedOwnedGenes();
+            List<GeneDef> genes = RHAH_XenotypeResolver.LoadedOwnedGenes();
             if (genes.Count == 0)
             {
                 Empty(list, "RHAH_Menu_Genes_NoOwned");
@@ -720,7 +720,7 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             Section(list, "RHAH_Menu_PawnHistory");
             Note(list, "RHAH_Menu_PawnHistory_Note");
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings == null)
             {
                 Empty(list, "RHAH_Menu_Settings_Missing");
@@ -740,10 +740,10 @@ namespace HungerAndHavoc.Pawn.Compat
             DrawContentToggles(list, settings);
         }
 
-        void DrawContentToggles(Listing_Standard list, HungerAndHavocSettings settings)
+        void DrawContentToggles(Listing_Standard list, RHAH_Settings settings)
         {
             List<string> historyIds = new List<string>();
-            HungerAndHavocApi.CopyHistoryIds(historyIds);
+            RHAH_Api.CopyHistoryIds(historyIds);
             if (list.ButtonText("RHAH_Menu_PawnHistory_EnableAll".Translate()))
             {
                 settings.SetAllHistories(true, historyIds);
@@ -759,7 +759,7 @@ namespace HungerAndHavoc.Pawn.Compat
                 string id = historyIds[i];
                 string defName;
                 bool enabled = settings.IsHistoryEnabled(id);
-                string label = HungerAndHavocApi.TryGetHistory(id, out defName)
+                string label = RHAH_Api.TryGetHistory(id, out defName)
                     ? id + " " + BackstoryTitle(defName)
                     : id;
                 MenuControls.Checkbox(list, label, ref enabled, "RHAH_Menu_PawnHistory_ItemTip".Translate());
@@ -768,7 +768,7 @@ namespace HungerAndHavoc.Pawn.Compat
 
             Section(list, "RHAH_Menu_PawnTrait");
             List<string> traitIds = new List<string>();
-            HungerAndHavocApi.CopyTraitIds(traitIds);
+            RHAH_Api.CopyTraitIds(traitIds);
             if (list.ButtonText("RHAH_Menu_PawnTrait_EnableAll".Translate()))
             {
                 settings.SetAllTraits(true, traitIds);
@@ -784,7 +784,7 @@ namespace HungerAndHavoc.Pawn.Compat
                 string id = traitIds[i];
                 string defName;
                 bool enabled = settings.IsTraitEnabled(id);
-                string label = HungerAndHavocApi.TryGetTrait(id, out defName)
+                string label = RHAH_Api.TryGetTrait(id, out defName)
                     ? id + " " + TraitTitle(defName)
                     : id;
                 MenuControls.Checkbox(list, label, ref enabled, "RHAH_Menu_PawnTrait_ItemTip".Translate());
@@ -828,7 +828,7 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             Section(list, "RHAH_Menu_Experimental");
             Note(list, "RHAH_Menu_Experimental_Note");
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings == null)
             {
                 Empty(list, "RHAH_Menu_Settings_Missing");
@@ -855,7 +855,7 @@ namespace HungerAndHavoc.Pawn.Compat
         void DrawFrequency(Listing_Standard list)
         {
             Section(list, "RHAH_Menu_EventFrequency");
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings == null)
             {
                 Empty(list, "RHAH_Menu_Settings_Missing");
@@ -871,8 +871,8 @@ namespace HungerAndHavoc.Pawn.Compat
                 ref positiveDays,
                 ref positiveBuffer,
                 0,
-                (int)HungerIncidentSchedule.MaxDays);
-            settings.positiveIncidentDays = HungerIncidentSchedule.ClampDays(positiveDays);
+                (int)RHAH_IncidentSchedule.MaxDays);
+            settings.positiveIncidentDays = RHAH_IncidentSchedule.ClampDays(positiveDays);
 
             MenuControls.Anchor(list, "frequency-negative");
             string negativeBuffer = settings.negativeIncidentDays.ToString("0.#");
@@ -883,8 +883,8 @@ namespace HungerAndHavoc.Pawn.Compat
                 ref negativeDays,
                 ref negativeBuffer,
                 0,
-                (int)HungerIncidentSchedule.MaxDays);
-            settings.negativeIncidentDays = HungerIncidentSchedule.ClampDays(negativeDays);
+                (int)RHAH_IncidentSchedule.MaxDays);
+            settings.negativeIncidentDays = RHAH_IncidentSchedule.ClampDays(negativeDays);
             Note(list, "RHAH_Menu_Frequency_Gap");
             RHAH_IrisMenusWidgets.OccurrenceCurve(
                 list,
@@ -988,7 +988,7 @@ namespace HungerAndHavoc.Pawn.Compat
 
         static string ContentFinderVersion()
         {
-            ModMetaData meta = ModLister.GetActiveModWithIdentifier(HungerAndHavocRuntime.PackageId, false);
+            ModMetaData meta = ModLister.GetActiveModWithIdentifier(RHAH_Runtime.PackageId, false);
             return meta == null ? "0.1.0" : VersionOf(meta);
         }
 
@@ -1002,32 +1002,32 @@ namespace HungerAndHavoc.Pawn.Compat
             return new MenuSearchEntry(id, () => titleKey.Translate(), keywords == null ? null : () => keywords);
         }
 
-        static string FamilyLabel(HungerIncidentFamily family)
+        static string FamilyLabel(RHAH_IncidentFamily family)
         {
             return ("RHAH_Menu_Family_" + family).Translate();
         }
 
-        static string OriginLabel(HungerIncidentOrigin origin)
+        static string OriginLabel(RHAH_IncidentOrigin origin)
         {
             return ("RHAH_Menu_Origin_" + origin).Translate();
         }
 
-        static string CategoryLabel(HungerIncidentCategory category)
+        static string CategoryLabel(RHAH_IncidentCategory category)
         {
             return ("RHAH_Menu_Category_" + category).Translate();
         }
 
-        static string TargetLabel(HungerIncidentTarget target)
+        static string TargetLabel(RHAH_IncidentTarget target)
         {
             return ("RHAH_Menu_Target_" + target).Translate();
         }
 
-        static string RoleLabel(HungerPawnRole role)
+        static string RoleLabel(RHAH_PawnRole role)
         {
             return ("RHAH_Role_" + role).Translate();
         }
 
-        static string LifecycleLabel(HungerLifecycle lifecycle)
+        static string LifecycleLabel(RHAH_Lifecycle lifecycle)
         {
             return ("RHAH_Menu_Lifecycle_" + lifecycle).Translate();
         }

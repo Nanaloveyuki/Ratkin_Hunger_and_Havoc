@@ -16,17 +16,17 @@ namespace HungerAndHavoc.Pawn
         // 供无 Lord 的总 JobGiver 调度
         internal static Job TryCreate(Verse.Pawn pawn)
         {
-            if (!HungerAndHavocApi.IsVisitor(pawn))
+            if (!RHAH_Api.IsVisitor(pawn))
             {
                 return null;
             }
 
-            if (!HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.Steal))
+            if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Steal))
             {
                 return null;
             }
 
-            IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
             if (snapshot != null && snapshot.HasBeenFed)
             {
                 return null;

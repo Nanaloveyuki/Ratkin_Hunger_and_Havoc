@@ -30,7 +30,7 @@
 
 ## 源码文件
 
-`Source/Pawn` 及 Def XML 文件名用 `RHAH_` 短名，避免 `HungerAndHavocVisitor...` 膨胀。C# 类型名仍是合法标识符，XML `Class=` 写全名。
+`Source` 下 C# 文件名与主类型一致，类型前缀用 `RHAH_`，不用 `Hunger`。避免 `HungerAndHavocVisitor...` 膨胀。XML `Class=` 写全名。
 
 | 种类 | 文件 | 类型 |
 | --- | --- | --- |

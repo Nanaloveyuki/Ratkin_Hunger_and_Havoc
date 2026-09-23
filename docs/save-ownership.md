@@ -19,32 +19,32 @@ M0 工程对齐对实验性存档格式做 **破坏性重建**，不读旧键、
 
 新契约类型名（与 XML `hediffClass` / Comp `Class` 同步）：
 
-- `HungerAndHavoc.Identity.Hediff_HungerMark`
-- `HungerAndHavoc.Identity.CompHungerPawn`
-- `HungerAndHavoc.Identity.CompProperties_HungerPawn`
+- `HungerAndHavoc.Identity.Hediff_RHAH_Mark`
+- `HungerAndHavoc.Identity.CompRHAH_Pawn`
+- `HungerAndHavoc.Identity.CompProperties_RHAH_Pawn`
 
 Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集合；null 与空集合加载后语义相同，都是空集合。`SetExtra(key, null)` 删除键。
 
 ## 游戏存档键
 
-`HungerAndHavocSettings` 是全局 `ModSettings`，不写入 `.rws`，见下方非存档表。
+`RHAH_Settings` 是全局 `ModSettings`，不写入 `.rws`，见下方非存档表。
 
-### CompHungerPawn
+### CompRHAH_Pawn
 
-类型名：`HungerAndHavoc.Identity.CompHungerPawn`。字段名不是存档键；本表键名与字段一致，camelCase。
+类型名：`HungerAndHavoc.Identity.CompRHAH_Pawn`。字段名不是存档键；本表键名与字段一致，camelCase。
 
 | 字段 | 存档键 | 默认值 | 集合 | 说明 |
 | --- | --- | --- | --- | --- |
 | sourceIncidentDisplayId | sourceIncidentDisplayId | null | 否 | 取代旧键 `sourceIncidentId`；破坏性重建，不读旧键 |
 | spawnBatchId | spawnBatchId | 0 | 否 | |
 | relationshipGroupId | relationshipGroupId | 0 | 否 | |
-| role | role | Unspecified | 否 | `HungerPawnRole` |
-| lifecycle | lifecycle | Arriving | 否 | `HungerLifecycle` |
+| role | role | Unspecified | 否 | `RHAH_PawnRole` |
+| lifecycle | lifecycle | Arriving | 否 | `RHAH_Lifecycle` |
 | hasBeenFed | hasBeenFed | false | 否 | |
 | leaveAfterGameTick | leaveAfterGameTick | -1 | 否 | |
 | carriesPlague | carriesPlague | false | 否 | |
-| attitudeAtArrival | attitudeAtArrival | Neutral | 否 | `HungerAttitude` |
-| attitude | attitude | Neutral | 否 | 当前 `HungerAttitude`。旧档缺键且到达态度不是 Neutral 时回退到 `attitudeAtArrival` |
+| attitudeAtArrival | attitudeAtArrival | Neutral | 否 | `RHAH_Attitude` |
+| attitude | attitude | Neutral | 否 | 当前 `RHAH_Attitude`。旧档缺键且到达态度不是 Neutral 时回退到 `attitudeAtArrival` |
 | parentPawnLoadId | parentPawnLoadId | 0 | 否 | |
 | childPawnLoadIds | childPawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
 | gateOverrides | gateOverrides | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同 |
@@ -61,7 +61,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | --- | --- | --- | --- | --- |
 | faction | faction | null | 否 | 访客 Lord 使用的态度派系引用 |
 | waitSpot | waitSpot | IntVec3.Invalid | 否 | 寻食集合点 |
-| familyRole | familyRole | Unspecified | 否 | `HungerPawnRole` |
+| familyRole | familyRole | Unspecified | 否 | `RHAH_PawnRole` |
 
 
 ### ChoiceLetter_RHAH_Request
@@ -70,10 +70,10 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 | 字段 | 存档键 | 默认值 | 集合 | 说明 |
 | --- | --- | --- | --- | --- |
-| choiceId | choiceId | 0 | 否 | 对应 `HungerChoiceRecord.id` |
+| choiceId | choiceId | 0 | 否 | 对应 `RHAH_ChoiceRecord.id` |
 | mapId | mapId | 0 | 否 | |
-| kind | kind | None | 否 | `HungerRequestKind` |
-| site | site | None | 否 | `HungerIntelSiteKind` |
+| kind | kind | None | 否 | `RHAH_RequestKind` |
+| site | site | None | 否 | `RHAH_IntelSiteKind` |
 | amount | amount | 0 | 否 | |
 | expireTick | expireTick | -1 | 否 | |
 
@@ -83,12 +83,12 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 | 字段 | 存档键 | 默认值 | 集合 | 说明 |
 | --- | --- | --- | --- | --- |
-| choiceId | choiceId | 0 | 否 | 对应 `HungerChoiceRecord.id` |
-| choice | choice | Visitors | 否 | `HungerChoiceKind` |
+| choiceId | choiceId | 0 | 否 | 对应 `RHAH_ChoiceRecord.id` |
+| choice | choice | Visitors | 否 | `RHAH_ChoiceKind` |
 
-### HungerChoiceRecord
+### RHAH_ChoiceRecord
 
-类型名：`HungerAndHavoc.Incidents.HungerChoiceRecord`。嵌在 `openChoices` 里。
+类型名：`HungerAndHavoc.Incidents.RHAH_ChoiceRecord`。嵌在 `openChoices` 里。
 
 | 字段 | 存档键 | 默认值 | 集合 | 说明 |
 | --- | --- | --- | --- | --- |
@@ -96,12 +96,12 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | DisplayId | displayId | 空字符串 | 否 | `PostLoadInit` 把 null 补成空字符串 |
 | MapId | mapId | 0 | 否 | |
 | BatchId | batchId | 0 | 否 | |
-| Kind | kind | None | 否 | `HungerRequestKind` |
-| Site | site | None | 否 | `HungerIntelSiteKind` |
-| Choice | choice | None | 否 | `HungerChoiceKind` |
+| Kind | kind | None | 否 | `RHAH_RequestKind` |
+| Site | site | None | 否 | `RHAH_IntelSiteKind` |
+| Choice | choice | None | 否 | `RHAH_ChoiceKind` |
 | Amount | amount | 0 | 否 | |
 | ExpireTick | expireTick | -1 | 否 | |
-| Settled | settled | None | 否 | `HungerChoiceAction` |
+| Settled | settled | None | 否 | `RHAH_ChoiceAction` |
 | PawnLoadIds | pawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
 
 ### WorldObject_RHAH_RefugeeCamp
@@ -119,9 +119,9 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 | 类型 | 出现位置 | 卸载 |
 | --- | --- | --- |
-| HungerAndHavoc.Identity.Hediff_HungerMark | Hediff `Class` / `hediffClass` | Remove，随身份 Hediff 删除 |
-| HungerAndHavoc.Identity.CompHungerPawn | HediffComp `Class` | Remove，随身份 Hediff 删除 |
-| HungerAndHavoc.Identity.CompProperties_HungerPawn | Def XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Identity.Hediff_RHAH_Mark | Hediff `Class` / `hediffClass` | Remove，随身份 Hediff 删除 |
+| HungerAndHavoc.Identity.CompRHAH_Pawn | HediffComp `Class` | Remove，随身份 Hediff 删除 |
+| HungerAndHavoc.Identity.CompProperties_RHAH_Pawn | Def XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.LordJob_RHAH_Visitor | Lord `lordJob` | Remove。卸载后该 Lord 必须消失，pawn 回原版 ThinkTree |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Beg | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw | Job `driverClass` | Remove |
@@ -144,25 +144,25 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 
 | 类型 | 字段 | 存档键 | 卸载 |
 | --- | --- | --- | --- |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | active generation batches | activeGenerationBatches | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | pending incident display IDs | pendingIncidentDisplayIds | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | pending incident points | pendingIncidentPoints | Remove。与显示 ID 等长。旧档缺列表时按当前调试点补齐 |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return load ID | plagueReturnLoadId | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return map ID | plagueReturnMapId | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return phase | plagueReturnPhase | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return due tick | plagueReturnDueTick | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return leave tick | plagueReturnLeaveTick | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | open choices | openChoices | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | next choice id | nextChoiceId | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | broadcast cooldown tick | broadcastCooldownUntilTick | Remove |
-| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | generation cursor | generationCursor | Remove |
-| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | visitor pawn load IDs | visitorPawnLoadIds | Remove |
-| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | food search ticks | foodSearchTicks | Remove |
-| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague quarantine load IDs | plagueQuarantineLoadIds | Remove |
-| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague recovered count | plagueRecovered | Remove |
-| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague death count | plagueDied | Remove |
-| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | plague last spread day | plagueLastSpreadDay | Remove |
-| HungerAndHavoc.Core.MapComponent_HungerAndHavoc | wall gnaw counts | wallGnawCounts | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | active generation batches | activeGenerationBatches | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | pending incident display IDs | pendingIncidentDisplayIds | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | pending incident points | pendingIncidentPoints | Remove。与显示 ID 等长。旧档缺列表时按当前调试点补齐 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | plague return load ID | plagueReturnLoadId | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | plague return map ID | plagueReturnMapId | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | plague return phase | plagueReturnPhase | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | plague return due tick | plagueReturnDueTick | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | plague return leave tick | plagueReturnLeaveTick | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | open choices | openChoices | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | next choice id | nextChoiceId | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | broadcast cooldown tick | broadcastCooldownUntilTick | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | generation cursor | generationCursor | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | visitor pawn load IDs | visitorPawnLoadIds | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | food search ticks | foodSearchTicks | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | plague quarantine load IDs | plagueQuarantineLoadIds | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | plague recovered count | plagueRecovered | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | plague death count | plagueDied | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | plague last spread day | plagueLastSpreadDay | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | wall gnaw counts | wallGnawCounts | Remove |
 
 生成队列、批次保护和全局调度属于唯一全局运行时组件；本图访客索引和寻食缓存属于唯一地图组件。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
 
@@ -247,39 +247,39 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | 名称 | 说明 |
 | --- | --- |
 | nanaloveyuki.ratkin.hungerandhavoc | packageId。清理副本的 meta 里应去掉本包，但不在运行时存档字段中 |
-| HungerAndHavocSettings.enableNewContent | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.optimizeGeneration | 全局 ModSettings，默认 true。关闭后不套权重异种，事件 Profile 仍生效 |
-| HungerAndHavocSettings.positiveIncidentDays | 全局 ModSettings，默认 15。正池平均天数，0 关闭，上限 60 |
-| HungerAndHavocSettings.negativeIncidentDays | 全局 ModSettings，默认 15。负池平均天数，0 关闭，上限 60 |
-| HungerAndHavocSettings.xenotypeWeights | 全局 ModSettings，默认空字典。缺键用登记建议权重。空字典不是全部禁用 |
-| HungerAndHavocSettings.enabledXenotypeDefNames | 全局 ModSettings，默认空。玩家加入的外部异种 defName |
-| HungerAndHavocSettings.enabledGeneDefNames | 全局 ModSettings，默认空。只允许 `RHAH_` 基因在生成后追加 |
-| HungerAndHavocSettings.reliefEnabled | 全局 ModSettings，默认 true。关闭后访客不受赈灾区限制 |
-| HungerAndHavocSettings.allowEatOutsideRelief | 全局 ModSettings，默认 false。空值不是允许区外取食 |
-| HungerAndHavocSettings.ignoreReliefAfterFed | 全局 ModSettings，默认 false |
-| HungerAndHavocSettings.leaveAfterFed | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.disabledReliefFoodDefNames | 全局 ModSettings，默认空。空名单表示当前食物可用，不是全部禁用 |
-| HungerAndHavocSettings.aidRequestsEnabled | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.intelTradesEnabled | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.visitorChoicesEnabled | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.familyDropEnabled | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.motherFeedEnabled | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.prisonerScavengeEnabled | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.tailBiteEnabled | 全局 ModSettings，默认 false |
-| HungerAndHavocSettings.broadcastEnabled | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.broadcastCooldownDays | 全局 ModSettings，默认 3，范围 0 到 10 |
-| HungerAndHavocSettings.staggerGeneration | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.disabledIncidentDisplayIds | 全局 ModSettings，默认空。空名单表示事件可用 |
-| HungerAndHavocSettings.incidentDebugPoints | 全局 ModSettings，默认空字典。缺键用目录调试点。范围 1 到 10000 |
-| HungerAndHavocSettings.incidentWeights | 全局 ModSettings，默认空字典。缺键为 100，表示目录权重。0 不抽，上限 100。空字典不是全部禁用 |
-| HungerAndHavocSettings.refugeeCampEnabled | 全局 ModSettings，默认 true |
-| HungerAndHavocSettings.pawnHistoriesEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组经历 |
-| HungerAndHavocSettings.pawnTraitsEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组特质 |
-| HungerAndHavocSettings.disabledHistoryDisplayIds | 全局 ModSettings，默认空。空名单表示经历可抽 |
-| HungerAndHavocSettings.disabledTraitDisplayIds | 全局 ModSettings，默认空。空名单表示特质可抽 |
-| HungerAndHavocSettings.traitWeights | 全局 ModSettings，默认空字典。缺键用目录概率乘 100。0 不抽 |
+| RHAH_Settings.enableNewContent | 全局 ModSettings，默认 true |
+| RHAH_Settings.optimizeGeneration | 全局 ModSettings，默认 true。关闭后不套权重异种，事件 Profile 仍生效 |
+| RHAH_Settings.positiveIncidentDays | 全局 ModSettings，默认 15。正池平均天数，0 关闭，上限 60 |
+| RHAH_Settings.negativeIncidentDays | 全局 ModSettings，默认 15。负池平均天数，0 关闭，上限 60 |
+| RHAH_Settings.xenotypeWeights | 全局 ModSettings，默认空字典。缺键用登记建议权重。空字典不是全部禁用 |
+| RHAH_Settings.enabledXenotypeDefNames | 全局 ModSettings，默认空。玩家加入的外部异种 defName |
+| RHAH_Settings.enabledGeneDefNames | 全局 ModSettings，默认空。只允许 `RHAH_` 基因在生成后追加 |
+| RHAH_Settings.reliefEnabled | 全局 ModSettings，默认 true。关闭后访客不受赈灾区限制 |
+| RHAH_Settings.allowEatOutsideRelief | 全局 ModSettings，默认 false。空值不是允许区外取食 |
+| RHAH_Settings.ignoreReliefAfterFed | 全局 ModSettings，默认 false |
+| RHAH_Settings.leaveAfterFed | 全局 ModSettings，默认 true |
+| RHAH_Settings.disabledReliefFoodDefNames | 全局 ModSettings，默认空。空名单表示当前食物可用，不是全部禁用 |
+| RHAH_Settings.aidRequestsEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.intelTradesEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.visitorChoicesEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.familyDropEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.motherFeedEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.prisonerScavengeEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.tailBiteEnabled | 全局 ModSettings，默认 false |
+| RHAH_Settings.broadcastEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.broadcastCooldownDays | 全局 ModSettings，默认 3，范围 0 到 10 |
+| RHAH_Settings.staggerGeneration | 全局 ModSettings，默认 true |
+| RHAH_Settings.disabledIncidentDisplayIds | 全局 ModSettings，默认空。空名单表示事件可用 |
+| RHAH_Settings.incidentDebugPoints | 全局 ModSettings，默认空字典。缺键用目录调试点。范围 1 到 10000 |
+| RHAH_Settings.incidentWeights | 全局 ModSettings，默认空字典。缺键为 100，表示目录权重。0 不抽，上限 100。空字典不是全部禁用 |
+| RHAH_Settings.refugeeCampEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.pawnHistoriesEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组经历 |
+| RHAH_Settings.pawnTraitsEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组特质 |
+| RHAH_Settings.disabledHistoryDisplayIds | 全局 ModSettings，默认空。空名单表示经历可抽 |
+| RHAH_Settings.disabledTraitDisplayIds | 全局 ModSettings，默认空。空名单表示特质可抽 |
+| RHAH_Settings.traitWeights | 全局 ModSettings，默认空字典。缺键用目录概率乘 100。0 不抽 |
 | HungerAndHavoc.Guard.* | Guard 始终加载，无存档类型 |
-| HungerAndHavocMod / HarmonyBootstrap / HungerAndHavocRuntime | 运行时入口，无 ExposeData |
+| RHAH_Mod / HarmonyBootstrap / RHAH_Runtime | 运行时入口，无 ExposeData |
 
 ## 卸载边界
 

@@ -9,7 +9,7 @@ namespace HungerAndHavoc.Pawn
     {
         internal static bool TryComplete(Verse.Pawn pawn)
         {
-            if (!HungerAndHavocApi.IsVisitor(pawn) || pawn.needs == null || pawn.needs.food == null)
+            if (!RHAH_Api.IsVisitor(pawn) || pawn.needs == null || pawn.needs.food == null)
             {
                 return false;
             }
@@ -20,16 +20,16 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
 
-            IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
             if (snapshot == null)
             {
                 return false;
             }
 
             bool already = snapshot.HasBeenFed;
-            if (!already && snapshot.Lifecycle == HungerLifecycle.SeekingFood)
+            if (!already && snapshot.Lifecycle == RHAH_Lifecycle.SeekingFood)
             {
-                HungerAndHavocApi.SetLifecycle(pawn, HungerLifecycle.Fed);
+                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed);
             }
 
             if (!already)
@@ -37,7 +37,7 @@ namespace HungerAndHavoc.Pawn
                 TryAddRefeeding(pawn);
             }
 
-            return HungerAndHavocApi.Get(pawn) != null && HungerAndHavocApi.Get(pawn).HasBeenFed;
+            return RHAH_Api.Get(pawn) != null && RHAH_Api.Get(pawn).HasBeenFed;
         }
 
         static void TryAddRefeeding(Verse.Pawn pawn)
@@ -47,7 +47,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            HediffDef syndrome = HungerAndHavocDefOf.RHAH_RefeedingSyndrome;
+            HediffDef syndrome = RHAH_DefOf.RHAH_RefeedingSyndrome;
             if (syndrome == null || pawn.health.hediffSet.HasHediff(syndrome))
             {
                 return;

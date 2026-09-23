@@ -9,7 +9,7 @@ namespace HungerAndHavoc.Incidents
     public class ChoiceLetter_RHAH_Visitors : ChoiceLetter
     {
         public int choiceId;
-        public HungerChoiceKind choice = HungerChoiceKind.Visitors;
+        public RHAH_ChoiceKind choice = RHAH_ChoiceKind.Visitors;
 
         public override bool CanDismissWithRightClick => false;
 
@@ -17,18 +17,18 @@ namespace HungerAndHavoc.Incidents
         {
             get
             {
-                HungerChoiceRecord record = FindRecord();
+                RHAH_ChoiceRecord record = FindRecord();
                 if (ArchivedOnly || record == null || !record.Open)
                 {
                     yield return Option_Close;
                     yield break;
                 }
 
-                yield return Action("RHAH_Choice_Join", HungerChoiceAction.Join);
-                yield return Action("RHAH_Choice_Hire", HungerChoiceAction.Hire);
-                yield return Action("RHAH_Choice_Feed", HungerChoiceAction.Feed);
-                yield return Action("RHAH_Choice_Reject", HungerChoiceAction.Reject);
-                yield return Action("RHAH_Choice_Ignore", HungerChoiceAction.Ignore);
+                yield return Action("RHAH_Choice_Join", RHAH_ChoiceAction.Join);
+                yield return Action("RHAH_Choice_Hire", RHAH_ChoiceAction.Hire);
+                yield return Action("RHAH_Choice_Feed", RHAH_ChoiceAction.Feed);
+                yield return Action("RHAH_Choice_Reject", RHAH_ChoiceAction.Reject);
+                yield return Action("RHAH_Choice_Ignore", RHAH_ChoiceAction.Ignore);
                 yield return Option_Postpone;
             }
         }
@@ -37,10 +37,10 @@ namespace HungerAndHavoc.Incidents
         {
             base.ExposeData();
             Scribe_Values.Look(ref choiceId, "choiceId", 0);
-            Scribe_Values.Look(ref choice, "choice", HungerChoiceKind.Visitors);
+            Scribe_Values.Look(ref choice, "choice", RHAH_ChoiceKind.Visitors);
         }
 
-        DiaOption Action(string key, HungerChoiceAction action)
+        DiaOption Action(string key, RHAH_ChoiceAction action)
         {
             DiaOption option = new DiaOption(key.Translate());
             option.action = () => Settle(action);
@@ -48,26 +48,26 @@ namespace HungerAndHavoc.Incidents
             return option;
         }
 
-        void Settle(HungerChoiceAction action)
+        void Settle(RHAH_ChoiceAction action)
         {
-            GameComponent_HungerAndHavoc game = Current.Game?.GetComponent<GameComponent_HungerAndHavoc>();
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+            RHAH_Settings settings = RHAH_Mod.Settings;
             bool enabled = settings == null || settings.visitorChoicesEnabled;
-            HungerChoiceAction settled = HungerChoiceRuntime.TrySettle(
+            RHAH_ChoiceAction settled = RHAH_ChoiceRuntime.TrySettle(
                 game,
                 choiceId,
                 action,
                 Find.TickManager.TicksGame,
                 enabled,
                 true);
-            if (settled == HungerChoiceAction.None)
+            if (settled == RHAH_ChoiceAction.None)
             {
                 Messages.Message("RHAH_Choice_Stale".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            HungerChoiceRuntime.Apply(FindRecord());
-            if (settled == HungerChoiceAction.Feed)
+            RHAH_ChoiceRuntime.Apply(FindRecord());
+            if (settled == RHAH_ChoiceAction.Feed)
             {
                 Messages.Message("RHAH_Choice_Fed".Translate(), MessageTypeDefOf.PositiveEvent);
             }
@@ -75,15 +75,15 @@ namespace HungerAndHavoc.Incidents
             Find.LetterStack.RemoveLetter(this);
         }
 
-        HungerChoiceRecord FindRecord()
+        RHAH_ChoiceRecord FindRecord()
         {
-            GameComponent_HungerAndHavoc game = Current.Game?.GetComponent<GameComponent_HungerAndHavoc>();
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
             if (game == null)
             {
                 return null;
             }
 
-            IReadOnlyList<HungerChoiceRecord> records = game.OpenChoices;
+            IReadOnlyList<RHAH_ChoiceRecord> records = game.OpenChoices;
             for (int i = 0; i < records.Count; i++)
             {
                 if (records[i].Id == choiceId)

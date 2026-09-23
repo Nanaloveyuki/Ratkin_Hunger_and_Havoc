@@ -9,8 +9,8 @@ namespace HungerAndHavoc.Incidents
     {
         public int choiceId;
         public int mapId;
-        public HungerRequestKind kind;
-        public HungerIntelSiteKind site;
+        public RHAH_RequestKind kind;
+        public RHAH_IntelSiteKind site;
         public int amount;
         public int expireTick = -1;
 
@@ -28,8 +28,8 @@ namespace HungerAndHavoc.Incidents
 
                 DiaOption deliver = new DiaOption("RHAH_Choice_Deliver".Translate());
                 Map map = ResolveMap();
-                bool enough = map != null && HungerChoiceRuntime.Stock(map, kind) >= amount;
-                if (kind == HungerRequestKind.Baby)
+                bool enough = map != null && RHAH_ChoiceRuntime.Stock(map, kind) >= amount;
+                if (kind == RHAH_RequestKind.Baby)
                 {
                     enough = false;
                     deliver.Disable("RHAH_Choice_NoBaby".Translate());
@@ -40,15 +40,15 @@ namespace HungerAndHavoc.Incidents
                 }
                 else
                 {
-                    deliver.action = () => Settle(HungerChoiceAction.Deliver);
+                    deliver.action = () => Settle(RHAH_ChoiceAction.Deliver);
                     deliver.resolveTree = true;
                 }
 
                 DiaOption reject = new DiaOption("RHAH_Choice_Reject".Translate());
-                reject.action = () => Settle(HungerChoiceAction.Reject);
+                reject.action = () => Settle(RHAH_ChoiceAction.Reject);
                 reject.resolveTree = true;
                 DiaOption ignore = new DiaOption("RHAH_Choice_Ignore".Translate());
-                ignore.action = () => Settle(HungerChoiceAction.Ignore);
+                ignore.action = () => Settle(RHAH_ChoiceAction.Ignore);
                 ignore.resolveTree = true;
 
                 yield return deliver;
@@ -63,45 +63,45 @@ namespace HungerAndHavoc.Incidents
             base.ExposeData();
             Scribe_Values.Look(ref choiceId, "choiceId", 0);
             Scribe_Values.Look(ref mapId, "mapId", 0);
-            Scribe_Values.Look(ref kind, "kind", HungerRequestKind.None);
-            Scribe_Values.Look(ref site, "site", HungerIntelSiteKind.None);
+            Scribe_Values.Look(ref kind, "kind", RHAH_RequestKind.None);
+            Scribe_Values.Look(ref site, "site", RHAH_IntelSiteKind.None);
             Scribe_Values.Look(ref amount, "amount", 0);
             Scribe_Values.Look(ref expireTick, "expireTick", -1);
         }
 
-        void Settle(HungerChoiceAction action)
+        void Settle(RHAH_ChoiceAction action)
         {
-            GameComponent_HungerAndHavoc game = Current.Game?.GetComponent<GameComponent_HungerAndHavoc>();
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+            RHAH_Settings settings = RHAH_Mod.Settings;
             Map map = ResolveMap();
-            bool enabled = settings == null || settings.AllowsRequest(site == HungerIntelSiteKind.None ? HungerChoiceKind.Aid : HungerChoiceKind.Intel);
-            bool canDeliver = map != null && HungerChoiceRuntime.TryConsume(map, kind, amount);
-            if (action != HungerChoiceAction.Deliver)
+            bool enabled = settings == null || settings.AllowsRequest(site == RHAH_IntelSiteKind.None ? RHAH_ChoiceKind.Aid : RHAH_ChoiceKind.Intel);
+            bool canDeliver = map != null && RHAH_ChoiceRuntime.TryConsume(map, kind, amount);
+            if (action != RHAH_ChoiceAction.Deliver)
             {
                 canDeliver = true;
             }
 
-            HungerChoiceAction settled = HungerChoiceRuntime.TrySettle(
+            RHAH_ChoiceAction settled = RHAH_ChoiceRuntime.TrySettle(
                 game,
                 choiceId,
                 action,
                 Find.TickManager.TicksGame,
                 enabled,
                 canDeliver);
-            if (settled == HungerChoiceAction.None)
+            if (settled == RHAH_ChoiceAction.None)
             {
                 Messages.Message("RHAH_Choice_Stale".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            HungerChoiceRecord record = FindRecord(game);
-            if (HungerRequestRules.CreatesSite(settled, site))
+            RHAH_ChoiceRecord record = FindRecord(game);
+            if (RHAH_RequestRules.CreatesSite(settled, site))
             {
-                HungerChoiceRuntime.TryCreateSite(map, site);
+                RHAH_ChoiceRuntime.TryCreateSite(map, site);
             }
 
-            HungerChoiceRuntime.Apply(record);
-            if (settled == HungerChoiceAction.Deliver)
+            RHAH_ChoiceRuntime.Apply(record);
+            if (settled == RHAH_ChoiceAction.Deliver)
             {
                 Messages.Message("RHAH_Choice_Delivered".Translate(), MessageTypeDefOf.PositiveEvent);
             }
@@ -111,18 +111,18 @@ namespace HungerAndHavoc.Incidents
 
         bool StillOpen()
         {
-            HungerChoiceRecord record = FindRecord(Current.Game?.GetComponent<GameComponent_HungerAndHavoc>());
+            RHAH_ChoiceRecord record = FindRecord(Current.Game?.GetComponent<GameComponent_RHAH_Game>());
             return record != null && record.Open;
         }
 
-        HungerChoiceRecord FindRecord(GameComponent_HungerAndHavoc game)
+        RHAH_ChoiceRecord FindRecord(GameComponent_RHAH_Game game)
         {
             if (game == null)
             {
                 return null;
             }
 
-            IReadOnlyList<HungerChoiceRecord> records = game.OpenChoices;
+            IReadOnlyList<RHAH_ChoiceRecord> records = game.OpenChoices;
             for (int i = 0; i < records.Count; i++)
             {
                 if (records[i].Id == choiceId)

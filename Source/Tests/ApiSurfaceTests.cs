@@ -12,26 +12,26 @@ namespace HungerAndHavoc.Tests
     {
         static readonly string[] Whitelist =
         {
-            "HungerAndHavocApi",
-            "IHungerPawn",
-            "HungerPawnSnapshot",
-            "IHungerPawnBehavior",
-            "HungerPawnBehaviors",
-            "HungerPawnSeed",
-            "HungerBehaviorGate",
-            "HungerPawnRole",
-            "HungerLifecycle",
-            "HungerReleaseReason",
-            "HungerAttitude"
+            "RHAH_Api",
+            "IRHAH_Pawn",
+            "RHAH_PawnSnapshot",
+            "IRHAH_PawnBehavior",
+            "RHAH_PawnBehaviors",
+            "RHAH_PawnSeed",
+            "RHAH_BehaviorGate",
+            "RHAH_PawnRole",
+            "RHAH_Lifecycle",
+            "RHAH_ReleaseReason",
+            "RHAH_Attitude"
         };
 
         static readonly string[] ForbiddenNames =
         {
-            "CompHungerPawn",
-            "CompProperties_HungerPawn",
-            "Hediff_HungerMark",
-            "HungerRace",
-            "HungerRaceExtension"
+            "CompRHAH_Pawn",
+            "CompProperties_RHAH_Pawn",
+            "Hediff_RHAH_Mark",
+            "RHAH_Race",
+            "RHAH_RaceExtension"
         };
 
         static ApiSurfaceTests()
@@ -42,7 +42,7 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void ExportedTypesMatchWhitelist()
         {
-            Assembly api = typeof(HungerAndHavocApi).Assembly;
+            Assembly api = typeof(RHAH_Api).Assembly;
             Assert.Equal("HungerAndHavoc.Api", api.GetName().Name);
 
             HashSet<string> actual = new HashSet<string>(
@@ -54,15 +54,15 @@ namespace HungerAndHavoc.Tests
                 expected.SetEquals(actual),
                 "missing=[" + string.Join(", ", expected.Except(actual).OrderBy(name => name)) +
                 "] extra=[" + string.Join(", ", actual.Except(expected).OrderBy(name => name)) + "]");
-            Assert.Contains("HungerPawnSnapshot", actual);
-            Assert.True(typeof(HungerPawnSnapshot).IsSealed);
-            Assert.False(typeof(IHungerApiHost).IsPublic);
+            Assert.Contains("RHAH_PawnSnapshot", actual);
+            Assert.True(typeof(RHAH_PawnSnapshot).IsSealed);
+            Assert.False(typeof(IRHAH_ApiHost).IsPublic);
         }
 
         [Fact]
-        public void PublicSignaturesDoNotExposeCompHediffOrHungerRace()
+        public void PublicSignaturesDoNotExposeCompHediffOrRHAH_Race()
         {
-            Assembly api = typeof(HungerAndHavocApi).Assembly;
+            Assembly api = typeof(RHAH_Api).Assembly;
             List<string> leaks = new List<string>();
             foreach (Type type in api.GetExportedTypes())
             {
@@ -106,7 +106,7 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void AssemblyReferencesFlowApiToImplementationOnly()
         {
-            Assembly api = typeof(HungerAndHavocApi).Assembly;
+            Assembly api = typeof(RHAH_Api).Assembly;
             HashSet<string> apiRefs = Names(api);
             Assert.DoesNotContain("HungerAndHavoc", apiRefs);
             Assert.DoesNotContain("HungerAndHavoc.Tests", apiRefs);
@@ -118,7 +118,7 @@ namespace HungerAndHavoc.Tests
             HashSet<string> implRefs = Names(implementation);
             Assert.Contains("HungerAndHavoc.Api", implRefs);
             Assert.DoesNotContain("HungerAndHavoc.Tests", implRefs);
-            Assert.False(typeof(IHungerPawn).IsAssignableFrom(typeof(CompHungerPawn)));
+            Assert.False(typeof(IRHAH_Pawn).IsAssignableFrom(typeof(CompRHAH_Pawn)));
         }
 
         static HashSet<string> Names(Assembly assembly)
@@ -158,7 +158,7 @@ namespace HungerAndHavoc.Tests
                 return true;
             }
 
-            if (type.Name.IndexOf("CompHunger", StringComparison.Ordinal) >= 0)
+            if (type.Name.IndexOf("CompRHAH_", StringComparison.Ordinal) >= 0)
             {
                 return true;
             }

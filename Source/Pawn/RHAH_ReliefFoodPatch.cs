@@ -13,13 +13,13 @@ namespace HungerAndHavoc.Pawn
     {
         static void Postfix(Verse.Pawn pawn, ref Job __result)
         {
-            if (__result == null || __result.def != JobDefOf.Ingest || !HungerAndHavocApi.IsVisitor(pawn))
+            if (__result == null || __result.def != JobDefOf.Ingest || !RHAH_Api.IsVisitor(pawn))
             {
                 return;
             }
 
-            IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (snapshot == null || !snapshot.HasBeenFed || settings == null ||
                 !settings.reliefEnabled || !settings.ignoreReliefAfterFed)
             {

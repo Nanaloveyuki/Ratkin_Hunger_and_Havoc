@@ -95,18 +95,18 @@ namespace HungerAndHavoc.Pawn.Compat
             DrawMarker(graph, positiveDays, new Color(0.45f, 0.78f, 0.48f));
             DrawMarker(graph, negativeDays, new Color(0.86f, 0.42f, 0.36f));
             TooltipHandler.TipRegion(graph, "RHAH_Menu_Frequency_CurveTip".Translate(
-                HungerIncidentSchedule.OccurrenceChance(positiveDays).ToString("P1"),
-                HungerIncidentSchedule.OccurrenceChance(negativeDays).ToString("P1")));
+                RHAH_IncidentSchedule.OccurrenceChance(positiveDays).ToString("P1"),
+                RHAH_IncidentSchedule.OccurrenceChance(negativeDays).ToString("P1")));
         }
 
         static void DrawCurve(Rect graph, Color color, int samples)
         {
-            float span = HungerIncidentSchedule.MaxDays;
+            float span = RHAH_IncidentSchedule.MaxDays;
             Vector2 last = CurvePoint(graph, 0f, 0f, span);
             for (int i = 1; i <= samples; i++)
             {
                 float sampleDays = span * i / samples;
-                Vector2 next = CurvePoint(graph, sampleDays, HungerIncidentSchedule.OccurrenceChance(sampleDays), span);
+                Vector2 next = CurvePoint(graph, sampleDays, RHAH_IncidentSchedule.OccurrenceChance(sampleDays), span);
                 Widgets.DrawLine(last, next, color, 1.5f);
                 last = next;
             }
@@ -122,8 +122,8 @@ namespace HungerAndHavoc.Pawn.Compat
             Vector2 point = CurvePoint(
                 graph,
                 days,
-                HungerIncidentSchedule.OccurrenceChance(days),
-                HungerIncidentSchedule.MaxDays);
+                RHAH_IncidentSchedule.OccurrenceChance(days),
+                RHAH_IncidentSchedule.MaxDays);
             Widgets.DrawBoxSolid(new Rect(point.x - 2f, point.y - 2f, 4f, 4f), color);
         }
 

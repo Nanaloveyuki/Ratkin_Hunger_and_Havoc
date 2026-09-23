@@ -6,7 +6,7 @@ namespace HungerAndHavoc.Pawn
 {
     internal static class RHAH_AttitudeFactions
     {
-        internal static Faction Resolve(HungerAttitude attitude)
+        internal static Faction Resolve(RHAH_Attitude attitude)
         {
             FactionDef def = DefFor(attitude);
             if (def == null || Find.FactionManager == null)
@@ -17,20 +17,20 @@ namespace HungerAndHavoc.Pawn
             return Find.FactionManager.FirstFactionOfDef(def);
         }
 
-        internal static FactionDef DefFor(HungerAttitude attitude)
+        internal static FactionDef DefFor(RHAH_Attitude attitude)
         {
             switch (attitude)
             {
-                case HungerAttitude.Hostile:
-                    return HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_Hostile;
-                case HungerAttitude.LeaningHostile:
-                    return HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_LeaningHostile;
-                case HungerAttitude.LeaningFriendly:
-                    return HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_LeaningFriendly;
-                case HungerAttitude.Friendly:
-                    return HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_Friendly;
+                case RHAH_Attitude.Hostile:
+                    return HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Hostile;
+                case RHAH_Attitude.LeaningHostile:
+                    return HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_LeaningHostile;
+                case RHAH_Attitude.LeaningFriendly:
+                    return HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_LeaningFriendly;
+                case RHAH_Attitude.Friendly:
+                    return HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Friendly;
                 default:
-                    return HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_Neutral;
+                    return HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Neutral;
             }
         }
 
@@ -42,11 +42,11 @@ namespace HungerAndHavoc.Pawn
             }
 
             FactionDef def = faction.def;
-            return def == HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_Hostile ||
-                   def == HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_LeaningHostile ||
-                   def == HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_Neutral ||
-                   def == HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_LeaningFriendly ||
-                   def == HungerAndHavoc.Core.HungerAndHavocDefOf.RHAH_Faction_Friendly;
+            return def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Hostile ||
+                   def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_LeaningHostile ||
+                   def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Neutral ||
+                   def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_LeaningFriendly ||
+                   def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Friendly;
         }
     }
 }

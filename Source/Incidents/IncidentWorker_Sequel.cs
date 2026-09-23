@@ -9,23 +9,23 @@ namespace HungerAndHavoc.Incidents
     {
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            HungerIncidentEntry entry = Entry;
-            if (entry == null || !Core.HungerAndHavocRuntime.AllowsNewContent)
+            RHAH_IncidentEntry entry = Entry;
+            if (entry == null || !Core.RHAH_Runtime.AllowsNewContent)
             {
                 return false;
             }
 
             if (entry.DisplayId == "I-038")
             {
-                return Core.HungerMapResolver.Resolve(parms?.target as Map) != null;
+                return Core.RHAH_MapResolver.Resolve(parms?.target as Map) != null;
             }
 
-            if (entry.Target == HungerIncidentTarget.Caravan)
+            if (entry.Target == RHAH_IncidentTarget.Caravan)
             {
                 return Caravan.CaravanTargetResolver.ResolvePlayerCaravan() != null;
             }
 
-            Map map = Core.HungerMapResolver.Resolve(parms?.target as Map);
+            Map map = Core.RHAH_MapResolver.Resolve(parms?.target as Map);
             return map != null && FindAnySpawnCell(map);
         }
         static bool FindAnySpawnCell(Map map)
@@ -36,7 +36,7 @@ namespace HungerAndHavoc.Incidents
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
-            HungerIncidentEntry entry = Entry;
+            RHAH_IncidentEntry entry = Entry;
             if (entry == null || !CanFireNowSub(parms))
             {
                 return false;
@@ -51,12 +51,12 @@ namespace HungerAndHavoc.Incidents
                 return TradeEventRouter.TrySpawnTraderCaravan(entry, parms);
             }
 
-            if (entry.Target == HungerIncidentTarget.Caravan)
+            if (entry.Target == RHAH_IncidentTarget.Caravan)
             {
                 return TradeEventRouter.TrySpawnCaravanAmbush(entry, parms == null ? 0f : parms.points);
             }
 
-            Map map = Core.HungerMapResolver.Resolve(parms?.target as Map);
+            Map map = Core.RHAH_MapResolver.Resolve(parms?.target as Map);
             if (map == null)
             {
                 return false;
@@ -69,46 +69,46 @@ namespace HungerAndHavoc.Incidents
             }
 
             int tick = Find.TickManager.TicksGame;
-            return HungerIncidentFacts.Submit(new HungerIncidentContext
+            return RHAH_IncidentFacts.Submit(new RHAH_IncidentContext
             {
                 DisplayId = entry.DisplayId,
                 SpawnBatchId = tick,
                 RelationshipGroupId = tick,
                 Role = RoleFor(entry),
-                Attitude = entry.DefaultAttitudePool == HungerAttitudePool.Positive ? HungerAttitude.LeaningFriendly : HungerAttitude.Hostile,
-                CarriesPlague = entry.Category == HungerIncidentCategory.Plague,
+                Attitude = entry.DefaultAttitudePool == RHAH_AttitudePool.Positive ? RHAH_Attitude.LeaningFriendly : RHAH_Attitude.Hostile,
+                CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
                 SpawnCell = cell,
-                PawnCount = HungerIncidentScale.Count(entry.DisplayId, parms == null ? 0f : parms.points),
+                PawnCount = RHAH_IncidentScale.Count(entry.DisplayId, parms == null ? 0f : parms.points),
                 Points = parms == null ? 0f : parms.points
             });
         }
 
-        HungerIncidentEntry Entry => def == null ? null : HungerIncidentCatalog.GetByDefName(def.defName);
+        RHAH_IncidentEntry Entry => def == null ? null : RHAH_IncidentCatalog.GetByDefName(def.defName);
 
-        static HungerPawnRole RoleFor(HungerIncidentEntry entry)
+        static RHAH_PawnRole RoleFor(RHAH_IncidentEntry entry)
         {
             switch (entry.Family)
             {
-                case HungerIncidentFamily.Thief: return HungerPawnRole.Thief;
-                case HungerIncidentFamily.Wild: return HungerPawnRole.Wild;
-                case HungerIncidentFamily.Siege: return HungerPawnRole.Siege;
-                case HungerIncidentFamily.Trade: return HungerPawnRole.Trader;
-                case HungerIncidentFamily.Aid: return HungerPawnRole.Refugee;
-                case HungerIncidentFamily.Intel: return HungerPawnRole.Envoy;
-                case HungerIncidentFamily.Special: return HungerPawnRole.Refugee;
-                default: return HungerPawnRole.Beggar;
+                case RHAH_IncidentFamily.Thief: return RHAH_PawnRole.Thief;
+                case RHAH_IncidentFamily.Wild: return RHAH_PawnRole.Wild;
+                case RHAH_IncidentFamily.Siege: return RHAH_PawnRole.Siege;
+                case RHAH_IncidentFamily.Trade: return RHAH_PawnRole.Trader;
+                case RHAH_IncidentFamily.Aid: return RHAH_PawnRole.Refugee;
+                case RHAH_IncidentFamily.Intel: return RHAH_PawnRole.Envoy;
+                case RHAH_IncidentFamily.Special: return RHAH_PawnRole.Refugee;
+                default: return RHAH_PawnRole.Beggar;
             }
         }
 
-        static int CountFor(HungerIncidentEntry entry)
+        static int CountFor(RHAH_IncidentEntry entry)
         {
-            if (entry.Family == HungerIncidentFamily.Siege || entry.Family == HungerIncidentFamily.Thief)
+            if (entry.Family == RHAH_IncidentFamily.Siege || entry.Family == RHAH_IncidentFamily.Thief)
             {
                 return 3;
             }
 
-            return entry.Family == HungerIncidentFamily.Beggar ? 2 : 1;
+            return entry.Family == RHAH_IncidentFamily.Beggar ? 2 : 1;
         }
     }
 }

@@ -6,9 +6,9 @@ namespace HungerAndHavoc.Pawn.Compat
 {
     internal interface RHAH_PawnCompatHook
     {
-        bool? Allows(Verse.Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate);
+        bool? Allows(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_BehaviorGate gate);
 
-        bool? ShouldReleaseToColony(Verse.Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason);
+        bool? ShouldReleaseToColony(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_ReleaseReason reason);
     }
 
     // 后注册优先 null 表示弃权
@@ -27,15 +27,15 @@ namespace HungerAndHavoc.Pawn.Compat
             hooks.Add(new Entry(packageId, hook));
         }
 
-        internal static bool? TryQuery(Verse.Pawn pawn, HungerBehaviorGate gate)
+        internal static bool? TryQuery(Verse.Pawn pawn, RHAH_BehaviorGate gate)
         {
-            IHungerPawn snapshot = pawn == null ? null : HungerAndHavocApi.Get(pawn);
+            IRHAH_Pawn snapshot = pawn == null ? null : RHAH_Api.Get(pawn);
             return QueryAllows(pawn, snapshot, gate);
         }
 
         internal static void EnsureAdapterRegistered()
         {
-            HungerPawnBehaviors.Register(adapter);
+            RHAH_PawnBehaviors.Register(adapter);
         }
 
         internal static void ResetForTests()
@@ -43,7 +43,7 @@ namespace HungerAndHavoc.Pawn.Compat
             hooks.Clear();
         }
 
-        static bool? QueryAllows(Verse.Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate)
+        static bool? QueryAllows(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_BehaviorGate gate)
         {
             for (int i = hooks.Count - 1; i >= 0; i--)
             {
@@ -57,7 +57,7 @@ namespace HungerAndHavoc.Pawn.Compat
             return null;
         }
 
-        static bool? QueryRelease(Verse.Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
+        static bool? QueryRelease(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_ReleaseReason reason)
         {
             for (int i = hooks.Count - 1; i >= 0; i--)
             {
@@ -83,14 +83,14 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
-        sealed class RHAH_PawnCompatAdapter : IHungerPawnBehavior
+        sealed class RHAH_PawnCompatAdapter : IRHAH_PawnBehavior
         {
-            public bool? Allows(Verse.Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate)
+            public bool? Allows(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_BehaviorGate gate)
             {
                 return QueryAllows(pawn, snapshot, gate);
             }
 
-            public bool? ShouldReleaseToColony(Verse.Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
+            public bool? ShouldReleaseToColony(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_ReleaseReason reason)
             {
                 return QueryRelease(pawn, snapshot, reason);
             }

@@ -9,7 +9,7 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void EmptyDenylistAllowsFoodAndDisableAllKeepsLaterFoods()
         {
-            HungerAndHavocSettings settings = new HungerAndHavocSettings();
+            RHAH_Settings settings = new RHAH_Settings();
             Assert.True(settings.IsReliefFoodEnabled("MealSimple"));
             settings.SetAllReliefFood(false, new System.Collections.Generic.List<string> { "MealSimple" });
             Assert.False(settings.IsReliefFoodEnabled("MealSimple"));

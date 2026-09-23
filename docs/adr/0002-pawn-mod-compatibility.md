@@ -2,7 +2,7 @@
 
 - Status: Implemented
 - Date: 2026-09-20
-- Superseded in part by: [0003](0003-engineering-standards.md)（对外身份是 `IHungerPawn`，不是 `CompHungerPawn`）
+- Superseded in part by: [0003](0003-engineering-standards.md)（对外身份是 `IRHAH_Pawn`，不是 `CompRHAH_Pawn`）
 
 ## Context
 
@@ -12,9 +12,9 @@
 
 ## Decision
 
-1. 身份是 Hediff `RHAH_HungerMark` + `CompHungerPawn`（HediffComp），不打种族 ThingDef 补丁。`Hediff_HungerMark.ShouldRemove` 恒为 false。
-2. 对外只保证 `HungerAndHavoc.Api.HungerAndHavocApi` 与 `IHungerPawnBehavior`。查询、标记来源、释放到殖民地、闸门覆盖都走这里。
-3. 行为不在 JobGiver 写死。询问顺序：单 pawn `Allow:`/`Deny:` 标签 → 后注册的 `IHungerPawnBehavior` → 本模组默认。闸门枚举第一期就列齐，未实现的 AI 也先占位。
+1. 身份是 Hediff `RHAH_HungerMark` + `CompRHAH_Pawn`（HediffComp），不打种族 ThingDef 补丁。`Hediff_RHAH_Mark.ShouldRemove` 恒为 false。
+2. 对外只保证 `HungerAndHavoc.Api.RHAH_Api` 与 `IRHAH_PawnBehavior`。查询、标记来源、释放到殖民地、闸门覆盖都走这里。
+3. 行为不在 JobGiver 写死。询问顺序：单 pawn `Allow:`/`Deny:` 标签 → 后注册的 `IRHAH_PawnBehavior` → 本模组默认。闸门枚举第一期就列齐，未实现的 AI 也先占位。
 4. `extraData`（`packageId:key` → string）给其它模组存私有状态，避免它们再挂一个容易被清掉的 Hediff。
 5. `TryMarkOrigin` 允许其它模组生成的鼠族计入来源（例如牵引/交易带进的幼年鼠族）。
 

@@ -20,11 +20,11 @@
 
 这是所有玩法实现的前置条件。
 
-- 拆分 `HungerAndHavoc.Api.dll` 与实现程序集，API 不引用 Verse、实现类型或 `CompHungerPawn`
+- 拆分 `HungerAndHavoc.Api.dll` 与实现程序集，API 不引用 Verse、实现类型或 `CompRHAH_Pawn`
 - 按工程标准修正命名空间、访问级别、文件路径和反射入口例外
-- 完成 `IHungerPawn` 只读快照，事件参数不得暴露 Hediff、Comp、Job 或 Worker
-- 固化 `CompHungerPawn` 的存档键、默认值、空集合语义和生命周期转换
-- 将 `HungerRace.Register` 等内部入口收敛为稳定 API 的鼠族匹配注册
+- 完成 `IRHAH_Pawn` 只读快照，事件参数不得暴露 Hediff、Comp、Job 或 Worker
+- 固化 `CompRHAH_Pawn` 的存档键、默认值、空集合语义和生命周期转换
+- 将 `RHAH_Race.Register` 等内部入口收敛为稳定 API 的鼠族匹配注册
 - 建立 API 白名单、Def/Keyed/workerClass、存档契约和旧命名禁用检查
 - 保持 Guard、旧包冲突检测和独立 packageId 的边界
 
@@ -64,7 +64,7 @@ P1 的目标是形成“事件可以完整生成、Pawn 可以完成生命周期
 
 实现要求：
 
-- 先实现通用生成上下文、批次 ID、关系组和 `HungerPawnSeed`
+- 先实现通用生成上下文、批次 ID、关系组和 `RHAH_PawnSeed`
 - 同类事件共用生成和 Worker 逻辑，鼠疫通过参数或策略注入，不复制近似 Worker
 - 每个事件明确 Family、Origin、Category、Target、态度池和调试点数
 - 事件必须能安全处理目标地图、商队、无可用 Pawn、人口上限和重复触发
@@ -91,7 +91,7 @@ P1 的目标是形成“事件可以完整生成、Pawn 可以完成生命周期
 
 Pawn 的身份分为种族、来源、访客、角色、经历和有效状态。经历只负责技能与文本，不参与来源或访客判定。
 
-- `RHAH_HungerMark` + `CompHungerPawn` 保存来源和运行时状态
+- `RHAH_HungerMark` + `CompRHAH_Pawn` 保存来源和运行时状态
 - 角色决定默认行为，生命周期决定当前阶段，闸门决定可否执行具体行为
 - 招募、囚禁、奴役或加入玩家派系时统一调用 `ReleaseToColony`
 - 死亡、地图转移、跨地图和存档重载必须保持来源数据一致
@@ -110,13 +110,13 @@ API 是长期兼容边界，优先稳定、少量、可验证。
 
 首期公开范围：
 
-- `HungerAndHavocApi`
-- `IHungerPawn`
-- `HungerPawnSeed`
-- `HungerPawnRole`、`HungerLifecycle`、`HungerReleaseReason`、`HungerAttitude`
-- `HungerBehaviorGate`
-- `HungerPawnBehaviors`
-- `IHungerPawnBehavior`
+- `RHAH_Api`
+- `IRHAH_Pawn`
+- `RHAH_PawnSeed`
+- `RHAH_PawnRole`、`RHAH_Lifecycle`、`RHAH_ReleaseReason`、`RHAH_Attitude`
+- `RHAH_BehaviorGate`
+- `RHAH_PawnBehaviors`
+- `IRHAH_PawnBehavior`
 
 规则：
 

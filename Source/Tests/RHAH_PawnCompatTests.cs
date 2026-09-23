@@ -19,104 +19,104 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void EmptyHooksAbstain()
         {
-            HungerPawnSnapshot snapshot = DummySnapshot(HungerPawnRole.BeggarChild);
+            RHAH_PawnSnapshot snapshot = DummySnapshot(RHAH_PawnRole.BeggarChild);
             RHAH_LeashCompat leash = new RHAH_LeashCompat();
             RHAH_ToddlerCompat toddler = new RHAH_ToddlerCompat();
             RHAH_PrisonerCompat prisoner = new RHAH_PrisonerCompat();
 
-            Assert.Null(leash.Allows(null, snapshot, HungerBehaviorGate.Leash));
-            Assert.Null(leash.ShouldReleaseToColony(null, snapshot, HungerReleaseReason.Recruited));
-            Assert.Null(toddler.Allows(null, snapshot, HungerBehaviorGate.Carry));
-            Assert.Null(toddler.ShouldReleaseToColony(null, snapshot, HungerReleaseReason.ModRequest));
-            Assert.Null(prisoner.Allows(null, snapshot, HungerBehaviorGate.Imprison));
-            Assert.Null(prisoner.ShouldReleaseToColony(null, snapshot, HungerReleaseReason.Imprisoned));
+            Assert.Null(leash.Allows(null, snapshot, RHAH_BehaviorGate.Leash));
+            Assert.Null(leash.ShouldReleaseToColony(null, snapshot, RHAH_ReleaseReason.Recruited));
+            Assert.Null(toddler.Allows(null, snapshot, RHAH_BehaviorGate.Carry));
+            Assert.Null(toddler.ShouldReleaseToColony(null, snapshot, RHAH_ReleaseReason.ModRequest));
+            Assert.Null(prisoner.Allows(null, snapshot, RHAH_BehaviorGate.Imprison));
+            Assert.Null(prisoner.ShouldReleaseToColony(null, snapshot, RHAH_ReleaseReason.Imprisoned));
         }
 
         [Fact]
         public void TryQueryLastRegisteredWinsAndSkipsNull()
         {
-            HungerPawnBehaviors.ResetForTests();
+            RHAH_PawnBehaviors.ResetForTests();
             RHAH_PawnCompat.ResetForTests();
-            HungerAndHavocApi.Bind(new HungerApiHost());
+            RHAH_Api.Bind(new RHAH_ApiHost());
             try
             {
-                Assert.Null(RHAH_PawnCompat.TryQuery(null, HungerBehaviorGate.Leash));
+                Assert.Null(RHAH_PawnCompat.TryQuery(null, RHAH_BehaviorGate.Leash));
 
                 RHAH_PawnCompat.Register(null, new StubHook { AllowsResult = false });
                 RHAH_PawnCompat.Register("test.first", new StubHook { AllowsResult = true });
                 RHAH_PawnCompat.Register("test.later", new StubHook { AllowsResult = false });
                 RHAH_PawnCompat.Register("test.skip", new StubHook { AllowsResult = null });
 
-                Assert.False(RHAH_PawnCompat.TryQuery(null, HungerBehaviorGate.Leash));
+                Assert.False(RHAH_PawnCompat.TryQuery(null, RHAH_BehaviorGate.Leash));
             }
             finally
             {
                 RHAH_PawnCompat.ResetForTests();
-                HungerPawnBehaviors.ResetForTests();
-                HungerAndHavocApi.Bind(null);
+                RHAH_PawnBehaviors.ResetForTests();
+                RHAH_Api.Bind(null);
             }
         }
 
         [Fact]
         public void DenyLeashDoesNotChangeDefaultsUnlessAdapterWired()
         {
-            HungerPawnBehaviors.ResetForTests();
+            RHAH_PawnBehaviors.ResetForTests();
             RHAH_PawnCompat.ResetForTests();
-            HungerAndHavocApi.Bind(new HungerApiHost());
+            RHAH_Api.Bind(new RHAH_ApiHost());
             try
             {
-                HungerPawnState child = ChildVisitor();
-                Assert.True(HungerPawnDefaults.Allows(child.ToSnapshot(), HungerBehaviorGate.Leash));
-                Assert.True(child.Allows(HungerBehaviorGate.Leash));
-                Assert.False(HungerAndHavocApi.Allows(null, HungerBehaviorGate.Leash));
+                RHAH_PawnState child = ChildVisitor();
+                Assert.True(RHAH_PawnDefaults.Allows(child.ToSnapshot(), RHAH_BehaviorGate.Leash));
+                Assert.True(child.Allows(RHAH_BehaviorGate.Leash));
+                Assert.False(RHAH_Api.Allows(null, RHAH_BehaviorGate.Leash));
 
                 RHAH_PawnCompat.Register("test.deny.leash", new DenyLeashHook());
-                Assert.False(RHAH_PawnCompat.TryQuery(null, HungerBehaviorGate.Leash));
-                Assert.True(child.Allows(HungerBehaviorGate.Leash));
-                Assert.Null(HungerPawnBehaviors.Query(handler =>
-                    handler.Allows(null, child.ToSnapshot(), HungerBehaviorGate.Leash)));
-                Assert.False(HungerAndHavocApi.Allows(null, HungerBehaviorGate.Leash));
+                Assert.False(RHAH_PawnCompat.TryQuery(null, RHAH_BehaviorGate.Leash));
+                Assert.True(child.Allows(RHAH_BehaviorGate.Leash));
+                Assert.Null(RHAH_PawnBehaviors.Query(handler =>
+                    handler.Allows(null, child.ToSnapshot(), RHAH_BehaviorGate.Leash)));
+                Assert.False(RHAH_Api.Allows(null, RHAH_BehaviorGate.Leash));
             }
             finally
             {
                 RHAH_PawnCompat.ResetForTests();
-                HungerPawnBehaviors.ResetForTests();
-                HungerAndHavocApi.Bind(null);
+                RHAH_PawnBehaviors.ResetForTests();
+                RHAH_Api.Bind(null);
             }
         }
 
         [Fact]
         public void WiredAdapterDenyLeashWinsAfterRegister()
         {
-            HungerPawnBehaviors.ResetForTests();
+            RHAH_PawnBehaviors.ResetForTests();
             RHAH_PawnCompat.ResetForTests();
-            HungerAndHavocApi.Bind(new HungerApiHost());
+            RHAH_Api.Bind(new RHAH_ApiHost());
             try
             {
-                HungerPawnState child = ChildVisitor();
+                RHAH_PawnState child = ChildVisitor();
                 RHAH_PawnCompat.EnsureAdapterRegistered();
-                Assert.True(child.Allows(HungerBehaviorGate.Leash));
-                Assert.Null(HungerPawnBehaviors.Query(handler =>
-                    handler.Allows(null, child.ToSnapshot(), HungerBehaviorGate.Leash)));
+                Assert.True(child.Allows(RHAH_BehaviorGate.Leash));
+                Assert.Null(RHAH_PawnBehaviors.Query(handler =>
+                    handler.Allows(null, child.ToSnapshot(), RHAH_BehaviorGate.Leash)));
 
                 RHAH_PawnCompat.Register("test.deny.leash", new DenyLeashHook());
-                Assert.False(child.Allows(HungerBehaviorGate.Leash));
-                Assert.False(HungerPawnBehaviors.Query(handler =>
-                    handler.Allows(null, child.ToSnapshot(), HungerBehaviorGate.Leash)));
-                Assert.False(HungerAndHavocApi.Allows(null, HungerBehaviorGate.Leash));
+                Assert.False(child.Allows(RHAH_BehaviorGate.Leash));
+                Assert.False(RHAH_PawnBehaviors.Query(handler =>
+                    handler.Allows(null, child.ToSnapshot(), RHAH_BehaviorGate.Leash)));
+                Assert.False(RHAH_Api.Allows(null, RHAH_BehaviorGate.Leash));
             }
             finally
             {
                 RHAH_PawnCompat.ResetForTests();
-                HungerPawnBehaviors.ResetForTests();
-                HungerAndHavocApi.Bind(null);
+                RHAH_PawnBehaviors.ResetForTests();
+                RHAH_Api.Bind(null);
             }
         }
 
         [Fact]
         public void StartupRegistersAdapterAndStaysPublic()
         {
-            HungerPawnBehaviors.ResetForTests();
+            RHAH_PawnBehaviors.ResetForTests();
             RHAH_PawnCompat.ResetForTests();
             try
             {
@@ -134,16 +134,16 @@ namespace HungerAndHavoc.Tests
             finally
             {
                 RHAH_PawnCompat.ResetForTests();
-                HungerPawnBehaviors.ResetForTests();
+                RHAH_PawnBehaviors.ResetForTests();
             }
         }
 
         [Fact]
         public void ReservedHookTypesStayInternalAndAbstainWhenRegistered()
         {
-            HungerPawnBehaviors.ResetForTests();
+            RHAH_PawnBehaviors.ResetForTests();
             RHAH_PawnCompat.ResetForTests();
-            HungerAndHavocApi.Bind(new HungerApiHost());
+            RHAH_Api.Bind(new RHAH_ApiHost());
             try
             {
                 RHAH_PawnCompat.EnsureAdapterRegistered();
@@ -151,11 +151,11 @@ namespace HungerAndHavoc.Tests
                 RHAH_PawnCompat.Register("toddler.mod", new RHAH_ToddlerCompat());
                 RHAH_PawnCompat.Register("prisoner.work.expansion", new RHAH_PrisonerCompat());
 
-                HungerPawnState child = ChildVisitor();
-                Assert.True(child.Allows(HungerBehaviorGate.Leash));
-                Assert.True(child.Allows(HungerBehaviorGate.Carry));
-                Assert.True(child.Allows(HungerBehaviorGate.Imprison));
-                Assert.Null(RHAH_PawnCompat.TryQuery(null, HungerBehaviorGate.Leash));
+                RHAH_PawnState child = ChildVisitor();
+                Assert.True(child.Allows(RHAH_BehaviorGate.Leash));
+                Assert.True(child.Allows(RHAH_BehaviorGate.Carry));
+                Assert.True(child.Allows(RHAH_BehaviorGate.Imprison));
+                Assert.Null(RHAH_PawnCompat.TryQuery(null, RHAH_BehaviorGate.Leash));
                 Assert.False(typeof(RHAH_LeashCompat).IsPublic);
                 Assert.False(typeof(RHAH_ToddlerCompat).IsPublic);
                 Assert.False(typeof(RHAH_PrisonerCompat).IsPublic);
@@ -163,34 +163,34 @@ namespace HungerAndHavoc.Tests
             finally
             {
                 RHAH_PawnCompat.ResetForTests();
-                HungerPawnBehaviors.ResetForTests();
-                HungerAndHavocApi.Bind(null);
+                RHAH_PawnBehaviors.ResetForTests();
+                RHAH_Api.Bind(null);
             }
         }
 
-        static HungerPawnState ChildVisitor()
+        static RHAH_PawnState ChildVisitor()
         {
-            HungerPawnState state = new HungerPawnState();
-            state.ApplySeed(new HungerPawnSeed(
+            RHAH_PawnState state = new RHAH_PawnState();
+            state.ApplySeed(new RHAH_PawnSeed(
                 sourceIncidentDisplayId: "I-001",
-                role: HungerPawnRole.BeggarChild,
-                lifecycle: HungerLifecycle.SeekingFood,
-                attitudeAtArrival: HungerAttitude.Neutral));
+                role: RHAH_PawnRole.BeggarChild,
+                lifecycle: RHAH_Lifecycle.SeekingFood,
+                attitudeAtArrival: RHAH_Attitude.Neutral));
             return state;
         }
 
-        static HungerPawnSnapshot DummySnapshot(HungerPawnRole role)
+        static RHAH_PawnSnapshot DummySnapshot(RHAH_PawnRole role)
         {
-            return new HungerPawnSnapshot(
+            return new RHAH_PawnSnapshot(
                 "I-001",
                 0,
                 0,
                 role,
-                HungerLifecycle.SeekingFood,
+                RHAH_Lifecycle.SeekingFood,
                 false,
                 -1,
                 false,
-                HungerAttitude.Neutral,
+                RHAH_Attitude.Neutral,
                 0,
                 null);
         }
@@ -203,9 +203,9 @@ namespace HungerAndHavoc.Tests
 
         sealed class DenyLeashHook : RHAH_PawnCompatHook
         {
-            public bool? Allows(Verse.Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate)
+            public bool? Allows(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_BehaviorGate gate)
             {
-                if (gate == HungerBehaviorGate.Leash)
+                if (gate == RHAH_BehaviorGate.Leash)
                 {
                     return false;
                 }
@@ -213,7 +213,7 @@ namespace HungerAndHavoc.Tests
                 return null;
             }
 
-            public bool? ShouldReleaseToColony(Verse.Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
+            public bool? ShouldReleaseToColony(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_ReleaseReason reason)
             {
                 return null;
             }
@@ -223,12 +223,12 @@ namespace HungerAndHavoc.Tests
         {
             public bool? AllowsResult;
 
-            public bool? Allows(Verse.Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate)
+            public bool? Allows(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_BehaviorGate gate)
             {
                 return AllowsResult;
             }
 
-            public bool? ShouldReleaseToColony(Verse.Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason)
+            public bool? ShouldReleaseToColony(Verse.Pawn pawn, IRHAH_Pawn snapshot, RHAH_ReleaseReason reason)
             {
                 return null;
             }

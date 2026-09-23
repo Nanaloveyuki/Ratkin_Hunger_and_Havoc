@@ -15,7 +15,7 @@ namespace HungerAndHavoc.Pawn
         protected override FloatMenuOption GetSingleOptionFor(Thing clickedThing, FloatMenuContext context)
         {
             Building_CommsConsole console = clickedThing as Building_CommsConsole;
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (console == null || settings == null || !settings.broadcastEnabled)
             {
                 return null;
@@ -27,14 +27,14 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            GameComponent_HungerAndHavoc game = Current.Game?.GetComponent<GameComponent_HungerAndHavoc>();
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
             int tick = Find.TickManager.TicksGame;
-            if (game == null || !HungerBroadcastRules.Ready(tick, game.BroadcastCooldownUntilTick))
+            if (game == null || !RHAH_BroadcastRules.Ready(tick, game.BroadcastCooldownUntilTick))
             {
                 return new FloatMenuOption("RHAH_Broadcast_Cooldown".Translate(), null);
             }
 
-            List<string> candidates = HungerBroadcastRules.Candidates(HungerIncidentCatalog.All, Disabled(settings));
+            List<string> candidates = RHAH_BroadcastRules.Candidates(RHAH_IncidentCatalog.All, Disabled(settings));
             if (candidates.Count == 0)
             {
                 return new FloatMenuOption("RHAH_Broadcast_Empty".Translate(), null);
@@ -43,20 +43,20 @@ namespace HungerAndHavoc.Pawn
             return new FloatMenuOption("RHAH_Broadcast_Label".Translate(), () => Queue(game, candidates, tick, settings.broadcastCooldownDays));
         }
 
-        static void Queue(GameComponent_HungerAndHavoc game, List<string> candidates, int tick, int days)
+        static void Queue(GameComponent_RHAH_Game game, List<string> candidates, int tick, int days)
         {
-            string displayId = HungerBroadcastRules.Pick(candidates, tick % candidates.Count);
+            string displayId = RHAH_BroadcastRules.Pick(candidates, tick % candidates.Count);
             if (displayId != null && game.QueueIncident(displayId))
             {
-                game.BroadcastCooldownUntilTick = HungerBroadcastRules.NextCooldown(tick, days);
+                game.BroadcastCooldownUntilTick = RHAH_BroadcastRules.NextCooldown(tick, days);
                 Messages.Message("RHAH_Broadcast_Queued".Translate(displayId), MessageTypeDefOf.NeutralEvent);
             }
         }
 
-        static HashSet<string> Disabled(HungerAndHavocSettings settings)
+        static HashSet<string> Disabled(RHAH_Settings settings)
         {
             HashSet<string> disabled = new HashSet<string>();
-            IReadOnlyList<HungerIncidentEntry> entries = HungerIncidentCatalog.All;
+            IReadOnlyList<RHAH_IncidentEntry> entries = RHAH_IncidentCatalog.All;
             for (int i = 0; i < entries.Count; i++)
             {
                 if (!settings.IsIncidentEnabled(entries[i].DisplayId))

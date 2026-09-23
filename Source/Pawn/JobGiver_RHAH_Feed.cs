@@ -17,12 +17,12 @@ namespace HungerAndHavoc.Pawn
         // 供无 Lord 的总 JobGiver 调度
         internal static Job TryCreate(Verse.Pawn pawn)
         {
-            if (!HungerAndHavocApi.IsVisitor(pawn))
+            if (!RHAH_Api.IsVisitor(pawn))
             {
                 return null;
             }
 
-            if (!HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.FeedFromRelief))
+            if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.FeedFromRelief))
             {
                 return null;
             }
@@ -32,7 +32,7 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
             if (snapshot != null && snapshot.HasBeenFed)
             {
                 return null;
@@ -50,7 +50,7 @@ namespace HungerAndHavoc.Pawn
                 return RHAH_ReliefFood.MakeJob(pawn, carried);
             }
 
-            MapComponent_HungerAndHavoc mapState = pawn.Map.GetComponent<MapComponent_HungerAndHavoc>();
+            MapComponent_RHAH_Map mapState = pawn.Map.GetComponent<MapComponent_RHAH_Map>();
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             if (mapState != null && !mapState.FoodSearchReady(pawn.thingIDNumber, now))
             {
@@ -79,7 +79,7 @@ namespace HungerAndHavoc.Pawn
             return RHAH_ReliefFood.MakeJob(pawn, food);
         }
 
-        static void RememberMiss(MapComponent_HungerAndHavoc mapState, Verse.Pawn pawn, int now)
+        static void RememberMiss(MapComponent_RHAH_Map mapState, Verse.Pawn pawn, int now)
         {
             if (mapState == null || pawn == null)
             {

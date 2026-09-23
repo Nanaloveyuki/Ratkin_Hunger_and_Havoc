@@ -5,11 +5,11 @@ namespace HungerAndHavoc.Pawn
 {
     internal static class RHAH_FamilyRules
     {
-        internal static bool CanDrop(HungerPawnRole role, bool leaving, bool enabled)
+        internal static bool CanDrop(RHAH_PawnRole role, bool leaving, bool enabled)
         {
             return enabled &&
                 leaving &&
-                (role == HungerPawnRole.Mother || role == HungerPawnRole.BeggarMother);
+                (role == RHAH_PawnRole.Mother || role == RHAH_PawnRole.BeggarMother);
         }
 
         internal static bool MarkDropped(IList<int> dropped, int childLoadId)
@@ -46,9 +46,9 @@ namespace HungerAndHavoc.Pawn
             return true;
         }
 
-        internal static bool CanMotherFeed(HungerPawnRole role, bool enabled, bool childHungry)
+        internal static bool CanMotherFeed(RHAH_PawnRole role, bool enabled, bool childHungry)
         {
-            return enabled && childHungry && (role == HungerPawnRole.Mother || role == HungerPawnRole.BeggarMother);
+            return enabled && childHungry && (role == RHAH_PawnRole.Mother || role == RHAH_PawnRole.BeggarMother);
         }
 
         internal static bool CanScavenge(bool enabled, bool prisoner, bool hungry)

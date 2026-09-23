@@ -11,16 +11,16 @@ namespace HungerAndHavoc.Pawn
 
     internal static class RHAH_AttitudePolicy
     {
-        internal static RHAH_AttitudeShift React(HungerAttitude attitude, bool forcedAway)
+        internal static RHAH_AttitudeShift React(RHAH_Attitude attitude, bool forcedAway)
         {
             switch (attitude)
             {
-                case HungerAttitude.Hostile:
+                case RHAH_Attitude.Hostile:
                     return RHAH_AttitudeShift.Hostile;
-                case HungerAttitude.LeaningHostile:
+                case RHAH_Attitude.LeaningHostile:
                     return RHAH_AttitudeShift.Hostile;
-                case HungerAttitude.LeaningFriendly:
-                case HungerAttitude.Friendly:
+                case RHAH_Attitude.LeaningFriendly:
+                case RHAH_Attitude.Friendly:
                     return RHAH_AttitudeShift.Leave;
                 default:
                     return forcedAway ? RHAH_AttitudeShift.Hostile : RHAH_AttitudeShift.None;

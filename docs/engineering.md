@@ -40,7 +40,7 @@
 
 依赖方向只能是实现依赖 API。其它模组只引用 `HungerAndHavoc.Api.dll`。
 
-`HungerAndHavoc.Api.dll` 可以引用 `Assembly-CSharp` 与 `UnityEngine.CoreModule`，`Private=False`。API **不得**引用 `HungerAndHavoc.dll`、Harmony、Guard、其它模组程序集。公开方法可以使用 `Pawn`、`ThingDef` 等基础游戏类型。公开表面 **不得**出现 `CompHungerPawn`、`Hediff_HungerMark`、`HungerRace`、Job、Worker、DefOf、实现命名空间类型。
+`HungerAndHavoc.Api.dll` 可以引用 `Assembly-CSharp` 与 `UnityEngine.CoreModule`，`Private=False`。API **不得**引用 `HungerAndHavoc.dll`、Harmony、Guard、其它模组程序集。公开方法可以使用 `Pawn`、`ThingDef` 等基础游戏类型。公开表面 **不得**出现 `CompRHAH_Pawn`、`Hediff_RHAH_Mark`、`RHAH_Race`、Job、Worker、DefOf、实现命名空间类型。
 
 `Source/{Layer}/Foo.cs` 的命名空间必须是 `HungerAndHavoc.{Layer}`。`Source/Core` 使用 `HungerAndHavoc.Core`，`Source/Identity` 使用 `HungerAndHavoc.Identity`，`Source/Generation` 使用 `HungerAndHavoc.Generation`，`Source/Incidents` 使用 `HungerAndHavoc.Incidents`，`Source/Pawn` 使用 `HungerAndHavoc.Pawn`，`Source/Pawn/Compat` 使用 `HungerAndHavoc.Pawn.Compat`，`Source/Narrative` 使用 `HungerAndHavoc.Narrative`，`Source/Trade` 使用 `HungerAndHavoc.Trade`，`Source/Tests` 使用 `HungerAndHavoc.Tests`。API 类型使用 `HungerAndHavoc.Api`，并放在 API 项目目录。`RHAH_IrisMenusWidgets` 只画卡片、可拖拽份额条和只读份额柱，不保存设置，不引用领域求值。
 
@@ -50,20 +50,20 @@
 
 API 程序集的公开类型采用白名单，当前目标包括：
 
-- `HungerAndHavocApi`
-- `IHungerPawn`
-- `HungerPawnSnapshot`
-- `IHungerPawnBehavior`
-- `HungerPawnBehaviors`
-- `HungerPawnSeed`
-- `HungerBehaviorGate`
-- `HungerPawnRole` / `HungerLifecycle` / `HungerReleaseReason` / `HungerAttitude`
-- `HungerAndHavocApi` 的经历与特质查询：`IsOwnedHistory`、`IsOwnedTrait`、`TryGetHistory`、`TryGetTrait`、`CopyHistoryIds`、`CopyTraitIds`。参数是显示 ID 或 defName，不返回 Backstory、Trait 或 Data 记录
-`IHungerPawn` 是只读快照。快照、事件和 `IHungerPawnBehavior` 不得返回或接收 `CompHungerPawn`、Hediff、私有 Job 或其它实现对象。
+- `RHAH_Api`
+- `IRHAH_Pawn`
+- `RHAH_PawnSnapshot`
+- `IRHAH_PawnBehavior`
+- `RHAH_PawnBehaviors`
+- `RHAH_PawnSeed`
+- `RHAH_BehaviorGate`
+- `RHAH_PawnRole` / `RHAH_Lifecycle` / `RHAH_ReleaseReason` / `RHAH_Attitude`
+- `RHAH_Api` 的经历与特质查询：`IsOwnedHistory`、`IsOwnedTrait`、`TryGetHistory`、`TryGetTrait`、`CopyHistoryIds`、`CopyTraitIds`。参数是显示 ID 或 defName，不返回 Backstory、Trait 或 Data 记录
+`IRHAH_Pawn` 是只读快照。快照、事件和 `IRHAH_PawnBehavior` 不得返回或接收 `CompRHAH_Pawn`、Hediff、私有 Job 或其它实现对象。
 
-状态修改只通过 `HungerAndHavocApi`：`SetLifecycle`、`SetGate`、`SetExtra`、`ReleaseToColony`、`TryMarkOrigin`。API 事件参数必须使用稳定类型或基础游戏类型，不得暴露实现程序集类型。
+状态修改只通过 `RHAH_Api`：`SetLifecycle`、`SetGate`、`SetExtra`、`ReleaseToColony`、`TryMarkOrigin`。API 事件参数必须使用稳定类型或基础游戏类型，不得暴露实现程序集类型。
 
-鼠族判定通过 `HungerAndHavocApi.RegisterRatkinMatcher` 注册。不得公开或把 `HungerRace.Register` 作为跨模组契约。
+鼠族判定通过 `RHAH_Api.RegisterRatkinMatcher` 注册。不得公开或把 `RHAH_Race.Register` 作为跨模组契约。
 
 改公开 API 签名、成员语义、事件顺序、闸门优先级或存活周期时，必须先更新本页、[pawn.md](pawn.md) 和对应 ADR，再修改实现。
 
@@ -99,7 +99,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 需要注释时使用短中文，句末无标点；注释只解释意图、约束或非显然事实
 - Def / Keyed 使用 `RHAH_`，规则见 [naming.md](naming.md)
 - XML `workerClass` 使用 `HungerAndHavoc.Incidents.IncidentWorker_*`
-- 禁止 `MouseDisaster`、`RHH_`、`RatkinEgg`、`HungerPawnRole.Egg`
+- 禁止 `MouseDisaster`、`RHH_`、`RatkinEgg`、`RHAH_PawnRole.Egg`
 - 不以 XML Doc、EditorConfig、StyleCop 或 nullable 作为当前强制前提；若未来启用，必须通过 ADR 统一
 
 ## 方法、运行时与性能
@@ -107,8 +107,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 方法应有单一主要责任；状态转换、校验、事件通知和持久化协同可以保留在同一事务边界内
 - 禁止新增无法命名职责、无法独立测试或承担多个领域决策的万能 Utility
 - 模组协作只走稳定 API，不把私有方法、字段、反射路径或 XML 实现细节当合约
-- 访客 JobGiver 只问 `HungerAndHavocApi.Allows`，不在 JobGiver 中复制角色规则
-- 全局运行时组件默认由 `GameComponent_HungerAndHavoc` 与 `MapComponent_HungerAndHavoc` 承担；增加其它全局组件必须登记职责、生命周期和存档范围
+- 访客 JobGiver 只问 `RHAH_Api.Allows`，不在 JobGiver 中复制角色规则
+- 全局运行时组件默认由 `GameComponent_RHAH_Game` 与 `MapComponent_RHAH_Map` 承担；增加其它全局组件必须登记职责、生命周期和存档范围
 - Tick 热路径包括每 tick 或高频批量执行的 Pawn、Map、组件和 Job 查询
 - Tick 热路径默认避免 LINQ、闭包、装箱、重复字符串拼接和临时集合；使用 `for`、缓存和可复用缓冲区时必须保持可读性
 - 性能约束以代码审查、分配分析或基准结果验证，不以机械行数或圈复杂度阈值替代判断
@@ -145,13 +145,13 @@ API 程序集的公开类型采用白名单，当前目标包括：
 
 | 类型 | 创建入口 | 所在程序集 | 为何不能 internal |
 | --- | --- | --- | --- |
-| `HungerAndHavoc.Identity.Hediff_HungerMark` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
-| `HungerAndHavoc.Identity.CompHungerPawn` | `HediffCompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 HediffComp；类型名写入 `.rws` |
-| `HungerAndHavoc.Identity.CompProperties_HungerPawn` | Def XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
-| `HungerAndHavoc.Identity.HungerRaceExtension` | ThingDef `modExtensions` XML `Class` | `HungerAndHavoc.dll` | Verse 按 DefModExtension XML `Class` 创建 |
-| `HungerAndHavoc.Core.HungerAndHavocMod` | Verse 扫描 `Mod` 子类 | `HungerAndHavoc.dll` | 模组入口必须可被 Verse 发现并构造 |
-| `HungerAndHavoc.Core.HungerAndHavocSettings` | `Mod.GetSettings<T>()` | `HungerAndHavoc.dll` | Verse 按类型参数创建 `ModSettings` |
-| `HungerAndHavoc.Core.HungerAndHavocDefOf` | `[DefOf]` 静态字段 | `HungerAndHavoc.dll` | `DefOfHelper` 反射绑定公开静态 Def 字段 |
+| `HungerAndHavoc.Identity.Hediff_RHAH_Mark` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
+| `HungerAndHavoc.Identity.CompRHAH_Pawn` | `HediffCompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 HediffComp；类型名写入 `.rws` |
+| `HungerAndHavoc.Identity.CompProperties_RHAH_Pawn` | Def XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
+| `HungerAndHavoc.Identity.RHAH_RaceExtension` | ThingDef `modExtensions` XML `Class` | `HungerAndHavoc.dll` | Verse 按 DefModExtension XML `Class` 创建 |
+| `HungerAndHavoc.Core.RHAH_Mod` | Verse 扫描 `Mod` 子类 | `HungerAndHavoc.dll` | 模组入口必须可被 Verse 发现并构造 |
+| `HungerAndHavoc.Core.RHAH_Settings` | `Mod.GetSettings<T>()` | `HungerAndHavoc.dll` | Verse 按类型参数创建 `ModSettings` |
+| `HungerAndHavoc.Core.RHAH_DefOf` | `[DefOf]` 静态字段 | `HungerAndHavoc.dll` | `DefOfHelper` 反射绑定公开静态 Def 字段 |
 | `HungerAndHavoc.Core.HarmonyBootstrap` | `[StaticConstructorOnStartup]` | `HungerAndHavoc.dll` | Verse 启动扫描公开静态构造入口 |
 | `HungerAndHavoc.Pawn.LordJob_RHAH_Visitor` | Lord `lordJob` / `LordMaker` | `HungerAndHavoc.dll` | Verse 按类型创建并存档 Lord |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_Beg` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
@@ -182,11 +182,11 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_Scavenge` | 囚犯调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_TailBite` | 囚犯调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
 | `HungerAndHavoc.Pawn.RHAH_BroadcastMenu` | `FloatMenuMakerMap` 扫描 `FloatMenuOptionProvider` 子类 | `HungerAndHavoc.dll` | 原版只实例化公开子类 |
-| `HungerAndHavoc.Incidents.HungerRequestKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
-| `HungerAndHavoc.Incidents.HungerIntelSiteKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
-| `HungerAndHavoc.Incidents.HungerChoiceKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
-| `HungerAndHavoc.Incidents.HungerChoiceAction` | 选择记录存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
-| `HungerAndHavoc.Incidents.HungerChoiceRecord` | `openChoices` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
+| `HungerAndHavoc.Incidents.RHAH_RequestKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
+| `HungerAndHavoc.Incidents.RHAH_IntelSiteKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
+| `HungerAndHavoc.Incidents.RHAH_ChoiceKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
+| `HungerAndHavoc.Incidents.RHAH_ChoiceAction` | 选择记录存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
+| `HungerAndHavoc.Incidents.RHAH_ChoiceRecord` | `openChoices` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
 | `HungerAndHavoc.Pawn.CompProperties_RHAH_Clay` | ThingDef XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Pawn.Comp_RHAH_Clay` | `CompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 ThingComp；类型名写入 `.rws` |
@@ -194,7 +194,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease` | ThoughtDef `workerClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThoughtWorker |
 | `HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusCompat` 所在文件对 `IrisMenus` 的编译引用 | IrisMenus 1.6 公开 `MenuRegistry.RegisterSubItemListing` | `HungerAndHavoc.dll` 引用，`Private=False`，不随包发布 | 可选依赖。`ModLister` 未启用或 `modVersion` 不是 `1.6` 时不注册页面。类型保持 `internal`，不进入 API 程序集。`RHAH_IrisMenusWidgets.cs` 使用同一条编译排除 |
 
-原版 Harmony 例外不进上表。`HungerIncidentSchedulePatch` 是 `internal`，Postfix `Storyteller.StorytellerTick`。原版讲述者没有本模组事件池，`baseChance` 保持 0。补丁只在 1000 tick 检查点入队，不改类别权重，不替换袭击。
+原版 Harmony 例外不进上表。`RHAH_IncidentSchedulePatch` 是 `internal`，Postfix `Storyteller.StorytellerTick`。原版讲述者没有本模组事件池，`baseChance` 保持 0。补丁只在 1000 tick 检查点入队，不改类别权重，不替换袭击。
 
 `RHAH_AttitudeHarmPatch` 是 `internal`，Postfix `Thing.PreApplyDamage`。原版伤害只改单只 pawn 的好感，不会按生成批次改态度。补丁只接收玩家派系实施者的外部暴力，调用批次离场或敌对关系，不创建袭击 Lord。目标缺失时不注册。
 
@@ -213,7 +213,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 中英 Keyed 键集合对称、`Translate` 引用存在、英文 DefInjected 覆盖 Def 正文
 - 可持久化 Def 与类型已登记卸载动作（Remove / Replace）
 - 禁止旧前缀、旧产品名和含义不清的 Egg 身份名
-- `IHungerPawn`、`RegisterRatkinMatcher` 和稳定 API 事件签名
+- `IRHAH_Pawn`、`RegisterRatkinMatcher` 和稳定 API 事件签名
 - 测试程序集只能通过 `InternalsVisibleTo` 访问内部实现，且不得成为运行时依赖
 - 修 bug 时的范围、Language、存档和卸载门禁见 [bug-handling.md](bug-handling.md)
 

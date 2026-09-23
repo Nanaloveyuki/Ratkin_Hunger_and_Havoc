@@ -16,7 +16,7 @@ namespace HungerAndHavoc.Pawn
 
         public override IEnumerable<FloatMenuOption> GetOptionsFor(Verse.Pawn clickedPawn, FloatMenuContext context)
         {
-            if (!HungerAndHavocApi.IsVisitor(clickedPawn))
+            if (!RHAH_Api.IsVisitor(clickedPawn))
             {
                 yield break;
             }
@@ -33,25 +33,25 @@ namespace HungerAndHavoc.Pawn
                 MenuOptionPriority.Default,
                 null,
                 clickedPawn);
-            if (HungerAndHavocApi.Allows(clickedPawn, HungerBehaviorGate.JoinColony))
+            if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.JoinColony))
             {
                 yield return new FloatMenuOption("RHAH_Choice_Join".Translate(), () =>
                 {
-                    HungerAndHavocApi.ReleaseToColony(clickedPawn, HungerReleaseReason.JoinedPlayerFaction);
+                    RHAH_Api.ReleaseToColony(clickedPawn, RHAH_ReleaseReason.JoinedPlayerFaction);
                     clickedPawn.SetFaction(Faction.OfPlayer);
                 });
             }
 
-            if (HungerAndHavocApi.Allows(clickedPawn, HungerBehaviorGate.Hire))
+            if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.Hire))
             {
                 yield return new FloatMenuOption("RHAH_Choice_Hire".Translate(), () =>
-                    HungerAndHavocApi.ReleaseToColony(clickedPawn, HungerReleaseReason.Recruited));
+                    RHAH_Api.ReleaseToColony(clickedPawn, RHAH_ReleaseReason.Recruited));
             }
 
-            if (HungerAndHavocApi.Allows(clickedPawn, HungerBehaviorGate.FeedFromRelief))
+            if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.FeedFromRelief))
             {
                 yield return new FloatMenuOption("RHAH_Choice_Feed".Translate(), () =>
-                    HungerAndHavocApi.SetLifecycle(clickedPawn, HungerLifecycle.Fed));
+                    RHAH_Api.SetLifecycle(clickedPawn, RHAH_Lifecycle.Fed));
             }
         }
     }

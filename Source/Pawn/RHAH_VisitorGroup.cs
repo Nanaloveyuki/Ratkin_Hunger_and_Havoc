@@ -12,7 +12,7 @@ namespace HungerAndHavoc.Pawn
             IEnumerable<Verse.Pawn> pawns,
             Map map,
             IntVec3 waitSpot,
-            HungerPawnRole familyRole)
+            RHAH_PawnRole familyRole)
         {
             if (map == null || !waitSpot.IsValid)
             {
@@ -172,11 +172,11 @@ namespace HungerAndHavoc.Pawn
             }
         }
 
-        static Faction ResolveFaction(List<Verse.Pawn> pawnList, HungerPawnRole familyRole)
+        static Faction ResolveFaction(List<Verse.Pawn> pawnList, RHAH_PawnRole familyRole)
         {
             for (int i = 0; i < pawnList.Count; i++)
             {
-                IHungerPawn snapshot = HungerAndHavocApi.Get(pawnList[i]);
+                IRHAH_Pawn snapshot = RHAH_Api.Get(pawnList[i]);
                 if (snapshot != null && snapshot.Role == familyRole)
                 {
                     return pawnList[i].Faction;

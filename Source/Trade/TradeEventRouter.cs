@@ -10,9 +10,9 @@ namespace HungerAndHavoc.Trade
 {
     internal static class TradeEventRouter
     {
-        internal static bool TrySpawnTraderCaravan(HungerIncidentEntry entry, IncidentParms parms)
+        internal static bool TrySpawnTraderCaravan(RHAH_IncidentEntry entry, IncidentParms parms)
         {
-            Map map = Core.HungerMapResolver.Resolve(parms?.target as Map);
+            Map map = Core.RHAH_MapResolver.Resolve(parms?.target as Map);
             if (entry == null || map == null)
             {
                 return false;
@@ -25,27 +25,27 @@ namespace HungerAndHavoc.Trade
             }
 
             int tick = Find.TickManager.TicksGame;
-            HungerPawnCreationResult result = HungerPawnFactory.Create(new HungerPawnRequest
+            RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
             {
                 SourceIncidentDisplayId = entry.DisplayId,
                 SpawnBatchId = tick,
                 RelationshipGroupId = tick,
-                Role = HungerPawnRole.Trader,
-                AttitudeAtArrival = HungerAttitude.Neutral,
-                CarriesPlague = entry.Category == HungerIncidentCategory.Plague,
+                Role = RHAH_PawnRole.Trader,
+                AttitudeAtArrival = RHAH_Attitude.Neutral,
+                CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
                 PawnKind = PawnKindDefOf.Colonist,
-                Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(HungerAttitude.Neutral) ?? Faction.OfPlayer,
+                Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Neutral) ?? Faction.OfPlayer,
                 SpawnCell = cell
             });
 
             return result.Succeeded;
         }
 
-        internal static bool TrySpawnCaravanAmbush(HungerIncidentEntry entry, float points)
+        internal static bool TrySpawnCaravanAmbush(RHAH_IncidentEntry entry, float points)
         {
             RimWorld.Planet.Caravan caravan = CaravanTargetResolver.ResolvePlayerCaravan();
-            Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(HungerAttitude.Hostile) ??
+            Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Hostile) ??
                 Find.FactionManager.RandomEnemyFaction();
             if (entry == null || caravan == null || faction == null ||
                 !RimWorld.Planet.CaravanIncidentUtility.CanFireIncidentWhichWantsToGenerateMapAt(caravan.Tile))
@@ -55,17 +55,17 @@ namespace HungerAndHavoc.Trade
 
             List<Verse.Pawn> attackers = new List<Verse.Pawn>();
             int tick = Find.TickManager.TicksGame;
-            int count = HungerIncidentScale.Count(entry.DisplayId, points);
+            int count = RHAH_IncidentScale.Count(entry.DisplayId, points);
             for (int i = 0; i < count; i++)
             {
-                HungerPawnCreationResult result = HungerPawnFactory.Create(new HungerPawnRequest
+                RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
                 {
                     SourceIncidentDisplayId = entry.DisplayId,
                     SpawnBatchId = tick + i + 1,
                     RelationshipGroupId = tick,
-                    Role = HungerPawnRole.Thief,
-                    AttitudeAtArrival = HungerAttitude.Hostile,
-                    CarriesPlague = entry.Category == HungerIncidentCategory.Plague,
+                    Role = RHAH_PawnRole.Thief,
+                    AttitudeAtArrival = RHAH_Attitude.Hostile,
+                    CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                     Map = null,
                     PawnKind = PawnKindDefOf.Colonist,
                     Faction = faction

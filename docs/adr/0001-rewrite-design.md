@@ -122,7 +122,7 @@ tmp/                      # 已 gitignore
 
 ### 3.1 事件目录（第一批对照）
 
-`HungerIncidentCatalog` 每条记录：
+`RHAH_IncidentCatalog` 每条记录：
 
 - `DisplayId`（I-001）
 - `DefName`（RHAH_LargeRefugeeWave）
@@ -171,7 +171,7 @@ Worker 只实现一次行为；鼠疫变体是同一 Worker + `infectsWithPlague
 | 层 | 载体 | 含义 |
 | --- | --- | --- |
 | 种族 | 鼠族 `ThingDef` | 是否鼠族（不靠名字模糊匹配作为唯一依据） |
-| 来源 | `RHAH_HungerMark` + `CompHungerPawn` | 本模组（或经 API 标记的其它模组）生成过，随 pawn 存档 |
+| 来源 | `RHAH_HungerMark` + `CompRHAH_Pawn` | 本模组（或经 API 标记的其它模组）生成过，随 pawn 存档 |
 | 访客 | `comp.IsActiveVisitor` | 仍走事件 AI / Lord / 五个固定态度派系 |
 | 角色 | `comp.Role` | Beggar、Thief、Mother、RatkinYoung、Trader、Wild、Siege、Plague、Labor、Envoy… |
 | 经历 | BackstoryDef | 只是文本和技能，**不参与身份判定** |
@@ -181,15 +181,15 @@ Worker 只实现一次行为；鼠疫变体是同一 Worker + `infectsWithPlague
 
 判定入口走公开 API（其它模组不要自己翻 Hediff）：
 
-- `HungerAndHavocApi.IsOrigin(pawn)`
-- `HungerAndHavocApi.IsVisitor(pawn)`
-- `HungerAndHavocApi.IsRatkin(pawn)`
-- `HungerAndHavocApi.IsRatkinYoung(pawn)`
+- `RHAH_Api.IsOrigin(pawn)`
+- `RHAH_Api.IsVisitor(pawn)`
+- `RHAH_Api.IsRatkin(pawn)`
+- `RHAH_Api.IsRatkinYoung(pawn)`
 - 基因/特质/叙事统计用 origin；JobGiver/离场/乞食只用 visitor
 
 招募、囚禁、奴隶、玩家派系加入时调用 `ReleaseToColony()`：停访客 AI，**保留标记** 供穗音信件和统计。
 
-### 4.2 `CompHungerPawn` 存档字段
+### 4.2 `CompRHAH_Pawn` 存档字段
 
 ```
 sourceIncidentDisplayId // "I-005"
@@ -203,7 +203,7 @@ carriesPlague
 attitudeAtArrival
 attitude              // 当前态度 到达后可按批次改
 behaviorFlags       // 本模组内建开关
-gateOverrides       // per-pawn HungerBehaviorGate overrides
+gateOverrides       // per-pawn RHAH_BehaviorGate overrides
 extraData           // Dictionary<string,string>，其它模组私有状态
 parentPawnLoadId / childPawnLoadIds
 ```
@@ -214,8 +214,8 @@ parentPawnLoadId / childPawnLoadIds
 
 默认行为全部经过闸门，不在 JobGiver 里写死。其它模组有三层、由近到远：
 
-1. **单 pawn**：`HungerAndHavocApi.SetGate(pawn, HungerBehaviorGate.Leash, true/false/null)` 写入 `gateOverrides`。牵绳、吞食、离场、加入等都能按只覆盖。检疫中的 `JoinColony`、`Hire`、`Transfer` 由疾病层强制拒绝，单 pawn 覆盖不能放开。
-2. **全局策略**：`HungerPawnBehaviors.Register(IHungerPawnBehavior)`。后注册优先；返回 `null` 表示不管。Lead Your Pet、Toddlers、囚犯模组在 `StaticConstructorOnStartup` 里注册即可，不必 Harmony 我们的私有方法。
+1. **单 pawn**：`RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.Leash, true/false/null)` 写入 `gateOverrides`。牵绳、吞食、离场、加入等都能按只覆盖。检疫中的 `JoinColony`、`Hire`、`Transfer` 由疾病层强制拒绝，单 pawn 覆盖不能放开。
+2. **全局策略**：`RHAH_PawnBehaviors.Register(IRHAH_PawnBehavior)`。后注册优先；返回 `null` 表示不管。Lead Your Pet、Toddlers、囚犯模组在 `StaticConstructorOnStartup` 里注册即可，不必 Harmony 我们的私有方法。
 3. **事件**：`OriginMarked` / `ReleasedToColony` / `LifecycleChanged` / `GateQueried`。只观察也可以。
 
 闸门枚举一开始就留齐，即使本期未实现对应 AI：
@@ -230,7 +230,7 @@ parentPawnLoadId / childPawnLoadIds
 
 ### 4.4 生成管线
 
-`HungerPawnFactory.Create(HungerPawnRequest)`，一步一责：
+`RHAH_PawnFactory.Create(RHAH_PawnRequest)`，一步一责：
 
 1. 选 `PawnKindDef` + 年龄/性别/异种
 2. `PawnGenerator.GeneratePawn`
@@ -247,13 +247,13 @@ parentPawnLoadId / childPawnLoadIds
 
 `GameComponent` 收敛为两个：
 
-- `GameComponent_HungerAndHavoc`（partial：调度、生成队列、叙事、卸载清理）
-- `MapComponent_HungerAndHavoc`（寻食缓存、捕食、本图访客索引）
+- `GameComponent_RHAH_Game`（partial：调度、生成队列、叙事、卸载清理）
+- `MapComponent_RHAH_Map`（寻食缓存、捕食、本图访客索引）
 
 ## 5. 实现顺序
 
 1. **脚手架**：About、LoadFolders、`1.6/`、SDK csproj、Guard、adr、Catalog
-2. **身份 + API**：`CompHungerPawn`、闸门、`TryMarkOrigin`、一条最小事件 `I-005`
+2. **身份 + API**：`CompRHAH_Pawn`、闸门、`TryMarkOrigin`、一条最小事件 `I-005`
 3. **访客 AI**（全部走闸门）
 4. **原作 14 事件** `I-001`~`I-014`
 5. **调度与设置**

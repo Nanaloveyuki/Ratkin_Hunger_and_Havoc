@@ -7,14 +7,14 @@ namespace HungerAndHavoc.Pawn
     {
         protected override Job TryGiveJob(Verse.Pawn pawn)
         {
-            if (!HungerAndHavocApi.IsVisitor(pawn))
+            if (!RHAH_Api.IsVisitor(pawn))
             {
                 return null;
             }
 
             MarkSeekingFood(pawn);
 
-            if (HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.FeedFromRelief))
+            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.FeedFromRelief))
             {
                 Job feed = JobGiver_RHAH_Feed.TryCreate(pawn);
                 if (feed != null)
@@ -23,7 +23,7 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            if (HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.Beg))
+            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Beg))
             {
                 Job beg = JobGiver_RHAH_Beg.TryCreate(pawn);
                 if (beg != null)
@@ -32,7 +32,7 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            if (HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.Steal))
+            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Steal))
             {
                 Job steal = JobGiver_RHAH_Steal.TryCreate(pawn);
                 if (steal != null)
@@ -41,7 +41,7 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            if (HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.Gnaw))
+            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Gnaw))
             {
                 Job gnaw = JobGiver_RHAH_Gnaw.TryCreate(pawn);
                 if (gnaw != null)
@@ -50,7 +50,7 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            if (!HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.EatOutsideRelief))
+            if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.EatOutsideRelief))
             {
                 Job wait = JobGiver_RHAH_WaitFood.TryCreate(pawn);
                 if (wait != null)
@@ -59,8 +59,8 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            if (HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.LeaveAfterFed) ||
-                HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.ExitMap))
+            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.LeaveAfterFed) ||
+                RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap))
             {
                 Job leave = JobGiver_RHAH_Leave.TryCreate(pawn);
                 if (leave != null)
@@ -74,19 +74,19 @@ namespace HungerAndHavoc.Pawn
 
         internal static void MarkSeekingFood(Verse.Pawn pawn)
         {
-            IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
-            if (snapshot != null && snapshot.Lifecycle == HungerLifecycle.Arriving)
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
+            if (snapshot != null && snapshot.Lifecycle == RHAH_Lifecycle.Arriving)
             {
-                HungerAndHavocApi.SetLifecycle(pawn, HungerLifecycle.SeekingFood);
+                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.SeekingFood);
             }
         }
 
         internal static void MarkFed(Verse.Pawn pawn)
         {
-            IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
-            if (snapshot != null && snapshot.Lifecycle == HungerLifecycle.SeekingFood)
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
+            if (snapshot != null && snapshot.Lifecycle == RHAH_Lifecycle.SeekingFood)
             {
-                HungerAndHavocApi.SetLifecycle(pawn, HungerLifecycle.Fed);
+                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed);
             }
         }
     }

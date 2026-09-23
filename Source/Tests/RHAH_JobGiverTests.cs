@@ -45,13 +45,13 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void GiversAskVisitorThenGateAndTryGiveJobCallsTryCreate()
         {
-            AssertVisitorThenAllows("JobGiver_RHAH_Beg.cs", "HungerBehaviorGate.Beg");
-            AssertVisitorThenAllows("JobGiver_RHAH_Steal.cs", "HungerBehaviorGate.Steal");
-            AssertVisitorThenAllows("JobGiver_RHAH_Gnaw.cs", "HungerBehaviorGate.Gnaw");
-            AssertVisitorThenAllows("JobGiver_RHAH_Feed.cs", "HungerBehaviorGate.FeedFromRelief");
-            AssertVisitorThenAllows("JobGiver_RHAH_Leave.cs", "HungerBehaviorGate.ExitMap");
+            AssertVisitorThenAllows("JobGiver_RHAH_Beg.cs", "RHAH_BehaviorGate.Beg");
+            AssertVisitorThenAllows("JobGiver_RHAH_Steal.cs", "RHAH_BehaviorGate.Steal");
+            AssertVisitorThenAllows("JobGiver_RHAH_Gnaw.cs", "RHAH_BehaviorGate.Gnaw");
+            AssertVisitorThenAllows("JobGiver_RHAH_Feed.cs", "RHAH_BehaviorGate.FeedFromRelief");
+            AssertVisitorThenAllows("JobGiver_RHAH_Leave.cs", "RHAH_BehaviorGate.ExitMap");
             string leave = ReadPawn("JobGiver_RHAH_Leave.cs");
-            Assert.Contains("HungerBehaviorGate.LeaveAfterFed", leave);
+            Assert.Contains("RHAH_BehaviorGate.LeaveAfterFed", leave);
         }
 
         [Fact]
@@ -62,8 +62,8 @@ namespace HungerAndHavoc.Tests
             string steal = ReadPawn("JobGiver_RHAH_Steal.cs");
             string feed = ReadPawn("JobGiver_RHAH_Feed.cs");
             string leave = ReadPawn("JobGiver_RHAH_Leave.cs");
-            Assert.Contains("HungerAndHavocDefOf.RHAH_Beg", beg);
-            Assert.Contains("HungerAndHavocDefOf.RHAH_Gnaw", gnaw);
+            Assert.Contains("RHAH_DefOf.RHAH_Beg", beg);
+            Assert.Contains("RHAH_DefOf.RHAH_Gnaw", gnaw);
             Assert.True(
                 steal.Contains("JobDefOf.Steal") || steal.Contains("JobDefOf.TakeFromOtherInventory"),
                 "Steal must use a vanilla JobDef");
@@ -92,7 +92,7 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("return TryCreate(pawn);", source);
             Assert.Contains("internal static Job TryCreate(Verse.Pawn pawn)", source);
             Assert.DoesNotContain("using Pawn = Verse.Pawn", source);
-            bool visitor = source.Contains("HungerAndHavocApi.IsVisitor") ||
+            bool visitor = source.Contains("RHAH_Api.IsVisitor") ||
                            source.Contains("RHAH_VisitorGate");
             Assert.True(visitor, fileName + " must check IsVisitor or RHAH_VisitorGate");
             Assert.Contains("Allows", source);
@@ -106,7 +106,7 @@ namespace HungerAndHavoc.Tests
 
         static int IndexOfVisitorCheck(string source)
         {
-            int api = source.IndexOf("HungerAndHavocApi.IsVisitor");
+            int api = source.IndexOf("RHAH_Api.IsVisitor");
             int gate = source.IndexOf("RHAH_VisitorGate");
             if (api < 0)
             {

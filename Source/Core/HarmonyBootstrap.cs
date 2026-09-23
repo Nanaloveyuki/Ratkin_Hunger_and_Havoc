@@ -11,8 +11,8 @@ namespace HungerAndHavoc.Core
         static HarmonyBootstrap()
         {
             // 启动时绑定 API 宿主 再打 Harmony 补丁
-            HungerAndHavocApi.Bind(new HungerApiHost());
-            new Harmony(HungerAndHavocRuntime.HarmonyId).PatchAll();
+            RHAH_Api.Bind(new RHAH_ApiHost());
+            new Harmony(RHAH_Runtime.HarmonyId).PatchAll();
         }
     }
 }

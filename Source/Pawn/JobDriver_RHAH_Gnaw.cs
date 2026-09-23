@@ -39,8 +39,8 @@ namespace HungerAndHavoc.Pawn
                 }
 
                 HediffDef wound = wall
-                    ? HungerAndHavocDefOf.RHAH_GnawedWall
-                    : HungerAndHavocDefOf.RHAH_GnawedBark;
+                    ? RHAH_DefOf.RHAH_GnawedWall
+                    : RHAH_DefOf.RHAH_GnawedBark;
                 Refresh(pawn, wound, bite.Severity);
                 if (!wall)
                 {
@@ -48,13 +48,13 @@ namespace HungerAndHavoc.Pawn
                 }
                 else
                 {
-                    MapComponent_HungerAndHavoc mapState = pawn.Map != null
-                        ? pawn.Map.GetComponent<MapComponent_HungerAndHavoc>()
+                    MapComponent_RHAH_Map mapState = pawn.Map != null
+                        ? pawn.Map.GetComponent<MapComponent_RHAH_Map>()
                         : null;
                     int count = mapState != null ? mapState.NextWallGnaw(pawn.thingIDNumber) : 0;
                     if (RHAH_GnawHealth.IsOvergnaw(count))
                     {
-                        Refresh(pawn, HungerAndHavocDefOf.RHAH_OvergnawedWall, RHAH_GnawHealth.OverSeverity);
+                        Refresh(pawn, RHAH_DefOf.RHAH_OvergnawedWall, RHAH_GnawHealth.OverSeverity);
                         if (food != null)
                         {
                             food.CurLevel = RHAH_GnawHealth.ClampFood(food.CurLevel, food.MaxLevel);

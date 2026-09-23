@@ -7,17 +7,17 @@ ROOT = Path(__file__).resolve().parents[1]
 errors = []
 
 API_WHITELIST_TYPES = (
-    "HungerAndHavocApi",
-    "IHungerPawn",
-    "HungerPawnSnapshot",
-    "IHungerPawnBehavior",
-    "HungerPawnBehaviors",
-    "HungerPawnSeed",
-    "HungerBehaviorGate",
-    "HungerPawnRole",
-    "HungerLifecycle",
-    "HungerReleaseReason",
-    "HungerAttitude",
+    "RHAH_Api",
+    "IRHAH_Pawn",
+    "RHAH_PawnSnapshot",
+    "IRHAH_PawnBehavior",
+    "RHAH_PawnBehaviors",
+    "RHAH_PawnSeed",
+    "RHAH_BehaviorGate",
+    "RHAH_PawnRole",
+    "RHAH_Lifecycle",
+    "RHAH_ReleaseReason",
+    "RHAH_Attitude",
 )
 
 TYPE_DECL = re.compile(
@@ -169,7 +169,7 @@ def catalog_defs(catalog):
 
 
 def check_catalog():
-    catalog = read("Source/Incidents/HungerIncidentCatalog.cs")
+    catalog = read("Source/Incidents/RHAH_IncidentCatalog.cs")
     ids, defs = catalog_defs(catalog)
     if len(ids) != 51:
         errors.append("catalog size %s, expected 51" % len(ids))
@@ -284,32 +284,32 @@ def check_api_surface():
 
 
 def check_comp_contract():
-    comp_rel = "Source/Identity/CompHungerPawn.cs"
+    comp_rel = "Source/Identity/CompRHAH_Pawn.cs"
     comp_path = ROOT / comp_rel
     if not comp_path.exists():
         errors.append("missing " + comp_rel)
         return
     comp = comp_path.read_text(encoding="utf-8")
     if not re.search(r"namespace\s+HungerAndHavoc\.Identity\b", comp):
-        errors.append("CompHungerPawn must be in HungerAndHavoc.Identity")
+        errors.append("CompRHAH_Pawn must be in HungerAndHavoc.Identity")
     if re.search(r'"sourceIncidentId"', comp):
-        errors.append("CompHungerPawn still uses save key sourceIncidentId")
+        errors.append("CompRHAH_Pawn still uses save key sourceIncidentId")
     if not re.search(r'"sourceIncidentDisplayId"', comp):
         errors.append(
-            "CompHungerPawn CompExposeData missing save key sourceIncidentDisplayId"
+            "CompRHAH_Pawn CompExposeData missing save key sourceIncidentDisplayId"
         )
     for token in COMP_SAVE_FIELDS:
         if token not in comp:
-            errors.append("CompHungerPawn missing " + token)
+            errors.append("CompRHAH_Pawn missing " + token)
 
 
 def check_identity_defs():
     hediff = read("1.6/Defs/HediffDefs/RHAH_HungerMark.xml")
     if "RHAH_HungerMark" not in hediff:
         errors.append("Hunger mark missing defName RHAH_HungerMark")
-    if "HungerAndHavoc.Identity.Hediff_HungerMark" not in hediff:
+    if "HungerAndHavoc.Identity.Hediff_RHAH_Mark" not in hediff:
         errors.append(
-            "Hunger mark hediffClass must be HungerAndHavoc.Identity.Hediff_HungerMark"
+            "Hunger mark hediffClass must be HungerAndHavoc.Identity.Hediff_RHAH_Mark"
         )
     genes = read("Biotech/Defs/GeneDefs/RHAH_Genes.xml")
     xenotypes = read("Biotech/Defs/GeneDefs/RHAH_Xenotypes.xml")
@@ -317,9 +317,9 @@ def check_identity_defs():
         errors.append("Owned hunger gene must stay out of random gene sets")
     if "RHAH_Xenotype_Ratkin" not in xenotypes:
         errors.append("Fallback xenotype RHAH_Xenotype_Ratkin is missing")
-    if "HungerAndHavoc.Identity.CompProperties_HungerPawn" not in hediff:
+    if "HungerAndHavoc.Identity.CompProperties_RHAH_Pawn" not in hediff:
         errors.append(
-            "Hunger mark Comp Class must be HungerAndHavoc.Identity.CompProperties_HungerPawn"
+            "Hunger mark Comp Class must be HungerAndHavoc.Identity.CompProperties_RHAH_Pawn"
         )
 
 
@@ -419,7 +419,7 @@ def check_forbidden_names():
             errors.append("MouseDisaster leftover in " + rel)
         if re.search(r"\bRHH_", text):
             errors.append("RHH_ leftover in " + rel)
-        if re.search(r"\b(?:RatkinEgg|IsEgg|HungerPawnRole\.Egg)\b", text):
+        if re.search(r"\b(?:RatkinEgg|IsEgg|RHAH_PawnRole\.Egg)\b", text):
             errors.append("ambiguous egg naming in " + rel)
 
 

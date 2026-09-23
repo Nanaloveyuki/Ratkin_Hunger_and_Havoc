@@ -12,13 +12,13 @@ namespace HungerAndHavoc.Pawn
     {
         internal static bool TryShift(Verse.Pawn harmed, bool forcedAway)
         {
-            CompHungerPawn comp = CompHungerPawn.TryGet(harmed);
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(harmed);
             if (comp == null || !comp.State.IsActiveVisitor || harmed.Map == null)
             {
                 return false;
             }
 
-            HungerAttitude attitude = comp.State.attitude;
+            RHAH_Attitude attitude = comp.State.attitude;
             RHAH_AttitudeShift shift = RHAH_AttitudePolicy.React(attitude, forcedAway);
             if (shift == RHAH_AttitudeShift.None)
             {
@@ -43,7 +43,7 @@ namespace HungerAndHavoc.Pawn
 
         static void SetHostile(List<Verse.Pawn> members)
         {
-            Faction hostile = RHAH_AttitudeFactions.Resolve(HungerAttitude.Hostile);
+            Faction hostile = RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Hostile);
             Faction player = Faction.OfPlayer;
             if (hostile != null && player != null && !hostile.HostileTo(player))
             {
@@ -58,8 +58,8 @@ namespace HungerAndHavoc.Pawn
 
             for (int i = 0; i < members.Count; i++)
             {
-                CompHungerPawn comp = CompHungerPawn.TryGet(members[i]);
-                comp?.State.SetAttitude(HungerAttitude.Hostile);
+                CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(members[i]);
+                comp?.State.SetAttitude(RHAH_Attitude.Hostile);
             }
         }
 
@@ -112,7 +112,7 @@ namespace HungerAndHavoc.Pawn
             for (int i = 0; i < spawned.Count; i++)
             {
                 Verse.Pawn pawn = spawned[i];
-                CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
+                CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
                 if (comp != null && comp.State.IsActiveVisitor && comp.State.spawnBatchId == batchId)
                 {
                     members.Add(pawn);

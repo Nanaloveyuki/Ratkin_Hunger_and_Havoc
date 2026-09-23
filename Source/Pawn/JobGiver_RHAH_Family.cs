@@ -17,14 +17,14 @@ namespace HungerAndHavoc.Pawn
 
         internal static Job TryCreate(Verse.Pawn pawn)
         {
-            CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (comp == null || pawn.Map == null || settings == null)
             {
                 return null;
             }
 
-            bool leaving = comp.State.lifecycle == HungerLifecycle.Leaving;
+            bool leaving = comp.State.lifecycle == RHAH_Lifecycle.Leaving;
             if (!RHAH_FamilyRules.CanDrop(comp.State.role, leaving, settings.familyDropEnabled))
             {
                 return null;
@@ -50,7 +50,7 @@ namespace HungerAndHavoc.Pawn
                 }
 
                 RHAH_FamilyRules.MarkDropped(comp.State.droppedChildLoadIds, childId);
-                return JobMaker.MakeJob(HungerAndHavocDefOf.RHAH_DropChild, child);
+                return JobMaker.MakeJob(RHAH_DefOf.RHAH_DropChild, child);
             }
 
             return null;
@@ -99,9 +99,9 @@ namespace HungerAndHavoc.Pawn
     {
         protected override Job TryGiveJob(Verse.Pawn pawn)
         {
-            CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
-            if (comp == null || pawn.Map == null || settings == null || !HungerAndHavocApi.IsVisitor(pawn))
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            if (comp == null || pawn.Map == null || settings == null || !RHAH_Api.IsVisitor(pawn))
             {
                 return null;
             }
@@ -125,7 +125,7 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                return JobMaker.MakeJob(HungerAndHavocDefOf.RHAH_MotherFeed, child);
+                return JobMaker.MakeJob(RHAH_DefOf.RHAH_MotherFeed, child);
             }
 
             return null;
@@ -151,14 +151,14 @@ namespace HungerAndHavoc.Pawn
     {
         protected override Job TryGiveJob(Verse.Pawn pawn)
         {
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             bool hungry = pawn != null && pawn.needs?.food != null && pawn.needs.food.CurLevelPercentage < 0.2f;
             if (pawn == null || settings == null || !RHAH_FamilyRules.CanScavenge(settings.prisonerScavengeEnabled, pawn.IsPrisoner, hungry))
             {
                 return null;
             }
 
-            return JobMaker.MakeJob(HungerAndHavocDefOf.RHAH_Scavenge, pawn);
+            return JobMaker.MakeJob(RHAH_DefOf.RHAH_Scavenge, pawn);
         }
     }
 
@@ -179,7 +179,7 @@ namespace HungerAndHavoc.Pawn
     {
         protected override Job TryGiveJob(Verse.Pawn pawn)
         {
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            RHAH_Settings settings = RHAH_Mod.Settings;
             if (pawn == null || pawn.Map == null || settings == null)
             {
                 return null;
@@ -203,7 +203,7 @@ namespace HungerAndHavoc.Pawn
                 float age = target.ageTracker == null ? 99f : target.ageTracker.AgeBiologicalYearsFloat;
                 if (RHAH_FamilyRules.CanTailBite(true, true, true, !target.Awake(), age))
                 {
-                    return JobMaker.MakeJob(HungerAndHavocDefOf.RHAH_TailBite, target);
+                    return JobMaker.MakeJob(RHAH_DefOf.RHAH_TailBite, target);
                 }
             }
 

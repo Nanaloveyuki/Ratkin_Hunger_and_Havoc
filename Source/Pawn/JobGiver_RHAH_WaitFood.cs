@@ -18,17 +18,17 @@ namespace HungerAndHavoc.Pawn
 
         internal static Job TryCreate(Verse.Pawn pawn)
         {
-            if (!HungerAndHavocApi.IsVisitor(pawn) || pawn.Map == null || pawn.Downed)
+            if (!RHAH_Api.IsVisitor(pawn) || pawn.Map == null || pawn.Downed)
             {
                 return null;
             }
 
-            if (!HungerAndHavocApi.Allows(pawn, HungerBehaviorGate.FeedFromRelief))
+            if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.FeedFromRelief))
             {
                 return null;
             }
 
-            IHungerPawn snapshot = HungerAndHavocApi.Get(pawn);
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
             if (snapshot == null || snapshot.HasBeenFed || RHAH_ReliefFood.MayEatOutside(pawn))
             {
                 return null;
@@ -47,7 +47,7 @@ namespace HungerAndHavoc.Pawn
 
             if (snapshot.LeaveAfterGameTick < 0)
             {
-                CompHungerPawn comp = CompHungerPawn.TryGet(pawn);
+                CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
                 if (comp != null)
                 {
                     comp.SetLeaveAfter(now + WaitTicks);

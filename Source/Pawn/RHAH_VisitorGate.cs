@@ -6,17 +6,17 @@ namespace HungerAndHavoc.Pawn
     {
         internal static bool IsVisitor(Verse.Pawn pawn)
         {
-            return HungerAndHavocApi.IsVisitor(pawn);
+            return RHAH_Api.IsVisitor(pawn);
         }
 
-        internal static bool Allows(Verse.Pawn pawn, HungerBehaviorGate gate)
+        internal static bool Allows(Verse.Pawn pawn, RHAH_BehaviorGate gate)
         {
             if (!IsVisitor(pawn))
             {
                 return false;
             }
 
-            return HungerAndHavocApi.Allows(pawn, gate);
+            return RHAH_Api.Allows(pawn, gate);
         }
     }
 }

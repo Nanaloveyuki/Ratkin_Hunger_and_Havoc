@@ -1,8 +1,8 @@
 # Pawn 身份
 
-来源标记是 Hediff `RHAH_HungerMark`，存档数据在 Identity 的 `CompHungerPawn`。其它模组只引用独立的 `HungerAndHavoc.Api.dll`，使用 `HungerAndHavoc.Api` 中的 `HungerAndHavocApi`、`IHungerPawn`、`HungerPawnSnapshot`、闸门与 Seed。不要扫描 Hediff、Backstory 或 Comp。`CompHungerPawn` 不实现 `IHungerPawn`。
+来源标记是 Hediff `RHAH_HungerMark`，存档数据在 Identity 的 `CompRHAH_Pawn`。其它模组只引用独立的 `HungerAndHavoc.Api.dll`，使用 `HungerAndHavoc.Api` 中的 `RHAH_Api`、`IRHAH_Pawn`、`RHAH_PawnSnapshot`、闸门与 Seed。不要扫描 Hediff、Backstory 或 Comp。`CompRHAH_Pawn` 不实现 `IRHAH_Pawn`。
 
-`HungerAndHavocApi` 查询与标记返回 `IHungerPawn`（`HungerPawnSnapshot`，sealed 不可变副本）。只读成员：`SourceIncidentDisplayId`、`SpawnBatchId`、`RelationshipGroupId`、`Role`、`Lifecycle`、`HasBeenFed`、`LeaveAfterGameTick`、`CarriesPlague`、`AttitudeAtArrival`、`ParentPawnLoadId`、`ChildPawnLoadIds`（`IReadOnlyList<int>`）、`IsReleased`、`IsActiveVisitor`。`IsReleased` 为 `Lifecycle == Released`；`IsActiveVisitor` 为未 Released 且未 Dead。快照是拷贝，后续 Comp 变化不写回已发出的快照。改状态走 `SetLifecycle` / `SetGate` / `SetExtra` / `ReleaseToColony` / `TryMarkOrigin`。事件与行为参数使用 `IHungerPawn`，不得传 Comp。
+`RHAH_Api` 查询与标记返回 `IRHAH_Pawn`（`RHAH_PawnSnapshot`，sealed 不可变副本）。只读成员：`SourceIncidentDisplayId`、`SpawnBatchId`、`RelationshipGroupId`、`Role`、`Lifecycle`、`HasBeenFed`、`LeaveAfterGameTick`、`CarriesPlague`、`AttitudeAtArrival`、`ParentPawnLoadId`、`ChildPawnLoadIds`（`IReadOnlyList<int>`）、`IsReleased`、`IsActiveVisitor`。`IsReleased` 为 `Lifecycle == Released`；`IsActiveVisitor` 为未 Released 且未 Dead。快照是拷贝，后续 Comp 变化不写回已发出的快照。改状态走 `SetLifecycle` / `SetGate` / `SetExtra` / `ReleaseToColony` / `TryMarkOrigin`。事件与行为参数使用 `IRHAH_Pawn`，不得传 Comp。
 
 ## 生命周期
 
@@ -26,29 +26,29 @@
 
 ## 闸门
 
-`HungerBehaviorGate`：Beg, Steal, Fight, LeaveAfterFed, EatOutsideRelief, FeedFromRelief, Gnaw, TailBite, Leash, Carry, JoinColony, Hire, Transfer, Imprison, DropOffChild, ExitMap。
+`RHAH_BehaviorGate`：Beg, Steal, Fight, LeaveAfterFed, EatOutsideRelief, FeedFromRelief, Gnaw, TailBite, Leash, Carry, JoinColony, Hire, Transfer, Imprison, DropOffChild, ExitMap。
 
 `Hire` 与 `Transfer` 默认允许。检疫名单上的 pawn，`JoinColony`、`Hire`、`Transfer` 为 false，覆盖和行为策略不能放开这三项。
 
-判定顺序：该 pawn 的 `gateOverrides` → `IHungerPawnBehavior`（后注册优先）→ `HungerPawnDefaults`。无来源标记时 `Allows` 为 false。检疫拒绝发生在这三层之后。
+判定顺序：该 pawn 的 `gateOverrides` → `IRHAH_PawnBehavior`（后注册优先）→ `RHAH_PawnDefaults`。无来源标记时 `Allows` 为 false。检疫拒绝发生在这三层之后。
 
-`IHungerPawnBehavior`：
+`IRHAH_PawnBehavior`：
 
 ```csharp
-bool? Allows(Pawn pawn, IHungerPawn snapshot, HungerBehaviorGate gate);
-bool? ShouldReleaseToColony(Pawn pawn, IHungerPawn snapshot, HungerReleaseReason reason);
+bool? Allows(Pawn pawn, IRHAH_Pawn snapshot, RHAH_BehaviorGate gate);
+bool? ShouldReleaseToColony(Pawn pawn, IRHAH_Pawn snapshot, RHAH_ReleaseReason reason);
 ```
 
 单只覆盖：
 
 ```csharp
-HungerAndHavocApi.SetGate(pawn, HungerBehaviorGate.Leash, true);
+RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.Leash, true);
 ```
 
 全局：
 
 ```csharp
-HungerPawnBehaviors.Register(new MyPolicy());
+RHAH_PawnBehaviors.Register(new MyPolicy());
 ```
 
 私有数据用 `SetExtra(pawn, "your.package.id:key", value)`。
@@ -57,19 +57,19 @@ HungerPawnBehaviors.Register(new MyPolicy());
 
 访客 AI 在 `Source/Pawn`，命名空间 `HungerAndHavoc.Pawn`。Identity 只管标记和闸门数据，不发 Job。
 
-有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `HungerAndHavocApi.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
+有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
 
 不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 的大人带出。
 
-JobGiver 第一行：非访客返回 null；再问 `HungerAndHavocApi.Allows`。角色规则只在 `HungerPawnDefaults` 和闸门覆盖里。吃饱后不再乞讨、偷窃、啃咬或由本模组安排进食。
+JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规则只在 `RHAH_PawnDefaults` 和闸门覆盖里。吃饱后不再乞讨、偷窃、啃咬或由本模组安排进食。
 
 `ReleaseToColony` 必须拆 Lord、清 duty、停访客 JobGiver。标记 Hediff 保留。
 
-其它模组适配只进 `Source/Pawn/Compat/`。基底只暴露闸门、`IHungerPawnBehavior` 和 `HungerAndHavocApi` 事件。禁止 Harmony 其它模组私有类型。原版缺口补丁登记在 [engineering.md](engineering.md)。
+其它模组适配只进 `Source/Pawn/Compat/`。基底只暴露闸门、`IRHAH_PawnBehavior` 和 `RHAH_Api` 事件。禁止 Harmony 其它模组私有类型。原版缺口补丁登记在 [engineering.md](engineering.md)。
 
 ## 生成
 
-`HungerPawnRequest.Profile` 是事件自己的生成配置，不进存档。四个开关各自独立，默认关闭，关闭时不改对应内容：
+`RHAH_PawnRequest.Profile` 是事件自己的生成配置，不进存档。四个开关各自独立，默认关闭，关闭时不改对应内容：
 
 - `UseExplicitApparel` 与 `Apparel`：先清掉生成器给出的衣服，再穿列表中的装备。空列表表示不穿
 - `UseExplicitBackstory` 与 `Childhood` / `Adulthood`：直接替换背景。两者都空时清掉背景。未满 20 岁不写成年背景
