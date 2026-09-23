@@ -301,9 +301,9 @@ namespace HungerAndHavoc.Pawn.Compat
                 return "RHAH_Menu_Queue_NoCaravan".Translate();
             }
 
-            if (RHAH_Scheduler.ExecuteDebugIncident(entry.DisplayId))
+            if (RHAH_Scheduler.QueueDebugIncident(entry.DisplayId))
             {
-                return "RHAH_Menu_Queue_Fired".Translate();
+                return "RHAH_Menu_Queue_Queued".Translate();
             }
 
             return "RHAH_Menu_Queue_Failed".Translate();

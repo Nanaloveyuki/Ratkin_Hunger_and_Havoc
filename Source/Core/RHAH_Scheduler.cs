@@ -7,34 +7,31 @@ namespace HungerAndHavoc.Core
 {
     internal static class RHAH_Scheduler
     {
-        internal static bool ExecuteDebugIncident(string displayId)
+        internal static bool QueueDebugIncident(string displayId)
         {
             RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
             RHAH_Settings settings = RHAH_Mod.Settings;
-            if (!RHAH_Runtime.AllowsNewContent || entry == null || Current.Game == null ||
-                (settings != null && !settings.IsIncidentEnabled(entry.DisplayId)))
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+            if (!CanQueueDebug(entry, settings, game != null, ResolveTarget(entry) != null))
             {
                 return false;
             }
 
-            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
-            if (def?.Worker == null)
-            {
-                return false;
-            }
-
-            IIncidentTarget target = ResolveTarget(entry);
-            if (target == null)
-            {
-                return false;
-            }
-
-            IncidentParms parms = StorytellerUtility.DefaultParmsNow(def.category, target);
             float catalog = entry.DebugPoints;
-            parms.points = settings == null
+            float points = settings == null
                 ? catalog
                 : settings.IncidentDebugPoints(entry.DisplayId, catalog);
-            return def.Worker.TryExecute(parms);
+            return game.QueueIncident(entry.DisplayId, points);
+        }
+
+        internal static bool CanQueueDebug(
+            RHAH_IncidentEntry entry,
+            RHAH_Settings settings,
+            bool gameLoaded,
+            bool targetReady)
+        {
+            return RHAH_Runtime.AllowsNewContent && entry != null && gameLoaded && targetReady &&
+                (settings == null || settings.IsIncidentEnabled(entry.DisplayId));
         }
 
         static IIncidentTarget ResolveTarget(RHAH_IncidentEntry entry)

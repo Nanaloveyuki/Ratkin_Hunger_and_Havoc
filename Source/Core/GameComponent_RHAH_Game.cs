@@ -40,13 +40,19 @@ namespace HungerAndHavoc.Core
         {
             TickPlague();
             RHAH_ChoiceRuntime.Tick(this, Find.TickManager.TicksGame, RHAH_Mod.Settings == null || RHAH_Mod.Settings.visitorChoicesEnabled);
-            if (RHAH_Mod.Settings != null && RHAH_Mod.Settings.staggerGeneration && (Find.TickManager.TicksGame & 63) != 0)
+            TrySpawnPending(Find.TickManager.TicksGame);
+        }
+
+        internal bool TrySpawnPending(int tick)
+        {
+            if (RHAH_Mod.Settings != null && RHAH_Mod.Settings.staggerGeneration && (tick & 63) != 0)
             {
-                return;
+                return false;
             }
+
             if (pendingIncidentDisplayIds.Count == 0 || Current.Game == null)
             {
-                return;
+                return false;
             }
 
             string displayId = pendingIncidentDisplayIds[0];
@@ -58,27 +64,31 @@ namespace HungerAndHavoc.Core
             if (entry == null)
             {
                 DropPending();
-                return;
+                return false;
             }
 
             Map map = entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map ? RHAH_MapResolver.Resolve() : null;
             if (entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map && map == null)
             {
-                return;
+                return false;
             }
+
             IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
             if (def == null)
             {
                 DropPending();
-                return;
+                return false;
             }
 
             IncidentParms parms = new IncidentParms { target = map };
             parms.points = points;
-            if (def.Worker.TryExecute(parms))
+            if (!def.Worker.TryExecute(parms))
             {
-                DropPending();
+                return false;
             }
+
+            DropPending();
+            return true;
         }
 
         public void RegisterBatch(string batchKey)

@@ -64,8 +64,9 @@
   <RHAH_Menu_Queue_NoMap>No usable map.</RHAH_Menu_Queue_NoMap>
   <RHAH_Menu_Queue_NoCaravan>No player caravan.</RHAH_Menu_Queue_NoCaravan>
   <RHAH_Menu_Queue_Fired>Spawned.</RHAH_Menu_Queue_Fired>
-  <RHAH_Menu_Queue_Failed>Nothing spawned.</RHAH_Menu_Queue_Failed>
-  <RHAH_Menu_DevEvents_Note>Spawns this incident now. It does not wait for the natural draw.</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_Queue_Queued>Queued. It spawns after this menu closes.</RHAH_Menu_Queue_Queued>
+  <RHAH_Menu_Queue_Failed>Nothing queued.</RHAH_Menu_Queue_Failed>
+  <RHAH_Menu_DevEvents_Note>Queues this incident instead of waiting for the natural draw. It spawns after the menu closes and the game is running again.</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>No current map.</RHAH_Menu_Pawns_NoMap>
   <RHAH_Menu_Pawns_None>No Hunger and Havoc pawns on this map.</RHAH_Menu_Pawns_None>
   <RHAH_Menu_Pawns_Invalid>That pawn is gone.</RHAH_Menu_Pawns_Invalid>
