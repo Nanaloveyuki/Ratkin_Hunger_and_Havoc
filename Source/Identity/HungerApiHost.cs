@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using HungerAndHavoc.Api;
 using Verse;
@@ -168,6 +169,57 @@ namespace HungerAndHavoc.Identity
         public void RegisterRatkinMatcher(Func<ThingDef, bool> matcher)
         {
             HungerRace.Register(matcher);
+        }
+        public bool IsOwnedHistory(string backstoryDefName)
+        {
+            return Data.HungerContentCatalog.IsOwnedHistory(backstoryDefName);
+        }
+
+        public bool IsOwnedTrait(string traitDefName)
+        {
+            return Data.HungerContentCatalog.IsOwnedTrait(traitDefName);
+        }
+
+        public bool TryGetHistory(string displayId, out string backstoryDefName)
+        {
+            Data.HungerHistoryRecord record = Data.HungerContentCatalog.FindHistory(displayId);
+            backstoryDefName = record?.BackstoryDefName;
+            return record != null;
+        }
+
+        public bool TryGetTrait(string displayId, out string traitDefName)
+        {
+            Data.HungerTraitRecord record = Data.HungerContentCatalog.FindTrait(displayId);
+            traitDefName = record?.TraitDefName;
+            return record != null;
+        }
+
+        public void CopyHistoryIds(List<string> destination)
+        {
+            if (destination == null)
+            {
+                return;
+            }
+
+            IReadOnlyList<Data.HungerHistoryRecord> records = Data.HungerContentCatalog.Histories;
+            for (int i = 0; i < records.Count; i++)
+            {
+                destination.Add(records[i].DisplayId);
+            }
+        }
+
+        public void CopyTraitIds(List<string> destination)
+        {
+            if (destination == null)
+            {
+                return;
+            }
+
+            IReadOnlyList<Data.HungerTraitRecord> records = Data.HungerContentCatalog.Traits;
+            for (int i = 0; i < records.Count; i++)
+            {
+                destination.Add(records[i].DisplayId);
+            }
         }
     }
 }

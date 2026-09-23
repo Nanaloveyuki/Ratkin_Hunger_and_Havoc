@@ -91,7 +91,20 @@
   <RHAH_Menu_Genes_JoinOne>Join {0}</RHAH_Menu_Genes_JoinOne>
   <RHAH_Menu_Genes_Remove>Remove</RHAH_Menu_Genes_Remove>
   <RHAH_Menu_Genes_NoOwned>No Hunger and Havoc genes are available to toggle.</RHAH_Menu_Genes_NoOwned>
-  <RHAH_Menu_PawnHistory_Gap>History generation controls are not implemented. This page does not change backstories.</RHAH_Menu_PawnHistory_Gap>
+  <RHAH_Menu_PawnHistory_Note>New visitors draw one checked history by developmental stage, age, temperature, and incident. An incident that sets its own backstory keeps it. Traits can still be drawn.</RHAH_Menu_PawnHistory_Note>
+  <RHAH_Menu_PawnHistory_EnableAll>Enable all histories</RHAH_Menu_PawnHistory_EnableAll>
+  <RHAH_Menu_PawnHistory_DisableAll>Disable all histories</RHAH_Menu_PawnHistory_DisableAll>
+  <RHAH_Menu_PawnHistory_ItemTip>With this off, the history stays out of the draw. Pawns already generated keep theirs.</RHAH_Menu_PawnHistory_ItemTip>
+  <RHAH_Menu_PawnTrait>Traits</RHAH_Menu_PawnTrait>
+  <RHAH_Menu_PawnTrait_EnableAll>Enable all traits</RHAH_Menu_PawnTrait_EnableAll>
+  <RHAH_Menu_PawnTrait_DisableAll>Disable all traits</RHAH_Menu_PawnTrait_DisableAll>
+  <RHAH_Menu_PawnTrait_ItemTip>With this off, the trait stays out of the draw. Pawns already generated keep theirs.</RHAH_Menu_PawnTrait_ItemTip>
+  <RHAH_Menu_PawnTrait_Weight>Weight</RHAH_Menu_PawnTrait_Weight>
+  <RHAH_Menu_PawnTrait_WeightTip>A higher weight is drawn more often. 0 stays out. After the draw, weight divided by 100 is the chance to gain it.</RHAH_Menu_PawnTrait_WeightTip>
+  <RHAH_Settings_PawnHistories>Draw histories for new visitors</RHAH_Settings_PawnHistories>
+  <RHAH_Settings_PawnHistories_Tooltip>With this off, new visitors keep the backstory from the generator. Pawns already here keep theirs.</RHAH_Settings_PawnHistories_Tooltip>
+  <RHAH_Settings_PawnTraits>Draw traits for new visitors</RHAH_Settings_PawnTraits>
+  <RHAH_Settings_PawnTraits_Tooltip>With this off, new visitors gain no mod trait. Pawns already here keep theirs. Each visitor gets at most one.</RHAH_Settings_PawnTraits_Tooltip>
   <RHAH_Menu_Experimental_Gap>Generation optimization is registered on this page. Other experiments are not added yet.</RHAH_Menu_Experimental_Gap>
   <RHAH_Menu_Experimental_Note>These options change how long visitors take to generate. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>Speed up visitor generation</RHAH_Settings_OptimizeGeneration>

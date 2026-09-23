@@ -221,8 +221,14 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Faction_Neutral | FactionDef | Remove |
 | RHAH_Faction_LeaningFriendly | FactionDef | Remove |
 | RHAH_Faction_Friendly | FactionDef | Remove |
+| RHAH_History_* | BackstoryDef | Remove。不替换成原版背景 |
+| RHAH_Trait_* | TraitDef | Remove。不替换成原版特质 |
+| RHAH_Thought_EggKeeperYoung, RHAH_Thought_HungerRage, RHAH_Thought_FoodSnatcher, RHAH_Thought_PlagueDreadSick, RHAH_Thought_PlagueDreadNearby | ThoughtDef | Remove |
+| RHAH_Thought_NightTerrors, RHAH_Thought_GrainGreed, RHAH_Thought_Chillblood, RHAH_Thought_FamineGloom, RHAH_Thought_AilingMother, RHAH_Thought_FamilyThief | ThoughtDef | Remove |
+| HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed | 无存档字段 | Remove |
+| HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease | 无存档字段 | Remove |
 
-尚无 PawnKind、Backstory、TraderKind、Site、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
+尚无 PawnKind、TraderKind、Site、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
 
 ### Hediff_RHAH_ClaySatiety
 
@@ -264,6 +270,11 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | HungerAndHavocSettings.staggerGeneration | 全局 ModSettings，默认 true |
 | HungerAndHavocSettings.disabledIncidentDisplayIds | 全局 ModSettings，默认空。空名单表示事件可用 |
 | HungerAndHavocSettings.refugeeCampEnabled | 全局 ModSettings，默认 true |
+| HungerAndHavocSettings.pawnHistoriesEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组经历 |
+| HungerAndHavocSettings.pawnTraitsEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组特质 |
+| HungerAndHavocSettings.disabledHistoryDisplayIds | 全局 ModSettings，默认空。空名单表示经历可抽 |
+| HungerAndHavocSettings.disabledTraitDisplayIds | 全局 ModSettings，默认空。空名单表示特质可抽 |
+| HungerAndHavocSettings.traitWeights | 全局 ModSettings，默认空字典。缺键用目录概率乘 100。0 不抽 |
 | HungerAndHavoc.Guard.* | Guard 始终加载，无存档类型 |
 | HungerAndHavocMod / HarmonyBootstrap / HungerAndHavocRuntime | 运行时入口，无 ExposeData |
 

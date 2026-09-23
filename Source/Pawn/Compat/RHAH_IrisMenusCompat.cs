@@ -637,7 +637,107 @@ namespace HungerAndHavoc.Pawn.Compat
 
         void DrawPawnHistory(Listing_Standard list)
         {
-            Unavailable(list, "RHAH_Menu_PawnHistory", "RHAH_Menu_PawnHistory_Gap");
+            Section(list, "RHAH_Menu_PawnHistory");
+            Note(list, "RHAH_Menu_PawnHistory_Note");
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            if (settings == null)
+            {
+                Empty(list, "RHAH_Menu_Settings_Missing");
+                return;
+            }
+
+            MenuControls.Checkbox(
+                list,
+                "RHAH_Settings_PawnHistories".Translate(),
+                ref settings.pawnHistoriesEnabled,
+                "RHAH_Settings_PawnHistories_Tooltip".Translate());
+            MenuControls.Checkbox(
+                list,
+                "RHAH_Settings_PawnTraits".Translate(),
+                ref settings.pawnTraitsEnabled,
+                "RHAH_Settings_PawnTraits_Tooltip".Translate());
+            DrawContentToggles(list, settings);
+        }
+
+        static void DrawContentToggles(Listing_Standard list, HungerAndHavocSettings settings)
+        {
+            List<string> historyIds = new List<string>();
+            HungerAndHavocApi.CopyHistoryIds(historyIds);
+            if (list.ButtonText("RHAH_Menu_PawnHistory_EnableAll".Translate()))
+            {
+                settings.SetAllHistories(true, historyIds);
+            }
+
+            if (list.ButtonText("RHAH_Menu_PawnHistory_DisableAll".Translate()))
+            {
+                settings.SetAllHistories(false, historyIds);
+            }
+
+            for (int i = 0; i < historyIds.Count; i++)
+            {
+                string id = historyIds[i];
+                string defName;
+                bool enabled = settings.IsHistoryEnabled(id);
+                string label = HungerAndHavocApi.TryGetHistory(id, out defName)
+                    ? id + " " + BackstoryTitle(defName)
+                    : id;
+                MenuControls.Checkbox(list, label, ref enabled, "RHAH_Menu_PawnHistory_ItemTip".Translate());
+                settings.SetHistoryEnabled(id, enabled);
+            }
+
+            Section(list, "RHAH_Menu_PawnTrait");
+            List<string> traitIds = new List<string>();
+            HungerAndHavocApi.CopyTraitIds(traitIds);
+            if (list.ButtonText("RHAH_Menu_PawnTrait_EnableAll".Translate()))
+            {
+                settings.SetAllTraits(true, traitIds);
+            }
+
+            if (list.ButtonText("RHAH_Menu_PawnTrait_DisableAll".Translate()))
+            {
+                settings.SetAllTraits(false, traitIds);
+            }
+
+            for (int i = 0; i < traitIds.Count; i++)
+            {
+                string id = traitIds[i];
+                string defName;
+                bool enabled = settings.IsTraitEnabled(id);
+                string label = HungerAndHavocApi.TryGetTrait(id, out defName)
+                    ? id + " " + TraitTitle(defName)
+                    : id;
+                MenuControls.Checkbox(list, label, ref enabled, "RHAH_Menu_PawnTrait_ItemTip".Translate());
+                settings.SetTraitEnabled(id, enabled);
+                float weight = settings.TraitWeight(id);
+                weight = MenuControls.Slider(
+                    list,
+                    "RHAH_Menu_PawnTrait_Weight".Translate(),
+                    weight,
+                    0f,
+                    100f,
+                    "0",
+                    "RHAH_Menu_PawnTrait_WeightTip".Translate());
+                settings.SetTraitWeight(id, weight);
+            }
+        }
+
+        static string BackstoryTitle(string defName)
+        {
+            BackstoryDef backstory = DefDatabase<BackstoryDef>.GetNamedSilentFail(defName);
+            string title = backstory?.title;
+            return string.IsNullOrEmpty(title) ? defName : title;
+        }
+
+        static string TraitTitle(string defName)
+        {
+            TraitDef trait = DefDatabase<TraitDef>.GetNamedSilentFail(defName);
+            if (trait?.degreeDatas == null || trait.degreeDatas.Count == 0 || trait.degreeDatas[0] == null)
+            {
+                return defName;
+            }
+
+            string label = trait.degreeDatas[0].label;
+            return string.IsNullOrEmpty(label) ? defName : label;
         }
 
         void DrawExperimental(Listing_Standard list)
@@ -790,7 +890,8 @@ namespace HungerAndHavoc.Pawn.Compat
 
         static IEnumerable<MenuSearchEntry> SearchPawnHistory()
         {
-            yield return Entry("history-gap", "RHAH_Menu_PawnHistory_Gap");
+            yield return Entry("history-master", "RHAH_Settings_PawnHistories");
+            yield return Entry("trait-master", "RHAH_Settings_PawnTraits");
         }
 
         static IEnumerable<MenuSearchEntry> SearchExperimental()

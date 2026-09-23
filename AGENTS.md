@@ -26,7 +26,7 @@
 | 路线与当前进度 | `docs/project-goals.md` |
 | 决策记录 | `docs/adr/` |
 | 面向玩家的说明 | `README.md` |
-| 构建并部署 | `scripts/build-and-deploy.ps1` |
+| 构建并部署 | `scripts/deploy.sh` |
 | 结构检查 | `scripts/verify-scaffold.py` |
 
 源码：
@@ -64,7 +64,7 @@ Windows 路径给资源管理器和 PowerShell。WSL 里用 `/mnt/...`。
 | 旧鼠灾，只对照玩法 |  | `/root/repos/Ratkin-Great-Famine-Year-Continued` |
 | IrisMenus 源码与公开 API |  | `/root/repos/IrisMenus` |
 
-`scripts/build-and-deploy.ps1` 里的默认 `D:\Appdata\...` 不是这台机器的游戏目录。本机用上面的 `E:\Apps\...`，或已导出的 `RIMWORLD_DIR` / `RimWorldDir`。
+一键部署用 `scripts/deploy.sh`。它在 WSL 里做结构检查、Release 构建，并把 About、Languages、Guard、1.6、Biotech 同步到本机 `Mods/RatkinHungerAndHavoc`，按 SHA-256 核对。游戏进程 `RimWorldWin64` 存在时拒绝覆盖。游戏目录用 `RIMWORLD_DIR` 或 `RimWorldDir`，缺省是上面的 `/mnt/e/Apps/...`。`scripts/build-and-deploy.ps1` 默认指向另一台机器的 `D:\Appdata\...`，本机 Windows 也没有 Python 和 .NET SDK，不要用它部署。
 
 IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `MenuControls.cs`。接入说明是同仓库的 `guide.md` 与 `guide_agents.md`。它的 About 没有 `modVersion`，用 `supportedVersions` 的 1.6 判断。
 
@@ -90,7 +90,7 @@ IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `Men
 
 ## 当前进度
 
-版本 `0.1.0`。M0 到 M3 的目录、生成、访客、调度和 IrisMenus 页面已经落地。访客按五个态度派系活动，伤害和驱逐改整批态度并离场。赈灾区限制取食。携带鼠疫的来客进入检疫，检疫中不能加入、雇佣或转移。`NarrativeState` 保存计数、结局计算，以及 `N-001`..`N-010` 和 `R-01` 的开关、开始和期限。事件会记下事实，但还不会推进剧情。事件频率和基因页已落地。结局开关和经历概率还没有。
+版本 `0.1.0`。M0 到 M3 的目录、生成、访客、调度和 IrisMenus 页面已经落地。访客按五个态度派系活动，伤害和驱逐改整批态度并离场。赈灾区限制取食。携带鼠疫的来客进入检疫，检疫中不能加入、雇佣或转移。`NarrativeState` 保存计数、结局计算，以及 `N-001`..`N-010` 和 `R-01` 的开关、开始和期限。事件会记下事实，但还不会推进剧情。事件频率、基因页、121 条经历和 50 条特质已落地。结局开关还没有。
 
 已落地：
 
@@ -105,7 +105,7 @@ IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `Men
 
 不要改 `packageId`、显示名、Harmony Id、Guard 冲突列表，也不要改已登记的 51 个事件显示 ID。
 
-不要再建 `Source/Behavior`。Generation、Narrative、Pawn 已有类型，不要为了规划再建空目录。
+不要再建 `Source/Behavior`。Generation、Narrative、Pawn、Data 已有类型，不要为了规划再建空目录。
 
 ## 验证
 
@@ -117,6 +117,6 @@ dotnet build Guard/Source/HungerAndHavocGuard.csproj -p:RimWorldDir=/mnt/e/Apps/
 dotnet test Source/Tests/HungerAndHavoc.Tests.csproj -p:RimWorldDir=/mnt/e/Apps/Steam/steamapps/common/RimWorld
 ```
 
-部署到 `Mods/RatkinHungerAndHavoc`。游戏正在运行时不要覆盖。IrisMenus.dll 是 net48 可选引用，`Private=False`，不要打进 `1.6/Assemblies/`。
+部署用 `scripts/deploy.sh`，不要在游戏运行时覆盖。IrisMenus.dll 是 net48 可选引用，`Private=False`，不要打进 `1.6/Assemblies/`。
 
 不要提交 `bin/`、`obj/`、pdb、`1.6/Assemblies/0Harmony.dll`。Harmony 是模组依赖，不是本仓库程序集。

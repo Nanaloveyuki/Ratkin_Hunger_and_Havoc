@@ -19,16 +19,15 @@ RimWorld 1.6 模组。`packageId`：`nanaloveyuki.ratkin.hungerandhavoc`。
 
 ## 构建
 
-退出 RimWorld 后，在 Windows 上：
+退出 RimWorld 后：
 
-```powershell
-pwsh -NoProfile -File scripts/build-and-deploy.ps1
+```bash
+scripts/deploy.sh
 ```
 
-需要 `/p:RimWorldDir=` 或环境变量 `RIMWORLD_DIR`。只检查仓库结构：
+脚本做结构检查、Release 构建，并部署到游戏 `Mods/RatkinHungerAndHavoc`。游戏目录用 `RIMWORLD_DIR`。只检查仓库结构：
 
-```powershell
-pwsh -NoProfile -File scripts/verify-scaffold.ps1
+```bash
+python3 scripts/verify-scaffold.py
 ```
 
-或 `python3 scripts/verify-scaffold.py`。

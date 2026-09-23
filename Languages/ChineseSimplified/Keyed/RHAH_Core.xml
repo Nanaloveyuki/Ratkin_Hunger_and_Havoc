@@ -91,7 +91,20 @@
   <RHAH_Menu_Genes_JoinOne>加入 {0}</RHAH_Menu_Genes_JoinOne>
   <RHAH_Menu_Genes_Remove>移出</RHAH_Menu_Genes_Remove>
   <RHAH_Menu_Genes_NoOwned>当前没有可开关的饥与祸基因。</RHAH_Menu_Genes_NoOwned>
-  <RHAH_Menu_PawnHistory_Gap>经历生成控制尚未实现。此页不会修改背景故事。</RHAH_Menu_PawnHistory_Gap>
+  <RHAH_Menu_PawnHistory_Note>新来客按发育阶段、年龄、气温和事件从已勾选的经历里抽一条。显式指定背景的事件不改经历，特质仍可抽。</RHAH_Menu_PawnHistory_Note>
+  <RHAH_Menu_PawnHistory_EnableAll>启用全部经历</RHAH_Menu_PawnHistory_EnableAll>
+  <RHAH_Menu_PawnHistory_DisableAll>停用全部经历</RHAH_Menu_PawnHistory_DisableAll>
+  <RHAH_Menu_PawnHistory_ItemTip>关闭后，这条经历不再进入抽取。已经生成的角色不变。</RHAH_Menu_PawnHistory_ItemTip>
+  <RHAH_Menu_PawnTrait>特质</RHAH_Menu_PawnTrait>
+  <RHAH_Menu_PawnTrait_EnableAll>启用全部特质</RHAH_Menu_PawnTrait_EnableAll>
+  <RHAH_Menu_PawnTrait_DisableAll>停用全部特质</RHAH_Menu_PawnTrait_DisableAll>
+  <RHAH_Menu_PawnTrait_ItemTip>关闭后，这条特质不再进入抽取。已经生成的角色不变。</RHAH_Menu_PawnTrait_ItemTip>
+  <RHAH_Menu_PawnTrait_Weight>权重</RHAH_Menu_PawnTrait_Weight>
+  <RHAH_Menu_PawnTrait_WeightTip>权重越高越容易被抽中。0 不抽。抽中后再按权重除以 100 决定是否赋予。</RHAH_Menu_PawnTrait_WeightTip>
+  <RHAH_Settings_PawnHistories>为新来客抽取经历</RHAH_Settings_PawnHistories>
+  <RHAH_Settings_PawnHistories_Tooltip>关闭后，新来客保留生成器给出的背景。已经在场的角色不变。</RHAH_Settings_PawnHistories_Tooltip>
+  <RHAH_Settings_PawnTraits>为新来客抽取特质</RHAH_Settings_PawnTraits>
+  <RHAH_Settings_PawnTraits_Tooltip>关闭后，新来客不再获得本模组特质。已经在场的角色不变。每人最多一条。</RHAH_Settings_PawnTraits_Tooltip>
   <RHAH_Menu_Experimental_Gap>生成优化已登记在本页。其它实验项尚未加入。</RHAH_Menu_Experimental_Gap>
   <RHAH_Menu_Experimental_Note>这些选项会改变生成来客的耗时。关闭后，来客仍按各事件自己的装备、经历、健康和基因生成。</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>加快来客生成</RHAH_Settings_OptimizeGeneration>

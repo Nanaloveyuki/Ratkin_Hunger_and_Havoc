@@ -81,6 +81,10 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_Broadcast_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_Stagger".Translate(), ref Settings.staggerGeneration,
                 "RHAH_Settings_Stagger_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_PawnHistories".Translate(), ref Settings.pawnHistoriesEnabled,
+                "RHAH_Settings_PawnHistories_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_PawnTraits".Translate(), ref Settings.pawnTraitsEnabled,
+                "RHAH_Settings_PawnTraits_Tooltip".Translate());
 
             listing.End();
             Settings.Write();

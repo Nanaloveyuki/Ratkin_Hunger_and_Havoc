@@ -1,0 +1,1719 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <BackstoryDef>
+    <defName>RHAH_History_A001_FleeingTenantFarmer</defName>
+    <slot>Adulthood</slot>
+    <title>fleeing tenant farmer</title>
+    <titleShort>fleeing tenant</titleShort>
+    <description>[PAWN_nameDef] made a living as a f while the Ratkin settlements ran out of food.leeing Tenant Farmer</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A002_DroughtFieldWatcher</defName>
+    <slot>Adulthood</slot>
+    <title>drought field watcher</title>
+    <titleShort>drought field</titleShort>
+    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.rought Field Watcher</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A003_ScavengerOfFallowFields</defName>
+    <slot>Adulthood</slot>
+    <title>scavenger of fallow fields</title>
+    <titleShort>scavenger of</titleShort>
+    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.cavenger of Fallow Fields</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A004_FamineHerdTender</defName>
+    <slot>Adulthood</slot>
+    <title>famine herd tender</title>
+    <titleShort>famine herd</titleShort>
+    <description>[PAWN_nameDef] made a living as a f while the Ratkin settlements ran out of food.amine Herd Tender</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A005_DroughtWellWaterCarrier</defName>
+    <slot>Adulthood</slot>
+    <title>drought well water carrier</title>
+    <titleShort>drought well</titleShort>
+    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.rought Well Water Carrier</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A006_GranaryBookkeeper</defName>
+    <slot>Adulthood</slot>
+    <title>granary bookkeeper</title>
+    <titleShort>granary bookkeeper</titleShort>
+    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Bookkeeper</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A007_MoldyGrainSifter</defName>
+    <slot>Adulthood</slot>
+    <title>moldy grain sifter</title>
+    <titleShort>moldy grain</titleShort>
+    <description>[PAWN_nameDef] made a living as a m while the Ratkin settlements ran out of food.oldy Grain Sifter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A008_OrphanedMillhand</defName>
+    <slot>Adulthood</slot>
+    <title>orphaned millhand</title>
+    <titleShort>orphaned millhand</titleShort>
+    <description>[PAWN_nameDef] made a living as a o while the Ratkin settlements ran out of food.rphaned Millhand</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A009_GranaryCarpenter</defName>
+    <slot>Adulthood</slot>
+    <title>granary carpenter</title>
+    <titleShort>granary carpenter</titleShort>
+    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Carpenter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A010_RagStitcher</defName>
+    <slot>Adulthood</slot>
+    <title>rag stitcher</title>
+    <titleShort>rag stitcher</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.ag Stitcher</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A011_DiseasedHideTanner</defName>
+    <slot>Adulthood</slot>
+    <title>diseased hide tanner</title>
+    <titleShort>diseased hide</titleShort>
+    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.iseased Hide Tanner</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A012_HerbSorter</defName>
+    <slot>Adulthood</slot>
+    <title>herb sorter</title>
+    <titleShort>herb sorter</titleShort>
+    <description>[PAWN_nameDef] made a living as a h while the Ratkin settlements ran out of food.erb Sorter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A013_KilnWatcher</defName>
+    <slot>Adulthood</slot>
+    <title>kiln watcher</title>
+    <titleShort>kiln watcher</titleShort>
+    <description>[PAWN_nameDef] made a living as a k while the Ratkin settlements ran out of food.iln Watcher</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A014_NightFamineEscapee</defName>
+    <slot>Adulthood</slot>
+    <title>night famine escapee</title>
+    <titleShort>night famine</titleShort>
+    <description>[PAWN_nameDef] made a living as a n while the Ratkin settlements ran out of food.ight Famine Escapee</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A015_RiverbankBridgeBuilder</defName>
+    <slot>Adulthood</slot>
+    <title>riverbank bridge builder</title>
+    <titleShort>riverbank bridge</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.iverbank Bridge Builder</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A016_RuinedVillageSearcher</defName>
+    <slot>Adulthood</slot>
+    <title>ruined village searcher</title>
+    <titleShort>ruined village</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.uined Village Searcher</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A017_SnowpathGuide</defName>
+    <slot>Adulthood</slot>
+    <title>snowpath guide</title>
+    <titleShort>snowpath guide</titleShort>
+    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.nowpath Guide</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A018_DustwayPorter</defName>
+    <slot>Adulthood</slot>
+    <title>dustway porter</title>
+    <titleShort>dustway porter</titleShort>
+    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.ustway Porter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A019_CampNightWatch</defName>
+    <slot>Adulthood</slot>
+    <title>camp night watch</title>
+    <titleShort>camp night</titleShort>
+    <description>[PAWN_nameDef] made a living as a c while the Ratkin settlements ran out of food.amp Night Watch</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A020_LostAtTheCheckpoint</defName>
+    <slot>Adulthood</slot>
+    <title>lost at the checkpoint</title>
+    <titleShort>lost at</titleShort>
+    <description>[PAWN_nameDef] made a living as a l while the Ratkin settlements ran out of food.ost at the Checkpoint</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A021_OldMapmaker</defName>
+    <slot>Adulthood</slot>
+    <title>old mapmaker</title>
+    <titleShort>old mapmaker</titleShort>
+    <description>[PAWN_nameDef] made a living as a o while the Ratkin settlements ran out of food.ld Mapmaker</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A022_KinSeekingExile</defName>
+    <slot>Adulthood</slot>
+    <title>kin-seeking exile</title>
+    <titleShort>kin-seeking exile</titleShort>
+    <description>[PAWN_nameDef] made a living as a k while the Ratkin settlements ran out of food.in-Seeking Exile</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A023_RefugeeConvoyGuide</defName>
+    <slot>Adulthood</slot>
+    <title>refugee convoy guide</title>
+    <titleShort>refugee convoy</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.efugee Convoy Guide</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A024_ShackRepairer</defName>
+    <slot>Adulthood</slot>
+    <title>shack repairer</title>
+    <titleShort>shack repairer</titleShort>
+    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.hack Repairer</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A025_DisasterBurier</defName>
+    <slot>Adulthood</slot>
+    <title>disaster burier</title>
+    <titleShort>disaster burier</titleShort>
+    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.isaster Burier</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A026_GrainPetitionSpeaker</defName>
+    <slot>Adulthood</slot>
+    <title>grain petition speaker</title>
+    <titleShort>grain petition</titleShort>
+    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.rain Petition Speaker</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A027_ReliefGoodsBroker</defName>
+    <slot>Adulthood</slot>
+    <title>relief goods broker</title>
+    <titleShort>relief goods</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.elief Goods Broker</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A028_EscapedLedgerCopyist</defName>
+    <slot>Adulthood</slot>
+    <title>escaped ledger copyist</title>
+    <titleShort>escaped ledger</titleShort>
+    <description>[PAWN_nameDef] made a living as a e while the Ratkin settlements ran out of food.scaped Ledger Copyist</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A029_ReliefCook</defName>
+    <slot>Adulthood</slot>
+    <title>relief cook</title>
+    <titleShort>relief cook</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.elief Cook</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A030_InfirmaryCaretaker</defName>
+    <slot>Adulthood</slot>
+    <title>infirmary caretaker</title>
+    <titleShort>infirmary caretaker</titleShort>
+    <description>[PAWN_nameDef] made a living as a i while the Ratkin settlements ran out of food.nfirmary Caretaker</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A031_RatEggCaretaker</defName>
+    <slot>Adulthood</slot>
+    <title>rat egg caretaker</title>
+    <titleShort>rat egg</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.at Egg Caretaker</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A032_NightStoryteller</defName>
+    <slot>Adulthood</slot>
+    <title>night storyteller</title>
+    <titleShort>night storyteller</titleShort>
+    <description>[PAWN_nameDef] made a living as a n while the Ratkin settlements ran out of food.ight Storyteller</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A033_SealedVillageMessenger</defName>
+    <slot>Adulthood</slot>
+    <title>sealed village messenger</title>
+    <titleShort>sealed village</titleShort>
+    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.ealed Village Messenger</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A034_MarketSackPorter</defName>
+    <slot>Adulthood</slot>
+    <title>market sack porter</title>
+    <titleShort>market sack</titleShort>
+    <description>[PAWN_nameDef] made a living as a m while the Ratkin settlements ran out of food.arket Sack Porter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A035_UsedGoodsAppraiser</defName>
+    <slot>Adulthood</slot>
+    <title>used goods appraiser</title>
+    <titleShort>used goods</titleShort>
+    <description>[PAWN_nameDef] made a living as a u while the Ratkin settlements ran out of food.sed Goods Appraiser</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A036_RationMediator</defName>
+    <slot>Adulthood</slot>
+    <title>ration mediator</title>
+    <titleShort>ration mediator</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.ation Mediator</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A037_RationTicketKeeper</defName>
+    <slot>Adulthood</slot>
+    <title>ration ticket keeper</title>
+    <titleShort>ration ticket</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.ation Ticket Keeper</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A038_GranaryRefuser</defName>
+    <slot>Adulthood</slot>
+    <title>granary refuser</title>
+    <titleShort>granary refuser</titleShort>
+    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Refuser</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A039_HomeboundDeserter</defName>
+    <slot>Adulthood</slot>
+    <title>homebound deserter</title>
+    <titleShort>homebound deserter</titleShort>
+    <description>[PAWN_nameDef] made a living as a h while the Ratkin settlements ran out of food.omebound Deserter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A040_CampTrapSetter</defName>
+    <slot>Adulthood</slot>
+    <title>camp trap setter</title>
+    <titleShort>camp trap</titleShort>
+    <description>[PAWN_nameDef] made a living as a c while the Ratkin settlements ran out of food.amp Trap Setter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A041_GrainThiefOutcast</defName>
+    <slot>Adulthood</slot>
+    <title>grain thief outcast</title>
+    <titleShort>grain thief</titleShort>
+    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.rain Thief Outcast</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A042_ScarredHunter</defName>
+    <slot>Adulthood</slot>
+    <title>scarred hunter</title>
+    <titleShort>scarred hunter</titleShort>
+    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.carred Hunter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A043_GranaryRatcatcher</defName>
+    <slot>Adulthood</slot>
+    <title>granary ratcatcher</title>
+    <titleShort>granary ratcatcher</titleShort>
+    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Ratcatcher</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A044_QuarantinePorter</defName>
+    <slot>Adulthood</slot>
+    <title>quarantine porter</title>
+    <titleShort>quarantine porter</titleShort>
+    <description>[PAWN_nameDef] made a living as a q while the Ratkin settlements ran out of food.uarantine Porter</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A045_QuarantineWatcher</defName>
+    <slot>Adulthood</slot>
+    <title>quarantine watcher</title>
+    <titleShort>quarantine watcher</titleShort>
+    <description>[PAWN_nameDef] made a living as a q while the Ratkin settlements ran out of food.uarantine Watcher</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A046_PostPlagueCaretaker</defName>
+    <slot>Adulthood</slot>
+    <title>post-plague caretaker</title>
+    <titleShort>post-plague caretaker</titleShort>
+    <description>[PAWN_nameDef] made a living as a p while the Ratkin settlements ran out of food.ost-Plague Caretaker</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A047_DisguisedGrainThief</defName>
+    <slot>Adulthood</slot>
+    <title>disguised grain thief</title>
+    <titleShort>disguised grain</titleShort>
+    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.isguised Grain Thief</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A048_SiegeTunnelDigger</defName>
+    <slot>Adulthood</slot>
+    <title>siege tunnel digger</title>
+    <titleShort>siege tunnel</titleShort>
+    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.iege Tunnel Digger</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A049_GranaryBreaker</defName>
+    <slot>Adulthood</slot>
+    <title>granary breaker</title>
+    <titleShort>granary breaker</titleShort>
+    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Breaker</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y001_RuinsLitter</defName>
+    <slot>Childhood</slot>
+    <title>ruins litter</title>
+    <titleShort>ruins litter</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Ruins Litter.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y002_LostFieldLitter</defName>
+    <slot>Childhood</slot>
+    <title>lost field litter</title>
+    <titleShort>lost field</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Lost Field Litter.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y003_CreviceMessenger</defName>
+    <slot>Childhood</slot>
+    <title>crevice messenger</title>
+    <titleShort>crevice messenger</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Crevice Messenger.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y004_GrainMillApprentice</defName>
+    <slot>Childhood</slot>
+    <title>grain mill apprentice</title>
+    <titleShort>grain mill</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Grain Mill Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y005_RatEggGuardApprentice</defName>
+    <slot>Childhood</slot>
+    <title>rat egg guard apprentice</title>
+    <titleShort>rat egg</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Rat Egg Guard Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y006_LandmarkRememberingOrphan</defName>
+    <slot>Childhood</slot>
+    <title>landmark-remembering orphan</title>
+    <titleShort>landmark-remembering orphan</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Landmark-Remembering Orphan.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y007_LivestockApprentice</defName>
+    <slot>Childhood</slot>
+    <title>livestock apprentice</title>
+    <titleShort>livestock apprentice</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Livestock Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y008_OrphanedMillApprentice</defName>
+    <slot>Childhood</slot>
+    <title>orphaned mill apprentice</title>
+    <titleShort>orphaned mill</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Orphaned Mill Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y009_CampfireListener</defName>
+    <slot>Childhood</slot>
+    <title>campfire listener</title>
+    <titleShort>campfire listener</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Campfire Listener.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y010_QuarantineShedChild</defName>
+    <slot>Childhood</slot>
+    <title>quarantine shed child</title>
+    <titleShort>quarantine shed</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Quarantine Shed Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y011_RuinedHouseOrphan</defName>
+    <slot>Childhood</slot>
+    <title>ruined house orphan</title>
+    <titleShort>ruined house</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Ruined House Orphan.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y012_NightWatchApprentice</defName>
+    <slot>Childhood</slot>
+    <title>night watch apprentice</title>
+    <titleShort>night watch</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Night Watch Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A050_ElderSisterProtector</defName>
+    <slot>Adulthood</slot>
+    <title>elder sister protector</title>
+    <titleShort>elder sister</titleShort>
+    <description>[PAWN_nameDef] made a living as a e while the Ratkin settlements ran out of food.lder Sister Protector</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A051_IllMotherLeavingA</defName>
+    <slot>Adulthood</slot>
+    <title>ill mother leaving a child</title>
+    <titleShort>ill mother</titleShort>
+    <description>[PAWN_nameDef] made a living as a i while the Ratkin settlements ran out of food.ll Mother Leaving a Child</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A052_BeggingRatkinMother</defName>
+    <slot>Adulthood</slot>
+    <title>begging ratkin mother</title>
+    <titleShort>begging ratkin</titleShort>
+    <description>[PAWN_nameDef] made a living as a b while the Ratkin settlements ran out of food.egging Ratkin Mother</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A053_GrainThiefForFamily</defName>
+    <slot>Adulthood</slot>
+    <title>grain thief for family</title>
+    <titleShort>grain thief</titleShort>
+    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.rain Thief for Family</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A054_WastelandSurvivor</defName>
+    <slot>Adulthood</slot>
+    <title>wasteland survivor</title>
+    <titleShort>wasteland survivor</titleShort>
+    <description>[PAWN_nameDef] made a living as a w while the Ratkin settlements ran out of food.asteland Survivor</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A055_RefugeeCampSteward</defName>
+    <slot>Adulthood</slot>
+    <title>refugee camp steward</title>
+    <titleShort>refugee camp</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.efugee Camp Steward</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A056_CageWatcher</defName>
+    <slot>Adulthood</slot>
+    <title>cage watcher</title>
+    <titleShort>cage watcher</titleShort>
+    <description>[PAWN_nameDef] made a living as a c while the Ratkin settlements ran out of food.age Watcher</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A057_RatEggMerchant</defName>
+    <slot>Adulthood</slot>
+    <title>rat egg merchant</title>
+    <titleShort>rat egg</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.at Egg Merchant</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A058_OutwallBeggar</defName>
+    <slot>Adulthood</slot>
+    <title>outwall beggar</title>
+    <titleShort>outwall beggar</titleShort>
+    <description>[PAWN_nameDef] made a living as a o while the Ratkin settlements ran out of food.utwall Beggar</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A059_ReliefKitchenCook</defName>
+    <slot>Adulthood</slot>
+    <title>relief kitchen cook</title>
+    <titleShort>relief kitchen</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.elief Kitchen Cook</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A060_RefugeeMedic</defName>
+    <slot>Adulthood</slot>
+    <title>refugee medic</title>
+    <titleShort>refugee medic</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.efugee Medic</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A061_SilverTrader</defName>
+    <slot>Adulthood</slot>
+    <title>silver trader</title>
+    <titleShort>silver trader</titleShort>
+    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.ilver Trader</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A062_FragmentMapInformant</defName>
+    <slot>Adulthood</slot>
+    <title>fragment map informant</title>
+    <titleShort>fragment map</titleShort>
+    <description>[PAWN_nameDef] made a living as a f while the Ratkin settlements ran out of food.ragment Map Informant</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A063_RuinInformant</defName>
+    <slot>Adulthood</slot>
+    <title>ruin informant</title>
+    <titleShort>ruin informant</titleShort>
+    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.uin Informant</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A064_SmallSettlementClerk</defName>
+    <slot>Adulthood</slot>
+    <title>small settlement clerk</title>
+    <titleShort>small settlement</titleShort>
+    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.mall Settlement Clerk</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A065_PregnantRefugee</defName>
+    <slot>Adulthood</slot>
+    <title>pregnant refugee</title>
+    <titleShort>pregnant refugee</titleShort>
+    <description>[PAWN_nameDef] made a living as a p while the Ratkin settlements ran out of food.regnant Refugee</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A066_MisdeliveredCargoCarrier</defName>
+    <slot>Adulthood</slot>
+    <title>misdelivered cargo carrier</title>
+    <titleShort>misdelivered cargo</titleShort>
+    <description>[PAWN_nameDef] made a living as a m while the Ratkin settlements ran out of food.isdelivered Cargo Carrier</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A067_MisidentifiedKin</defName>
+    <slot>Adulthood</slot>
+    <title>misidentified kin</title>
+    <titleShort>misidentified kin</titleShort>
+    <description>[PAWN_nameDef] made a living as a m while the Ratkin settlements ran out of food.isidentified Kin</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A068_FamineFarmer</defName>
+    <slot>Adulthood</slot>
+    <title>famine farmer</title>
+    <titleShort>famine farmer</titleShort>
+    <description>[PAWN_nameDef] made a living as a f while the Ratkin settlements ran out of food.amine Farmer</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A069_AmbushedEscort</defName>
+    <slot>Adulthood</slot>
+    <title>ambushed escort</title>
+    <titleShort>ambushed escort</titleShort>
+    <description>[PAWN_nameDef] made a living as a a while the Ratkin settlements ran out of food.mbushed Escort</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A070_PlaguezoneExile</defName>
+    <slot>Adulthood</slot>
+    <title>plague-zone exile</title>
+    <titleShort>plague-zone exile</titleShort>
+    <description>[PAWN_nameDef] made a living as a p while the Ratkin settlements ran out of food.lague-zone Exile</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A071_QuarantineGatekeeper</defName>
+    <slot>Adulthood</slot>
+    <title>quarantine gatekeeper</title>
+    <titleShort>quarantine gatekeeper</titleShort>
+    <description>[PAWN_nameDef] made a living as a q while the Ratkin settlements ran out of food.uarantine Gatekeeper</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A072_PlagueCampTunnelDigger</defName>
+    <slot>Adulthood</slot>
+    <title>plague camp tunnel digger</title>
+    <titleShort>plague camp</titleShort>
+    <description>[PAWN_nameDef] made a living as a p while the Ratkin settlements ran out of food.lague Camp Tunnel Digger</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A073_EscapedPlagueMessenger</defName>
+    <slot>Adulthood</slot>
+    <title>escaped plague messenger</title>
+    <titleShort>escaped plague</titleShort>
+    <description>[PAWN_nameDef] made a living as a e while the Ratkin settlements ran out of food.scaped Plague Messenger</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_A074_EvacuationGuide</defName>
+    <slot>Adulthood</slot>
+    <title>evacuation guide</title>
+    <titleShort>evacuation guide</titleShort>
+    <description>[PAWN_nameDef] made a living as a e while the Ratkin settlements ran out of food.vacuation Guide</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_AdultHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y013_CrowdBornChild</defName>
+    <slot>Childhood</slot>
+    <title>crowd-born child</title>
+    <titleShort>crowd-born child</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Crowd-Born Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y014_AbandonedHouseRatEgg</defName>
+    <slot>Childhood</slot>
+    <title>abandoned house rat egg</title>
+    <titleShort>abandoned house</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Abandoned House Rat Egg.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y015_DoorstepRatEgg</defName>
+    <slot>Childhood</slot>
+    <title>doorstep rat egg</title>
+    <titleShort>doorstep rat</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Doorstep Rat Egg.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y016_RationingApprentice</defName>
+    <slot>Childhood</slot>
+    <title>rationing apprentice</title>
+    <titleShort>rationing apprentice</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Rationing Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y017_GrainBarrelHiddenChild</defName>
+    <slot>Childhood</slot>
+    <title>grain barrel hidden child</title>
+    <titleShort>grain barrel</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Grain Barrel Hidden Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y018_WastelandBurrowLitter</defName>
+    <slot>Childhood</slot>
+    <title>wasteland burrow litter</title>
+    <titleShort>wasteland burrow</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Wasteland Burrow Litter.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y019_ChildByTheCage</defName>
+    <slot>Childhood</slot>
+    <title>child by the cage</title>
+    <titleShort>child by</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Child by the Cage.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y020_HiddenTradeChild</defName>
+    <slot>Childhood</slot>
+    <title>hidden trade child</title>
+    <titleShort>hidden trade</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Hidden Trade Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y021_SiegeCampWaterRunner</defName>
+    <slot>Childhood</slot>
+    <title>siege camp water runner</title>
+    <titleShort>siege camp</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Siege Camp Water Runner.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y022_ReliefLedgerChild</defName>
+    <slot>Childhood</slot>
+    <title>relief ledger child</title>
+    <titleShort>relief ledger</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Relief Ledger Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y023_MapLostChild</defName>
+    <slot>Childhood</slot>
+    <title>map-lost child</title>
+    <titleShort>map-lost child</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Map-Lost Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y024_BirthConvoyChild</defName>
+    <slot>Childhood</slot>
+    <title>birth convoy child</title>
+    <titleShort>birth convoy</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Birth Convoy Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y025_MisdeliveredChild</defName>
+    <slot>Childhood</slot>
+    <title>misdelivered child</title>
+    <titleShort>misdelivered child</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Misdelivered Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y026_MisnamedChild</defName>
+    <slot>Childhood</slot>
+    <title>misnamed child</title>
+    <titleShort>misnamed child</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Misnamed Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y027_FamineCampChild</defName>
+    <slot>Childhood</slot>
+    <title>famine camp child</title>
+    <titleShort>famine camp</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Famine Camp Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y028_PlaguezoneChild</defName>
+    <slot>Childhood</slot>
+    <title>plague-zone child</title>
+    <titleShort>plague-zone child</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Plague-zone Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y029_WoodenShelterOrphan</defName>
+    <slot>Childhood</slot>
+    <title>wooden shelter orphan</title>
+    <titleShort>wooden shelter</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Wooden Shelter Orphan.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y030_DroughtFieldApprentice</defName>
+    <slot>Childhood</slot>
+    <title>drought field apprentice</title>
+    <titleShort>drought field</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Drought Field Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y031_SeedSortingApprentice</defName>
+    <slot>Childhood</slot>
+    <title>seed sorting apprentice</title>
+    <titleShort>seed sorting</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Seed Sorting Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y032_FenceHerdingChild</defName>
+    <slot>Childhood</slot>
+    <title>fence herding child</title>
+    <titleShort>fence herding</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Fence Herding Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y033_DryWellWaterChild</defName>
+    <slot>Childhood</slot>
+    <title>dry well water child</title>
+    <titleShort>dry well</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Dry Well Water Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y034_GrainSackRecorder</defName>
+    <slot>Childhood</slot>
+    <title>grain sack recorder</title>
+    <titleShort>grain sack</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Grain Sack Recorder.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y035_MillhandHelperChild</defName>
+    <slot>Childhood</slot>
+    <title>millhand helper child</title>
+    <titleShort>millhand helper</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Millhand Helper Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y036_WheelRepairApprentice</defName>
+    <slot>Childhood</slot>
+    <title>wheel repair apprentice</title>
+    <titleShort>wheel repair</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Wheel Repair Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y037_NeedleworkApprentice</defName>
+    <slot>Childhood</slot>
+    <title>needlework apprentice</title>
+    <titleShort>needlework apprentice</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Needlework Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y038_HuntingGroundHelper</defName>
+    <slot>Childhood</slot>
+    <title>hunting ground helper</title>
+    <titleShort>hunting ground</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Hunting Ground Helper.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y039_HerbBasketApprentice</defName>
+    <slot>Childhood</slot>
+    <title>herb basket apprentice</title>
+    <titleShort>herb basket</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Herb Basket Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y040_KilnsideChildWorker</defName>
+    <slot>Childhood</slot>
+    <title>kiln-side child worker</title>
+    <titleShort>kiln-side child</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Kiln-side Child Worker.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y041_CampfireOrphan</defName>
+    <slot>Childhood</slot>
+    <title>campfire orphan</title>
+    <titleShort>campfire orphan</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Campfire Orphan.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y042_RiverRaftApprentice</defName>
+    <slot>Childhood</slot>
+    <title>river raft apprentice</title>
+    <titleShort>river raft</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as River Raft Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y043_RaidedVillageChild</defName>
+    <slot>Childhood</slot>
+    <title>raided village child</title>
+    <titleShort>raided village</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Raided Village Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y044_SnowprintApprentice</defName>
+    <slot>Childhood</slot>
+    <title>snowprint apprentice</title>
+    <titleShort>snowprint apprentice</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Snowprint Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y045_PackAnimalApprentice</defName>
+    <slot>Childhood</slot>
+    <title>pack animal apprentice</title>
+    <titleShort>pack animal</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Pack Animal Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y046_NightWatchChild</defName>
+    <slot>Childhood</slot>
+    <title>night watch child</title>
+    <titleShort>night watch</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Night Watch Child.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Y047_CheckpointEvasionApprentice</defName>
+    <slot>Childhood</slot>
+    <title>checkpoint evasion apprentice</title>
+    <titleShort>checkpoint evasion</titleShort>
+    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Checkpoint Evasion Apprentice.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories>
+      <li>RHAH_YoungHistory</li>
+      <li>RHAH_Famine</li>
+    </spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Newborn</defName>
+    <slot>Childhood</slot>
+    <title>famine newborn</title>
+    <titleShort>newborn</titleShort>
+    <description>[PAWN_nameDef] was born while the famine was already in the settlements. There was no childhood work to remember, only the road.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories><li>RHAH_YoungHistory</li><li>RHAH_Famine</li></spawnCategories>
+  </BackstoryDef>
+  <BackstoryDef>
+    <defName>RHAH_History_Refugee</defName>
+    <slot>Adulthood</slot>
+    <title>famine refugee</title>
+    <titleShort>refugee</titleShort>
+    <description>[PAWN_nameDef] left a Ratkin settlement after the stores ran out. The work that paid for the next meal is what remains.</description>
+    <bodyTypeMale>Thin</bodyTypeMale>
+    <bodyTypeFemale>Thin</bodyTypeFemale>
+    <shuffleable>false</shuffleable>
+    <spawnCategories><li>RHAH_AdultHistory</li><li>RHAH_Famine</li></spawnCategories>
+  </BackstoryDef>
+</Defs>

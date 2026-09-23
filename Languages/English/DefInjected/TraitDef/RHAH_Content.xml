@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LanguageData>
-  <RHAH_Trait_FoodHoarder.label>food hoarder</RHAH_Trait_FoodHoarder.label>
-  <RHAH_Trait_FoodHoarder.description>{PAWN_nameDef} survived the famine by hiding food. {PAWN_pronoun} dislikes seeing food wasted and gets a mood bonus after eating a meal made from stored ingredients.</RHAH_Trait_FoodHoarder.description>
-</LanguageData>

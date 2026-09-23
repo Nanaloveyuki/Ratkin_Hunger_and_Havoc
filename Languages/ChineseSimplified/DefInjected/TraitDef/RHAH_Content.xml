@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LanguageData>
-  <RHAH_Trait_FoodHoarder.label>藏粮者</RHAH_Trait_FoodHoarder.label>
-  <RHAH_Trait_FoodHoarder.description>{PAWN_nameDef}靠藏起食物熬过了饥荒。{PAWN_pronoun}不喜欢看见食物被浪费，吃下用储存食材做成的饭后会心情更好。</RHAH_Trait_FoodHoarder.description>
-</LanguageData>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LanguageData>
-  <RHAH_History_Y001_FamineChild.title>饥荒童年</RHAH_History_Y001_FamineChild.title>
-  <RHAH_History_Y001_FamineChild.titleShort>饥荒童年</RHAH_History_Y001_FamineChild.titleShort>
-  <RHAH_History_Y001_FamineChild.baseDescription>饥荒来到鼠族聚居地时，[PAWN_nameDef]还很小。[PAWN_pronoun]学会了在垃圾里找食物，也学会了不相信许诺一顿饱饭的人。</RHAH_History_Y001_FamineChild.baseDescription>
-  <RHAH_History_A001_ReliefTrader.title>赈灾商人</RHAH_History_A001_ReliefTrader.title>
-  <RHAH_History_A001_ReliefTrader.titleShort>赈灾商人</RHAH_History_A001_ReliefTrader.titleShort>
-  <RHAH_History_A001_ReliefTrader.baseDescription>[PAWN_nameDef]在饥荒期间往返于鼠族聚居地之间，运送食物和药品。[PAWN_pronoun]学会了哪些承诺可以拿来交易，也学会了哪些承诺会让商队空手而归。</RHAH_History_A001_ReliefTrader.baseDescription>
-</LanguageData>

@@ -27,7 +27,7 @@
 | `scripts/` | 检查、构建和部署脚本 |
 | `tmp/` | 临时文件，已 gitignore，不当源码或发布输入 |
 
-已有层是 Core、Identity、Generation、Incidents、Pawn、Narrative、Trade、Tests。World、Patches、UI 等有第一个类型再建模，不建空目录。不要再建 `Source/Behavior`。IrisMenus 绘制留在 `Source/Pawn/Compat`，和注册一起在缺少 IrisMenus.dll 时排除。不建 `Source/Settings` 或 `Source/UI`：设置数据仍在 `Core`，函数求值留在对应领域。
+已有层是 Core、Identity、Generation、Incidents、Pawn、Narrative、Trade、Data、Tests。World、Patches、UI 等有第一个类型再建模，不建空目录。不要再建 `Source/Behavior`。IrisMenus 绘制留在 `Source/Pawn/Compat`，和注册一起在缺少 IrisMenus.dll 时排除。不建 `Source/Settings` 或 `Source/UI`：设置数据仍在 `Core`，函数求值留在对应领域。`Source/Data` 使用 `HungerAndHavoc.Data`，只放经历和特质的静态记录与选择，不引用存档或设置。
 
 ## 分层与程序集
 
@@ -58,7 +58,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - `HungerPawnSeed`
 - `HungerBehaviorGate`
 - `HungerPawnRole` / `HungerLifecycle` / `HungerReleaseReason` / `HungerAttitude`
-
+- `HungerAndHavocApi` 的经历与特质查询：`IsOwnedHistory`、`IsOwnedTrait`、`TryGetHistory`、`TryGetTrait`、`CopyHistoryIds`、`CopyTraitIds`。参数是显示 ID 或 defName，不返回 Backstory、Trait 或 Data 记录
 `IHungerPawn` 是只读快照。快照、事件和 `IHungerPawnBehavior` 不得返回或接收 `CompHungerPawn`、Hediff、私有 Job 或其它实现对象。
 
 状态修改只通过 `HungerAndHavocApi`：`SetLifecycle`、`SetGate`、`SetExtra`、`ReleaseToColony`、`TryMarkOrigin`。API 事件参数必须使用稳定类型或基础游戏类型，不得暴露实现程序集类型。
@@ -190,6 +190,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
 | `HungerAndHavoc.Pawn.CompProperties_RHAH_Clay` | ThingDef XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Pawn.Comp_RHAH_Clay` | `CompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 ThingComp；类型名写入 `.rws` |
+| `HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed` | ThoughtDef `workerClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThoughtWorker |
+| `HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease` | ThoughtDef `workerClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThoughtWorker |
 | `HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusCompat` 所在文件对 `IrisMenus` 的编译引用 | IrisMenus 1.6 公开 `MenuRegistry.RegisterSubItemListing` | `HungerAndHavoc.dll` 引用，`Private=False`，不随包发布 | 可选依赖。`ModLister` 未启用或 `modVersion` 不是 `1.6` 时不注册页面。类型保持 `internal`，不进入 API 程序集。`RHAH_IrisMenusWidgets.cs` 使用同一条编译排除 |
 
 原版 Harmony 例外不进上表。`HungerIncidentSchedulePatch` 是 `internal`，Postfix `Storyteller.StorytellerTick`。原版讲述者没有本模组事件池，`baseChance` 保持 0。补丁只在 1000 tick 检查点入队，不改类别权重，不替换袭击。
@@ -197,6 +199,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_AttitudeHarmPatch` 是 `internal`，Postfix `Thing.PreApplyDamage`。原版伤害只改单只 pawn 的好感，不会按生成批次改态度。补丁只接收玩家派系实施者的外部暴力，调用批次离场或敌对关系，不创建袭击 Lord。目标缺失时不注册。
 
 `RHAH_ClayEatThingPatch` 与 `RHAH_ClayEatDefPatch` 是 `internal`，Postfix `FoodUtility.WillEat` 的 Thing 和 ThingDef 重载。观音土十五天吃满三块后原版仍把它当食物。补丁只在目标是 `RHAH_GuanyinTu` 且饱腹窗口未过时返回 false，不改其它食物。
+`RHAH_TraitColor` 是 `internal`，Postfix `Trait.LabelCap`。原版特质名没有本模组颜色。补丁只给 `RHAH_Trait_` 前缀上色，已有颜色标签时不改。
 
 ## 检查门禁
 

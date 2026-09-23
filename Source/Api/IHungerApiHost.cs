@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Verse;
 
 namespace HungerAndHavoc.Api
@@ -25,5 +26,16 @@ namespace HungerAndHavoc.Api
         bool TryGetExtra(Pawn pawn, string key, out string value);
 
         void RegisterRatkinMatcher(Func<ThingDef, bool> matcher);
+        bool IsOwnedHistory(string backstoryDefName);
+
+        bool IsOwnedTrait(string traitDefName);
+
+        bool TryGetHistory(string displayId, out string backstoryDefName);
+
+        bool TryGetTrait(string displayId, out string traitDefName);
+
+        void CopyHistoryIds(List<string> destination);
+
+        void CopyTraitIds(List<string> destination);
     }
 }

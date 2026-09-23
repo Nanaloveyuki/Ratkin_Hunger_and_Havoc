@@ -109,6 +109,8 @@ namespace HungerAndHavoc.Generation
             }
 
             ApplyProfile(pawn, profile);
+            HungerContentApplier.Apply(pawn, request, !profile.UseExplicitBackstory);
+
             HungerXenotypeResolver.ApplyEnabledGenes(pawn);
             return pawn;
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using Verse;
 
@@ -133,6 +134,49 @@ namespace HungerAndHavoc.Api
             }
 
             host.RegisterRatkinMatcher(matcher);
+        }
+        public static bool IsOwnedHistory(string backstoryDefName)
+        {
+            return host != null && host.IsOwnedHistory(backstoryDefName);
+        }
+
+        public static bool IsOwnedTrait(string traitDefName)
+        {
+            return host != null && host.IsOwnedTrait(traitDefName);
+        }
+
+        public static bool TryGetHistory(string displayId, out string backstoryDefName)
+        {
+            backstoryDefName = null;
+            return host != null && host.TryGetHistory(displayId, out backstoryDefName);
+        }
+
+        public static bool TryGetTrait(string displayId, out string traitDefName)
+        {
+            traitDefName = null;
+            return host != null && host.TryGetTrait(displayId, out traitDefName);
+        }
+
+        public static void CopyHistoryIds(List<string> destination)
+        {
+            if (destination == null)
+            {
+                return;
+            }
+
+            destination.Clear();
+            host?.CopyHistoryIds(destination);
+        }
+
+        public static void CopyTraitIds(List<string> destination)
+        {
+            if (destination == null)
+            {
+                return;
+            }
+
+            destination.Clear();
+            host?.CopyTraitIds(destination);
         }
 
         internal static void RaiseOriginMarked(Pawn pawn, IHungerPawn snapshot)

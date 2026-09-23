@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThoughtDef>
+    <defName>RHAH_Thought_EggKeeperYoung</defName>
+    <workerClass>HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed</workerClass>
+    <requiredTraits>
+      <li>RHAH_Trait_EggKeeper</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>young still hungry</label>
+        <description>A young one nearby is still hungry.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+            <li>
+        <label>young one down</label>
+        <description>A young one nearby is sick or down.</description>
+        <baseMoodEffect>-9</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_HungerRage</defName>
+    <workerClass>ThoughtWorker_NeedFood</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <requiredTraits>
+      <li>RHAH_Trait_HungerRage</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>red-eyed</label>
+        <description>I need to eat. Now.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+            <li>
+        <label>red-eyed</label>
+        <description>I need to eat. Now.</description>
+        <baseMoodEffect>-14</baseMoodEffect>
+      </li>
+            <li>
+        <label>red-eyed</label>
+        <description>I need to eat. Now.</description>
+        <baseMoodEffect>-20</baseMoodEffect>
+      </li>
+            <li>
+        <label>red-eyed</label>
+        <description>I need to eat. Now.</description>
+        <baseMoodEffect>-26</baseMoodEffect>
+      </li>
+            <li>
+        <label>red-eyed</label>
+        <description>I need to eat. Now.</description>
+        <baseMoodEffect>-32</baseMoodEffect>
+      </li>
+            <li>
+        <label>red-eyed</label>
+        <description>I need to eat. Now.</description>
+        <baseMoodEffect>-38</baseMoodEffect>
+      </li>
+            <li>
+        <label>red-eyed</label>
+        <description>I need to eat. Now.</description>
+        <baseMoodEffect>-44</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_FoodSnatcher</defName>
+    <workerClass>ThoughtWorker_NeedFood</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <requiredTraits>
+      <li>RHAH_Trait_FoodSnatcher</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>snatching</label>
+        <description>That sack should not have passed in front of me.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+            <li>
+        <label>snatching</label>
+        <description>That sack should not have passed in front of me.</description>
+        <baseMoodEffect>-14</baseMoodEffect>
+      </li>
+            <li>
+        <label>snatching</label>
+        <description>That sack should not have passed in front of me.</description>
+        <baseMoodEffect>-20</baseMoodEffect>
+      </li>
+            <li>
+        <label>snatching</label>
+        <description>That sack should not have passed in front of me.</description>
+        <baseMoodEffect>-26</baseMoodEffect>
+      </li>
+            <li>
+        <label>snatching</label>
+        <description>That sack should not have passed in front of me.</description>
+        <baseMoodEffect>-32</baseMoodEffect>
+      </li>
+            <li>
+        <label>snatching</label>
+        <description>That sack should not have passed in front of me.</description>
+        <baseMoodEffect>-38</baseMoodEffect>
+      </li>
+            <li>
+        <label>snatching</label>
+        <description>That sack should not have passed in front of me.</description>
+        <baseMoodEffect>-44</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_PlagueDreadSick</defName>
+    <workerClass>ThoughtWorker_Sick</workerClass>
+    <requiredTraits>
+      <li>RHAH_Trait_PlagueDread</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>afraid of sickness</label>
+        <description>I'm sick. I don't think this is a small one.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_PlagueDreadNearby</defName>
+    <workerClass>HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease</workerClass>
+    <requiredTraits>
+      <li>RHAH_Trait_PlagueDread</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>afraid of plague</label>
+        <description>Someone nearby is sick. I don't want it on me.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_NightTerrors</defName>
+    <workerClass>ThoughtWorker_NeedRest</workerClass>
+    <requiredTraits>
+      <li>RHAH_Trait_NightTerrors</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>jumpy</label>
+        <description>I'm too tired. Every sound makes me flinch.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+            <li>
+        <label>jumpy</label>
+        <description>I'm too tired. Every sound makes me flinch.</description>
+        <baseMoodEffect>-14</baseMoodEffect>
+      </li>
+            <li>
+        <label>jumpy</label>
+        <description>I'm too tired. Every sound makes me flinch.</description>
+        <baseMoodEffect>-20</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_GrainGreed</defName>
+    <workerClass>ThoughtWorker_NeedFood</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <requiredTraits>
+      <li>RHAH_Trait_GrainGreed</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>still hungry</label>
+        <description>I haven't had enough. Eat it while the grain is still here.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+            <li>
+        <label>still hungry</label>
+        <description>I haven't had enough. Eat it while the grain is still here.</description>
+        <baseMoodEffect>-14</baseMoodEffect>
+      </li>
+            <li>
+        <label>still hungry</label>
+        <description>I haven't had enough. Eat it while the grain is still here.</description>
+        <baseMoodEffect>-20</baseMoodEffect>
+      </li>
+            <li>
+        <label>still hungry</label>
+        <description>I haven't had enough. Eat it while the grain is still here.</description>
+        <baseMoodEffect>-26</baseMoodEffect>
+      </li>
+            <li>
+        <label>still hungry</label>
+        <description>I haven't had enough. Eat it while the grain is still here.</description>
+        <baseMoodEffect>-32</baseMoodEffect>
+      </li>
+            <li>
+        <label>still hungry</label>
+        <description>I haven't had enough. Eat it while the grain is still here.</description>
+        <baseMoodEffect>-38</baseMoodEffect>
+      </li>
+            <li>
+        <label>still hungry</label>
+        <description>I haven't had enough. Eat it while the grain is still here.</description>
+        <baseMoodEffect>-44</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_Chillblood</defName>
+    <workerClass>ThoughtWorker_Cold</workerClass>
+    <requiredTraits>
+      <li>RHAH_Trait_Chillblood</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>too cold</label>
+        <description>It's too cold. I take it worse than the others.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+            <li>
+        <label>too cold</label>
+        <description>It's too cold. I take it worse than the others.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+            <li>
+        <label>too cold</label>
+        <description>It's too cold. I take it worse than the others.</description>
+        <baseMoodEffect>-14</baseMoodEffect>
+      </li>
+            <li>
+        <label>too cold</label>
+        <description>It's too cold. I take it worse than the others.</description>
+        <baseMoodEffect>-18</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_FamineGloom</defName>
+    <workerClass>ThoughtWorker_AlwaysActive</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <requiredTraits>
+      <li>RHAH_Trait_FamineGloom</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>gloomy</label>
+        <description>The next thing probably won't be good either.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_AilingMother</defName>
+    <workerClass>HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed</workerClass>
+    <requiredTraits>
+      <li>RHAH_Trait_AilingMother</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>child still hungry</label>
+        <description>My child is still hungry.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+            <li>
+        <label>child down</label>
+        <description>My child is sick or down.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_FamilyThief</defName>
+    <workerClass>HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed</workerClass>
+    <requiredTraits>
+      <li>RHAH_Trait_FamilyThief</li>
+    </requiredTraits>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+            <li>
+        <label>den still hungry</label>
+        <description>The young in the den are still hungry.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+            <li>
+        <label>den down</label>
+        <description>The young in the den are sick or down.</description>
+        <baseMoodEffect>-9</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>
