@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 校验、Release 构建、部署到 RimWorld Mods
-# 游戏进程存在时拒绝覆盖。IrisMenus.dll 与 0Harmony.dll 不进包
+# 游戏进程存在时拒绝覆盖。IrisMenus.dll 与 0Harmony.dll 不进包。Lead Your Pet 只在运行时查找，不复制对方程序集
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

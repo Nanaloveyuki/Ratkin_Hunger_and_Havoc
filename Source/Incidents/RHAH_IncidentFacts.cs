@@ -44,6 +44,19 @@ namespace HungerAndHavoc.Incidents
 
                 created.Add(result);
             }
+            List<Verse.Pawn> arrived = new List<Verse.Pawn>();
+            for (int i = 0; i < created.Count; i++)
+            {
+                for (int j = 0; j < created[i].Pawns.Count; j++)
+                {
+                    if (created[i].Pawns[j] != null)
+                    {
+                        arrived.Add(created[i].Pawns[j]);
+                    }
+                }
+            }
+
+            Pawn.Compat.RHAH_LeashBridge.TryLeashArrivals(arrived);
             Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new Narrative.SuiyinIncidentFact(
                 context.DisplayId,
                 context.Map.uniqueID,

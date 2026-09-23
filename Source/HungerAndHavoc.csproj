@@ -75,4 +75,5 @@
   <PropertyGroup Condition="Exists('$(IrisMenusDll)')">
     <DefineConstants>$(DefineConstants);RHAH_IRISMENUS</DefineConstants>
   </PropertyGroup>
+
 </Project>

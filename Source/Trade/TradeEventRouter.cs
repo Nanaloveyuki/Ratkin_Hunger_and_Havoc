@@ -5,6 +5,7 @@ using HungerAndHavoc.Generation;
 using HungerAndHavoc.Incidents;
 using RimWorld;
 using Verse;
+using Verse.AI.Group;
 
 namespace HungerAndHavoc.Trade
 {
@@ -39,6 +40,10 @@ namespace HungerAndHavoc.Trade
                 SpawnCell = cell
             });
 
+            if (result.Succeeded && result.Pawns != null && result.Pawns.Count > 0)
+            {
+                HungerAndHavoc.Pawn.Compat.RHAH_LeashBridge.TryLeashTravel(result.Pawns[0].GetLord());
+            }
             return result.Succeeded;
         }
 

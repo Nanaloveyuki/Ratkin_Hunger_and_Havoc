@@ -68,6 +68,18 @@ namespace HungerAndHavoc.Pawn
             toLeave.AddTrigger(new Trigger_Custom(_ => AllReadyToLeave()));
             toLeave.AddTrigger(new Trigger_Memo("RHAH_Leave"));
             toLeave.AddTrigger(new Trigger_Custom(signal => TraderMustLeave(signal)));
+            toLeave.AddPostAction(new TransitionAction_Custom((System.Action)(() =>
+            {
+                if (lord?.ownedPawns == null)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < lord.ownedPawns.Count; i++)
+                {
+                    Compat.RHAH_LeashBridge.ClearDeparture(lord.ownedPawns[i]);
+                }
+            })));
             toLeave.AddPostAction(new TransitionAction_EndAllJobs());
             graph.AddTransition(toLeave, false);
 

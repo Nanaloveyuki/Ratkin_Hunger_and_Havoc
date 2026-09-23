@@ -67,6 +67,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
+            RHAH_LeashBridge.ClearDeparture(pawn);
             Job job = JobMaker.MakeJob(JobDefOf.Goto, spot);
             job.exitMapOnArrival = true;
             job.locomotionUrgency = LocomotionUrgency.Jog;

@@ -35,6 +35,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             ClearTrade(pawn, RHAH_ReleaseReason.Recruited, false);
+            Compat.RHAH_LeashBridge.ClearDeparture(pawn);
             return true;
         }
 
