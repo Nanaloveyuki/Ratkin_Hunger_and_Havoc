@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Menu_Ending_Note>这些开关只拦住还没出现的结尾。已经记下的结尾不会撤掉。非穗音时，高条件结尾使用公开纪事，不出现她的私信。</RHAH_Menu_Ending_Note>
+  <RHAH_Ending_CountWithout>非穗音也计数</RHAH_Ending_CountWithout>
+  <RHAH_Ending_CountWithout_Tooltip>关闭后，其它叙事者的存档不再累计接济、广播、驱逐和完成结果。</RHAH_Ending_CountWithout_Tooltip>
+  <RHAH_Ending_WithoutNarrator>非穗音也出结局</RHAH_Ending_WithoutNarrator>
+  <RHAH_Ending_WithoutNarrator_Tooltip>关闭后，其它叙事者不再新触发结局。已出现的结尾保留。</RHAH_Ending_WithoutNarrator_Tooltip>
+  <RHAH_Ending_Toggle_Tooltip>关闭后这项不再新触发。已经出现的不回滚。</RHAH_Ending_Toggle_Tooltip>
+  <RHAH_Ending_Identity>身份询问</RHAH_Ending_Identity>
+  <RHAH_Ending_Identity_Tooltip>只在穗音叙事下出现一次。拒绝不扣信任，也不会反复弹出。</RHAH_Ending_Identity_Tooltip>
+  <RHAH_Ending_Aid>接济门槛：{0}</RHAH_Ending_Aid>
+  <RHAH_Ending_Aid_Tooltip>广义接济达到这个次数后，才检查丰年和希望城。默认 99。</RHAH_Ending_Aid_Tooltip>
+  <RHAH_Ending_Broadcast>广播门槛：{0}</RHAH_Ending_Broadcast>
+  <RHAH_Ending_Broadcast_Tooltip>只计成功发出的广播。默认 3。</RHAH_Ending_Broadcast_Tooltip>
+  <RHAH_Ending_Expel>主动驱逐上限：{0}</RHAH_Ending_Expel>
+  <RHAH_Ending_Expel_Tooltip>超过这个次数后，不再满足丰年和希望城。抵御来袭不算主动驱逐。默认 3。</RHAH_Ending_Expel_Tooltip>
+  <RHAH_Ending_Adults>成年灾鼠：{0}</RHAH_Ending_Adults>
+  <RHAH_Ending_Adults_Tooltip>同一处玩家家园里的成年灾鼠殖民者。按年清点。默认 100。</RHAH_Ending_Adults_Tooltip>
+  <RHAH_Ending_Wait>结尾等待：{0} 天</RHAH_Ending_Wait>
+  <RHAH_Ending_Wait_Tooltip>中低信任结尾至少等这么多天。记录中止不等。默认 30。</RHAH_Ending_Wait_Tooltip>
+  <RHAH_Ending_Preview_Note>开发者预览只显示文本，不改结局和身份标记。</RHAH_Ending_Preview_Note>
+
+  <RHAH_Ending_E01_Label>鼠族丰年</RHAH_Ending_E01_Label>
+  <RHAH_Ending_E01_Text>最后一笔接济记进账时，穗音在纸边写了一个名字。写到一半，她停了很久。\n\n“我答应过，要把她的孩子带到有饭吃的地方。那一次我没做到。后来每份名单我都找过那个孩子。一直没有。”\n\n下一页列着送出的食物、照料过的病人，以及放行离开的来客。\n\n“这里有很多我没见过的人。他们还能活着，你们出了力。这句话我该说一次。”\n\n“谢谢你们。正在这里长大的孩子，吃饭的时候就吃饭。你们的那一份，已经有人留下了。”\n\n接济 {0} 次，广播 {1} 次。灾年还没结束。这处殖民地已经是有人能够走到的地方。</RHAH_Ending_E01_Text>
+  <RHAH_Ending_E02_Label>希望“吱”城</RHAH_Ending_E02_Label>
+  <RHAH_Ending_E02_Text>这一年的名册上，同一处殖民地有 {2} 名成年灾鼠。名单太长，穗音又加了几张纸。从前跟在队伍后面的孩子，现在能在自己的名字旁边签字。\n\n“以前我问他们往哪里去，常常只听见一句：再往前走走。”\n\n“现在有人报出这里的名字。有人算回来要走几天，有人托来客捎话。会有人等他们。”\n\n她把最初那张皱掉的求援名单夹进信里。\n\n“这张纸交给你们。我留了抄本。原件该放在他们住的地方。”\n\n“往后的日子还要一起过。房子会旧，人会吵，收成有好有坏。愿他们老了以后谈起这一年，旁边还有人接得上话。”</RHAH_Ending_E02_Text>
+  <RHAH_Ending_E03_Label>没有答案的记录</RHAH_Ending_E03_Label>
+  <RHAH_Ending_E03_Text>穗音寄来一份阶段记录。有食物送到的日期，也有队伍离开后再无消息的空栏。\n\n“这一段我能确认的就到这里。活着离开的人后来去了哪里，没能留下的人还有没有别的落脚处，我还在找。”\n\n“有几次你们伸了手。有几次门没有打开。我都记下了。隔着这么远，我不知道那天屋里还剩多少粮食。”\n\n信末附了一张空白回执。\n\n“以后有消息就寄来。一个名字也行。我想把这些空栏慢慢填上。”\n\n记录先合上。殖民地还在运转，路上也还可能再有来客。</RHAH_Ending_E03_Text>
+  <RHAH_Ending_E04_Label>失望的旁观者</RHAH_Ending_E04_Label>
+  <RHAH_Ending_E04_Text>这一次穗音没有问候近况。她退回几页记录，把争议最大的几项做了标记。\n\n“我读过了，也核对过了。你们可能有自己的理由。那些人承受的后果已经发生。”\n\n“我不能再在求援名单旁边写：可以去这里试试。有人会把这几个字当真，带着孩子上路。”\n\n她还是留下了收信地址。\n\n“已经交给你们的人，愿他们还能得到照料。以后的事我会接着看。信任，我现在给不了。”\n\n地址没有变。来信的语气变了。</RHAH_Ending_E04_Text>
+  <RHAH_Ending_E05_Label>记录中止</RHAH_Ending_E05_Label>
+  <RHAH_Ending_E05_Text>这封信很短，署名写得很清楚。\n\n“我不再为这里作保。已经发生的事，我会把记录交给受影响的人。”\n\n“有人问我当初为什么相信这里。我得当面回答。”\n\n“留在你们身边的人还要吃饭、治病、睡觉。我不再捎闲话。他们的日子继续。必要的交接和结果记录仍会送来。”\n\n“穗音。”\n\n信里没有新的求援名单。她也没有要求答复。随机来客不会因此停掉。</RHAH_Ending_E05_Text>
+  <RHAH_Ending_Public_Label>灾鼠援助纪事</RHAH_Ending_Public_Label>
+  <RHAH_Ending_Public_Text>这段时间的援助已经汇成一份名册。有人在路上得到了食物，也有人在这里住了下来。\n\n接济 {0} 次，广播 {1} 次。上次清点时，一处聚落里有 {2} 名成年灾鼠。</RHAH_Ending_Public_Text>
+  <RHAH_Ending_IdentityAsk_Label>你一直没说的事</RHAH_Ending_IdentityAsk_Label>
+  <RHAH_Ending_IdentityAsk_Text>“我知道一些旧仓号，也能联系上管运输的人。\n\n这些事以前没说清楚。现在可以谈。”</RHAH_Ending_IdentityAsk_Text>
+  <RHAH_Ending_IdentityFull_Label>她的名字</RHAH_Ending_IdentityFull_Label>
+  <RHAH_Ending_IdentityFull_Text>“我是王国的公主。名字就是穗音，没有换过。\n\n外面还有那么多人在讨饭，这件事我知道。我也一直在问那些能把粮食留在仓里的人。\n\n这些钱是我能拿出来的，运输也是。我没有能把每一条路打通的军队。\n\n现在你知道了。别因为这个头衔改口。我还没做成值得你那样叫的事。”</RHAH_Ending_IdentityFull_Text>
+  <RHAH_Ending_IdentityPartial_Label>先说到这里</RHAH_Ending_IdentityPartial_Label>
+  <RHAH_Ending_IdentityPartial_Text>“我以前在王国管过一些账，也能联系上几个管运输的人。还有些事，我现在不愿意说。\n\n说出口以后就不能再当作没说过。今天先到这里。”</RHAH_Ending_IdentityPartial_Text>
+</LanguageData>

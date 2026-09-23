@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Menu_Ending_Note>These switches only stop endings that have not appeared yet. An ending already recorded stays recorded. Without Suiyin, a high ending uses the public chronicle and does not include her letters.</RHAH_Menu_Ending_Note>
+  <RHAH_Ending_CountWithout>Count without Suiyin</RHAH_Ending_CountWithout>
+  <RHAH_Ending_CountWithout_Tooltip>When off, saves told by another storyteller stop adding aid, broadcasts, expulsions, and completed results.</RHAH_Ending_CountWithout_Tooltip>
+  <RHAH_Ending_WithoutNarrator>Endings without Suiyin</RHAH_Ending_WithoutNarrator>
+  <RHAH_Ending_WithoutNarrator_Tooltip>When off, other storytellers do not start a new ending. Endings already shown stay shown.</RHAH_Ending_WithoutNarrator_Tooltip>
+  <RHAH_Ending_Toggle_Tooltip>When off, this ending does not start again. One already shown is not rolled back.</RHAH_Ending_Toggle_Tooltip>
+  <RHAH_Ending_Identity>Identity question</RHAH_Ending_Identity>
+  <RHAH_Ending_Identity_Tooltip>Asked once, and only while Suiyin is the storyteller. Refusing costs no trust and does not ask again.</RHAH_Ending_Identity_Tooltip>
+  <RHAH_Ending_Aid>Aid required: {0}</RHAH_Ending_Aid>
+  <RHAH_Ending_Aid_Tooltip>A year of plenty and the city of hope wait for this many completed acts of aid. Default 99.</RHAH_Ending_Aid_Tooltip>
+  <RHAH_Ending_Broadcast>Broadcasts required: {0}</RHAH_Ending_Broadcast>
+  <RHAH_Ending_Broadcast_Tooltip>Only broadcasts that actually go out. Default 3.</RHAH_Ending_Broadcast_Tooltip>
+  <RHAH_Ending_Expel>Expulsion limit: {0}</RHAH_Ending_Expel>
+  <RHAH_Ending_Expel_Tooltip>Past this many forced departures, the high endings no longer qualify. Fighting an attack does not count. Default 3.</RHAH_Ending_Expel_Tooltip>
+  <RHAH_Ending_Adults>Adult famine Ratkin: {0}</RHAH_Ending_Adults>
+  <RHAH_Ending_Adults_Tooltip>Adult famine Ratkin colonists in one player home. Counted once a year. Default 100.</RHAH_Ending_Adults_Tooltip>
+  <RHAH_Ending_Wait>Ending wait: {0} days</RHAH_Ending_Wait>
+  <RHAH_Ending_Wait_Tooltip>Low and middling endings wait at least this long. The halted record does not. Default 30.</RHAH_Ending_Wait_Tooltip>
+  <RHAH_Ending_Preview_Note>A developer preview shows the text only. It does not mark an ending or an identity.</RHAH_Ending_Preview_Note>
+
+  <RHAH_Ending_E01_Label>A year of plenty</RHAH_Ending_E01_Label>
+  <RHAH_Ending_E01_Text>When the last act of aid went into the ledger, Suiyin wrote a name in the margin. Halfway through, she stopped.\n\n"I promised to take her child somewhere there would be food. That time, I failed. I looked for the child on every list after that. I never found them."\n\nThe next page lists food sent, patients tended, and visitors allowed to leave.\n\n"There are many people here I have never met. You helped them stay alive. I should say that once."\n\n"Thank you. Children growing up there: eat when it is time to eat. Your share has already been set aside."\n\nAid: {0}. Broadcasts: {1}. The famine is not over. This colony is a place people can reach.</RHAH_Ending_E01_Text>
+  <RHAH_Ending_E02_Label>A squeak of hope</RHAH_Ending_E02_Label>
+  <RHAH_Ending_E02_Text>This year's roll lists {2} adult famine Ratkin in one colony. Suiyin added more pages. Children who used to trail the group can sign beside their own names.\n\n"When I asked where they were going, the answer was often: a little farther."\n\n"Now some give this colony's name. Some count the days back. Some ask a visitor to carry a message. Someone will be waiting."\n\nShe enclosed the first crumpled plea.\n\n"Keep this. I have a copy. The original belongs where they live."\n\n"You still have years to share. Houses age, people argue, and harvests vary. When they are old and speak of this year, I hope someone beside them can answer."</RHAH_Ending_E02_Text>
+  <RHAH_Ending_E03_Label>An unanswered record</RHAH_Ending_E03_Label>
+  <RHAH_Ending_E03_Text>Suiyin sent an account of the past months. It lists dates when food arrived, and blank lines where a group left and was not heard from again.\n\n"This is as far as I can confirm. I am still looking for where the living went, and whether the ones who could not stay found another place."\n\n"Sometimes you reached out. Sometimes the gate stayed shut. I wrote both down. From this far away, I cannot tell how much food was left inside that day."\n\nA blank reply slip is enclosed.\n\n"If you hear anything, send it. A name is enough. I want to fill these lines slowly."\n\nThe record closes for now. The colony is still running, and more visitors may still come down the road.</RHAH_Ending_E03_Text>
+  <RHAH_Ending_E04_Label>A disappointed witness</RHAH_Ending_E04_Label>
+  <RHAH_Ending_E04_Text>This time Suiyin did not ask how you were. She sent back several pages and marked the worst entries.\n\n"I read them and checked them. You may have had reasons. Those people have already lived with the result."\n\n"I cannot keep writing beside the pleas: try going here. Someone will believe those words and take children onto the road."\n\nShe still left a return address.\n\n"I hope the people already left with you are still cared for. I will keep reading what happens. I cannot give you my trust now."\n\nThe address is the same. The letters are not.</RHAH_Ending_E04_Text>
+  <RHAH_Ending_E05_Label>The record stops</RHAH_Ending_E05_Label>
+  <RHAH_Ending_E05_Text>The letter is short. The signature is clear.\n\n"I will no longer vouch for this place. I will give the record of what happened to the people it concerns."\n\n"Someone asked why I trusted you. I have to answer that in person."\n\n"The people still with you need food, treatment, and sleep. I will send no more idle news. Their days continue. Necessary handovers and result letters will still arrive."\n\n"Suiyin."\n\nThere is no new plea in the letter. She does not ask for a reply. Random visitors do not stop because of it.</RHAH_Ending_E05_Text>
+  <RHAH_Ending_Public_Label>A chronicle of Ratkin aid</RHAH_Ending_Public_Label>
+  <RHAH_Ending_Public_Text>The aid of these months now fills a register. Some found food on the road. Others stayed here.\n\nAid: {0}. Broadcasts: {1}. At the last count, one settlement held {2} adult famine Ratkin.</RHAH_Ending_Public_Text>
+  <RHAH_Ending_IdentityAsk_Label>What you never said</RHAH_Ending_IdentityAsk_Label>
+  <RHAH_Ending_IdentityAsk_Text>"I know some old storehouse numbers, and I can reach people who move cargo.\n\nI have not explained that before. We can talk now."</RHAH_Ending_IdentityAsk_Text>
+  <RHAH_Ending_IdentityFull_Label>Her name</RHAH_Ending_IdentityFull_Label>
+  <RHAH_Ending_IdentityFull_Text>"I am a princess of the kingdom. My name is Suiyin. I have not changed it.\n\nI know there are still people begging outside. I keep asking the ones who can leave grain in a storehouse.\n\nThis silver is what I can spare. The transport too. I do not have an army that can open every road.\n\nNow you know. Do not change how you address me because of a title. I have not done enough to earn that."</RHAH_Ending_IdentityFull_Text>
+  <RHAH_Ending_IdentityPartial_Label>Enough for today</RHAH_Ending_IdentityPartial_Label>
+  <RHAH_Ending_IdentityPartial_Text>"I used to keep some accounts for the kingdom, and I can reach a few people who move cargo. There are other things I will not say yet.\n\nOnce they are said, they stay said. That is enough for today."</RHAH_Ending_IdentityPartial_Text>
+</LanguageData>
