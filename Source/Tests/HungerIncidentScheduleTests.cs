@@ -15,6 +15,15 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void OccurrenceChanceIsThePoolCheckNotAnIncidentShare()
+        {
+            Assert.Equal(0f, HungerIncidentSchedule.OccurrenceChance(0f));
+            Assert.Equal(1000f / (15f * 60000f), HungerIncidentSchedule.OccurrenceChance(15f), 6);
+            Assert.True(HungerIncidentSchedule.OccurrenceChance(15f) > HungerIncidentSchedule.OccurrenceChance(60f));
+            Assert.Equal(1000f / (60f * 60000f), HungerIncidentSchedule.OccurrenceChance(90f), 6);
+        }
+
+        [Fact]
         public void MapPoolCannotSelectCaravanIncidents()
         {
             string selected = HungerIncidentSchedule.Select(

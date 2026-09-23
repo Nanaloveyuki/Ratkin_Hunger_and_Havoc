@@ -28,8 +28,7 @@
   <RHAH_Menu_Pawns>Pawns</RHAH_Menu_Pawns>
   <RHAH_Menu_Narrative>Narrative</RHAH_Menu_Narrative>
   <RHAH_Menu_Other>Other</RHAH_Menu_Other>
-  <RHAH_Menu_Compatibility>Compatibility</RHAH_Menu_Compatibility>
-  <RHAH_Menu_Diagnostics>Diagnostics</RHAH_Menu_Diagnostics>
+  <RHAH_Menu_CompatDiagnostics>Compatibility and diagnostics</RHAH_Menu_CompatDiagnostics>
   <RHAH_Menu_Ending>Ending</RHAH_Menu_Ending>
   <RHAH_Menu_Genes>Genes</RHAH_Menu_Genes>
   <RHAH_Menu_DevEvents>Dev events</RHAH_Menu_DevEvents>
@@ -39,7 +38,7 @@
   <RHAH_Menu_Experimental>Experimental</RHAH_Menu_Experimental>
   <RHAH_Menu_Field_Mod>Mod</RHAH_Menu_Field_Mod>
   <RHAH_Menu_Field_Version>Version</RHAH_Menu_Field_Version>
-  <RHAH_Menu_Field_NewContent>New content</RHAH_Menu_Field_NewContent>
+
   <RHAH_Menu_Field_Game>Game</RHAH_Menu_Field_Game>
   <RHAH_Menu_Field_IrisMenus>IrisMenus</RHAH_Menu_Field_IrisMenus>
   <RHAH_Menu_On>On</RHAH_Menu_On>
@@ -51,14 +50,22 @@
   <RHAH_Menu_GameLoaded>Game loaded</RHAH_Menu_GameLoaded>
   <RHAH_Menu_Unavailable>Not available</RHAH_Menu_Unavailable>
   <RHAH_Menu_Settings_Missing>Settings are not ready. Reopen this page and try again.</RHAH_Menu_Settings_Missing>
-  <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}. Broadcast: {4}. Debug points: {5}.</RHAH_Menu_EventMeta>
-  <RHAH_Menu_Queue>Queue</RHAH_Menu_Queue>
+  <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}. Broadcast: {4}.</RHAH_Menu_EventMeta>
+  <RHAH_Menu_Events_Note>A checked incident can fire. The slider sets a rough value. Type the exact value on the right. Debug points change the number of arrivals and the size of a request. A spawn weight of 0 stays out of the draw.</RHAH_Menu_Events_Note>
+  <RHAH_Menu_EventEnabled>Allow this incident</RHAH_Menu_EventEnabled>
+  <RHAH_Menu_EventEnabled_Tip>With this off, the incident stays out of the draw and cannot be queued from the debug page. Visitors already here stay.</RHAH_Menu_EventEnabled_Tip>
+  <RHAH_Menu_DebugPoints>Debug points</RHAH_Menu_DebugPoints>
+  <RHAH_Menu_DebugPoints_Tip>Natural fires and debug triggers use this size. It changes how many pawns arrive and how much aid or intel asks for. Range 1 to 10000. The slider is rough. The field is exact.</RHAH_Menu_DebugPoints_Tip>
+  <RHAH_Menu_IncidentWeight>Spawn weight</RHAH_Menu_IncidentWeight>
+  <RHAH_Menu_IncidentWeight_Tip>100 keeps the catalog weight. Higher is drawn more often. 0 stays out. The slider is rough. The field is exact.</RHAH_Menu_IncidentWeight_Tip>
+  <RHAH_Menu_Trigger>Trigger</RHAH_Menu_Trigger>
   <RHAH_Menu_Queue_Disabled>New content is off.</RHAH_Menu_Queue_Disabled>
   <RHAH_Menu_Queue_NoGame>No game is loaded.</RHAH_Menu_Queue_NoGame>
   <RHAH_Menu_Queue_NoMap>No usable map.</RHAH_Menu_Queue_NoMap>
-  <RHAH_Menu_Queue_Queued>Queued.</RHAH_Menu_Queue_Queued>
-  <RHAH_Menu_Queue_Rejected>Not queued. It is already waiting, or the scheduler refused it.</RHAH_Menu_Queue_Rejected>
-  <RHAH_Menu_DevEvents_Note>Queues the existing debug scheduler. It does not spawn pawns from this page.</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_Queue_NoCaravan>No player caravan.</RHAH_Menu_Queue_NoCaravan>
+  <RHAH_Menu_Queue_Fired>Spawned.</RHAH_Menu_Queue_Fired>
+  <RHAH_Menu_Queue_Failed>Nothing spawned.</RHAH_Menu_Queue_Failed>
+  <RHAH_Menu_DevEvents_Note>Spawns this incident now. It does not wait for the natural draw.</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>No current map.</RHAH_Menu_Pawns_NoMap>
   <RHAH_Menu_Pawns_None>No Hunger and Havoc pawns on this map.</RHAH_Menu_Pawns_None>
   <RHAH_Menu_Pawns_Invalid>That pawn is gone.</RHAH_Menu_Pawns_Invalid>
@@ -81,7 +88,7 @@
   <RHAH_Menu_Ending_Gap>Ending switches are not implemented. This page does not write an ending.</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>Biotech gene settings are not implemented. This page does not edit genes.</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>Biotech is required. With it, you can set the xenotypes of visitors here.</RHAH_Menu_Genes_NoBiotech>
-  <RHAH_Menu_Genes_Note>Bar length is the current chance. Drag a bar to set a weight from 0 to 100. A xenotype at 0 stays out of the draw. At all zeroes, visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_Note>The percent after the name is the current chance. The slider sets a rough weight. Type the exact value on the right, from 0 to 100. A xenotype at 0 stays out of the draw. At all zeroes, visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>Reset weights</RHAH_Menu_Genes_Reset>
   <RHAH_Menu_Genes_Fallback>The enabled weights add up to 0. Visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Menu_Genes_Fallback>
   <RHAH_Menu_Genes_WeightTip>Suggested weight {1}. Chance is this weight divided by the sum of enabled weights.</RHAH_Menu_Genes_WeightTip>
@@ -100,7 +107,7 @@
   <RHAH_Menu_PawnTrait_DisableAll>Disable all traits</RHAH_Menu_PawnTrait_DisableAll>
   <RHAH_Menu_PawnTrait_ItemTip>With this off, the trait stays out of the draw. Pawns already generated keep theirs.</RHAH_Menu_PawnTrait_ItemTip>
   <RHAH_Menu_PawnTrait_Weight>Weight</RHAH_Menu_PawnTrait_Weight>
-  <RHAH_Menu_PawnTrait_WeightTip>A higher weight is drawn more often. 0 stays out. After the draw, weight divided by 100 is the chance to gain it.</RHAH_Menu_PawnTrait_WeightTip>
+  <RHAH_Menu_PawnTrait_WeightTip>A higher weight is drawn more often. 0 stays out. After the draw, weight divided by 100 is the chance to gain it. The slider is rough. The field is exact.</RHAH_Menu_PawnTrait_WeightTip>
   <RHAH_Settings_PawnHistories>Draw histories for new visitors</RHAH_Settings_PawnHistories>
   <RHAH_Settings_PawnHistories_Tooltip>With this off, new visitors keep the backstory from the generator. Pawns already here keep theirs.</RHAH_Settings_PawnHistories_Tooltip>
   <RHAH_Settings_PawnTraits>Draw traits for new visitors</RHAH_Settings_PawnTraits>
@@ -109,10 +116,11 @@
   <RHAH_Menu_Experimental_Note>These options change how long visitors take to generate. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>Speed up visitor generation</RHAH_Settings_OptimizeGeneration>
   <RHAH_Settings_OptimizeGeneration_Tooltip>Skips relations, titles, random apparel, and redressing world pawns. Incidents without a set xenotype draw from the gene page weights. If those weights are unavailable, visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>Each pool fires on its own average interval. 0 turns that pool off. Weight still changes with season, plague, and trust.</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Gap>The curve is the chance a pool fires. Days run across. Chance runs up. The dot is the current setting. 0 turns that pool off.</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>Positive incidents, average days</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>Negative incidents, average days</RHAH_Menu_Frequency_Negative>
-  <RHAH_Menu_Frequency_Expression>Weight</RHAH_Menu_Frequency_Expression>
+  <RHAH_Menu_Frequency_Curve>Occurrence chance</RHAH_Menu_Frequency_Curve>
+  <RHAH_Menu_Frequency_CurveTip>Positive {0}, negative {1}.</RHAH_Menu_Frequency_CurveTip>
   <RHAH_Menu_Developer_Note>Read-only build markers. Debug queues live under Dev events.</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>Last listed pawn</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>Beggar</RHAH_Menu_Family_Beggar>

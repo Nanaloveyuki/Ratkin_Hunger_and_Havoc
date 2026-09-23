@@ -1,3 +1,4 @@
+using Verse;
 using System;
 
 namespace HungerAndHavoc.Incidents
@@ -40,6 +41,162 @@ namespace HungerAndHavoc.Incidents
             Trust = trust;
             MapHome = mapHome;
             PlayerCaravan = playerCaravan;
+        }
+    }
+
+    internal static class HungerIncidentTuning
+    {
+        internal const float MinDebugPoints = 1f;
+        internal const float MaxDebugPoints = 10000f;
+        internal const float DefaultWeight = 100f;
+        internal const float MinWeight = 0f;
+        internal const float MaxWeight = 100f;
+
+        internal static float ClampPoints(float value)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value) || value < MinDebugPoints)
+            {
+                return MinDebugPoints;
+            }
+
+            return value > MaxDebugPoints ? MaxDebugPoints : value;
+        }
+
+        internal static float ClampWeight(float value)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value) || value < MinWeight)
+            {
+                return MinWeight;
+            }
+
+            return value > MaxWeight ? MaxWeight : value;
+        }
+
+        internal static float Scale(float formulaWeight, bool enabled, float playerWeight)
+        {
+            if (!enabled || formulaWeight <= 0f)
+            {
+                return 0f;
+            }
+
+            return formulaWeight * (ClampWeight(playerWeight) / DefaultWeight);
+        }
+    }
+
+    internal static class HungerIncidentScale
+    {
+        internal const float ReferencePoints = 300f;
+
+        internal static int Count(string displayId, float points)
+        {
+            float safe = HungerIncidentTuning.ClampPoints(points);
+            switch (displayId)
+            {
+                case "I-001": return Fixed(safe, 10, 50, 50f);
+                case "I-002": return Linear(safe, 120f, 1, 10);
+                case "I-003": return Linear(safe, 150f, 1, 10) + 1;
+                case "I-004": return 3;
+                case "I-005":
+                case "I-042": return Spread(safe, 3, 20, 85f);
+                case "I-006":
+                case "I-007": return Spread(safe, 3, 20, 75f);
+                case "I-008":
+                case "I-009":
+                case "I-013":
+                case "I-019":
+                case "I-033":
+                case "I-037":
+                case "I-041":
+                case "I-047":
+                case "I-049": return 1;
+                case "I-010": return Fixed(safe, 2, 10, 120f);
+                case "I-011":
+                case "I-040": return Linear(safe, 200f, 1, 4);
+                case "I-012":
+                case "I-038": return 3;
+                case "I-014": return 5;
+                case "I-015":
+                case "I-016":
+                case "I-017":
+                case "I-018":
+                case "I-020":
+                case "I-021":
+                case "I-022":
+                case "I-023":
+                case "I-024":
+                case "I-025":
+                case "I-026":
+                case "I-027":
+                case "I-028": return 1;
+                case "I-029":
+                case "I-044": return 2;
+                case "I-030":
+                case "I-045": return Spread(safe, 4, 16, 80f);
+                case "I-031":
+                case "I-039": return Spread(safe, 4, 12, 85f);
+                case "I-032":
+                case "I-046": return Spread(safe, 4, 14, 80f);
+                case "I-034":
+                case "I-048": return Spread(safe, 8, 28, 55f);
+                case "I-035":
+                case "I-050": return Spread(safe, 3, 10, 85f);
+                case "I-036": return Spread(safe, 2, 8, 90f);
+                case "I-043": return Spread(safe, 3, 18, 90f);
+                default: return 1;
+            }
+        }
+
+        internal static int ScaleAmount(int amount, float points, int min, int max)
+        {
+            if (amount <= 0)
+            {
+                return 0;
+            }
+
+            float safe = HungerIncidentTuning.ClampPoints(points);
+            int scaled = Round(amount * (safe / ReferencePoints));
+            if (scaled < min)
+            {
+                return min;
+            }
+
+            return scaled > max ? max : scaled;
+        }
+
+        static int Linear(float points, float perStep, int min, int max)
+        {
+            return Clamp(Round(points / perStep) + 1, min, max);
+        }
+
+        static int Fixed(float points, int min, int max, float perStep)
+        {
+            return Clamp(Round(points / perStep) + min, min, max);
+        }
+
+        static int Spread(float points, int min, int max, float perStep)
+        {
+            int ceiling = Fixed(points, min, max, perStep);
+            if (ceiling <= min)
+            {
+                return min;
+            }
+
+            return min + Rand.Range(0, ceiling - min + 1);
+        }
+
+        static int Round(float value)
+        {
+            return (int)(value >= 0f ? value + 0.5f : value - 0.5f);
+        }
+
+        static int Clamp(int value, int min, int max)
+        {
+            if (value < min)
+            {
+                return min;
+            }
+
+            return value > max ? max : value;
         }
     }
 

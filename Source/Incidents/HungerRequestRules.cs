@@ -149,23 +149,48 @@ namespace HungerAndHavoc.Incidents
 
         internal static int Amount(HungerRequestKind kind, float wealth, int roll)
         {
+            return Amount(kind, wealth, roll, HungerIncidentScale.ReferencePoints);
+        }
+
+        internal static int Amount(HungerRequestKind kind, float wealth, int roll, float points)
+        {
+            int amount;
+            int min;
+            int max;
             switch (kind)
             {
                 case HungerRequestKind.SimpleMeal:
-                    return Clamp(6 + Round(wealth / 12000f) + ClampRoll(roll, 0, 4), MinSimple, MaxSimple);
+                    amount = 6 + Round(wealth / 12000f) + ClampRoll(roll, 0, 4);
+                    min = MinSimple;
+                    max = MaxSimple;
+                    break;
                 case HungerRequestKind.FineMeal:
-                    return Clamp(4 + Round(wealth / 18000f) + ClampRoll(roll, 0, 3), MinFine, MaxFine);
+                    amount = 4 + Round(wealth / 18000f) + ClampRoll(roll, 0, 3);
+                    min = MinFine;
+                    max = MaxFine;
+                    break;
                 case HungerRequestKind.Medicine:
-                    return Clamp(2 + Round(wealth / 25000f) + ClampRoll(roll, 0, 2), MinMedicine, MaxMedicine);
+                    amount = 2 + Round(wealth / 25000f) + ClampRoll(roll, 0, 2);
+                    min = MinMedicine;
+                    max = MaxMedicine;
+                    break;
                 case HungerRequestKind.Silver:
-                    return Clamp(80 + Round(wealth / 40f) + ClampRoll(roll, 0, 120), MinSilver, MaxSilver);
+                    amount = 80 + Round(wealth / 40f) + ClampRoll(roll, 0, 120);
+                    min = MinSilver;
+                    max = MaxSilver;
+                    break;
                 case HungerRequestKind.HerbalMedicine:
-                    return Clamp(3 + Round(wealth / 22000f) + ClampRoll(roll, 0, 3), MinHerbal, MaxHerbal);
+                    amount = 3 + Round(wealth / 22000f) + ClampRoll(roll, 0, 3);
+                    min = MinHerbal;
+                    max = MaxHerbal;
+                    break;
                 case HungerRequestKind.Baby:
                     return 1;
                 default:
                     return 0;
             }
+
+            return HungerIncidentScale.ScaleAmount(amount, points, min, max);
         }
 
         internal static string ThingDefName(HungerRequestKind kind)

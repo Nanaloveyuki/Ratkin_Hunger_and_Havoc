@@ -11,7 +11,17 @@ namespace HungerAndHavoc.Incidents
         internal const float MinDays = 0f;
         internal const float MaxDays = 60f;
         internal const float GraceDays = 1f;
-        internal const string Expression = "w = family x season x plague x trust x target";
+
+        internal static float OccurrenceChance(float days)
+        {
+            days = ClampDays(days);
+            if (days <= 0f)
+            {
+                return 0f;
+            }
+
+            return Storyteller.CheckInterval / (days * GenDate.TicksPerDay);
+        }
 
         internal static float ClampDays(float days)
         {
@@ -98,15 +108,10 @@ namespace HungerAndHavoc.Incidents
             }
 
             string displayId = Select(pool, trust, season, mapHome, playerCaravan, Rand.Range(0f, total));
-            if (displayId != null && SettingsEnabled(displayId))
+            if (displayId != null)
             {
                 game.QueueIncident(displayId);
             }
-        }
-        static bool SettingsEnabled(string displayId)
-        {
-            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
-            return settings == null || settings.IsIncidentEnabled(displayId);
         }
 
         internal static float TotalWeight(
@@ -158,7 +163,7 @@ namespace HungerAndHavoc.Incidents
                 return 0f;
             }
 
-            return HungerIncidentWeight.Evaluate(new HungerIncidentWeightInput(
+            float formula = HungerIncidentWeight.Evaluate(new HungerIncidentWeightInput(
                 entry.Family,
                 entry.Category,
                 entry.Target,
@@ -167,6 +172,12 @@ namespace HungerAndHavoc.Incidents
                 trust,
                 mapHome,
                 playerCaravan));
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            bool enabled = settings == null || settings.IsIncidentEnabled(entry.DisplayId);
+            float playerWeight = settings == null
+                ? HungerIncidentTuning.DefaultWeight
+                : settings.IncidentWeight(entry.DisplayId);
+            return HungerIncidentTuning.Scale(formula, enabled, playerWeight);
         }
 
         internal static HungerIncidentSeason SeasonOf(IIncidentTarget target)

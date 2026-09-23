@@ -1,19 +1,50 @@
+using HungerAndHavoc.Caravan;
 using HungerAndHavoc.Incidents;
+using RimWorld;
 using Verse;
 
 namespace HungerAndHavoc.Core
 {
     internal static class HungerAndHavocScheduler
     {
-        internal static bool QueueDebugIncident(string displayId)
+        internal static bool ExecuteDebugIncident(string displayId)
         {
             HungerIncidentEntry entry = HungerIncidentCatalog.GetByDisplayId(displayId);
-            if (!HungerAndHavocRuntime.AllowsNewContent || entry == null || Current.Game == null)
+            HungerAndHavocSettings settings = HungerAndHavocMod.Settings;
+            if (!HungerAndHavocRuntime.AllowsNewContent || entry == null || Current.Game == null ||
+                (settings != null && !settings.IsIncidentEnabled(entry.DisplayId)))
             {
                 return false;
             }
 
-            return Current.Game.GetComponent<GameComponent_HungerAndHavoc>()?.QueueIncident(entry.DisplayId) == true;
+            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
+            if (def?.Worker == null)
+            {
+                return false;
+            }
+
+            IIncidentTarget target = ResolveTarget(entry);
+            if (target == null)
+            {
+                return false;
+            }
+
+            IncidentParms parms = StorytellerUtility.DefaultParmsNow(def.category, target);
+            float catalog = entry.DebugPoints;
+            parms.points = settings == null
+                ? catalog
+                : settings.IncidentDebugPoints(entry.DisplayId, catalog);
+            return def.Worker.TryExecute(parms);
+        }
+
+        static IIncidentTarget ResolveTarget(HungerIncidentEntry entry)
+        {
+            if (entry.Target == HungerIncidentTarget.Caravan)
+            {
+                return CaravanTargetResolver.ResolvePlayerCaravan();
+            }
+
+            return HungerMapResolver.Resolve();
         }
 
         internal static bool IsEligible(string displayId, Map map)

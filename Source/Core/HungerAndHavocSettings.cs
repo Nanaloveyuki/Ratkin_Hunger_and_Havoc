@@ -33,6 +33,8 @@ namespace HungerAndHavoc.Core
         public bool pawnHistoriesEnabled = true;
         public bool pawnTraitsEnabled = true;
         List<string> disabledIncidentDisplayIds = new List<string>();
+        Dictionary<string, float> incidentDebugPoints = new Dictionary<string, float>();
+        Dictionary<string, float> incidentWeights = new Dictionary<string, float>();
         List<string> disabledHistoryDisplayIds = new List<string>();
         List<string> disabledTraitDisplayIds = new List<string>();
         Dictionary<string, float> traitWeights = new Dictionary<string, float>();
@@ -65,6 +67,8 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref pawnHistoriesEnabled, "pawnHistoriesEnabled", true);
             Scribe_Values.Look(ref pawnTraitsEnabled, "pawnTraitsEnabled", true);
             Scribe_Collections.Look(ref disabledIncidentDisplayIds, "disabledIncidentDisplayIds", LookMode.Value);
+            Scribe_Collections.Look(ref incidentDebugPoints, "incidentDebugPoints", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref incidentWeights, "incidentWeights", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref disabledHistoryDisplayIds, "disabledHistoryDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref disabledTraitDisplayIds, "disabledTraitDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref traitWeights, "traitWeights", LookMode.Value, LookMode.Value);
@@ -75,6 +79,8 @@ namespace HungerAndHavoc.Core
                 enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
                 disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
                 disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
+                incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
+                incidentWeights = incidentWeights ?? new Dictionary<string, float>();
                 disabledHistoryDisplayIds = disabledHistoryDisplayIds ?? new List<string>();
                 disabledTraitDisplayIds = disabledTraitDisplayIds ?? new List<string>();
                 traitWeights = traitWeights ?? new Dictionary<string, float>();
@@ -264,6 +270,8 @@ namespace HungerAndHavoc.Core
         void Normalize()
         {
             xenotypeWeights = ClampWeights(xenotypeWeights, HungerXenotypeWeightTable.Clamp);
+            incidentDebugPoints = ClampWeights(incidentDebugPoints, ClampDebugPoints);
+            incidentWeights = ClampWeights(incidentWeights, ClampIncidentWeight);
             traitWeights = ClampWeights(traitWeights, ClampTraitWeight);
             enabledXenotypeDefNames = Clean(enabledXenotypeDefNames);
             enabledGeneDefNames = Clean(enabledGeneDefNames);
@@ -294,7 +302,29 @@ namespace HungerAndHavoc.Core
 
         static float ClampTraitWeight(float value)
         {
-            if (value < 0f)
+            return ClampUnit(value);
+        }
+
+        static float ClampIncidentWeight(float value)
+        {
+            return ClampUnit(value);
+        }
+
+        static float ClampDebugPoints(float value)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value) || value < HungerAndHavoc.Incidents.HungerIncidentTuning.MinDebugPoints)
+            {
+                return HungerAndHavoc.Incidents.HungerIncidentTuning.MinDebugPoints;
+            }
+
+            return value > HungerAndHavoc.Incidents.HungerIncidentTuning.MaxDebugPoints
+                ? HungerAndHavoc.Incidents.HungerIncidentTuning.MaxDebugPoints
+                : value;
+        }
+
+        static float ClampUnit(float value)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value) || value < 0f)
             {
                 return 0f;
             }
@@ -328,6 +358,8 @@ namespace HungerAndHavoc.Core
             enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
             disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
             disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
+            incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
+            incidentWeights = incidentWeights ?? new Dictionary<string, float>();
             disabledHistoryDisplayIds = disabledHistoryDisplayIds ?? new List<string>();
             disabledTraitDisplayIds = disabledTraitDisplayIds ?? new List<string>();
             traitWeights = traitWeights ?? new Dictionary<string, float>();
@@ -356,6 +388,52 @@ namespace HungerAndHavoc.Core
             {
                 disabledIncidentDisplayIds.Add(displayId);
             }
+        }
+
+        public float IncidentDebugPoints(string displayId, float catalogPoints)
+        {
+            EnsureCollections();
+            float stored;
+            if (!string.IsNullOrEmpty(displayId) && incidentDebugPoints.TryGetValue(displayId, out stored))
+            {
+                return ClampDebugPoints(stored);
+            }
+
+            return ClampDebugPoints(catalogPoints);
+        }
+
+        public void SetIncidentDebugPoints(string displayId, float points)
+        {
+            if (string.IsNullOrEmpty(displayId))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            incidentDebugPoints[displayId] = ClampDebugPoints(points);
+        }
+
+        public float IncidentWeight(string displayId)
+        {
+            EnsureCollections();
+            float stored;
+            if (!string.IsNullOrEmpty(displayId) && incidentWeights.TryGetValue(displayId, out stored))
+            {
+                return ClampIncidentWeight(stored);
+            }
+
+            return HungerAndHavoc.Incidents.HungerIncidentTuning.DefaultWeight;
+        }
+
+        public void SetIncidentWeight(string displayId, float weight)
+        {
+            if (string.IsNullOrEmpty(displayId))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            incidentWeights[displayId] = ClampIncidentWeight(weight);
         }
         public bool IsHistoryEnabled(string displayId)
         {

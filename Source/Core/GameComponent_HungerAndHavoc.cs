@@ -9,6 +9,7 @@ namespace HungerAndHavoc.Core
     {
         List<string> activeGenerationBatches = new List<string>();
         List<string> pendingIncidentDisplayIds = new List<string>();
+        List<float> pendingIncidentPoints = new List<float>();
         int plagueReturnLoadId;
         int plagueReturnMapId;
         int plagueReturnPhase;
@@ -49,11 +50,14 @@ namespace HungerAndHavoc.Core
             }
 
             string displayId = pendingIncidentDisplayIds[0];
+            float points = pendingIncidentPoints.Count > 0
+                ? pendingIncidentPoints[0]
+                : PointsFor(displayId);
             HungerAndHavoc.Incidents.HungerIncidentEntry entry =
                 HungerAndHavoc.Incidents.HungerIncidentCatalog.GetByDisplayId(displayId);
             if (entry == null)
             {
-                pendingIncidentDisplayIds.RemoveAt(0);
+                DropPending();
                 return;
             }
 
@@ -65,13 +69,15 @@ namespace HungerAndHavoc.Core
             IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
             if (def == null)
             {
-                pendingIncidentDisplayIds.RemoveAt(0);
+                DropPending();
                 return;
             }
 
-            if (def.Worker.TryExecute(new IncidentParms { target = map }))
+            IncidentParms parms = new IncidentParms { target = map };
+            parms.points = points;
+            if (def.Worker.TryExecute(parms))
             {
-                pendingIncidentDisplayIds.RemoveAt(0);
+                DropPending();
             }
         }
 
@@ -85,13 +91,41 @@ namespace HungerAndHavoc.Core
 
         public bool QueueIncident(string displayId)
         {
+            return QueueIncident(displayId, PointsFor(displayId));
+        }
+
+        public bool QueueIncident(string displayId, float points)
+        {
             if (string.IsNullOrEmpty(displayId) || pendingIncidentDisplayIds.Contains(displayId))
             {
                 return false;
             }
 
             pendingIncidentDisplayIds.Add(displayId);
+            pendingIncidentPoints.Add(HungerIncidentTuning.ClampPoints(points));
             return true;
+        }
+
+        static float PointsFor(string displayId)
+        {
+            HungerIncidentEntry entry = HungerIncidentCatalog.GetByDisplayId(displayId);
+            float catalog = entry == null ? HungerIncidentTuning.MinDebugPoints : entry.DebugPoints;
+            return HungerAndHavocMod.Settings == null
+                ? catalog
+                : HungerAndHavocMod.Settings.IncidentDebugPoints(displayId, catalog);
+        }
+
+        void DropPending()
+        {
+            if (pendingIncidentDisplayIds.Count > 0)
+            {
+                pendingIncidentDisplayIds.RemoveAt(0);
+            }
+
+            if (pendingIncidentPoints.Count > 0)
+            {
+                pendingIncidentPoints.RemoveAt(0);
+            }
         }
         void TickPlague()
         {
@@ -117,6 +151,7 @@ namespace HungerAndHavoc.Core
         {
             Scribe_Collections.Look(ref activeGenerationBatches, "activeGenerationBatches", LookMode.Value);
             Scribe_Collections.Look(ref pendingIncidentDisplayIds, "pendingIncidentDisplayIds", LookMode.Value);
+            Scribe_Collections.Look(ref pendingIncidentPoints, "pendingIncidentPoints", LookMode.Value);
             Scribe_Values.Look(ref plagueReturnLoadId, "plagueReturnLoadId", 0);
             Scribe_Values.Look(ref plagueReturnMapId, "plagueReturnMapId", 0);
             Scribe_Values.Look(ref plagueReturnPhase, "plagueReturnPhase", 0);
@@ -130,6 +165,16 @@ namespace HungerAndHavoc.Core
             {
                 activeGenerationBatches = activeGenerationBatches ?? new List<string>();
                 pendingIncidentDisplayIds = pendingIncidentDisplayIds ?? new List<string>();
+                pendingIncidentPoints = pendingIncidentPoints ?? new List<float>();
+                while (pendingIncidentPoints.Count < pendingIncidentDisplayIds.Count)
+                {
+                    pendingIncidentPoints.Add(PointsFor(pendingIncidentDisplayIds[pendingIncidentPoints.Count]));
+                }
+
+                while (pendingIncidentPoints.Count > pendingIncidentDisplayIds.Count)
+                {
+                    pendingIncidentPoints.RemoveAt(pendingIncidentPoints.Count - 1);
+                }
                 openChoices = openChoices ?? new List<HungerChoiceRecord>();
                 for (int i = openChoices.Count - 1; i >= 0; i--)
                 {

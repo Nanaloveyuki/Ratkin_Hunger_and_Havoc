@@ -53,7 +53,7 @@ namespace HungerAndHavoc.Incidents
 
             if (entry.Target == HungerIncidentTarget.Caravan)
             {
-                return TradeEventRouter.TrySpawnCaravanAmbush(entry);
+                return TradeEventRouter.TrySpawnCaravanAmbush(entry, parms == null ? 0f : parms.points);
             }
 
             Map map = Core.HungerMapResolver.Resolve(parms?.target as Map);
@@ -79,7 +79,8 @@ namespace HungerAndHavoc.Incidents
                 CarriesPlague = entry.Category == HungerIncidentCategory.Plague,
                 Map = map,
                 SpawnCell = cell,
-                PawnCount = CountFor(entry)
+                PawnCount = HungerIncidentScale.Count(entry.DisplayId, parms == null ? 0f : parms.points),
+                Points = parms == null ? 0f : parms.points
             });
         }
 

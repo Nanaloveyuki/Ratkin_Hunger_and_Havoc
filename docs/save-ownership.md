@@ -146,6 +146,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | --- | --- | --- | --- |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | active generation batches | activeGenerationBatches | Remove |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | pending incident display IDs | pendingIncidentDisplayIds | Remove |
+| HungerAndHavoc.Core.GameComponent_HungerAndHavoc | pending incident points | pendingIncidentPoints | Remove。与显示 ID 等长。旧档缺列表时按当前调试点补齐 |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return load ID | plagueReturnLoadId | Remove |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return map ID | plagueReturnMapId | Remove |
 | HungerAndHavoc.Core.GameComponent_HungerAndHavoc | plague return phase | plagueReturnPhase | Remove |
@@ -269,6 +270,8 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | HungerAndHavocSettings.broadcastCooldownDays | 全局 ModSettings，默认 3，范围 0 到 10 |
 | HungerAndHavocSettings.staggerGeneration | 全局 ModSettings，默认 true |
 | HungerAndHavocSettings.disabledIncidentDisplayIds | 全局 ModSettings，默认空。空名单表示事件可用 |
+| HungerAndHavocSettings.incidentDebugPoints | 全局 ModSettings，默认空字典。缺键用目录调试点。范围 1 到 10000 |
+| HungerAndHavocSettings.incidentWeights | 全局 ModSettings，默认空字典。缺键为 100，表示目录权重。0 不抽，上限 100。空字典不是全部禁用 |
 | HungerAndHavocSettings.refugeeCampEnabled | 全局 ModSettings，默认 true |
 | HungerAndHavocSettings.pawnHistoriesEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组经历 |
 | HungerAndHavocSettings.pawnTraitsEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组特质 |

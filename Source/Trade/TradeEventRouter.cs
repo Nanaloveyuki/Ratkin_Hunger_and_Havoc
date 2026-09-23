@@ -42,7 +42,7 @@ namespace HungerAndHavoc.Trade
             return result.Succeeded;
         }
 
-        internal static bool TrySpawnCaravanAmbush(HungerIncidentEntry entry)
+        internal static bool TrySpawnCaravanAmbush(HungerIncidentEntry entry, float points)
         {
             RimWorld.Planet.Caravan caravan = CaravanTargetResolver.ResolvePlayerCaravan();
             Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(HungerAttitude.Hostile) ??
@@ -55,7 +55,8 @@ namespace HungerAndHavoc.Trade
 
             List<Verse.Pawn> attackers = new List<Verse.Pawn>();
             int tick = Find.TickManager.TicksGame;
-            for (int i = 0; i < 3; i++)
+            int count = HungerIncidentScale.Count(entry.DisplayId, points);
+            for (int i = 0; i < count; i++)
             {
                 HungerPawnCreationResult result = HungerPawnFactory.Create(new HungerPawnRequest
                 {

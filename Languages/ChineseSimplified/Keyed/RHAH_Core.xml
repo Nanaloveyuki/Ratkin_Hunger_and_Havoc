@@ -28,8 +28,7 @@
   <RHAH_Menu_Pawns>角色</RHAH_Menu_Pawns>
   <RHAH_Menu_Narrative>叙事</RHAH_Menu_Narrative>
   <RHAH_Menu_Other>其他</RHAH_Menu_Other>
-  <RHAH_Menu_Compatibility>兼容</RHAH_Menu_Compatibility>
-  <RHAH_Menu_Diagnostics>诊断</RHAH_Menu_Diagnostics>
+  <RHAH_Menu_CompatDiagnostics>兼容与诊断</RHAH_Menu_CompatDiagnostics>
   <RHAH_Menu_Ending>结局</RHAH_Menu_Ending>
   <RHAH_Menu_Genes>基因</RHAH_Menu_Genes>
   <RHAH_Menu_DevEvents>开发者事件</RHAH_Menu_DevEvents>
@@ -39,7 +38,7 @@
   <RHAH_Menu_Experimental>实验性</RHAH_Menu_Experimental>
   <RHAH_Menu_Field_Mod>模组</RHAH_Menu_Field_Mod>
   <RHAH_Menu_Field_Version>版本</RHAH_Menu_Field_Version>
-  <RHAH_Menu_Field_NewContent>新内容</RHAH_Menu_Field_NewContent>
+
   <RHAH_Menu_Field_Game>游戏</RHAH_Menu_Field_Game>
   <RHAH_Menu_Field_IrisMenus>IrisMenus</RHAH_Menu_Field_IrisMenus>
   <RHAH_Menu_On>开</RHAH_Menu_On>
@@ -51,14 +50,22 @@
   <RHAH_Menu_GameLoaded>游戏已加载</RHAH_Menu_GameLoaded>
   <RHAH_Menu_Unavailable>不可用</RHAH_Menu_Unavailable>
   <RHAH_Menu_Settings_Missing>设置还没准备好。重新打开这个页面后再试。</RHAH_Menu_Settings_Missing>
-  <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}。可广播：{4}。调试点：{5}。</RHAH_Menu_EventMeta>
-  <RHAH_Menu_Queue>排队</RHAH_Menu_Queue>
+  <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}。可广播：{4}。</RHAH_Menu_EventMeta>
+  <RHAH_Menu_Events_Note>勾选后这条事件可以发生。滑条粗调，右侧输入精确值。调试点改变人数和索取量。生成权重为 0 时不抽。</RHAH_Menu_Events_Note>
+  <RHAH_Menu_EventEnabled>允许发生</RHAH_Menu_EventEnabled>
+  <RHAH_Menu_EventEnabled_Tip>关闭后，这条事件不再进入抽取，也不能从调试页排队。已经在场的来客不变。</RHAH_Menu_EventEnabled_Tip>
+  <RHAH_Menu_DebugPoints>调试点</RHAH_Menu_DebugPoints>
+  <RHAH_Menu_DebugPoints_Tip>自然触发和调试触发都用这个规模。人数和接济、情报的索取量随之变化。范围 1 到 10000。滑条粗调，输入框精确设置。</RHAH_Menu_DebugPoints_Tip>
+  <RHAH_Menu_IncidentWeight>生成权重</RHAH_Menu_IncidentWeight>
+  <RHAH_Menu_IncidentWeight_Tip>100 为目录权重。更高更容易被抽中，0 不抽。滑条粗调，输入框精确设置。</RHAH_Menu_IncidentWeight_Tip>
+  <RHAH_Menu_Trigger>触发</RHAH_Menu_Trigger>
   <RHAH_Menu_Queue_Disabled>新内容已关闭。</RHAH_Menu_Queue_Disabled>
   <RHAH_Menu_Queue_NoGame>没有已加载的游戏。</RHAH_Menu_Queue_NoGame>
   <RHAH_Menu_Queue_NoMap>没有可用地图。</RHAH_Menu_Queue_NoMap>
-  <RHAH_Menu_Queue_Queued>已排队。</RHAH_Menu_Queue_Queued>
-  <RHAH_Menu_Queue_Rejected>未排队。它已在等待，或调度器拒绝了它。</RHAH_Menu_Queue_Rejected>
-  <RHAH_Menu_DevEvents_Note>只调用现有调试调度。此页不会直接生成角色。</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_Queue_NoCaravan>没有玩家商队。</RHAH_Menu_Queue_NoCaravan>
+  <RHAH_Menu_Queue_Fired>已生成。</RHAH_Menu_Queue_Fired>
+  <RHAH_Menu_Queue_Failed>没有生成。</RHAH_Menu_Queue_Failed>
+  <RHAH_Menu_DevEvents_Note>立刻生成这条事件，不等待自然抽取。</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>没有当前地图。</RHAH_Menu_Pawns_NoMap>
   <RHAH_Menu_Pawns_None>这张地图上没有饥与祸角色。</RHAH_Menu_Pawns_None>
   <RHAH_Menu_Pawns_Invalid>这个角色已经不在了。</RHAH_Menu_Pawns_Invalid>
@@ -81,7 +88,7 @@
   <RHAH_Menu_Ending_Gap>结局开关尚未实现。此页不会写入结局。</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>生物科技基因设置尚未实现。此页不会修改基因。</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>需要生物科技。启用后可以在这里调整来客的异种。</RHAH_Menu_Genes_NoBiotech>
-  <RHAH_Menu_Genes_Note>横条长度是当前抽中的几率。拖动横条设置权重，范围 0 到 100。权重为 0 的异种不参与抽取。全部为 0 时，来客使用初鼠种；找不到初鼠种时使用饥荒鼠族。</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_Note>标签后的百分比是当前抽中几率。滑条粗调权重，右侧输入精确值，范围 0 到 100。权重为 0 的异种不参与抽取。全部为 0 时，来客使用初鼠种；找不到初鼠种时使用饥荒鼠族。</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>恢复默认权重</RHAH_Menu_Genes_Reset>
   <RHAH_Menu_Genes_Fallback>当前权重合计为 0。来客使用初鼠种；找不到初鼠种时使用饥荒鼠族。</RHAH_Menu_Genes_Fallback>
   <RHAH_Menu_Genes_WeightTip>建议权重 {1}。抽中几率等于这个权重除以所有启用权重之和。</RHAH_Menu_Genes_WeightTip>
@@ -100,7 +107,7 @@
   <RHAH_Menu_PawnTrait_DisableAll>停用全部特质</RHAH_Menu_PawnTrait_DisableAll>
   <RHAH_Menu_PawnTrait_ItemTip>关闭后，这条特质不再进入抽取。已经生成的角色不变。</RHAH_Menu_PawnTrait_ItemTip>
   <RHAH_Menu_PawnTrait_Weight>权重</RHAH_Menu_PawnTrait_Weight>
-  <RHAH_Menu_PawnTrait_WeightTip>权重越高越容易被抽中。0 不抽。抽中后再按权重除以 100 决定是否赋予。</RHAH_Menu_PawnTrait_WeightTip>
+  <RHAH_Menu_PawnTrait_WeightTip>权重越高越容易被抽中。0 不抽。抽中后再按权重除以 100 决定是否赋予。滑条粗调，输入框精确设置。</RHAH_Menu_PawnTrait_WeightTip>
   <RHAH_Settings_PawnHistories>为新来客抽取经历</RHAH_Settings_PawnHistories>
   <RHAH_Settings_PawnHistories_Tooltip>关闭后，新来客保留生成器给出的背景。已经在场的角色不变。</RHAH_Settings_PawnHistories_Tooltip>
   <RHAH_Settings_PawnTraits>为新来客抽取特质</RHAH_Settings_PawnTraits>
@@ -109,10 +116,11 @@
   <RHAH_Menu_Experimental_Note>这些选项会改变生成来客的耗时。关闭后，来客仍按各事件自己的装备、经历、健康和基因生成。</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>加快来客生成</RHAH_Settings_OptimizeGeneration>
   <RHAH_Settings_OptimizeGeneration_Tooltip>跳过关系、头衔、随机装备和世界角色换装。事件没有指定异种时，按基因页的权重抽取。权重不可用时使用初鼠种；找不到初鼠种时使用饥荒鼠族。</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>正池和负池各自按平均天数抽取。0 关闭该池。权重随季节、鼠疫和信任变化。</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Gap>曲线是这一池发生事件的概率。横轴是平均天数，纵轴是概率。点是当前设置。0 关闭该池。</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>正面事件平均天数</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>负面事件平均天数</RHAH_Menu_Frequency_Negative>
-  <RHAH_Menu_Frequency_Expression>权重</RHAH_Menu_Frequency_Expression>
+  <RHAH_Menu_Frequency_Curve>发生概率</RHAH_Menu_Frequency_Curve>
+  <RHAH_Menu_Frequency_CurveTip>正面 {0}，负面 {1}。</RHAH_Menu_Frequency_CurveTip>
   <RHAH_Menu_Developer_Note>只读的构建标记。调试排队在开发者事件页。</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>最近列出的角色</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>乞食</RHAH_Menu_Family_Beggar>

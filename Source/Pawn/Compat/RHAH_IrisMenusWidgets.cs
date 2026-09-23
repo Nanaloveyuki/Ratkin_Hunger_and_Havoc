@@ -1,5 +1,6 @@
 extern alias iris;
 using System;
+using HungerAndHavoc.Incidents;
 using iris::IrisMenus;
 using UnityEngine;
 using Verse;
@@ -20,59 +21,120 @@ namespace HungerAndHavoc.Pawn.Compat
             return card.ContractedBy(CardPad);
         }
 
-        internal static float ShareBar(Listing_Standard list, string label, float share, float labelFraction, out Rect row)
+        internal static float TunedValue(
+            Listing_Standard list,
+            string label,
+            float value,
+            ref string buffer,
+            float min,
+            float max,
+            string format,
+            string tooltip)
         {
-            row = list.GetRect(34f);
-            float labelWidth = row.width * labelFraction;
-            Widgets.Label(new Rect(row.x, row.y, labelWidth, row.height), label);
-            Rect bar = new Rect(row.x + labelWidth + 8f, row.y + 8f, Mathf.Max(1f, row.width - labelWidth - 8f), 16f);
-            Widgets.FillableBar(bar, Mathf.Clamp01(share));
+            float height = 30f;
+            Rect row = list.GetRect(height);
+            float result = TunedValue(row, label, value, ref buffer, min, max, format, tooltip);
             list.Gap(CardGap);
-            return DragValue(bar);
+            return result;
         }
 
-        internal static void ShareChart(Listing_Standard list, string anchor, string[] labels, float[] shares, int count)
+        internal static float TunedValue(
+            Rect row,
+            string label,
+            float value,
+            ref string buffer,
+            float min,
+            float max,
+            string format,
+            string tooltip)
         {
-            if (labels == null || shares == null || count <= 0 || count > labels.Length || count > shares.Length)
+            Rect labelRect = new Rect(row.x, row.y, row.width * 0.34f, row.height);
+            Widgets.Label(labelRect, label);
+            if (!string.IsNullOrEmpty(tooltip))
+            {
+                TooltipHandler.TipRegion(labelRect, tooltip);
+            }
+
+            float fieldWidth = 72f;
+            Rect field = new Rect(row.xMax - fieldWidth, row.y, fieldWidth, row.height);
+            Rect slider = new Rect(labelRect.xMax + 8f, row.y, Mathf.Max(1f, field.x - labelRect.xMax - 16f), row.height);
+            float slid = Widgets.HorizontalSlider(slider, value, min, max);
+            bool sliderMoved = Mathf.Abs(slid - value) > 0.001f;
+            if (sliderMoved)
+            {
+                value = slid;
+                buffer = value.ToString(format);
+            }
+
+            string typed = buffer;
+            Widgets.TextFieldNumeric(field, ref value, ref buffer, min, max);
+            if (!sliderMoved && SameNumber(typed, buffer))
+            {
+                buffer = typed;
+            }
+
+            return value;
+        }
+
+        internal static bool SameNumber(string typed, string parsed)
+        {
+            float left;
+            float right;
+            return float.TryParse(typed, out left) && float.TryParse(parsed, out right) && Mathf.Abs(left - right) <= 0.001f;
+        }
+
+        internal static void OccurrenceCurve(Listing_Standard list, string anchor, float positiveDays, float negativeDays)
+        {
+            const int samples = 48;
+            Rect plot = Card(list, anchor, 168f);
+            Widgets.Label(new Rect(plot.x, plot.y, plot.width * 0.5f, 18f), "RHAH_Menu_Frequency_Positive".Translate());
+            Widgets.Label(new Rect(plot.x + plot.width * 0.5f, plot.y, plot.width * 0.5f, 18f), "RHAH_Menu_Frequency_Negative".Translate());
+            Rect graph = new Rect(plot.x, plot.y + 22f, plot.width, plot.height - 22f);
+            Widgets.DrawBoxSolid(graph, new Color(0.08f, 0.08f, 0.08f, 0.55f));
+            DrawCurve(graph, new Color(0.45f, 0.78f, 0.48f), samples);
+            DrawMarker(graph, positiveDays, new Color(0.45f, 0.78f, 0.48f));
+            DrawMarker(graph, negativeDays, new Color(0.86f, 0.42f, 0.36f));
+            TooltipHandler.TipRegion(graph, "RHAH_Menu_Frequency_CurveTip".Translate(
+                HungerIncidentSchedule.OccurrenceChance(positiveDays).ToString("P1"),
+                HungerIncidentSchedule.OccurrenceChance(negativeDays).ToString("P1")));
+        }
+
+        static void DrawCurve(Rect graph, Color color, int samples)
+        {
+            float span = HungerIncidentSchedule.MaxDays;
+            Vector2 last = CurvePoint(graph, 0f, 0f, span);
+            for (int i = 1; i <= samples; i++)
+            {
+                float sampleDays = span * i / samples;
+                Vector2 next = CurvePoint(graph, sampleDays, HungerIncidentSchedule.OccurrenceChance(sampleDays), span);
+                Widgets.DrawLine(last, next, color, 1.5f);
+                last = next;
+            }
+        }
+
+        static void DrawMarker(Rect graph, float days, Color color)
+        {
+            if (days <= 0f)
             {
                 return;
             }
 
-            float height = count * 22f + 8f;
-            Rect plot = Card(list, anchor, height);
-            float max = 0f;
-            for (int i = 0; i < count; i++)
-            {
-                if (shares[i] > max)
-                {
-                    max = shares[i];
-                }
-            }
-
-            if (max <= 0f)
-            {
-                max = 1f;
-            }
-
-            float rowHeight = (plot.height - 4f) / count;
-            float labelWidth = Mathf.Min(96f, plot.width * 0.34f);
-            for (int i = 0; i < count; i++)
-            {
-                float y = plot.y + i * rowHeight;
-                Widgets.Label(new Rect(plot.x, y, labelWidth, rowHeight), labels[i]);
-                Rect bar = new Rect(plot.x + labelWidth + 6f, y + 3f, Mathf.Max(1f, plot.width - labelWidth - 6f), Mathf.Max(8f, rowHeight - 6f));
-                Widgets.FillableBar(bar, Mathf.Clamp01(shares[i] / max));
-            }
+            Vector2 point = CurvePoint(
+                graph,
+                days,
+                HungerIncidentSchedule.OccurrenceChance(days),
+                HungerIncidentSchedule.MaxDays);
+            Widgets.DrawBoxSolid(new Rect(point.x - 2f, point.y - 2f, 4f, 4f), color);
         }
 
-        static float DragValue(Rect bar)
+        static Vector2 CurvePoint(Rect graph, float days, float chance, float span)
         {
-            if (!Mouse.IsOver(bar) || Event.current.type != EventType.MouseDrag || bar.width <= 0f)
-            {
-                return -1f;
-            }
-
-            return Mathf.Clamp01((Event.current.mousePosition.x - bar.x) / bar.width);
+            float x = graph.x + graph.width * Mathf.Clamp01(days / span);
+            float y = graph.yMax - graph.height * Mathf.Clamp01(chance / AxisChance);
+            return new Vector2(x, y);
         }
+
+        const float AxisChance = 1000f / (1f * 60000f);
+
     }
 }

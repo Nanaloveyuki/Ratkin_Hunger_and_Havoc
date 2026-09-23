@@ -44,7 +44,8 @@ namespace HungerAndHavoc.Incidents
                 CarriesPlague = CarriesPlague,
                 Map = map,
                 SpawnCell = cell,
-                PawnCount = PawnCount
+                PawnCount = HungerIncidentScale.Count(DisplayId, parms.points),
+                Points = parms.points
             });
         }
 

@@ -90,7 +90,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             GameComponent_HungerAndHavoc game = Current.Game?.GetComponent<GameComponent_HungerAndHavoc>();
-            int amount = HungerRequestRules.Amount(spec.Kind, context.Map.wealthWatcher?.WealthTotal ?? 0f, context.SpawnBatchId % 5);
+            int amount = HungerRequestRules.Amount(spec.Kind, context.Map.wealthWatcher?.WealthTotal ?? 0f, context.SpawnBatchId % 5, context.Points);
             HungerChoiceRecord record = HungerChoiceRuntime.Open(game, new HungerChoiceRecord
             {
                 DisplayId = context.DisplayId,
