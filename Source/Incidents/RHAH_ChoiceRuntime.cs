@@ -169,6 +169,7 @@ namespace HungerAndHavoc.Incidents
             if (RHAH_RequestRules.Joins(record.Settled))
             {
                 Release(record, RHAH_ReleaseReason.JoinedPlayerFaction);
+                NoteEnding(record);
                 return;
             }
 
@@ -181,7 +182,10 @@ namespace HungerAndHavoc.Incidents
             if (RHAH_RequestRules.Leaves(record.Settled))
             {
                 Leave(record);
+                return;
             }
+
+            NoteEnding(record);
         }
 
         static void Release(RHAH_ChoiceRecord record, RHAH_ReleaseReason reason)
@@ -217,6 +221,17 @@ namespace HungerAndHavoc.Incidents
             }
 
             RHAH_BatchAttitude.TryShift(pawns[0], true);
+        }
+        static void NoteEnding(RHAH_ChoiceRecord record)
+        {
+            Narrative.RHAH_EndingRules.RHAH_EndingEvent ending = Narrative.RHAH_EndingRules.FromChoice(record.Choice, record.Settled);
+            if (ending != Narrative.RHAH_EndingRules.RHAH_EndingEvent.Aid || !Narrative.RHAH_EndingRuntime.CountsNow())
+            {
+                return;
+            }
+
+            int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteAid(tick);
         }
 
         static List<Verse.Pawn> Pawns(RHAH_ChoiceRecord record)

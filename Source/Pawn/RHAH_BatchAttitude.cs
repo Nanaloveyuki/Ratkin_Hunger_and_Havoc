@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Identity;
+using HungerAndHavoc.Narrative;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -38,6 +39,12 @@ namespace HungerAndHavoc.Pawn
             }
 
             OrderLeave(members);
+            if (RHAH_EndingRules.CountsExpulsion(forcedAway, true) && RHAH_EndingRuntime.CountsNow())
+            {
+                int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+                Current.Game?.GetComponent<NarrativeState>()?.NoteExpulsion(tick);
+            }
+
             return true;
         }
 

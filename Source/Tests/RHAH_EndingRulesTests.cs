@@ -1,3 +1,4 @@
+using HungerAndHavoc.Incidents;
 using HungerAndHavoc.Narrative;
 using Xunit;
 
@@ -165,6 +166,17 @@ namespace HungerAndHavoc.Tests
             int identity)
         {
             return new RHAH_EndingFacts(trust, narrator, aid, broadcasts, expulsions, adults, kinds, relic, waited, e01, e02, e03, e04, e05, identity);
+        }
+
+        [Fact]
+        public void CompletedAidAndForcedExpulsionCountOnce()
+        {
+            Assert.Equal(RHAH_EndingRules.RHAH_EndingEvent.Aid, RHAH_EndingRules.FromChoice(RHAH_ChoiceKind.Aid, RHAH_ChoiceAction.Deliver));
+            Assert.Equal(RHAH_EndingRules.RHAH_EndingEvent.Aid, RHAH_EndingRules.FromChoice(RHAH_ChoiceKind.ChildExchange, RHAH_ChoiceAction.Deliver));
+            Assert.Equal(RHAH_EndingRules.RHAH_EndingEvent.None, RHAH_EndingRules.FromChoice(RHAH_ChoiceKind.Aid, RHAH_ChoiceAction.Reject));
+            Assert.Equal(RHAH_EndingRules.RHAH_EndingEvent.None, RHAH_EndingRules.FromChoice(RHAH_ChoiceKind.Intel, RHAH_ChoiceAction.Deliver));
+            Assert.True(RHAH_EndingRules.CountsExpulsion(true, true));
+            Assert.False(RHAH_EndingRules.CountsExpulsion(false, true));
         }
     }
 }

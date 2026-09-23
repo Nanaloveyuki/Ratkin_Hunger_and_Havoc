@@ -49,6 +49,11 @@ namespace HungerAndHavoc.Pawn
             if (displayId != null && game.QueueIncident(displayId))
             {
                 game.BroadcastCooldownUntilTick = RHAH_BroadcastRules.NextCooldown(tick, days);
+                if (HungerAndHavoc.Narrative.RHAH_EndingRuntime.CountsNow())
+                {
+                    Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>()?.NoteBroadcast(tick);
+                }
+
                 Messages.Message("RHAH_Broadcast_Queued".Translate(displayId), MessageTypeDefOf.NeutralEvent);
             }
         }

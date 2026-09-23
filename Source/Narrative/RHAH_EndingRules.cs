@@ -130,6 +130,38 @@ namespace HungerAndHavoc.Narrative
         internal const int HaltTrust = -75;
         internal const int LowKindMinimum = 6;
         internal const float ThreatIntervalDays = 13f;
+        internal enum RHAH_EndingEvent
+        {
+            None = 0,
+            Aid = 1,
+            Broadcast = 2,
+            Expulsion = 3
+        }
+
+        internal static RHAH_EndingEvent FromChoice(Incidents.RHAH_ChoiceKind choice, Incidents.RHAH_ChoiceAction action)
+        {
+            if (action != Incidents.RHAH_ChoiceAction.Deliver)
+            {
+                return RHAH_EndingEvent.None;
+            }
+
+            if (choice == Incidents.RHAH_ChoiceKind.Aid ||
+                choice == Incidents.RHAH_ChoiceKind.ChildExchange ||
+                choice == Incidents.RHAH_ChoiceKind.Refugees ||
+                choice == Incidents.RHAH_ChoiceKind.Abandoned ||
+                choice == Incidents.RHAH_ChoiceKind.Kinship ||
+                choice == Incidents.RHAH_ChoiceKind.Airdrop)
+            {
+                return RHAH_EndingEvent.Aid;
+            }
+
+            return RHAH_EndingEvent.None;
+        }
+
+        internal static bool CountsExpulsion(bool forcedAway, bool shifted)
+        {
+            return forcedAway && shifted;
+        }
 
         internal static int ClampGoal(int value, int min, int max)
         {

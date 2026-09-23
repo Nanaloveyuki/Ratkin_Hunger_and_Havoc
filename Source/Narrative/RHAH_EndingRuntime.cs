@@ -17,6 +17,11 @@ namespace HungerAndHavoc.Narrative
             return defName == NarratorDefName;
         }
 
+        internal static bool CountsNow()
+        {
+            return Counts(Find.Storyteller?.def?.defName == NarratorDefName, RHAH_Mod.Settings);
+        }
+
         internal static bool Counts(bool narrator, RHAH_Settings settings)
         {
             return narrator || settings == null || settings.countEndingsWithoutNarrator;
@@ -46,6 +51,7 @@ namespace HungerAndHavoc.Narrative
             {
                 return;
             }
+
 
             RHAH_EndingGoals goals = settings == null ? RHAH_EndingGoals.Defaults() : settings.EndingGoals();
             RHAH_EndingId ending = state.PendingEnding(tick, narrator, goals);
