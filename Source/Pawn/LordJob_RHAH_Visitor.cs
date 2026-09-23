@@ -1,5 +1,6 @@
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
+using HungerAndHavoc.Trade;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -66,6 +67,7 @@ namespace HungerAndHavoc.Pawn
             toLeave.AddSource(travel);
             toLeave.AddTrigger(new Trigger_Custom(_ => AllReadyToLeave()));
             toLeave.AddTrigger(new Trigger_Memo("RHAH_Leave"));
+            toLeave.AddTrigger(new Trigger_Custom(signal => TraderMustLeave(signal)));
             toLeave.AddPostAction(new TransitionAction_EndAllJobs());
             graph.AddTransition(toLeave, false);
 
@@ -118,6 +120,38 @@ namespace HungerAndHavoc.Pawn
             }
 
             return true;
+        }
+        bool TraderMustLeave(TriggerSignal signal)
+        {
+            if (signal.type != TriggerSignalType.Tick || lord?.ownedPawns == null)
+            {
+                return false;
+            }
+
+            int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            if (tick % 197 != 0)
+            {
+                return false;
+            }
+
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            bool ignoreHarsh = settings == null || settings.traderIgnoresHarshEnvironment;
+            bool ignoreEnclosed = settings == null || settings.traderIgnoresEnclosedSpace;
+            if (ignoreHarsh && ignoreEnclosed)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                Verse.Pawn pawn = lord.ownedPawns[i];
+                if (RHAH_CaravanStay.MemberMustLeave(pawn, ignoreHarsh, ignoreEnclosed))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         bool HasCarrier(Verse.Pawn child)

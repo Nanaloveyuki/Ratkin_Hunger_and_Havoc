@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Incidents;
 using RimWorld;
@@ -9,6 +10,7 @@ namespace HungerAndHavoc.Trade
     internal static class RHAH_CaravanStay
     {
         internal const int FoodPerChild = 10;
+        internal const float TemperatureSeverity = 0.15f;
         internal const float TemperatureMargin = 10f;
 
         internal static bool IsTradeCaravan(string displayId, RHAH_PawnRole role)
@@ -16,14 +18,89 @@ namespace HungerAndHavoc.Trade
             return role == RHAH_PawnRole.Trader || displayId == "I-012" || displayId == "I-038";
         }
 
-        internal static bool ShouldHold(Verse.Pawn pawn, bool ignoreHarshEnvironment, bool ignoreEnclosedSpace)
+        internal static bool ShouldLeave(
+            bool isTradeCaravan,
+            bool ignoreHarshEnvironment,
+            bool ignoreEnclosedSpace,
+            bool temperatureSevere,
+            bool anomalousWeather,
+            bool traderExitCondition,
+            bool cannotReachEdge)
         {
-            if (!IsTradeCaravan(pawn))
+            if (!isTradeCaravan)
             {
                 return false;
             }
 
-            return (ignoreHarshEnvironment && CellIsHarsh(pawn)) || (ignoreEnclosedSpace && RoomIsEnclosed(pawn));
+            bool environment = !ignoreHarshEnvironment && (temperatureSevere || anomalousWeather || traderExitCondition);
+            bool enclosed = !ignoreEnclosedSpace && cannotReachEdge;
+            return environment || enclosed;
+        }
+
+        internal static bool TemperatureSevere(float heatstroke, float hypothermia)
+        {
+            return Severity(heatstroke) > TemperatureSeverity || Severity(hypothermia) > TemperatureSeverity;
+        }
+
+        static float Severity(float value)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value) || value < 0f)
+            {
+                return 0f;
+            }
+
+            return value;
+        }
+        internal static bool MemberMustLeave(Verse.Pawn pawn, bool ignoreHarshEnvironment, bool ignoreEnclosedSpace)
+        {
+            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed || !IsTradeCaravan(pawn))
+            {
+                return false;
+            }
+
+            float heat = HediffSeverity(pawn, HediffDefOf.Heatstroke);
+            float cold = HediffSeverity(pawn, HediffDefOf.Hypothermia);
+            float blood = 0f;
+            if (ModsConfig.AnomalyActive && HediffDefOf.BloodRage != null)
+            {
+                blood = HediffSeverity(pawn, HediffDefOf.BloodRage);
+            }
+
+            return ShouldLeave(
+                true,
+                ignoreHarshEnvironment,
+                ignoreEnclosedSpace,
+                TemperatureSevere(heat, cold),
+                TemperatureSevere(blood, 0f),
+                TraderExitActive(pawn),
+                !pawn.CanReachMapEdge());
+        }
+
+        static float HediffSeverity(Verse.Pawn pawn, HediffDef def)
+        {
+            Hediff hediff = pawn.health?.hediffSet == null || def == null ? null : pawn.health.hediffSet.GetFirstHediffOfDef(def);
+            return hediff == null ? 0f : hediff.Severity;
+        }
+
+        static bool TraderExitActive(Verse.Pawn pawn)
+        {
+            GameConditionManager manager = pawn.Map?.gameConditionManager;
+            if (manager == null)
+            {
+                return false;
+            }
+
+            List<GameConditionDef> defs = DefDatabase<GameConditionDef>.AllDefsListForReading;
+            for (int i = 0; i < defs.Count; i++)
+            {
+                GameConditionDef def = defs[i];
+                if (def != null && def.causesTraderCaravanExit && manager.ConditionIsActive(def))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         internal static bool IsTradeCaravan(Verse.Pawn pawn)
