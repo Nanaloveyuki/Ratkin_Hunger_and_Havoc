@@ -75,7 +75,7 @@ namespace HungerAndHavoc.Incidents
                 SpawnBatchId = tick,
                 RelationshipGroupId = tick,
                 Role = RoleFor(entry),
-                Attitude = entry.DefaultAttitudePool == RHAH_AttitudePool.Positive ? RHAH_Attitude.LeaningFriendly : RHAH_Attitude.Hostile,
+                Attitude = ArrivalAttitude(entry),
                 CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
                 SpawnCell = cell,
@@ -103,6 +103,35 @@ namespace HungerAndHavoc.Incidents
                 case RHAH_IncidentFamily.Intel: return RHAH_PawnRole.Envoy;
                 case RHAH_IncidentFamily.Special: return RHAH_PawnRole.Refugee;
                 default: return RHAH_PawnRole.Beggar;
+            }
+        }
+
+        internal static RHAH_Attitude ArrivalAttitude(RHAH_IncidentEntry entry)
+        {
+            if (entry == null)
+            {
+                return RHAH_Attitude.Neutral;
+            }
+
+            if (entry.DefaultAttitudePool == RHAH_AttitudePool.Positive)
+            {
+                return RHAH_Attitude.LeaningFriendly;
+            }
+
+            if (entry.Target == RHAH_IncidentTarget.Caravan)
+            {
+                return RHAH_Attitude.Neutral;
+            }
+
+            switch (entry.Family)
+            {
+                case RHAH_IncidentFamily.Siege:
+                case RHAH_IncidentFamily.Thief:
+                    return entry.DisplayId == "I-034" || entry.DisplayId == "I-048"
+                        ? RHAH_Attitude.LeaningHostile
+                        : RHAH_Attitude.Hostile;
+                default:
+                    return RHAH_Attitude.Neutral;
             }
         }
 

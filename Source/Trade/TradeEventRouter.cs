@@ -45,8 +45,8 @@ namespace HungerAndHavoc.Trade
         internal static bool TrySpawnCaravanAmbush(RHAH_IncidentEntry entry, float points)
         {
             RimWorld.Planet.Caravan caravan = CaravanTargetResolver.ResolvePlayerCaravan();
-            Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Hostile) ??
-                Find.FactionManager.RandomEnemyFaction();
+            RHAH_Attitude attitude = IncidentWorker_Sequel.ArrivalAttitude(entry);
+            Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(attitude);
             if (entry == null || caravan == null || faction == null ||
                 !RimWorld.Planet.CaravanIncidentUtility.CanFireIncidentWhichWantsToGenerateMapAt(caravan.Tile))
             {
@@ -64,7 +64,7 @@ namespace HungerAndHavoc.Trade
                     SpawnBatchId = tick + i + 1,
                     RelationshipGroupId = tick,
                     Role = RHAH_PawnRole.Thief,
-                    AttitudeAtArrival = RHAH_Attitude.Hostile,
+                    AttitudeAtArrival = attitude,
                     CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                     Map = null,
                     PawnKind = PawnKindDefOf.Colonist,

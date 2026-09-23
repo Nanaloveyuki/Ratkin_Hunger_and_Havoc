@@ -1,3 +1,4 @@
+using HungerAndHavoc.Api;
 using System.Linq;
 using HungerAndHavoc.Incidents;
 using Xunit;
@@ -43,6 +44,31 @@ namespace HungerAndHavoc.Tests
                 Assert.NotEmpty(entry.LabelKey);
                 Assert.True(entry.DebugPoints > 0f);
             });
+        }
+
+        [Fact]
+        public void SequelArrival_FollowsFamilyNotPool()
+        {
+            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-035"));
+            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-050"));
+            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-031"));
+            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-036"));
+            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-038"));
+            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-042"));
+            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-049"));
+            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-051"));
+            Assert.Equal(RHAH_Attitude.LeaningHostile, Arrival("I-034"));
+            Assert.Equal(RHAH_Attitude.LeaningHostile, Arrival("I-048"));
+            Assert.Equal(RHAH_Attitude.Hostile, Arrival("I-030"));
+            Assert.Equal(RHAH_Attitude.Hostile, Arrival("I-043"));
+            Assert.Equal(RHAH_Attitude.Hostile, Arrival("I-045"));
+            Assert.Equal(RHAH_Attitude.LeaningFriendly, Arrival("I-015"));
+            Assert.Equal(RHAH_Attitude.LeaningFriendly, Arrival("I-028"));
+        }
+
+        static RHAH_Attitude Arrival(string displayId)
+        {
+            return IncidentWorker_Sequel.ArrivalAttitude(RHAH_IncidentCatalog.GetByDisplayId(displayId));
         }
     }
 }
