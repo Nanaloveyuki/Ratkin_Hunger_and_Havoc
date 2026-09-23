@@ -61,19 +61,9 @@ namespace HungerAndHavoc.Incidents
             return !missing && dead && !downed && !prisoner && !onMap;
         }
 
-        internal static bool AllowedWeapon(bool weapon, bool melee, int tech, bool shortBow, bool wooden)
+        internal static bool AllowedWeapon(string defName, bool coreMod, bool weapon, bool melee, int tech, bool shortBow, bool wooden)
         {
-            if (!weapon)
-            {
-                return false;
-            }
-
-            if (shortBow)
-            {
-                return wooden;
-            }
-
-            return melee && tech >= 2 && tech <= 3 && wooden;
+            return weapon && RHAH_PredationRules.VanillaWeapon(defName, coreMod, melee, tech, shortBow, wooden);
         }
 
         static int Clamp(int value, int min, int max)

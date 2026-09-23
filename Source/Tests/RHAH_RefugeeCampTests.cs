@@ -42,13 +42,14 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void ResidentsOnlyCarryWoodenLowTechWeapons()
+        public void ResidentsOnlyCarryVanillaWoodenWeapons()
         {
-            Assert.True(RHAH_RefugeeCampRules.AllowedWeapon(true, true, 2, false, true));
-            Assert.False(RHAH_RefugeeCampRules.AllowedWeapon(true, true, 4, false, true));
-            Assert.True(RHAH_RefugeeCampRules.AllowedWeapon(true, false, 2, true, true));
-            Assert.False(RHAH_RefugeeCampRules.AllowedWeapon(true, false, 2, false, true));
-            Assert.False(RHAH_RefugeeCampRules.AllowedWeapon(true, true, 2, false, false));
+            Assert.True(RHAH_RefugeeCampRules.AllowedWeapon("MeleeWeapon_Club", true, true, true, 2, false, true));
+            Assert.True(RHAH_RefugeeCampRules.AllowedWeapon("Bow_Short", true, true, false, 2, true, true));
+            Assert.False(RHAH_RefugeeCampRules.AllowedWeapon("MeleeWeapon_Mace", true, true, true, 3, false, true));
+            Assert.False(RHAH_RefugeeCampRules.AllowedWeapon("MeleeWeapon_Club", false, true, true, 2, false, true));
+            Assert.False(RHAH_RefugeeCampRules.AllowedWeapon("ModClub", true, true, true, 2, false, true));
+            Assert.False(RHAH_RefugeeCampRules.AllowedWeapon("MeleeWeapon_Knife", true, true, true, 2, false, false));
         }
     }
 }

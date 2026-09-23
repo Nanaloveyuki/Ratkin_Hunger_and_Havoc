@@ -145,6 +145,8 @@ namespace HungerAndHavoc.Incidents
             {
                 LordMaker.MakeNewLord(site.Faction, new LordJob_DefendPoint(center), map, spawned);
             }
+
+            RHAH_CampPredation.Roll(map, spawned);
         }
 
         static void BuildHuts(Map map, Faction faction, IntVec3 center)
@@ -214,16 +216,25 @@ namespace HungerAndHavoc.Incidents
 
             pawn.equipment.DestroyAllEquipment();
             List<ThingDef> weapons = DefDatabase<ThingDef>.AllDefsListForReading;
+            List<ThingDef> allowed = new List<ThingDef>();
             for (int i = 0; i < weapons.Count; i++)
             {
                 ThingDef weapon = weapons[i];
+                bool core = weapon.modContentPack != null && weapon.modContentPack.IsCoreMod;
                 bool wooden = !weapon.MadeFromStuff || weapon.stuffCategories.Contains(StuffCategoryDefOf.Woody);
-                if (RHAH_RefugeeCampRules.AllowedWeapon(weapon.IsWeapon, weapon.IsMeleeWeapon, (int)weapon.techLevel, weapon.defName == "Bow_Short", wooden))
+                if (RHAH_RefugeeCampRules.AllowedWeapon(weapon.defName, core, weapon.IsWeapon, weapon.IsMeleeWeapon, (int)weapon.techLevel, weapon.defName == "Bow_Short", wooden))
                 {
-                    pawn.equipment.AddEquipment((ThingWithComps)ThingMaker.MakeThing(weapon, weapon.MadeFromStuff ? ThingDefOf.WoodLog : null));
-                    return;
+                    allowed.Add(weapon);
                 }
             }
+
+            if (allowed.Count == 0)
+            {
+                return;
+            }
+
+            ThingDef chosen = allowed[Rand.Range(0, allowed.Count)];
+            pawn.equipment.AddEquipment((ThingWithComps)ThingMaker.MakeThing(chosen, chosen.MadeFromStuff ? ThingDefOf.WoodLog : null));
         }
     }
 
