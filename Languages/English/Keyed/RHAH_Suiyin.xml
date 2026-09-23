@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Suiyin_N001_Label>A letter from Suiyin</RHAH_Suiyin_N001_Label>
+  <RHAH_Suiyin_N001_Text>My name is Suiyin. I get some of the news from your side. It arrives late, and it is not always right.\n\nMore ratkin are on the roads. Some want food, some want to trade, and some will take what they can. Do not open the door because I wrote this. I am not vouching for them.\n\nI will write again when there is more to say.</RHAH_Suiyin_N001_Text>
+  <RHAH_Suiyin_N002_Label>More news</RHAH_Suiyin_N002_Label>
+  <RHAH_Suiyin_N002_Text>{0} kinds of visitors have reached me now.\n\nI keep arrival and settlement apart. Someone can come in well and leave badly. Someone can come to steal and still stay.\n\nYou do not need to write back. I will wait for the next report.</RHAH_Suiyin_N002_Text>
+  <RHAH_Suiyin_N003_Label>Travel money</RHAH_Suiyin_N003_Label>
+  <RHAH_Suiyin_N003_Text>The silver is mine. There are {0}.\n\nI sent it the long way. The carrier complained that the load was too small, then asked when the next run would be. I have not promised him another.\n\nThe money is there. Use it for what you need now. You do not owe anyone a place because of it.</RHAH_Suiyin_N003_Text>
+  <RHAH_Suiyin_N004Entry_Label>A child left behind</RHAH_Suiyin_N004Entry_Label>
+  <RHAH_Suiyin_N004Entry_Text>The mother can barely stand. She pushes the child forward, then pulls it back.\n\n"Help... my... child... squeak."\n\nShe does not give her name. Everything she brought is beside the child.</RHAH_Suiyin_N004Entry_Text>
+  <RHAH_Suiyin_N004ChildAlone_Label>Where is mother</RHAH_Suiyin_N004ChildAlone_Label>
+  <RHAH_Suiyin_N004ChildAlone_Text>The child stops where the basket used to be. The basket is gone. The boards were used somewhere else.\n\n"Where is mother?"\n\nThe mood drop lasts a day. If the mind breaks today, the mark stays.</RHAH_Suiyin_N004ChildAlone_Text>
+  <RHAH_Suiyin_N004FamilyHere_Label>Still here</RHAH_Suiyin_N004FamilyHere_Label>
+  <RHAH_Suiyin_N004FamilyHere_Text>The child finds the mother first. They do not say much.\n\nSuiyin writes one word: still here.</RHAH_Suiyin_N004FamilyHere_Text>
+  <RHAH_Suiyin_N004Captive_Label>Still alive</RHAH_Suiyin_N004Captive_Label>
+  <RHAH_Suiyin_N004Captive_Text>It learned to look at the door before it looks at people. It is alive, and it treats staying alive as work.\n\nSuiyin adds one short mark beside the name.</RHAH_Suiyin_N004Captive_Text>
+  <RHAH_Suiyin_N004Story_Label>Only a story</RHAH_Suiyin_N004Story_Label>
+  <RHAH_Suiyin_N004Story_Text>The room has been cleared. In a while, the map will not show what happened here.\n\nSuiyin says, "This is only a story, isn't it? The ending was already written."\n\nShe does not wait for an answer.</RHAH_Suiyin_N004Story_Text>
+  <RHAH_Suiyin_N004Banished_Label>Sent away</RHAH_Suiyin_N004Banished_Label>
+  <RHAH_Suiyin_N004Banished_Text>You sent them past the border. The map has one less person to feed, and one less bed to explain.\n\nA caravan may meet the survivor again within four years.</RHAH_Suiyin_N004Banished_Text>
+  <RHAH_Suiyin_N004Revisit_Label>Seen again</RHAH_Suiyin_N004Revisit_Label>
+  <RHAH_Suiyin_N004Revisit_Text>The caravan sees them on a road that should have been empty. The survivor can find food. The old cloth still has the colony's color.\n\nYou can leave them there. You can pay 250 silver and receive 2500 silver after four years. Killing them ends it.</RHAH_Suiyin_N004Revisit_Text>
+  <RHAH_Suiyin_N004RescuePaid_Label>The later payment</RHAH_Suiyin_N004RescuePaid_Label>
+  <RHAH_Suiyin_N004RescuePaid_Text>The 250 silver is paid. The 2500 silver stays on the account for four years. Loading the save does not start it over.</RHAH_Suiyin_N004RescuePaid_Text>
+  <RHAH_Suiyin_N004Killed_Label>Only a story</RHAH_Suiyin_N004Killed_Label>
+  <RHAH_Suiyin_N004Killed_Text>Suiyin says, "This is only a story..."\n\nIt ends here.</RHAH_Suiyin_N004Killed_Text>
+  <RHAH_Suiyin_N004Regret_Label>If only</RHAH_Suiyin_N004Regret_Label>
+  <RHAH_Suiyin_N004Regret_Text>The mother still walks to the old place. The child is not there.\n\n"If that day..."\n\nShe does not finish it.</RHAH_Suiyin_N004Regret_Text>
+  <RHAH_Suiyin_N005Accepted_Label>Settle them first</RHAH_Suiyin_N005Accepted_Label>
+  <RHAH_Suiyin_N005Accepted_Text>The child is with you. The trader checks the handover again.\n\nSomeone still has to feed the child and find a bed. That was not in the trade.</RHAH_Suiyin_N005Accepted_Text>
+  <RHAH_Suiyin_N005Cared_Label>The old name</RHAH_Suiyin_N005Cared_Label>
+  <RHAH_Suiyin_N005Cared_Text>Someone has had to stop work to watch the child. At least the crying no longer starts with a question about the name.\n\nThe old name is still there. Changing it is your business.</RHAH_Suiyin_N005Cared_Text>
+  <RHAH_Suiyin_N005Dead_Label>An empty place</RHAH_Suiyin_N005Dead_Label>
+  <RHAH_Suiyin_N005Dead_Text>The child did not live. The trade was already paid. Nobody is coming back to return it.</RHAH_Suiyin_N005Dead_Text>
+  <RHAH_Suiyin_N005Left_Label>Not here</RHAH_Suiyin_N005Left_Label>
+  <RHAH_Suiyin_N005Left_Text>The child has left your care. What happens next is not known from here.</RHAH_Suiyin_N005Left_Text>
+  <RHAH_Suiyin_N005Missing_Label>Not settled</RHAH_Suiyin_N005Missing_Label>
+  <RHAH_Suiyin_N005Missing_Text>The handover was a while ago, and the child still has no settled place. This letter does not count the care as finished, and it does not call the child dead.</RHAH_Suiyin_N005Missing_Text>
+  <RHAH_Suiyin_N005Rejected_Label>An empty basket</RHAH_Suiyin_N005Rejected_Label>
+  <RHAH_Suiyin_N005Rejected_Text>The trader packs the trade goods away. You do not change your answer, so he stops waiting.</RHAH_Suiyin_N005Rejected_Text>
+  <RHAH_Suiyin_N005TimedOut_Label>No answer</RHAH_Suiyin_N005TimedOut_Label>
+  <RHAH_Suiyin_N005TimedOut_Text>The trader waits until the agreed time and gets no answer. He leaves with the child.</RHAH_Suiyin_N005TimedOut_Text>
+  <RHAH_Suiyin_N005Broken_Label>The trade breaks</RHAH_Suiyin_N005Broken_Label>
+  <RHAH_Suiyin_N005Broken_Text>The handover does not finish. The terms are void.</RHAH_Suiyin_N005Broken_Text>
+  <RHAH_Suiyin_N006Entry_Label>Grain at the wall</RHAH_Suiyin_N006Entry_Label>
+  <RHAH_Suiyin_N006Entry_Text>The store is short a few mouthfuls. The hole at the wall is narrow, and crumbs hang at the edge.\n\nYou can seal it with 20 wood, leave bait, or clear the edge. Leave it for three days and the hole is gone.</RHAH_Suiyin_N006Entry_Text>
+  <RHAH_Suiyin_N006Sealed_Label>The hole is filled</RHAH_Suiyin_N006Sealed_Label>
+  <RHAH_Suiyin_N006Sealed_Text>The hole is filled. Today's count matches again.\n\nNobody goes to see who was on the other side.</RHAH_Suiyin_N006Sealed_Text>
+  <RHAH_Suiyin_N006BaitSet_Label>Bait left</RHAH_Suiyin_N006BaitSet_Label>
+  <RHAH_Suiyin_N006BaitSet_Text>Food is by the hole. Tonight there is one portion less. Check the trail after a day.</RHAH_Suiyin_N006BaitSet_Text>
+  <RHAH_Suiyin_N006BaitGone_Label>A dragged trail</RHAH_Suiyin_N006BaitGone_Label>
+  <RHAH_Suiyin_N006BaitGone_Text>The bait is gone. There is a fresh trail outside. One more rain and it will be hard to read.</RHAH_Suiyin_N006BaitGone_Text>
+  <RHAH_Suiyin_N006Traced_Label>A place marked</RHAH_Suiyin_N006Traced_Label>
+  <RHAH_Suiyin_N006Traced_Text>You mark a place along the trail. Someone still has to walk there to see what is inside.</RHAH_Suiyin_N006Traced_Text>
+  <RHAH_Suiyin_N006Stopped_Label>No further</RHAH_Suiyin_N006Stopped_Label>
+  <RHAH_Suiyin_N006Stopped_Text>The trail stops here. The hole is closed, and it no longer takes food.</RHAH_Suiyin_N006Stopped_Text>
+  <RHAH_Suiyin_N006Cleaned_Label>The edge is cleared</RHAH_Suiyin_N006Cleaned_Label>
+  <RHAH_Suiyin_N006Cleaned_Text>You turn over the places around the hole where food could hide. The scraps come out, and they cannot be eaten.\n\nAt least nobody has to watch the gap tonight.</RHAH_Suiyin_N006Cleaned_Text>
+  <RHAH_Suiyin_N006Gone_Label>The hole is gone</RHAH_Suiyin_N006Gone_Label>
+  <RHAH_Suiyin_N006Gone_Text>When you look again, the hole is gone. That path cannot be followed.</RHAH_Suiyin_N006Gone_Text>
+  <RHAH_Suiyin_N007Choice_Label>Visitors with plague</RHAH_Suiyin_N007Choice_Label>
+  <RHAH_Suiyin_N007Choice_Text>Some of these visitors have the plague. They are still here, and they cannot be handled like ordinary guests.\n\nYou can hold them for watch, let them go, or leave the choice for later. The disease does not stop because a choice was made. Joining, hiring, and transfer still use the quarantine gate. Nobody is cured automatically.</RHAH_Suiyin_N007Choice_Text>
+  <RHAH_Suiyin_N007Quarantine_Label>The sick stay</RHAH_Suiyin_N007Quarantine_Label>
+  <RHAH_Suiyin_N007Quarantine_Text>The sick stay for now. They still need care. A sentence telling them not to leave is not care.</RHAH_Suiyin_N007Quarantine_Text>
+  <RHAH_Suiyin_N007Release_Label>On the road again</RHAH_Suiyin_N007Release_Label>
+  <RHAH_Suiyin_N007Release_Text>You tell them to keep moving. Some move at once. Some have to wait until they can walk. The release ends when they actually leave.</RHAH_Suiyin_N007Release_Text>
+  <RHAH_Suiyin_N007Defer_Label>Not yet</RHAH_Suiyin_N007Defer_Label>
+  <RHAH_Suiyin_N007Defer_Text>The sick stay as they are. The disease is still there, and the choice is still open.</RHAH_Suiyin_N007Defer_Text>
+  <RHAH_Suiyin_N007Broken_Label>The watch failed</RHAH_Suiyin_N007Broken_Label>
+  <RHAH_Suiyin_N007Broken_Text>Someone still infected left the map. The rest are no longer held.\n\nWhere the ones who left went is not visible from here.</RHAH_Suiyin_N007Broken_Text>
+  <RHAH_Suiyin_N007Recovered_Label>Fit to travel</RHAH_Suiyin_N007Recovered_Label>
+  <RHAH_Suiyin_N007Recovered_Text>The recovered people have left. This time they do not carry the plague with them. The same survivor can come back once, fifteen days later.</RHAH_Suiyin_N007Recovered_Text>
+  <RHAH_Suiyin_N007Stayed_Label>Staying</RHAH_Suiyin_N007Stayed_Label>
+  <RHAH_Suiyin_N007Stayed_Text>The recovered people stay in the colony. The sick beds are empty. They still need a place of their own.</RHAH_Suiyin_N007Stayed_Text>
+  <RHAH_Suiyin_N007AllDead_Label>None lived</RHAH_Suiyin_N007AllDead_Label>
+  <RHAH_Suiyin_N007AllDead_Text>None of this group lived. The watch is over.</RHAH_Suiyin_N007AllDead_Text>
+  <RHAH_Suiyin_N007Return_Label>A known face</RHAH_Suiyin_N007Return_Label>
+  <RHAH_Suiyin_N007Return_Text>A known face is at the door. The plague was gone when they left.\n\nThey ask for a meal. You can receive them or send them on. No second person is made to stand in for them.</RHAH_Suiyin_N007Return_Text>
+  <RHAH_Suiyin_N008Arrive_Label>Someone asking the way</RHAH_Suiyin_N008Arrive_Label>
+  <RHAH_Suiyin_N008Arrive_Text>"I came for the ones who are still alive."\n\n{0} rearranges the words.\n\n"We need food, and we need a road that still works. Six simple meals, and I leave the place of an old store. You can check whether I am telling it straight."\n\nHe will wait three days.</RHAH_Suiyin_N008Arrive_Text>
+  <RHAH_Suiyin_N008Trade_Label>The place is given</RHAH_Suiyin_N008Trade_Label>
+  <RHAH_Suiyin_N008Trade_Text>"That is enough. Do not add more. I cannot carry it."\n\n{0} hands over the place and checks the way back.</RHAH_Suiyin_N008Trade_Text>
+  <RHAH_Suiyin_N008Proof_Label>It matches</RHAH_Suiyin_N008Proof_Label>
+  <RHAH_Suiyin_N008Proof_Text>"This part matches. I cannot promise the rest, and you do not have to believe it now."\n\n{0} finished records can be checked. The trade can still be made once.</RHAH_Suiyin_N008Proof_Text>
+  <RHAH_Suiyin_N008NoProof_Label>Wrong place</RHAH_Suiyin_N008NoProof_Label>
+  <RHAH_Suiyin_N008NoProof_Text>"I may have the wrong place."\n\nHe leaves. There is no fight, and no loss of trust.</RHAH_Suiyin_N008NoProof_Text>
+  <RHAH_Suiyin_N008Refuse_Label>Then not</RHAH_Suiyin_N008Refuse_Label>
+  <RHAH_Suiyin_N008Refuse_Text>"Then not. I still have to be outside before dark."\n\nA plain refusal does not cost trust.</RHAH_Suiyin_N008Refuse_Text>
+  <RHAH_Suiyin_N008Drive_Label>Driven off</RHAH_Suiyin_N008Drive_Label>
+  <RHAH_Suiyin_N008Drive_Text>You drive the visitor off by force. That is recorded on its own. It does not become revenge by itself.</RHAH_Suiyin_N008Drive_Text>
+  <RHAH_Suiyin_N008Dead_Label>Dead</RHAH_Suiyin_N008Dead_Label>
+  <RHAH_Suiyin_N008Dead_Text>The one who asked the way is dead. The message ends there.</RHAH_Suiyin_N008Dead_Text>
+  <RHAH_Suiyin_N008Left_Label>Gone</RHAH_Suiyin_N008Left_Label>
+  <RHAH_Suiyin_N008Left_Text>The one who asked the way left the map. The message brought nothing back.</RHAH_Suiyin_N008Left_Text>
+  <RHAH_Suiyin_N008Missing_Label>No sign</RHAH_Suiyin_N008Missing_Label>
+  <RHAH_Suiyin_N008Missing_Text>The one who asked the way is missing. This letter does not call that death.</RHAH_Suiyin_N008Missing_Text>
+  <RHAH_Suiyin_N008Timeout_Label>Three days</RHAH_Suiyin_N008Timeout_Label>
+  <RHAH_Suiyin_N008Timeout_Text>The three days are over. The visitor is still here, and the trade was not made.</RHAH_Suiyin_N008Timeout_Text>
+  <RHAH_Suiyin_N009Arrive_Label>An old store</RHAH_Suiyin_N009Arrive_Label>
+  <RHAH_Suiyin_N009Arrive_Text>There is no grain here. The box holds haul lists, ration counts, and damp paper.\n\nThe number on the top page was changed twice. The last change has no name. The place lasts fifteen days.</RHAH_Suiyin_N009Arrive_Text>
+  <RHAH_Suiyin_N009Take_Label>Records taken</RHAH_Suiyin_N009Take_Label>
+  <RHAH_Suiyin_N009Take_Text>What can be carried is packed. Some pages are stuck together. Do not tear them yet.\n\nThe silver is {0}. Positive trust raises narrative silver by at most a quarter. This is paid once.</RHAH_Suiyin_N009Take_Text>
+  <RHAH_Suiyin_N009Leave_Label>Left in place</RHAH_Suiyin_N009Leave_Label>
+  <RHAH_Suiyin_N009Leave_Text>You do not take the box. The place is noted. Whether the next group takes it is not decided here.</RHAH_Suiyin_N009Leave_Text>
+  <RHAH_Suiyin_N009Hand_Label>Given over</RHAH_Suiyin_N009Hand_Label>
+  <RHAH_Suiyin_N009Hand_Text>"Leave one with us," the other says. "After you take the rest, do not make us ask again."\n\nThe keeping goes to them. The silver is {0}.</RHAH_Suiyin_N009Hand_Text>
+  <RHAH_Suiyin_N009Share_Label>One copy each</RHAH_Suiyin_N009Share_Label>
+  <RHAH_Suiyin_N009Share_Text>You keep a copy. They keep the other. There is no silver now, and no promise that it comes back.</RHAH_Suiyin_N009Share_Text>
+  <RHAH_Suiyin_N009Destroy_Label>Records destroyed</RHAH_Suiyin_N009Destroy_Label>
+  <RHAH_Suiyin_N009Destroy_Text>The paper and the box are no longer usable. There is no second copy here to check the list against.</RHAH_Suiyin_N009Destroy_Text>
+  <RHAH_Suiyin_N009Empty_Label>An empty store</RHAH_Suiyin_N009Empty_Label>
+  <RHAH_Suiyin_N009Empty_Text>The place is still there. What could be taken is already gone. The walk brought nothing back.</RHAH_Suiyin_N009Empty_Text>
+  <RHAH_Suiyin_Journal_Label>Record {0}</RHAH_Suiyin_Journal_Label>
+  <RHAH_Suiyin_Journal_Text>This batch is recorded. A broad relief counts only after a safe leaving or continued settlement. The same batch is not counted twice.</RHAH_Suiyin_Journal_Text>
+  <RHAH_Suiyin_Aside_1_Label>Another child</RHAH_Suiyin_Aside_1_Label>
+  <RHAH_Suiyin_Aside_1_Text>Someone is talking about a child's place again. The last time does not decide this one.</RHAH_Suiyin_Aside_1_Text>
+  <RHAH_Suiyin_Aside_2_Label>Another place</RHAH_Suiyin_Aside_2_Label>
+  <RHAH_Suiyin_Aside_2_Text>The grain trail has another place. Do not treat them as the same until someone walks there.</RHAH_Suiyin_Aside_2_Text>
+  <RHAH_Suiyin_Aside_3_Label>News again</RHAH_Suiyin_Aside_3_Label>
+  <RHAH_Suiyin_Aside_3_Text>Someone can travel again, so news can arrive again. Whether this visitor heard about the quarantine still has to be asked.</RHAH_Suiyin_Aside_3_Text>
+  <RHAH_Suiyin_Aside_4_Label>The place he named</RHAH_Suiyin_Aside_4_Label>
+  <RHAH_Suiyin_Aside_4_Text>The place he named is there. This time, the thing he promised is actually in it.</RHAH_Suiyin_Aside_4_Text>
+  <RHAH_Menu_Narrative_Nodes>Nodes</RHAH_Menu_Narrative_Nodes>
+  <RHAH_Menu_Narrative_Node>Node switch</RHAH_Menu_Narrative_Node>
+  <RHAH_Menu_Narrative_Thresholds>Thresholds</RHAH_Menu_Narrative_Thresholds>
+  <RHAH_Menu_Narrative_Progress>Event kinds before the record letter</RHAH_Menu_Narrative_Progress>
+  <RHAH_Menu_Narrative_Reward>Event kinds before the silver letter</RHAH_Menu_Narrative_Reward>
+  <RHAH_Menu_Narrative_Envoy>Event kinds before the envoy</RHAH_Menu_Narrative_Envoy>
+  <RHAH_Menu_Narrative_Relic>Event kinds before the record site</RHAH_Menu_Narrative_Relic>
+  <RHAH_Menu_Narrative_Journals>Records</RHAH_Menu_Narrative_Journals>
+  <RHAH_Menu_Narrative_JournalOpen>Open record {0}</RHAH_Menu_Narrative_JournalOpen>
+  <RHAH_Menu_Narrative_Aside>Asides</RHAH_Menu_Narrative_Aside>
+  <RHAH_Menu_Narrative_TrustClosed>Trust is too low for asides. Result letters still arrive.</RHAH_Menu_Narrative_TrustClosed>
+</LanguageData>
