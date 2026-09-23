@@ -31,8 +31,24 @@ namespace HungerAndHavoc.Incidents
                 bool enough = map != null && RHAH_ChoiceRuntime.Stock(map, kind) >= amount;
                 if (kind == RHAH_RequestKind.Baby)
                 {
-                    enough = false;
-                    deliver.Disable("RHAH_Choice_NoBaby".Translate());
+                    RHAH_ChoiceRecord record = FindRecord(Current.Game?.GetComponent<GameComponent_RHAH_Game>());
+                    bool food = record != null &&
+                        RHAH_RequestRules.CanSubstituteFood(
+                            RHAH_Mod.Settings == null || RHAH_Mod.Settings.childExchangeFoodSubstitution,
+                            record.Choice,
+                            map == null ? 0 : RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal),
+                            record.PawnLoadIds.Count);
+                    if (food)
+                    {
+                        enough = true;
+                        deliver.action = () => Settle(RHAH_ChoiceAction.Deliver);
+                        deliver.resolveTree = true;
+                    }
+                    else
+                    {
+                        enough = false;
+                        deliver.Disable("RHAH_Choice_NoBaby".Translate());
+                    }
                 }
                 else if (!enough)
                 {
@@ -74,8 +90,13 @@ namespace HungerAndHavoc.Incidents
             GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
             RHAH_Settings settings = RHAH_Mod.Settings;
             Map map = ResolveMap();
-            bool enabled = settings == null || settings.AllowsRequest(site == RHAH_IntelSiteKind.None ? RHAH_ChoiceKind.Aid : RHAH_ChoiceKind.Intel);
-            bool canDeliver = map != null && RHAH_ChoiceRuntime.TryConsume(map, kind, amount);
+            RHAH_ChoiceRecord open = FindRecord(game);
+            bool enabled = settings == null || settings.AllowsRequest(open == null ? (site == RHAH_IntelSiteKind.None ? RHAH_ChoiceKind.Aid : RHAH_ChoiceKind.Intel) : open.Choice);
+            bool foodForChild = open != null && open.Choice == RHAH_ChoiceKind.ChildExchange && kind == RHAH_RequestKind.Baby &&
+                (settings == null || settings.childExchangeFoodSubstitution);
+            bool canDeliver = map != null && (foodForChild
+                ? RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, RHAH_RequestRules.FoodForChildren(open.PawnLoadIds.Count))
+                : RHAH_ChoiceRuntime.TryConsume(map, kind, amount));
             if (action != RHAH_ChoiceAction.Deliver)
             {
                 canDeliver = true;

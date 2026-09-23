@@ -231,6 +231,16 @@ namespace HungerAndHavoc.Incidents
 
             return stock >= amount;
         }
+        internal static int FoodForChildren(int childCount)
+        {
+            return childCount <= 0 ? 0 : childCount * HungerAndHavoc.Trade.RHAH_CaravanStay.FoodPerChild;
+        }
+
+        internal static bool CanSubstituteFood(bool foodSubstitutionEnabled, RHAH_ChoiceKind choice, int foodStock, int childCount)
+        {
+            return HungerAndHavoc.Trade.RHAH_CaravanStay.AllowsFoodForChild(
+                foodSubstitutionEnabled, choice, true, true, foodStock, childCount);
+        }
 
         internal static RHAH_ChoiceAction Settle(
             RHAH_ChoiceAction requested,

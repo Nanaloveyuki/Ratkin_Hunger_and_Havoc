@@ -44,6 +44,27 @@ namespace HungerAndHavoc.Tests
             Assert.True(RHAH_RequestRules.OffersVisitorControl("I-008"));
             Assert.False(RHAH_RequestRules.OffersVisitorControl("I-051"));
         }
+        [Fact]
+        public void TraderCaravansStayAndFoodReplacesChildren()
+        {
+            Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.BlocksEnvironmentLeave(true, true));
+            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.BlocksEnvironmentLeave(false, true));
+            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.BlocksEnvironmentLeave(true, false));
+            Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.BlocksEnclosedLeave(true, true));
+            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.BlocksEnclosedLeave(false, true));
+            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.BlocksEnclosedLeave(true, false));
+            Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.CellIsHarsh(-30f, 0f, 20f));
+            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.CellIsHarsh(15f, 0f, 20f));
+            Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.RoomIsEnclosed(true, false, false));
+            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.RoomIsEnclosed(true, true, false));
+            Assert.Equal(20, RHAH_RequestRules.FoodForChildren(2));
+            Assert.True(RHAH_RequestRules.CanSubstituteFood(true, RHAH_ChoiceKind.ChildExchange, 20, 2));
+            Assert.False(RHAH_RequestRules.CanSubstituteFood(false, RHAH_ChoiceKind.ChildExchange, 20, 2));
+            Assert.False(RHAH_RequestRules.CanSubstituteFood(true, RHAH_ChoiceKind.ChildExchange, 19, 2));
+            Assert.False(RHAH_RequestRules.CanSubstituteFood(true, RHAH_ChoiceKind.Aid, 20, 2));
+            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.NpcSellsFood(true, true));
+            Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.NpcSellsFood(true, false));
+        }
 
         [Fact]
         public void FamilyDropRecordsEachChildOnce()

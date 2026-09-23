@@ -1,3 +1,5 @@
+using HungerAndHavoc.Core;
+using HungerAndHavoc.Trade;
 using HungerAndHavoc.Api;
 using Verse.AI;
 
@@ -13,6 +15,13 @@ namespace HungerAndHavoc.Pawn
             }
 
             MarkSeekingFood(pawn);
+            if (RHAH_CaravanStay.ShouldHold(
+                pawn,
+                RHAH_Mod.Settings == null || RHAH_Mod.Settings.traderIgnoresHarshEnvironment,
+                RHAH_Mod.Settings == null || RHAH_Mod.Settings.traderIgnoresEnclosedSpace))
+            {
+                return null;
+            }
 
             if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.FeedFromRelief))
             {
