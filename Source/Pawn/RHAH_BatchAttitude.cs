@@ -33,12 +33,18 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
 
-            if (shift == RHAH_AttitudeShift.Hostile)
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            bool shiftHostile = settings == null || settings.batchTurnsHostile;
+            bool leave = settings == null || settings.batchLeavesTogether;
+            if (shift == RHAH_AttitudeShift.Hostile && shiftHostile)
             {
                 SetHostile(members);
             }
 
-            OrderLeave(members);
+            if (leave)
+            {
+                OrderLeave(members);
+            }
             if (RHAH_EndingRules.CountsExpulsion(forcedAway, true) && RHAH_EndingRuntime.CountsNow())
             {
                 int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;

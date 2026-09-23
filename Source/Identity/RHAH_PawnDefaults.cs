@@ -28,12 +28,12 @@ namespace HungerAndHavoc.Identity
             switch (gate)
             {
                 case RHAH_BehaviorGate.Beg:
-                    return IsBeggar(role);
+                    return MasterOn(RHAH_BehaviorGate.Beg) && IsBeggar(role);
                 case RHAH_BehaviorGate.Steal:
-                    return IsThief(role);
+                    return MasterOn(RHAH_BehaviorGate.Steal) && IsThief(role);
                 case RHAH_BehaviorGate.Fight:
-                    return role == RHAH_PawnRole.Siege ||
-                           attitude == RHAH_Attitude.Hostile;
+                    return MasterOn(RHAH_BehaviorGate.Fight) &&
+                           (role == RHAH_PawnRole.Siege || attitude == RHAH_Attitude.Hostile);
                 case RHAH_BehaviorGate.LeaveAfterFed:
                     return true;
                 case RHAH_BehaviorGate.EatOutsideRelief:
@@ -41,7 +41,7 @@ namespace HungerAndHavoc.Identity
                 case RHAH_BehaviorGate.FeedFromRelief:
                     return true;
                 case RHAH_BehaviorGate.Gnaw:
-                    return true;
+                    return MasterOn(RHAH_BehaviorGate.Gnaw);
                 case RHAH_BehaviorGate.TailBite:
                     return true;
                 case RHAH_BehaviorGate.Leash:
@@ -75,6 +75,24 @@ namespace HungerAndHavoc.Identity
                    gate == RHAH_BehaviorGate.Leash ||
                    gate == RHAH_BehaviorGate.Carry;
         }
+        static bool MasterOn(RHAH_BehaviorGate gate)
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            if (settings == null)
+            {
+                return true;
+            }
+
+            switch (gate)
+            {
+                case RHAH_BehaviorGate.Beg: return settings.beggingEnabled;
+                case RHAH_BehaviorGate.Steal: return settings.stealingEnabled;
+                case RHAH_BehaviorGate.Fight: return settings.fightingEnabled;
+                case RHAH_BehaviorGate.Gnaw: return settings.gnawingEnabled;
+                default: return true;
+            }
+        }
+
 
         static bool IsBeggar(RHAH_PawnRole role)
         {

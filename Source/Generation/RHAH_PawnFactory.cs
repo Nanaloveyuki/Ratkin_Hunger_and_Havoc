@@ -66,11 +66,17 @@ namespace HungerAndHavoc.Generation
                 return RHAH_PawnCreationResult.Failed(RHAH_PawnCreationFailure.GenerationFailed);
             }
 
-            RHAH_Plague.InfectCarrier(pawn, request.CarriesPlague);
-            if (request.CarriesPlague)
+            bool plagueOn = Core.RHAH_Mod.Settings == null || Core.RHAH_Mod.Settings.plagueEnabled;
+            if (plagueOn)
+            {
+                RHAH_Plague.InfectCarrier(pawn, request.CarriesPlague);
+            }
+
+            if (plagueOn && request.CarriesPlague)
             {
                 request.Map?.GetComponent<MapComponent_RHAH_Map>()?.Quarantine(pawn.thingIDNumber);
             }
+
             RHAH_VisitorGroup.TryStart(created, request.Map, request.SpawnCell, request.Role);
             RHAH_Runtime.RegisterBatch(request.Map, request.SpawnBatchId);
             return RHAH_PawnCreationResult.Success(created);

@@ -10,22 +10,22 @@
   <RHAH_Settings_EatOutsideRelief>Allow food outside the relief zone</RHAH_Settings_EatOutsideRelief>
   <RHAH_Settings_EatOutsideRelief_Tooltip>Visitors may only eat food they can reach inside the zone. With none, they beg, wait, or leave.</RHAH_Settings_EatOutsideRelief_Tooltip>
   <RHAH_Settings_IgnoreReliefAfterFed>Ignore the relief zone after eating</RHAH_Settings_IgnoreReliefAfterFed>
-  <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>After a visitor is full, their next meal may come from outside the zone. With this off, a full visitor is no longer fed by this mod.</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
+  <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>After a visitor is full, the next meal may come from outside the zone. With this off, a full visitor stops looking for another meal.</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
   <RHAH_Settings_LeaveAfterFed>Leave the map after eating</RHAH_Settings_LeaveAfterFed>
   <RHAH_Settings_LeaveAfterFed_Tooltip>A visitor who can reach an exit leaves after eating. A child too young to walk is carried out. With this off, a full visitor stays.</RHAH_Settings_LeaveAfterFed_Tooltip>
   <RHAH_Settings_MaxEventPawns>Pawns per event: {0}</RHAH_Settings_MaxEventPawns>
-  <RHAH_Settings_MaxEventPawns_Tooltip>Adults, children, Ratkin young, and animals in one event stay under this number. Range 1 to 100, default 30. A count below the event minimum still uses that minimum. A fixed mother and child group is not split.</RHAH_Settings_MaxEventPawns_Tooltip>
+  <RHAH_Settings_MaxEventPawns_Tooltip>One event stays under this count. 1 to 100, default 30. A count below the event minimum still uses that minimum. A mother and child stay together.</RHAH_Settings_MaxEventPawns_Tooltip>
   <RHAH_Settings_ReliefScore>Relief food bonus: {0}%</RHAH_Settings_ReliefScore>
   <RHAH_Settings_ReliefScore_Tooltip>Food inside the zone also gains this bonus, on top of distance and whether it is suitable. Range 0 to 100%, default 10%.</RHAH_Settings_ReliefScore_Tooltip>
   <RHAH_Settings_FedStay>Stay after eating: {0} days</RHAH_Settings_FedStay>
-  <RHAH_Settings_FedStay_Tooltip>After the first full meal, each visitor stays for half to one and a half times this duration, then leaves. Range 0 to 5 days, default half a day. Turning leaving off keeps the record of who has already eaten.</RHAH_Settings_FedStay_Tooltip>
+  <RHAH_Settings_FedStay_Tooltip>After the first full meal, a visitor stays for half to one and a half times this long, then leaves. 0 to 5 days, default half a day.</RHAH_Settings_FedStay_Tooltip>
   <RHAH_Settings_WaitFood>Wait when no food is found</RHAH_Settings_WaitFood>
   <RHAH_Settings_WaitFood_Tooltip>Visitors keep looking for the set time. Food found later starts the next wait over. With this off, they leave.</RHAH_Settings_WaitFood_Tooltip>
   <RHAH_Settings_FoodWait>Wait without food: {0} days</RHAH_Settings_FoodWait>
   <RHAH_Settings_FoodWait_Tooltip>How long a visitor waits after finding nothing to eat. Range 0 to 5 days, default half a day.</RHAH_Settings_FoodWait_Tooltip>
   <RHAH_Settings_MinAge>Minimum age: {0}</RHAH_Settings_MinAge>
   <RHAH_Settings_MaxAge>Maximum age: {0}</RHAH_Settings_MaxAge>
-  <RHAH_Settings_Age_Tooltip>Ordinary visitors are generated inside this range. Range 0 to 100, default 0 to 50. Ratkin young, fixed ages, and mothers keep the age the event requires. Without Toddlers, only event infants ignore age-based immobility. Injury, pain, and consciousness still drop them.</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_Age_Tooltip>Ordinary visitors fall inside this range. 0 to 100, default 0 to 50. Ratkin young, fixed ages, and mothers keep the age the event asks for.</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_ShelterDays>Short stay: {0} days</RHAH_Settings_ShelterDays>
   <RHAH_Settings_ShelterDays_Tooltip>A sheltered visitor leaves when the time is up. Range 5 to 60 days, default 5. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_ShelterDays_Tooltip>
   <RHAH_Settings_HireDays>Long hire: {0} days</RHAH_Settings_HireDays>
@@ -37,7 +37,7 @@
   <RHAH_Settings_Temp_Tooltip>New map incidents stop while the map is outside this range. Default -35°C to 70°C. Caravans ignore it.</RHAH_Settings_Temp_Tooltip>
   <RHAH_Choice_Shelter>Shelter</RHAH_Choice_Shelter>
   <RHAH_Settings_ReliefFoods>Allowed foods</RHAH_Settings_ReliefFoods>
-  <RHAH_Settings_ReliefFoods_Tooltip>Visitors may take any food left on. Disabling all only turns off foods loaded now. Foods added later stay available.</RHAH_Settings_ReliefFoods_Tooltip>
+  <RHAH_Settings_ReliefFoods_Tooltip>Visitors may take any food left on.</RHAH_Settings_ReliefFoods_Tooltip>
   <RHAH_Settings_ReliefFoods_All>Allow all</RHAH_Settings_ReliefFoods_All>
   <RHAH_Settings_ReliefFoods_None>Disable all</RHAH_Settings_ReliefFoods_None>
   <RHAH_Settings_ReliefFoods_Search>Search foods or mods</RHAH_Settings_ReliefFoods_Search>
@@ -48,6 +48,58 @@
   <RHAH_ReliefArea_Clear>Clear relief zone</RHAH_ReliefArea_Clear>
   <RHAH_ReliefArea_Clear_Desc>Remove marked cells. Once none remain, visitors who cannot leave the zone stop taking food here.</RHAH_ReliefArea_Clear_Desc>
   <RHAH_PlagueSpreading>Ratkin plague is spreading through the colony.</RHAH_PlagueSpreading>
+  <RHAH_Menu_Visitors>Visitors</RHAH_Menu_Visitors>
+  <RHAH_Menu_Plague>Plague</RHAH_Menu_Plague>
+  <RHAH_Settings_Begging>Allow begging</RHAH_Settings_Begging>
+  <RHAH_Settings_Begging_Tooltip>Visitors no longer beg from colonists.</RHAH_Settings_Begging_Tooltip>
+  <RHAH_Settings_Stealing>Allow stealing</RHAH_Settings_Stealing>
+  <RHAH_Settings_Stealing_Tooltip>Visitors no longer steal.</RHAH_Settings_Stealing_Tooltip>
+  <RHAH_Settings_Fighting>Allow fighting back</RHAH_Settings_Fighting>
+  <RHAH_Settings_Fighting_Tooltip>When harmed or driven off, visitors leave instead of fighting.</RHAH_Settings_Fighting_Tooltip>
+  <RHAH_Settings_Gnawing>Allow gnawing trees and walls</RHAH_Settings_Gnawing>
+  <RHAH_Settings_Gnawing_Tooltip>Visitors no longer gnaw bark or walls for food.</RHAH_Settings_Gnawing_Tooltip>
+  <RHAH_Settings_BatchHostile>The whole group turns hostile</RHAH_Settings_BatchHostile>
+  <RHAH_Settings_BatchHostile_Tooltip>Harming or driving off one visitor no longer turns the rest of that group hostile.</RHAH_Settings_BatchHostile_Tooltip>
+  <RHAH_Settings_BatchLeave>The whole group leaves together</RHAH_Settings_BatchLeave>
+  <RHAH_Settings_BatchLeave_Tooltip>Harm or expulsion affects only that visitor. The rest of the group stays.</RHAH_Settings_BatchLeave_Tooltip>
+  <RHAH_Settings_BroadcastCooldown>Broadcast cooldown: {0} days</RHAH_Settings_BroadcastCooldown>
+  <RHAH_Settings_BroadcastCooldown_Tooltip>Days before another broadcast. 0 to 10, default 3.</RHAH_Settings_BroadcastCooldown_Tooltip>
+  <RHAH_Settings_RefugeeCamp>Allow refugee camps</RHAH_Settings_RefugeeCamp>
+  <RHAH_Settings_RefugeeCamp_Tooltip>Temporary refugee camps stop appearing.</RHAH_Settings_RefugeeCamp_Tooltip>
+  <RHAH_Settings_Plague>Allow the plague</RHAH_Settings_Plague>
+  <RHAH_Settings_Plague_Tooltip>New visitors arrive healthy, and it stops spreading. People already sick still need treatment.</RHAH_Settings_Plague_Tooltip>
+  <RHAH_Settings_PlaguePerCarrier>Spread chance per sick visitor: {0}%</RHAH_Settings_PlaguePerCarrier>
+  <RHAH_Settings_PlaguePerCarrier_Tooltip>Each sick ratkin on the map adds this much chance that a colonist catches it. 0 to 100, default 0.5.</RHAH_Settings_PlaguePerCarrier_Tooltip>
+  <RHAH_Settings_PlagueCap>Spread chance cap: {0}%</RHAH_Settings_PlagueCap>
+  <RHAH_Settings_PlagueCap_Tooltip>One check will not infect a colonist more often than this. 0 to 100, default 30.</RHAH_Settings_PlagueCap_Tooltip>
+  <RHAH_Settings_PlagueDays>Spread interval: {0} days</RHAH_Settings_PlagueDays>
+  <RHAH_Settings_PlagueDays_Tooltip>How many days pass between spread checks. 1 to 30, default 3.</RHAH_Settings_PlagueDays_Tooltip>
+  <RHAH_Settings_PlagueHour>Check hour: {0}</RHAH_Settings_PlagueHour>
+  <RHAH_Settings_PlagueHour_Tooltip>The hour of day when spread is checked. 0 to 23, default 6.</RHAH_Settings_PlagueHour_Tooltip>
+  <RHAH_Settings_PlagueBlood>Blood pumping of {0}% prevents infection</RHAH_Settings_PlagueBlood>
+  <RHAH_Settings_PlagueBlood_Tooltip>A person at or above this blood pumping is not infected. 0 to 300, default 120.</RHAH_Settings_PlagueBlood_Tooltip>
+  <RHAH_Settings_PlagueQuarantine>Quarantine blocks joining, hiring, and trade</RHAH_Settings_PlagueQuarantine>
+  <RHAH_Settings_PlagueQuarantine_Tooltip>A visitor still in quarantine can join, be hired, or be traded.</RHAH_Settings_PlagueQuarantine_Tooltip>
+  <RHAH_Settings_PlagueReturn>Allow recovered visitors to return</RHAH_Settings_PlagueReturn>
+  <RHAH_Settings_PlagueReturn_Tooltip>Someone who left and recovered does not come back.</RHAH_Settings_PlagueReturn_Tooltip>
+  <RHAH_Settings_PlagueDelay>Days before a return: {0}</RHAH_Settings_PlagueDelay>
+  <RHAH_Settings_PlagueDelay_Tooltip>After leaving and recovering, they return after this many days. 0 to 60, default 15.</RHAH_Settings_PlagueDelay_Tooltip>
+  <RHAH_Settings_PlagueStay>Stay after returning: {0} days</RHAH_Settings_PlagueStay>
+  <RHAH_Settings_PlagueStay_Tooltip>A returned visitor leaves after this many days. 0 to 15, default 1.</RHAH_Settings_PlagueStay_Tooltip>
+  <RHAH_Settings_SuiyinTempo>Suiyin changes major threats with trust</RHAH_Settings_SuiyinTempo>
+  <RHAH_Settings_SuiyinTempo_Tooltip>With Suiyin as storyteller, major threats no longer speed up or slow down with trust.</RHAH_Settings_SuiyinTempo_Tooltip>
+  <RHAH_Settings_WeightWild>Wild: {0}</RHAH_Settings_WeightWild>
+  <RHAH_Settings_WeightBeggar>Begging: {0}</RHAH_Settings_WeightBeggar>
+  <RHAH_Settings_WeightThief>Theft: {0}</RHAH_Settings_WeightThief>
+  <RHAH_Settings_WeightTrade>Trade: {0}</RHAH_Settings_WeightTrade>
+  <RHAH_Settings_WeightSiege>Siege: {0}</RHAH_Settings_WeightSiege>
+  <RHAH_Settings_WeightAid>Aid: {0}</RHAH_Settings_WeightAid>
+  <RHAH_Settings_WeightSpecial>Special: {0}</RHAH_Settings_WeightSpecial>
+  <RHAH_Settings_WeightIntel>Intel: {0}</RHAH_Settings_WeightIntel>
+  <RHAH_Settings_WeightSeason>Spring and winter: {0}</RHAH_Settings_WeightSeason>
+  <RHAH_Settings_WeightPlague>Plague incidents: {0}</RHAH_Settings_WeightPlague>
+  <RHAH_Settings_Weight_Tooltip>Incidents of this kind are multiplied by this before the draw. 0 to 5. At 0, that kind stops appearing.</RHAH_Settings_Weight_Tooltip>
+  <RHAH_Settings_ReliefFoods_Quote>Visitors stop taking food you turn off. Food added later stays available.</RHAH_Settings_ReliefFoods_Quote>
   <RHAH_Menu_Overview>Overview</RHAH_Menu_Overview>
   <RHAH_Menu_Events>Events</RHAH_Menu_Events>
   <RHAH_Menu_Pawns>Pawns</RHAH_Menu_Pawns>
@@ -76,7 +128,7 @@
   <RHAH_Menu_Unavailable>Not available</RHAH_Menu_Unavailable>
   <RHAH_Menu_Settings_Missing>Settings are not ready. Reopen this page and try again.</RHAH_Menu_Settings_Missing>
   <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}. Broadcast: {4}.</RHAH_Menu_EventMeta>
-  <RHAH_Menu_Events_Note>A checked incident can fire. The slider sets a rough value. Type the exact value on the right. Debug points change the number of arrivals and the size of a request. A spawn weight of 0 stays out of the draw.</RHAH_Menu_Events_Note>
+  <RHAH_Menu_Events_Note>A checked event can happen. Drag for a rough value, type the exact one. Scale changes headcount and requests. At weight 0, it stops appearing.</RHAH_Menu_Events_Note>
   <RHAH_Menu_EventEnabled>Allow this incident</RHAH_Menu_EventEnabled>
   <RHAH_Menu_EventEnabled_Tip>With this off, the incident stays out of the draw and cannot be queued from the debug page. Visitors already here stay.</RHAH_Menu_EventEnabled_Tip>
   <RHAH_Menu_DebugPoints>Debug points</RHAH_Menu_DebugPoints>
@@ -114,7 +166,7 @@
   <RHAH_Menu_Ending_Gap>Ending switches are not implemented. This page does not write an ending.</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>Biotech gene settings are not implemented. This page does not edit genes.</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>Biotech is required. With it, you can set the xenotypes of visitors here.</RHAH_Menu_Genes_NoBiotech>
-  <RHAH_Menu_Genes_Note>The percent after the name is the current chance. The slider sets a rough weight. Type the exact value on the right, from 0 to 100. A xenotype at 0 stays out of the draw. At all zeroes, visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_Note>The percent is the current chance. Drag a bar or type a weight from 0 to 100. Zero stays out. At all zeroes, visitors use the base ratkin xenotype, or the famine ratkin xenotype if that one is missing.</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>Reset weights</RHAH_Menu_Genes_Reset>
   <RHAH_Menu_Genes_Fallback>The enabled weights add up to 0. Visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Menu_Genes_Fallback>
   <RHAH_Menu_Genes_WeightTip>Suggested weight {1}. Chance is this weight divided by the sum of enabled weights.</RHAH_Menu_Genes_WeightTip>
@@ -125,7 +177,7 @@
   <RHAH_Menu_Genes_Remove>Remove</RHAH_Menu_Genes_Remove>
   <RHAH_Menu_Genes_UnknownMod>Unknown source</RHAH_Menu_Genes_UnknownMod>
   <RHAH_Menu_Genes_NoOwned>No Hunger and Havoc genes are available to toggle.</RHAH_Menu_Genes_NoOwned>
-  <RHAH_Menu_PawnHistory_Note>New visitors draw one checked history by developmental stage, age, temperature, and incident. An incident that sets its own backstory keeps it. Traits can still be drawn.</RHAH_Menu_PawnHistory_Note>
+  <RHAH_Menu_PawnHistory_Note>New visitors draw one checked history. Someone whose story the event already wrote keeps it. Traits can still be drawn.</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>Enable all histories</RHAH_Menu_PawnHistory_EnableAll>
   <RHAH_Menu_PawnHistory_DisableAll>Disable all histories</RHAH_Menu_PawnHistory_DisableAll>
   <RHAH_Menu_PawnHistory_ItemTip>With this off, the history stays out of the draw. Pawns already generated keep theirs.</RHAH_Menu_PawnHistory_ItemTip>
@@ -136,13 +188,13 @@
   <RHAH_Menu_PawnTrait_Weight>Weight</RHAH_Menu_PawnTrait_Weight>
   <RHAH_Menu_PawnTrait_WeightTip>A higher weight is drawn more often. 0 stays out. After the draw, weight divided by 100 is the chance to gain it. The slider is rough. The field is exact.</RHAH_Menu_PawnTrait_WeightTip>
   <RHAH_Settings_PawnHistories>Draw histories for new visitors</RHAH_Settings_PawnHistories>
-  <RHAH_Settings_PawnHistories_Tooltip>With this off, new visitors keep the backstory from the generator. Pawns already here keep theirs.</RHAH_Settings_PawnHistories_Tooltip>
+  <RHAH_Settings_PawnHistories_Tooltip>New visitors no longer receive these histories. People already here stay as they are.</RHAH_Settings_PawnHistories_Tooltip>
   <RHAH_Settings_PawnTraits>Draw traits for new visitors</RHAH_Settings_PawnTraits>
   <RHAH_Settings_PawnTraits_Tooltip>With this off, new visitors gain no mod trait. Pawns already here keep theirs. Each visitor gets at most one.</RHAH_Settings_PawnTraits_Tooltip>
   <RHAH_Menu_Experimental_Gap>Generation optimization is registered on this page. Other experiments are not added yet.</RHAH_Menu_Experimental_Gap>
   <RHAH_Menu_Experimental_Note>These options change how long visitors take to generate. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>Speed up visitor generation</RHAH_Settings_OptimizeGeneration>
-  <RHAH_Settings_OptimizeGeneration_Tooltip>Skips relations, titles, random apparel, and redressing world pawns. Incidents without a set xenotype draw from the gene page weights. If those weights are unavailable, visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Settings_OptimizeGeneration_Tooltip>
+  <RHAH_Settings_OptimizeGeneration_Tooltip>Visitors appear faster, with less random clothing and status. Without a set xenotype, the gene page weights decide.</RHAH_Settings_OptimizeGeneration_Tooltip>
   <RHAH_Menu_Frequency_Gap>The curve is the chance this pool fires. Days run across. Chance runs up. The dot is the current setting. 0 turns this pool off. Rest the cursor on the curve to read that day's chance.</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>Positive incidents, average days</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>Negative incidents, average days</RHAH_Menu_Frequency_Negative>
@@ -207,7 +259,7 @@
   <RHAH_Settings_ChildExchangeFood>Allow food in place of children</RHAH_Settings_ChildExchangeFood>
   <RHAH_Settings_ChildExchangeFood_Tooltip>Child exchange accepts simple meals instead of a baby. Each child costs 10. The traders do not sell food. Off, the trade still asks for the child.</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>Set children down when leaving</RHAH_Settings_FamilyDrop>
-  <RHAH_Settings_FamilyDrop_Tooltip>Mothers stop recording each child they set down. Records already written stay in the save.</RHAH_Settings_FamilyDrop_Tooltip>
+  <RHAH_Settings_FamilyDrop_Tooltip>A mother no longer sets her child down when she leaves.</RHAH_Settings_FamilyDrop_Tooltip>
   <RHAH_Settings_MotherFeed>Mothers feed children</RHAH_Settings_MotherFeed>
   <RHAH_Settings_MotherFeed_Tooltip>Mothers stop walking over to feed a hungry child.</RHAH_Settings_MotherFeed_Tooltip>
   <RHAH_Settings_PrisonerScavenge>Prisoners scavenge the ground</RHAH_Settings_PrisonerScavenge>

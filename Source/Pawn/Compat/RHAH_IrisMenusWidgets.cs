@@ -20,6 +20,22 @@ namespace HungerAndHavoc.Pawn.Compat
             list.Gap(CardGap);
             return card.ContractedBy(CardPad);
         }
+        internal static void Quote(Listing_Standard list, string anchor, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+
+            float width = Mathf.Max(1f, list.ColumnWidth - 14f);
+            float height = Text.CalcHeight(text, width);
+            MenuControls.Anchor(list, anchor, height + CardGap);
+            Rect row = list.GetRect(height);
+            Widgets.DrawBoxSolid(new Rect(row.x, row.y, 3f, row.height), new Color(0.62f, 0.58f, 0.42f));
+            Widgets.Label(new Rect(row.x + 10f, row.y, width, height), text);
+            list.Gap(CardGap);
+        }
+
 
         internal static float TunedValue(
             Listing_Standard list,

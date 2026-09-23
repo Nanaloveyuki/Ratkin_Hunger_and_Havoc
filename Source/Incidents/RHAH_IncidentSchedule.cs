@@ -163,6 +163,8 @@ namespace HungerAndHavoc.Incidents
                 return 0f;
             }
 
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            RHAH_WeightFactors factors = settings == null ? RHAH_WeightFactors.Defaults() : settings.WeightFactors();
             float formula = RHAH_IncidentWeight.Evaluate(new RHAH_IncidentWeightInput(
                 entry.Family,
                 entry.Category,
@@ -171,8 +173,7 @@ namespace HungerAndHavoc.Incidents
                 season,
                 trust,
                 mapHome,
-                playerCaravan));
-            RHAH_Settings settings = RHAH_Mod.Settings;
+                playerCaravan), factors);
             bool enabled = settings == null || settings.IsIncidentEnabled(entry.DisplayId);
             float playerWeight = settings == null
                 ? RHAH_IncidentTuning.DefaultWeight

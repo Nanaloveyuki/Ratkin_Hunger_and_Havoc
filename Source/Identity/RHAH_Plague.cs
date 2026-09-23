@@ -63,25 +63,42 @@ namespace HungerAndHavoc.Identity
             }
         }
 
-        internal static bool IsSpreadDay(int absoluteDay, int lastSpreadDay)
+        internal static bool IsSpreadDay(int absoluteDay, int lastSpreadDay, int intervalDays)
         {
-            return absoluteDay % SpreadDayInterval == 0 && absoluteDay != lastSpreadDay;
+            int interval = intervalDays < 1 ? 1 : intervalDays;
+            return absoluteDay % interval == 0 && absoluteDay != lastSpreadDay;
         }
 
-        internal static float SpreadChance(int carrierCount)
+        internal static bool IsSpreadDay(int absoluteDay, int lastSpreadDay)
         {
-            if (carrierCount <= 0)
+            return IsSpreadDay(absoluteDay, lastSpreadDay, SpreadDayInterval);
+        }
+
+        internal static float SpreadChance(int carrierCount, float perCarrier, float cap)
+        {
+            if (carrierCount <= 0 || perCarrier <= 0f || cap <= 0f)
             {
                 return 0f;
             }
 
-            return Mathf.Min(SpreadChancePerCarrier * carrierCount, SpreadChanceCap);
+            return Mathf.Min(perCarrier * carrierCount, cap);
+        }
+
+        internal static float SpreadChance(int carrierCount)
+        {
+            return SpreadChance(carrierCount, SpreadChancePerCarrier, SpreadChanceCap);
+        }
+
+        internal static bool SkipsBloodPumping(float bloodPumpingPercent, float skipPercent)
+        {
+            return bloodPumpingPercent >= skipPercent;
         }
 
         internal static bool SkipsBloodPumping(float bloodPumpingPercent)
         {
-            return bloodPumpingPercent >= BloodPumpingSkipPercent;
+            return SkipsBloodPumping(bloodPumpingPercent, BloodPumpingSkipPercent);
         }
+
 
         internal static bool IsCarrier(Verse.Pawn pawn, bool isRatkin)
         {
@@ -92,14 +109,19 @@ namespace HungerAndHavoc.Identity
                    HasActive(pawn);
         }
 
-        internal static bool CanReceive(Verse.Pawn pawn, float bloodPumpingPercent)
+        internal static bool CanReceive(Verse.Pawn pawn, float bloodPumpingPercent, float skipPercent)
         {
             return pawn != null &&
                    !pawn.Dead &&
                    pawn.IsFreeColonist &&
                    pawn.health?.capacities != null &&
                    !HasActive(pawn) &&
-                   !SkipsBloodPumping(bloodPumpingPercent);
+                   !SkipsBloodPumping(bloodPumpingPercent, skipPercent);
+        }
+
+        internal static bool CanReceive(Verse.Pawn pawn, float bloodPumpingPercent)
+        {
+            return CanReceive(pawn, bloodPumpingPercent, BloodPumpingSkipPercent);
         }
 
         internal static PlagueTally ResolveQuarantine(PlagueWatch watch)
@@ -189,9 +211,9 @@ namespace HungerAndHavoc.Identity
             return false;
         }
 
-        internal static bool BlocksGate(RHAH_BehaviorGate gate, bool quarantined)
+        internal static bool BlocksGate(RHAH_BehaviorGate gate, bool quarantined, bool blockJoin)
         {
-            if (!quarantined)
+            if (!quarantined || !blockJoin)
             {
                 return false;
             }
@@ -199,6 +221,11 @@ namespace HungerAndHavoc.Identity
             return gate == RHAH_BehaviorGate.JoinColony ||
                    gate == RHAH_BehaviorGate.Hire ||
                    gate == RHAH_BehaviorGate.Transfer;
+        }
+
+        internal static bool BlocksGate(RHAH_BehaviorGate gate, bool quarantined)
+        {
+            return BlocksGate(gate, quarantined, true);
         }
 
         internal static int ChooseReturn(int alreadyReturnedLoadId, IList<int> recoveredLoadIds)

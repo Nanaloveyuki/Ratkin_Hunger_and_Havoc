@@ -228,6 +228,12 @@ namespace HungerAndHavoc.Narrative
             List<IncidentCategoryDef> skipCategories,
             ref IncidentCategoryDef __result)
         {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            if (settings != null && !settings.suiYinThreatTempo)
+            {
+                return true;
+            }
+
             if (Find.Storyteller?.def?.defName != RHAH_EndingRuntime.NarratorDefName || !(target is Map map) || !map.IsPlayerHome)
             {
                 return true;

@@ -330,6 +330,33 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.endingE04 | 全局 ModSettings，默认 true |
 | RHAH_Settings.endingE05 | 全局 ModSettings，默认 true |
 | RHAH_Settings.endingIdentity | 全局 ModSettings，默认 true。只控制穗音身份询问 |
+| RHAH_Settings.plagueEnabled | 全局 ModSettings，默认 true。关闭后新来客不感染，也不再传播 |
+| RHAH_Settings.plagueSpreadChancePerCarrier | 全局 ModSettings，默认 0.005，范围 0 到 1 |
+| RHAH_Settings.plagueSpreadChanceCap | 全局 ModSettings，默认 0.30，范围 0 到 1 |
+| RHAH_Settings.plagueSpreadDayInterval | 全局 ModSettings，默认 3，范围 1 到 30 |
+| RHAH_Settings.plagueSpreadHour | 全局 ModSettings，默认 6，范围 0 到 23 |
+| RHAH_Settings.plagueBloodPumpingSkipPercent | 全局 ModSettings，默认 120，范围 0 到 300 |
+| RHAH_Settings.plagueQuarantineBlocksJoin | 全局 ModSettings，默认 true。关闭后检疫不挡加入、雇佣、转移 |
+| RHAH_Settings.plagueReturnEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.plagueReturnDelayDays | 全局 ModSettings，默认 15，范围 0 到 60 |
+| RHAH_Settings.plagueReturnStayDays | 全局 ModSettings，默认 1，范围 0 到 15 |
+| RHAH_Settings.beggingEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.stealingEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.fightingEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.gnawingEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.batchTurnsHostile | 全局 ModSettings，默认 true |
+| RHAH_Settings.batchLeavesTogether | 全局 ModSettings，默认 true |
+| RHAH_Settings.suiYinThreatTempo | 全局 ModSettings，默认 true。关闭后穗音不再按信任改大型威胁节奏 |
+| RHAH_Settings.weightWild | 全局 ModSettings，默认 1.4，范围 0 到 5 |
+| RHAH_Settings.weightBeggar | 全局 ModSettings，默认 1 |
+| RHAH_Settings.weightThief | 全局 ModSettings，默认 0.7 |
+| RHAH_Settings.weightTrade | 全局 ModSettings，默认 0.5 |
+| RHAH_Settings.weightSiege | 全局 ModSettings，默认 0.35 |
+| RHAH_Settings.weightAid | 全局 ModSettings，默认 0.25 |
+| RHAH_Settings.weightSpecial | 全局 ModSettings，默认 0.2 |
+| RHAH_Settings.weightIntel | 全局 ModSettings，默认 0.12 |
+| RHAH_Settings.weightSeason | 全局 ModSettings，默认 1.1。春冬系数 |
+| RHAH_Settings.weightPlague | 全局 ModSettings，默认 0.5。鼠疫事件系数 |
 | HungerAndHavoc.Guard.* | Guard 始终加载，无存档类型 |
 | RHAH_Mod / HarmonyBootstrap / RHAH_Runtime | 运行时入口，无 ExposeData |
 

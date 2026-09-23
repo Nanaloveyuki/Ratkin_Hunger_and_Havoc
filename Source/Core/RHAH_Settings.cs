@@ -69,6 +69,34 @@ namespace HungerAndHavoc.Core
         public bool endingE04 = true;
         public bool endingE05 = true;
         public bool endingIdentity = true;
+        public bool plagueEnabled = true;
+        public float plagueSpreadChancePerCarrier = 0.005f;
+        public float plagueSpreadChanceCap = 0.30f;
+        public int plagueSpreadDayInterval = 3;
+        public int plagueSpreadHour = 6;
+        public float plagueBloodPumpingSkipPercent = 120f;
+        public bool plagueQuarantineBlocksJoin = true;
+        public bool plagueReturnEnabled = true;
+        public int plagueReturnDelayDays = 15;
+        public int plagueReturnStayDays = 1;
+        public bool beggingEnabled = true;
+        public bool stealingEnabled = true;
+        public bool fightingEnabled = true;
+        public bool gnawingEnabled = true;
+        public bool batchTurnsHostile = true;
+        public bool batchLeavesTogether = true;
+        public bool suiYinThreatTempo = true;
+        public float weightWild = 1.4f;
+        public float weightBeggar = 1f;
+        public float weightThief = 0.7f;
+        public float weightTrade = 0.5f;
+        public float weightSiege = 0.35f;
+        public float weightAid = 0.25f;
+        public float weightSpecial = 0.2f;
+        public float weightIntel = 0.12f;
+        public float weightSeason = 1.1f;
+        public float weightPlague = 0.5f;
+
 
         public override void ExposeData()
         {
@@ -133,6 +161,33 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref endingE03, "endingE03", true);
             Scribe_Values.Look(ref endingE04, "endingE04", true);
             Scribe_Values.Look(ref endingE05, "endingE05", true);
+            Scribe_Values.Look(ref plagueEnabled, "plagueEnabled", true);
+            Scribe_Values.Look(ref plagueSpreadChancePerCarrier, "plagueSpreadChancePerCarrier", 0.005f);
+            Scribe_Values.Look(ref plagueSpreadChanceCap, "plagueSpreadChanceCap", 0.30f);
+            Scribe_Values.Look(ref plagueSpreadDayInterval, "plagueSpreadDayInterval", 3);
+            Scribe_Values.Look(ref plagueSpreadHour, "plagueSpreadHour", 6);
+            Scribe_Values.Look(ref plagueBloodPumpingSkipPercent, "plagueBloodPumpingSkipPercent", 120f);
+            Scribe_Values.Look(ref plagueQuarantineBlocksJoin, "plagueQuarantineBlocksJoin", true);
+            Scribe_Values.Look(ref plagueReturnEnabled, "plagueReturnEnabled", true);
+            Scribe_Values.Look(ref plagueReturnDelayDays, "plagueReturnDelayDays", 15);
+            Scribe_Values.Look(ref plagueReturnStayDays, "plagueReturnStayDays", 1);
+            Scribe_Values.Look(ref beggingEnabled, "beggingEnabled", true);
+            Scribe_Values.Look(ref stealingEnabled, "stealingEnabled", true);
+            Scribe_Values.Look(ref fightingEnabled, "fightingEnabled", true);
+            Scribe_Values.Look(ref gnawingEnabled, "gnawingEnabled", true);
+            Scribe_Values.Look(ref batchTurnsHostile, "batchTurnsHostile", true);
+            Scribe_Values.Look(ref batchLeavesTogether, "batchLeavesTogether", true);
+            Scribe_Values.Look(ref suiYinThreatTempo, "suiYinThreatTempo", true);
+            Scribe_Values.Look(ref weightWild, "weightWild", 1.4f);
+            Scribe_Values.Look(ref weightBeggar, "weightBeggar", 1f);
+            Scribe_Values.Look(ref weightThief, "weightThief", 0.7f);
+            Scribe_Values.Look(ref weightTrade, "weightTrade", 0.5f);
+            Scribe_Values.Look(ref weightSiege, "weightSiege", 0.35f);
+            Scribe_Values.Look(ref weightAid, "weightAid", 0.25f);
+            Scribe_Values.Look(ref weightSpecial, "weightSpecial", 0.2f);
+            Scribe_Values.Look(ref weightIntel, "weightIntel", 0.12f);
+            Scribe_Values.Look(ref weightSeason, "weightSeason", 1.1f);
+            Scribe_Values.Look(ref weightPlague, "weightPlague", 0.5f);
             Scribe_Values.Look(ref endingIdentity, "endingIdentity", true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -153,6 +208,8 @@ namespace HungerAndHavoc.Core
                 ClampVisitorRules();
                 ClampEndingGoals();
                 refugeePredationChancePercent = HungerAndHavoc.Incidents.RHAH_PredationRules.ClampChance(refugeePredationChancePercent);
+                ClampPlagueRules();
+                ClampFamilyWeights();
             }
         }
 
@@ -697,6 +754,110 @@ namespace HungerAndHavoc.Core
                 endingE04,
                 endingE05,
                 endingIdentity);
+        }
+
+        internal HungerAndHavoc.Incidents.RHAH_WeightFactors WeightFactors()
+        {
+            return new HungerAndHavoc.Incidents.RHAH_WeightFactors(
+                weightWild,
+                weightBeggar,
+                weightThief,
+                weightTrade,
+                weightSiege,
+                weightAid,
+                weightSpecial,
+                weightIntel,
+                weightSeason,
+                weightPlague);
+        }
+
+        void ClampPlagueRules()
+        {
+            plagueSpreadChancePerCarrier = ClampUnit(plagueSpreadChancePerCarrier, 0.005f);
+            plagueSpreadChanceCap = ClampUnit(plagueSpreadChanceCap, 0.30f);
+            if (plagueSpreadDayInterval < 1)
+            {
+                plagueSpreadDayInterval = 1;
+            }
+
+            if (plagueSpreadDayInterval > 30)
+            {
+                plagueSpreadDayInterval = 30;
+            }
+
+            if (plagueSpreadHour < 0)
+            {
+                plagueSpreadHour = 0;
+            }
+
+            if (plagueSpreadHour > 23)
+            {
+                plagueSpreadHour = 23;
+            }
+
+            if (float.IsNaN(plagueBloodPumpingSkipPercent) || plagueBloodPumpingSkipPercent < 0f)
+            {
+                plagueBloodPumpingSkipPercent = 120f;
+            }
+
+            if (plagueBloodPumpingSkipPercent > 300f)
+            {
+                plagueBloodPumpingSkipPercent = 300f;
+            }
+
+            if (plagueReturnDelayDays < 0)
+            {
+                plagueReturnDelayDays = 0;
+            }
+
+            if (plagueReturnDelayDays > 60)
+            {
+                plagueReturnDelayDays = 60;
+            }
+
+            if (plagueReturnStayDays < 0)
+            {
+                plagueReturnStayDays = 0;
+            }
+
+            if (plagueReturnStayDays > 15)
+            {
+                plagueReturnStayDays = 15;
+            }
+        }
+
+        void ClampFamilyWeights()
+        {
+            weightWild = ClampFactor(weightWild, 1.4f);
+            weightBeggar = ClampFactor(weightBeggar, 1f);
+            weightThief = ClampFactor(weightThief, 0.7f);
+            weightTrade = ClampFactor(weightTrade, 0.5f);
+            weightSiege = ClampFactor(weightSiege, 0.35f);
+            weightAid = ClampFactor(weightAid, 0.25f);
+            weightSpecial = ClampFactor(weightSpecial, 0.2f);
+            weightIntel = ClampFactor(weightIntel, 0.12f);
+            weightSeason = ClampFactor(weightSeason, 1.1f);
+            weightPlague = ClampFactor(weightPlague, 0.5f);
+        }
+
+        static float ClampUnit(float value, float fallback)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value) || value < 0f)
+            {
+                return fallback;
+            }
+
+            return value > 1f ? 1f : value;
+        }
+
+        static float ClampFactor(float value, float fallback)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value) || value < 0f)
+            {
+                return fallback;
+            }
+
+            return value > 5f ? 5f : value;
         }
 
         void ClampEndingGoals()

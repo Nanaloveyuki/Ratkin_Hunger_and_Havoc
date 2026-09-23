@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using HungerAndHavoc.Api;
+using HungerAndHavoc.Core;
 using Verse;
 
 namespace HungerAndHavoc.Identity
@@ -123,7 +124,9 @@ namespace HungerAndHavoc.Identity
                 allowed = behavior ?? RHAH_PawnDefaults.Allows(snapshot, gate);
             }
 
-            if (RHAH_Plague.BlocksGate(gate, RHAH_PlagueRuntime.IsQuarantined(pawn)))
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            bool blockJoin = settings == null || settings.plagueQuarantineBlocksJoin;
+            if (RHAH_Plague.BlocksGate(gate, RHAH_PlagueRuntime.IsQuarantined(pawn), blockJoin))
             {
                 allowed = false;
             }

@@ -89,13 +89,22 @@ namespace HungerAndHavoc.Incidents
 
         internal static int Count(string displayId, float points)
         {
-            return Count(displayId, points, DefaultEventPawns, false);
+            int raw = RawCount(displayId, points);
+            int minimum = Minimum(displayId);
+            return raw < minimum ? minimum : raw;
         }
 
         internal static int Count(string displayId, float points, int cap, bool keepTogether)
         {
             int raw = RawCount(displayId, points);
-            return HungerAndHavoc.Pawn.RHAH_VisitorRules.LimitCount(raw, Minimum(displayId), cap, keepTogether || FixedGroup(displayId));
+            int safeMinimum = Minimum(displayId);
+            int requested = raw < safeMinimum ? safeMinimum : raw;
+            if (keepTogether || FixedGroup(displayId) || cap < safeMinimum)
+            {
+                return requested;
+            }
+
+            return requested < cap ? requested : cap;
         }
 
         static int RawCount(string displayId, float points)
@@ -251,6 +260,65 @@ namespace HungerAndHavoc.Incidents
         }
     }
 
+    internal readonly struct RHAH_WeightFactors
+    {
+        internal RHAH_WeightFactors(
+            float wild,
+            float beggar,
+            float thief,
+            float trade,
+            float siege,
+            float aid,
+            float special,
+            float intel,
+            float season,
+            float plague)
+        {
+            Wild = wild;
+            Beggar = beggar;
+            Thief = thief;
+            Trade = trade;
+            Siege = siege;
+            Aid = aid;
+            Special = special;
+            Intel = intel;
+            Season = season;
+            Plague = plague;
+        }
+
+        internal float Wild { get; }
+        internal float Beggar { get; }
+        internal float Thief { get; }
+        internal float Trade { get; }
+        internal float Siege { get; }
+        internal float Aid { get; }
+        internal float Special { get; }
+        internal float Intel { get; }
+        internal float Season { get; }
+        internal float Plague { get; }
+
+        internal static RHAH_WeightFactors Defaults()
+        {
+            return new RHAH_WeightFactors(1.4f, 1f, 0.7f, 0.5f, 0.35f, 0.25f, 0.2f, 0.12f, 1.1f, 0.5f);
+        }
+
+        internal float Family(RHAH_IncidentFamily family)
+        {
+            switch (family)
+            {
+                case RHAH_IncidentFamily.Wild: return Wild;
+                case RHAH_IncidentFamily.Beggar: return Beggar;
+                case RHAH_IncidentFamily.Thief: return Thief;
+                case RHAH_IncidentFamily.Trade: return Trade;
+                case RHAH_IncidentFamily.Siege: return Siege;
+                case RHAH_IncidentFamily.Aid: return Aid;
+                case RHAH_IncidentFamily.Special: return Special;
+                case RHAH_IncidentFamily.Intel: return Intel;
+                default: return 0f;
+            }
+        }
+    }
+
     internal static class RHAH_IncidentWeight
     {
         internal const float PlagueFactor = 0.5f;
@@ -273,14 +341,14 @@ namespace HungerAndHavoc.Incidents
             }
         }
 
-        internal static float Evaluate(RHAH_IncidentWeightInput input)
+        internal static float Evaluate(RHAH_IncidentWeightInput input, RHAH_WeightFactors factors)
         {
             if (!TargetMatches(input.Target, input.MapHome, input.PlayerCaravan))
             {
                 return 0f;
             }
 
-            float weight = FamilyBase(input.Family);
+            float weight = factors.Family(input.Family);
             if (weight <= 0f)
             {
                 return 0f;
@@ -288,12 +356,12 @@ namespace HungerAndHavoc.Incidents
 
             if (input.Season == RHAH_IncidentSeason.Spring || input.Season == RHAH_IncidentSeason.Winter)
             {
-                weight *= SeasonFactor;
+                weight *= factors.Season;
             }
 
             if (input.Category == RHAH_IncidentCategory.Plague)
             {
-                weight *= PlagueFactor;
+                weight *= factors.Plague;
             }
 
             if (input.Pool == RHAH_AttitudePool.Negative)
@@ -302,6 +370,11 @@ namespace HungerAndHavoc.Incidents
             }
 
             return weight;
+        }
+
+        internal static float Evaluate(RHAH_IncidentWeightInput input)
+        {
+            return Evaluate(input, RHAH_WeightFactors.Defaults());
         }
 
         internal static float TrustFactor(int trust)

@@ -32,25 +32,38 @@ namespace HungerAndHavoc.Identity
                 return;
             }
 
-            if (Find.TickManager.TicksGame % 60 != 0 || GenLocalDate.HourInteger(map) != RHAH_Plague.SpreadHour)
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            bool plagueOn = settings == null || settings.plagueEnabled;
+            if (!plagueOn)
+            {
+                return;
+            }
+
+            int spreadHour = settings == null ? RHAH_Plague.SpreadHour : settings.plagueSpreadHour;
+            if (Find.TickManager.TicksGame % 60 != 0 || GenLocalDate.HourInteger(map) != spreadHour)
             {
                 return;
             }
 
             int absoluteDay = GenLocalDate.Year(map) * 60 + GenLocalDate.DayOfYear(map);
             SettleQuarantine(component, map, Find.TickManager.TicksGame);
-            TryScheduleReturn(component, map);
-            AdvanceReturn(component, map);
-            if (!RHAH_Plague.IsSpreadDay(absoluteDay, component.PlagueLastSpreadDay))
+            if (settings == null || settings.plagueReturnEnabled)
+            {
+                TryScheduleReturn(component, map);
+                AdvanceReturn(component, map);
+            }
+
+            int interval = settings == null ? RHAH_Plague.SpreadDayInterval : settings.plagueSpreadDayInterval;
+            if (!RHAH_Plague.IsSpreadDay(absoluteDay, component.PlagueLastSpreadDay, interval))
             {
                 return;
             }
 
             component.PlagueLastSpreadDay = absoluteDay;
-            Spread(map);
+            Spread(map, settings);
         }
 
-        static void Spread(Map map)
+        static void Spread(Map map, RHAH_Settings settings)
         {
             HediffDef def = RHAH_Plague.Def;
             if (def == null || map.mapPawns == null)
@@ -69,7 +82,9 @@ namespace HungerAndHavoc.Identity
                 }
             }
 
-            float chance = RHAH_Plague.SpreadChance(carriers);
+            float perCarrier = settings == null ? RHAH_Plague.SpreadChancePerCarrier : settings.plagueSpreadChancePerCarrier;
+            float cap = settings == null ? RHAH_Plague.SpreadChanceCap : settings.plagueSpreadChanceCap;
+            float chance = RHAH_Plague.SpreadChance(carriers, perCarrier, cap);
             if (chance <= 0f)
             {
                 return;
@@ -83,7 +98,8 @@ namespace HungerAndHavoc.Identity
                 float pumping = pawn?.health?.capacities == null
                     ? 0f
                     : pawn.health.capacities.GetLevel(PawnCapacityDefOf.BloodPumping) * 100f;
-                if (!RHAH_Plague.CanReceive(pawn, pumping) || !Rand.Chance(chance))
+                float skip = settings == null ? RHAH_Plague.BloodPumpingSkipPercent : settings.plagueBloodPumpingSkipPercent;
+                if (!RHAH_Plague.CanReceive(pawn, pumping, skip) || !Rand.Chance(chance))
                 {
                     continue;
                 }
@@ -237,8 +253,10 @@ namespace HungerAndHavoc.Identity
                 return;
             }
 
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            int delay = settings == null ? RHAH_Plague.ReturnDelayDays : settings.plagueReturnDelayDays;
             game.PlagueReturnLoadId = chosen;
-            game.PlagueReturnDueTick = Find.TickManager.TicksGame + GenDate.TicksPerDay * RHAH_Plague.ReturnDelayDays;
+            game.PlagueReturnDueTick = Find.TickManager.TicksGame + GenDate.TicksPerDay * delay;
             game.PlagueReturnPhase = 1;
         }
 
@@ -268,9 +286,11 @@ namespace HungerAndHavoc.Identity
             }
 
             GenSpawn.Spawn(pawn, cell, map);
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            int stay = settings == null ? RHAH_Plague.ReturnStayDays : settings.plagueReturnStayDays;
             game.PlagueReturnMapId = map.uniqueID;
             game.PlagueReturnPhase = 2;
-            game.PlagueReturnLeaveTick = Find.TickManager.TicksGame + GenDate.TicksPerDay * RHAH_Plague.ReturnStayDays;
+            game.PlagueReturnLeaveTick = Find.TickManager.TicksGame + GenDate.TicksPerDay * stay;
             component.RegisterVisitor(pawn.thingIDNumber);
         }
 
