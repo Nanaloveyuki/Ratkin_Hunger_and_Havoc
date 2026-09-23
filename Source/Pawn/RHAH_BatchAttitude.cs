@@ -65,8 +65,18 @@ namespace HungerAndHavoc.Pawn
 
             for (int i = 0; i < members.Count; i++)
             {
-                CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(members[i]);
+                Verse.Pawn member = members[i];
+                if (!RHAH_Api.Allows(member, RHAH_BehaviorGate.Fight))
+                {
+                    continue;
+                }
+
+                CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(member);
                 comp?.State.SetAttitude(RHAH_Attitude.Hostile);
+                if (hostile != null && member.Faction != hostile)
+                {
+                    member.SetFaction(hostile);
+                }
             }
         }
 

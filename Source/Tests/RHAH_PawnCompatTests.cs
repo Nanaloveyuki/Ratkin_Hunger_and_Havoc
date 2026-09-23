@@ -191,6 +191,7 @@ namespace HungerAndHavoc.Tests
                 -1,
                 false,
                 RHAH_Attitude.Neutral,
+                RHAH_Attitude.Neutral,
                 0,
                 null);
         }

@@ -59,7 +59,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - `RHAH_BehaviorGate`
 - `RHAH_PawnRole` / `RHAH_Lifecycle` / `RHAH_ReleaseReason` / `RHAH_Attitude`
 - `RHAH_Api` 的经历与特质查询：`IsOwnedHistory`、`IsOwnedTrait`、`TryGetHistory`、`TryGetTrait`、`CopyHistoryIds`、`CopyTraitIds`。参数是显示 ID 或 defName，不返回 Backstory、Trait 或 Data 记录
-`IRHAH_Pawn` 是只读快照。快照、事件和 `IRHAH_PawnBehavior` 不得返回或接收 `CompRHAH_Pawn`、Hediff、私有 Job 或其它实现对象。
+`IRHAH_Pawn` 是只读快照。只读态度有两个：`AttitudeAtArrival` 是到达时快照，`Attitude` 是当前态度。批次反应只改当前态度。快照、事件和 `IRHAH_PawnBehavior` 不得返回或接收 `CompRHAH_Pawn`、Hediff、私有 Job 或其它实现对象。
 
 状态修改只通过 `RHAH_Api`：`SetLifecycle`、`SetGate`、`SetExtra`、`ReleaseToColony`、`TryMarkOrigin`。API 事件参数必须使用稳定类型或基础游戏类型，不得暴露实现程序集类型。
 
@@ -206,6 +206,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_ThreatTempoPatch` 是 `internal`，Prefix `StorytellerComp_RandomMain.ChooseRandomCategory`。原版权重不看本模组信任。补丁只在当前叙事者是 `RHAH_Suiyin`、目标是玩家家园、信任不是 0 时，把大型威胁权重乘以 `1 - clamp(trust, -100, 100) / 400`，并把 13 天补发阈值除以同一系数。其它叙事者、任务袭击、商队和本模组事件池不改。目标或属性缺失时走原版。
 `RHAH_PredationFoodPatch` 是 `internal`，Prefix `JobGiver_GetFood.TryGiveJob`。原版觅食不认识安居点的强制目标。补丁只改 `MapComponent_RHAH_Map` 正在跟踪、且地图父对象是 `WorldObject_RHAH_RefugeeCamp` 的野生捕食者。其它地图走原版。
 `RHAH_PredationFleePatch` 是 `internal`，Prefix `JobGiver_ReactToCloseMeleeThreat.TryGiveJob`。关闭反击后，被本特殊情况追猎的安居点鼠族改为逃跑。默认反击，不能使用暴力的人不变。其它威胁走原版。
+`RHAH_CaptureGatePatch` 是 `internal`，Prefix `Pawn_GuestTracker.CapturedBy`。原版俘虏不看来源闸门。补丁只在捕获方是玩家且目标是本模组来源时问 `Imprison`，拒绝则不捕获，通过则 `ReleaseToColony(Imprisoned)`。其它俘虏走原版。
+`RHAH_TradePawnGatePatch` 是 `internal`，Prefix `Tradeable_Pawn.ResolveTrade`。原版角色买卖不看来源闸门。补丁只检查这笔要成交的本模组来源，任一 `Transfer` 被拒则整笔不成交，通过则 `ReleaseToColony(ModRequest)`。物品交易和其它角色走原版。
 
 ## 检查门禁
 

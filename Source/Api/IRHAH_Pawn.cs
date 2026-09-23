@@ -22,6 +22,8 @@ namespace HungerAndHavoc.Api
 
         RHAH_Attitude AttitudeAtArrival { get; }
 
+        RHAH_Attitude Attitude { get; }
+
         int ParentPawnLoadId { get; }
 
         IReadOnlyList<int> ChildPawnLoadIds { get; }

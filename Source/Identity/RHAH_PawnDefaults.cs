@@ -11,7 +11,7 @@ namespace HungerAndHavoc.Identity
                 return AllowsInactive(gate);
             }
 
-            return Allows(pawn.Role, pawn.Lifecycle, pawn.AttitudeAtArrival, gate);
+            return Allows(pawn.Role, pawn.Lifecycle, pawn.Attitude, gate);
         }
 
         public static bool Allows(
@@ -43,7 +43,7 @@ namespace HungerAndHavoc.Identity
                 case RHAH_BehaviorGate.Gnaw:
                     return true;
                 case RHAH_BehaviorGate.TailBite:
-                    return false;
+                    return true;
                 case RHAH_BehaviorGate.Leash:
                     return IsChild(role);
                 case RHAH_BehaviorGate.Carry:

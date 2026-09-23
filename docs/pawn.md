@@ -2,7 +2,7 @@
 
 来源标记是 Hediff `RHAH_HungerMark`，存档数据在 Identity 的 `CompRHAH_Pawn`。其它模组只引用独立的 `HungerAndHavoc.Api.dll`，使用 `HungerAndHavoc.Api` 中的 `RHAH_Api`、`IRHAH_Pawn`、`RHAH_PawnSnapshot`、闸门与 Seed。不要扫描 Hediff、Backstory 或 Comp。`CompRHAH_Pawn` 不实现 `IRHAH_Pawn`。
 
-`RHAH_Api` 查询与标记返回 `IRHAH_Pawn`（`RHAH_PawnSnapshot`，sealed 不可变副本）。只读成员：`SourceIncidentDisplayId`、`SpawnBatchId`、`RelationshipGroupId`、`Role`、`Lifecycle`、`HasBeenFed`、`LeaveAfterGameTick`、`CarriesPlague`、`AttitudeAtArrival`、`ParentPawnLoadId`、`ChildPawnLoadIds`（`IReadOnlyList<int>`）、`IsReleased`、`IsActiveVisitor`。`IsReleased` 为 `Lifecycle == Released`；`IsActiveVisitor` 为未 Released 且未 Dead。快照是拷贝，后续 Comp 变化不写回已发出的快照。改状态走 `SetLifecycle` / `SetGate` / `SetExtra` / `ReleaseToColony` / `TryMarkOrigin`。事件与行为参数使用 `IRHAH_Pawn`，不得传 Comp。
+`RHAH_Api` 查询与标记返回 `IRHAH_Pawn`（`RHAH_PawnSnapshot`，sealed 不可变副本）。只读成员：`SourceIncidentDisplayId`、`SpawnBatchId`、`RelationshipGroupId`、`Role`、`Lifecycle`、`HasBeenFed`、`LeaveAfterGameTick`、`CarriesPlague`、`AttitudeAtArrival`、`Attitude`、`ParentPawnLoadId`、`ChildPawnLoadIds`（`IReadOnlyList<int>`）、`IsReleased`、`IsActiveVisitor`。`AttitudeAtArrival` 不随批次反应改写；`Attitude` 是当前态度，战斗和区外进食读它。`IsReleased` 为 `Lifecycle == Released`；`IsActiveVisitor` 为未 Released 且未 Dead。快照是拷贝，后续 Comp 变化不写回已发出的快照。改状态走 `SetLifecycle` / `SetGate` / `SetExtra` / `ReleaseToColony` / `TryMarkOrigin`。事件与行为参数使用 `IRHAH_Pawn`，不得传 Comp。
 
 ## 生命周期
 
@@ -31,6 +31,15 @@
 `Hire` 与 `Transfer` 默认允许。检疫名单上的 pawn，`JoinColony`、`Hire`、`Transfer` 为 false，覆盖和行为策略不能放开这三项。
 
 判定顺序：该 pawn 的 `gateOverrides` → `IRHAH_PawnBehavior`（后注册优先）→ `RHAH_PawnDefaults`。无来源标记时 `Allows` 为 false。检疫拒绝发生在这三层之后。
+
+玩法必须问对应闸门，不能只看设置或角色：
+
+- `Fight`：批次转敌对后，本模组安排的反击。默认只放行 `Siege` 或当前态度 `Hostile`。关闸后仍会离场，但不反击
+- `DropOffChild`：母亲离场放下孩子。设置 `familyDropEnabled` 仍可整项关闭
+- `TailBite`：囚犯咬幼年尾巴。默认关闭，设置或单只覆盖打开后才执行
+- `Imprison`：原版俘虏进玩家囚犯名单时调用 `ReleaseToColony(Imprisoned)`。关闸后不捕获
+- `Transfer`：原版交易把来客卖出或买进玩家派系。关闸后这笔角色交易不成交。检疫同样拒绝
+- `Leash`：只公开查询和覆盖。牵引适配以后再接，当前没有玩法消费它
 
 `IRHAH_PawnBehavior`：
 

@@ -75,6 +75,9 @@ namespace HungerAndHavoc.Pawn.Compat
         readonly Dictionary<string, string> debugResults = new Dictionary<string, string>();
         readonly Dictionary<string, string> pointBuffers = new Dictionary<string, string>();
         readonly Dictionary<string, string> weightBuffers = new Dictionary<string, string>();
+        string foodQuery = string.Empty;
+        string pendingFoodMod;
+        readonly HashSet<string> collapsedFoodMods = new HashSet<string>();
 
         string selectedPawnLabel = string.Empty;
 
@@ -581,9 +584,9 @@ namespace HungerAndHavoc.Pawn.Compat
             weightBuffers["food-wait"] = wait;
         }
 
-        static void DrawFoodList(Listing_Standard list, RHAH_Settings settings)
+        void DrawFoodList(Listing_Standard list, RHAH_Settings settings)
         {
-            MenuControls.Anchor(list, "relief-foods", 52f);
+            MenuControls.Anchor(list, "relief-foods", 86f);
             Note(list, "RHAH_Settings_ReliefFoods_Tooltip");
             Rect buttons = list.GetRect(28f);
             if (Widgets.ButtonText(new Rect(buttons.x, buttons.y, 140f, 26f),
@@ -607,23 +610,130 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             list.Gap(4f);
+            Rect search = list.GetRect(28f);
+            foodQuery = Widgets.TextField(search, foodQuery ?? string.Empty);
+            if (string.IsNullOrEmpty(foodQuery))
+            {
+                GUI.color = Color.gray;
+                Widgets.Label(new Rect(search.x + 6f, search.y, search.width - 8f, search.height),
+                    "RHAH_Settings_ReliefFoods_Search".Translate());
+                GUI.color = Color.white;
+            }
+
+            list.Gap(4f);
             List<ThingDef> listed = new List<ThingDef>();
             RHAH_ReliefFood.AppendCandidateFoods(listed);
-            for (int i = 0; i < listed.Count; i++)
+            List<List<ThingDef>> groups = RHAH_ReliefFood.GroupBySourceMod(listed);
+            bool searching = !string.IsNullOrEmpty(foodQuery);
+            bool any = false;
+            for (int i = 0; i < groups.Count; i++)
             {
-                ThingDef food = listed[i];
-                bool enabled = settings.IsReliefFoodEnabled(food.defName);
-                MenuControls.Anchor(list, "relief-food-" + food.defName);
-                MenuControls.Checkbox(list, food.LabelCap, ref enabled);
-                settings.SetReliefFoodEnabled(food.defName, enabled);
+                List<ThingDef> matched = MatchedFoods(groups[i]);
+                if (matched.Count == 0)
+                {
+                    continue;
+                }
+
+                any = true;
+                string modName = RHAH_ReliefFood.SourceModName(groups[i][0]);
+                string key = modName ?? string.Empty;
+                if (pendingFoodMod != null && string.Equals(pendingFoodMod, key, StringComparison.Ordinal))
+                {
+                    collapsedFoodMods.Remove(key);
+                    pendingFoodMod = null;
+                }
+
+                bool open = searching || !collapsedFoodMods.Contains(key);
+                string title = (modName ?? "RHAH_Menu_Genes_UnknownMod".Translate()) + "  " + matched.Count;
+                MenuControls.Anchor(list, "relief-food-mod-" + key, 28f);
+                if (DrawFoodFold(list, title, open))
+                {
+                    if (open)
+                    {
+                        collapsedFoodMods.Add(key);
+                    }
+                    else
+                    {
+                        collapsedFoodMods.Remove(key);
+                    }
+
+                    open = !open;
+                }
+
+                if (!open)
+                {
+                    continue;
+                }
+
+                for (int foodIndex = 0; foodIndex < matched.Count; foodIndex++)
+                {
+                    ThingDef food = matched[foodIndex];
+                    bool enabled = settings.IsReliefFoodEnabled(food.defName);
+                    MenuControls.Anchor(list, "relief-food-" + food.defName);
+                    MenuControls.Checkbox(list, food.LabelCap, ref enabled);
+                    settings.SetReliefFoodEnabled(food.defName, enabled);
+                }
+            }
+
+            if (!any)
+            {
+                Empty(list, "RHAH_Settings_ReliefFoods_Empty");
             }
         }
 
-        static IEnumerable<MenuSearchEntry> SearchRelief()
+        List<ThingDef> MatchedFoods(List<ThingDef> foods)
+        {
+            List<ThingDef> matched = new List<ThingDef>();
+            for (int i = 0; i < foods.Count; i++)
+            {
+                if (RHAH_ReliefFood.MatchesQuery(foods[i], foodQuery))
+                {
+                    matched.Add(foods[i]);
+                }
+            }
+
+            return matched;
+        }
+
+        static bool DrawFoodFold(Listing_Standard list, string title, bool open)
+        {
+            Rect row = list.GetRect(28f);
+            Widgets.DrawHighlightIfMouseover(row);
+            Rect mark = new Rect(row.x, row.y + 2f, 24f, 24f);
+            Widgets.DrawTextureFitted(mark, open ? TexButton.Collapse : TexButton.Reveal, 0.7f);
+            Widgets.Label(new Rect(row.x + 26f, row.y, row.width - 26f, row.height), title);
+            return Widgets.ButtonInvisible(row);
+        }
+
+        IEnumerable<MenuSearchEntry> SearchRelief()
         {
             yield return Entry("relief-enabled", "RHAH_Settings_ReliefEnabled");
             yield return Entry("relief-outside", "RHAH_Settings_EatOutsideRelief");
             yield return Entry("relief-foods", "RHAH_Settings_ReliefFoods");
+            List<ThingDef> foods = new List<ThingDef>();
+            RHAH_ReliefFood.AppendCandidateFoods(foods);
+            for (int i = 0; i < foods.Count; i++)
+            {
+                ThingDef food = foods[i];
+                if (food == null || string.IsNullOrEmpty(food.defName))
+                {
+                    continue;
+                }
+
+                string modName = RHAH_ReliefFood.SourceModName(food);
+                string key = modName ?? string.Empty;
+                string id = "relief-food-" + food.defName;
+                string label = food.LabelCap;
+                yield return new MenuSearchEntry(
+                    id,
+                    () => label,
+                    () => food.defName + " " + (modName ?? string.Empty),
+                    () =>
+                    {
+                        pendingFoodMod = key;
+                        return modName;
+                    });
+            }
         }
         void DrawCompatDiagnostics(Listing_Standard list)
         {

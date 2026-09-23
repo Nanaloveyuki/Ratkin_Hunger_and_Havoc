@@ -137,7 +137,7 @@ namespace HungerAndHavoc.Tests
             Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.Transfer));
             Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.Imprison));
             Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.ExitMap));
-            Assert.False(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.TailBite));
+            Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.TailBite));
         }
 
         [Fact]
@@ -162,6 +162,7 @@ namespace HungerAndHavoc.Tests
                 -1,
                 false,
                 RHAH_Attitude.Neutral,
+                RHAH_Attitude.Neutral,
                 0,
                 null);
             RHAH_PawnSnapshot released = new RHAH_PawnSnapshot(
@@ -173,6 +174,7 @@ namespace HungerAndHavoc.Tests
                 true,
                 -1,
                 false,
+                RHAH_Attitude.Hostile,
                 RHAH_Attitude.Hostile,
                 0,
                 null);

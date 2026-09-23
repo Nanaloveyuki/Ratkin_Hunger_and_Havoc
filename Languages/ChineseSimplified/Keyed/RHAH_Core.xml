@@ -40,6 +40,8 @@
   <RHAH_Settings_ReliefFoods_Tooltip>未关闭的食物都可以被来客取用。全部禁用只关掉现在已加载的食物，之后新出现的食物仍可用。</RHAH_Settings_ReliefFoods_Tooltip>
   <RHAH_Settings_ReliefFoods_All>全部启用</RHAH_Settings_ReliefFoods_All>
   <RHAH_Settings_ReliefFoods_None>全部禁用</RHAH_Settings_ReliefFoods_None>
+  <RHAH_Settings_ReliefFoods_Search>搜索食物或模组</RHAH_Settings_ReliefFoods_Search>
+  <RHAH_Settings_ReliefFoods_Empty>没有符合的食物。</RHAH_Settings_ReliefFoods_Empty>
   <RHAH_ReliefArea_Label>赈灾区</RHAH_ReliefArea_Label>
   <RHAH_ReliefArea_Expand>扩展赈灾区</RHAH_ReliefArea_Expand>
   <RHAH_ReliefArea_Expand_Desc>划出来客可以取食的格子。空区域不会变成整张地图。</RHAH_ReliefArea_Expand_Desc>

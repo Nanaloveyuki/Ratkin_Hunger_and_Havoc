@@ -19,7 +19,12 @@ namespace HungerAndHavoc.Pawn
         {
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
             RHAH_Settings settings = RHAH_Mod.Settings;
-            if (comp == null || pawn.Map == null || settings == null)
+            if (comp == null || pawn.Map == null || settings == null || !RHAH_Api.IsVisitor(pawn))
+            {
+                return null;
+            }
+
+            if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.DropOffChild))
             {
                 return null;
             }
@@ -186,6 +191,11 @@ namespace HungerAndHavoc.Pawn
             }
 
             bool hungry = pawn.needs?.food != null && pawn.needs.food.CurLevelPercentage < 0.2f;
+            if (!RHAH_Api.IsOrigin(pawn) || !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.TailBite))
+            {
+                return null;
+            }
+
             if (!RHAH_FamilyRules.CanTailBite(settings.tailBiteEnabled, pawn.IsPrisoner, hungry, false, 0f))
             {
                 return null;

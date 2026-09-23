@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
@@ -302,6 +303,91 @@ namespace HungerAndHavoc.Pawn
             {
                 result.Add(ThingDefOf.MealNutrientPaste);
             }
+        }
+
+        internal static string SourceModName(ThingDef food)
+        {
+            string name = food == null || food.modContentPack == null
+                ? null
+                : food.modContentPack.Name;
+            return string.IsNullOrEmpty(name) ? null : name;
+        }
+
+        internal static List<List<ThingDef>> GroupBySourceMod(List<ThingDef> foods)
+        {
+            List<List<ThingDef>> groups = new List<List<ThingDef>>();
+            if (foods == null)
+            {
+                return groups;
+            }
+
+            List<string> names = new List<string>();
+            for (int i = 0; i < foods.Count; i++)
+            {
+                string name = SourceModName(foods[i]);
+                int index = IndexOf(names, name);
+                if (index < 0)
+                {
+                    names.Add(name);
+                    groups.Add(new List<ThingDef>());
+                    index = groups.Count - 1;
+                }
+
+                groups[index].Add(foods[i]);
+            }
+
+            return groups;
+        }
+
+        internal static bool MatchesQuery(ThingDef food, string query)
+        {
+            if (food == null)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(query))
+            {
+                return true;
+            }
+
+            string[] terms = query.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < terms.Length; i++)
+            {
+                if (!ContainsTerm(food, terms[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        static bool ContainsTerm(ThingDef food, string term)
+        {
+            return Contains(food.LabelCap, term)
+                || Contains(food.label, term)
+                || Contains(food.defName, term)
+                || Contains(SourceModName(food), term);
+        }
+
+        static bool Contains(string value, string term)
+        {
+            return !string.IsNullOrEmpty(value)
+                && value.IndexOf(term, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        }
+
+        static int IndexOf(List<string> names, string name)
+        {
+            for (int i = 0; i < names.Count; i++)
+            {
+                if (string.Equals(names[i], name, StringComparison.Ordinal))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
     }
 }

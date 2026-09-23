@@ -40,6 +40,8 @@
   <RHAH_Settings_ReliefFoods_Tooltip>Visitors may take any food left on. Disabling all only turns off foods loaded now. Foods added later stay available.</RHAH_Settings_ReliefFoods_Tooltip>
   <RHAH_Settings_ReliefFoods_All>Allow all</RHAH_Settings_ReliefFoods_All>
   <RHAH_Settings_ReliefFoods_None>Disable all</RHAH_Settings_ReliefFoods_None>
+  <RHAH_Settings_ReliefFoods_Search>Search foods or mods</RHAH_Settings_ReliefFoods_Search>
+  <RHAH_Settings_ReliefFoods_Empty>No foods match.</RHAH_Settings_ReliefFoods_Empty>
   <RHAH_ReliefArea_Label>Relief zone</RHAH_ReliefArea_Label>
   <RHAH_ReliefArea_Expand>Expand relief zone</RHAH_ReliefArea_Expand>
   <RHAH_ReliefArea_Expand_Desc>Mark cells where visitors may take food. An empty zone does not become the whole map.</RHAH_ReliefArea_Expand_Desc>

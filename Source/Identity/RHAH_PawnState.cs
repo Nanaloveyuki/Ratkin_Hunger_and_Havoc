@@ -237,6 +237,7 @@ namespace HungerAndHavoc.Identity
                 hasBeenFed,
                 leaveAfterGameTick,
                 carriesPlague,
+                attitudeAtArrival,
                 attitude,
                 parentPawnLoadId,
                 childPawnLoadIds);

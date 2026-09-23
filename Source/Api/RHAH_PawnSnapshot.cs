@@ -16,6 +16,7 @@ namespace HungerAndHavoc.Api
             int leaveAfterGameTick,
             bool carriesPlague,
             RHAH_Attitude attitudeAtArrival,
+            RHAH_Attitude attitude,
             int parentPawnLoadId,
             IEnumerable<int> childPawnLoadIds)
         {
@@ -28,6 +29,7 @@ namespace HungerAndHavoc.Api
             LeaveAfterGameTick = leaveAfterGameTick;
             CarriesPlague = carriesPlague;
             AttitudeAtArrival = attitudeAtArrival;
+            Attitude = attitude;
             ParentPawnLoadId = parentPawnLoadId;
             ChildPawnLoadIds = CopyChildren(childPawnLoadIds);
         }
@@ -48,6 +50,7 @@ namespace HungerAndHavoc.Api
             LeaveAfterGameTick = source.LeaveAfterGameTick;
             CarriesPlague = source.CarriesPlague;
             AttitudeAtArrival = source.AttitudeAtArrival;
+            Attitude = source.Attitude;
             ParentPawnLoadId = source.ParentPawnLoadId;
             ChildPawnLoadIds = CopyChildren(source.ChildPawnLoadIds);
         }
@@ -69,6 +72,8 @@ namespace HungerAndHavoc.Api
         public bool CarriesPlague { get; }
 
         public RHAH_Attitude AttitudeAtArrival { get; }
+
+        public RHAH_Attitude Attitude { get; }
 
         public int ParentPawnLoadId { get; }
 

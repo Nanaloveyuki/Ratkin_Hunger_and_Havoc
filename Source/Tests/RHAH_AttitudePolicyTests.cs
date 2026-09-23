@@ -34,6 +34,8 @@ namespace HungerAndHavoc.Tests
 
             state.SetAttitude(RHAH_Attitude.Hostile);
             Assert.Equal(RHAH_Attitude.Neutral, state.attitudeAtArrival);
+            Assert.Equal(RHAH_Attitude.Neutral, state.ToSnapshot().AttitudeAtArrival);
+            Assert.Equal(RHAH_Attitude.Hostile, state.ToSnapshot().Attitude);
             Assert.True(state.Allows(RHAH_BehaviorGate.Fight));
         }
 

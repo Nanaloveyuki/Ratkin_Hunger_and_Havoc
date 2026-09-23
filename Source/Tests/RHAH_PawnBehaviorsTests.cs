@@ -27,6 +27,7 @@ namespace HungerAndHavoc.Tests
                     -1,
                     false,
                     RHAH_Attitude.Neutral,
+                    RHAH_Attitude.Neutral,
                     0,
                     null);
                 StubBehavior first = new StubBehavior { AllowsResult = true };
@@ -87,6 +88,7 @@ namespace HungerAndHavoc.Tests
                 false,
                 -1,
                 false,
+                RHAH_Attitude.Neutral,
                 RHAH_Attitude.Neutral,
                 0,
                 null);
