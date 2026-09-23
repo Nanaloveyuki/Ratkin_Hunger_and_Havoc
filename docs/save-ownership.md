@@ -42,6 +42,9 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | lifecycle | lifecycle | Arriving | 否 | `RHAH_Lifecycle` |
 | hasBeenFed | hasBeenFed | false | 否 | |
 | leaveAfterGameTick | leaveAfterGameTick | -1 | 否 | |
+| stayKind | stayKind | 0 | 否 | 0 无，1 收留，2 雇佣 |
+| stayRemainingTicks | stayRemainingTicks | 0 | 否 | 倒地时冻结的剩余 tick |
+| foodWaitUntilTick | foodWaitUntilTick | -1 | 否 | 断粮等待截止。找到食物后回到 -1 |
 | carriesPlague | carriesPlague | false | 否 | |
 | attitudeAtArrival | attitudeAtArrival | Neutral | 否 | `RHAH_Attitude` |
 | attitude | attitude | Neutral | 否 | 当前 `RHAH_Attitude`。旧档缺键且到达态度不是 Neutral 时回退到 `attitudeAtArrival` |
@@ -138,6 +141,17 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety | Hediff `Class` / `hediffClass` | Remove，随饱腹 Hediff 删除 |
 | HungerAndHavoc.Pawn.Comp_RHAH_Clay | ThingComp `Class` | Remove，随观音土物品删除 |
 | HungerAndHavoc.Pawn.CompProperties_RHAH_Clay | Def XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Incidents.RHAH_PredatorRecord | 捕食者深存档，嵌在 `predators` | Remove。随地图组件删除，不替换成原版动物 |
+
+### RHAH_PredatorRecord
+
+类型名：`HungerAndHavoc.Incidents.RHAH_PredatorRecord`。嵌在 `predators` 里。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| pawn | pawn | null | 否 | 活跃捕食者引用 |
+| outside | outside | false | 否 | 本地捕食者为 false，外边生成的为 true |
+| nextSearchTick | nextSearchTick | -1 | 否 | 下次允许搜索的 tick。空闲地图不因这个值扫描 |
 
 Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记。GameComponent 与 MapComponent 的键在下一节。
 ### Generation runtime
@@ -163,6 +177,12 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | plague death count | plagueDied | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | plague last spread day | plagueLastSpreadDay | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | wall gnaw counts | wallGnawCounts | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation prey | predationPrey | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predators | predators | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation rolled | predationRolled | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation selected | predationSelected | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation pending tick | predationPendingTick | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation next tick | predationNextTick | Remove |
 
 生成队列、批次保护和全局调度属于唯一全局运行时组件；本图访客索引和寻食缓存属于唯一地图组件。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
 
@@ -201,7 +221,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_PlagueStrongSiege, RHAH_PlagueAirdropMistake, RHAH_PlagueMisguidedKinship, RHAH_PlagueGreatFamine, RHAH_PlagueRevenge | IncidentDef | Remove |
 | RHAH_RefugeeMassacre | IncidentDef | Remove |
 | RHAH_ChildExchange | IncidentDef | Remove |
-| HungerAndHavoc.Narrative.NarrativeState | revealedCount, trust, rescued, lost, failed, suiyinEnabled, suiyinStarted, suiyinDeadlineTick | revealedCount, trust, rescued, lost, failed, suiyinEnabled, suiyinStarted, suiyinDeadlineTick | Remove |
+| HungerAndHavoc.Narrative.NarrativeState | revealedCount, trust, rescued, lost, failed, suiyinEnabled, suiyinStarted, suiyinDeadlineTick, seenKinds, theftMaps, theftCounts, journalNoted, asidesSent, openingSent, progressSent, rewardClaimed, rewardPaid, envoyClue, relicClue, lastAsideTick, nextCaseId, aidCount, broadcastCount, expulsionCount, adultCount, completedKindCount, firstFactTick, nextAdultCheckTick, relicDone, endingE01, endingE02, endingE03, endingE04, endingE05, identityTier, identityRefused | 同上 | Remove。0.1.0 破坏性重建：结局计数与标记无旧档迁移 |
 | RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
 | RHAH_Gnaw | JobDef | Remove |
@@ -229,6 +249,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed | 无存档字段 | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease | 无存档字段 | Remove |
 
+| RHAH_Suiyin | StorytellerDef | Remove。卸载后叙事者换成原版 Randy，不保留穗音定义 |
 尚无 PawnKind、TraderKind、Site、Letter。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
 
 ### Hediff_RHAH_ClaySatiety
@@ -262,6 +283,9 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.aidRequestsEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.intelTradesEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.visitorChoicesEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.traderIgnoresHarshEnvironment | 全局 ModSettings，默认 true。商队不因恶劣环境离图 |
+| RHAH_Settings.traderIgnoresEnclosedSpace | 全局 ModSettings，默认 true。商队在封闭房间里不挖路离开 |
+| RHAH_Settings.childExchangeFoodSubstitution | 全局 ModSettings，默认 true。易子而食玩家侧可用简单餐代替婴幼儿 |
 | RHAH_Settings.familyDropEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.motherFeedEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.prisonerScavengeEnabled | 全局 ModSettings，默认 true |
@@ -273,11 +297,39 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.incidentDebugPoints | 全局 ModSettings，默认空字典。缺键用目录调试点。范围 1 到 10000 |
 | RHAH_Settings.incidentWeights | 全局 ModSettings，默认空字典。缺键为 100，表示目录权重。0 不抽，上限 100。空字典不是全部禁用 |
 | RHAH_Settings.refugeeCampEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.refugeePredationChancePercent | 全局 ModSettings，默认 10，范围 0 到 100。每个安居点地图独立掷一次 |
+| RHAH_Settings.refugeePredationFightBack | 全局 ModSettings，默认 true。关闭后被追猎的安居点鼠族逃跑 |
+| RHAH_Settings.outsidePredatorsFollowDifficulty | 全局 ModSettings，默认 false。开启后外来捕食者无目标时走原版觅食 |
 | RHAH_Settings.pawnHistoriesEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组经历 |
 | RHAH_Settings.pawnTraitsEnabled | 全局 ModSettings，默认 true。关闭后新来客不抽本模组特质 |
 | RHAH_Settings.disabledHistoryDisplayIds | 全局 ModSettings，默认空。空名单表示经历可抽 |
 | RHAH_Settings.disabledTraitDisplayIds | 全局 ModSettings，默认空。空名单表示特质可抽 |
 | RHAH_Settings.traitWeights | 全局 ModSettings，默认空字典。缺键用目录概率乘 100。0 不抽 |
+| RHAH_Settings.maxEventPawns | 全局 ModSettings，默认 30，范围 1 到 100。低于事件最低人数时保留最低人数。母子固定组合不拆 |
+| RHAH_Settings.minGeneratedAge | 全局 ModSettings，默认 0。普通来客年龄下限 |
+| RHAH_Settings.maxGeneratedAge | 全局 ModSettings，默认 50。普通来客年龄上限，不超过 100 |
+| RHAH_Settings.reliefFoodScoreBonus | 全局 ModSettings，默认 0.1。赈灾区食物额外加分，0 到 1 |
+| RHAH_Settings.fedStayDays | 全局 ModSettings，默认 0.5。首次吃饱后停留基准，实际为 50% 到 150%，0 到 5 天 |
+| RHAH_Settings.waitWhenNoFood | 全局 ModSettings，默认 true。关闭后找不到食物直接离开 |
+| RHAH_Settings.noFoodWaitDays | 全局 ModSettings，默认 0.5，范围 0 到 5 |
+| RHAH_Settings.shelterDays | 全局 ModSettings，默认 5，范围 5 到 60 |
+| RHAH_Settings.hireDays | 全局 ModSettings，默认 60，范围 5 到 600 |
+| RHAH_Settings.coldClothesEnabled | 全局 ModSettings，默认 true。低于舒适温度时给新来客一件防寒衣 |
+| RHAH_Settings.minimumEventTemperature | 全局 ModSettings，默认 -35。地图事件下限 |
+| RHAH_Settings.maximumEventTemperature | 全局 ModSettings，默认 70。地图事件上限。商队不受限 |
+| RHAH_Settings.countEndingsWithoutNarrator | 全局 ModSettings，默认 true。关闭后非穗音不累计结局计数 |
+| RHAH_Settings.endingsWithoutNarrator | 全局 ModSettings，默认 true。关闭后非穗音不新触发结局 |
+| RHAH_Settings.endingAidGoal | 全局 ModSettings，默认 99，范围 1 到 999 |
+| RHAH_Settings.endingBroadcastGoal | 全局 ModSettings，默认 3，范围 1 到 99 |
+| RHAH_Settings.endingExpulsionLimit | 全局 ModSettings，默认 3，范围 0 到 99 |
+| RHAH_Settings.endingAdultGoal | 全局 ModSettings，默认 100，范围 1 到 500 |
+| RHAH_Settings.endingWaitDays | 全局 ModSettings，默认 30，范围 0 到 120 |
+| RHAH_Settings.endingE01 | 全局 ModSettings，默认 true |
+| RHAH_Settings.endingE02 | 全局 ModSettings，默认 true |
+| RHAH_Settings.endingE03 | 全局 ModSettings，默认 true |
+| RHAH_Settings.endingE04 | 全局 ModSettings，默认 true |
+| RHAH_Settings.endingE05 | 全局 ModSettings，默认 true |
+| RHAH_Settings.endingIdentity | 全局 ModSettings，默认 true。只控制穗音身份询问 |
 | HungerAndHavoc.Guard.* | Guard 始终加载，无存档类型 |
 | RHAH_Mod / HarmonyBootstrap / RHAH_Runtime | 运行时入口，无 ExposeData |
 

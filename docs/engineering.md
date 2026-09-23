@@ -187,6 +187,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Incidents.RHAH_ChoiceKind` | 选择信存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
 | `HungerAndHavoc.Incidents.RHAH_ChoiceAction` | 选择记录存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
 | `HungerAndHavoc.Incidents.RHAH_ChoiceRecord` | `openChoices` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
+| `HungerAndHavoc.Incidents.RHAH_PredatorRecord` | `predators` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
 | `HungerAndHavoc.Pawn.CompProperties_RHAH_Clay` | ThingDef XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Pawn.Comp_RHAH_Clay` | `CompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 ThingComp；类型名写入 `.rws` |
@@ -200,6 +201,11 @@ API 程序集的公开类型采用白名单，当前目标包括：
 
 `RHAH_ClayEatThingPatch` 与 `RHAH_ClayEatDefPatch` 是 `internal`，Postfix `FoodUtility.WillEat` 的 Thing 和 ThingDef 重载。观音土十五天吃满三块后原版仍把它当食物。补丁只在目标是 `RHAH_GuanyinTu` 且饱腹窗口未过时返回 false，不改其它食物。
 `RHAH_TraitColor` 是 `internal`，Postfix `Trait.LabelCap`。原版特质名没有本模组颜色。补丁只给 `RHAH_Trait_` 前缀上色，已有颜色标签时不改。
+`RHAH_CaravanLeavePatch` 是 `internal`，Prefix `Transition.CheckSignal`。原版交易 Lord 会因危险温度、异常天气、危险状况或到不了地图边缘离图。补丁只拦本模组商队：环境离图看 `traderIgnoresHarshEnvironment`，封闭空间看 `traderIgnoresEnclosedSpace`。其它 Lord 不改。
+`RHAH_CaravanFoodSalePatch` 是 `internal`，Postfix `TraderKindDef.WillTrade`。原版商人可以卖食物。补丁只在交易对象是本模组商队且物品提供营养时返回 false。玩家用食物换孩子不走这条。
+`RHAH_ThreatTempoPatch` 是 `internal`，Prefix `StorytellerComp_RandomMain.ChooseRandomCategory`。原版权重不看本模组信任。补丁只在当前叙事者是 `RHAH_Suiyin`、目标是玩家家园、信任不是 0 时，把大型威胁权重乘以 `1 - clamp(trust, -100, 100) / 400`，并把 13 天补发阈值除以同一系数。其它叙事者、任务袭击、商队和本模组事件池不改。目标或属性缺失时走原版。
+`RHAH_PredationFoodPatch` 是 `internal`，Prefix `JobGiver_GetFood.TryGiveJob`。原版觅食不认识安居点的强制目标。补丁只改 `MapComponent_RHAH_Map` 正在跟踪、且地图父对象是 `WorldObject_RHAH_RefugeeCamp` 的野生捕食者。其它地图走原版。
+`RHAH_PredationFleePatch` 是 `internal`，Prefix `JobGiver_ReactToCloseMeleeThreat.TryGiveJob`。关闭反击后，被本特殊情况追猎的安居点鼠族改为逃跑。默认反击，不能使用暴力的人不变。其它威胁走原版。
 
 ## 检查门禁
 

@@ -77,7 +77,8 @@ JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规
 - `UseExplicitXenotype` 与 `Xenotype` / `XenotypeDefName`：指定异种。两者都空时不指定基因
 未设置显式背景时，生成后从 `Source/Data` 的经历表抽一条。自有特质在其后抽取，最多一条。身份仍只看 `RHAH_HungerMark`。经历槽位用发育阶段，年龄上下限仍按每条记录。`pawnHistoriesEnabled` 或 `pawnTraitsEnabled` 关闭、单条被禁用、特质权重为 0 时跳过对应抽取。显式背景不改经历，特质仍抽。成年经历同时写入保底童年 `RHAH_History_Newborn`。幼年关联只影响抽取权重，不预写成年背景。
 
-`optimizeGeneration` 默认开启，登记在 IrisMenus 实验页和原版设置窗口。开启时跳过关系、头衔、随机装备、成瘾、食物和世界角色重装。事件没有显式基因时，按基因页权重抽取已启用异种。权重合计为 0、生物科技未开或 Def 丢失时，依次尝试 `RK_XenoType_Ratkin` 和 `RHAH_Xenotype_Ratkin`。两者都不存在时保持原版默认。关闭优化不取消事件 Profile，也不取消经历和特质抽取。`RHAH_` 基因开关只在异种套上后追加，冲突则跳过。
+`optimizeGeneration` 默认开启，登记在 IrisMenus 实验页和原版设置窗口。开启时跳过关系、头衔、随机装备、成瘾、食物和世界角色重装。事件没有显式基因时，按基因页权重抽取已启用异种。权重合计为 0、生物科技未开或 Def 丢失时，依次尝试 `RK_XenoType_Ratkin` 和 `RHAH_Xenotype_Ratkin`。两者都不存在时保持原版默认。关闭优化不取消事件 Profile，也不取消经历和特质抽取。`RHAH_` 基因开关只在异种套上后追加，冲突则跳过。基因页的已启用异种和可加入异种按来源模组的显示名分组，组内保持原顺序。没有 `modContentPack` 或名称为空时归入未知来源。
 地图事件默认分帧：排队事件每 64 tick 执行一条。`staggerGeneration` 关闭后连续执行。广播只从 `BroadcastEligible` 且未被单独关闭的事件里抽。
 
 商队伏击先生成未入场的 pawn，再交给原版商队地图。
+商队来客在恶劣环境或封闭房间里不走寻食离场。两项分别看 `traderIgnoresHarshEnvironment` 和 `traderIgnoresEnclosedSpace`，默认都开启。Lead Your Pet 不改这条。
