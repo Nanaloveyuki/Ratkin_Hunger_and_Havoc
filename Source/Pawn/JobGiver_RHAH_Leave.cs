@@ -32,7 +32,20 @@ namespace HungerAndHavoc.Pawn
             }
 
             RHAH_Settings settings = RHAH_Mod.Settings;
-            if (fedLeave && !exit && settings != null && !settings.leaveAfterFed)
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            bool fedDue = snapshot != null && RHAH_VisitorRules.FedLeaveDue(
+                settings == null || settings.leaveAfterFed,
+                snapshot.HasBeenFed,
+                now,
+                snapshot.LeaveAfterGameTick,
+                pawn.Downed);
+            if (fedLeave && !exit && !fedDue)
+            {
+                return null;
+            }
+
+            if (pawn.Downed)
             {
                 return null;
             }

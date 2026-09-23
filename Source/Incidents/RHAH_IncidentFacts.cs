@@ -33,7 +33,7 @@ namespace HungerAndHavoc.Incidents
                     PawnKind = PawnKindDefOf.Colonist,
                     Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(context.Attitude) ?? Faction.OfPlayer,
                     SpawnCell = context.SpawnCell,
-                    Profile = context.Profile
+                    BiologicalAge = GenerationAge(context.Role)
                 });
 
                 if (!result.Succeeded)
@@ -53,6 +53,13 @@ namespace HungerAndHavoc.Incidents
             OpenChoice(context, created);
 
             return true;
+        }
+        static float? GenerationAge(RHAH_PawnRole role)
+        {
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            float min = settings == null ? 0f : settings.minGeneratedAge;
+            float max = settings == null ? 50f : settings.maxGeneratedAge;
+            return HungerAndHavoc.Pawn.RHAH_VisitorRules.GenerationAge(role, null, min, max, Rand.Value);
         }
 
         static void Rollback(List<RHAH_PawnCreationResult> created)

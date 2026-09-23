@@ -16,7 +16,7 @@ namespace HungerAndHavoc.Incidents
         protected override bool CanFireNowSub(IncidentParms parms)
         {
             Map map = ResolveMap(parms);
-            return map != null && RHAH_RuntimeAllows() && FindAnySpawnCell(map);
+            return map != null && RHAH_RuntimeAllows() && TemperatureAllows(map) && FindAnySpawnCell(map);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -44,7 +44,7 @@ namespace HungerAndHavoc.Incidents
                 CarriesPlague = CarriesPlague,
                 Map = map,
                 SpawnCell = cell,
-                PawnCount = RHAH_IncidentScale.Count(DisplayId, parms.points),
+                PawnCount = RHAH_IncidentScale.Count(DisplayId, parms.points, EventCap(), false),
                 Points = parms.points
             });
         }
@@ -63,6 +63,19 @@ namespace HungerAndHavoc.Incidents
             return RCellFinder.TryFindRandomPawnEntryCell(out cell, map, CellFinder.EdgeRoadChance_Animal, false, null);
         }
 
+        static int EventCap()
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            return settings == null ? RHAH_IncidentScale.DefaultEventPawns : settings.maxEventPawns;
+        }
+        bool TemperatureAllows(Map map)
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            float minimum = settings == null ? -35f : settings.minimumEventTemperature;
+            float maximum = settings == null ? 70f : settings.maximumEventTemperature;
+            float temperature = map.mapTemperature == null ? 0f : map.mapTemperature.OutdoorTemp;
+            return HungerAndHavoc.Pawn.RHAH_VisitorRules.TemperatureAllows(temperature, minimum, maximum, DisplayId == "I-012");
+        }
         static bool RHAH_RuntimeAllows()
         {
             return Core.RHAH_Runtime.AllowsNewContent;

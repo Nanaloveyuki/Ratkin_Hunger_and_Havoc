@@ -76,6 +76,12 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
+            Identity.CompRHAH_Pawn fed = Identity.CompRHAH_Pawn.TryGet(pawn);
+            if (fed != null)
+            {
+                fed.SetFoodWait(-1);
+            }
+
             return RHAH_ReliefFood.MakeJob(pawn, food);
         }
 
@@ -118,11 +124,11 @@ namespace HungerAndHavoc.Pawn
             }
 
             Thing best = null;
-            float bestDist = float.MaxValue;
+            float bestScore = float.NegativeInfinity;
             List<Thing> foods = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
-            Consider(pawn, foods, insideZone, ref best, ref bestDist);
+            Consider(pawn, foods, insideZone, ref best, ref bestScore);
             List<Thing> plants = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.HarvestablePlant);
-            Consider(pawn, plants, insideZone, ref best, ref bestDist);
+            Consider(pawn, plants, insideZone, ref best, ref bestScore);
             return best;
         }
 
@@ -131,13 +137,14 @@ namespace HungerAndHavoc.Pawn
             List<Thing> things,
             bool insideZone,
             ref Thing best,
-            ref float bestDist)
+            ref float bestScore)
         {
             if (things == null)
             {
                 return;
             }
 
+            float bonus = RHAH_Mod.Settings == null ? RHAH_VisitorRules.DefaultReliefScoreBonus : RHAH_Mod.Settings.reliefFoodScoreBonus;
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
@@ -146,13 +153,26 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                float dist = thing.PositionHeld.DistanceToSquared(pawn.Position);
-                if (dist < bestDist)
+                float distance = thing.PositionHeld.DistanceToSquared(pawn.Position);
+                bool inRelief = RHAH_ReliefArea.Contains(pawn.Map, thing.PositionHeld);
+                float score = RHAH_VisitorRules.Score(-distance, FoodFit(thing), inRelief, bonus);
+                if (score > bestScore)
                 {
-                    bestDist = dist;
+                    bestScore = score;
                     best = thing;
                 }
             }
+        }
+
+        static float FoodFit(Thing thing)
+        {
+            ThingDef eaten = RHAH_ReliefFood.EatenDef(thing);
+            if (eaten == null || eaten.ingestible == null)
+            {
+                return 0f;
+            }
+
+            return (float)eaten.ingestible.preferability;
         }
     }
 }

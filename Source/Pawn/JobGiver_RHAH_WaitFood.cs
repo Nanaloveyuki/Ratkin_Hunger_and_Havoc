@@ -39,19 +39,26 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (snapshot.LeaveAfterGameTick >= 0 && now >= snapshot.LeaveAfterGameTick)
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            bool wait = settings == null || settings.waitWhenNoFood;
+            float days = settings == null ? RHAH_VisitorRules.DefaultNoFoodWaitDays : settings.noFoodWaitDays;
+            int budget = RHAH_VisitorRules.WaitTicks(wait, days);
+            if (budget <= 0)
             {
                 return null;
             }
 
-            if (snapshot.LeaveAfterGameTick < 0)
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            int deadline = comp == null ? -1 : comp.State.foodWaitUntilTick;
+            if (deadline >= 0 && now >= deadline)
             {
-                CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
-                if (comp != null)
-                {
-                    comp.SetLeaveAfter(now + WaitTicks);
-                }
+                return null;
+            }
+
+            if (comp != null && deadline < 0)
+            {
+                comp.SetFoodWait(RHAH_VisitorRules.NextWaitTick(now, -1, false, true, days));
             }
 
 

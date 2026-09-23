@@ -55,7 +55,7 @@ namespace HungerAndHavoc.Trade
 
             List<Verse.Pawn> attackers = new List<Verse.Pawn>();
             int tick = Find.TickManager.TicksGame;
-            int count = RHAH_IncidentScale.Count(entry.DisplayId, points);
+            int count = RHAH_IncidentScale.Count(entry.DisplayId, points, EventCap(), false);
             for (int i = 0; i < count; i++)
             {
                 RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
@@ -108,6 +108,11 @@ namespace HungerAndHavoc.Trade
                     pawns[i].Destroy(DestroyMode.Vanish);
                 }
             }
+        }
+        static int EventCap()
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            return settings == null ? RHAH_IncidentScale.DefaultEventPawns : settings.maxEventPawns;
         }
     }
 }

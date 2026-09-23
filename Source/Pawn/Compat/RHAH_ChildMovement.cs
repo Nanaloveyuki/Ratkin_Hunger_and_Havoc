@@ -17,6 +17,27 @@ namespace HungerAndHavoc.Pawn.Compat
                 return false;
             }
 
+            if (LiftsAgeImmobility(pawn))
+            {
+                return false;
+            }
+
+            LifeStageDef stage = pawn.ageTracker != null ? pawn.ageTracker.CurLifeStage : null;
+            return stage == null || stage.alwaysDowned;
+        }
+
+        internal static bool LiftsAgeImmobility(Verse.Pawn pawn)
+        {
+            bool toddlers = ModsConfig.IsActive("cyanobot.toddlers");
+            bool eventBaby = HungerAndHavoc.Api.RHAH_Api.IsOrigin(pawn) && pawn.DevelopmentalStage == DevelopmentalStage.Baby;
+            bool injured = pawn.health != null && pawn.health.Downed && !AgeOnlyDown(pawn);
+            LifeStageDef stage = pawn.ageTracker != null ? pawn.ageTracker.CurLifeStage : null;
+            bool ageDowned = stage == null || stage.alwaysDowned;
+            return RHAH_VisitorRules.LiftsAgeImmobility(toddlers, eventBaby, ageDowned, injured);
+        }
+
+        static bool AgeOnlyDown(Verse.Pawn pawn)
+        {
             LifeStageDef stage = pawn.ageTracker != null ? pawn.ageTracker.CurLifeStage : null;
             return stage == null || stage.alwaysDowned;
         }

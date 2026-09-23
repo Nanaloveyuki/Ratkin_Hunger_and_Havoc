@@ -174,7 +174,7 @@ namespace HungerAndHavoc.Incidents
 
             if (RHAH_RequestRules.Hires(record.Settled))
             {
-                Release(record, RHAH_ReleaseReason.Recruited);
+                Stay(record, HungerAndHavoc.Pawn.RHAH_StayKind.Hire);
                 return;
             }
 
@@ -193,6 +193,17 @@ namespace HungerAndHavoc.Incidents
                 {
                     RHAH_Api.ReleaseToColony(pawns[i], reason);
                     pawns[i].SetFaction(Faction.OfPlayer);
+                }
+            }
+        }
+        static void Stay(RHAH_ChoiceRecord record, HungerAndHavoc.Pawn.RHAH_StayKind kind)
+        {
+            List<Verse.Pawn> pawns = Pawns(record);
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (HungerAndHavoc.Pawn.RHAH_VisitorStay.Begin(pawns[i], kind))
+                {
+                    HungerAndHavoc.Pawn.RHAH_VisitorStay.ClearTrade(pawns[i], RHAH_ReleaseReason.Recruited, true);
                 }
             }
         }

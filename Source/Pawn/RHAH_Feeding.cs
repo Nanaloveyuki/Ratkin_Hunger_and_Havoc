@@ -34,10 +34,29 @@ namespace HungerAndHavoc.Pawn
 
             if (!already)
             {
+                ScheduleStay(pawn);
                 TryAddRefeeding(pawn);
             }
 
             return RHAH_Api.Get(pawn) != null && RHAH_Api.Get(pawn).HasBeenFed;
+        }
+        static void ScheduleStay(Verse.Pawn pawn)
+        {
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            Identity.CompRHAH_Pawn comp = Identity.CompRHAH_Pawn.TryGet(pawn);
+            if (comp == null)
+            {
+                return;
+            }
+
+            if (settings != null && !settings.leaveAfterFed)
+            {
+                return;
+            }
+
+            float days = settings == null ? RHAH_VisitorRules.DefaultFedStayDays : settings.fedStayDays;
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            comp.SetLeaveAfter(now + RHAH_VisitorRules.FedStayTicks(days, Rand.Value));
         }
 
         static void TryAddRefeeding(Verse.Pawn pawn)

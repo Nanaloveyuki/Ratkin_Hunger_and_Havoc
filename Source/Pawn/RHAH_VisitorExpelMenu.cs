@@ -45,7 +45,12 @@ namespace HungerAndHavoc.Pawn
             if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.Hire))
             {
                 yield return new FloatMenuOption("RHAH_Choice_Hire".Translate(), () =>
-                    RHAH_Api.ReleaseToColony(clickedPawn, RHAH_ReleaseReason.Recruited));
+                    RHAH_VisitorStay.Begin(clickedPawn, RHAH_StayKind.Hire));
+            }
+            if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.JoinColony))
+            {
+                yield return new FloatMenuOption("RHAH_Choice_Shelter".Translate(), () =>
+                    RHAH_VisitorStay.Begin(clickedPawn, RHAH_StayKind.Shelter));
             }
 
             if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.FeedFromRelief))

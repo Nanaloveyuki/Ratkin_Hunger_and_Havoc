@@ -89,6 +89,17 @@ namespace HungerAndHavoc.Incidents
 
         internal static int Count(string displayId, float points)
         {
+            return Count(displayId, points, DefaultEventPawns, false);
+        }
+
+        internal static int Count(string displayId, float points, int cap, bool keepTogether)
+        {
+            int raw = RawCount(displayId, points);
+            return HungerAndHavoc.Pawn.RHAH_VisitorRules.LimitCount(raw, Minimum(displayId), cap, keepTogether || FixedGroup(displayId));
+        }
+
+        static int RawCount(string displayId, float points)
+        {
             float safe = RHAH_IncidentTuning.ClampPoints(points);
             switch (displayId)
             {
@@ -197,6 +208,46 @@ namespace HungerAndHavoc.Incidents
             }
 
             return value > max ? max : value;
+        }
+
+        internal const int DefaultEventPawns = 30;
+
+        internal static bool FixedGroup(string displayId)
+        {
+            return displayId == "I-003" || displayId == "I-004" || displayId == "I-029" || displayId == "I-044";
+        }
+
+        internal static int Minimum(string displayId)
+        {
+            switch (displayId)
+            {
+                case "I-001": return 10;
+                case "I-004":
+                case "I-005":
+                case "I-006":
+                case "I-012":
+                case "I-038":
+                case "I-042": return 3;
+                case "I-003":
+                case "I-007":
+                case "I-010":
+                case "I-014":
+                case "I-029":
+                case "I-035":
+                case "I-036":
+                case "I-043":
+                case "I-044":
+                case "I-050": return 2;
+                case "I-030":
+                case "I-031":
+                case "I-032":
+                case "I-045":
+                case "I-046":
+                case "I-039": return 4;
+                case "I-034":
+                case "I-048": return 8;
+                default: return 1;
+            }
         }
     }
 

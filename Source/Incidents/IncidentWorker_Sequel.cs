@@ -79,9 +79,14 @@ namespace HungerAndHavoc.Incidents
                 CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
                 SpawnCell = cell,
-                PawnCount = RHAH_IncidentScale.Count(entry.DisplayId, parms == null ? 0f : parms.points),
+                PawnCount = RHAH_IncidentScale.Count(entry.DisplayId, parms == null ? 0f : parms.points, EventCap(), false),
                 Points = parms == null ? 0f : parms.points
             });
+        }
+        static int EventCap()
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            return settings == null ? RHAH_IncidentScale.DefaultEventPawns : settings.maxEventPawns;
         }
 
         RHAH_IncidentEntry Entry => def == null ? null : RHAH_IncidentCatalog.GetByDefName(def.defName);

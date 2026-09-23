@@ -13,6 +13,9 @@ namespace HungerAndHavoc.Identity
         internal RHAH_Lifecycle lifecycle = RHAH_Lifecycle.Arriving;
         internal bool hasBeenFed;
         internal int leaveAfterGameTick = -1;
+        internal int stayKind;
+        internal int stayRemainingTicks;
+        internal int foodWaitUntilTick = -1;
         internal bool carriesPlague;
         internal RHAH_Attitude attitudeAtArrival = RHAH_Attitude.Neutral;
         internal RHAH_Attitude attitude = RHAH_Attitude.Neutral;
@@ -82,9 +85,21 @@ namespace HungerAndHavoc.Identity
 
         internal void SetLeaveAfter(int tick)
         {
-            if (leaveAfterGameTick < 0)
+            leaveAfterGameTick = tick;
+        }
+
+        internal void SetStay(int kind, int deadline, int remaining)
+        {
+            stayKind = kind;
+            leaveAfterGameTick = deadline;
+            stayRemainingTicks = remaining < 0 ? 0 : remaining;
+        }
+
+        internal void ClearFedTimer()
+        {
+            if (stayKind == 0)
             {
-                leaveAfterGameTick = tick;
+                leaveAfterGameTick = -1;
             }
         }
 

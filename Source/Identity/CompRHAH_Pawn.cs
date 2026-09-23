@@ -33,6 +33,19 @@ namespace HungerAndHavoc.Identity
         {
             state.SetLeaveAfter(tick);
         }
+        internal void SetStay(int kind, int deadline, int remaining)
+        {
+            state.SetStay(kind, deadline, remaining);
+        }
+
+        internal void ClearFedTimer()
+        {
+            state.ClearFedTimer();
+        }
+        internal void SetFoodWait(int tick)
+        {
+            state.foodWaitUntilTick = tick;
+        }
 
         internal static CompRHAH_Pawn TryGet(Verse.Pawn pawn)
         {
@@ -52,6 +65,7 @@ namespace HungerAndHavoc.Identity
 
         public override void CompExposeData()
         {
+            Scribe_Values.Look(ref state.foodWaitUntilTick, "foodWaitUntilTick", -1);
             Scribe_Values.Look(ref state.sourceIncidentDisplayId, "sourceIncidentDisplayId");
             Scribe_Values.Look(ref state.spawnBatchId, "spawnBatchId", 0);
             Scribe_Values.Look(ref state.relationshipGroupId, "relationshipGroupId", 0);
@@ -59,6 +73,8 @@ namespace HungerAndHavoc.Identity
             Scribe_Values.Look(ref state.lifecycle, "lifecycle", RHAH_Lifecycle.Arriving);
             Scribe_Values.Look(ref state.hasBeenFed, "hasBeenFed", false);
             Scribe_Values.Look(ref state.leaveAfterGameTick, "leaveAfterGameTick", -1);
+            Scribe_Values.Look(ref state.stayKind, "stayKind", 0);
+            Scribe_Values.Look(ref state.stayRemainingTicks, "stayRemainingTicks", 0);
             Scribe_Values.Look(ref state.carriesPlague, "carriesPlague", false);
             Scribe_Values.Look(ref state.attitudeAtArrival, "attitudeAtArrival", RHAH_Attitude.Neutral);
             Scribe_Values.Look(ref state.attitude, "attitude", RHAH_Attitude.Neutral);
