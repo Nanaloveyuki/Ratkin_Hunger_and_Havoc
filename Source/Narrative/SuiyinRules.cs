@@ -1713,6 +1713,25 @@ namespace HungerAndHavoc.Narrative
 
             Pending.Add(new SuiyinNotice(letter, arg, isPrivate));
         }
+        internal static string LetterKey(SuiyinLetter letter, int arg)
+        {
+            if (letter == SuiyinLetter.None)
+            {
+                return null;
+            }
+
+            if (letter == SuiyinLetter.Aside)
+            {
+                if (arg < 1 || arg > 4)
+                {
+                    return null;
+                }
+
+                return "RHAH_Suiyin_Aside_" + arg;
+            }
+
+            return "RHAH_Suiyin_" + letter;
+        }
 
         static int Days(int days)
         {

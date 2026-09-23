@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using HungerAndHavoc.Narrative;
 using Xunit;
 
@@ -230,6 +233,65 @@ namespace HungerAndHavoc.Tests
             Assert.False(book.CloseJournal(record, 3000));
         }
 
+        [Fact]
+        public void QueuedLettersUseExistingKeys()
+        {
+            Assert.Equal("RHAH_Suiyin_N001", SuiyinBook.LetterKey(SuiyinLetter.N001, 0));
+            Assert.Equal("RHAH_Suiyin_N009Empty", SuiyinBook.LetterKey(SuiyinLetter.N009Empty, 0));
+            Assert.Equal("RHAH_Suiyin_Aside_1", SuiyinBook.LetterKey(SuiyinLetter.Aside, 1));
+            Assert.Null(SuiyinBook.LetterKey(SuiyinLetter.Aside, 0));
+            Assert.Null(SuiyinBook.LetterKey(SuiyinLetter.None, 0));
+            HashSet<string> keys = Keyed("Languages/English/Keyed/RHAH_Suiyin.xml");
+            HashSet<string> chinese = Keyed("Languages/ChineseSimplified/Keyed/RHAH_Suiyin.xml");
+            foreach (SuiyinLetter letter in Enum.GetValues(typeof(SuiyinLetter)))
+            {
+                string key = letter == SuiyinLetter.Aside
+                    ? SuiyinBook.LetterKey(letter, 1)
+                    : SuiyinBook.LetterKey(letter, 0);
+                if (key == null)
+                {
+                    continue;
+                }
+
+                Assert.Contains(key + "_Label", keys);
+                Assert.Contains(key + "_Text", keys);
+                Assert.Contains(key + "_Label", chinese);
+                Assert.Contains(key + "_Text", chinese);
+            }
+        }
+
+        static HashSet<string> Keyed(string relative)
+        {
+            string path = Path.Combine(FindRoot(), relative);
+            XmlDocument document = new XmlDocument();
+            document.Load(path);
+            HashSet<string> keys = new HashSet<string>();
+            foreach (XmlNode node in document.DocumentElement.ChildNodes)
+            {
+                if (node.NodeType == XmlNodeType.Element)
+                {
+                    keys.Add(node.Name);
+                }
+            }
+
+            return keys;
+        }
+
+        static string FindRoot()
+        {
+            DirectoryInfo directory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            while (directory != null)
+            {
+                if (File.Exists(Path.Combine(directory.FullName, "Languages/English/Keyed/RHAH_Suiyin.xml")))
+                {
+                    return directory.FullName;
+                }
+
+                directory = directory.Parent;
+            }
+
+            return ".";
+        }
         [Fact]
         public void SavedClaimsDoNotReset()
         {

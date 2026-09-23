@@ -49,9 +49,11 @@ namespace HungerAndHavoc.Narrative
 
             if (!Counts(narrator, settings))
             {
+                DeliverNotices(state, narrator);
                 return;
             }
 
+            DeliverNotices(state, narrator);
 
             RHAH_EndingGoals goals = settings == null ? RHAH_EndingGoals.Defaults() : settings.EndingGoals();
             RHAH_EndingId ending = state.PendingEnding(tick, narrator, goals);
@@ -68,6 +70,49 @@ namespace HungerAndHavoc.Narrative
                 ShowIdentity(offer);
             }
         }
+        static void DeliverNotices(NarrativeState state, bool narrator)
+        {
+            SuiyinBook book = state.Book;
+            if (book == null)
+            {
+                return;
+            }
+
+            book.Narrator = narrator;
+            List<SuiyinNotice> notices = new List<SuiyinNotice>();
+            if (book.TakeNotices(notices) == 0)
+            {
+                return;
+            }
+
+            if (Find.LetterStack == null)
+            {
+                for (int i = 0; i < notices.Count; i++)
+                {
+                    book.Pending.Add(notices[i]);
+                }
+
+                return;
+            }
+
+            for (int i = 0; i < notices.Count; i++)
+            {
+                SuiyinNotice notice = notices[i];
+                if (notice.Private && !narrator)
+                {
+                    continue;
+                }
+
+                string key = SuiyinBook.LetterKey(notice.Letter, notice.Arg);
+                if (key == null)
+                {
+                    continue;
+                }
+
+                Find.LetterStack.ReceiveLetter((key + "_Label").Translate(), (key + "_Text").Translate(notice.Arg), LetterDefOf.NeutralEvent);
+            }
+        }
+
 
         internal static int CountAdults()
         {
