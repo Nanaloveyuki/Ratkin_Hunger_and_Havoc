@@ -22,6 +22,9 @@ namespace HungerAndHavoc.Core
         public bool aidRequestsEnabled = true;
         public bool intelTradesEnabled = true;
         public bool visitorChoicesEnabled = true;
+        public bool traderIgnoresHarshEnvironment = true;
+        public bool traderIgnoresEnclosedSpace = true;
+        public bool childExchangeFoodSubstitution = true;
         public bool familyDropEnabled = true;
         public bool motherFeedEnabled = true;
         public bool prisonerScavengeEnabled = true;
@@ -30,6 +33,9 @@ namespace HungerAndHavoc.Core
         public int broadcastCooldownDays = 3;
         public bool staggerGeneration = true;
         public bool refugeeCampEnabled = true;
+        public float refugeePredationChancePercent = 10f;
+        public bool refugeePredationFightBack = true;
+        public bool outsidePredatorsFollowDifficulty;
         public bool pawnHistoriesEnabled = true;
         public bool pawnTraitsEnabled = true;
         List<string> disabledIncidentDisplayIds = new List<string>();
@@ -38,6 +44,31 @@ namespace HungerAndHavoc.Core
         List<string> disabledHistoryDisplayIds = new List<string>();
         List<string> disabledTraitDisplayIds = new List<string>();
         Dictionary<string, float> traitWeights = new Dictionary<string, float>();
+        public int maxEventPawns = 30;
+        public float minGeneratedAge;
+        public float maxGeneratedAge = 50f;
+        public float reliefFoodScoreBonus = 0.1f;
+        public float fedStayDays = 0.5f;
+        public bool waitWhenNoFood = true;
+        public float noFoodWaitDays = 0.5f;
+        public int shelterDays = 5;
+        public int hireDays = 60;
+        public bool coldClothesEnabled = true;
+        public float minimumEventTemperature = -35f;
+        public float maximumEventTemperature = 70f;
+        public bool countEndingsWithoutNarrator = true;
+        public bool endingsWithoutNarrator = true;
+        public int endingAidGoal = 99;
+        public int endingBroadcastGoal = 3;
+        public int endingExpulsionLimit = 3;
+        public int endingAdultGoal = 100;
+        public int endingWaitDays = 30;
+        public bool endingE01 = true;
+        public bool endingE02 = true;
+        public bool endingE03 = true;
+        public bool endingE04 = true;
+        public bool endingE05 = true;
+        public bool endingIdentity = true;
 
         public override void ExposeData()
         {
@@ -56,6 +87,9 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref aidRequestsEnabled, "aidRequestsEnabled", true);
             Scribe_Values.Look(ref intelTradesEnabled, "intelTradesEnabled", true);
             Scribe_Values.Look(ref visitorChoicesEnabled, "visitorChoicesEnabled", true);
+            Scribe_Values.Look(ref traderIgnoresHarshEnvironment, "traderIgnoresHarshEnvironment", true);
+            Scribe_Values.Look(ref traderIgnoresEnclosedSpace, "traderIgnoresEnclosedSpace", true);
+            Scribe_Values.Look(ref childExchangeFoodSubstitution, "childExchangeFoodSubstitution", true);
             Scribe_Values.Look(ref familyDropEnabled, "familyDropEnabled", true);
             Scribe_Values.Look(ref motherFeedEnabled, "motherFeedEnabled", true);
             Scribe_Values.Look(ref prisonerScavengeEnabled, "prisonerScavengeEnabled", true);
@@ -64,6 +98,9 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref broadcastCooldownDays, "broadcastCooldownDays", 3);
             Scribe_Values.Look(ref staggerGeneration, "staggerGeneration", true);
             Scribe_Values.Look(ref refugeeCampEnabled, "refugeeCampEnabled", true);
+            Scribe_Values.Look(ref refugeePredationChancePercent, "refugeePredationChancePercent", 10f);
+            Scribe_Values.Look(ref refugeePredationFightBack, "refugeePredationFightBack", true);
+            Scribe_Values.Look(ref outsidePredatorsFollowDifficulty, "outsidePredatorsFollowDifficulty", false);
             Scribe_Values.Look(ref pawnHistoriesEnabled, "pawnHistoriesEnabled", true);
             Scribe_Values.Look(ref pawnTraitsEnabled, "pawnTraitsEnabled", true);
             Scribe_Collections.Look(ref disabledIncidentDisplayIds, "disabledIncidentDisplayIds", LookMode.Value);
@@ -72,6 +109,31 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref disabledHistoryDisplayIds, "disabledHistoryDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref disabledTraitDisplayIds, "disabledTraitDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref traitWeights, "traitWeights", LookMode.Value, LookMode.Value);
+            Scribe_Values.Look(ref maxEventPawns, "maxEventPawns", 30);
+            Scribe_Values.Look(ref minGeneratedAge, "minGeneratedAge", 0f);
+            Scribe_Values.Look(ref maxGeneratedAge, "maxGeneratedAge", 50f);
+            Scribe_Values.Look(ref reliefFoodScoreBonus, "reliefFoodScoreBonus", 0.1f);
+            Scribe_Values.Look(ref fedStayDays, "fedStayDays", 0.5f);
+            Scribe_Values.Look(ref waitWhenNoFood, "waitWhenNoFood", true);
+            Scribe_Values.Look(ref noFoodWaitDays, "noFoodWaitDays", 0.5f);
+            Scribe_Values.Look(ref shelterDays, "shelterDays", 5);
+            Scribe_Values.Look(ref hireDays, "hireDays", 60);
+            Scribe_Values.Look(ref coldClothesEnabled, "coldClothesEnabled", true);
+            Scribe_Values.Look(ref minimumEventTemperature, "minimumEventTemperature", -35f);
+            Scribe_Values.Look(ref maximumEventTemperature, "maximumEventTemperature", 70f);
+            Scribe_Values.Look(ref countEndingsWithoutNarrator, "countEndingsWithoutNarrator", true);
+            Scribe_Values.Look(ref endingsWithoutNarrator, "endingsWithoutNarrator", true);
+            Scribe_Values.Look(ref endingAidGoal, "endingAidGoal", 99);
+            Scribe_Values.Look(ref endingBroadcastGoal, "endingBroadcastGoal", 3);
+            Scribe_Values.Look(ref endingExpulsionLimit, "endingExpulsionLimit", 3);
+            Scribe_Values.Look(ref endingAdultGoal, "endingAdultGoal", 100);
+            Scribe_Values.Look(ref endingWaitDays, "endingWaitDays", 30);
+            Scribe_Values.Look(ref endingE01, "endingE01", true);
+            Scribe_Values.Look(ref endingE02, "endingE02", true);
+            Scribe_Values.Look(ref endingE03, "endingE03", true);
+            Scribe_Values.Look(ref endingE04, "endingE04", true);
+            Scribe_Values.Look(ref endingE05, "endingE05", true);
+            Scribe_Values.Look(ref endingIdentity, "endingIdentity", true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 xenotypeWeights = xenotypeWeights ?? new Dictionary<string, float>();
@@ -88,6 +150,9 @@ namespace HungerAndHavoc.Core
                 Normalize();
                 positiveIncidentDays = HungerAndHavoc.Incidents.RHAH_IncidentSchedule.ClampDays(positiveIncidentDays);
                 negativeIncidentDays = HungerAndHavoc.Incidents.RHAH_IncidentSchedule.ClampDays(negativeIncidentDays);
+                ClampVisitorRules();
+                ClampEndingGoals();
+                refugeePredationChancePercent = HungerAndHavoc.Incidents.RHAH_PredationRules.ClampChance(refugeePredationChancePercent);
             }
         }
 
@@ -279,6 +344,65 @@ namespace HungerAndHavoc.Core
             disabledIncidentDisplayIds = Clean(disabledIncidentDisplayIds);
             disabledHistoryDisplayIds = Clean(disabledHistoryDisplayIds);
             disabledTraitDisplayIds = Clean(disabledTraitDisplayIds);
+        }
+
+        void ClampVisitorRules()
+        {
+            maxEventPawns = Pawn.RHAH_VisitorRules.ClampCount(maxEventPawns);
+            minGeneratedAge = Pawn.RHAH_VisitorRules.ClampAge(minGeneratedAge);
+            maxGeneratedAge = Pawn.RHAH_VisitorRules.ClampAge(maxGeneratedAge);
+            if (maxGeneratedAge < minGeneratedAge)
+            {
+                maxGeneratedAge = minGeneratedAge;
+            }
+
+            reliefFoodScoreBonus = Pawn.RHAH_VisitorRules.ClampBonus(reliefFoodScoreBonus);
+            fedStayDays = ClampStayDays(fedStayDays, 0.5f);
+            noFoodWaitDays = ClampStayDays(noFoodWaitDays, 0.5f);
+            shelterDays = Pawn.RHAH_VisitorRules.ClampShelterDays(shelterDays);
+            hireDays = Pawn.RHAH_VisitorRules.ClampHireDays(hireDays);
+            if (float.IsNaN(minimumEventTemperature) || float.IsInfinity(minimumEventTemperature))
+            {
+                minimumEventTemperature = -35f;
+            }
+
+            if (float.IsNaN(maximumEventTemperature) || float.IsInfinity(maximumEventTemperature))
+            {
+                maximumEventTemperature = 70f;
+            }
+
+            if (minimumEventTemperature < -35f)
+            {
+                minimumEventTemperature = -35f;
+            }
+
+            if (maximumEventTemperature > 70f)
+            {
+                maximumEventTemperature = 70f;
+            }
+
+            if (minimumEventTemperature > maximumEventTemperature)
+            {
+                float swap = minimumEventTemperature;
+                minimumEventTemperature = maximumEventTemperature;
+                maximumEventTemperature = swap;
+            }
+        }
+
+
+        static float ClampStayDays(float days, float fallback)
+        {
+            if (float.IsNaN(days) || float.IsInfinity(days))
+            {
+                return fallback;
+            }
+
+            if (days < 0f)
+            {
+                return 0f;
+            }
+
+            return days > 5f ? 5f : days;
         }
 
         static Dictionary<string, float> ClampWeights(Dictionary<string, float> source, Func<float, float> clamp)
@@ -555,6 +679,33 @@ namespace HungerAndHavoc.Core
             }
 
             return visitorChoicesEnabled;
+        }
+
+        internal HungerAndHavoc.Narrative.RHAH_EndingGoals EndingGoals()
+        {
+            return new HungerAndHavoc.Narrative.RHAH_EndingGoals(
+                endingAidGoal,
+                endingBroadcastGoal,
+                endingExpulsionLimit,
+                endingAdultGoal,
+                endingWaitDays,
+                countEndingsWithoutNarrator,
+                endingsWithoutNarrator,
+                endingE01,
+                endingE02,
+                endingE03,
+                endingE04,
+                endingE05,
+                endingIdentity);
+        }
+
+        void ClampEndingGoals()
+        {
+            endingAidGoal = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampAid(endingAidGoal);
+            endingBroadcastGoal = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampBroadcasts(endingBroadcastGoal);
+            endingExpulsionLimit = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampExpulsions(endingExpulsionLimit);
+            endingAdultGoal = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampAdults(endingAdultGoal);
+            endingWaitDays = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampWait(endingWaitDays);
         }
     }
 }

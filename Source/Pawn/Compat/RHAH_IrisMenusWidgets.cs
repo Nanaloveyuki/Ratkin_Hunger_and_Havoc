@@ -83,20 +83,33 @@ namespace HungerAndHavoc.Pawn.Compat
             return float.TryParse(typed, out left) && float.TryParse(parsed, out right) && Mathf.Abs(left - right) <= 0.001f;
         }
 
-        internal static void OccurrenceCurve(Listing_Standard list, string anchor, float positiveDays, float negativeDays)
+        internal static void OccurrenceCurve(Listing_Standard list, string anchor, float markerDays, Color color)
         {
             const int samples = 48;
-            Rect plot = Card(list, anchor, 168f);
-            Widgets.Label(new Rect(plot.x, plot.y, plot.width * 0.5f, 18f), "RHAH_Menu_Frequency_Positive".Translate());
-            Widgets.Label(new Rect(plot.x + plot.width * 0.5f, plot.y, plot.width * 0.5f, 18f), "RHAH_Menu_Frequency_Negative".Translate());
-            Rect graph = new Rect(plot.x, plot.y + 22f, plot.width, plot.height - 22f);
+            Rect plot = Card(list, anchor, 148f);
+            Rect graph = new Rect(plot.x, plot.y, plot.width, plot.height);
             Widgets.DrawBoxSolid(graph, new Color(0.08f, 0.08f, 0.08f, 0.55f));
-            DrawCurve(graph, new Color(0.45f, 0.78f, 0.48f), samples);
-            DrawMarker(graph, positiveDays, new Color(0.45f, 0.78f, 0.48f));
-            DrawMarker(graph, negativeDays, new Color(0.86f, 0.42f, 0.36f));
-            TooltipHandler.TipRegion(graph, "RHAH_Menu_Frequency_CurveTip".Translate(
-                RHAH_IncidentSchedule.OccurrenceChance(positiveDays).ToString("P1"),
-                RHAH_IncidentSchedule.OccurrenceChance(negativeDays).ToString("P1")));
+            DrawCurve(graph, color, samples);
+            DrawMarker(graph, markerDays, color);
+            if (Mouse.IsOver(graph))
+            {
+                float days = DaysAt(graph, Event.current.mousePosition.x);
+                Widgets.DrawLineVertical(CurvePoint(graph, days, 0f, RHAH_IncidentSchedule.MaxDays).x, graph.y, graph.height);
+                TooltipHandler.TipRegion(graph, () => "RHAH_Menu_Frequency_CurveTip".Translate(
+                    days.ToString("0.#"),
+                    RHAH_IncidentSchedule.OccurrenceChance(days).ToString("P2")), anchor.GetHashCode());
+            }
+        }
+
+        internal static float DaysAt(Rect graph, float mouseX)
+        {
+            if (graph.width <= 0f)
+            {
+                return 0f;
+            }
+
+            float along = Mathf.Clamp01((mouseX - graph.x) / graph.width);
+            return along * RHAH_IncidentSchedule.MaxDays;
         }
 
         static void DrawCurve(Rect graph, Color color, int samples)

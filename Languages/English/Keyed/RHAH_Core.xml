@@ -13,6 +13,29 @@
   <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>After a visitor is full, their next meal may come from outside the zone. With this off, a full visitor is no longer fed by this mod.</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
   <RHAH_Settings_LeaveAfterFed>Leave the map after eating</RHAH_Settings_LeaveAfterFed>
   <RHAH_Settings_LeaveAfterFed_Tooltip>A visitor who can reach an exit leaves after eating. A child too young to walk is carried out. With this off, a full visitor stays.</RHAH_Settings_LeaveAfterFed_Tooltip>
+  <RHAH_Settings_MaxEventPawns>Pawns per event: {0}</RHAH_Settings_MaxEventPawns>
+  <RHAH_Settings_MaxEventPawns_Tooltip>Adults, children, Ratkin young, and animals in one event stay under this number. Range 1 to 100, default 30. A count below the event minimum still uses that minimum. A fixed mother and child group is not split.</RHAH_Settings_MaxEventPawns_Tooltip>
+  <RHAH_Settings_ReliefScore>Relief food bonus: {0}%</RHAH_Settings_ReliefScore>
+  <RHAH_Settings_ReliefScore_Tooltip>Food inside the zone also gains this bonus, on top of distance and whether it is suitable. Range 0 to 100%, default 10%.</RHAH_Settings_ReliefScore_Tooltip>
+  <RHAH_Settings_FedStay>Stay after eating: {0} days</RHAH_Settings_FedStay>
+  <RHAH_Settings_FedStay_Tooltip>After the first full meal, each visitor stays for half to one and a half times this duration, then leaves. Range 0 to 5 days, default half a day. Turning leaving off keeps the record of who has already eaten.</RHAH_Settings_FedStay_Tooltip>
+  <RHAH_Settings_WaitFood>Wait when no food is found</RHAH_Settings_WaitFood>
+  <RHAH_Settings_WaitFood_Tooltip>Visitors keep looking for the set time. Food found later starts the next wait over. With this off, they leave.</RHAH_Settings_WaitFood_Tooltip>
+  <RHAH_Settings_FoodWait>Wait without food: {0} days</RHAH_Settings_FoodWait>
+  <RHAH_Settings_FoodWait_Tooltip>How long a visitor waits after finding nothing to eat. Range 0 to 5 days, default half a day.</RHAH_Settings_FoodWait_Tooltip>
+  <RHAH_Settings_MinAge>Minimum age: {0}</RHAH_Settings_MinAge>
+  <RHAH_Settings_MaxAge>Maximum age: {0}</RHAH_Settings_MaxAge>
+  <RHAH_Settings_Age_Tooltip>Ordinary visitors are generated inside this range. Range 0 to 100, default 0 to 50. Ratkin young, fixed ages, and mothers keep the age the event requires. Without Toddlers, only event infants ignore age-based immobility. Injury, pain, and consciousness still drop them.</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_ShelterDays>Short stay: {0} days</RHAH_Settings_ShelterDays>
+  <RHAH_Settings_ShelterDays_Tooltip>A sheltered visitor leaves when the time is up. Range 5 to 60 days, default 5. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_ShelterDays_Tooltip>
+  <RHAH_Settings_HireDays>Long hire: {0} days</RHAH_Settings_HireDays>
+  <RHAH_Settings_HireDays_Tooltip>A hired visitor leaves when the time is up. Range 5 to 600 days, default 60. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_HireDays_Tooltip>
+  <RHAH_Settings_ColdClothes>Give new visitors a cold wrap</RHAH_Settings_ColdClothes>
+  <RHAH_Settings_ColdClothes_Tooltip>When the map is colder than a visitor can bear, a new visitor wears one extra cold wrap. With this off, no extra clothing is given.</RHAH_Settings_ColdClothes_Tooltip>
+  <RHAH_Settings_TempMin>Minimum incident temperature: {0}°C</RHAH_Settings_TempMin>
+  <RHAH_Settings_TempMax>Maximum incident temperature: {0}°C</RHAH_Settings_TempMax>
+  <RHAH_Settings_Temp_Tooltip>New map incidents stop while the map is outside this range. Default -35°C to 70°C. Caravans ignore it.</RHAH_Settings_Temp_Tooltip>
+  <RHAH_Choice_Shelter>Shelter</RHAH_Choice_Shelter>
   <RHAH_Settings_ReliefFoods>Allowed foods</RHAH_Settings_ReliefFoods>
   <RHAH_Settings_ReliefFoods_Tooltip>Visitors may take any food left on. Disabling all only turns off foods loaded now. Foods added later stay available.</RHAH_Settings_ReliefFoods_Tooltip>
   <RHAH_Settings_ReliefFoods_All>Allow all</RHAH_Settings_ReliefFoods_All>
@@ -98,6 +121,7 @@
   <RHAH_Menu_Genes_Join>Ratkin xenotypes available to join</RHAH_Menu_Genes_Join>
   <RHAH_Menu_Genes_JoinOne>Join {0}</RHAH_Menu_Genes_JoinOne>
   <RHAH_Menu_Genes_Remove>Remove</RHAH_Menu_Genes_Remove>
+  <RHAH_Menu_Genes_UnknownMod>Unknown source</RHAH_Menu_Genes_UnknownMod>
   <RHAH_Menu_Genes_NoOwned>No Hunger and Havoc genes are available to toggle.</RHAH_Menu_Genes_NoOwned>
   <RHAH_Menu_PawnHistory_Note>New visitors draw one checked history by developmental stage, age, temperature, and incident. An incident that sets its own backstory keeps it. Traits can still be drawn.</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>Enable all histories</RHAH_Menu_PawnHistory_EnableAll>
@@ -117,12 +141,12 @@
   <RHAH_Menu_Experimental_Note>These options change how long visitors take to generate. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>Speed up visitor generation</RHAH_Settings_OptimizeGeneration>
   <RHAH_Settings_OptimizeGeneration_Tooltip>Skips relations, titles, random apparel, and redressing world pawns. Incidents without a set xenotype draw from the gene page weights. If those weights are unavailable, visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>The curve is the chance a pool fires. Days run across. Chance runs up. The dot is the current setting. 0 turns that pool off.</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Gap>The curve is the chance this pool fires. Days run across. Chance runs up. The dot is the current setting. 0 turns this pool off. Rest the cursor on the curve to read that day's chance.</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>Positive incidents, average days</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>Negative incidents, average days</RHAH_Menu_Frequency_Negative>
   <RHAH_Menu_Frequency_Curve>Occurrence chance</RHAH_Menu_Frequency_Curve>
-  <RHAH_Menu_Frequency_CurveTip>Positive {0}, negative {1}.</RHAH_Menu_Frequency_CurveTip>
-  <RHAH_Menu_Developer_Note>Read-only build markers. Debug queues live under Dev events.</RHAH_Menu_Developer_Note>
+  <RHAH_Menu_Frequency_CurveTip>{0} days, chance {1}.</RHAH_Menu_Frequency_CurveTip>
+  <RHAH_Menu_Developer_Note>Debug queues live under Dev events. Version and IrisMenus are under Compatibility and diagnostics.</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>Last listed pawn</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>Beggar</RHAH_Menu_Family_Beggar>
   <RHAH_Menu_Family_Thief>Thief</RHAH_Menu_Family_Thief>
@@ -174,6 +198,12 @@
   <RHAH_Settings_IntelTrades_Tooltip>New intel stops being traded for a site. Sites already placed stay on the world.</RHAH_Settings_IntelTrades_Tooltip>
   <RHAH_Settings_VisitorChoices>Enable visitor choices</RHAH_Settings_VisitorChoices>
   <RHAH_Settings_VisitorChoices_Tooltip>New visitors stop asking to be taken in, hired, or sent away. The right-click menu still handles people already here.</RHAH_Settings_VisitorChoices_Tooltip>
+  <RHAH_Settings_TraderIgnoreEnvironment>Trader caravans ignore harsh conditions</RHAH_Settings_TraderIgnoreEnvironment>
+  <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>Famine traders do not leave as soon as they enter because of cold, heat, or dangerous weather. Off, harsh conditions still send them away.</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
+  <RHAH_Settings_TraderIgnoreEnclosed>Trader caravans ignore enclosed rooms</RHAH_Settings_TraderIgnoreEnclosed>
+  <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>Famine traders stay inside a closed room instead of digging out. Off, they dig out when they cannot reach the map edge.</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
+  <RHAH_Settings_ChildExchangeFood>Allow food in place of children</RHAH_Settings_ChildExchangeFood>
+  <RHAH_Settings_ChildExchangeFood_Tooltip>Child exchange accepts simple meals instead of a baby. Each child costs 10. The traders do not sell food. Off, the trade still asks for the child.</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>Set children down when leaving</RHAH_Settings_FamilyDrop>
   <RHAH_Settings_FamilyDrop_Tooltip>Mothers stop recording each child they set down. Records already written stay in the save.</RHAH_Settings_FamilyDrop_Tooltip>
   <RHAH_Settings_MotherFeed>Mothers feed children</RHAH_Settings_MotherFeed>
@@ -186,6 +216,16 @@
   <RHAH_Settings_Broadcast_Tooltip>The comms console stops listing a broadcast. A cooldown already running does not end early.</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_Stagger>Generate visitors in batches</RHAH_Settings_Stagger>
   <RHAH_Settings_Stagger_Tooltip>Queued incidents spawn one batch at a time. Off, queued incidents spawn as soon as they can.</RHAH_Settings_Stagger_Tooltip>
+  <RHAH_Settings_PredationChance>Ratkin refugees hunted: {0}%</RHAH_Settings_PredationChance>
+  <RHAH_Settings_PredationChance_Tooltip>Each camp map rolls this chance for a predator. 0 to 100, default 10. At 0, none arrive.</RHAH_Settings_PredationChance_Tooltip>
+  <RHAH_Settings_PredationFightBack>Refugees fight back</RHAH_Settings_PredationFightBack>
+  <RHAH_Settings_PredationFightBack_Tooltip>Off, hunted camp Ratkin run. Anyone who cannot use violence still cannot fight.</RHAH_Settings_PredationFightBack_Tooltip>
+  <RHAH_Settings_PredationFollowDifficulty>Outside predators follow the save difficulty once the Ratkin are gone</RHAH_Settings_PredationFollowDifficulty>
+  <RHAH_Settings_PredationFollowDifficulty_Tooltip>On, they resume normal hunting when no reachable Ratkin or corpse remains. Off, a hungry predator with nothing reachable leaves the map.</RHAH_Settings_PredationFollowDifficulty_Tooltip>
+  <RHAH_Predation_Label>Predator</RHAH_Predation_Label>
+  <RHAH_Predation_Text>A wild predator has started hunting these Ratkin refugees. It goes for the young first.</RHAH_Predation_Text>
+  <RHAH_OutsidePredators_Label>Outside predator</RHAH_OutsidePredators_Label>
+  <RHAH_OutsidePredators_Text>A predator followed the Ratkin refugees here and is looking for one it can eat.</RHAH_OutsidePredators_Text>
   <RHAH_Choice_Label>Visitor request</RHAH_Choice_Label>
   <RHAH_Choice_Text>They want {0} {1}. Delivering sends them off. Refusing sends them off too. Ignoring leaves them as they are.</RHAH_Choice_Text>
   <RHAH_Choice_Deliver>Deliver</RHAH_Choice_Deliver>

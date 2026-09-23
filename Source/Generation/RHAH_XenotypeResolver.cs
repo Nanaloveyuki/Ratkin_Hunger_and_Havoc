@@ -175,6 +175,53 @@ namespace HungerAndHavoc.Generation
         {
             return string.Equals(defName, RHAH_GeneCatalog.FallbackXenotypeDefName, System.StringComparison.OrdinalIgnoreCase);
         }
+
+        internal static string SourceModName(XenotypeDef xenotype)
+        {
+            string name = xenotype == null || xenotype.modContentPack == null
+                ? null
+                : xenotype.modContentPack.Name;
+            return string.IsNullOrEmpty(name) ? null : name;
+        }
+
+        internal static List<List<XenotypeDef>> GroupBySourceMod(List<XenotypeDef> xenotypes)
+        {
+            List<List<XenotypeDef>> groups = new List<List<XenotypeDef>>();
+            if (xenotypes == null)
+            {
+                return groups;
+            }
+
+            List<string> names = new List<string>();
+            for (int i = 0; i < xenotypes.Count; i++)
+            {
+                string name = SourceModName(xenotypes[i]);
+                int index = IndexOf(names, name);
+                if (index < 0)
+                {
+                    names.Add(name);
+                    groups.Add(new List<XenotypeDef>());
+                    index = groups.Count - 1;
+                }
+
+                groups[index].Add(xenotypes[i]);
+            }
+
+            return groups;
+        }
+
+        static int IndexOf(List<string> names, string name)
+        {
+            for (int i = 0; i < names.Count; i++)
+            {
+                if (string.Equals(names[i], name, System.StringComparison.Ordinal))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
         static bool Contains(List<XenotypeDef> loaded, string defName)
         {
             for (int i = 0; i < loaded.Count; i++)

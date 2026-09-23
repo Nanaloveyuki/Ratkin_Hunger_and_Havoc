@@ -1,6 +1,10 @@
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.Serialization;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Generation;
 using RimWorld;
+using Verse;
 using Xunit;
 
 namespace HungerAndHavoc.Tests
@@ -94,6 +98,40 @@ namespace HungerAndHavoc.Tests
             RHAH_GeneCatalog.RegisterXenotype(RHAH_GeneCatalog.DefaultXenotypeDefName, 1f, false);
             Assert.Equal(40f, RHAH_GeneCatalog.SuggestedWeight("Ratkin_OA"));
             Assert.False(RHAH_GeneCatalog.IsBuiltin(RHAH_GeneCatalog.FallbackXenotypeDefName));
+        }
+
+        [Fact]
+        public void XenotypesGroupBySourceModAndKeepOrder()
+        {
+            XenotypeDef first = Xenotype("RK_XenoType_Ratkin", "New Ratkin Plus");
+            XenotypeDef second = Xenotype("RHAH_Xenotype_Ratkin", "Ratkin: Hunger and Havoc");
+            XenotypeDef third = Xenotype("Ratkin_OA", "New Ratkin Plus");
+            XenotypeDef unknown = new XenotypeDef { defName = "LooseRatkin" };
+            List<List<XenotypeDef>> groups = RHAH_XenotypeResolver.GroupBySourceMod(new List<XenotypeDef>
+            {
+                first,
+                second,
+                third,
+                unknown
+            });
+            Assert.Equal(3, groups.Count);
+            Assert.Equal(new[] { first, third }, groups[0]);
+            Assert.Equal(new[] { second }, groups[1]);
+            Assert.Equal(new[] { unknown }, groups[2]);
+            Assert.Equal("New Ratkin Plus", RHAH_XenotypeResolver.SourceModName(first));
+            Assert.Null(RHAH_XenotypeResolver.SourceModName(unknown));
+            Assert.Empty(RHAH_XenotypeResolver.GroupBySourceMod(null));
+        }
+
+        static XenotypeDef Xenotype(string defName, string modName)
+        {
+            ModContentPack pack = (ModContentPack)FormatterServices.GetUninitializedObject(typeof(ModContentPack));
+            typeof(ModContentPack).GetField("nameInt", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(pack, modName);
+            return new XenotypeDef
+            {
+                defName = defName,
+                modContentPack = pack
+            };
         }
 
         static bool SetOptimization(bool enabled)

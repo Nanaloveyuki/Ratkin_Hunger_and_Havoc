@@ -13,6 +13,29 @@
   <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>开启后，来客吃饱的下一次进食可以取用区外食物。关闭后，吃饱的来客不再由本模组安排进食。</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
   <RHAH_Settings_LeaveAfterFed>吃完后离开地图</RHAH_Settings_LeaveAfterFed>
   <RHAH_Settings_LeaveAfterFed_Tooltip>开启后，能走到出口的来客吃饱后离开。太小或走不动的幼年鼠族由大人带出。关闭后，吃饱的来客留在地图上。</RHAH_Settings_LeaveAfterFed_Tooltip>
+  <RHAH_Settings_MaxEventPawns>单次人数上限：{0}</RHAH_Settings_MaxEventPawns>
+  <RHAH_Settings_MaxEventPawns_Tooltip>一次事件里成人、儿童、幼年鼠族和动物合计不超过这个数。范围 1 到 100，默认 30。低于该事件最少人数时仍按最少人数生成。母亲和孩子的固定组合不拆开。</RHAH_Settings_MaxEventPawns_Tooltip>
+  <RHAH_Settings_ReliefScore>赈灾区食物加分：{0}%</RHAH_Settings_ReliefScore>
+  <RHAH_Settings_ReliefScore_Tooltip>区内食物在距离和是否合适之外再加这一成。范围 0 到 100%，默认 10%。</RHAH_Settings_ReliefScore_Tooltip>
+  <RHAH_Settings_FedStay>吃饱后停留：{0} 天</RHAH_Settings_FedStay>
+  <RHAH_Settings_FedStay_Tooltip>每只来客第一次吃饱后，停留这个时长的一半到一倍半，然后离开。范围 0 到 5 天，默认半天。关掉离场后，已经吃饱的记录还在。</RHAH_Settings_FedStay_Tooltip>
+  <RHAH_Settings_WaitFood>找不到食物时等待</RHAH_Settings_WaitFood>
+  <RHAH_Settings_WaitFood_Tooltip>开启后，来客在划定时间内继续找吃的。找到后，下一次断粮重新计时。关闭后直接离开。</RHAH_Settings_WaitFood_Tooltip>
+  <RHAH_Settings_FoodWait>断粮等待：{0} 天</RHAH_Settings_FoodWait>
+  <RHAH_Settings_FoodWait_Tooltip>找不到食物时最多等这么久。范围 0 到 5 天，默认半天。</RHAH_Settings_FoodWait_Tooltip>
+  <RHAH_Settings_MinAge>最低生成年龄：{0}</RHAH_Settings_MinAge>
+  <RHAH_Settings_MaxAge>最高生成年龄：{0}</RHAH_Settings_MaxAge>
+  <RHAH_Settings_Age_Tooltip>普通来客的年龄落在这个区间里。范围 0 到 100，默认 0 到 50。幼年鼠族、固定年龄和母亲仍用事件要求的年龄。没有 Toddlers 时，只给事件里的婴儿解开年龄造成的不能移动，伤、痛和意识造成的倒地还在。</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_ShelterDays>短工天数：{0}</RHAH_Settings_ShelterDays>
+  <RHAH_Settings_ShelterDays_Tooltip>收留到期后离开。范围 5 到 60 天，默认 5 天。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_ShelterDays_Tooltip>
+  <RHAH_Settings_HireDays>长工天数：{0}</RHAH_Settings_HireDays>
+  <RHAH_Settings_HireDays_Tooltip>雇佣到期后离开。范围 5 到 600 天，默认 60 天。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_HireDays_Tooltip>
+  <RHAH_Settings_ColdClothes>低温时给新来客一件防寒衣</RHAH_Settings_ColdClothes>
+  <RHAH_Settings_ColdClothes_Tooltip>地图气温低于来客能受的下限时，新来客多穿一件防寒衣。关闭后不额外发衣。</RHAH_Settings_ColdClothes_Tooltip>
+  <RHAH_Settings_TempMin>事件最低气温：{0}°C</RHAH_Settings_TempMin>
+  <RHAH_Settings_TempMax>事件最高气温：{0}°C</RHAH_Settings_TempMax>
+  <RHAH_Settings_Temp_Tooltip>地图气温超出这个区间时，不再刷新以地图为目标的新事件。默认 -35°C 到 70°C。商队不受这项限制。</RHAH_Settings_Temp_Tooltip>
+  <RHAH_Choice_Shelter>收留</RHAH_Choice_Shelter>
   <RHAH_Settings_ReliefFoods>启用的食物</RHAH_Settings_ReliefFoods>
   <RHAH_Settings_ReliefFoods_Tooltip>未关闭的食物都可以被来客取用。全部禁用只关掉现在已加载的食物，之后新出现的食物仍可用。</RHAH_Settings_ReliefFoods_Tooltip>
   <RHAH_Settings_ReliefFoods_All>全部启用</RHAH_Settings_ReliefFoods_All>
@@ -98,6 +121,7 @@
   <RHAH_Menu_Genes_Join>可加入的鼠族异种</RHAH_Menu_Genes_Join>
   <RHAH_Menu_Genes_JoinOne>加入 {0}</RHAH_Menu_Genes_JoinOne>
   <RHAH_Menu_Genes_Remove>移出</RHAH_Menu_Genes_Remove>
+  <RHAH_Menu_Genes_UnknownMod>未知来源</RHAH_Menu_Genes_UnknownMod>
   <RHAH_Menu_Genes_NoOwned>当前没有可开关的饥与祸基因。</RHAH_Menu_Genes_NoOwned>
   <RHAH_Menu_PawnHistory_Note>新来客按发育阶段、年龄、气温和事件从已勾选的经历里抽一条。显式指定背景的事件不改经历，特质仍可抽。</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>启用全部经历</RHAH_Menu_PawnHistory_EnableAll>
@@ -117,12 +141,12 @@
   <RHAH_Menu_Experimental_Note>这些选项会改变生成来客的耗时。关闭后，来客仍按各事件自己的装备、经历、健康和基因生成。</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>加快来客生成</RHAH_Settings_OptimizeGeneration>
   <RHAH_Settings_OptimizeGeneration_Tooltip>跳过关系、头衔、随机装备和世界角色换装。事件没有指定异种时，按基因页的权重抽取。权重不可用时使用初鼠种；找不到初鼠种时使用饥荒鼠族。</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>曲线是这一池发生事件的概率。横轴是平均天数，纵轴是概率。点是当前设置。0 关闭该池。</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Gap>曲线是这一池发生事件的概率。横轴是平均天数，纵轴是概率。点是当前设置。0 关闭该池。鼠标停在曲线上时，显示该天数的概率。</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>正面事件平均天数</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>负面事件平均天数</RHAH_Menu_Frequency_Negative>
   <RHAH_Menu_Frequency_Curve>发生概率</RHAH_Menu_Frequency_Curve>
-  <RHAH_Menu_Frequency_CurveTip>正面 {0}，负面 {1}。</RHAH_Menu_Frequency_CurveTip>
-  <RHAH_Menu_Developer_Note>只读的构建标记。调试排队在开发者事件页。</RHAH_Menu_Developer_Note>
+  <RHAH_Menu_Frequency_CurveTip>{0} 天，概率 {1}。</RHAH_Menu_Frequency_CurveTip>
+  <RHAH_Menu_Developer_Note>调试排队在开发者事件页。版本和 IrisMenus 在兼容与诊断。</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>最近列出的角色</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>乞食</RHAH_Menu_Family_Beggar>
   <RHAH_Menu_Family_Thief>偷窃</RHAH_Menu_Family_Thief>
@@ -174,6 +198,12 @@
   <RHAH_Settings_IntelTrades_Tooltip>关闭后，新的情报不再用来换地点。已经交付的地点留在世界上。</RHAH_Settings_IntelTrades_Tooltip>
   <RHAH_Settings_VisitorChoices>启用来客选择</RHAH_Settings_VisitorChoices>
   <RHAH_Settings_VisitorChoices_Tooltip>关闭后，新的来客不再询问收留、雇佣或拒绝。右键菜单仍可处理在场来客。</RHAH_Settings_VisitorChoices_Tooltip>
+  <RHAH_Settings_TraderIgnoreEnvironment>商队无视恶劣环境</RHAH_Settings_TraderIgnoreEnvironment>
+  <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>开启后，灾荒商队不会因为太冷、太热或危险天气刚进图就离开。关闭后，恶劣环境仍会让他们离开。</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
+  <RHAH_Settings_TraderIgnoreEnclosed>商队无视封闭空间</RHAH_Settings_TraderIgnoreEnclosed>
+  <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>开启后，灾荒商队在封闭房间里不挖路离开。关闭后，到不了地图边缘时他们会挖路走。</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
+  <RHAH_Settings_ChildExchangeFood>允许用食物换孩子</RHAH_Settings_ChildExchangeFood>
+  <RHAH_Settings_ChildExchangeFood_Tooltip>开启后，易子而食可以用简单餐代替婴幼儿，每个孩子 10 份。商人不卖食物。关闭后，只能按原交易交出孩子。</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>携幼离场时放下孩子</RHAH_Settings_FamilyDrop>
   <RHAH_Settings_FamilyDrop_Tooltip>关闭后，母亲离场不再单独记下放下的孩子。已经记下的仍留在存档里。</RHAH_Settings_FamilyDrop_Tooltip>
   <RHAH_Settings_MotherFeed>母亲给孩子喂食</RHAH_Settings_MotherFeed>
@@ -186,6 +216,16 @@
   <RHAH_Settings_Broadcast_Tooltip>关闭后，通讯台不再列出广播。冷却中的广播不会提前结束。</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_Stagger>分批生成来客</RHAH_Settings_Stagger>
   <RHAH_Settings_Stagger_Tooltip>开启后，排队的事件每隔一小段时间生成一批。关闭后，排队事件会尽快连续生成。</RHAH_Settings_Stagger_Tooltip>
+  <RHAH_Settings_PredationChance>鼠难民被捕食：{0}%</RHAH_Settings_PredationChance>
+  <RHAH_Settings_PredationChance_Tooltip>每个安居点地图按这个概率出现捕食者。范围 0 到 100，默认 10。0 不出现。</RHAH_Settings_PredationChance_Tooltip>
+  <RHAH_Settings_PredationFightBack>鼠难民反击捕食者</RHAH_Settings_PredationFightBack>
+  <RHAH_Settings_PredationFightBack_Tooltip>关闭后，被追猎的安居点鼠族逃跑。不能使用暴力的人仍然不能反击。</RHAH_Settings_PredationFightBack_Tooltip>
+  <RHAH_Settings_PredationFollowDifficulty>外来捕食者无鼠可吃后遵循存档难度</RHAH_Settings_PredationFollowDifficulty>
+  <RHAH_Settings_PredationFollowDifficulty_Tooltip>开启后，找不到可接近的鼠族或尸体时恢复原版觅食。关闭后，饥饿且没有可接近的目标就离开地图。</RHAH_Settings_PredationFollowDifficulty_Tooltip>
+  <RHAH_Predation_Label>捕食者</RHAH_Predation_Label>
+  <RHAH_Predation_Text>一只野生捕食者开始追猎这批鼠难民，先盯上了其中的幼年鼠族。</RHAH_Predation_Text>
+  <RHAH_OutsidePredators_Label>外边的捕食者</RHAH_OutsidePredators_Label>
+  <RHAH_OutsidePredators_Text>一只捕食者跟着鼠难民来到这里，正在找可以吃的鼠族。</RHAH_OutsidePredators_Text>
   <RHAH_Choice_Label>来客请求</RHAH_Choice_Label>
   <RHAH_Choice_Text>他们要 {0} 份{1}。交付后他们离开。拒绝后他们也会离开。忽视则让他们按原样继续。</RHAH_Choice_Text>
   <RHAH_Choice_Deliver>交付</RHAH_Choice_Deliver>

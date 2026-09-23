@@ -115,31 +115,23 @@ namespace HungerAndHavoc.Pawn.Compat
         void DrawOverview(Listing_Standard list)
         {
             Section(list, "RHAH_Menu_Overview");
-            Status(list, "RHAH_Menu_Field_Mod", "RHAH_ModName".Translate());
-            Status(list, "RHAH_Menu_Field_Version", ContentFinderVersion());
             RHAH_Settings settings = RHAH_Mod.Settings;
             if (settings == null)
             {
                 Empty(list, "RHAH_Menu_Settings_Missing");
-            }
-            else
-            {
-                MenuControls.Anchor(list, "enable-new-content");
-                MenuControls.Checkbox(
-                    list,
-                    "RHAH_Settings_EnableNewContent".Translate(),
-                    ref settings.enableNewContent,
-                    "RHAH_Settings_EnableNewContent_Tooltip".Translate());
+                return;
             }
 
-            Status(list, "RHAH_Menu_Field_Game",
-                Current.Game == null ? "RHAH_Menu_NoGame".Translate() : "RHAH_Menu_GameLoaded".Translate());
-            Status(list, "RHAH_Menu_Field_IrisMenus", irisVersion);
+            MenuControls.Anchor(list, "enable-new-content");
+            MenuControls.Checkbox(
+                list,
+                "RHAH_Settings_EnableNewContent".Translate(),
+                ref settings.enableNewContent,
+                "RHAH_Settings_EnableNewContent_Tooltip".Translate());
         }
 
         IEnumerable<MenuSearchEntry> SearchOverview()
         {
-            yield return Entry("overview-version", "RHAH_Menu_Field_Version");
             yield return Entry("enable-new-content", "RHAH_Settings_EnableNewContent", "toggle content");
         }
 
@@ -190,7 +182,7 @@ namespace HungerAndHavoc.Pawn.Compat
 
             if (settings != null)
             {
-                height += ControlRow * 3f;
+                height += ControlRow * (entry.DisplayId == "I-051" ? 6f : 3f);
             }
 
             Rect inner = RHAH_IrisMenusWidgets.Card(list, anchor, height);
@@ -265,6 +257,29 @@ namespace HungerAndHavoc.Pawn.Compat
                 "RHAH_Menu_IncidentWeight_Tip".Translate());
             weightBuffers[entry.DisplayId] = weightBuffer;
             settings.SetIncidentWeight(entry.DisplayId, weight);
+            if (entry.DisplayId != "I-051")
+            {
+                return;
+            }
+
+            y += ControlRow;
+            string chanceBuffer = Buffer(weightBuffers, "predation-chance", settings.refugeePredationChancePercent, "0");
+            settings.refugeePredationChancePercent = RHAH_IrisMenusWidgets.TunedValue(
+                new Rect(inner.x, y, inner.width, 30f),
+                "RHAH_Settings_PredationChance".Translate(settings.refugeePredationChancePercent.ToString("0")),
+                settings.refugeePredationChancePercent,
+                ref chanceBuffer,
+                0f,
+                100f,
+                "0",
+                "RHAH_Settings_PredationChance_Tooltip".Translate());
+            weightBuffers["predation-chance"] = chanceBuffer;
+            y += ControlRow;
+            Widgets.CheckboxLabeled(new Rect(inner.x, y, inner.width, 24f), "RHAH_Settings_PredationFightBack".Translate(), ref settings.refugeePredationFightBack);
+            TooltipHandler.TipRegion(new Rect(inner.x, y, inner.width, 24f), "RHAH_Settings_PredationFightBack_Tooltip".Translate());
+            y += ControlRow;
+            Widgets.CheckboxLabeled(new Rect(inner.x, y, inner.width, 24f), "RHAH_Settings_PredationFollowDifficulty".Translate(), ref settings.outsidePredatorsFollowDifficulty);
+            TooltipHandler.TipRegion(new Rect(inner.x, y, inner.width, 24f), "RHAH_Settings_PredationFollowDifficulty_Tooltip".Translate());
         }
 
         static string Buffer(Dictionary<string, string> buffers, string id, float value, string format)
@@ -426,21 +441,87 @@ namespace HungerAndHavoc.Pawn.Compat
             Status(list, "RHAH_Menu_Narrative_Failed",
                 snapshot.Failed ? "RHAH_Menu_Yes".Translate() : "RHAH_Menu_No".Translate());
             Status(list, "RHAH_Menu_Narrative_Outcome", OutcomeLabel(state.CalculateOutcome()));
+            Section(list, "RHAH_Menu_Narrative_Nodes");
+            DrawNode(list, state, SuiyinNode.N001, "N-001");
+            DrawNode(list, state, SuiyinNode.N002, "N-002");
+            DrawNode(list, state, SuiyinNode.N003, "N-003");
+            DrawNode(list, state, SuiyinNode.N004, "N-004");
+            DrawNode(list, state, SuiyinNode.N005, "N-005");
+            DrawNode(list, state, SuiyinNode.N006, "N-006");
+            DrawNode(list, state, SuiyinNode.N007, "N-007");
+            DrawNode(list, state, SuiyinNode.N008, "N-008");
+            DrawNode(list, state, SuiyinNode.N009, "N-009");
+            Section(list, "RHAH_Menu_Narrative_Thresholds");
+            SuiyinConfig config = state.Book.Config;
+            config.ProgressKinds = ClampKinds(list, "narrative-progress", "RHAH_Menu_Narrative_Progress", config.ProgressKinds);
+            config.RewardKinds = ClampKinds(list, "narrative-reward", "RHAH_Menu_Narrative_Reward", config.RewardKinds);
+            config.EnvoyKinds = ClampKinds(list, "narrative-envoy", "RHAH_Menu_Narrative_Envoy", config.EnvoyKinds);
+            config.RelicKinds = ClampKinds(list, "narrative-relic", "RHAH_Menu_Narrative_Relic", config.RelicKinds);
+            Section(list, "RHAH_Menu_Narrative_Journals");
+            for (int journal = 1; journal <= 14; journal++)
+            {
+                string label = "RHAH_Menu_Narrative_JournalOpen".Translate(journal);
+                if (list.ButtonText(label))
+                {
+                    Find.LetterStack.ReceiveLetter(
+                        "RHAH_Suiyin_Journal_Label".Translate(journal),
+                        "RHAH_Suiyin_Journal_Text".Translate(),
+                        LetterDefOf.NeutralEvent);
+                }
+            }
+
+            if (snapshot.Trust <= -75)
+            {
+                Note(list, "RHAH_Menu_Narrative_TrustClosed");
+            }
         }
 
         IEnumerable<MenuSearchEntry> SearchNarrative()
         {
             yield return Entry("narrative-outcome", "RHAH_Menu_Narrative_Outcome");
+            yield return Entry("narrative-nodes", "RHAH_Menu_Narrative_Nodes");
+            yield return Entry("narrative-thresholds", "RHAH_Menu_Narrative_Thresholds");
+            yield return Entry("narrative-journals", "RHAH_Menu_Narrative_Journals");
         }
 
-        static void DrawOther(Listing_Standard list)
+        void DrawOther(Listing_Standard list)
         {
             Section(list, "RHAH_Menu_Other");
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            if (settings == null)
+            {
+                Empty(list, "RHAH_Menu_Settings_Missing");
+                return;
+            }
+
+            DrawOtherNumbers(list, settings);
         }
 
         static IEnumerable<MenuSearchEntry> SearchOther()
         {
             yield break;
+        }
+        void DrawOtherNumbers(Listing_Standard list, RHAH_Settings settings)
+        {
+            string minAge = Buffer(weightBuffers, "age-min", settings.minGeneratedAge, "0.0");
+            settings.minGeneratedAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MinAge".Translate(settings.minGeneratedAge.ToString("0.0")), settings.minGeneratedAge, ref minAge, 0f, 100f, "0.0", "RHAH_Settings_Age_Tooltip".Translate());
+            weightBuffers["age-min"] = minAge;
+            string maxAge = Buffer(weightBuffers, "age-max", settings.maxGeneratedAge, "0.0");
+            settings.maxGeneratedAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaxAge".Translate(settings.maxGeneratedAge.ToString("0.0")), settings.maxGeneratedAge, ref maxAge, settings.minGeneratedAge, 100f, "0.0", "RHAH_Settings_Age_Tooltip".Translate());
+            weightBuffers["age-max"] = maxAge;
+            string shelter = Buffer(weightBuffers, "shelter-days", settings.shelterDays, "0");
+            settings.shelterDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_ShelterDays".Translate(settings.shelterDays), settings.shelterDays, ref shelter, 5f, 60f, "0", "RHAH_Settings_ShelterDays_Tooltip".Translate());
+            weightBuffers["shelter-days"] = shelter;
+            string hire = Buffer(weightBuffers, "hire-days", settings.hireDays, "0");
+            settings.hireDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_HireDays".Translate(settings.hireDays), settings.hireDays, ref hire, 5f, 600f, "0", "RHAH_Settings_HireDays_Tooltip".Translate());
+            weightBuffers["hire-days"] = hire;
+            MenuControls.Checkbox(list, "RHAH_Settings_ColdClothes".Translate(), ref settings.coldClothesEnabled, "RHAH_Settings_ColdClothes_Tooltip".Translate());
+            string cold = Buffer(weightBuffers, "temp-min", settings.minimumEventTemperature, "0");
+            settings.minimumEventTemperature = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_TempMin".Translate(settings.minimumEventTemperature.ToString("0")), settings.minimumEventTemperature, ref cold, -35f, 70f, "0", "RHAH_Settings_Temp_Tooltip".Translate());
+            weightBuffers["temp-min"] = cold;
+            string heat = Buffer(weightBuffers, "temp-max", settings.maximumEventTemperature, "0");
+            settings.maximumEventTemperature = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_TempMax".Translate(settings.maximumEventTemperature.ToString("0")), settings.maximumEventTemperature, ref heat, settings.minimumEventTemperature, 70f, "0", "RHAH_Settings_Temp_Tooltip".Translate());
+            weightBuffers["temp-max"] = heat;
         }
 
 
@@ -463,6 +544,7 @@ namespace HungerAndHavoc.Pawn.Compat
                 "RHAH_Settings_IgnoreReliefAfterFed", settings);
             DrawReliefToggle(list, "relief-leave", ref settings.leaveAfterFed,
                 "RHAH_Settings_LeaveAfterFed", settings);
+            DrawVisitorNumbers(list, settings);
             DrawFoodList(list, settings);
         }
 
@@ -480,6 +562,23 @@ namespace HungerAndHavoc.Pawn.Compat
             {
                 settings.InvalidateReliefSearch();
             }
+        }
+        void DrawVisitorNumbers(Listing_Standard list, RHAH_Settings settings)
+        {
+            string cap = Buffer(weightBuffers, "event-cap", settings.maxEventPawns, "0");
+            settings.maxEventPawns = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaxEventPawns".Translate(settings.maxEventPawns), settings.maxEventPawns, ref cap, 1f, 100f, "0", "RHAH_Settings_MaxEventPawns_Tooltip".Translate());
+            weightBuffers["event-cap"] = cap;
+            string bonus = Buffer(weightBuffers, "relief-bonus", settings.reliefFoodScoreBonus * 100f, "0");
+            float percent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_ReliefScore".Translate((settings.reliefFoodScoreBonus * 100f).ToString("0")), settings.reliefFoodScoreBonus * 100f, ref bonus, 0f, 100f, "0", "RHAH_Settings_ReliefScore_Tooltip".Translate());
+            settings.reliefFoodScoreBonus = percent / 100f;
+            weightBuffers["relief-bonus"] = bonus;
+            string stay = Buffer(weightBuffers, "fed-stay", settings.fedStayDays, "0.00");
+            settings.fedStayDays = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FedStay".Translate(settings.fedStayDays.ToString("0.00")), settings.fedStayDays, ref stay, 0f, 5f, "0.00", "RHAH_Settings_FedStay_Tooltip".Translate());
+            weightBuffers["fed-stay"] = stay;
+            MenuControls.Checkbox(list, "RHAH_Settings_WaitFood".Translate(), ref settings.waitWhenNoFood, "RHAH_Settings_WaitFood_Tooltip".Translate());
+            string wait = Buffer(weightBuffers, "food-wait", settings.noFoodWaitDays, "0.00");
+            settings.noFoodWaitDays = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FoodWait".Translate(settings.noFoodWaitDays.ToString("0.00")), settings.noFoodWaitDays, ref wait, 0f, 5f, "0.00", "RHAH_Settings_FoodWait_Tooltip".Translate());
+            weightBuffers["food-wait"] = wait;
         }
 
         static void DrawFoodList(Listing_Standard list, RHAH_Settings settings)
@@ -529,6 +628,10 @@ namespace HungerAndHavoc.Pawn.Compat
         void DrawCompatDiagnostics(Listing_Standard list)
         {
             Section(list, "RHAH_Menu_CompatDiagnostics");
+            Status(list, "RHAH_Menu_Field_Mod", "RHAH_ModName".Translate());
+            Status(list, "RHAH_Menu_Field_Version", ContentFinderVersion());
+            Status(list, "RHAH_Menu_Field_Game",
+                Current.Game == null ? "RHAH_Menu_NoGame".Translate() : "RHAH_Menu_GameLoaded".Translate());
             DrawModRow(list, "ratkin", "NewRatkinPlus", "Solaris.RatkinRaceMod", true);
             DrawModRow(list, "harmony", "Harmony", "brrainz.harmony", true);
             DrawModRow(list, "biotech", "Biotech", "Ludeon.RimWorld.Biotech", true);
@@ -553,7 +656,10 @@ namespace HungerAndHavoc.Pawn.Compat
 
         IEnumerable<MenuSearchEntry> SearchCompatDiagnostics()
         {
-            yield return Entry("compat-iris", "RHAH_Menu_CompatDiagnostics");
+            yield return Entry("compat-mod", "RHAH_Menu_Field_Mod");
+            yield return Entry("compat-version", "RHAH_Menu_Field_Version");
+            yield return Entry("compat-game", "RHAH_Menu_Field_Game");
+            yield return Entry("compat-iris", "RHAH_Menu_Field_IrisMenus");
             yield return Entry("diagnostics-pending", "RHAH_Menu_Diagnostics_Pending");
         }
 
@@ -575,7 +681,62 @@ namespace HungerAndHavoc.Pawn.Compat
 
         void DrawEnding(Listing_Standard list)
         {
-            Unavailable(list, "RHAH_Menu_Ending", "RHAH_Menu_Ending_Gap");
+            Section(list, "RHAH_Menu_Ending");
+            Note(list, "RHAH_Menu_Ending_Note");
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            if (settings == null)
+            {
+                Empty(list, "RHAH_Menu_Settings_Missing");
+                return;
+            }
+
+            MenuControls.Checkbox(list, "RHAH_Ending_CountWithout".Translate(), ref settings.countEndingsWithoutNarrator, "RHAH_Ending_CountWithout_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Ending_WithoutNarrator".Translate(), ref settings.endingsWithoutNarrator, "RHAH_Ending_WithoutNarrator_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Ending_E01_Label".Translate(), ref settings.endingE01, "RHAH_Ending_Toggle_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Ending_E02_Label".Translate(), ref settings.endingE02, "RHAH_Ending_Toggle_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Ending_E03_Label".Translate(), ref settings.endingE03, "RHAH_Ending_Toggle_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Ending_E04_Label".Translate(), ref settings.endingE04, "RHAH_Ending_Toggle_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Ending_E05_Label".Translate(), ref settings.endingE05, "RHAH_Ending_Toggle_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Ending_Identity".Translate(), ref settings.endingIdentity, "RHAH_Ending_Identity_Tooltip".Translate());
+            string aid = Buffer(weightBuffers, "ending-aid", settings.endingAidGoal, "0");
+            settings.endingAidGoal = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Ending_Aid".Translate(settings.endingAidGoal), settings.endingAidGoal, ref aid, 1f, 999f, "0", "RHAH_Ending_Aid_Tooltip".Translate());
+            weightBuffers["ending-aid"] = aid;
+            string broadcasts = Buffer(weightBuffers, "ending-broadcast", settings.endingBroadcastGoal, "0");
+            settings.endingBroadcastGoal = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Ending_Broadcast".Translate(settings.endingBroadcastGoal), settings.endingBroadcastGoal, ref broadcasts, 1f, 99f, "0", "RHAH_Ending_Broadcast_Tooltip".Translate());
+            weightBuffers["ending-broadcast"] = broadcasts;
+            string expulsions = Buffer(weightBuffers, "ending-expel", settings.endingExpulsionLimit, "0");
+            settings.endingExpulsionLimit = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Ending_Expel".Translate(settings.endingExpulsionLimit), settings.endingExpulsionLimit, ref expulsions, 0f, 99f, "0", "RHAH_Ending_Expel_Tooltip".Translate());
+            weightBuffers["ending-expel"] = expulsions;
+            string adults = Buffer(weightBuffers, "ending-adults", settings.endingAdultGoal, "0");
+            settings.endingAdultGoal = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Ending_Adults".Translate(settings.endingAdultGoal), settings.endingAdultGoal, ref adults, 1f, 500f, "0", "RHAH_Ending_Adults_Tooltip".Translate());
+            weightBuffers["ending-adults"] = adults;
+            string wait = Buffer(weightBuffers, "ending-wait", settings.endingWaitDays, "0");
+            settings.endingWaitDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Ending_Wait".Translate(settings.endingWaitDays), settings.endingWaitDays, ref wait, 0f, 120f, "0", "RHAH_Ending_Wait_Tooltip".Translate());
+            weightBuffers["ending-wait"] = wait;
+            if (Prefs.DevMode)
+            {
+                Note(list, "RHAH_Ending_Preview_Note");
+                PreviewButton(list, "preview-e01", RHAH_EndingId.E01);
+                PreviewButton(list, "preview-e02", RHAH_EndingId.E02);
+                PreviewButton(list, "preview-e03", RHAH_EndingId.E03);
+                PreviewButton(list, "preview-e04", RHAH_EndingId.E04);
+                PreviewButton(list, "preview-e05", RHAH_EndingId.E05);
+                PreviewButton(list, "preview-r01", RHAH_EndingId.None);
+            }
+        }
+
+        void PreviewButton(Listing_Standard list, string anchor, RHAH_EndingId id)
+        {
+            MenuControls.Anchor(list, anchor);
+            string key = id == RHAH_EndingId.None ? "RHAH_Ending_IdentityAsk_Label" : RHAH_EndingRuntime.TextKey(id, true) + "_Label";
+            if (list.ButtonText(key.Translate()))
+            {
+                NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
+                int aid = state == null ? 0 : state.AidCount;
+                int broadcasts = state == null ? 0 : state.BroadcastCount;
+                int adults = state == null ? 0 : state.AdultCount;
+                Messages.Message(RHAH_EndingRuntime.Preview(id, true, aid, broadcasts, adults), MessageTypeDefOf.NeutralEvent, false);
+            }
         }
 
         void DrawGenes(Listing_Standard list)
@@ -613,15 +774,51 @@ namespace HungerAndHavoc.Pawn.Compat
 
             ReservedNote(list, "genes-fallback", "RHAH_Menu_Genes_Fallback", total <= 0f);
 
-            for (int i = 0; i < xenotypes.Count; i++)
+            DrawXenotypesByMod(list, xenotypes, group =>
             {
-                DrawXenotypeBar(list, settings, xenotypes[i], total);
-            }
+                for (int i = 0; i < group.Count; i++)
+                {
+                    DrawXenotypeBar(list, settings, group[i], total);
+                }
+            });
 
             DrawMissingXenotypes(list, settings, xenotypes);
             DrawJoinableXenotypes(list, settings);
             DrawGeneSwitches(list, settings);
             RHAH_Mod.Settings.Write();
+        }
+
+        static void DrawJoinableXenotypes(Listing_Standard list, RHAH_Settings settings)
+        {
+            List<XenotypeDef> available = RHAH_XenotypeResolver.AvailableToJoin(settings);
+            if (available.Count == 0)
+            {
+                return;
+            }
+
+            Section(list, "RHAH_Menu_Genes_Join");
+            DrawXenotypesByMod(list, available, group =>
+            {
+                for (int i = 0; i < group.Count; i++)
+                {
+                    XenotypeDef xenotype = group[i];
+                    if (list.ButtonText("RHAH_Menu_Genes_JoinOne".Translate(xenotype.LabelCap)))
+                    {
+                        settings.SetXenotypeEnabled(xenotype.defName, true);
+                    }
+                }
+            });
+        }
+
+        static void DrawXenotypesByMod(Listing_Standard list, List<XenotypeDef> xenotypes, Action<List<XenotypeDef>> drawGroup)
+        {
+            List<List<XenotypeDef>> groups = RHAH_XenotypeResolver.GroupBySourceMod(xenotypes);
+            for (int i = 0; i < groups.Count; i++)
+            {
+                string name = RHAH_XenotypeResolver.SourceModName(groups[i][0]);
+                MenuControls.Section(list, name ?? "RHAH_Menu_Genes_UnknownMod".Translate());
+                drawGroup(groups[i]);
+            }
         }
 
         void DrawXenotypeBar(Listing_Standard list, RHAH_Settings settings, XenotypeDef xenotype, float total)
@@ -652,24 +849,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
-        static void DrawJoinableXenotypes(Listing_Standard list, RHAH_Settings settings)
-        {
-            List<XenotypeDef> available = RHAH_XenotypeResolver.AvailableToJoin(settings);
-            if (available.Count == 0)
-            {
-                return;
-            }
 
-            Section(list, "RHAH_Menu_Genes_Join");
-            for (int i = 0; i < available.Count; i++)
-            {
-                XenotypeDef xenotype = available[i];
-                if (list.ButtonText("RHAH_Menu_Genes_JoinOne".Translate(xenotype.LabelCap)))
-                {
-                    settings.SetXenotypeEnabled(xenotype.defName, true);
-                }
-            }
-        }
 
         static void DrawMissingXenotypes(Listing_Standard list, RHAH_Settings settings, List<XenotypeDef> loaded)
         {
@@ -844,6 +1024,9 @@ namespace HungerAndHavoc.Pawn.Compat
             MenuControls.Checkbox(list, "RHAH_Settings_AidRequests".Translate(), ref settings.aidRequestsEnabled, "RHAH_Settings_AidRequests_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Settings_IntelTrades".Translate(), ref settings.intelTradesEnabled, "RHAH_Settings_IntelTrades_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Settings_VisitorChoices".Translate(), ref settings.visitorChoicesEnabled, "RHAH_Settings_VisitorChoices_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Settings_TraderIgnoreEnvironment".Translate(), ref settings.traderIgnoresHarshEnvironment, "RHAH_Settings_TraderIgnoreEnvironment_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Settings_TraderIgnoreEnclosed".Translate(), ref settings.traderIgnoresEnclosedSpace, "RHAH_Settings_TraderIgnoreEnclosed_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Settings_ChildExchangeFood".Translate(), ref settings.childExchangeFoodSubstitution, "RHAH_Settings_ChildExchangeFood_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Settings_FamilyDrop".Translate(), ref settings.familyDropEnabled, "RHAH_Settings_FamilyDrop_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Settings_MotherFeed".Translate(), ref settings.motherFeedEnabled, "RHAH_Settings_MotherFeed_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Settings_PrisonerScavenge".Translate(), ref settings.prisonerScavengeEnabled, "RHAH_Settings_PrisonerScavenge_Tooltip".Translate());
@@ -863,50 +1046,60 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             MenuControls.Anchor(list, "frequency-positive");
-            string positiveBuffer = settings.positiveIncidentDays.ToString("0.#");
-            float positiveDays = settings.positiveIncidentDays;
-            MenuControls.Number(
+            settings.positiveIncidentDays = PoolDays(
                 list,
+                "frequency-positive",
                 "RHAH_Menu_Frequency_Positive".Translate(),
-                ref positiveDays,
-                ref positiveBuffer,
-                0,
-                (int)RHAH_IncidentSchedule.MaxDays);
-            settings.positiveIncidentDays = RHAH_IncidentSchedule.ClampDays(positiveDays);
-
-            MenuControls.Anchor(list, "frequency-negative");
-            string negativeBuffer = settings.negativeIncidentDays.ToString("0.#");
-            float negativeDays = settings.negativeIncidentDays;
-            MenuControls.Number(
-                list,
-                "RHAH_Menu_Frequency_Negative".Translate(),
-                ref negativeDays,
-                ref negativeBuffer,
-                0,
-                (int)RHAH_IncidentSchedule.MaxDays);
-            settings.negativeIncidentDays = RHAH_IncidentSchedule.ClampDays(negativeDays);
+                settings.positiveIncidentDays);
             Note(list, "RHAH_Menu_Frequency_Gap");
             RHAH_IrisMenusWidgets.OccurrenceCurve(
                 list,
-                "frequency-curve",
+                "frequency-positive-curve",
                 settings.positiveIncidentDays,
+                new Color(0.45f, 0.78f, 0.48f));
+
+            MenuControls.Anchor(list, "frequency-negative");
+            settings.negativeIncidentDays = PoolDays(
+                list,
+                "frequency-negative",
+                "RHAH_Menu_Frequency_Negative".Translate(),
                 settings.negativeIncidentDays);
+            RHAH_IrisMenusWidgets.OccurrenceCurve(
+                list,
+                "frequency-negative-curve",
+                settings.negativeIncidentDays,
+                new Color(0.86f, 0.42f, 0.36f));
             list.Gap(4f);
+        }
+
+        float PoolDays(Listing_Standard list, string id, string label, float days)
+        {
+            string buffer = Buffer(weightBuffers, id, days, "0.#");
+            days = RHAH_IrisMenusWidgets.TunedValue(
+                list,
+                label,
+                days,
+                ref buffer,
+                RHAH_IncidentSchedule.MinDays,
+                RHAH_IncidentSchedule.MaxDays,
+                "0.#",
+                "RHAH_Menu_Frequency_Gap".Translate());
+            weightBuffers[id] = buffer;
+            return RHAH_IncidentSchedule.ClampDays(days);
         }
 
         IEnumerable<MenuSearchEntry> SearchFrequency()
         {
             yield return Entry("frequency-positive", "RHAH_Menu_Frequency_Positive");
+            yield return Entry("frequency-positive-curve", "RHAH_Menu_Frequency_Curve");
             yield return Entry("frequency-negative", "RHAH_Menu_Frequency_Negative");
-            yield return Entry("frequency-curve", "RHAH_Menu_Frequency_Curve");
+            yield return Entry("frequency-negative-curve", "RHAH_Menu_Frequency_Curve");
         }
 
         void DrawDeveloper(Listing_Standard list)
         {
             Section(list, "RHAH_Menu_Developer");
             Note(list, "RHAH_Menu_Developer_Note");
-            Status(list, "RHAH_Menu_Field_Version", ContentFinderVersion());
-            Status(list, "RHAH_Menu_Field_IrisMenus", irisVersion);
             if (!string.IsNullOrEmpty(selectedPawnLabel))
             {
                 Status(list, "RHAH_Menu_Developer_LastPawn", selectedPawnLabel);
@@ -915,12 +1108,15 @@ namespace HungerAndHavoc.Pawn.Compat
 
         IEnumerable<MenuSearchEntry> SearchDeveloper()
         {
-            yield return Entry("developer-version", "RHAH_Menu_Field_Version");
+            yield return Entry("developer-last-pawn", "RHAH_Menu_Developer_LastPawn");
         }
 
         static IEnumerable<MenuSearchEntry> SearchEnding()
         {
-            yield return Entry("ending-gap", "RHAH_Menu_Ending_Gap");
+            yield return Entry("ending-count", "RHAH_Ending_CountWithout");
+            yield return Entry("ending-without", "RHAH_Ending_WithoutNarrator");
+            yield return Entry("ending-aid", "RHAH_Ending_Aid");
+            yield return Entry("ending-identity", "RHAH_Ending_Identity");
         }
 
         static IEnumerable<MenuSearchEntry> SearchGenes()
@@ -946,6 +1142,26 @@ namespace HungerAndHavoc.Pawn.Compat
             Empty(list, "RHAH_Menu_Unavailable");
             Note(list, gapKey);
         }
+        static void DrawNode(Listing_Standard list, NarrativeState state, SuiyinNode node, string label)
+        {
+            bool enabled = state.SuiyinEnabled(node);
+            list.CheckboxLabeled(label, ref enabled);
+            state.SetSuiyinEnabled(node, enabled);
+        }
+
+        static int ClampKinds(Listing_Standard list, string anchor, string key, int value)
+        {
+            MenuControls.Anchor(list, anchor, 28f);
+            value = (int)list.Slider(value, 1f, 14f);
+            list.Label(key.Translate() + ": " + value);
+            if (value < 1)
+            {
+                return 1;
+            }
+
+            return value > 14 ? 14 : value;
+        }
+
 
         static void Section(Listing_Standard list, string titleKey)
         {

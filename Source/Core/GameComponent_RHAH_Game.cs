@@ -41,6 +41,8 @@ namespace HungerAndHavoc.Core
             TickPlague();
             RHAH_ChoiceRuntime.Tick(this, Find.TickManager.TicksGame, RHAH_Mod.Settings == null || RHAH_Mod.Settings.visitorChoicesEnabled);
             TrySpawnPending(Find.TickManager.TicksGame);
+            TickStays(Find.TickManager.TicksGame);
+            HungerAndHavoc.Narrative.RHAH_EndingRuntime.Tick(Find.TickManager.TicksGame);
         }
 
         internal bool TrySpawnPending(int tick)
@@ -198,6 +200,28 @@ namespace HungerAndHavoc.Core
                 }
             }
         }
+        static void TickStays(int tick)
+        {
+            if ((tick & 250) != 0 || Find.Maps == null)
+            {
+                return;
+            }
+
+            for (int mapIndex = 0; mapIndex < Find.Maps.Count; mapIndex++)
+            {
+                Map map = Find.Maps[mapIndex];
+                if (map?.mapPawns?.AllPawnsSpawned == null)
+                {
+                    continue;
+                }
+
+                System.Collections.Generic.IReadOnlyList<Verse.Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    HungerAndHavoc.Pawn.RHAH_VisitorStay.Tick(pawns[i], tick);
+                }
+            }
+        }
     }
 
     public sealed class MapComponent_RHAH_Map : MapComponent
@@ -209,12 +233,24 @@ namespace HungerAndHavoc.Core
         int plagueRecovered;
         int plagueDied;
         int plagueLastSpreadDay = -1;
+        List<Verse.Pawn> predationPrey = new List<Verse.Pawn>();
+        List<HungerAndHavoc.Incidents.RHAH_PredatorRecord> predators = new List<HungerAndHavoc.Incidents.RHAH_PredatorRecord>();
+        bool predationRolled;
+        bool predationSelected;
+        int predationPendingTick = -1;
+        int predationNextTick = -1;
 
         public IReadOnlyList<int> VisitorPawnLoadIds => visitorPawnLoadIds;
         public List<int> PlagueQuarantineLoadIds => plagueQuarantineLoadIds;
         public int PlagueRecovered { get => plagueRecovered; set => plagueRecovered = value; }
         public int PlagueDied { get => plagueDied; set => plagueDied = value; }
         public int PlagueLastSpreadDay { get => plagueLastSpreadDay; set => plagueLastSpreadDay = value; }
+        public bool PredationRolled { get => predationRolled; set => predationRolled = value; }
+        public bool PredationSelected { get => predationSelected; set => predationSelected = value; }
+        public int PredationPendingTick { get => predationPendingTick; set => predationPendingTick = value; }
+        public int PredationNextTick { get => predationNextTick; set => predationNextTick = value; }
+        public List<Verse.Pawn> PredationPrey => predationPrey;
+        public List<HungerAndHavoc.Incidents.RHAH_PredatorRecord> Predators => predators;
         public MapComponent_RHAH_Map(Map map) : base(map)
         {
         }
@@ -291,6 +327,48 @@ namespace HungerAndHavoc.Core
         {
             Identity.RHAH_PlagueRuntime.TickMap(this, map);
         }
+        public void RememberPredationPrey(Verse.Pawn pawn)
+        {
+            if (pawn != null && !predationPrey.Contains(pawn))
+            {
+                predationPrey.Add(pawn);
+            }
+        }
+
+        public bool IsPredationPrey(Verse.Pawn pawn)
+        {
+            return pawn != null && predationPrey.Contains(pawn);
+        }
+
+        public void TrackPredator(Verse.Pawn pawn, bool outside, int tick)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < predators.Count; i++)
+            {
+                if (predators[i]?.pawn == pawn)
+                {
+                    predators[i].outside = outside;
+                    predators[i].nextSearchTick = tick;
+                    return;
+                }
+            }
+
+            predators.Add(new HungerAndHavoc.Incidents.RHAH_PredatorRecord
+            {
+                pawn = pawn,
+                outside = outside,
+                nextSearchTick = tick
+            });
+        }
+
+        public override void MapComponentTick()
+        {
+            HungerAndHavoc.Incidents.RHAH_CampPredation.Tick(this, map);
+        }
 
 
         public override void ExposeData()
@@ -302,12 +380,20 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref plagueRecovered, "plagueRecovered", 0);
             Scribe_Values.Look(ref plagueDied, "plagueDied", 0);
             Scribe_Values.Look(ref plagueLastSpreadDay, "plagueLastSpreadDay", -1);
+            Scribe_Collections.Look(ref predationPrey, "predationPrey", LookMode.Reference);
+            Scribe_Collections.Look(ref predators, "predators", LookMode.Deep);
+            Scribe_Values.Look(ref predationRolled, "predationRolled", false);
+            Scribe_Values.Look(ref predationSelected, "predationSelected", false);
+            Scribe_Values.Look(ref predationPendingTick, "predationPendingTick", -1);
+            Scribe_Values.Look(ref predationNextTick, "predationNextTick", -1);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 visitorPawnLoadIds = visitorPawnLoadIds ?? new List<int>();
                 foodSearchTicks = foodSearchTicks ?? new Dictionary<int, int>();
                 plagueQuarantineLoadIds = plagueQuarantineLoadIds ?? new List<int>();
                 wallGnawCounts = wallGnawCounts ?? new Dictionary<int, int>();
+                predationPrey = predationPrey ?? new List<Verse.Pawn>();
+                predators = predators ?? new List<HungerAndHavoc.Incidents.RHAH_PredatorRecord>();
             }
         }
     }

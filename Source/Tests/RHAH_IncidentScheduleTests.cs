@@ -24,6 +24,16 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void HoverMapsTheGraphWidthOntoAverageDays()
+        {
+            var graph = new UnityEngine.Rect(10f, 20f, 100f, 80f);
+            Assert.Equal(0f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DaysAt(graph, 10f));
+            Assert.Equal(30f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DaysAt(graph, 60f));
+            Assert.Equal(60f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DaysAt(graph, 200f));
+            Assert.Equal(0f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DaysAt(new UnityEngine.Rect(0f, 0f, 0f, 10f), 4f));
+        }
+
+        [Fact]
         public void MapPoolCannotSelectCaravanIncidents()
         {
             string selected = RHAH_IncidentSchedule.Select(

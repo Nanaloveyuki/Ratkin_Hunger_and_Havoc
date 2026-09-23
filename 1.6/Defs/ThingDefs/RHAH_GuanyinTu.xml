@@ -47,6 +47,9 @@
           <categories>
             <li>StoneChunks</li>
           </categories>
+          <disallowedThingDefs>
+            <li>ChunkSlagSteel</li>
+          </disallowedThingDefs>
         </filter>
         <count>1</count>
       </li>
@@ -55,6 +58,9 @@
       <categories>
         <li>StoneChunks</li>
       </categories>
+      <disallowedThingDefs>
+        <li>ChunkSlagSteel</li>
+      </disallowedThingDefs>
     </fixedIngredientFilter>
     <products>
       <RHAH_GuanyinTu>3</RHAH_GuanyinTu>
