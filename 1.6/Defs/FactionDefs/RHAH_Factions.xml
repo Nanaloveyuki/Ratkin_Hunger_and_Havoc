@@ -24,6 +24,7 @@
     <permanentEnemy>false</permanentEnemy>
     <hostileToFactionlessHumanlikes>false</hostileToFactionlessHumanlikes>
     <techLevel>Neolithic</techLevel>
+    <factionIconPath>Icon/RK_icon</factionIconPath>
     <basicMemberKind>Colonist</basicMemberKind>
     <raidLootValueFromPointsCurve>
       <points>

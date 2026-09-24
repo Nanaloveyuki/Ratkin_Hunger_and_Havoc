@@ -17,9 +17,10 @@
       <WorkToBuild>0</WorkToBuild>
     </statBases>
     <graphicData>
-      <texPath>Things/Building/Linked/Burrow</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1,1)</drawSize>
+      <texPath>Things/Building/Crater/2x2</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <shaderType>Transparent</shaderType>
+      <drawSize>(0.8,0.8)</drawSize>
     </graphicData>
     <building>
       <isInert>true</isInert>

@@ -55,6 +55,7 @@ folders = (
     "1.6/Defs",
     "1.6/Patches",
     "Biotech",
+    "Textures",
 )
 files = (
     "1.6/Assemblies/HungerAndHavoc.Api.dll",
