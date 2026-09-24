@@ -15,7 +15,7 @@
     </statFactors>
     <customEffectDescriptions>
       <li>最大营养需求降至常人的 85%</li>
-      <li>不阻止饥饿，也不阻止饿死</li>
+      <li>饥饿仍会到来，也仍会饿死</li>
     </customEffectDescriptions>
   </GeneDef>
 </Defs>

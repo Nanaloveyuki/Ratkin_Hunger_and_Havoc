@@ -44,7 +44,12 @@ namespace HungerAndHavoc.Incidents
         Join = 4,
         Hire = 5,
         Feed = 6,
-        Timeout = 7
+        Timeout = 7,
+        Recruit = 8,
+        Enslave = 9,
+        Capture = 10,
+        Attack = 11,
+        Prison = 12
     }
 
     internal readonly struct RHAH_RequestSpec
@@ -281,9 +286,128 @@ namespace HungerAndHavoc.Incidents
             return action == RHAH_ChoiceAction.Hire;
         }
 
+        internal static bool Recruits(RHAH_ChoiceAction action)
+        {
+            return action == RHAH_ChoiceAction.Recruit;
+        }
+
+        internal static bool Enslaves(RHAH_ChoiceAction action)
+        {
+            return action == RHAH_ChoiceAction.Enslave;
+        }
+
+        internal static bool Captures(RHAH_ChoiceAction action)
+        {
+            return action == RHAH_ChoiceAction.Capture || action == RHAH_ChoiceAction.Prison;
+        }
+
+        internal static bool Attacks(RHAH_ChoiceAction action)
+        {
+            return action == RHAH_ChoiceAction.Attack;
+        }
+
+        internal static bool WaitsForFood(RHAH_ChoiceAction action)
+        {
+            return action == RHAH_ChoiceAction.Feed;
+        }
+
         internal static bool Leaves(RHAH_ChoiceAction action)
         {
             return action == RHAH_ChoiceAction.Reject || action == RHAH_ChoiceAction.Timeout;
+        }
+
+        internal const int FoodPerVisitor = 1;
+        internal const int MaxFoodRequest = 12;
+
+        internal static int FoodRequestCount(int visitorCount)
+        {
+            if (visitorCount < 1)
+            {
+                return 0;
+            }
+
+            return visitorCount > MaxFoodRequest ? MaxFoodRequest : visitorCount;
+        }
+
+        internal static bool OffersBatchControl(string displayId)
+        {
+            switch (displayId)
+            {
+                case "I-004":
+                case "I-005":
+                case "I-006":
+                case "I-007":
+                case "I-008":
+                case "I-009":
+                case "I-010":
+                case "I-011":
+                case "I-014":
+                case "I-029":
+                case "I-030":
+                case "I-031":
+                case "I-036":
+                case "I-039":
+                case "I-040":
+                case "I-041":
+                case "I-042":
+                case "I-043":
+                case "I-044":
+                case "I-045":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        internal static bool ShowsHire(string displayId, bool recruitable)
+        {
+            return recruitable && OffersBatchControl(displayId);
+        }
+
+        internal static bool ShowsRecruit(string displayId, bool recruitable)
+        {
+            return recruitable && OffersBatchControl(displayId);
+        }
+
+        internal static bool ShowsJoin(string displayId, bool present)
+        {
+            return present && OffersBatchControl(displayId);
+        }
+
+        internal static bool ShowsEnslave(bool ideologyActive, bool recruitable)
+        {
+            return ideologyActive && recruitable;
+        }
+
+        internal static bool ShowsCapture(bool recruitable)
+        {
+            return recruitable;
+        }
+
+        internal static bool ShowsAttack(bool recruitable)
+        {
+            return recruitable;
+        }
+
+        internal static bool ShowsPrison(string displayId, bool present, bool prisonEnabled, bool hasCells)
+        {
+            return prisonEnabled && hasCells && present && OffersBatchControl(displayId);
+        }
+
+        internal static bool ShowsFoodGive(RHAH_ChoiceKind choice)
+        {
+            return choice == RHAH_ChoiceKind.Visitors ||
+                choice == RHAH_ChoiceKind.Refugees ||
+                choice == RHAH_ChoiceKind.Airdrop;
+        }
+
+        internal static bool ShowsFoodHint(bool dismissed, bool firstClick)
+        {
+            return !dismissed && firstClick;
+        }
+
+        internal static bool FoodWaiting(bool open, bool alive, bool spawned, int received, int requested)
+        {
+            return open && alive && spawned && requested > 0 && received < requested;
         }
 
         static int Round(float value)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <RHAH_RefugeeMassacre.questNameRules.rulesStrings.0>questName->Temporary camp</RHAH_RefugeeMassacre.questNameRules.rulesStrings.0>
-  <RHAH_RefugeeMassacre.questDescriptionRules.rulesStrings.0>questDescription->[sponsorName] says a temporary Ratkin camp nearby may threaten their settlement. Kill every resident within 15 days of accepting for 12 goodwill. There are 2 to 4 adults and 8 to 16 Ratkin young under 8, living in wooden huts with no turrets or power. Downing or capturing them does not finish it.</RHAH_RefugeeMassacre.questDescriptionRules.rulesStrings.0>
+  <RHAH_RefugeeMassacre.questNameRules.rulesStrings.0>questName->Clear the ratkin camp</RHAH_RefugeeMassacre.questNameRules.rulesStrings.0>
+  <RHAH_RefugeeMassacre.questDescriptionRules.rulesStrings.0>questDescription->[sponsorName] says a ratkin camp of wooden huts nearby may threaten their settlement. They want every resident dead within 15 days. Finishing it pays 12 goodwill.\n\nThe camp holds 2 to 4 adults and 8 to 16 ratkin young under 8. There are no turrets and no power. Downing or capturing them does not finish it.</RHAH_RefugeeMassacre.questDescriptionRules.rulesStrings.0>
 </LanguageData>

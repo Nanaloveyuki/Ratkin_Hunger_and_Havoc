@@ -65,6 +65,9 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | faction | faction | null | 否 | 访客 Lord 使用的态度派系引用 |
 | waitSpot | waitSpot | IntVec3.Invalid | 否 | 寻食集合点 |
 | familyRole | familyRole | Unspecified | 否 | `RHAH_PawnRole` |
+| foodReceiver | foodReceiver | null | 否 | 等待玩家亲手交食物的来客 |
+| foodDef | foodDef | null | 否 | 第一次交货后锁定的食物 |
+| foodCount | foodCount | 0 | 否 | 需要的份数。0 表示没有在等 |
 
 
 ### ChoiceLetter_RHAH_Request
@@ -141,6 +144,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety | Hediff `Class` / `hediffClass` | Remove，随饱腹 Hediff 删除 |
 | HungerAndHavoc.Pawn.Comp_RHAH_Clay | ThingComp `Class` | Remove，随观音土物品删除 |
 | HungerAndHavoc.Pawn.CompProperties_RHAH_Clay | Def XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Pawn.StatPart_RHAH_TemperatureApparel | StatDef `parts` XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Incidents.RHAH_PredatorRecord | 捕食者深存档，嵌在 `predators` | Remove。随地图组件删除，不替换成原版动物 |
 
 ### RHAH_PredatorRecord
@@ -198,6 +202,8 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_OvergnawedWall | HediffDef | Remove。不替换成原版 Hediff |
 | RHAH_ClaySatiety | HediffDef | Remove。不替换成原版 Hediff |
 | RHAH_GuanyinTu | ThingDef | Remove。不替换成原版食物 |
+| RHAH_Heat_WetCloth, RHAH_Heat_MudCoat, RHAH_Heat_ReedWrap, RHAH_Heat_BarkWrap, RHAH_Heat_MudMantle, RHAH_Heat_MudShell | ThingDef | Remove。不替换成原版衣物 |
+| RHAH_Cold_ThinHemp, RHAH_Cold_LayeredHemp, RHAH_Cold_StrawQuilt, RHAH_Cold_FurCloak, RHAH_Cold_SmokedBlanket, RHAH_Cold_HideWrap | ThingDef | Remove。不替换成原版衣物 |
 | RHAH_MakeGuanyinTu | RecipeDef | Remove |
 | RHAH_LargeRefugeeWave | IncidentDef | Remove |
 | RHAH_ThiefRatkinGroup | IncidentDef | Remove |
@@ -284,9 +290,12 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.ignoreReliefAfterFed | 全局 ModSettings，默认 false |
 | RHAH_Settings.leaveAfterFed | 全局 ModSettings，默认 true |
 | RHAH_Settings.disabledReliefFoodDefNames | 全局 ModSettings，默认空。空名单表示当前食物可用，不是全部禁用 |
+| RHAH_Settings.disabledGiveFoodDefNames | 全局 ModSettings，默认空。空名单表示当前食物可以交给来客，不是全部禁止。不随赈灾区开关 |
+| RHAH_Settings.giveFoodListMode | 全局 ModSettings，默认 0。0 按模组，1 按名称，2 按原版分类。只影响给予食物菜单 |
 | RHAH_Settings.aidRequestsEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.intelTradesEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.visitorChoicesEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.foodGiveHintDismissed | 全局 ModSettings，默认 false。第一次投喂后玩家选择不再提示 |
 | RHAH_Settings.traderIgnoresHarshEnvironment | 全局 ModSettings，默认 true。商队不因恶劣环境离图 |
 | RHAH_Settings.traderIgnoresEnclosedSpace | 全局 ModSettings，默认 true。商队在封闭房间里不挖路离开 |
 | RHAH_Settings.childExchangeFoodSubstitution | 全局 ModSettings，默认 true。易子而食玩家侧可用简单餐代替婴幼儿 |
@@ -325,9 +334,11 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.fedStayDays | 全局 ModSettings，默认 0.5。首次吃饱后停留基准，实际为 50% 到 150%，0 到 5 天 |
 | RHAH_Settings.waitWhenNoFood | 全局 ModSettings，默认 true。关闭后找不到食物直接离开 |
 | RHAH_Settings.noFoodWaitDays | 全局 ModSettings，默认 0.5，范围 0 到 5 |
-| RHAH_Settings.shelterDays | 全局 ModSettings，默认 5，范围 5 到 60 |
-| RHAH_Settings.hireDays | 全局 ModSettings，默认 60，范围 5 到 600 |
-| RHAH_Settings.coldClothesEnabled | 全局 ModSettings，默认 true。低于舒适温度时给新来客一件防寒衣 |
+| RHAH_Settings.shelterDays | 全局 ModSettings，默认 5，范围 5 到 240。短工，1 年按 60 天 |
+| RHAH_Settings.hireDays | 全局 ModSettings，默认 240，范围 5 到 2400。长工，1 年按 60 天 |
+| RHAH_Settings.coldClothesEnabled | 全局 ModSettings，默认 true。气温超出舒适范围时给新来客一件温度衣 |
+| RHAH_Settings.temperatureApparelInsulation | 全局 ModSettings。温度衣 defName 到隔热，范围 0 到 100，缺省用 Def 默认值 |
+| RHAH_Settings.disabledTemperatureApparelDefNames | 全局 ModSettings。关闭的温度衣 defName，默认空 |
 | RHAH_Settings.minimumEventTemperature | 全局 ModSettings，默认 -35。地图事件下限 |
 | RHAH_Settings.maximumEventTemperature | 全局 ModSettings，默认 70。地图事件上限。商队不受限 |
 | RHAH_Settings.countEndingsWithoutNarrator | 全局 ModSettings，默认 true。关闭后非穗音不累计结局计数 |

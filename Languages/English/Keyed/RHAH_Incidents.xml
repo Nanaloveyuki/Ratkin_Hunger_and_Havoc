@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_Incident_LargeRefugeeWave_Label>Large refugee wave</RHAH_Incident_LargeRefugeeWave_Label>
-  <RHAH_Incident_AbandonedRatkinChildren_Label>Abandoned Ratkin young</RHAH_Incident_AbandonedRatkinChildren_Label>
+  <RHAH_Incident_AbandonedRatkinChildren_Label>Abandoned ratkin young</RHAH_Incident_AbandonedRatkinChildren_Label>
   <RHAH_Incident_ShatteredMother_Label>Shattered mother</RHAH_Incident_ShatteredMother_Label>
   <RHAH_Incident_BeggarFamily_Label>Begging famine mother</RHAH_Incident_BeggarFamily_Label>
-  <RHAH_Incident_BeggarGroup_Label>Begging Ratkin group</RHAH_Incident_BeggarGroup_Label>
-  <RHAH_Incident_ThiefRatkinGroup_Label>Thief Ratkin</RHAH_Incident_ThiefRatkinGroup_Label>
-  <RHAH_Incident_ThiefRatkinChildGroup_Label>Thief Ratkin young</RHAH_Incident_ThiefRatkinChildGroup_Label>
-  <RHAH_Incident_WildRatkinWandersIn_Label>Wild Ratkin wanders in</RHAH_Incident_WildRatkinWandersIn_Label>
-  <RHAH_Incident_WildRatkinChildWandersIn_Label>Wild Ratkin young wanders in</RHAH_Incident_WildRatkinChildWandersIn_Label>
-  <RHAH_Incident_WildRatkinGroupWandersIn_Label>Wild Ratkin group wanders in</RHAH_Incident_WildRatkinGroupWandersIn_Label>
+  <RHAH_Incident_BeggarGroup_Label>Begging ratkin group</RHAH_Incident_BeggarGroup_Label>
+  <RHAH_Incident_ThiefRatkinGroup_Label>Thieving ratkin</RHAH_Incident_ThiefRatkinGroup_Label>
+  <RHAH_Incident_ThiefRatkinChildGroup_Label>Thieving ratkin young</RHAH_Incident_ThiefRatkinChildGroup_Label>
+  <RHAH_Incident_WildRatkinWandersIn_Label>Wild ratkin wanders in</RHAH_Incident_WildRatkinWandersIn_Label>
+  <RHAH_Incident_WildRatkinChildWandersIn_Label>Wild ratkin young wanders in</RHAH_Incident_WildRatkinChildWandersIn_Label>
+  <RHAH_Incident_WildRatkinGroupWandersIn_Label>Wild ratkin group wanders in</RHAH_Incident_WildRatkinGroupWandersIn_Label>
   <RHAH_Incident_FamineRefugees_Label>Famine refugees</RHAH_Incident_FamineRefugees_Label>
   <RHAH_Incident_RatkinTraderCaravan_Label>Ratkin trader caravan</RHAH_Incident_RatkinTraderCaravan_Label>
   <RHAH_Incident_ChildExchange_Label>Child exchange</RHAH_Incident_ChildExchange_Label>
@@ -32,7 +32,7 @@
   <RHAH_Incident_StrongSiege_Label>Strong siege</RHAH_Incident_StrongSiege_Label>
   <RHAH_Incident_Passersby_Label>Passersby</RHAH_Incident_Passersby_Label>
   <RHAH_Incident_AirdropMistake_Label>Airdrop mistake</RHAH_Incident_AirdropMistake_Label>
-  <RHAH_Incident_MisguidedKinship_Label>Misguided kinship</RHAH_Incident_MisguidedKinship_Label>
+  <RHAH_Incident_MisguidedKinship_Label>Mistaken kin</RHAH_Incident_MisguidedKinship_Label>
   <RHAH_Incident_GreatFamine_Label>Great famine</RHAH_Incident_GreatFamine_Label>
   <RHAH_Incident_CaravanMuggers_Label>Caravan muggers</RHAH_Incident_CaravanMuggers_Label>
   <RHAH_Incident_PlagueWanderers_Label>Plague wanderers</RHAH_Incident_PlagueWanderers_Label>
@@ -46,9 +46,9 @@
   <RHAH_Incident_PlagueLaboringRefugees_Label>Plague laboring refugees</RHAH_Incident_PlagueLaboringRefugees_Label>
   <RHAH_Incident_PlagueStrongSiege_Label>Plague strong siege</RHAH_Incident_PlagueStrongSiege_Label>
   <RHAH_Incident_PlagueAirdropMistake_Label>Plague airdrop mistake</RHAH_Incident_PlagueAirdropMistake_Label>
-  <RHAH_Incident_PlagueMisguidedKinship_Label>Plague misguided kinship</RHAH_Incident_PlagueMisguidedKinship_Label>
+  <RHAH_Incident_PlagueMisguidedKinship_Label>Plague mistaken kin</RHAH_Incident_PlagueMisguidedKinship_Label>
   <RHAH_Incident_PlagueGreatFamine_Label>Plague great famine</RHAH_Incident_PlagueGreatFamine_Label>
   <RHAH_Incident_PlagueRevenge_Label>Plague revenge</RHAH_Incident_PlagueRevenge_Label>
   <RHAH_Incident_PlagueCaravanMuggers_Label>Plague caravan muggers</RHAH_Incident_PlagueCaravanMuggers_Label>
-  <RHAH_Incident_RefugeeMassacre_Label>Dangerous Ratkin settlement</RHAH_Incident_RefugeeMassacre_Label>
+  <RHAH_Incident_RefugeeMassacre_Label>Dangerous ratkin settlement</RHAH_Incident_RefugeeMassacre_Label>
 </LanguageData>

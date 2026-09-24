@@ -66,11 +66,13 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 
 访客 AI 在 `Source/Pawn`，命名空间 `HungerAndHavoc.Pawn`。Identity 只管标记和闸门数据，不发 Job。
 
-有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
+有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。寻食 duty 在没有进食、乞讨、偷窃、啃咬或等待 Job 时，在等待点附近游荡，不走向地图出口。`ExitMap` 只在生命周期已经是 `Leaving` 时放行；吃饱离开仍问 `LeaveAfterFed`。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
 
 不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 的大人带出。
 
-JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规则只在 `RHAH_PawnDefaults` 和闸门覆盖里。吃饱后不再乞讨、偷窃、啃咬或由本模组安排进食。
+招募、短工和长工仍保留来源标记，但停留期间不发乞讨、偷窃、啃咬、赈灾取食、等待和本模组离场。期限结束且不再倒地后，拒绝工作、休息、娱乐和任何非玩家强制任务，只保留被动近战反击、逃跑和进食。倒地期间计时暂停，这些限制先不生效。
+
+JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规则只在 `RHAH_PawnDefaults` 和闸门覆盖里。吃饱后不再乞讨、偷窃、啃咬或由本模组安排进食。啃树皮和墙只从原版饥饿觅食补上：食物比例低于 5%、当前没有 Job，并且 40 格内有可预订、可走到的树、植物或实心墙。寻食 duty 不主动发啃食。啃完只加营养和伤口，不把生命周期改成 `Fed`，也不因此离场。
 
 `ReleaseToColony` 必须拆 Lord、清 duty、停访客 JobGiver。标记 Hediff 保留。
 
@@ -84,9 +86,11 @@ JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规
 - `UseExplicitBackstory` 与 `Childhood` / `Adulthood`：直接替换背景。两者都空时清掉背景。未满 20 岁不写成年背景
 - `UseExplicitHealth` 与 `Hediffs`：只追加列表中的 Hediff，不删除生成器已有状态。空列表表示不追加
 - `UseExplicitXenotype` 与 `Xenotype` / `XenotypeDefName`：指定异种。两者都空时不指定基因
-生成请求未指定 `PawnKind` 时使用 `RHAH_PawnKind_Ratkin`，种族是 NewRatkinPlus 的 `Ratkin`。事件、难民营和交易都传这个 PawnKind。生成后读取该种族的 HAR 设置：头型不在 `headTypes` 里就重抽，发型不含 `styleTagsOverride` 的标签就重抽，`BeardDef` 或 `TattooDef` 的 `hasStyle` 为 false 时清成无胡须、无纹身。`apparelMode` 为 0 时，衣服不在 `apparelList` 或 `whiteApparelList` 里就脱掉并销毁。两个名单都读不到时不改衣服。为 1 或 2 时保留原版衣着。为 3 时清空。`UseExplicitApparel` 之后仍按事件列表穿衣。调用方传入非鼠族 `PawnKind` 时不改外观。`coldClothesEnabled` 打开且没有清空衣服时，地图低于舒适温度就补一件防寒衣。
+生成请求未指定 `PawnKind` 时使用 `RHAH_PawnKind_Ratkin`，种族是 NewRatkinPlus 的 `Ratkin`。事件、难民营和交易都传这个 PawnKind。生成后读取该种族的 HAR 设置：头型不在 `headTypes` 里就重抽，发型不含 `styleTagsOverride` 的标签就重抽，`BeardDef` 或 `TattooDef` 的 `hasStyle` 为 false 时清成无胡须、无纹身。`apparelMode` 为 0 时，衣服不在 `apparelList` 或 `whiteApparelList` 里就脱掉并销毁。两个名单都读不到时不改衣服。为 1 或 2 时保留原版衣着。为 3 时清空。`UseExplicitApparel` 之后仍按事件列表穿衣。调用方传入非鼠族 `PawnKind` 时不改外观。`coldClothesEnabled` 打开且没有清空衣服、也没有显式衣服时，地图气温低于舒适下限或高于舒适上限就补一件温度衣。抗寒六档默认 8、12、20、28、40、56，抗热六档默认 8、12、20、28、36、44。选刚好盖住缺口的最低一档，单件关闭就跳过，都不够用最厚的一件。已经穿过温度衣不再换。滑条范围 0 到 100，改的是这件衣服实际隔热。
 未设置显式背景时，生成后从 `Source/Data` 的经历表抽一条。自有特质在其后抽取，数量看 `maxOwnedTraits`，默认 1，最多 3。身份仍只看 `RHAH_HungerMark`。经历槽位用发育阶段，年龄上下限仍按每条记录。`pawnHistoriesEnabled` 或 `pawnTraitsEnabled` 关闭、单条被禁用、特质权重为 0、上限为 0 时跳过对应抽取。显式背景不改经历，特质仍抽。成年经历同时写入保底童年 `RHAH_History_Newborn`。幼年关联只影响抽取权重，不预写成年背景。`traitAgeFilter` 关闭后，幼年特质和成年特质可以互相抽到。`allowVanillaTraits` 关闭后，年龄特质上下限都是 0。
 普通来客年龄用 `minGeneratedAge` 和 `maxGeneratedAge`。`youngAgeFollowsRange` 打开后，幼年鼠族也用这组区间。母亲和调用方已指定年龄的请求不改。无幼童模组且 `allowImmobileBabies` 关闭时，幼年角色不足 3 岁会抬到 3 岁。幼童模组启用或开关打开时不抬。`genderMode` 只填未指定性别的请求。经历和特质菜单按来源、名称首字母或类别折叠。页内搜索和 IrisMenus 搜索都能定位到条目。
+选择信里的投喂不改这份赈灾名单。右键交给来客时另看 `disabledGiveFoodDefNames`，默认空，表示当前能吃的食物都可以交。关掉的食物不出现在选项里。之后新加入的食物默认可交。名单按 `giveFoodListMode` 折叠：0 按来源模组，1 按名称首字母，2 按食物在 `Foods` 下的原版类别。没有类别时归入其他。
+短工用 `shelterDays`，默认 5 天，范围 5 到 240。长工用 `hireDays`，默认 240 天，范围 5 到 2400。一年按 60 天。临时征募走短工期限。到期把派系清掉并改为离场，倒地不消耗剩余时间。
 
 `optimizeGeneration` 默认开启，登记在 IrisMenus 实验页和原版设置窗口。开启时跳过关系、头衔、随机装备、成瘾、食物和世界角色重装。事件没有显式基因时，按基因页权重抽取已启用异种。权重合计为 0、生物科技未开或 Def 丢失时，依次尝试 `RK_XenoType_Ratkin` 和 `RHAH_Xenotype_Ratkin`。两者都不存在时保持原版默认。关闭优化不取消事件 Profile，也不取消经历和特质抽取。`RHAH_` 基因开关只在异种套上后追加，冲突则跳过。基因页的已启用异种和可加入异种按来源模组的显示名分组，组内保持原顺序。没有 `modContentPack` 或名称为空时归入未知来源。
 地图事件默认分帧：游戏走动时，排队事件每 64 tick 执行一条。`staggerGeneration` 关闭后连续执行。开发者触发在菜单强制暂停期间不走 tick，暂停窗口关闭后的下一帧立即生成，不受这 64 tick 限制。广播只从 `BroadcastEligible` 且未被单独关闭的事件里抽。

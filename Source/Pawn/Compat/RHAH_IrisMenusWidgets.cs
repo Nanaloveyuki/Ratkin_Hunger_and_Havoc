@@ -99,71 +99,61 @@ namespace HungerAndHavoc.Pawn.Compat
             return float.TryParse(typed, out left) && float.TryParse(parsed, out right) && Mathf.Abs(left - right) <= 0.001f;
         }
 
-        internal static void OccurrenceCurve(Listing_Standard list, string anchor, float markerDays, Color color)
+        internal static void OccurrenceCurve(
+            Listing_Standard list,
+            string anchor,
+            float averageDays,
+            float windowDays,
+            Color color)
         {
             const int samples = 48;
             Rect plot = Card(list, anchor, 148f);
             Rect graph = new Rect(plot.x, plot.y, plot.width, plot.height);
             Widgets.DrawBoxSolid(graph, new Color(0.08f, 0.08f, 0.08f, 0.55f));
-            DrawCurve(graph, color, samples);
-            DrawMarker(graph, markerDays, color);
+            float span = RHAH_IncidentSchedule.ClampWindowDays(windowDays);
+            float chance = RHAH_IncidentSchedule.DailyOccurrenceChance(averageDays);
+            DrawCurve(graph, color, samples, span, chance);
             if (Mouse.IsOver(graph))
             {
-                float days = DaysAt(graph, Event.current.mousePosition.x);
-                Widgets.DrawLineVertical(CurvePoint(graph, days, 0f, RHAH_IncidentSchedule.MaxDays).x, graph.y, graph.height);
+                float day = DayAt(graph, Event.current.mousePosition.x, span);
+                Widgets.DrawLineVertical(CurvePoint(graph, day, 0f, span, chance).x, graph.y, graph.height);
                 TooltipHandler.TipRegion(graph, () => "RHAH_Menu_Frequency_CurveTip".Translate(
-                    days.ToString("0.#"),
-                    RHAH_IncidentSchedule.OccurrenceChance(days).ToString("P2")), anchor.GetHashCode());
+                    Mathf.Clamp(Mathf.CeilToInt(day), 1, Mathf.CeilToInt(span)).ToString(),
+                    chance.ToString("P2")), anchor.GetHashCode());
             }
         }
 
-        internal static float DaysAt(Rect graph, float mouseX)
+        internal static float DayAt(Rect graph, float mouseX, float windowDays)
         {
             if (graph.width <= 0f)
             {
                 return 0f;
             }
 
+            float span = RHAH_IncidentSchedule.ClampWindowDays(windowDays);
             float along = Mathf.Clamp01((mouseX - graph.x) / graph.width);
-            return along * RHAH_IncidentSchedule.MaxDays;
+            return along * span;
         }
 
-        static void DrawCurve(Rect graph, Color color, int samples)
+        static void DrawCurve(Rect graph, Color color, int samples, float span, float chance)
         {
-            float span = RHAH_IncidentSchedule.MaxDays;
-            Vector2 last = CurvePoint(graph, 0f, 0f, span);
+            Vector2 last = CurvePoint(graph, 0f, chance, span, chance);
             for (int i = 1; i <= samples; i++)
             {
-                float sampleDays = span * i / samples;
-                Vector2 next = CurvePoint(graph, sampleDays, RHAH_IncidentSchedule.OccurrenceChance(sampleDays), span);
+                float day = span * i / samples;
+                Vector2 next = CurvePoint(graph, day, chance, span, chance);
                 Widgets.DrawLine(last, next, color, 1.5f);
                 last = next;
             }
         }
 
-        static void DrawMarker(Rect graph, float days, Color color)
+        static Vector2 CurvePoint(Rect graph, float day, float chance, float span, float axisChance)
         {
-            if (days <= 0f)
-            {
-                return;
-            }
-
-            Vector2 point = CurvePoint(
-                graph,
-                days,
-                RHAH_IncidentSchedule.OccurrenceChance(days),
-                RHAH_IncidentSchedule.MaxDays);
-            Widgets.DrawBoxSolid(new Rect(point.x - 2f, point.y - 2f, 4f, 4f), color);
-        }
-
-        static Vector2 CurvePoint(Rect graph, float days, float chance, float span)
-        {
-            float x = graph.x + graph.width * Mathf.Clamp01(days / span);
-            float y = graph.yMax - graph.height * Mathf.Clamp01(chance / AxisChance);
+            float x = graph.x + graph.width * Mathf.Clamp01(day / span);
+            float scale = axisChance <= 0f ? 1f : axisChance;
+            float y = graph.yMax - graph.height * Mathf.Clamp01(chance / scale);
             return new Vector2(x, y);
         }
-
-        const float AxisChance = 1000f / (1f * 60000f);
 
     }
 }

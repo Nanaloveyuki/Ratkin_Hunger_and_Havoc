@@ -19,9 +19,12 @@ namespace HungerAndHavoc.Core
         public bool ignoreReliefAfterFed;
         public bool leaveAfterFed = true;
         List<string> disabledReliefFoodDefNames = new List<string>();
+        List<string> disabledGiveFoodDefNames = new List<string>();
+        public int giveFoodListMode;
         public bool aidRequestsEnabled = true;
         public bool intelTradesEnabled = true;
         public bool visitorChoicesEnabled = true;
+        public bool foodGiveHintDismissed;
         public bool traderIgnoresHarshEnvironment = true;
         public bool traderIgnoresEnclosedSpace = true;
         public bool childExchangeFoodSubstitution = true;
@@ -61,8 +64,10 @@ namespace HungerAndHavoc.Core
         public bool waitWhenNoFood = true;
         public float noFoodWaitDays = 0.5f;
         public int shelterDays = 5;
-        public int hireDays = 60;
+        public int hireDays = 60 * 4;
         public bool coldClothesEnabled = true;
+        Dictionary<string, float> temperatureApparelInsulation = new Dictionary<string, float>();
+        List<string> disabledTemperatureApparelDefNames = new List<string>();
         public float minimumEventTemperature = -35f;
         public float maximumEventTemperature = 70f;
         public bool countEndingsWithoutNarrator = true;
@@ -121,9 +126,12 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref ignoreReliefAfterFed, "ignoreReliefAfterFed", false);
             Scribe_Values.Look(ref leaveAfterFed, "leaveAfterFed", true);
             Scribe_Collections.Look(ref disabledReliefFoodDefNames, "disabledReliefFoodDefNames", LookMode.Value);
+            Scribe_Collections.Look(ref disabledGiveFoodDefNames, "disabledGiveFoodDefNames", LookMode.Value);
+            Scribe_Values.Look(ref giveFoodListMode, "giveFoodListMode", 0);
             Scribe_Values.Look(ref aidRequestsEnabled, "aidRequestsEnabled", true);
             Scribe_Values.Look(ref intelTradesEnabled, "intelTradesEnabled", true);
             Scribe_Values.Look(ref visitorChoicesEnabled, "visitorChoicesEnabled", true);
+            Scribe_Values.Look(ref foodGiveHintDismissed, "foodGiveHintDismissed", false);
             Scribe_Values.Look(ref traderIgnoresHarshEnvironment, "traderIgnoresHarshEnvironment", true);
             Scribe_Values.Look(ref traderIgnoresEnclosedSpace, "traderIgnoresEnclosedSpace", true);
             Scribe_Values.Look(ref childExchangeFoodSubstitution, "childExchangeFoodSubstitution", true);
@@ -163,8 +171,10 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref waitWhenNoFood, "waitWhenNoFood", true);
             Scribe_Values.Look(ref noFoodWaitDays, "noFoodWaitDays", 0.5f);
             Scribe_Values.Look(ref shelterDays, "shelterDays", 5);
-            Scribe_Values.Look(ref hireDays, "hireDays", 60);
+            Scribe_Values.Look(ref hireDays, "hireDays", 60 * 4);
             Scribe_Values.Look(ref coldClothesEnabled, "coldClothesEnabled", true);
+            Scribe_Collections.Look(ref temperatureApparelInsulation, "temperatureApparelInsulation", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref disabledTemperatureApparelDefNames, "disabledTemperatureApparelDefNames", LookMode.Value);
             Scribe_Values.Look(ref minimumEventTemperature, "minimumEventTemperature", -35f);
             Scribe_Values.Look(ref maximumEventTemperature, "maximumEventTemperature", 70f);
             Scribe_Values.Look(ref countEndingsWithoutNarrator, "countEndingsWithoutNarrator", true);
@@ -213,6 +223,9 @@ namespace HungerAndHavoc.Core
                 enabledXenotypeDefNames = enabledXenotypeDefNames ?? new List<string>();
                 enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
                 disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
+                disabledGiveFoodDefNames = disabledGiveFoodDefNames ?? new List<string>();
+                temperatureApparelInsulation = temperatureApparelInsulation ?? new Dictionary<string, float>();
+                disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();
                 disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
                 incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
                 incidentWeights = incidentWeights ?? new Dictionary<string, float>();
@@ -387,6 +400,46 @@ namespace HungerAndHavoc.Core
             InvalidateReliefSearch();
         }
 
+        public bool IsGiveFoodEnabled(string defName)
+        {
+            EnsureCollections();
+            return string.IsNullOrEmpty(defName) || !disabledGiveFoodDefNames.Contains(defName);
+        }
+
+        public void SetGiveFoodEnabled(string defName, bool enabled)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            if (enabled)
+            {
+                disabledGiveFoodDefNames.Remove(defName);
+            }
+            else if (!disabledGiveFoodDefNames.Contains(defName))
+            {
+                disabledGiveFoodDefNames.Add(defName);
+            }
+        }
+
+        public void SetAllGiveFood(bool enabled, List<string> candidates)
+        {
+            EnsureCollections();
+            disabledGiveFoodDefNames.Clear();
+            if (!enabled && candidates != null)
+            {
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty(candidates[i]) && !disabledGiveFoodDefNames.Contains(candidates[i]))
+                    {
+                        disabledGiveFoodDefNames.Add(candidates[i]);
+                    }
+                }
+            }
+        }
+
         public void InvalidateReliefSearch()
         {
             if (Current.Game == null || Current.Game.Maps == null)
@@ -406,6 +459,62 @@ namespace HungerAndHavoc.Core
                 }
             }
         }
+        public bool IsTemperatureApparelEnabled(string defName)
+        {
+            EnsureCollections();
+            return !string.IsNullOrEmpty(defName) && !disabledTemperatureApparelDefNames.Contains(defName);
+        }
+
+        public void SetTemperatureApparelEnabled(string defName, bool enabled)
+        {
+            if (string.IsNullOrEmpty(defName) || !Pawn.RHAH_VisitorRules.IsTemperatureApparel(defName))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            if (enabled)
+            {
+                disabledTemperatureApparelDefNames.Remove(defName);
+                return;
+            }
+
+            if (!disabledTemperatureApparelDefNames.Contains(defName))
+            {
+                disabledTemperatureApparelDefNames.Add(defName);
+            }
+        }
+
+        public float TemperatureApparelInsulation(string defName)
+        {
+            EnsureCollections();
+            float fallback = Pawn.RHAH_VisitorRules.DefaultInsulation(defName);
+            float stored;
+            if (!string.IsNullOrEmpty(defName) && temperatureApparelInsulation.TryGetValue(defName, out stored))
+            {
+                return Pawn.RHAH_VisitorRules.ClampInsulation(stored, fallback);
+            }
+
+            return fallback;
+        }
+
+        public void SetTemperatureApparelInsulation(string defName, float value)
+        {
+            if (string.IsNullOrEmpty(defName) || !Pawn.RHAH_VisitorRules.IsTemperatureApparel(defName))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            temperatureApparelInsulation[defName] = Pawn.RHAH_VisitorRules.ClampInsulation(
+                value,
+                Pawn.RHAH_VisitorRules.DefaultInsulation(defName));
+        }
+
+        static float ClampStoredInsulation(float value)
+        {
+            return Pawn.RHAH_VisitorRules.ClampInsulation(value, Pawn.RHAH_VisitorRules.MinTemperatureInsulation);
+        }
 
         void Normalize()
         {
@@ -416,6 +525,9 @@ namespace HungerAndHavoc.Core
             enabledXenotypeDefNames = Clean(enabledXenotypeDefNames);
             enabledGeneDefNames = Clean(enabledGeneDefNames);
             disabledReliefFoodDefNames = Clean(disabledReliefFoodDefNames);
+            disabledGiveFoodDefNames = Clean(disabledGiveFoodDefNames);
+            temperatureApparelInsulation = ClampWeights(temperatureApparelInsulation, ClampStoredInsulation);
+            disabledTemperatureApparelDefNames = Clean(disabledTemperatureApparelDefNames);
             disabledIncidentDisplayIds = Clean(disabledIncidentDisplayIds);
             disabledHistoryDisplayIds = Clean(disabledHistoryDisplayIds);
             disabledTraitDisplayIds = Clean(disabledTraitDisplayIds);
@@ -435,6 +547,7 @@ namespace HungerAndHavoc.Core
             apparelMode = Pawn.RHAH_VisitorRules.ClampBodyMode(apparelMode, 4);
             maxOwnedTraits = Pawn.RHAH_VisitorRules.ClampOwnedTraits(maxOwnedTraits);
             contentListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(contentListMode, 3);
+            giveFoodListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(giveFoodListMode, 3);
 
             reliefFoodScoreBonus = Pawn.RHAH_VisitorRules.ClampBonus(reliefFoodScoreBonus);
             fedStayDays = ClampStayDays(fedStayDays, 0.5f);
@@ -561,6 +674,9 @@ namespace HungerAndHavoc.Core
             enabledXenotypeDefNames = enabledXenotypeDefNames ?? new List<string>();
             enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
             disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
+            disabledGiveFoodDefNames = disabledGiveFoodDefNames ?? new List<string>();
+            temperatureApparelInsulation = temperatureApparelInsulation ?? new Dictionary<string, float>();
+            disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();
             disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
             incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
             incidentWeights = incidentWeights ?? new Dictionary<string, float>();

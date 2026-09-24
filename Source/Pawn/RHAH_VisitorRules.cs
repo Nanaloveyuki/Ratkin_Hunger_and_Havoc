@@ -1,12 +1,16 @@
+using System;
 using HungerAndHavoc.Api;
-
+using RimWorld;
+using Verse;
+using Verse.AI;
 namespace HungerAndHavoc.Pawn
 {
     internal enum RHAH_StayKind
     {
         None = 0,
         Shelter = 1,
-        Hire = 2
+        Hire = 2,
+        Recruit = 3
     }
 
     // 人数、年龄、停留和雇佣期限 不碰存档
@@ -26,16 +30,41 @@ namespace HungerAndHavoc.Pawn
         internal const float MaxStayFraction = 1.5f;
         internal const int MinShelterDays = 5;
         internal const int DefaultShelterDays = 5;
-        internal const int MaxShelterDays = 60;
+        internal const int MaxShelterDays = 60 * 4;
         internal const int MinHireDays = 5;
-        internal const int DefaultHireDays = 60;
-        internal const int MaxHireDays = 600;
+        internal const int DefaultHireDays = 60 * 4;
+        internal const int MaxHireDays = 60 * 4 * 10;
         internal const int TicksPerDay = 60000;
         internal const float DefaultReliefScoreBonus = 0.1f;
         internal const float DefaultMinimumTemperature = -35f;
         internal const float DefaultMaximumTemperature = 70f;
         internal const float MinimumTemperatureBound = -35f;
         internal const float MaximumTemperatureBound = 70f;
+        internal const float MinTemperatureInsulation = 0f;
+        internal const float MaxTemperatureInsulation = 100f;
+
+        internal static readonly string[] ColdApparel =
+        {
+            "RHAH_Cold_ThinHemp",
+            "RHAH_Cold_LayeredHemp",
+            "RHAH_Cold_StrawQuilt",
+            "RHAH_Cold_FurCloak",
+            "RHAH_Cold_SmokedBlanket",
+            "RHAH_Cold_HideWrap"
+        };
+
+        internal static readonly string[] HeatApparel =
+        {
+            "RHAH_Heat_WetCloth",
+            "RHAH_Heat_MudCoat",
+            "RHAH_Heat_ReedWrap",
+            "RHAH_Heat_BarkWrap",
+            "RHAH_Heat_MudMantle",
+            "RHAH_Heat_MudShell"
+        };
+
+        internal static readonly float[] ColdInsulation = { 8f, 12f, 20f, 28f, 40f, 56f };
+        internal static readonly float[] HeatInsulation = { 8f, 12f, 20f, 28f, 36f, 44f };
 
         internal const int DefaultMaxOwnedTraits = 1;
         internal const int MaxOwnedTraits = 3;
@@ -200,6 +229,112 @@ namespace HungerAndHavoc.Pawn
 
             return WantsColdClothes(true, temperature, comfortableMinimum);
         }
+        internal static bool IsTemperatureApparel(string defName)
+        {
+            return IndexOf(ColdApparel, defName) >= 0 || IndexOf(HeatApparel, defName) >= 0;
+        }
+
+        internal static float DefaultInsulation(string defName)
+        {
+            int cold = IndexOf(ColdApparel, defName);
+            if (cold >= 0)
+            {
+                return ColdInsulation[cold];
+            }
+
+            int heat = IndexOf(HeatApparel, defName);
+            return heat >= 0 ? HeatInsulation[heat] : 0f;
+        }
+
+        internal static float ClampInsulation(float value, float fallback)
+        {
+            float safe = float.IsNaN(value) || float.IsInfinity(value) ? fallback : value;
+            if (safe < MinTemperatureInsulation)
+            {
+                return MinTemperatureInsulation;
+            }
+
+            return safe > MaxTemperatureInsulation ? MaxTemperatureInsulation : safe;
+        }
+
+        internal static int TemperatureDirection(float temperature, float comfortableMinimum, float comfortableMaximum)
+        {
+            if (float.IsNaN(temperature) || float.IsInfinity(temperature))
+            {
+                return 0;
+            }
+
+            if (temperature < comfortableMinimum)
+            {
+                return -1;
+            }
+
+            return temperature > comfortableMaximum ? 1 : 0;
+        }
+
+        internal static float RequiredInsulation(int direction, float temperature, float comfortableMinimum, float comfortableMaximum, float clampMinimum, float clampMaximum)
+        {
+            if (direction == 0 || float.IsNaN(temperature) || float.IsInfinity(temperature))
+            {
+                return 0f;
+            }
+
+            float low = float.IsNaN(clampMinimum) || float.IsInfinity(clampMinimum) ? DefaultMinimumTemperature : clampMinimum;
+            float high = float.IsNaN(clampMaximum) || float.IsInfinity(clampMaximum) ? DefaultMaximumTemperature : clampMaximum;
+            if (high < low)
+            {
+                high = low;
+            }
+
+            float target = temperature < low ? low : temperature > high ? high : temperature;
+            float required = direction < 0 ? comfortableMinimum - target : target - comfortableMaximum;
+            return required < 0f ? 0f : required;
+        }
+
+        internal static string SelectTemperatureApparel(int direction, float required, Func<string, bool> enabled, Func<string, float> insulation)
+        {
+            if (direction == 0 || enabled == null || insulation == null)
+            {
+                return null;
+            }
+
+            string[] names = direction < 0 ? ColdApparel : HeatApparel;
+            string fallback = null;
+            for (int i = 0; i < names.Length; i++)
+            {
+                string name = names[i];
+                if (!enabled(name))
+                {
+                    continue;
+                }
+
+                fallback = name;
+                if (ClampInsulation(insulation(name), DefaultInsulation(name)) >= required - 0.001f)
+                {
+                    return name;
+                }
+            }
+
+            return fallback;
+        }
+
+        static int IndexOf(string[] names, string defName)
+        {
+            if (names == null || string.IsNullOrEmpty(defName))
+            {
+                return -1;
+            }
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                if (string.Equals(names[i], defName, StringComparison.Ordinal))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
 
         internal const int HostileGoodwill = -100;
         internal const int NeutralGoodwill = 0;
@@ -299,10 +434,47 @@ namespace HungerAndHavoc.Pawn
 
         internal static int BeginStay(int now, RHAH_StayKind kind, int shelterDays, int hireDays)
         {
-            int days = kind == RHAH_StayKind.Hire
-                ? ClampHireDays(hireDays)
-                : ClampShelterDays(shelterDays);
+            int days = kind == RHAH_StayKind.Hire ? ClampHireDays(hireDays) : ClampShelterDays(shelterDays);
             return now + days * TicksPerDay;
+        }
+
+        internal static int StayYears(int days)
+        {
+            int safe = days < 0 ? 0 : days;
+            return safe / 60;
+        }
+
+        internal static int StayRestDays(int days)
+        {
+            int safe = days < 0 ? 0 : days;
+            return safe - StayYears(safe) * 60;
+        }
+
+        internal static string StayLabel(int days)
+        {
+            int years = StayYears(days);
+            int rest = StayRestDays(days);
+            if (years > 0 && rest > 0)
+            {
+                return ((string)"RHAH_Stay_YearsDays").Translate(years, rest).ToString();
+            }
+
+            if (years == 1)
+            {
+                return ((string)"RHAH_Stay_Year").Translate().ToString();
+            }
+
+            if (years > 1)
+            {
+                return ((string)"RHAH_Stay_Years").Translate(years).ToString();
+            }
+
+            if (rest == 1)
+            {
+                return ((string)"RHAH_Stay_Day").Translate().ToString();
+            }
+
+            return ((string)"RHAH_Stay_Days").Translate(rest).ToString();
         }
 
         internal static int ResumeStay(int now, int savedDeadline, int savedRemaining, bool downed)
@@ -338,6 +510,41 @@ namespace HungerAndHavoc.Pawn
             }
 
             return deadline > now ? deadline - now : 0;
+        }
+
+        // 招募、短工、长工期间不发本模组行为
+        internal static bool IsColonyStay(int stayKind)
+        {
+            return stayKind == (int)RHAH_StayKind.Shelter ||
+                   stayKind == (int)RHAH_StayKind.Hire ||
+                   stayKind == (int)RHAH_StayKind.Recruit;
+        }
+
+        // 期限结束且不再倒地 只允许离场和被动反击
+        internal static bool BlocksAssignedWork(int stayKind, int now, int deadline, bool downed)
+        {
+            return IsColonyStay(stayKind) && StayExpired(now, deadline, downed);
+        }
+
+        internal static bool AllowsModBehavior(int stayKind)
+        {
+            return !IsColonyStay(stayKind);
+        }
+
+        internal static bool IsPassiveDefense(JobDef def)
+        {
+            return def == JobDefOf.AttackMelee || def == JobDefOf.AttackStatic || def == JobDefOf.Flee;
+        }
+
+        internal static bool IsNeedFood(ThinkNode giver)
+        {
+            return giver is JobGiver_GetFood;
+        }
+
+        internal static bool AllowsGnaw(bool gate, bool visitor, bool modBehavior, bool needFood, float foodLevel, float starvation, bool busy, bool downed)
+        {
+            return gate && visitor && modBehavior && needFood &&
+                   foodLevel < starvation && !busy && !downed;
         }
 
         internal static bool ClearsTrade(RHAH_ReleaseReason reason, bool letterBatch)

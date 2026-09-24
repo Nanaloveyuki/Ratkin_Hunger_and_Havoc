@@ -44,6 +44,37 @@ namespace HungerAndHavoc.Tests
             Assert.True(RHAH_RequestRules.OffersVisitorControl("I-008"));
             Assert.False(RHAH_RequestRules.OffersVisitorControl("I-051"));
         }
+
+        [Fact]
+        public void VisitorLettersRestoreOptionsTheOldPolicyDropped()
+        {
+            Assert.True(RHAH_RequestRules.ShowsRecruit("I-008", true));
+            Assert.True(RHAH_RequestRules.ShowsHire("I-008", true));
+            Assert.False(RHAH_RequestRules.ShowsHire("I-008", false));
+            Assert.False(RHAH_RequestRules.ShowsHire("I-002", true));
+            Assert.False(RHAH_RequestRules.ShowsHire("I-051", true));
+            Assert.False(RHAH_RequestRules.ShowsRecruit("I-008", false));
+            Assert.False(RHAH_RequestRules.ShowsJoin("I-002", true));
+            Assert.True(RHAH_RequestRules.ShowsJoin("I-011", true));
+            Assert.False(RHAH_RequestRules.ShowsEnslave(false, true));
+            Assert.True(RHAH_RequestRules.ShowsEnslave(true, true));
+            Assert.False(RHAH_RequestRules.ShowsCapture(false));
+            Assert.True(RHAH_RequestRules.ShowsAttack(true));
+            Assert.False(RHAH_RequestRules.ShowsPrison("I-004", true, true, false));
+            Assert.True(RHAH_RequestRules.ShowsPrison("I-004", true, true, true));
+            Assert.False(RHAH_RequestRules.ShowsPrison("I-003", true, true, true));
+            Assert.True(RHAH_RequestRules.ShowsFoodGive(RHAH_ChoiceKind.Airdrop));
+            Assert.False(RHAH_RequestRules.ShowsFoodGive(RHAH_ChoiceKind.Abandoned));
+            Assert.False(RHAH_RequestRules.ShowsFoodGive(RHAH_ChoiceKind.Kinship));
+            Assert.Equal(3, RHAH_RequestRules.FoodRequestCount(3));
+            Assert.Equal(12, RHAH_RequestRules.FoodRequestCount(40));
+            Assert.True(RHAH_RequestRules.ShowsFoodHint(false, true));
+            Assert.False(RHAH_RequestRules.ShowsFoodHint(true, true));
+            Assert.False(RHAH_RequestRules.ShowsFoodHint(false, false));
+            Assert.True(RHAH_RequestRules.FoodWaiting(true, true, true, 0, 2));
+            Assert.False(RHAH_RequestRules.FoodWaiting(true, true, true, 2, 2));
+            Assert.False(RHAH_RequestRules.FoodWaiting(false, true, true, 0, 2));
+        }
         [Fact]
         public void TraderCaravansStayAndFoodReplacesChildren()
         {

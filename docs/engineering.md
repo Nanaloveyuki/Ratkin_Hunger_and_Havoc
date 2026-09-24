@@ -191,6 +191,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
 | `HungerAndHavoc.Pawn.CompProperties_RHAH_Clay` | ThingDef XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Pawn.Comp_RHAH_Clay` | `CompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 ThingComp；类型名写入 `.rws` |
+| `HungerAndHavoc.Pawn.StatPart_RHAH_TemperatureApparel` | `Insulation_Cold` 与 `Insulation_Heat` 的 `parts` XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 StatPart。只给 12 件温度衣加减玩家设置与默认隔热的差，其它物品为 0 |
 | `HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed` | ThoughtDef `workerClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThoughtWorker |
 | `HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease` | ThoughtDef `workerClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThoughtWorker |
 | `HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusCompat` 所在文件对 `IrisMenus` 的编译引用 | IrisMenus 1.6 公开 `MenuRegistry.RegisterSubItemListing` | `HungerAndHavoc.dll` 引用，`Private=False`，不随包发布 | 可选依赖。`ModLister` 未启用或 `modVersion` 不是 `1.6` 时不注册页面。类型保持 `internal`，不进入 API 程序集。`RHAH_IrisMenusWidgets.cs` 使用同一条编译排除 |
@@ -209,6 +210,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_PredationFleePatch` 是 `internal`，Prefix `JobGiver_ReactToCloseMeleeThreat.TryGiveJob`。关闭反击后，被本特殊情况追猎的安居点鼠族改为逃跑。默认反击，不能使用暴力的人不变。其它威胁走原版。
 `RHAH_CaptureGatePatch` 是 `internal`，Prefix `Pawn_GuestTracker.CapturedBy`。原版俘虏不看来源闸门。补丁只在捕获方是玩家且目标是本模组来源时问 `Imprison`，拒绝则不捕获，通过则 `ReleaseToColony(Imprisoned)`。其它俘虏走原版。
 `RHAH_TradePawnGatePatch` 是 `internal`，Prefix `Tradeable_Pawn.ResolveTrade`。原版角色买卖不看来源闸门。补丁只检查这笔要成交的本模组来源，任一 `Transfer` 被拒则整笔不成交，通过则 `ReleaseToColony(ModRequest)`。物品交易和其它角色走原版。
+`RHAH_GnawFoodPatch` 是 `internal`，Postfix `JobGiver_GetFood.TryGiveJob`。原版饥饿觅食找不到食物就结束。补丁只在结果为空、目标是本模组来客、且食物比例低于 5% 时补一个啃树皮或墙皮的 Job。寻食 duty、工作和工作优先级都不发啃食。
+`RHAH_StayWorkPatch` 是 `internal`，Prefix `Pawn_JobTracker.StartJob`。长工、短工和招募的计时结束后，原版仍会派工作、休息和娱乐。补丁只拒绝这些非玩家强制、也不是近战反击、逃跑或进食的 Job。倒地期间计时暂停，不拦。
 
 ## 检查门禁
 

@@ -13,7 +13,7 @@
   <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>After a visitor is full, the next meal may come from outside the zone. With this off, a full visitor stops looking for another meal.</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
   <RHAH_Settings_LeaveAfterFed>Leave the map after eating</RHAH_Settings_LeaveAfterFed>
   <RHAH_Settings_LeaveAfterFed_Tooltip>A visitor who can reach an exit leaves after eating. A child too young to walk is carried out. With this off, a full visitor stays.</RHAH_Settings_LeaveAfterFed_Tooltip>
-  <RHAH_Settings_MaxEventPawns>Pawns per event: {0}</RHAH_Settings_MaxEventPawns>
+  <RHAH_Settings_MaxEventPawns>Visitors per event: {0}</RHAH_Settings_MaxEventPawns>
   <RHAH_Settings_MaxEventPawns_Tooltip>One event stays under this count. 1 to 100, default 30. A count below the event minimum still uses that minimum. A mother and child stay together.</RHAH_Settings_MaxEventPawns_Tooltip>
   <RHAH_Settings_ReliefScore>Relief food bonus: {0}%</RHAH_Settings_ReliefScore>
   <RHAH_Settings_ReliefScore_Tooltip>Food inside the zone also gains this bonus, on top of distance and whether it is suitable. Range 0 to 100%, default 10%.</RHAH_Settings_ReliefScore_Tooltip>
@@ -23,8 +23,8 @@
   <RHAH_Settings_WaitFood_Tooltip>Visitors keep looking for the set time. Food found later starts the next wait over. With this off, they leave.</RHAH_Settings_WaitFood_Tooltip>
   <RHAH_Settings_FoodWait>Wait without food: {0} days</RHAH_Settings_FoodWait>
   <RHAH_Settings_FoodWait_Tooltip>How long a visitor waits after finding nothing to eat. Range 0 to 5 days, default half a day.</RHAH_Settings_FoodWait_Tooltip>
-  <RHAH_Settings_MinAge>Minimum age: {0}</RHAH_Settings_MinAge>
-  <RHAH_Settings_MaxAge>Maximum age: {0}</RHAH_Settings_MaxAge>
+  <RHAH_Settings_MinAge>Minimum arrival age: {0}</RHAH_Settings_MinAge>
+  <RHAH_Settings_MaxAge>Maximum arrival age: {0}</RHAH_Settings_MaxAge>
   <RHAH_Settings_Age_Tooltip>Ordinary visitors fall inside this range. 0 to 100, default 0 to 50. Mothers keep the age the event asks for. Ratkin young stay outside it unless the switch below is on.</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_YoungAge>Ratkin young use this age range</RHAH_Settings_YoungAge>
   <RHAH_Settings_YoungAge_Tooltip>With this on, ratkin young also fall inside the range above. Mothers keep the event age. People already here stay as they are.</RHAH_Settings_YoungAge_Tooltip>
@@ -61,16 +61,21 @@
   <RHAH_Menu_Content_theft>Theft</RHAH_Menu_Content_theft>
   <RHAH_Menu_Content_conflict>Conflict</RHAH_Menu_Content_conflict>
   <RHAH_Menu_Content_siege>Siege</RHAH_Menu_Content_siege>
-  <RHAH_Settings_ShelterDays>Short stay: {0} days</RHAH_Settings_ShelterDays>
-  <RHAH_Settings_ShelterDays_Tooltip>A sheltered visitor leaves when the time is up. Range 5 to 60 days, default 5. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_ShelterDays_Tooltip>
-  <RHAH_Settings_HireDays>Long hire: {0} days</RHAH_Settings_HireDays>
-  <RHAH_Settings_HireDays_Tooltip>A hired visitor leaves when the time is up. Range 5 to 600 days, default 60. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_HireDays_Tooltip>
-  <RHAH_Settings_ColdClothes>Give new visitors a cold wrap</RHAH_Settings_ColdClothes>
-  <RHAH_Settings_ColdClothes_Tooltip>When the map is colder than a visitor can bear, a new visitor wears one extra cold wrap. With this off, no extra clothing is given.</RHAH_Settings_ColdClothes_Tooltip>
+  <RHAH_Settings_ShelterDays>Short-term stay: {0}</RHAH_Settings_ShelterDays>
+  <RHAH_Settings_ShelterDays_Tooltip>A short-term worker leaves when the time is up. Minimum 5 days, maximum 1 year, default 5 days. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_ShelterDays_Tooltip>
+  <RHAH_Settings_HireDays>Long-term stay: {0}</RHAH_Settings_HireDays>
+  <RHAH_Settings_HireDays_Tooltip>A long-term worker leaves when the time is up. Minimum 5 days, maximum 10 years, default 1 year. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_HireDays_Tooltip>
+  <RHAH_Stay_Year>1 year</RHAH_Stay_Year>
+  <RHAH_Stay_Years>{0} years</RHAH_Stay_Years>
+  <RHAH_Stay_YearsDays>{0} years, {1} days</RHAH_Stay_YearsDays>
+  <RHAH_Stay_Day>1 day</RHAH_Stay_Day>
+  <RHAH_Stay_Days>{0} days</RHAH_Stay_Days>
+  <RHAH_Settings_ColdClothes>Give new visitors a temperature wrap</RHAH_Settings_ColdClothes>
+  <RHAH_Settings_ColdClothes_Tooltip>When the map is outside what a new visitor can bear, they get the lightest wrap that covers the gap. If none does, they get the thickest. Someone already wearing one keeps it. With this off, no extra clothing is given.</RHAH_Settings_ColdClothes_Tooltip>
   <RHAH_Settings_TempMin>Minimum incident temperature: {0}°C</RHAH_Settings_TempMin>
   <RHAH_Settings_TempMax>Maximum incident temperature: {0}°C</RHAH_Settings_TempMax>
   <RHAH_Settings_Temp_Tooltip>New map incidents stop while the map is outside this range. Default -35°C to 70°C. Caravans ignore it.</RHAH_Settings_Temp_Tooltip>
-  <RHAH_Choice_Shelter>Shelter</RHAH_Choice_Shelter>
+  <RHAH_Choice_Shelter>Take in short-term ({0})</RHAH_Choice_Shelter>
   <RHAH_Settings_ReliefFoods>Allowed foods</RHAH_Settings_ReliefFoods>
   <RHAH_Settings_ReliefFoods_Tooltip>Visitors may take any food left on.</RHAH_Settings_ReliefFoods_Tooltip>
   <RHAH_Settings_ReliefFoods_All>Allow all</RHAH_Settings_ReliefFoods_All>
@@ -135,11 +140,32 @@
   <RHAH_Settings_WeightPlague>Plague incidents: {0}</RHAH_Settings_WeightPlague>
   <RHAH_Settings_Weight_Tooltip>Incidents of this kind are multiplied by this before the draw. 0 to 5. At 0, that kind stops appearing.</RHAH_Settings_Weight_Tooltip>
   <RHAH_Settings_ReliefFoods_Quote>Visitors stop taking food you turn off. Food added later stays available.</RHAH_Settings_ReliefFoods_Quote>
+  <RHAH_Settings_GiveFoods>Food that can be handed over</RHAH_Settings_GiveFoods>
+  <RHAH_Settings_GiveFoods_Tooltip>Food turned off does not appear when a colonist hands food to a visitor.</RHAH_Settings_GiveFoods_Tooltip>
+  <RHAH_Settings_GiveFoods_All>Allow all</RHAH_Settings_GiveFoods_All>
+  <RHAH_Settings_GiveFoods_None>Forbid all</RHAH_Settings_GiveFoods_None>
+  <RHAH_Settings_GiveFoods_Search>Search foods or mods</RHAH_Settings_GiveFoods_Search>
+  <RHAH_Settings_GiveFoods_Empty>No foods match.</RHAH_Settings_GiveFoods_Empty>
+  <RHAH_Settings_GiveFoods_Quote>Food you turn off cannot be handed to visitors. Food added later can still be handed over.</RHAH_Settings_GiveFoods_Quote>
+  <RHAH_Settings_GiveFoods_Sort>Give-food grouping</RHAH_Settings_GiveFoods_Sort>
+  <RHAH_Settings_GiveFoods_Sort_0>By mod</RHAH_Settings_GiveFoods_Sort_0>
+  <RHAH_Settings_GiveFoods_Sort_1>By name</RHAH_Settings_GiveFoods_Sort_1>
+  <RHAH_Settings_GiveFoods_Sort_2>By vanilla category</RHAH_Settings_GiveFoods_Sort_2>
+  <RHAH_Settings_GiveFoods_Other>Other</RHAH_Settings_GiveFoods_Other>
   <RHAH_Menu_Overview>Overview</RHAH_Menu_Overview>
   <RHAH_Menu_Events>Events</RHAH_Menu_Events>
-  <RHAH_Menu_Pawns>Pawns</RHAH_Menu_Pawns>
+  <RHAH_Menu_Pawns>Visitors</RHAH_Menu_Pawns>
   <RHAH_Menu_Narrative>Narrative</RHAH_Menu_Narrative>
   <RHAH_Menu_Other>Other</RHAH_Menu_Other>
+  <RHAH_Menu_Environment>Environment</RHAH_Menu_Environment>
+  <RHAH_Menu_Environment_Note>When the map is outside what a new visitor can bear, they get the lightest wrap that covers the gap. If none does, they get the thickest. People already here keep what they wear.</RHAH_Menu_Environment_Note>
+  <RHAH_Menu_Environment_Disabled>Temperature wraps are off. New visitors get no extra clothing.</RHAH_Menu_Environment_Disabled>
+  <RHAH_Menu_Environment_Cold>Cold</RHAH_Menu_Environment_Cold>
+  <RHAH_Menu_Environment_Heat>Heat</RHAH_Menu_Environment_Heat>
+  <RHAH_Settings_TemperatureApparel>Use {0}</RHAH_Settings_TemperatureApparel>
+  <RHAH_Settings_TemperatureApparel_Tooltip>With this off, new visitors do not get this wrap. Someone already wearing it keeps it.</RHAH_Settings_TemperatureApparel_Tooltip>
+  <RHAH_Settings_TemperatureInsulation>{0}: +{1}°C {2}</RHAH_Settings_TemperatureInsulation>
+  <RHAH_Settings_TemperatureInsulation_Tooltip>Drag to set this wrap's protection. Range 0 to 100. At 0 it adds none.</RHAH_Settings_TemperatureInsulation_Tooltip>
   <RHAH_Menu_CompatDiagnostics>Compatibility and diagnostics</RHAH_Menu_CompatDiagnostics>
   <RHAH_Menu_Ending>Ending</RHAH_Menu_Ending>
   <RHAH_Menu_Genes>Genes</RHAH_Menu_Genes>
@@ -166,9 +192,9 @@
   <RHAH_Menu_Events_Note>A checked event can happen. Drag for a rough value, type the exact one. Scale changes headcount and requests. At weight 0, it stops appearing.</RHAH_Menu_Events_Note>
   <RHAH_Menu_EventEnabled>Allow this incident</RHAH_Menu_EventEnabled>
   <RHAH_Menu_EventEnabled_Tip>With this off, the incident stays out of the draw and cannot be queued from the debug page. Visitors already here stay.</RHAH_Menu_EventEnabled_Tip>
-  <RHAH_Menu_DebugPoints>Debug points</RHAH_Menu_DebugPoints>
-  <RHAH_Menu_DebugPoints_Tip>Natural fires and debug triggers use this size. It changes how many pawns arrive and how much aid or intel asks for. Range 1 to 10000. The slider is rough. The field is exact.</RHAH_Menu_DebugPoints_Tip>
-  <RHAH_Menu_IncidentWeight>Spawn weight</RHAH_Menu_IncidentWeight>
+  <RHAH_Menu_DebugPoints>Scale</RHAH_Menu_DebugPoints>
+  <RHAH_Menu_DebugPoints_Tip>Natural fires and debug triggers use this size. It changes how many visitors arrive and how much aid or intel asks for. Range 1 to 10000. The slider is rough. The field is exact.</RHAH_Menu_DebugPoints_Tip>
+  <RHAH_Menu_IncidentWeight>Appearance weight</RHAH_Menu_IncidentWeight>
   <RHAH_Menu_IncidentWeight_Tip>100 keeps the catalog weight. Higher is drawn more often. 0 stays out. The slider is rough. The field is exact.</RHAH_Menu_IncidentWeight_Tip>
   <RHAH_Menu_Trigger>Trigger</RHAH_Menu_Trigger>
   <RHAH_Menu_Queue_Disabled>New content is off.</RHAH_Menu_Queue_Disabled>
@@ -178,10 +204,10 @@
   <RHAH_Menu_Queue_Fired>Spawned.</RHAH_Menu_Queue_Fired>
   <RHAH_Menu_Queue_Queued>Queued. It spawns when the pausing window closes.</RHAH_Menu_Queue_Queued>
   <RHAH_Menu_Queue_Failed>Nothing queued.</RHAH_Menu_Queue_Failed>
-  <RHAH_Menu_DevEvents_Note>Queues this incident instead of waiting for the natural draw. It spawns on the next frame after the pausing window closes, even if time stays paused.</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_DevEvents_Note>Queues this incident instead of waiting for the natural draw. It appears as soon as this window closes, even if time stays paused.</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>No current map.</RHAH_Menu_Pawns_NoMap>
-  <RHAH_Menu_Pawns_None>No Hunger and Havoc pawns on this map.</RHAH_Menu_Pawns_None>
-  <RHAH_Menu_Pawns_Invalid>That pawn is gone.</RHAH_Menu_Pawns_Invalid>
+  <RHAH_Menu_Pawns_None>No Hunger and Havoc visitors on this map.</RHAH_Menu_Pawns_None>
+  <RHAH_Menu_Pawns_Invalid>That visitor is gone.</RHAH_Menu_Pawns_Invalid>
   <RHAH_Menu_PawnMeta>{0}. {1}. Incident {2}.</RHAH_Menu_PawnMeta>
   <RHAH_Menu_PawnRelation>Group {0}. Parent {1}. Children {2}. Fed: {3}. Plague: {4}.</RHAH_Menu_PawnRelation>
   <RHAH_Menu_Narrative_NoGame>Narrative state needs a loaded game.</RHAH_Menu_Narrative_NoGame>
@@ -197,9 +223,9 @@
   <RHAH_Menu_Diagnostics_NoGame>Diagnostics need a loaded game.</RHAH_Menu_Diagnostics_NoGame>
   <RHAH_Menu_Diagnostics_Pending>Pending incidents</RHAH_Menu_Diagnostics_Pending>
   <RHAH_Menu_Diagnostics_Batches>Active batches</RHAH_Menu_Diagnostics_Batches>
-  <RHAH_Menu_Diagnostics_Map>Resolved map</RHAH_Menu_Diagnostics_Map>
-  <RHAH_Menu_Ending_Gap>Ending switches are not implemented. This page does not write an ending.</RHAH_Menu_Ending_Gap>
-  <RHAH_Menu_Genes_Gap>Biotech gene settings are not implemented. This page does not edit genes.</RHAH_Menu_Genes_Gap>
+  <RHAH_Menu_Diagnostics_Map>Current map</RHAH_Menu_Diagnostics_Map>
+  <RHAH_Menu_Ending_Gap>Ending switches are not available here yet.</RHAH_Menu_Ending_Gap>
+  <RHAH_Menu_Genes_Gap>Gene settings are not available here yet.</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>Biotech is required. With it, you can set the xenotypes of visitors here.</RHAH_Menu_Genes_NoBiotech>
   <RHAH_Menu_Genes_Note>The percent is the current chance. Drag a bar or type a weight from 0 to 100. Zero stays out. At all zeroes, visitors use the base ratkin xenotype, or the famine ratkin xenotype if that one is missing.</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>Reset weights</RHAH_Menu_Genes_Reset>
@@ -215,28 +241,30 @@
   <RHAH_Menu_PawnHistory_Note>New visitors draw one checked history. Someone whose story the event already wrote keeps it. Traits can still be drawn.</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>Enable all histories</RHAH_Menu_PawnHistory_EnableAll>
   <RHAH_Menu_PawnHistory_DisableAll>Disable all histories</RHAH_Menu_PawnHistory_DisableAll>
-  <RHAH_Menu_PawnHistory_ItemTip>With this off, the history stays out of the draw. Pawns already generated keep theirs.</RHAH_Menu_PawnHistory_ItemTip>
+  <RHAH_Menu_PawnHistory_ItemTip>With this off, the history stays out of the draw. People already here keep theirs.</RHAH_Menu_PawnHistory_ItemTip>
   <RHAH_Menu_PawnTrait>Traits</RHAH_Menu_PawnTrait>
   <RHAH_Menu_PawnTrait_EnableAll>Enable all traits</RHAH_Menu_PawnTrait_EnableAll>
   <RHAH_Menu_PawnTrait_DisableAll>Disable all traits</RHAH_Menu_PawnTrait_DisableAll>
-  <RHAH_Menu_PawnTrait_ItemTip>With this off, the trait stays out of the draw. Pawns already generated keep theirs.</RHAH_Menu_PawnTrait_ItemTip>
+  <RHAH_Menu_PawnTrait_ItemTip>With this off, the trait stays out of the draw. People already here keep theirs.</RHAH_Menu_PawnTrait_ItemTip>
   <RHAH_Menu_PawnTrait_Weight>Weight</RHAH_Menu_PawnTrait_Weight>
   <RHAH_Menu_PawnTrait_WeightTip>A higher weight is drawn more often. 0 stays out. After the draw, weight divided by 100 is the chance to gain it. The slider is rough. The field is exact.</RHAH_Menu_PawnTrait_WeightTip>
   <RHAH_Settings_PawnHistories>Draw histories for new visitors</RHAH_Settings_PawnHistories>
   <RHAH_Settings_PawnHistories_Tooltip>New visitors no longer receive these histories. People already here stay as they are.</RHAH_Settings_PawnHistories_Tooltip>
   <RHAH_Settings_PawnTraits>Draw traits for new visitors</RHAH_Settings_PawnTraits>
-  <RHAH_Settings_PawnTraits_Tooltip>With this off, new visitors gain no mod trait. Pawns already here keep theirs. Each visitor follows the limit above.</RHAH_Settings_PawnTraits_Tooltip>
-  <RHAH_Menu_Experimental_Gap>Generation optimization is registered on this page. Other experiments are not added yet.</RHAH_Menu_Experimental_Gap>
-  <RHAH_Menu_Experimental_Note>These options change how long visitors take to generate. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
-  <RHAH_Settings_OptimizeGeneration>Speed up visitor generation</RHAH_Settings_OptimizeGeneration>
+  <RHAH_Settings_PawnTraits_Tooltip>With this off, new visitors gain no mod trait. People already here keep theirs. Each visitor follows the limit above.</RHAH_Settings_PawnTraits_Tooltip>
+  <RHAH_Menu_Experimental_Gap>This page only speeds up how visitors appear.</RHAH_Menu_Experimental_Gap>
+  <RHAH_Menu_Experimental_Note>These options change how long visitors take to appear. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
+  <RHAH_Settings_OptimizeGeneration>Speed up visitor arrival</RHAH_Settings_OptimizeGeneration>
   <RHAH_Settings_OptimizeGeneration_Tooltip>Visitors appear faster, with less random clothing and status. Without a set xenotype, the gene page weights decide.</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>The curve is the chance this pool fires. Days run across. Chance runs up. The dot is the current setting. 0 turns this pool off. Rest the cursor on the curve to read that day's chance.</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Gap>The line is the chance this pool fires at least once on each of the coming days. Days run across. That day's chance runs up. 0 turns this pool off. Rest the cursor on the line to read the chance.</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>Positive incidents, average days</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>Negative incidents, average days</RHAH_Menu_Frequency_Negative>
-  <RHAH_Menu_Frequency_Curve>Occurrence chance</RHAH_Menu_Frequency_Curve>
-  <RHAH_Menu_Frequency_CurveTip>{0} days, chance {1}.</RHAH_Menu_Frequency_CurveTip>
+  <RHAH_Menu_Frequency_Window>Days shown</RHAH_Menu_Frequency_Window>
+  <RHAH_Menu_Frequency_WindowTip>How many coming days the curve shows. From 5 to 60. This only changes the graph, not how often incidents fire.</RHAH_Menu_Frequency_WindowTip>
+  <RHAH_Menu_Frequency_Curve>Chance that day</RHAH_Menu_Frequency_Curve>
+  <RHAH_Menu_Frequency_CurveTip>Day {0}, chance {1}.</RHAH_Menu_Frequency_CurveTip>
   <RHAH_Menu_Developer_Note>Debug queues live under Dev events. Version and IrisMenus are under Compatibility and diagnostics.</RHAH_Menu_Developer_Note>
-  <RHAH_Menu_Developer_LastPawn>Last listed pawn</RHAH_Menu_Developer_LastPawn>
+  <RHAH_Menu_Developer_LastPawn>Last listed visitor</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>Beggar</RHAH_Menu_Family_Beggar>
   <RHAH_Menu_Family_Thief>Thief</RHAH_Menu_Family_Thief>
   <RHAH_Menu_Family_Wild>Wild</RHAH_Menu_Family_Wild>
@@ -287,6 +315,8 @@
   <RHAH_Settings_IntelTrades_Tooltip>New intel stops being traded for a site. Sites already placed stay on the world.</RHAH_Settings_IntelTrades_Tooltip>
   <RHAH_Settings_VisitorChoices>Enable visitor choices</RHAH_Settings_VisitorChoices>
   <RHAH_Settings_VisitorChoices_Tooltip>New visitors stop asking to be taken in, hired, or sent away. The right-click menu still handles people already here.</RHAH_Settings_VisitorChoices_Tooltip>
+  <RHAH_Settings_FoodGiveHint>Do not explain feeding again</RHAH_Settings_FoodGiveHint>
+  <RHAH_Settings_FoodGiveHint_Tooltip>The first time you choose to feed them, the letter no longer explains how to hand the food over.</RHAH_Settings_FoodGiveHint_Tooltip>
   <RHAH_Settings_TraderIgnoreEnvironment>Trader caravans ignore harsh conditions</RHAH_Settings_TraderIgnoreEnvironment>
   <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>Famine traders do not leave as soon as they enter because of cold, heat, or dangerous weather. Off, harsh conditions still send them away.</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
   <RHAH_Settings_TraderIgnoreEnclosed>Trader caravans ignore enclosed rooms</RHAH_Settings_TraderIgnoreEnclosed>
@@ -301,9 +331,9 @@
   <RHAH_Settings_PrisonerScavenge_Tooltip>Hungry prisoners stop searching the ground for something edible.</RHAH_Settings_PrisonerScavenge_Tooltip>
   <RHAH_Settings_TailBite>Allow tail bites</RHAH_Settings_TailBite>
   <RHAH_Settings_TailBite_Tooltip>A hungry prisoner may bite a sleeping prisoner under 3. Off by default.</RHAH_Settings_TailBite_Tooltip>
-  <RHAH_Settings_Broadcast>Allow hope broadcasts</RHAH_Settings_Broadcast>
+  <RHAH_Settings_Broadcast>Allow aid broadcasts</RHAH_Settings_Broadcast>
   <RHAH_Settings_Broadcast_Tooltip>The comms console stops listing a broadcast. A cooldown already running does not end early.</RHAH_Settings_Broadcast_Tooltip>
-  <RHAH_Settings_Stagger>Generate visitors in batches</RHAH_Settings_Stagger>
+  <RHAH_Settings_Stagger>Visitors arrive in batches</RHAH_Settings_Stagger>
   <RHAH_Settings_Stagger_Tooltip>Queued incidents spawn one batch at a time. Off, queued incidents spawn as soon as they can.</RHAH_Settings_Stagger_Tooltip>
   <RHAH_Settings_PredationChance>Ratkin refugees hunted: {0}%</RHAH_Settings_PredationChance>
   <RHAH_Settings_PredationChance_Tooltip>Each camp map rolls this chance for a predator. 0 to 100, default 10. At 0, none arrive.</RHAH_Settings_PredationChance_Tooltip>
@@ -315,14 +345,51 @@
   <RHAH_Predation_Text>A wild predator has started hunting these Ratkin refugees. It goes for the young first.</RHAH_Predation_Text>
   <RHAH_OutsidePredators_Label>Outside predator</RHAH_OutsidePredators_Label>
   <RHAH_OutsidePredators_Text>A predator followed the Ratkin refugees here and is looking for one it can eat.</RHAH_OutsidePredators_Text>
-  <RHAH_Choice_Label>Visitor request</RHAH_Choice_Label>
-  <RHAH_Choice_Text>They want {0} {1}. Delivering sends them off. Refusing sends them off too. Ignoring leaves them as they are.</RHAH_Choice_Text>
+  <RHAH_Choice_Label>Visitors</RHAH_Choice_Label>
+  <RHAH_Choice_Text>{0} arrived.\n\nThey want {1} {2}. Delivering or refusing sends them off. Ignoring leaves them as they are.</RHAH_Choice_Text>
+  <RHAH_Choice_Aid_Label>Aid</RHAH_Choice_Aid_Label>
+  <RHAH_Choice_Aid_Text>{0} arrived.\n\nThey want {1} {2}. Handing it over or refusing sends them off. Ignoring leaves them as they are.</RHAH_Choice_Aid_Text>
+  <RHAH_Choice_Intel_Label>Intel</RHAH_Choice_Intel_Label>
+  <RHAH_Choice_Intel_Text>{0} arrived.\n\nThey will trade a site for {1} {2}. Handing it over reveals the site and sends them off. Refusing leaves no site.</RHAH_Choice_Intel_Text>
+  <RHAH_Choice_Baby_Label>Baby</RHAH_Choice_Baby_Label>
+  <RHAH_Choice_Baby_Text>{0} arrived.\n\nThey want a prisoner or slave baby. Handing one over or refusing sends them off.</RHAH_Choice_Baby_Text>
+  <RHAH_Choice_Abandoned_Label>Abandoned young</RHAH_Choice_Abandoned_Label>
+  <RHAH_Choice_Abandoned_Text>{0} arrived.\n\nThe young are still here. You can take them in, or refuse. Refusing sends them off.</RHAH_Choice_Abandoned_Text>
+  <RHAH_Choice_Refugees_Label>Refugees</RHAH_Choice_Refugees_Label>
+  <RHAH_Choice_Refugees_Text>{0} arrived.\n\nThey ask to stay. You can take them in, or refuse. Refusing sends them off.</RHAH_Choice_Refugees_Text>
+  <RHAH_Choice_ChildExchange_Label>Child exchange</RHAH_Choice_ChildExchange_Label>
+  <RHAH_Choice_ChildExchange_Text>{0} arrived.\n\nThey want to trade children. When food may stand in, each child costs 10 simple meals. Handing them over or refusing sends the visitors off.</RHAH_Choice_ChildExchange_Text>
+  <RHAH_Choice_Kinship_Label>Mistaken kin</RHAH_Choice_Kinship_Label>
+  <RHAH_Choice_Kinship_Text>{0} arrived.\n\nThey have the wrong person, and they are still here. You can take them in, or refuse. Refusing sends them off.</RHAH_Choice_Kinship_Text>
+  <RHAH_Choice_Airdrop_Label>Airdrop</RHAH_Choice_Airdrop_Label>
+  <RHAH_Choice_Airdrop_Text>{0} arrived.\n\nThe drop landed in the wrong place. The people are still here. You can take them in, or refuse. Refusing sends them off.</RHAH_Choice_Airdrop_Text>
+  <RHAH_Choice_Visitors_Label>Visitors</RHAH_Choice_Visitors_Label>
+  <RHAH_Choice_Visitors_Text>{0} arrived.\n\nYou can take them in, hire them long-term, take them in short-term, capture them, or feed them. After feeding, select a colonist and right-click a visitor to hand over food. Refusing sends them off.</RHAH_Choice_Visitors_Text>
+  <RHAH_Choice_SimpleMeal>simple meals</RHAH_Choice_SimpleMeal>
+  <RHAH_Choice_FineMeal>fine meals</RHAH_Choice_FineMeal>
+  <RHAH_Choice_Medicine>medicine</RHAH_Choice_Medicine>
+  <RHAH_Choice_HerbalMedicine>herbal medicine</RHAH_Choice_HerbalMedicine>
+  <RHAH_Choice_Silver>silver</RHAH_Choice_Silver>
   <RHAH_Choice_Deliver>Deliver</RHAH_Choice_Deliver>
   <RHAH_Choice_Reject>Refuse</RHAH_Choice_Reject>
   <RHAH_Choice_Ignore>Ignore</RHAH_Choice_Ignore>
   <RHAH_Choice_Join>Take in</RHAH_Choice_Join>
-  <RHAH_Choice_Hire>Hire</RHAH_Choice_Hire>
+  <RHAH_Choice_Hire>Hire long-term ({0})</RHAH_Choice_Hire>
   <RHAH_Choice_Feed>Feed</RHAH_Choice_Feed>
+  <RHAH_Choice_Recruit>Take in short-term ({0})</RHAH_Choice_Recruit>
+  <RHAH_Choice_Enslave>Enslave</RHAH_Choice_Enslave>
+  <RHAH_Choice_Capture>Capture</RHAH_Choice_Capture>
+  <RHAH_Choice_Attack>Attack</RHAH_Choice_Attack>
+  <RHAH_Choice_Prison>Send to prison</RHAH_Choice_Prison>
+  <RHAH_Choice_NoRecruit>None of them can be handled that way.</RHAH_Choice_NoRecruit>
+  <RHAH_Choice_NoIdeology>Ideology is not active, so they cannot be enslaved.</RHAH_Choice_NoIdeology>
+  <RHAH_Choice_NoPrison>No empty prison cell.</RHAH_Choice_NoPrison>
+  <RHAH_Choice_Quarantine>Visitors in quarantine cannot join, be hired, or be transferred.</RHAH_Choice_Quarantine>
+  <RHAH_Choice_FeedHint>They will wait where they are. Select a colonist, then right-click a waiting visitor to hand over food. Nobody is sent to deliver it.</RHAH_Choice_FeedHint>
+  <RHAH_Choice_FeedHintDismiss>Do not show this again</RHAH_Choice_FeedHintDismiss>
+  <RHAH_Choice_FeedWaiting>The visitors are waiting for food.</RHAH_Choice_FeedWaiting>
+  <RHAH_Choice_GiveFood>Give {0} to {1}</RHAH_Choice_GiveFood>
+  <RHAH_Choice_NoFood>No food to give {1}</RHAH_Choice_NoFood>
   <RHAH_Choice_Short>Not enough in storage. They need {0}.</RHAH_Choice_Short>
   <RHAH_Choice_NoBaby>No prisoner or slave baby can be handed over.</RHAH_Choice_NoBaby>
   <RHAH_Choice_Stale>This letter has already been settled.</RHAH_Choice_Stale>
@@ -330,7 +397,7 @@
   <RHAH_Choice_Fed>The visitors have eaten.</RHAH_Choice_Fed>
   <RHAH_Intel_Label>Intel site</RHAH_Intel_Label>
   <RHAH_Intel_Text>The trade is done. A site has appeared nearby.</RHAH_Intel_Text>
-  <RHAH_Broadcast_Label>Broadcast hope</RHAH_Broadcast_Label>
+  <RHAH_Broadcast_Label>Broadcast for aid</RHAH_Broadcast_Label>
   <RHAH_Broadcast_Cooldown>The broadcast is still cooling down</RHAH_Broadcast_Cooldown>
   <RHAH_Broadcast_Empty>No incident can be broadcast</RHAH_Broadcast_Empty>
   <RHAH_Broadcast_Queued>Queued {0}</RHAH_Broadcast_Queued>

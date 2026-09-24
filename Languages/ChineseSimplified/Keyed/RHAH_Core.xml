@@ -13,7 +13,7 @@
   <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>开启后，吃饱的来客下一顿可以吃区外的食物。关闭后，吃饱的来客不再自己找下一顿。</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
   <RHAH_Settings_LeaveAfterFed>吃完后离开地图</RHAH_Settings_LeaveAfterFed>
   <RHAH_Settings_LeaveAfterFed_Tooltip>开启后，能走到出口的来客吃饱后离开。太小或走不动的幼年鼠族由大人带出。关闭后，吃饱的来客留在地图上。</RHAH_Settings_LeaveAfterFed_Tooltip>
-  <RHAH_Settings_MaxEventPawns>单次人数上限：{0}</RHAH_Settings_MaxEventPawns>
+  <RHAH_Settings_MaxEventPawns>单次来客上限：{0}</RHAH_Settings_MaxEventPawns>
   <RHAH_Settings_MaxEventPawns_Tooltip>一次事件的人数不超过这个数。1 到 100，默认 30。低于该事件最少人数时仍按最少人数来。母亲和孩子不拆开。</RHAH_Settings_MaxEventPawns_Tooltip>
   <RHAH_Settings_ReliefScore>赈灾区食物加分：{0}%</RHAH_Settings_ReliefScore>
   <RHAH_Settings_ReliefScore_Tooltip>区内食物在距离和是否合适之外再加这一成。范围 0 到 100%，默认 10%。</RHAH_Settings_ReliefScore_Tooltip>
@@ -23,12 +23,12 @@
   <RHAH_Settings_WaitFood_Tooltip>开启后，来客在划定时间内继续找吃的。找到后，下一次断粮重新计时。关闭后直接离开。</RHAH_Settings_WaitFood_Tooltip>
   <RHAH_Settings_FoodWait>断粮等待：{0} 天</RHAH_Settings_FoodWait>
   <RHAH_Settings_FoodWait_Tooltip>找不到食物时最多等这么久。范围 0 到 5 天，默认半天。</RHAH_Settings_FoodWait_Tooltip>
-  <RHAH_Settings_MinAge>最低生成年龄：{0}</RHAH_Settings_MinAge>
-  <RHAH_Settings_MaxAge>最高生成年龄：{0}</RHAH_Settings_MaxAge>
+  <RHAH_Settings_MinAge>最低到来年龄：{0}</RHAH_Settings_MinAge>
+  <RHAH_Settings_MaxAge>最高到来年龄：{0}</RHAH_Settings_MaxAge>
   <RHAH_Settings_Age_Tooltip>普通来客的年龄落在这个区间。0 到 100，默认 0 到 50。母亲仍按事件来。幼年鼠族默认不跟这个区间，除非打开下面的开关。</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_YoungAge>幼年鼠族使用这个年龄区间</RHAH_Settings_YoungAge>
   <RHAH_Settings_YoungAge_Tooltip>打开后，幼年鼠族也落在上面的年龄里。母亲仍按事件来。已经在场的人不变。</RHAH_Settings_YoungAge_Tooltip>
-  <RHAH_Settings_ImmobileBabies>允许生成不能走路的婴幼</RHAH_Settings_ImmobileBabies>
+  <RHAH_Settings_ImmobileBabies>允许不能走路的婴幼到来</RHAH_Settings_ImmobileBabies>
   <RHAH_Settings_ImmobileBabies_Tooltip>没有幼童模组时，3 岁以下的原版婴幼会一直躺着，离场要由大人抱走。关闭后，幼年鼠族至少 3 岁。</RHAH_Settings_ImmobileBabies_Tooltip>
   <RHAH_Settings_ImmobileBabies_Toddlers>幼童模组已启用。3 岁以下可以自己移动。这个开关不再抬高年龄。</RHAH_Settings_ImmobileBabies_Toddlers>
   <RHAH_Settings_Gender>性别</RHAH_Settings_Gender>
@@ -61,16 +61,21 @@
   <RHAH_Menu_Content_theft>偷窃</RHAH_Menu_Content_theft>
   <RHAH_Menu_Content_conflict>冲突</RHAH_Menu_Content_conflict>
   <RHAH_Menu_Content_siege>围攻</RHAH_Menu_Content_siege>
-  <RHAH_Settings_ShelterDays>短工天数：{0}</RHAH_Settings_ShelterDays>
-  <RHAH_Settings_ShelterDays_Tooltip>收留到期后离开。范围 5 到 60 天，默认 5 天。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_ShelterDays_Tooltip>
-  <RHAH_Settings_HireDays>长工天数：{0}</RHAH_Settings_HireDays>
-  <RHAH_Settings_HireDays_Tooltip>雇佣到期后离开。范围 5 到 600 天，默认 60 天。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_HireDays_Tooltip>
-  <RHAH_Settings_ColdClothes>低温时给新来客一件防寒衣</RHAH_Settings_ColdClothes>
-  <RHAH_Settings_ColdClothes_Tooltip>地图气温低于来客能受的下限时，新来客多穿一件防寒衣。关闭后不额外发衣。</RHAH_Settings_ColdClothes_Tooltip>
+  <RHAH_Settings_ShelterDays>短工：{0}</RHAH_Settings_ShelterDays>
+  <RHAH_Settings_ShelterDays_Tooltip>短工到期后离开。最短 5 天，最长 1 年，默认 5 天。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_ShelterDays_Tooltip>
+  <RHAH_Settings_HireDays>长工：{0}</RHAH_Settings_HireDays>
+  <RHAH_Settings_HireDays_Tooltip>长工到期后离开。最短 5 天，最长 10 年，默认 1 年。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_HireDays_Tooltip>
+  <RHAH_Stay_Year>1 年</RHAH_Stay_Year>
+  <RHAH_Stay_Years>{0} 年</RHAH_Stay_Years>
+  <RHAH_Stay_YearsDays>{0} 年 {1} 天</RHAH_Stay_YearsDays>
+  <RHAH_Stay_Day>1 天</RHAH_Stay_Day>
+  <RHAH_Stay_Days>{0} 天</RHAH_Stay_Days>
+  <RHAH_Settings_ColdClothes>给新来客一件温度衣</RHAH_Settings_ColdClothes>
+  <RHAH_Settings_ColdClothes_Tooltip>地图气温超出新来客能受的范围时，发一件刚好够用的温度衣。都不够时用最厚的一件。已经穿过的不再换。关闭后不额外发衣。</RHAH_Settings_ColdClothes_Tooltip>
   <RHAH_Settings_TempMin>事件最低气温：{0}°C</RHAH_Settings_TempMin>
   <RHAH_Settings_TempMax>事件最高气温：{0}°C</RHAH_Settings_TempMax>
   <RHAH_Settings_Temp_Tooltip>地图气温超出这个区间时，不再刷新以地图为目标的新事件。默认 -35°C 到 70°C。商队不受这项限制。</RHAH_Settings_Temp_Tooltip>
-  <RHAH_Choice_Shelter>收留</RHAH_Choice_Shelter>
+  <RHAH_Choice_Shelter>收留为短工（{0}）</RHAH_Choice_Shelter>
   <RHAH_Settings_ReliefFoods>启用的食物</RHAH_Settings_ReliefFoods>
   <RHAH_Settings_ReliefFoods_Tooltip>未关闭的食物都可以被来客取用。</RHAH_Settings_ReliefFoods_Tooltip>
   <RHAH_Settings_ReliefFoods_All>全部启用</RHAH_Settings_ReliefFoods_All>
@@ -135,11 +140,32 @@
   <RHAH_Settings_WeightPlague>鼠疫事件系数：{0}</RHAH_Settings_WeightPlague>
   <RHAH_Settings_Weight_Tooltip>这一类事件被抽中前先乘这个数。0 到 5。0 表示这一类不再出现。</RHAH_Settings_Weight_Tooltip>
   <RHAH_Settings_ReliefFoods_Quote>关掉的食物，来客不再取用。之后新加入的食物默认仍可取用。</RHAH_Settings_ReliefFoods_Quote>
+  <RHAH_Settings_GiveFoods>可交给来客的食物</RHAH_Settings_GiveFoods>
+  <RHAH_Settings_GiveFoods_Tooltip>关掉的食物不会出现在右键交给来客的选项里。</RHAH_Settings_GiveFoods_Tooltip>
+  <RHAH_Settings_GiveFoods_All>全部允许</RHAH_Settings_GiveFoods_All>
+  <RHAH_Settings_GiveFoods_None>全部禁止</RHAH_Settings_GiveFoods_None>
+  <RHAH_Settings_GiveFoods_Search>搜索食物或模组</RHAH_Settings_GiveFoods_Search>
+  <RHAH_Settings_GiveFoods_Empty>没有符合的食物。</RHAH_Settings_GiveFoods_Empty>
+  <RHAH_Settings_GiveFoods_Quote>关掉的食物不能交给来客。之后新加入的食物默认仍可交给。</RHAH_Settings_GiveFoods_Quote>
+  <RHAH_Settings_GiveFoods_Sort>给予食物分类</RHAH_Settings_GiveFoods_Sort>
+  <RHAH_Settings_GiveFoods_Sort_0>按模组</RHAH_Settings_GiveFoods_Sort_0>
+  <RHAH_Settings_GiveFoods_Sort_1>按名称</RHAH_Settings_GiveFoods_Sort_1>
+  <RHAH_Settings_GiveFoods_Sort_2>按原版分类</RHAH_Settings_GiveFoods_Sort_2>
+  <RHAH_Settings_GiveFoods_Other>其他</RHAH_Settings_GiveFoods_Other>
   <RHAH_Menu_Overview>总览</RHAH_Menu_Overview>
   <RHAH_Menu_Events>事件</RHAH_Menu_Events>
-  <RHAH_Menu_Pawns>角色</RHAH_Menu_Pawns>
+  <RHAH_Menu_Pawns>来客</RHAH_Menu_Pawns>
   <RHAH_Menu_Narrative>叙事</RHAH_Menu_Narrative>
   <RHAH_Menu_Other>其他</RHAH_Menu_Other>
+  <RHAH_Menu_Environment>环境自适应</RHAH_Menu_Environment>
+  <RHAH_Menu_Environment_Note>气温超出新来客能受的范围时，发一件刚好够用的温度衣。都不够时用最厚的一件。已经在场的人不变。</RHAH_Menu_Environment_Note>
+  <RHAH_Menu_Environment_Disabled>温度衣已关闭。新来客不再额外得到它。</RHAH_Menu_Environment_Disabled>
+  <RHAH_Menu_Environment_Cold>抗寒</RHAH_Menu_Environment_Cold>
+  <RHAH_Menu_Environment_Heat>抗热</RHAH_Menu_Environment_Heat>
+  <RHAH_Settings_TemperatureApparel>使用{0}</RHAH_Settings_TemperatureApparel>
+  <RHAH_Settings_TemperatureApparel_Tooltip>关闭后，新来客不再得到这件温度衣。已经穿过的人不变。</RHAH_Settings_TemperatureApparel_Tooltip>
+  <RHAH_Settings_TemperatureInsulation>{0}：+{1}°C {2}</RHAH_Settings_TemperatureInsulation>
+  <RHAH_Settings_TemperatureInsulation_Tooltip>拖动设置这件温度衣的防护。范围 0 到 100。0 不再提供这项防护。</RHAH_Settings_TemperatureInsulation_Tooltip>
   <RHAH_Menu_CompatDiagnostics>兼容与诊断</RHAH_Menu_CompatDiagnostics>
   <RHAH_Menu_Ending>结局</RHAH_Menu_Ending>
   <RHAH_Menu_Genes>基因</RHAH_Menu_Genes>
@@ -166,9 +192,9 @@
   <RHAH_Menu_Events_Note>勾选后这条事件可以发生。滑条粗调，右侧输入精确值。规模改变人数和索取量。权重为 0 时不再出现。</RHAH_Menu_Events_Note>
   <RHAH_Menu_EventEnabled>允许发生</RHAH_Menu_EventEnabled>
   <RHAH_Menu_EventEnabled_Tip>关闭后，这条事件不再进入抽取，也不能从调试页排队。已经在场的来客不变。</RHAH_Menu_EventEnabled_Tip>
-  <RHAH_Menu_DebugPoints>调试点</RHAH_Menu_DebugPoints>
-  <RHAH_Menu_DebugPoints_Tip>自然触发和调试触发都用这个规模。人数和接济、情报的索取量随之变化。范围 1 到 10000。滑条粗调，输入框精确设置。</RHAH_Menu_DebugPoints_Tip>
-  <RHAH_Menu_IncidentWeight>生成权重</RHAH_Menu_IncidentWeight>
+  <RHAH_Menu_DebugPoints>规模</RHAH_Menu_DebugPoints>
+  <RHAH_Menu_DebugPoints_Tip>自然触发和调试触发都用这个规模。来客人数和接济、情报的索取量随之变化。范围 1 到 10000。滑条粗调，输入框精确设置。</RHAH_Menu_DebugPoints_Tip>
+  <RHAH_Menu_IncidentWeight>出现权重</RHAH_Menu_IncidentWeight>
   <RHAH_Menu_IncidentWeight_Tip>100 为目录权重。更高更容易被抽中，0 不抽。滑条粗调，输入框精确设置。</RHAH_Menu_IncidentWeight_Tip>
   <RHAH_Menu_Trigger>触发</RHAH_Menu_Trigger>
   <RHAH_Menu_Queue_Disabled>新内容已关闭。</RHAH_Menu_Queue_Disabled>
@@ -178,10 +204,10 @@
   <RHAH_Menu_Queue_Fired>已生成。</RHAH_Menu_Queue_Fired>
   <RHAH_Menu_Queue_Queued>已排队。关闭暂停窗口后生成。</RHAH_Menu_Queue_Queued>
   <RHAH_Menu_Queue_Failed>没有排队。</RHAH_Menu_Queue_Failed>
-  <RHAH_Menu_DevEvents_Note>把这条事件排进队列，不走自然抽取。关闭暂停窗口后的下一帧生成，不要求游戏继续走时间。</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_DevEvents_Note>把这条事件排进队列，不走自然抽取。关掉这个窗口后立刻出现，时间暂停也一样。</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>没有当前地图。</RHAH_Menu_Pawns_NoMap>
-  <RHAH_Menu_Pawns_None>这张地图上没有饥与祸角色。</RHAH_Menu_Pawns_None>
-  <RHAH_Menu_Pawns_Invalid>这个角色已经不在了。</RHAH_Menu_Pawns_Invalid>
+  <RHAH_Menu_Pawns_None>这张地图上没有饥与祸来客。</RHAH_Menu_Pawns_None>
+  <RHAH_Menu_Pawns_Invalid>这个来客已经不在了。</RHAH_Menu_Pawns_Invalid>
   <RHAH_Menu_PawnMeta>{0}。{1}。事件 {2}。</RHAH_Menu_PawnMeta>
   <RHAH_Menu_PawnRelation>关系组 {0}。父母 {1}。子女 {2}。已投喂：{3}。鼠疫：{4}。</RHAH_Menu_PawnRelation>
   <RHAH_Menu_Narrative_NoGame>叙事状态需要已加载的游戏。</RHAH_Menu_Narrative_NoGame>
@@ -197,9 +223,9 @@
   <RHAH_Menu_Diagnostics_NoGame>诊断需要已加载的游戏。</RHAH_Menu_Diagnostics_NoGame>
   <RHAH_Menu_Diagnostics_Pending>等待中的事件</RHAH_Menu_Diagnostics_Pending>
   <RHAH_Menu_Diagnostics_Batches>进行中的批次</RHAH_Menu_Diagnostics_Batches>
-  <RHAH_Menu_Diagnostics_Map>解析到的地图</RHAH_Menu_Diagnostics_Map>
-  <RHAH_Menu_Ending_Gap>结局开关尚未实现。此页不会写入结局。</RHAH_Menu_Ending_Gap>
-  <RHAH_Menu_Genes_Gap>生物科技基因设置尚未实现。此页不会修改基因。</RHAH_Menu_Genes_Gap>
+  <RHAH_Menu_Diagnostics_Map>当前地图</RHAH_Menu_Diagnostics_Map>
+  <RHAH_Menu_Ending_Gap>这里还不能开关结局。</RHAH_Menu_Ending_Gap>
+  <RHAH_Menu_Genes_Gap>这里还不能调整基因。</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>需要生物科技。启用后可以在这里调整来客的异种。</RHAH_Menu_Genes_NoBiotech>
   <RHAH_Menu_Genes_Note>标签后的百分比是当前抽中几率。拖动横条或在右侧输入，范围 0 到 100。0 不抽。全部为 0 时使用初鼠种；找不到初鼠种时使用饥荒鼠族。</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>恢复默认权重</RHAH_Menu_Genes_Reset>
@@ -215,28 +241,30 @@
   <RHAH_Menu_PawnHistory_Note>新来客从已勾选的经历里抽一条。事件已经写好身世的人不再改经历，特质仍可抽。</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>启用全部经历</RHAH_Menu_PawnHistory_EnableAll>
   <RHAH_Menu_PawnHistory_DisableAll>停用全部经历</RHAH_Menu_PawnHistory_DisableAll>
-  <RHAH_Menu_PawnHistory_ItemTip>关闭后，这条经历不再进入抽取。已经生成的角色不变。</RHAH_Menu_PawnHistory_ItemTip>
+  <RHAH_Menu_PawnHistory_ItemTip>关闭后，这条经历不再进入抽取。已经在场的人不改。</RHAH_Menu_PawnHistory_ItemTip>
   <RHAH_Menu_PawnTrait>特质</RHAH_Menu_PawnTrait>
   <RHAH_Menu_PawnTrait_EnableAll>启用全部特质</RHAH_Menu_PawnTrait_EnableAll>
   <RHAH_Menu_PawnTrait_DisableAll>停用全部特质</RHAH_Menu_PawnTrait_DisableAll>
-  <RHAH_Menu_PawnTrait_ItemTip>关闭后，这条特质不再进入抽取。已经生成的角色不变。</RHAH_Menu_PawnTrait_ItemTip>
+  <RHAH_Menu_PawnTrait_ItemTip>关闭后，这条特质不再进入抽取。已经在场的人不改。</RHAH_Menu_PawnTrait_ItemTip>
   <RHAH_Menu_PawnTrait_Weight>权重</RHAH_Menu_PawnTrait_Weight>
   <RHAH_Menu_PawnTrait_WeightTip>权重越高越容易被抽中。0 不抽。抽中后再按权重除以 100 决定是否赋予。滑条粗调，输入框精确设置。</RHAH_Menu_PawnTrait_WeightTip>
   <RHAH_Settings_PawnHistories>为新来客抽取经历</RHAH_Settings_PawnHistories>
   <RHAH_Settings_PawnHistories_Tooltip>关闭后，新来客不再获得这些经历。已经在场的人不变。</RHAH_Settings_PawnHistories_Tooltip>
   <RHAH_Settings_PawnTraits>为新来客抽取特质</RHAH_Settings_PawnTraits>
   <RHAH_Settings_PawnTraits_Tooltip>关闭后，新来客不再获得本模组特质。已经在场的角色不变。每人最多按上面的上限。</RHAH_Settings_PawnTraits_Tooltip>
-  <RHAH_Menu_Experimental_Gap>生成优化已登记在本页。其它实验项尚未加入。</RHAH_Menu_Experimental_Gap>
-  <RHAH_Menu_Experimental_Note>这些选项会改变生成来客的耗时。关闭后，来客仍按各事件自己的装备、经历、健康和基因生成。</RHAH_Menu_Experimental_Note>
-  <RHAH_Settings_OptimizeGeneration>加快来客生成</RHAH_Settings_OptimizeGeneration>
-  <RHAH_Settings_OptimizeGeneration_Tooltip>来客生成得更快，少一些随机衣着和身份。没有指定异种时，按基因页的权重抽取。</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>曲线是这一池发生事件的概率。横轴是平均天数，纵轴是概率。点是当前设置。0 关闭该池。鼠标停在曲线上时，显示该天数的概率。</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Experimental_Gap>这页目前只加快来客出现。</RHAH_Menu_Experimental_Gap>
+  <RHAH_Menu_Experimental_Note>这些选项会改变来客出现要花的时间。关闭后，来客仍按各事件自己的装备、经历、健康和基因到来。</RHAH_Menu_Experimental_Note>
+  <RHAH_Settings_OptimizeGeneration>加快来客出现</RHAH_Settings_OptimizeGeneration>
+  <RHAH_Settings_OptimizeGeneration_Tooltip>来客出现得更快，少一些随机衣着和身份。没有指定异种时，按基因页的权重抽取。</RHAH_Settings_OptimizeGeneration_Tooltip>
+  <RHAH_Menu_Frequency_Gap>横线是这一池在接下来每一天至少发生一次的概率。横轴是第几天，纵轴是当天概率。0 关闭该池。鼠标停在线上时，显示这一天的概率。</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>正面事件平均天数</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>负面事件平均天数</RHAH_Menu_Frequency_Negative>
-  <RHAH_Menu_Frequency_Curve>发生概率</RHAH_Menu_Frequency_Curve>
-  <RHAH_Menu_Frequency_CurveTip>{0} 天，概率 {1}。</RHAH_Menu_Frequency_CurveTip>
+  <RHAH_Menu_Frequency_Window>显示天数</RHAH_Menu_Frequency_Window>
+  <RHAH_Menu_Frequency_WindowTip>曲线显示接下来多少天。范围 5 到 60。只改图的宽度，不改变事件频率。</RHAH_Menu_Frequency_WindowTip>
+  <RHAH_Menu_Frequency_Curve>当天发生概率</RHAH_Menu_Frequency_Curve>
+  <RHAH_Menu_Frequency_CurveTip>第 {0} 天，当天概率 {1}。</RHAH_Menu_Frequency_CurveTip>
   <RHAH_Menu_Developer_Note>调试排队在开发者事件页。版本和 IrisMenus 在兼容与诊断。</RHAH_Menu_Developer_Note>
-  <RHAH_Menu_Developer_LastPawn>最近列出的角色</RHAH_Menu_Developer_LastPawn>
+  <RHAH_Menu_Developer_LastPawn>最近列出的来客</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>乞食</RHAH_Menu_Family_Beggar>
   <RHAH_Menu_Family_Thief>偷窃</RHAH_Menu_Family_Thief>
   <RHAH_Menu_Family_Wild>野生</RHAH_Menu_Family_Wild>
@@ -266,7 +294,7 @@
 
   <RHAH_Role_Unspecified>饥与祸来客</RHAH_Role_Unspecified>
   <RHAH_Role_Beggar>饥饿的乞食者</RHAH_Role_Beggar>
-  <RHAH_Role_BeggarMother>乞讨的灾荒鼠妈</RHAH_Role_BeggarMother>
+  <RHAH_Role_BeggarMother>乞讨的饥荒鼠族母亲</RHAH_Role_BeggarMother>
   <RHAH_Role_BeggarChild>跟着乞讨的幼年鼠族</RHAH_Role_BeggarChild>
   <RHAH_Role_Thief>饥饿的偷窃者</RHAH_Role_Thief>
   <RHAH_Role_ThiefChild>学着偷东西的幼年鼠族</RHAH_Role_ThiefChild>
@@ -287,6 +315,8 @@
   <RHAH_Settings_IntelTrades_Tooltip>关闭后，新的情报不再用来换地点。已经交付的地点留在世界上。</RHAH_Settings_IntelTrades_Tooltip>
   <RHAH_Settings_VisitorChoices>启用来客选择</RHAH_Settings_VisitorChoices>
   <RHAH_Settings_VisitorChoices_Tooltip>关闭后，新的来客不再询问收留、雇佣或拒绝。右键菜单仍可处理在场来客。</RHAH_Settings_VisitorChoices_Tooltip>
+  <RHAH_Settings_FoodGiveHint>不再提示如何投喂</RHAH_Settings_FoodGiveHint>
+  <RHAH_Settings_FoodGiveHint_Tooltip>勾上后，第一次点投喂不再说明怎么把食物交给来客。</RHAH_Settings_FoodGiveHint_Tooltip>
   <RHAH_Settings_TraderIgnoreEnvironment>商队无视恶劣环境</RHAH_Settings_TraderIgnoreEnvironment>
   <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>开启后，灾荒商队不会因为太冷、太热或危险天气刚进图就离开。关闭后，恶劣环境仍会让他们离开。</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
   <RHAH_Settings_TraderIgnoreEnclosed>商队无视封闭空间</RHAH_Settings_TraderIgnoreEnclosed>
@@ -301,9 +331,9 @@
   <RHAH_Settings_PrisonerScavenge_Tooltip>关闭后，饥饿的囚犯不再趴在地上找能吃的东西。</RHAH_Settings_PrisonerScavenge_Tooltip>
   <RHAH_Settings_TailBite>允许咬尾巴</RHAH_Settings_TailBite>
   <RHAH_Settings_TailBite_Tooltip>开启后，饥饿的囚犯可能咬睡着的、不满 3 岁的囚犯。默认关闭。</RHAH_Settings_TailBite_Tooltip>
-  <RHAH_Settings_Broadcast>允许广播希望</RHAH_Settings_Broadcast>
+  <RHAH_Settings_Broadcast>允许广播求援</RHAH_Settings_Broadcast>
   <RHAH_Settings_Broadcast_Tooltip>关闭后，通讯台不再列出广播。冷却中的广播不会提前结束。</RHAH_Settings_Broadcast_Tooltip>
-  <RHAH_Settings_Stagger>分批生成来客</RHAH_Settings_Stagger>
+  <RHAH_Settings_Stagger>分批到来</RHAH_Settings_Stagger>
   <RHAH_Settings_Stagger_Tooltip>开启后，排队的事件每隔一小段时间生成一批。关闭后，排队事件会尽快连续生成。</RHAH_Settings_Stagger_Tooltip>
   <RHAH_Settings_PredationChance>鼠难民被捕食：{0}%</RHAH_Settings_PredationChance>
   <RHAH_Settings_PredationChance_Tooltip>每个安居点地图按这个概率出现捕食者。范围 0 到 100，默认 10。0 不出现。</RHAH_Settings_PredationChance_Tooltip>
@@ -315,14 +345,51 @@
   <RHAH_Predation_Text>一只野生捕食者开始追猎这批鼠难民，先盯上了其中的幼年鼠族。</RHAH_Predation_Text>
   <RHAH_OutsidePredators_Label>外边的捕食者</RHAH_OutsidePredators_Label>
   <RHAH_OutsidePredators_Text>一只捕食者跟着鼠难民来到这里，正在找可以吃的鼠族。</RHAH_OutsidePredators_Text>
-  <RHAH_Choice_Label>来客请求</RHAH_Choice_Label>
-  <RHAH_Choice_Text>他们要 {0} 份{1}。交付后他们离开。拒绝后他们也会离开。忽视则让他们按原样继续。</RHAH_Choice_Text>
+  <RHAH_Choice_Label>来客</RHAH_Choice_Label>
+  <RHAH_Choice_Text>{0}到了。\n\n他们要 {1} 份{2}。交付或拒绝后他们都离开。忽视则让他们按原样继续。</RHAH_Choice_Text>
+  <RHAH_Choice_Aid_Label>接济</RHAH_Choice_Aid_Label>
+  <RHAH_Choice_Aid_Text>{0}到了。\n\n他们要 {1} 份{2}。交出或拒绝后他们都离开。忽视则让他们按原样继续。</RHAH_Choice_Aid_Text>
+  <RHAH_Choice_Intel_Label>情报</RHAH_Choice_Intel_Label>
+  <RHAH_Choice_Intel_Text>{0}到了。\n\n他们用一个地点换 {1} 份{2}。交出后地点出现，他们离开。拒绝则没有地点。</RHAH_Choice_Intel_Text>
+  <RHAH_Choice_Baby_Label>婴儿</RHAH_Choice_Baby_Label>
+  <RHAH_Choice_Baby_Text>{0}到了。\n\n他们要一个囚犯或奴隶婴儿。交出或拒绝后他们都离开。</RHAH_Choice_Baby_Text>
+  <RHAH_Choice_Abandoned_Label>弃婴</RHAH_Choice_Abandoned_Label>
+  <RHAH_Choice_Abandoned_Text>{0}到了。\n\n孩子还在这里。可以收留，也可以拒绝。拒绝后他们离开。</RHAH_Choice_Abandoned_Text>
+  <RHAH_Choice_Refugees_Label>逃难者</RHAH_Choice_Refugees_Label>
+  <RHAH_Choice_Refugees_Text>{0}到了。\n\n他们请求留下。可以收留，也可以拒绝。拒绝后他们离开。</RHAH_Choice_Refugees_Text>
+  <RHAH_Choice_ChildExchange_Label>易子而食</RHAH_Choice_ChildExchange_Label>
+  <RHAH_Choice_ChildExchange_Text>{0}到了。\n\n他们要用孩子换孩子。允许用食物代替时，每个孩子 10 份简单餐。交出或拒绝后他们都离开。</RHAH_Choice_ChildExchange_Text>
+  <RHAH_Choice_Kinship_Label>认亲</RHAH_Choice_Kinship_Label>
+  <RHAH_Choice_Kinship_Text>{0}到了。\n\n他们认错了人，还停在这里。可以收留，也可以拒绝。拒绝后他们离开。</RHAH_Choice_Kinship_Text>
+  <RHAH_Choice_Airdrop_Label>空投</RHAH_Choice_Airdrop_Label>
+  <RHAH_Choice_Airdrop_Text>{0}到了。\n\n空投落错了地方，人还在这里。可以收留，也可以拒绝。拒绝后他们离开。</RHAH_Choice_Airdrop_Text>
+  <RHAH_Choice_Visitors_Label>来客</RHAH_Choice_Visitors_Label>
+  <RHAH_Choice_Visitors_Text>{0}到了。\n\n可以收留、收为短工、雇佣为长工、俘虏或投喂。投喂后选中殖民者，右键来客把食物交过去。拒绝后他们离开。</RHAH_Choice_Visitors_Text>
+  <RHAH_Choice_SimpleMeal>简单餐</RHAH_Choice_SimpleMeal>
+  <RHAH_Choice_FineMeal>精致餐</RHAH_Choice_FineMeal>
+  <RHAH_Choice_Medicine>药品</RHAH_Choice_Medicine>
+  <RHAH_Choice_HerbalMedicine>草药</RHAH_Choice_HerbalMedicine>
+  <RHAH_Choice_Silver>白银</RHAH_Choice_Silver>
   <RHAH_Choice_Deliver>交付</RHAH_Choice_Deliver>
   <RHAH_Choice_Reject>拒绝</RHAH_Choice_Reject>
   <RHAH_Choice_Ignore>忽视</RHAH_Choice_Ignore>
   <RHAH_Choice_Join>收留</RHAH_Choice_Join>
-  <RHAH_Choice_Hire>雇佣</RHAH_Choice_Hire>
+  <RHAH_Choice_Hire>雇佣为长工（{0}）</RHAH_Choice_Hire>
   <RHAH_Choice_Feed>投喂</RHAH_Choice_Feed>
+  <RHAH_Choice_Recruit>收为短工（{0}）</RHAH_Choice_Recruit>
+  <RHAH_Choice_Enslave>奴役</RHAH_Choice_Enslave>
+  <RHAH_Choice_Capture>俘虏</RHAH_Choice_Capture>
+  <RHAH_Choice_Attack>攻击</RHAH_Choice_Attack>
+  <RHAH_Choice_Prison>送进监狱</RHAH_Choice_Prison>
+  <RHAH_Choice_NoRecruit>没有可以这样处理的来客。</RHAH_Choice_NoRecruit>
+  <RHAH_Choice_NoIdeology>没有文化扩展，不能奴役。</RHAH_Choice_NoIdeology>
+  <RHAH_Choice_NoPrison>没有空的囚室。</RHAH_Choice_NoPrison>
+  <RHAH_Choice_Quarantine>检疫中的来客不能加入、雇佣或转移。</RHAH_Choice_Quarantine>
+  <RHAH_Choice_FeedHint>他们会等在原地。选中一名殖民者，右键正在等待的来客，把食物交给对方。这不会自动派一个人去送。</RHAH_Choice_FeedHint>
+  <RHAH_Choice_FeedHintDismiss>不再提示</RHAH_Choice_FeedHintDismiss>
+  <RHAH_Choice_FeedWaiting>来客正在等食物。</RHAH_Choice_FeedWaiting>
+  <RHAH_Choice_GiveFood>交给{1} {0}</RHAH_Choice_GiveFood>
+  <RHAH_Choice_NoFood>没有可交给{1}的食物</RHAH_Choice_NoFood>
   <RHAH_Choice_Short>库存不足，需要 {0}。</RHAH_Choice_Short>
   <RHAH_Choice_NoBaby>这里没有可交出的囚犯或奴隶婴儿。</RHAH_Choice_NoBaby>
   <RHAH_Choice_Stale>这封信已经结算过。</RHAH_Choice_Stale>
@@ -330,7 +397,7 @@
   <RHAH_Choice_Fed>来客吃过了。</RHAH_Choice_Fed>
   <RHAH_Intel_Label>情报地点</RHAH_Intel_Label>
   <RHAH_Intel_Text>交换完成。附近出现了一个地点。</RHAH_Intel_Text>
-  <RHAH_Broadcast_Label>广播希望</RHAH_Broadcast_Label>
+  <RHAH_Broadcast_Label>广播求援</RHAH_Broadcast_Label>
   <RHAH_Broadcast_Cooldown>广播仍在冷却</RHAH_Broadcast_Cooldown>
   <RHAH_Broadcast_Empty>没有可广播的事件</RHAH_Broadcast_Empty>
   <RHAH_Broadcast_Queued>已排队 {0}</RHAH_Broadcast_Queued>

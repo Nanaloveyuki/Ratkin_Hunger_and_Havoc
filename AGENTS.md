@@ -100,7 +100,7 @@ IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `Men
 - 事件目录 `I-001`..`I-051`，Def 在 `1.6/Defs/IncidentDefs/`
 - 访客 Lord、Job、Duty 和 ThinkTree 在 `Source/Pawn/` 与 `1.6/Defs/`
 - `GameComponent_RHAH_Game`、`MapComponent_RHAH_Map`
-- IrisMenus 1.6 的 14 个 SubItem。可选依赖，缺失时不注册
+- IrisMenus 1.6 的 15 个 SubItem。可选依赖，缺失时不注册
 - Guard 与 `LoadFolders.xml` 在旧鼠灾包启用时跳过主体
 
 不要改 `packageId`、显示名、Harmony Id、Guard 冲突列表，也不要改已登记的 51 个事件显示 ID。

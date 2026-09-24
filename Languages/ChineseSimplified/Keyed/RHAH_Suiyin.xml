@@ -6,26 +6,26 @@
   <RHAH_Suiyin_N002_Text>已经有 {0} 类来客的消息送到我这里。\n\n来过和安顿下来，我会分开记。有人进门时好好的，走的时候未必；也有人来抢东西，最后留了下来。\n\n你不用专门给我写回信。我会等后面的消息。</RHAH_Suiyin_N002_Text>
   <RHAH_Suiyin_N003_Label>一笔路费</RHAH_Suiyin_N003_Label>
   <RHAH_Suiyin_N003_Text>送来的白银是我出的，一共 {0} 份。\n\n我请人绕了路。他抱怨运这么一点东西不划算，回来又问下次什么时候走。我还没答应他。\n\n钱已经送到了，你按眼下的需要用吧。不必为了回这份礼接下谁。</RHAH_Suiyin_N003_Text>
-  <RHAH_Suiyin_N004Entry_Label>灾鼠托孤</RHAH_Suiyin_N004Entry_Label>
-  <RHAH_Suiyin_N004Entry_Text>鼠妈已经站不稳了。她把孩子往前推了一点，又立刻伸手把它挡回去。\n\n“帮……帮……我的……孩子……吱。”\n\n她没有说自己叫什么。能带来的东西都放在孩子旁边。</RHAH_Suiyin_N004Entry_Text>
+  <RHAH_Suiyin_N004Entry_Label>托孤</RHAH_Suiyin_N004Entry_Label>
+  <RHAH_Suiyin_N004Entry_Text>鼠妈已经站不稳了。她把孩子往前推了一点，又立刻伸手把孩子挡回去。\n\n「帮帮我的孩子。」\n\n她没有说自己叫什么。能带来的东西都放在孩子旁边。</RHAH_Suiyin_N004Entry_Text>
   <RHAH_Suiyin_N004ChildAlone_Label>妈妈去哪里了</RHAH_Suiyin_N004ChildAlone_Label>
-  <RHAH_Suiyin_N004ChildAlone_Text>孩子在原来放篮子的地方停了很久。篮子已经拆掉了，木板也用到别处去了。\n\n“妈妈去哪里了？”\n\n今天它的心情只降一点。如果精神先断了，留下的就不只是这段记忆。</RHAH_Suiyin_N004ChildAlone_Text>
+  <RHAH_Suiyin_N004ChildAlone_Text>孩子在原来放篮子的地方停了很久。篮子已经拆掉了，木板也用到别处去了。\n\n「妈妈去哪里了？」\n\n今天心情只降一点。如果精神先断了，留下的就不只是这段记忆。</RHAH_Suiyin_N004ChildAlone_Text>
   <RHAH_Suiyin_N004FamilyHere_Label>还在</RHAH_Suiyin_N004FamilyHere_Label>
-  <RHAH_Suiyin_N004FamilyHere_Text>孩子先找到了鼠妈。它们没有说很多话。\n\n穗音把这件事写得很短：还在。</RHAH_Suiyin_N004FamilyHere_Text>
+  <RHAH_Suiyin_N004FamilyHere_Text>孩子先找到了母亲。他们没有说很多话。\n\n穗音把这件事写得很短：还在。</RHAH_Suiyin_N004FamilyHere_Text>
   <RHAH_Suiyin_N004Captive_Label>活下来</RHAH_Suiyin_N004Captive_Label>
-  <RHAH_Suiyin_N004Captive_Text>它学会了先看门，再看人。它活下来了，并且把这件事当成每天要做的工作。\n\n穗音只在名字旁边加了一道短线。</RHAH_Suiyin_N004Captive_Text>
-  <RHAH_Suiyin_N004Story_Label>这只是个故事</RHAH_Suiyin_N004Story_Label>
-  <RHAH_Suiyin_N004Story_Text>房间已经清理过了。过一段时间，地图上看不出这里发生过什么。\n\n穗音说：“这只是个故事，不是吗？一切都是固定好的剧本。”\n\n她没有等回答。</RHAH_Suiyin_N004Story_Text>
+  <RHAH_Suiyin_N004Captive_Text>孩子学会了先看门，再看人。还活着，并且把活着当成每天要做的事。\n\n穗音只在名字旁边加了一道短线。</RHAH_Suiyin_N004Captive_Text>
+  <RHAH_Suiyin_N004Story_Label>看不出了</RHAH_Suiyin_N004Story_Label>
+  <RHAH_Suiyin_N004Story_Text>房间已经清理过了。过一段时间，地图上看不出这里发生过什么。\n\n穗音没有再写下去。</RHAH_Suiyin_N004Story_Text>
   <RHAH_Suiyin_N004Banished_Label>放逐</RHAH_Suiyin_N004Banished_Label>
-  <RHAH_Suiyin_N004Banished_Text>你把它们送过了边界。地图上少了一个需要照料的人，也少了一张床。\n\n四年内，远行队还有可能再遇见活着的那个。</RHAH_Suiyin_N004Banished_Text>
+  <RHAH_Suiyin_N004Banished_Text>你把他们送过了边界。地图上少了一个需要照料的人，也少了一张床。\n\n四年内，商队还有可能再遇见活着的那个。</RHAH_Suiyin_N004Banished_Text>
   <RHAH_Suiyin_N004Revisit_Label>又见面了</RHAH_Suiyin_N004Revisit_Label>
-  <RHAH_Suiyin_N004Revisit_Text>远行队在路上看见了它们。活着的那个已经会自己找食物，旧布料还留着殖民地的颜色。\n\n它可以留在路边。你也可以付 250 白银，四年后再收到 2500 白银。杀掉它，这件事就到此为止。</RHAH_Suiyin_N004Revisit_Text>
+  <RHAH_Suiyin_N004Revisit_Text>商队在路上看见了他们。活着的那个已经会自己找食物，旧布料还留着殖民地的颜色。\n\n可以留在路边。你也可以付 250 白银，四年后再收到 2500 白银。杀掉对方，这件事就到此为止。</RHAH_Suiyin_N004Revisit_Text>
   <RHAH_Suiyin_N004RescuePaid_Label>四年后的回礼</RHAH_Suiyin_N004RescuePaid_Label>
-  <RHAH_Suiyin_N004RescuePaid_Text>250 白银已经付过。四年后的 2500 白银还记在这笔账上，读档不会重算。</RHAH_Suiyin_N004RescuePaid_Text>
-  <RHAH_Suiyin_N004Killed_Label>这只是故事</RHAH_Suiyin_N004Killed_Label>
-  <RHAH_Suiyin_N004Killed_Text>穗音说：“这只是故事……”\n\n这件事不再继续。</RHAH_Suiyin_N004Killed_Text>
+  <RHAH_Suiyin_N004RescuePaid_Text>250 白银已经付过。四年后的 2500 白银还记在这笔账上。重新打开存档也不会再算一次。</RHAH_Suiyin_N004RescuePaid_Text>
+  <RHAH_Suiyin_N004Killed_Label>到此为止</RHAH_Suiyin_N004Killed_Label>
+  <RHAH_Suiyin_N004Killed_Text>穗音只写了一句：「到此为止。」\n\n这件事不再继续。</RHAH_Suiyin_N004Killed_Text>
   <RHAH_Suiyin_N004Regret_Label>要是</RHAH_Suiyin_N004Regret_Label>
-  <RHAH_Suiyin_N004Regret_Text>鼠妈还会走到原来的位置。那里已经没有孩子。\n\n“要是那天……”\n\n这句话没有说完。</RHAH_Suiyin_N004Regret_Text>
+  <RHAH_Suiyin_N004Regret_Text>母亲还会走到原来的位置。那里已经没有孩子。\n\n「要是那天...」\n\n这句话没有说完。</RHAH_Suiyin_N004Regret_Text>
   <RHAH_Suiyin_N005Accepted_Label>先安顿下来</RHAH_Suiyin_N005Accepted_Label>
   <RHAH_Suiyin_N005Accepted_Text>孩子已经交到你这里。商人又确认了一遍交接的东西。\n\n接下来还要有人喂饭、找地方睡觉。那些事没有写在交易里。</RHAH_Suiyin_N005Accepted_Text>
   <RHAH_Suiyin_N005Cared_Label>旧名字还在</RHAH_Suiyin_N005Cared_Label>
@@ -35,7 +35,7 @@
   <RHAH_Suiyin_N005Left_Label>人不在这里了</RHAH_Suiyin_N005Left_Label>
   <RHAH_Suiyin_N005Left_Text>孩子已经离开了你的照料范围。接手的人会怎样照顾，眼下还不知道。</RHAH_Suiyin_N005Left_Text>
   <RHAH_Suiyin_N005Missing_Label>没有安顿下来</RHAH_Suiyin_N005Missing_Label>
-  <RHAH_Suiyin_N005Missing_Text>接收手续已经过去，孩子的安置仍没有一个确定的结果。这封信不把它算作已经照料妥当，也不把它写成死亡。</RHAH_Suiyin_N005Missing_Text>
+  <RHAH_Suiyin_N005Missing_Text>交接已经过去，孩子还没有安置好。这封信不算已经照料妥当，也不算死亡。</RHAH_Suiyin_N005Missing_Text>
   <RHAH_Suiyin_N005Rejected_Label>空篮子</RHAH_Suiyin_N005Rejected_Label>
   <RHAH_Suiyin_N005Rejected_Text>商人收起了交换用的东西。你没有改口，他也就没有再等。</RHAH_Suiyin_N005Rejected_Text>
   <RHAH_Suiyin_N005TimedOut_Label>没有等到答案</RHAH_Suiyin_N005TimedOut_Label>
@@ -59,7 +59,7 @@
   <RHAH_Suiyin_N006Gone_Label>洞口不见了</RHAH_Suiyin_N006Gone_Label>
   <RHAH_Suiyin_N006Gone_Text>再去找时，洞口已经不见了。原先那条路没法继续追下去。</RHAH_Suiyin_N006Gone_Text>
   <RHAH_Suiyin_N007Choice_Label>来客得了鼠疫</RHAH_Suiyin_N007Choice_Label>
-  <RHAH_Suiyin_N007Choice_Text>来客中有人得了鼠疫。他们还在这里，去留却不能再按普通访客处理。\n\n可以先让他们留下观察，也可以放他们走，或者先不处理。病不会因为作了决定就停下来。加入、雇佣和转移仍按检疫闸门走，不会自动治疗。</RHAH_Suiyin_N007Choice_Text>
+  <RHAH_Suiyin_N007Choice_Text>来客中有人得了鼠疫。他们还在这里，去留却不能再按普通访客处理。\n\n可以先让他们留下观察，也可以放他们走，或者先不处理。病不会因为作了决定就停下来。加入、雇佣和买卖仍按检疫处理。病不会自己好。</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>病人暂时留下</RHAH_Suiyin_N007Quarantine_Label>
   <RHAH_Suiyin_N007Quarantine_Text>病人暂时留下了。这里还需要照料，不能只靠一句不许走。</RHAH_Suiyin_N007Quarantine_Text>
   <RHAH_Suiyin_N007Release_Label>继续赶路</RHAH_Suiyin_N007Release_Label>
@@ -75,17 +75,17 @@
   <RHAH_Suiyin_N007AllDead_Label>没有活下来的人</RHAH_Suiyin_N007AllDead_Label>
   <RHAH_Suiyin_N007AllDead_Text>这批病人没有活下来的人。留守安排已经结束。</RHAH_Suiyin_N007AllDead_Text>
   <RHAH_Suiyin_N007Return_Label>熟面孔</RHAH_Suiyin_N007Return_Label>
-  <RHAH_Suiyin_N007Return_Text>门外又见到了一个熟面孔。上次离开时，鼠疫已经好了。\n\n这次只问能不能讨一顿饭。你可以接待，也可以让对方继续走。不会再生成另一个人。</RHAH_Suiyin_N007Return_Text>
+  <RHAH_Suiyin_N007Return_Text>门外又见到了一个熟面孔。上次离开时，鼠疫已经好了。\n\n这次只问能不能讨一顿饭。你可以接待，也可以让对方继续走。不会再来第二个。</RHAH_Suiyin_N007Return_Text>
   <RHAH_Suiyin_N008Arrive_Label>来问路的人</RHAH_Suiyin_N008Arrive_Label>
-  <RHAH_Suiyin_N008Arrive_Text>“我替还活着的那一部分人来的。”\n\n{0} 把想说的话重排了一遍。\n\n“我们需要吃的，也需要知道哪条路还能走。你肯给六份简单食物，我留下一处旧存放点的位置。你也可以先查我说的是不是实话。”\n\n他会等三天。</RHAH_Suiyin_N008Arrive_Text>
+  <RHAH_Suiyin_N008Arrive_Text>「我替还活着的那一部分人来的。」\n\n{0} 把想说的话重排了一遍。\n\n「我们需要吃的，也需要知道哪条路还能走。你肯给六份简单餐，我留下一处旧存放点的位置。你也可以先查我说的是不是实话。」\n\n他会等三天。</RHAH_Suiyin_N008Arrive_Text>
   <RHAH_Suiyin_N008Trade_Label>位置交出来了</RHAH_Suiyin_N008Trade_Label>
-  <RHAH_Suiyin_N008Trade_Text>“够了。别再拿了，我一个人背不了那么多。”\n\n{0} 交出了约好的位置，又确认了一遍回程方向。</RHAH_Suiyin_N008Trade_Text>
+  <RHAH_Suiyin_N008Trade_Text>「够了。别再拿了，我一个人背不了那么多。」\n\n{0} 交出了约好的位置，又确认了一遍回程方向。</RHAH_Suiyin_N008Trade_Text>
   <RHAH_Suiyin_N008Proof_Label>对得上</RHAH_Suiyin_N008Proof_Label>
-  <RHAH_Suiyin_N008Proof_Text>“这件事对得上。别的我不能保证，你也不用现在就信。”\n\n已经能核对的记录有 {0} 条。交换还可以再做一次。</RHAH_Suiyin_N008Proof_Text>
+  <RHAH_Suiyin_N008Proof_Text>「这件事对得上。别的我不能保证，你也不用现在就信。」\n\n已经能核对的记录有 {0} 条。交换还可以再做一次。</RHAH_Suiyin_N008Proof_Text>
   <RHAH_Suiyin_N008NoProof_Label>可能找错地方了</RHAH_Suiyin_N008NoProof_Label>
-  <RHAH_Suiyin_N008NoProof_Text>“我可能找错地方了。”\n\n他离开了。没有额外的战斗，也没有扣分。</RHAH_Suiyin_N008NoProof_Text>
+  <RHAH_Suiyin_N008NoProof_Text>「我可能找错地方了。」\n\n他离开了。没有额外的战斗，也不扣信任。</RHAH_Suiyin_N008NoProof_Text>
   <RHAH_Suiyin_N008Refuse_Label>那就算了</RHAH_Suiyin_N008Refuse_Label>
-  <RHAH_Suiyin_N008Refuse_Text>“那就算了。我还得在天黑前走出去。”\n\n普通拒绝不扣信任。</RHAH_Suiyin_N008Refuse_Text>
+  <RHAH_Suiyin_N008Refuse_Text>「那就算了。我还得在天黑前走出去。」\n\n普通拒绝不扣信任。</RHAH_Suiyin_N008Refuse_Text>
   <RHAH_Suiyin_N008Drive_Label>赶走了</RHAH_Suiyin_N008Drive_Label>
   <RHAH_Suiyin_N008Drive_Text>你用武力把来客赶走了。这件事单独记一笔，不自动变成报复。</RHAH_Suiyin_N008Drive_Text>
   <RHAH_Suiyin_N008Dead_Label>人死了</RHAH_Suiyin_N008Dead_Label>
@@ -99,11 +99,11 @@
   <RHAH_Suiyin_N009Arrive_Label>旧存放点</RHAH_Suiyin_N009Arrive_Label>
   <RHAH_Suiyin_N009Arrive_Text>这里没有预想中的粮食。箱子里是搬运清单、配给数量和一叠受潮的纸。\n\n最上面一页有个数被改了两遍。最后一次没有签名。地点保留十五天。</RHAH_Suiyin_N009Arrive_Text>
   <RHAH_Suiyin_N009Take_Label>记录带走了</RHAH_Suiyin_N009Take_Label>
-  <RHAH_Suiyin_N009Take_Text>能带走的已经收好了。里面有几页粘在一起，先别硬撕。\n\n白银是 {0}。正信任最多把叙事白银提高四分之一。这笔只结算一次。</RHAH_Suiyin_N009Take_Text>
+  <RHAH_Suiyin_N009Take_Text>能带走的已经收好了。里面有几页粘在一起，先别硬撕。\n\n白银是 {0}。信任为正时，这笔最多再多四分之一。只结算一次。</RHAH_Suiyin_N009Take_Text>
   <RHAH_Suiyin_N009Leave_Label>留在原地</RHAH_Suiyin_N009Leave_Label>
   <RHAH_Suiyin_N009Leave_Text>你们没有带走箱子。位置已经记下。下一批来的人会不会拿走，不由这里决定。</RHAH_Suiyin_N009Leave_Text>
   <RHAH_Suiyin_N009Hand_Label>交给来者</RHAH_Suiyin_N009Hand_Label>
-  <RHAH_Suiyin_N009Hand_Text>“留一份给我们。”对方说，“搬走以后，别让我们再求你一遍。”\n\n保管权交出去了。白银是 {0}。</RHAH_Suiyin_N009Hand_Text>
+  <RHAH_Suiyin_N009Hand_Text>「留一份给我们。」对方说，「搬走以后，别让我们再求你一遍。」\n\n记录交给他们了。白银是 {0}。</RHAH_Suiyin_N009Hand_Text>
   <RHAH_Suiyin_N009Share_Label>各留一份</RHAH_Suiyin_N009Share_Label>
   <RHAH_Suiyin_N009Share_Text>你们留了副本，对方留了另一份。这次没有白银，也没有答应以后归还。</RHAH_Suiyin_N009Share_Text>
   <RHAH_Suiyin_N009Destroy_Label>记录毁了</RHAH_Suiyin_N009Destroy_Label>
@@ -120,13 +120,13 @@
   <RHAH_Suiyin_Aside_3_Text>有人能继续赶路，消息才有机会再送过来。这名来客是不是听说了那次检疫，还得问。</RHAH_Suiyin_Aside_3_Text>
   <RHAH_Suiyin_Aside_4_Label>他说的地方</RHAH_Suiyin_Aside_4_Label>
   <RHAH_Suiyin_Aside_4_Text>他说的地方找到了。至少这一次，答应交给你的东西确实在那里。</RHAH_Suiyin_Aside_4_Text>
-  <RHAH_Menu_Narrative_Nodes>节点</RHAH_Menu_Narrative_Nodes>
-  <RHAH_Menu_Narrative_Node>节点开关</RHAH_Menu_Narrative_Node>
+  <RHAH_Menu_Narrative_Nodes>信件</RHAH_Menu_Narrative_Nodes>
+  <RHAH_Menu_Narrative_Node>信件开关</RHAH_Menu_Narrative_Node>
   <RHAH_Menu_Narrative_Thresholds>门槛</RHAH_Menu_Narrative_Thresholds>
   <RHAH_Menu_Narrative_Progress>记录来信需要的事件种类</RHAH_Menu_Narrative_Progress>
   <RHAH_Menu_Narrative_Reward>白银来信需要的事件种类</RHAH_Menu_Narrative_Reward>
   <RHAH_Menu_Narrative_Envoy>使者需要的事件种类</RHAH_Menu_Narrative_Envoy>
-  <RHAH_Menu_Narrative_Relic>遗物地点需要的事件种类</RHAH_Menu_Narrative_Relic>
+  <RHAH_Menu_Narrative_Relic>记录地点需要的事件种类</RHAH_Menu_Narrative_Relic>
   <RHAH_Menu_Narrative_Journals>记录</RHAH_Menu_Narrative_Journals>
   <RHAH_Menu_Narrative_JournalOpen>打开记录 {0}</RHAH_Menu_Narrative_JournalOpen>
   <RHAH_Menu_Narrative_Aside>插话</RHAH_Menu_Narrative_Aside>

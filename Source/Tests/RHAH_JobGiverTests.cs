@@ -37,7 +37,7 @@ namespace HungerAndHavoc.Tests
         {
             Assert.Null(JobGiver_RHAH_Beg.TryCreate(null));
             Assert.Null(JobGiver_RHAH_Steal.TryCreate(null));
-            Assert.Null(JobGiver_RHAH_Gnaw.TryCreate(null));
+            Assert.Null(JobGiver_RHAH_Gnaw.TryCreate(null, true));
             Assert.Null(JobGiver_RHAH_Feed.TryCreate(null));
             Assert.Null(JobGiver_RHAH_Leave.TryCreate(null));
         }
@@ -47,9 +47,12 @@ namespace HungerAndHavoc.Tests
         {
             AssertVisitorThenAllows("JobGiver_RHAH_Beg.cs", "RHAH_BehaviorGate.Beg");
             AssertVisitorThenAllows("JobGiver_RHAH_Steal.cs", "RHAH_BehaviorGate.Steal");
-            AssertVisitorThenAllows("JobGiver_RHAH_Gnaw.cs", "RHAH_BehaviorGate.Gnaw");
             AssertVisitorThenAllows("JobGiver_RHAH_Feed.cs", "RHAH_BehaviorGate.FeedFromRelief");
             AssertVisitorThenAllows("JobGiver_RHAH_Leave.cs", "RHAH_BehaviorGate.ExitMap");
+            string gnaw = ReadPawn("JobGiver_RHAH_Gnaw.cs");
+            Assert.Contains("RHAH_BehaviorGate.Gnaw", gnaw);
+            Assert.Contains("return null;", gnaw);
+            Assert.Contains("TryCreate(pawn, true)", ReadPawn("RHAH_StayWorkPatch.cs"));
             string leave = ReadPawn("JobGiver_RHAH_Leave.cs");
             Assert.Contains("RHAH_BehaviorGate.LeaveAfterFed", leave);
         }
@@ -64,6 +67,9 @@ namespace HungerAndHavoc.Tests
             string leave = ReadPawn("JobGiver_RHAH_Leave.cs");
             Assert.Contains("RHAH_DefOf.RHAH_Beg", beg);
             Assert.Contains("RHAH_DefOf.RHAH_Gnaw", gnaw);
+            Assert.Contains("StarvationLevel", gnaw);
+            Assert.Contains("AllowsGnaw", gnaw);
+            Assert.Contains("CurLevelPercentage", gnaw);
             Assert.True(
                 steal.Contains("JobDefOf.Steal") || steal.Contains("JobDefOf.TakeFromOtherInventory"),
                 "Steal must use a vanilla JobDef");
@@ -83,6 +89,7 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("Toils_Goto.GotoThing", gnaw);
             Assert.Contains("WaitWith", beg);
             Assert.Contains("CurLevel", gnaw);
+            Assert.DoesNotContain("RHAH_Feeding.TryComplete", gnaw);
         }
 
         [Fact]

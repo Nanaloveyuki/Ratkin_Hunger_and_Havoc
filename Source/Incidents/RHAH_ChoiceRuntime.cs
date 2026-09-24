@@ -179,6 +179,38 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
+            if (RHAH_RequestRules.Recruits(record.Settled))
+            {
+                Stay(record, HungerAndHavoc.Pawn.RHAH_StayKind.Recruit);
+                return;
+            }
+
+            if (RHAH_RequestRules.Enslaves(record.Settled))
+            {
+                RHAH_VisitorBatch.Enslave(Pawns(record));
+                return;
+            }
+
+            if (RHAH_RequestRules.Captures(record.Settled))
+            {
+                bool move = record.Settled == RHAH_ChoiceAction.Prison;
+                RHAH_VisitorBatch.Capture(Pawns(record), move);
+                return;
+            }
+
+            if (RHAH_RequestRules.Attacks(record.Settled))
+            {
+                Leave(record);
+                return;
+            }
+
+            if (RHAH_RequestRules.WaitsForFood(record.Settled))
+            {
+                RHAH_FoodHandoff.Begin(Pawns(record));
+                return;
+            }
+
+
             if (RHAH_RequestRules.Leaves(record.Settled))
             {
                 Leave(record);
@@ -253,6 +285,22 @@ namespace HungerAndHavoc.Incidents
 
             return result;
         }
+
+        internal static List<Verse.Pawn> Present(RHAH_ChoiceRecord record)
+        {
+            List<Verse.Pawn> all = Pawns(record);
+            List<Verse.Pawn> present = new List<Verse.Pawn>();
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (all[i].Spawned && RHAH_Api.IsVisitor(all[i]))
+                {
+                    present.Add(all[i]);
+                }
+            }
+
+            return present;
+        }
+
 
         static Verse.Pawn FindPawn(int loadId)
         {

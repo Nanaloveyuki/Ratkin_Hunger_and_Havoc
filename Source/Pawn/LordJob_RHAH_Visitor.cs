@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using HungerAndHavoc.Incidents;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Trade;
@@ -14,6 +16,9 @@ namespace HungerAndHavoc.Pawn
         Faction faction;
         IntVec3 waitSpot = IntVec3.Invalid;
         RHAH_PawnRole familyRole;
+        Verse.Pawn foodReceiver;
+        ThingDef foodDef;
+        int foodCount;
 
         public LordJob_RHAH_Visitor()
         {
@@ -53,6 +58,8 @@ namespace HungerAndHavoc.Pawn
 
             LordToil_RHAH_VisitorSeek seek = new LordToil_RHAH_VisitorSeek(waitSpot);
             graph.AddToil(seek);
+            LordToil_RHAH_WaitFood waitFood = new LordToil_RHAH_WaitFood(this);
+            graph.AddToil(waitFood);
 
             LordToil_RHAH_VisitorLeave leave = new LordToil_RHAH_VisitorLeave();
             graph.AddToil(leave);
@@ -62,6 +69,12 @@ namespace HungerAndHavoc.Pawn
             Transition arrived = new Transition(travel, seek, false, true);
             arrived.AddTrigger(new Trigger_Memo("TravelArrived"));
             graph.AddTransition(arrived, false);
+            Transition toFood = new Transition(seek, waitFood, false, true);
+            toFood.AddTrigger(new Trigger_Memo("RHAH_WaitFood"));
+            graph.AddTransition(toFood, false);
+            Transition foodDone = new Transition(waitFood, seek, false, true);
+            foodDone.AddTrigger(new Trigger_Custom(_ => FoodFilled()));
+            graph.AddTransition(foodDone, false);
 
             Transition toLeave = new Transition(seek, leave, false, true);
             toLeave.AddSource(travel);
@@ -92,6 +105,49 @@ namespace HungerAndHavoc.Pawn
             Scribe_References.Look(ref faction, "faction");
             Scribe_Values.Look(ref waitSpot, "waitSpot", IntVec3.Invalid);
             Scribe_Values.Look(ref familyRole, "familyRole", RHAH_PawnRole.Unspecified);
+            Scribe_References.Look(ref foodReceiver, "foodReceiver");
+            Scribe_Defs.Look(ref foodDef, "foodDef");
+            Scribe_Values.Look(ref foodCount, "foodCount", 0);
+        }
+
+        internal void BeginFoodWait(Verse.Pawn receiver, int count)
+        {
+            foodReceiver = receiver;
+            foodCount = count;
+        }
+
+        internal bool WaitingForFood(Verse.Pawn pawn)
+        {
+            return RHAH_RequestRules.FoodWaiting(
+                foodReceiver == pawn,
+                pawn != null && !pawn.Dead,
+                pawn != null && pawn.Spawned,
+                foodDef == null ? 0 : RHAH_FoodHandoff.Received(pawn, foodDef),
+                foodCount);
+        }
+
+        internal int FoodStillNeeded(Verse.Pawn pawn)
+        {
+            if (!WaitingForFood(pawn))
+            {
+                return 0;
+            }
+
+            int received = foodDef == null ? 0 : RHAH_FoodHandoff.Received(pawn, foodDef);
+            return foodCount - received;
+        }
+
+        internal void NoteFood(ThingDef def)
+        {
+            if (foodDef == null)
+            {
+                foodDef = def;
+            }
+        }
+
+        bool FoodFilled()
+        {
+            return foodReceiver != null && foodDef != null && !WaitingForFood(foodReceiver);
         }
 
         bool AllReadyToLeave()
@@ -216,6 +272,76 @@ namespace HungerAndHavoc.Pawn
             {
                 lord.ownedPawns[i].mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
             }
+        }
+    }
+
+    internal sealed class LordToil_RHAH_WaitFood : LordToil, IWaitForItemsLordToil
+    {
+        readonly LordJob_RHAH_Visitor job;
+
+        public LordToil_RHAH_WaitFood(LordJob_RHAH_Visitor job)
+        {
+            this.job = job;
+        }
+
+        public int CountRemaining => job == null || job.lord == null ? 0 : job.FoodStillNeeded(Receiver());
+
+        public bool HasAllRequestedItems => CountRemaining <= 0;
+
+        public override void UpdateAllDuties()
+        {
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                lord.ownedPawns[i].mindState.duty = new PawnDuty(DutyDefOf.WanderClose_NoNeeds, lord.ownedPawns[i].Position, 3f);
+            }
+        }
+
+        public override IEnumerable<FloatMenuOption> ExtraFloatMenuOptions(Verse.Pawn requester, Verse.Pawn current)
+        {
+            if (!job.WaitingForFood(requester) || current == null || current.Faction != Faction.OfPlayer)
+            {
+                yield break;
+            }
+
+            List<Thing> foods = new List<Thing>();
+            RHAH_FoodHandoff.CollectFood(current, foods);
+            int left = job.FoodStillNeeded(requester);
+            if (foods.Count == 0)
+            {
+                yield return new FloatMenuOption("RHAH_Choice_NoFood".Translate(left, requester.LabelShort), null);
+                yield break;
+            }
+
+            for (int i = 0; i < foods.Count; i++)
+            {
+                Thing food = foods[i];
+                yield return GiveOption(food, current, requester, left);
+            }
+        }
+
+        FloatMenuOption GiveOption(Thing food, Verse.Pawn current, Verse.Pawn requester, int left)
+        {
+            return new FloatMenuOption("RHAH_Choice_GiveFood".Translate(left + " " + food.def.label, requester.LabelShort), () =>
+            {
+                job.NoteFood(food.def);
+                Job give = JobMaker.MakeJob(JobDefOf.GiveToPawn, food, requester);
+                give.haulMode = HaulMode.ToContainer;
+                give.count = left;
+                current.jobs.TryTakeOrderedJob(give, JobTag.Misc);
+            });
+        }
+
+        Verse.Pawn Receiver()
+        {
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                if (job.WaitingForFood(lord.ownedPawns[i]))
+                {
+                    return lord.ownedPawns[i];
+                }
+            }
+
+            return null;
         }
     }
 }

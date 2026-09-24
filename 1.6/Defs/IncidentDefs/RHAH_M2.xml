@@ -43,12 +43,12 @@
     <expireDaysRange>15</expireDaysRange>
     <questNameRules>
       <rulesStrings>
-        <li>questName->临时安居点</li>
+        <li>questName->清掉鼠族营地</li>
       </rulesStrings>
     </questNameRules>
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription->[sponsorName]说附近有一处鼠族临时安居点，可能威胁他们的定居点。接受后 15 天内杀死全部居民，可获得 12 点好感。那里有 2 到 4 名成年鼠族和 8 到 16 名不满 8 岁的幼年鼠族，住在木屋里，没有炮台和电力。击倒或俘虏不算完成。</li>
+        <li>questDescription->[sponsorName]说附近有一处鼠族木屋营地，可能威胁他们的定居点。他们要你在 15 天内杀掉那里的全部居民，完成后给 12 点好感。\n\n营地里有 2 到 4 名成年鼠族，以及 8 到 16 名不满 8 岁的幼年鼠族。没有炮台，也没有电力。只击倒或俘虏，不算完成。</li>
       </rulesStrings>
     </questDescriptionRules>
   </QuestScriptDef>

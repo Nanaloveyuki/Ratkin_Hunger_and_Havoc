@@ -61,8 +61,7 @@ namespace HungerAndHavoc.Pawn
                         }
                     }
                 }
-
-                RHAH_Feeding.TryComplete(pawn);
+                // 啃食只补一点营养 不记成吃饱离场
             };
             finish.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return finish;

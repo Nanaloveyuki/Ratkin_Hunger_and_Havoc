@@ -66,33 +66,6 @@ namespace HungerAndHavoc.Generation
             return settings == null ? 0 : settings.apparelMode;
         }
 
-        internal static void AddColdWrap(Verse.Pawn pawn, float temperature)
-        {
-            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
-            if (pawn?.apparel == null || settings == null)
-            {
-                return;
-            }
-
-            float minimum = pawn.GetStatValue(StatDefOf.ComfyTemperatureMin, true);
-            if (!HungerAndHavoc.Pawn.RHAH_VisitorRules.AddsColdClothes(
-                settings.apparelMode,
-                settings.coldClothesEnabled,
-                false,
-                temperature,
-                minimum))
-            {
-                return;
-            }
-
-            ThingDef wrap = DefDatabase<ThingDef>.GetNamedSilentFail("Apparel_Parka");
-            if (wrap == null || !ApparelUtility.HasPartsToWear(pawn, wrap))
-            {
-                return;
-            }
-
-            pawn.apparel.Wear((Apparel)ThingMaker.MakeThing(wrap, ThingDefOf.Cloth), false, false);
-        }
 
         internal static bool StyleAllowed(string itemTypeName, bool hasStyle, IList<string> styleTagsOverride, IList<string> styleTags)
         {

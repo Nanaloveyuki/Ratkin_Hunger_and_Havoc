@@ -60,7 +60,7 @@ namespace HungerAndHavoc.Identity
                     return role == RHAH_PawnRole.Mother ||
                            role == RHAH_PawnRole.BeggarMother;
                 case RHAH_BehaviorGate.ExitMap:
-                    return true;
+                    return lifecycle == RHAH_Lifecycle.Leaving;
                 default:
                     return false;
             }

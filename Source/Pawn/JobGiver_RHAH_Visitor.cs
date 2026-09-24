@@ -9,7 +9,7 @@ namespace HungerAndHavoc.Pawn
     {
         protected override Job TryGiveJob(Verse.Pawn pawn)
         {
-            if (!RHAH_Api.IsVisitor(pawn))
+            if (!RHAH_Api.IsVisitor(pawn) || !RHAH_VisitorRules.AllowsModBehavior(RHAH_VisitorStay.Kind(pawn)))
             {
                 return null;
             }
@@ -43,14 +43,7 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Gnaw))
-            {
-                Job gnaw = JobGiver_RHAH_Gnaw.TryCreate(pawn);
-                if (gnaw != null)
-                {
-                    return gnaw;
-                }
-            }
+
 
             if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.EatOutsideRelief))
             {

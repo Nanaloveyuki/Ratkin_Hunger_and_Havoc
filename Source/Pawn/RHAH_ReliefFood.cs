@@ -305,6 +305,144 @@ namespace HungerAndHavoc.Pawn
             }
         }
 
+        internal static bool GiveFoodAllowed(ThingDef def)
+        {
+            if (def == null)
+            {
+                return false;
+            }
+
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            return settings == null || settings.IsGiveFoodEnabled(def.defName);
+        }
+
+        internal static string GroupKey(int mode, ThingDef food)
+        {
+            int safe = mode < 0 || mode > 2 ? 0 : mode;
+            if (safe == 1)
+            {
+                string label = food == null ? null : food.label;
+                if (string.IsNullOrEmpty(label))
+                {
+                    label = food == null ? null : food.defName;
+                }
+
+                return string.IsNullOrEmpty(label) ? "#" : label.Substring(0, 1).ToUpperInvariant();
+            }
+
+            if (safe == 2)
+            {
+                return CategoryKey(food);
+            }
+
+            string name = SourceModName(food);
+            return name ?? string.Empty;
+        }
+
+        internal static string GroupTitle(int mode, string key)
+        {
+            int safe = mode < 0 || mode > 2 ? 0 : mode;
+            if (safe == 2)
+            {
+                return CategoryTitle(key);
+            }
+
+            if (safe == 0 && string.IsNullOrEmpty(key))
+            {
+                return null;
+            }
+
+            return key;
+        }
+
+        internal static List<List<ThingDef>> GroupFoods(int mode, List<ThingDef> foods)
+        {
+            List<List<ThingDef>> groups = new List<List<ThingDef>>();
+            if (foods == null)
+            {
+                return groups;
+            }
+
+            List<string> keys = new List<string>();
+            for (int i = 0; i < foods.Count; i++)
+            {
+                string key = GroupKey(mode, foods[i]);
+                int index = IndexOf(keys, key);
+                if (index < 0)
+                {
+                    keys.Add(key);
+                    groups.Add(new List<ThingDef>());
+                    index = groups.Count - 1;
+                }
+
+                groups[index].Add(foods[i]);
+            }
+
+            if (mode == 1 || mode == 2)
+            {
+                groups.Sort((left, right) => string.Compare(
+                    GroupKey(mode, left.Count == 0 ? null : left[0]),
+                    GroupKey(mode, right.Count == 0 ? null : right[0]),
+                    StringComparison.CurrentCultureIgnoreCase));
+                for (int i = 0; i < groups.Count; i++)
+                {
+                    groups[i].Sort((left, right) => string.Compare(
+                        left == null ? null : left.label,
+                        right == null ? null : right.label,
+                        StringComparison.CurrentCultureIgnoreCase));
+                }
+            }
+
+            return groups;
+        }
+
+        static string CategoryKey(ThingDef food)
+        {
+            if (food != null && food.thingCategories != null)
+            {
+                for (int i = 0; i < food.thingCategories.Count; i++)
+                {
+                    ThingCategoryDef category = food.thingCategories[i];
+                    while (category != null)
+                    {
+                        if (category.parent != null && category.parent.defName == "Foods")
+                        {
+                            return category.defName;
+                        }
+
+                        category = category.parent;
+                    }
+                }
+
+                for (int i = 0; i < food.thingCategories.Count; i++)
+                {
+                    ThingCategoryDef category = food.thingCategories[i];
+                    if (category != null && !string.IsNullOrEmpty(category.defName) && category.defName != "Foods")
+                    {
+                        return category.defName;
+                    }
+                }
+            }
+
+            return "other";
+        }
+
+        static string CategoryTitle(string key)
+        {
+            if (string.IsNullOrEmpty(key) || key == "other")
+            {
+                return null;
+            }
+
+            if (DefDatabase<ThingCategoryDef>.AllDefsListForReading == null)
+            {
+                return key;
+            }
+
+            ThingCategoryDef category = DefDatabase<ThingCategoryDef>.GetNamedSilentFail(key);
+            return category == null || string.IsNullOrEmpty(category.LabelCap) ? key : category.LabelCap;
+        }
+
         internal static string SourceModName(ThingDef food)
         {
             string name = food == null || food.modContentPack == null

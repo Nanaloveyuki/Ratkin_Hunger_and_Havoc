@@ -10,16 +10,23 @@ namespace HungerAndHavoc.Pawn
     public class JobGiver_RHAH_Gnaw : ThinkNode_JobGiver
     {
         const float SearchRadius = 40f;
+        internal const float StarvationLevel = 0.05f;
+
 
         protected override Job TryGiveJob(Verse.Pawn pawn)
         {
-            return TryCreate(pawn);
+            return null;
         }
 
-        // 供无 Lord 的总 JobGiver 调度
-        internal static Job TryCreate(Verse.Pawn pawn)
+        // 只由饥饿觅食调度 不从寻食 duty 主动发
+        internal static Job TryCreate(Verse.Pawn pawn, bool needFood)
         {
             if (!RHAH_Api.IsVisitor(pawn))
+            {
+                return null;
+            }
+
+            if (!RHAH_VisitorRules.AllowsModBehavior(RHAH_VisitorStay.Kind(pawn)))
             {
                 return null;
             }
@@ -35,10 +42,20 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            if (pawn.Map == null || pawn.Downed)
+            bool busy = pawn.jobs != null && pawn.jobs.curJob != null;
+            bool downed = pawn != null && pawn.Downed;
+            Need_Food food = pawn.needs != null ? pawn.needs.food : null;
+            float level = food == null ? 1f : food.CurLevelPercentage;
+            if (!RHAH_VisitorRules.AllowsGnaw(true, true, true, needFood, level, StarvationLevel, busy, downed))
             {
                 return null;
             }
+
+            if (pawn.Map == null)
+            {
+                return null;
+            }
+
 
             Thing target = FindGnawTarget(pawn);
             if (target == null)

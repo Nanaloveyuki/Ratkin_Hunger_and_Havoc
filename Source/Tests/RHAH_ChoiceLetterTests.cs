@@ -17,6 +17,13 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(
                 "HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Visitors",
                 LetterClass(letters, "RHAH_ChoiceVisitors"));
+            Assert.Null(letters.DocumentElement.SelectSingleNode("LetterDef[@ParentName]"));
+
+            XmlDocument kinds = Load("1.6/Defs/PawnKindDefs/RHAH_PawnKinds.xml");
+            XmlNode kind = kinds.SelectSingleNode("//PawnKindDef[defName='RHAH_PawnKind_Ratkin']");
+            Assert.NotNull(kind);
+            Assert.Equal("0~0", kind.SelectSingleNode("initialWillRange").InnerText);
+            Assert.Equal("0~0", kind.SelectSingleNode("initialResistanceRange").InnerText);
 
             string facts = File.ReadAllText(Source("Incidents/RHAH_IncidentFacts.cs"));
             int send = facts.IndexOf("static void SendLetter");
@@ -31,6 +38,12 @@ namespace HungerAndHavoc.Tests
             Assert.Contains(
                 "public static LetterDef RHAH_ChoiceVisitors",
                 File.ReadAllText(Source("Core/RHAH_DefOf.cs")));
+
+            Assert.Contains("ChoiceKey(record)", body);
+            Assert.Contains("RHAH_Choice_Visitors", body);
+            Assert.Contains("RHAH_Choice_Baby", body);
+            Assert.Contains("RHAH_Choice_SimpleMeal", body);
+            Assert.DoesNotContain("ThingDefName(record.Kind)", body);
         }
 
         static string LetterClass(XmlDocument document, string defName)

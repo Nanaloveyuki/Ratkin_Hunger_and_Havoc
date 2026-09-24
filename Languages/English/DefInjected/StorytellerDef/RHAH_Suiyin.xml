@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_Suiyin.label>Suiyin</RHAH_Suiyin.label>
-  <RHAH_Suiyin.description>Suiyin records the Ratkin, famines, and plagues your colony meets, then answers what has already happened. She does not decide for you.\n\nHer pace is close to Randy's. Famine incidents sit on top of that, so the game is harder overall. Her trust in this colony changes how often major threats reach a home map: high trust spaces them out, low trust packs them in. A single threat still follows the difficulty and its random swing.</RHAH_Suiyin.description>
+  <RHAH_Suiyin.description>Suiyin records the ratkin, famines, and plagues your colony meets, then answers what has already happened. She does not decide for you.\n\nHer pace is close to Randy's. Ratkin famine sits on top of that, so the game is harder. When she trusts this colony, major threats come less often. When she does not, they come more often.</RHAH_Suiyin.description>
 </LanguageData>

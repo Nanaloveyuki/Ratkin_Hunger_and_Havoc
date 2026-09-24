@@ -70,7 +70,8 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("JobGiver_RHAH_Feed.TryCreate(pawn)", source);
             Assert.Contains("JobGiver_RHAH_Beg.TryCreate(pawn)", source);
             Assert.Contains("JobGiver_RHAH_Steal.TryCreate(pawn)", source);
-            Assert.Contains("JobGiver_RHAH_Gnaw.TryCreate(pawn)", source);
+            Assert.DoesNotContain("JobGiver_RHAH_Gnaw.TryCreate(pawn)", source);
+            Assert.Contains("AllowsModBehavior", source);
             Assert.Contains("JobGiver_RHAH_Leave.TryCreate(pawn)", source);
         }
 
@@ -144,7 +145,7 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("HungerAndHavoc.Pawn.JobGiver_RHAH_Visitor", duty);
             Assert.DoesNotContain("JobGiver_RHAH_Feed", duty);
             Assert.DoesNotContain("JobGiver_RHAH_Beg", duty);
-            Assert.Contains("RHAH_Feeding.TryComplete(pawn)",
+            Assert.DoesNotContain("RHAH_Feeding.TryComplete",
                 File.ReadAllText(PawnPath("JobDriver_RHAH_Gnaw.cs")));
             Assert.Contains("RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving)",
                 File.ReadAllText(PawnPath("JobGiver_RHAH_Leave.cs")));

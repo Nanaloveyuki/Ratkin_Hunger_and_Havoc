@@ -44,12 +44,12 @@ namespace HungerAndHavoc.Pawn
 
             if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.Hire))
             {
-                yield return new FloatMenuOption("RHAH_Choice_Hire".Translate(), () =>
+                yield return new FloatMenuOption("RHAH_Choice_Hire".Translate(StayText(true)), () =>
                     RHAH_VisitorStay.Begin(clickedPawn, RHAH_StayKind.Hire));
             }
             if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.JoinColony))
             {
-                yield return new FloatMenuOption("RHAH_Choice_Shelter".Translate(), () =>
+                yield return new FloatMenuOption("RHAH_Choice_Shelter".Translate(StayText(false)), () =>
                     RHAH_VisitorStay.Begin(clickedPawn, RHAH_StayKind.Shelter));
             }
 
@@ -58,6 +58,14 @@ namespace HungerAndHavoc.Pawn
                 yield return new FloatMenuOption("RHAH_Choice_Feed".Translate(), () =>
                     RHAH_Api.SetLifecycle(clickedPawn, RHAH_Lifecycle.Fed));
             }
+        }
+        static string StayText(bool hire)
+        {
+            HungerAndHavoc.Core.RHAH_Settings settings = HungerAndHavoc.Core.RHAH_Mod.Settings;
+            int days = hire
+                ? (settings == null ? RHAH_VisitorRules.DefaultHireDays : settings.hireDays)
+                : (settings == null ? RHAH_VisitorRules.DefaultShelterDays : settings.shelterDays);
+            return RHAH_VisitorRules.StayLabel(days);
         }
     }
 }

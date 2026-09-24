@@ -4,7 +4,7 @@
   <StorytellerDef ParentName="BaseStoryteller">
     <defName>RHAH_Suiyin</defName>
     <label>穗音</label>
-    <description>穗音会记下殖民地遇到的鼠族、饥荒和鼠疫，再用信回应已经发生的事。她不替你做决定。\n\n她的事件节奏接近兰迪。鼠灾事件叠加上去以后，整体更难。她对这处殖民地的信任会改变家园大型威胁的疏密：信任高，威胁更疏；信任低，威胁更密。单次强度仍按难度和随机波动计算。</description>
+    <description>穗音会记下殖民地遇到的鼠族、饥荒和鼠疫，再用信回应已经发生的事。她不替你做决定。\n\n她的事件节奏接近兰迪。鼠族饥荒的事叠加上去以后，整体更难。她信得过这处殖民地时，大型威胁来得更疏；信不过时，来得更密。</description>
     <portraitLarge>UI/HeroArt/Storytellers/RandyRandom</portraitLarge>
     <portraitTiny>UI/HeroArt/Storytellers/RandyRandomTiny</portraitTiny>
     <listOrder>55</listOrder>

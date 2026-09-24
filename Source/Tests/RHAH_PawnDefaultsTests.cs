@@ -136,10 +136,17 @@ namespace HungerAndHavoc.Tests
             Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.Hire));
             Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.Transfer));
             Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.Imprison));
-            Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.ExitMap));
+            Assert.False(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.ExitMap));
             Assert.True(AllowVisitor(RHAH_PawnRole.Unspecified, RHAH_BehaviorGate.TailBite));
         }
 
+        [Fact]
+        public void LeavingVisitor_MayExitMap()
+        {
+            Assert.True(Allow(RHAH_PawnRole.Beggar, RHAH_Lifecycle.Leaving, RHAH_Attitude.Neutral, RHAH_BehaviorGate.ExitMap));
+            Assert.False(Allow(RHAH_PawnRole.Beggar, RHAH_Lifecycle.Arriving, RHAH_Attitude.Neutral, RHAH_BehaviorGate.ExitMap));
+            Assert.False(Allow(RHAH_PawnRole.Beggar, RHAH_Lifecycle.SeekingFood, RHAH_Attitude.Neutral, RHAH_BehaviorGate.ExitMap));
+        }
         [Fact]
         public void NullSnapshot_TreatedAsInactive()
         {

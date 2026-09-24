@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <LetterDef ParentName="NeutralEvent">
+  <LetterDef>
     <defName>RHAH_ChoiceRequest</defName>
     <letterClass>HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Request</letterClass>
+    <color>(175, 176, 185)</color>
+    <flashColor>(160, 170, 180)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>LetterArrive</arriveSound>
   </LetterDef>
-  <LetterDef ParentName="NeutralEvent">
+  <LetterDef>
     <defName>RHAH_ChoiceVisitors</defName>
     <letterClass>HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Visitors</letterClass>
+    <color>(175, 176, 185)</color>
+    <flashColor>(160, 170, 180)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>LetterArrive</arriveSound>
   </LetterDef>
 </Defs>

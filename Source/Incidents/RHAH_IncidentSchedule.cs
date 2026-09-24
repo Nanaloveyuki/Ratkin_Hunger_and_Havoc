@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HungerAndHavoc.Core;
 using RimWorld;
@@ -11,6 +12,8 @@ namespace HungerAndHavoc.Incidents
         internal const float MinDays = 0f;
         internal const float MaxDays = 60f;
         internal const float GraceDays = 1f;
+        internal const float MinWindowDays = 5f;
+        internal const int ChecksPerDay = 60;
 
         internal static float OccurrenceChance(float days)
         {
@@ -21,6 +24,32 @@ namespace HungerAndHavoc.Incidents
             }
 
             return Storyteller.CheckInterval / (days * GenDate.TicksPerDay);
+        }
+
+        internal static float DailyOccurrenceChance(float averageDays)
+        {
+            float perCheck = OccurrenceChance(averageDays);
+            if (perCheck <= 0f)
+            {
+                return 0f;
+            }
+
+            return 1f - (float)Math.Pow(1d - perCheck, ChecksPerDay);
+        }
+
+        internal static float ClampWindowDays(float days)
+        {
+            if (float.IsNaN(days) || days < MinWindowDays)
+            {
+                return MinWindowDays;
+            }
+
+            if (days > MaxDays)
+            {
+                return MaxDays;
+            }
+
+            return days;
         }
 
         internal static float ClampDays(float days)

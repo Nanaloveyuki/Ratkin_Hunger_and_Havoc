@@ -1,3 +1,4 @@
+using System;
 using HungerAndHavoc.Incidents;
 using Xunit;
 
@@ -24,13 +25,32 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void HoverMapsTheGraphWidthOntoAverageDays()
+        public void DailyChanceCompoundsSixtyChecks()
+        {
+            Assert.Equal(0f, RHAH_IncidentSchedule.DailyOccurrenceChance(0f));
+            float fifteen = 1f - (float)Math.Pow(1d - 1000f / (15f * 60000f), 60);
+            Assert.Equal(fifteen, RHAH_IncidentSchedule.DailyOccurrenceChance(15f), 6);
+            Assert.True(RHAH_IncidentSchedule.DailyOccurrenceChance(15f) > RHAH_IncidentSchedule.DailyOccurrenceChance(60f));
+        }
+
+        [Fact]
+        public void WindowDaysStayBetweenFiveAndSixty()
+        {
+            Assert.Equal(5f, RHAH_IncidentSchedule.ClampWindowDays(float.NaN));
+            Assert.Equal(5f, RHAH_IncidentSchedule.ClampWindowDays(1f));
+            Assert.Equal(30f, RHAH_IncidentSchedule.ClampWindowDays(30f));
+            Assert.Equal(60f, RHAH_IncidentSchedule.ClampWindowDays(90f));
+        }
+
+        [Fact]
+        public void HoverMapsTheGraphWidthOntoCalendarDays()
         {
             var graph = new UnityEngine.Rect(10f, 20f, 100f, 80f);
-            Assert.Equal(0f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DaysAt(graph, 10f));
-            Assert.Equal(30f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DaysAt(graph, 60f));
-            Assert.Equal(60f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DaysAt(graph, 200f));
-            Assert.Equal(0f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DaysAt(new UnityEngine.Rect(0f, 0f, 0f, 10f), 4f));
+            Assert.Equal(0f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DayAt(graph, 10f, 30f));
+            Assert.Equal(15f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DayAt(graph, 60f, 30f));
+            Assert.Equal(30f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DayAt(graph, 200f, 30f));
+            Assert.Equal(5f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DayAt(graph, 200f, 1f));
+            Assert.Equal(0f, HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusWidgets.DayAt(new UnityEngine.Rect(0f, 0f, 0f, 10f), 4f, 30f));
         }
 
         [Fact]

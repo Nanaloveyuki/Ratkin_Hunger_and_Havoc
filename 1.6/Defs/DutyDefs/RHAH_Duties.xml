@@ -2,7 +2,14 @@
 <Defs>
   <DutyDef>
     <defName>RHAH_VisitorSeek</defName>
-    <thinkNode Class="HungerAndHavoc.Pawn.JobGiver_RHAH_Visitor" />
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="HungerAndHavoc.Pawn.JobGiver_RHAH_Visitor" />
+        <li Class="JobGiver_WanderNearDutyLocation">
+          <wanderRadius>10</wanderRadius>
+        </li>
+      </subNodes>
+    </thinkNode>
   </DutyDef>
 
   <DutyDef>

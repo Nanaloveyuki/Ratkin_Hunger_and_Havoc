@@ -69,6 +69,8 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_IntelTrades_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_VisitorChoices".Translate(), ref Settings.visitorChoicesEnabled,
                 "RHAH_Settings_VisitorChoices_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_FoodGiveHint".Translate(), ref Settings.foodGiveHintDismissed,
+                "RHAH_Settings_FoodGiveHint_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_TraderIgnoreEnvironment".Translate(), ref Settings.traderIgnoresHarshEnvironment,
                 "RHAH_Settings_TraderIgnoreEnvironment_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_TraderIgnoreEnclosed".Translate(), ref Settings.traderIgnoresEnclosedSpace,
@@ -87,6 +89,10 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_Broadcast_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_Stagger".Translate(), ref Settings.staggerGeneration,
                 "RHAH_Settings_Stagger_Tooltip".Translate());
+            listing.Label("RHAH_Settings_ShelterDays".Translate(Pawn.RHAH_VisitorRules.StayLabel(Settings.shelterDays)));
+            Settings.shelterDays = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.shelterDays, Pawn.RHAH_VisitorRules.MinShelterDays, Pawn.RHAH_VisitorRules.MaxShelterDays));
+            listing.Label("RHAH_Settings_HireDays".Translate(Pawn.RHAH_VisitorRules.StayLabel(Settings.hireDays)));
+            Settings.hireDays = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.hireDays, Pawn.RHAH_VisitorRules.MinHireDays, Pawn.RHAH_VisitorRules.MaxHireDays));
             listing.CheckboxLabeled("RHAH_Settings_PawnHistories".Translate(), ref Settings.pawnHistoriesEnabled,
                 "RHAH_Settings_PawnHistories_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_PawnTraits".Translate(), ref Settings.pawnTraitsEnabled,

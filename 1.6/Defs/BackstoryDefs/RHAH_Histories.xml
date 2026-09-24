@@ -4,8 +4,8 @@
     <defName>RHAH_History_A001_FleeingTenantFarmer</defName>
     <slot>Adulthood</slot>
     <title>fleeing tenant farmer</title>
-    <titleShort>fleeing tenant</titleShort>
-    <description>[PAWN_nameDef] made a living as a f while the Ratkin settlements ran out of food.leeing Tenant Farmer</description>
+    <titleShort>tenant</titleShort>
+    <description>[PAWN_nameDef] farmed the family tenancy for the local nobles, and the rent kept the house half-starved. When the fighting reached the fields, the rolls and the cropland both failed, and [PAWN_pronoun] left the old ground with the refugees.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -17,9 +17,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A002_DroughtFieldWatcher</defName>
     <slot>Adulthood</slot>
-    <title>drought field watcher</title>
-    <titleShort>drought field</titleShort>
-    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.rought Field Watcher</description>
+    <title>dry field watcher</title>
+    <titleShort>farmhand</titleShort>
+    <description>[PAWN_nameDef] watched the last dry plots at home while missed rains baked each year's new seed in the sun. The landlord still called in the seed grain, so [PAWN_pronoun] left the bare ridges with the other tenants and their empty sacks.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -31,9 +31,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A003_ScavengerOfFallowFields</defName>
     <slot>Adulthood</slot>
-    <title>scavenger of fallow fields</title>
-    <titleShort>scavenger of</titleShort>
-    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.cavenger of Fallow Fields</description>
+    <title>fallow field gleaner</title>
+    <titleShort>gleaner</titleShort>
+    <description>[PAWN_nameDef] came of age with the house already out of food before the grain levy, and the tended fields had gone to weeds. Night gleaning in the fallow plots drew rats and grain patrols, so [PAWN_pronoun] took the leftover seed onto the refugee road.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -46,8 +46,8 @@
     <defName>RHAH_History_A004_FamineHerdTender</defName>
     <slot>Adulthood</slot>
     <title>famine herd tender</title>
-    <titleShort>famine herd</titleShort>
-    <description>[PAWN_nameDef] made a living as a f while the Ratkin settlements ran out of food.amine Herd Tender</description>
+    <titleShort>herder</titleShort>
+    <description>[PAWN_nameDef] tended ranch livestock until the famine year, when the owner sold the herd and turned the rest over as army rations. With the pens empty, [PAWN_pronoun] led the few animals still alive out with the refugees to find grass.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -59,9 +59,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A005_DroughtWellWaterCarrier</defName>
     <slot>Adulthood</slot>
-    <title>drought well water carrier</title>
-    <titleShort>drought well</titleShort>
-    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.rought Well Water Carrier</description>
+    <title>well water hauler</title>
+    <titleShort>hauler</titleShort>
+    <description>[PAWN_nameDef] carried water from the village well for grain until late summer left mud, and the walk for water grew longer each day. After the villages fought over the source, [PAWN_pronoun] left the old well with empty buckets and the water crew.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -74,8 +74,8 @@
     <defName>RHAH_History_A006_GranaryBookkeeper</defName>
     <slot>Adulthood</slot>
     <title>granary bookkeeper</title>
-    <titleShort>granary bookkeeper</titleShort>
-    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Bookkeeper</description>
+    <titleShort>bookkeeper</titleShort>
+    <description>[PAWN_nameDef] kept the granary books and found the listed sacks far heavier than the grain on the floor. When the steward tried to pin the shortage on [PAWN_objective], [PAWN_pronoun] fled the storehouse with the written list.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -88,8 +88,8 @@
     <defName>RHAH_History_A007_MoldyGrainSifter</defName>
     <slot>Adulthood</slot>
     <title>moldy grain sifter</title>
-    <titleShort>moldy grain</titleShort>
-    <description>[PAWN_nameDef] made a living as a m while the Ratkin settlements ran out of food.oldy Grain Sifter</description>
+    <titleShort>sifter</titleShort>
+    <description>[PAWN_nameDef] sifted grain at the mill, where moldy stores once dumped were mixed into the famine rations. When children were handed the bad grain, [PAWN_pronoun] stopped hiding it, lost the job and the bed, and joined the group leaving town.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -101,9 +101,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A008_OrphanedMillhand</defName>
     <slot>Adulthood</slot>
-    <title>orphaned millhand</title>
-    <titleShort>orphaned millhand</titleShort>
-    <description>[PAWN_nameDef] made a living as a o while the Ratkin settlements ran out of food.rphaned Millhand</description>
+    <title>orphaned mill hand</title>
+    <titleShort>millhand</titleShort>
+    <description>[PAWN_nameDef] worked the mill until the owner fled at night over grain debts, leaving loose stones and unpaid wages. When no grown hand came back, [PAWN_pronoun] took the usable tools and carried the mill work toward a new camp.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -116,8 +116,8 @@
     <defName>RHAH_History_A009_GranaryCarpenter</defName>
     <slot>Adulthood</slot>
     <title>granary carpenter</title>
-    <titleShort>granary carpenter</titleShort>
-    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Carpenter</description>
+    <titleShort>carpenter</titleShort>
+    <description>[PAWN_nameDef] repaired the village granary and found the walls already hollowed by rats, while the landlord kept the lumber for [PAWN_possessive] own roof. On the night the rain collapsed the storehouse, [PAWN_pronoun] lost the work shed and left the village with the other hands.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -129,9 +129,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A010_RagStitcher</defName>
     <slot>Adulthood</slot>
-    <title>rag stitcher</title>
-    <titleShort>rag stitcher</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.ag Stitcher</description>
+    <title>rag clothes mender</title>
+    <titleShort>tailor</titleShort>
+    <description>[PAWN_nameDef] mended old clothes for grain after the weave house stopped and the cloth was taken in the levy. A last fire burned the rags and the lodging, so [PAWN_pronoun] packed needle and thread and left with the refugees.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -144,8 +144,8 @@
     <defName>RHAH_History_A011_DiseasedHideTanner</defName>
     <slot>Adulthood</slot>
     <title>diseased hide tanner</title>
-    <titleShort>diseased hide</titleShort>
-    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.iseased Hide Tanner</description>
+    <titleShort>tanner</titleShort>
+    <description>[PAWN_nameDef] tanned hides for a hunting estate until the nobles closed the hills and steady leather stopped coming. In the cold, even diseased dead stock was traded for grain, and when that work ended [PAWN_pronoun] left with a caravan.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -157,9 +157,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A012_HerbSorter</defName>
     <slot>Adulthood</slot>
-    <title>herb sorter</title>
-    <titleShort>herb sorter</titleShort>
-    <description>[PAWN_nameDef] made a living as a h while the Ratkin settlements ran out of food.erb Sorter</description>
+    <title>village herb sorter</title>
+    <titleShort>herbalist</titleShort>
+    <description>[PAWN_nameDef] sorted gathered herbs until the plague killed the village herbalist and left only incomplete notes. [PAWN_pronoun] took the medicine basket and the isolation shed to bring the family's fever down, then was turned out when the shed closed.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -171,9 +171,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A013_KilnWatcher</defName>
     <slot>Adulthood</slot>
-    <title>kiln watcher</title>
-    <titleShort>kiln watcher</titleShort>
-    <description>[PAWN_nameDef] made a living as a k while the Ratkin settlements ran out of food.iln Watcher</description>
+    <title>brick kiln watcher</title>
+    <titleShort>brickmaker</titleShort>
+    <description>[PAWN_nameDef] kept a landlord's brick kiln fired all winter and still could not get enough fuel or a bed. When the fire died, [PAWN_pronoun] left the yard with smoke-ruined hands and looked for roof work between shelters.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -185,9 +185,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A014_NightFamineEscapee</defName>
     <slot>Adulthood</slot>
-    <title>night famine escapee</title>
-    <titleShort>night famine</titleShort>
-    <description>[PAWN_nameDef] made a living as a n while the Ratkin settlements ran out of food.ight Famine Escapee</description>
+    <title>famine night refugee</title>
+    <titleShort>refugee</titleShort>
+    <description>[PAWN_nameDef] saw harvest after harvest fail at home, and the last sack given to the old and the children was soon gone. On the night the village barred its doors and seized grain, [PAWN_pronoun] took an old water skin and left that hungry place behind.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -199,9 +199,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A015_RiverbankBridgeBuilder</defName>
     <slot>Adulthood</slot>
-    <title>riverbank bridge builder</title>
-    <titleShort>riverbank bridge</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.iverbank Bridge Builder</description>
+    <title>river boat builder</title>
+    <titleShort>shipwright</titleShort>
+    <description>[PAWN_nameDef] repaired boats on the river until a flood broke the wooden bridge and trapped the refugees on the bank. [PAWN_pronoun] built a rough bridge so the family could cross, and after the water dropped [PAWN_pronoun] found the home village empty and kept to the road.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -213,9 +213,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A016_RuinedVillageSearcher</defName>
     <slot>Adulthood</slot>
-    <title>ruined village searcher</title>
-    <titleShort>ruined village</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.uined Village Searcher</description>
+    <title>ruined village scavenger</title>
+    <titleShort>scavenger</titleShort>
+    <description>[PAWN_nameDef] went back again and again to the looted village for pots, cloth, and seed still fit to sow. After patrols closed the old road, the ruins could feed no one, and [PAWN_pronoun] left with the other refugees.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -227,9 +227,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A017_SnowpathGuide</defName>
     <slot>Adulthood</slot>
-    <title>snowpath guide</title>
-    <titleShort>snowpath guide</titleShort>
-    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.nowpath Guide</description>
+    <title>snow road guide</title>
+    <titleShort>guide</titleShort>
+    <description>[PAWN_nameDef] found roads for caravans until early snow shut the mountain track and a refugee party wandered lost on the white ground. Unable to find the way home, [PAWN_pronoun] led them across the wilds by footprints and the wind.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -241,9 +241,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A018_DustwayPorter</defName>
     <slot>Adulthood</slot>
-    <title>dustway porter</title>
-    <titleShort>dustway porter</titleShort>
-    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.ustway Porter</description>
+    <title>dust road porter</title>
+    <titleShort>porter</titleShort>
+    <description>[PAWN_nameDef] moved cargo in a caravan until the drought belt's water skins were stolen and the pack beasts dropped one by one. [PAWN_pronoun] took the hauling job to recover withheld pay, and after the caravan broke up still led the remaining animals on.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -255,9 +255,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A019_CampNightWatch</defName>
     <slot>Adulthood</slot>
-    <title>camp night watch</title>
-    <titleShort>camp night</titleShort>
-    <description>[PAWN_nameDef] made a living as a c while the Ratkin settlements ran out of food.amp Night Watch</description>
+    <title>camp night guard</title>
+    <titleShort>guard</titleShort>
+    <description>[PAWN_nameDef] lodged in a makeshift camp until nights of grain theft sent the guards running with the weapons. [PAWN_pronoun] took the night watch and the message runs, and kept both when the camp moved on.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -269,9 +269,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A020_LostAtTheCheckpoint</defName>
     <slot>Adulthood</slot>
-    <title>lost at the checkpoint</title>
-    <titleShort>lost at</titleShort>
-    <description>[PAWN_nameDef] made a living as a l while the Ratkin settlements ran out of food.ost at the Checkpoint</description>
+    <title>tax checkpoint migrant</title>
+    <titleShort>refugee</titleShort>
+    <description>[PAWN_nameDef] took the family through a grain-tax checkpoint, where refugees without papers could be held. One failed detour scattered the family, and [PAWN_pronoun] learned the patrol hours but walked the rest of the road alone.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -283,9 +283,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A021_OldMapmaker</defName>
     <slot>Adulthood</slot>
-    <title>old mapmaker</title>
-    <titleShort>old mapmaker</titleShort>
-    <description>[PAWN_nameDef] made a living as a o while the Ratkin settlements ran out of food.ld Mapmaker</description>
+    <title>waystation map maker</title>
+    <titleShort>mapmaker</titleShort>
+    <description>[PAWN_nameDef] drew routes for a waystation until a storehouse fire burned the old maps and the refugees had only broken road marks. [PAWN_pronoun] redrew the roads from memory onto cloth scraps, was pushed into guiding, and left home with no road back.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -297,9 +297,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A022_KinSeekingExile</defName>
     <slot>Adulthood</slot>
-    <title>kin-seeking exile</title>
-    <titleShort>kin-seeking exile</titleShort>
-    <description>[PAWN_nameDef] made a living as a k while the Ratkin settlements ran out of food.in-Seeking Exile</description>
+    <title>camp kin seeker</title>
+    <titleShort>refugee</titleShort>
+    <description>[PAWN_nameDef] was separated from family in a forced split, and rain pulped the temporary name rolls. [PAWN_pronoun] followed campfires and names along the road, found no kin, and remained with the moving camps.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -312,8 +312,8 @@
     <defName>RHAH_History_A023_RefugeeConvoyGuide</defName>
     <slot>Adulthood</slot>
     <title>refugee convoy guide</title>
-    <titleShort>refugee convoy</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.efugee Convoy Guide</description>
+    <titleShort>guide</titleShort>
+    <description>[PAWN_nameDef] was no leader until a grain fight killed the old guide and the party lost word of the next water. The others pushed route shares and rations onto [PAWN_objective], and after the column broke up [PAWN_pronoun] still went on with those willing to follow.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -325,9 +325,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A024_ShackRepairer</defName>
     <slot>Adulthood</slot>
-    <title>shack repairer</title>
-    <titleShort>shack repairer</titleShort>
-    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.hack Repairer</description>
+    <title>ruined shack mender</title>
+    <titleShort>repairman</titleShort>
+    <description>[PAWN_nameDef] saw the family walls chewed through by rats and the beams dropped by a storm, while the good lumber was taken to fix a granary. [PAWN_pronoun] mended wrecked rooms for grain until that work ran out, then left with the refugees to find another roof.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -339,9 +339,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A025_DisasterBurier</defName>
     <slot>Adulthood</slot>
-    <title>disaster burier</title>
-    <titleShort>disaster burier</titleShort>
-    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.isaster Burier</description>
+    <title>roadside gravedigger</title>
+    <titleShort>gravedigger</titleShort>
+    <description>[PAWN_nameDef] buried the dead along the worst village roads, where the sick and the unclaimed lay too many for anyone to approach. Contact with the disease got [PAWN_objective] driven out of the settlement, and [PAWN_pronoun] kept that burial work in the migrant line.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -353,9 +353,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A026_GrainPetitionSpeaker</defName>
     <slot>Adulthood</slot>
-    <title>grain petition speaker</title>
-    <titleShort>grain petition</titleShort>
-    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.rain Petition Speaker</description>
+    <title>ration petitioner</title>
+    <titleShort>petitioner</titleShort>
+    <description>[PAWN_nameDef] went to the granary to claim the village's due grain, but every talk cost another passage fee. After the village refused to pay and was cut off, [PAWN_pronoun] took a name list and empty bowls and begged grain house to house in unfamiliar settlements.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -367,9 +367,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A027_ReliefGoodsBroker</defName>
     <slot>Adulthood</slot>
-    <title>relief goods broker</title>
-    <titleShort>relief goods</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.elief Goods Broker</description>
+    <title>goods broker</title>
+    <titleShort>broker</titleShort>
+    <description>[PAWN_nameDef] swapped goods for others at the market until a grain price spike made the cargo worthless overnight. To get medicine and seed for [PAWN_possessive] family, [PAWN_pronoun] moved with different refugee bands and finally lost [PAWN_possessive] own sleeping place.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -381,9 +381,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A028_EscapedLedgerCopyist</defName>
     <slot>Adulthood</slot>
-    <title>escaped ledger copyist</title>
-    <titleShort>escaped ledger</titleShort>
-    <description>[PAWN_nameDef] made a living as a e while the Ratkin settlements ran out of food.scaped Ledger Copyist</description>
+    <title>ledger copyist</title>
+    <titleShort>copyist</titleShort>
+    <description>[PAWN_nameDef] copied household registers and grain ledgers, and saved only a few pages when the record house burned. On the road [PAWN_pronoun] wrote names and grain debts for people with no papers, and every settlement treated [PAWN_objective] as a suspicious outsider.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -396,8 +396,8 @@
     <defName>RHAH_History_A029_ReliefCook</defName>
     <slot>Adulthood</slot>
     <title>relief cook</title>
-    <titleShort>relief cook</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.elief Cook</description>
+    <titleShort>cook</titleShort>
+    <description>[PAWN_nameDef] did chores in the public kitchen until a rat plague took the cook and nobody dared portion the remaining grain. [PAWN_pronoun] took the stove so the children could eat first, then left with the refugees when the kitchen closed.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -409,9 +409,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A030_InfirmaryCaretaker</defName>
     <slot>Adulthood</slot>
-    <title>infirmary caretaker</title>
-    <titleShort>infirmary caretaker</titleShort>
-    <description>[PAWN_nameDef] made a living as a i while the Ratkin settlements ran out of food.nfirmary Caretaker</description>
+    <title>camp medic</title>
+    <titleShort>medic</titleShort>
+    <description>[PAWN_nameDef] tended the sick at home until a granary fight filled the camp with wounded. In a temporary camp short of medicine, [PAWN_pronoun] learned to clean wounds and change dressings, then left with only half that training when the camp was dispersed.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -423,9 +423,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A031_RatEggCaretaker</defName>
     <slot>Adulthood</slot>
-    <title>rat egg caretaker</title>
-    <titleShort>rat egg</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.at Egg Caretaker</description>
+    <title>rat egg minder</title>
+    <titleShort>minder</titleShort>
+    <description>[PAWN_nameDef] took turns carrying children in a refugee column until [PAWN_possessive] own family fell sick by the road. When the column left the sick and the young, [PAWN_pronoun] took the rat eggs that could still walk and no longer expected the adults to return.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -438,8 +438,8 @@
     <defName>RHAH_History_A032_NightStoryteller</defName>
     <slot>Adulthood</slot>
     <title>night storyteller</title>
-    <titleShort>night storyteller</titleShort>
-    <description>[PAWN_nameDef] made a living as a n while the Ratkin settlements ran out of food.ight Storyteller</description>
+    <titleShort>storyteller</titleShort>
+    <description>[PAWN_nameDef] spun thread and told old stories, but hunger and alarms kept the camp children awake all night. On the dark road between camps, [PAWN_pronoun] used stories to keep the children walking and stayed with the refugee column.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -451,9 +451,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A033_SealedVillageMessenger</defName>
     <slot>Adulthood</slot>
-    <title>sealed village messenger</title>
-    <titleShort>sealed village</titleShort>
-    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.ealed Village Messenger</description>
+    <title>village messenger</title>
+    <titleShort>messenger</titleShort>
+    <description>[PAWN_nameDef] carried letters for [PAWN_possessive] family in exchange for grain, and after several villages were sealed, walkers were the only news. The day a patrol cut the way home, [PAWN_pronoun] could not return and kept carrying messages for other camps.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -465,9 +465,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A034_MarketSackPorter</defName>
     <slot>Adulthood</slot>
-    <title>market sack porter</title>
-    <titleShort>market sack</titleShort>
-    <description>[PAWN_nameDef] made a living as a m while the Ratkin settlements ran out of food.arket Sack Porter</description>
+    <title>sack porter</title>
+    <titleShort>porter</titleShort>
+    <description>[PAWN_nameDef] hauled sacks at the market until the market closed and both wages and employer vanished. To avoid a looting rush, [PAWN_pronoun] carried the grain sacks into a temporary camp, then moved with the refugees left after the owner fled at night.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -479,9 +479,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A035_UsedGoodsAppraiser</defName>
     <slot>Adulthood</slot>
-    <title>used goods appraiser</title>
-    <titleShort>used goods</titleShort>
-    <description>[PAWN_nameDef] made a living as a u while the Ratkin settlements ran out of food.sed Goods Appraiser</description>
+    <title>goods appraiser</title>
+    <titleShort>appraiser</titleShort>
+    <description>[PAWN_nameDef] appraised old pots and tools to trade for household grain, but in the famine people accepted only food. After a few grain trades, robbers took the last goods, and [PAWN_pronoun] left with nothing left to price.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -494,8 +494,8 @@
     <defName>RHAH_History_A036_RationMediator</defName>
     <slot>Adulthood</slot>
     <title>ration mediator</title>
-    <titleShort>ration mediator</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.ation Mediator</description>
+    <titleShort>mediator</titleShort>
+    <description>[PAWN_nameDef] once split irrigation water in the village, then was pushed forward when two refugee bands fought over grain. After the quarrel in front of the granary broke down, [PAWN_pronoun] took the few still willing to listen and joined a new refugee road.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -507,9 +507,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A037_RationTicketKeeper</defName>
     <slot>Adulthood</slot>
-    <title>ration ticket keeper</title>
-    <titleShort>ration ticket</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.ation Ticket Keeper</description>
+    <title>ration clerk</title>
+    <titleShort>clerk</titleShort>
+    <description>[PAWN_nameDef] kept the ration tickets, but the issuer withheld the promised week of grain along with the food. When [PAWN_pronoun] refused to change the books, [PAWN_pronoun] was driven from the office and fled with a small stack of worthless tickets.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -521,9 +521,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A038_GranaryRefuser</defName>
     <slot>Adulthood</slot>
-    <title>granary refuser</title>
-    <titleShort>granary refuser</titleShort>
-    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Refuser</description>
+    <title>granary guard</title>
+    <titleShort>guard</titleShort>
+    <description>[PAWN_nameDef] was hired to guard a granary against outside grain thieves. When the owner secretly moved the stores and locked the hungry inside, [PAWN_pronoun] refused to keep the door and left with the abandoned guards as a refugee.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -535,9 +535,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A039_HomeboundDeserter</defName>
     <slot>Adulthood</slot>
-    <title>homebound deserter</title>
-    <titleShort>homebound deserter</titleShort>
-    <description>[PAWN_nameDef] made a living as a h while the Ratkin settlements ran out of food.omebound Deserter</description>
+    <title>returning deserter</title>
+    <titleShort>deserter</titleShort>
+    <description>[PAWN_nameDef] was drafted into a short ration unit, but the officer kept the last grain sack. In a retreat [PAWN_pronoun] dropped [PAWN_possessive] weapon to look for family, and the unit called [PAWN_objective] a deserter while the village had nobody left.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -549,9 +549,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A040_CampTrapSetter</defName>
     <slot>Adulthood</slot>
-    <title>camp trap setter</title>
-    <titleShort>camp trap</titleShort>
-    <description>[PAWN_nameDef] made a living as a c while the Ratkin settlements ran out of food.amp Trap Setter</description>
+    <title>camp trapper</title>
+    <titleShort>trapper</titleShort>
+    <description>[PAWN_nameDef] set traps outside the camp after night raids by beasts and grain thieves made the old fence useless. When the camp burned, [PAWN_pronoun] used trapcraft learned while hunting to guard [PAWN_possessive] own way and kept moving.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -563,9 +563,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A041_GrainThiefOutcast</defName>
     <slot>Adulthood</slot>
-    <title>grain thief outcast</title>
-    <titleShort>grain thief</titleShort>
-    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.rain Thief Outcast</description>
+    <title>grain thief</title>
+    <titleShort>thief</titleShort>
+    <description>[PAWN_nameDef] joined starving ratkin to seize grain, and the warehouse split quickly turned into a fight. After escaping, other settlements treated [PAWN_objective] as a grain thief, so [PAWN_pronoun] hid in the wastes to survive.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -578,8 +578,8 @@
     <defName>RHAH_History_A042_ScarredHunter</defName>
     <slot>Adulthood</slot>
     <title>scarred hunter</title>
-    <titleShort>scarred hunter</titleShort>
-    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.carred Hunter</description>
+    <titleShort>hunter</titleShort>
+    <description>[PAWN_nameDef] lived by a hunting ground until a drought burned off the game and nobles closed the woods. Tracking a wounded beast, [PAWN_pronoun] met a rat swarm, took scars, lost [PAWN_possessive] home, and followed refugees toward a new ground.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -592,8 +592,8 @@
     <defName>RHAH_History_A043_GranaryRatcatcher</defName>
     <slot>Adulthood</slot>
     <title>granary ratcatcher</title>
-    <titleShort>granary ratcatcher</titleShort>
-    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Ratcatcher</description>
+    <titleShort>ratcatcher</titleShort>
+    <description>[PAWN_nameDef] cleared rat holes for a granary, but when the rats multiplied the owner charged the losses to the workers. The night the stored grain was chewed open, [PAWN_pronoun] was driven from the village and carried that work to the next camp.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -605,9 +605,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A044_QuarantinePorter</defName>
     <slot>Adulthood</slot>
-    <title>quarantine porter</title>
-    <titleShort>quarantine porter</titleShort>
-    <description>[PAWN_nameDef] made a living as a q while the Ratkin settlements ran out of food.uarantine Porter</description>
+    <title>quarantine hauler</title>
+    <titleShort>hauler</titleShort>
+    <description>[PAWN_nameDef] hauled medicine and drinking water at a plague village gate because [PAWN_possessive] family was trapped in the isolation shed. When the sick ward burned, [PAWN_pronoun] lost both family and settlement and left with the memory of those sheds.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -619,9 +619,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A045_QuarantineWatcher</defName>
     <slot>Adulthood</slot>
-    <title>quarantine watcher</title>
-    <titleShort>quarantine watcher</titleShort>
-    <description>[PAWN_nameDef] made a living as a q while the Ratkin settlements ran out of food.uarantine Watcher</description>
+    <title>isolation warden</title>
+    <titleShort>warden</titleShort>
+    <description>[PAWN_nameDef] watched the isolation shed at the village gate and tried to keep the fevered apart from the healthy. When medicine and grain ran out, the villagers blamed the watch, so [PAWN_pronoun] was forced out to look for a place that would take the sick.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -633,9 +633,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A046_PostPlagueCaretaker</defName>
     <slot>Adulthood</slot>
-    <title>post-plague caretaker</title>
-    <titleShort>post-plague caretaker</titleShort>
-    <description>[PAWN_nameDef] made a living as a p while the Ratkin settlements ran out of food.ost-Plague Caretaker</description>
+    <title>plague nurse</title>
+    <titleShort>nurse</titleShort>
+    <description>[PAWN_nameDef] survived a sealed block in a rat plague, but the recovered had no grain and no permit to go home. After the old rooms were burned to an empty lot, [PAWN_pronoun] left with companions still unwell to find another shed where they could rest.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -647,9 +647,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A047_DisguisedGrainThief</defName>
     <slot>Adulthood</slot>
-    <title>disguised grain thief</title>
-    <titleShort>disguised grain</titleShort>
-    <description>[PAWN_nameDef] made a living as a d while the Ratkin settlements ran out of food.isguised Grain Thief</description>
+    <title>grain burglar</title>
+    <titleShort>burglar</titleShort>
+    <description>[PAWN_nameDef] slipped into a granary at night to steal grain after [PAWN_possessive] family had gone days without food. When the theft was discovered, [PAWN_possessive] companions handed [PAWN_objective] over for passage, so [PAWN_pronoun] passed as an ordinary refugee and fled from checkpoint to checkpoint.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -661,9 +661,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A048_SiegeTunnelDigger</defName>
     <slot>Adulthood</slot>
-    <title>siege tunnel digger</title>
-    <titleShort>siege tunnel</titleShort>
-    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.iege Tunnel Digger</description>
+    <title>tunnel digger</title>
+    <titleShort>digger</titleShort>
+    <description>[PAWN_nameDef] was trapped in a camp surrounded by grain raiders, and no outside help came. [PAWN_pronoun] and the others dug a narrow hole under the wall and led people out, then looked back to find the camp and the family's belongings already burned.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -676,8 +676,8 @@
     <defName>RHAH_History_A049_GranaryBreaker</defName>
     <slot>Adulthood</slot>
     <title>granary breaker</title>
-    <titleShort>granary breaker</titleShort>
-    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.ranary Breaker</description>
+    <titleShort>carpenter</titleShort>
+    <description>[PAWN_nameDef] repaired doors for a living, then saw the granary locked while the grain was left to mold instead of feeding the hungry. Hearing a cry for help inside, [PAWN_pronoun] broke the main door open and was hunted out of the home settlement.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -689,9 +689,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y001_RuinsLitter</defName>
     <slot>Childhood</slot>
-    <title>ruins litter</title>
-    <titleShort>ruins litter</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Ruins Litter.</description>
+    <title>ruins urchin</title>
+    <titleShort>urchin</titleShort>
+    <description>[PAWN_nameDef] lost [PAWN_possessive] mother in an arson and hid in a collapsed house. After a few days on scrap grain, the rescuers had already gone, so [PAWN_pronoun] left with refugees who passed later.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -703,9 +703,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y002_LostFieldLitter</defName>
     <slot>Childhood</slot>
-    <title>lost field litter</title>
-    <titleShort>lost field</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Lost Field Litter.</description>
+    <title>displaced farm child</title>
+    <titleShort>farmhand</titleShort>
+    <description>[PAWN_nameDef] grew up on a small farm until the owner sold the land and took the adult workers. The crops were requisitioned, so [PAWN_pronoun] left the fields and followed refugees looking for food.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -718,8 +718,8 @@
     <defName>RHAH_History_Y003_CreviceMessenger</defName>
     <slot>Childhood</slot>
     <title>crevice messenger</title>
-    <titleShort>crevice messenger</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Crevice Messenger.</description>
+    <titleShort>messenger</titleShort>
+    <description>[PAWN_nameDef] carried messages through cracks in a cave settlement after the adults split over food. When smoke and rats made the caves unlivable, [PAWN_pronoun] followed the last group to the surface.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -731,9 +731,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y004_GrainMillApprentice</defName>
     <slot>Childhood</slot>
-    <title>grain mill apprentice</title>
-    <titleShort>grain mill</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Grain Mill Apprentice.</description>
+    <title>grain mill screener</title>
+    <titleShort>mill hand</titleShort>
+    <description>[PAWN_nameDef] lived beside a grain mill with [PAWN_possessive] mother and ate broken grain. After the mill was seized and moldy grain went into the rations, [PAWN_pronoun] and [PAWN_possessive] mother were driven onto the refugee road.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -745,9 +745,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y005_RatEggGuardApprentice</defName>
     <slot>Childhood</slot>
-    <title>rat egg guard apprentice</title>
-    <titleShort>rat egg</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Rat Egg Guard Apprentice.</description>
+    <title>rat egg caretaker</title>
+    <titleShort>caretaker</titleShort>
+    <description>[PAWN_nameDef] watched the younger eggs after the adults in the group fell ill. A night march scattered the column, and [PAWN_pronoun] lost [PAWN_possessive] kin and followed whoever would share food with the children.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -759,9 +759,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y006_LandmarkRememberingOrphan</defName>
     <slot>Childhood</slot>
-    <title>landmark-remembering orphan</title>
-    <titleShort>landmark-remembering orphan</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Landmark-Remembering Orphan.</description>
+    <title>lost road guide</title>
+    <titleShort>guide</titleShort>
+    <description>[PAWN_nameDef] was separated from family on the road and remembered dead trees, a cracked bridge, and dangerous crossings. [PAWN_pronoun] used those marks to avoid pursuit, joined another refugee group, and did not find the old home.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -773,9 +773,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y007_LivestockApprentice</defName>
     <slot>Childhood</slot>
-    <title>livestock apprentice</title>
-    <titleShort>livestock apprentice</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Livestock Apprentice.</description>
+    <title>livestock herder</title>
+    <titleShort>herder</titleShort>
+    <description>[PAWN_nameDef] drove the family's remaining animals after the farm lost its water and most of the stock was taken. When the pens were abandoned, [PAWN_pronoun] followed the refugees with the last live animals and did not return.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -787,9 +787,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y008_OrphanedMillApprentice</defName>
     <slot>Childhood</slot>
-    <title>orphaned mill apprentice</title>
-    <titleShort>orphaned mill</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Orphaned Mill Apprentice.</description>
+    <title>abandoned mill hand</title>
+    <titleShort>miller</titleShort>
+    <description>[PAWN_nameDef] was left in a mill that owed grain, beside a stone [PAWN_pronoun] could not turn. [PAWN_pronoun] learned the simplest milling there and took that work along when the mill was torn down.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -801,9 +801,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y009_CampfireListener</defName>
     <slot>Childhood</slot>
-    <title>campfire listener</title>
-    <titleShort>campfire listener</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Campfire Listener.</description>
+    <title>campfire refugee child</title>
+    <titleShort>listener</titleShort>
+    <description>[PAWN_nameDef] was born in a refugee column that had never seen a good harvest and slept to talk of old crops. When the group broke up for lack of food, [PAWN_pronoun] waited by the campfire until another band passed, then moved on.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -816,8 +816,8 @@
     <defName>RHAH_History_Y010_QuarantineShedChild</defName>
     <slot>Childhood</slot>
     <title>quarantine shed child</title>
-    <titleShort>quarantine shed</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Quarantine Shed Child.</description>
+    <titleShort>patient</titleShort>
+    <description>[PAWN_nameDef] was put in a quarantine shed with family while food and water still came through the door. After the rat plague worsened and the kin died or left, [PAWN_pronoun] fled with the survivors when the shed was torn down.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -829,9 +829,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y011_RuinedHouseOrphan</defName>
     <slot>Childhood</slot>
-    <title>ruined house orphan</title>
-    <titleShort>ruined house</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Ruined House Orphan.</description>
+    <title>ruin house scavenger</title>
+    <titleShort>scavenger</titleShort>
+    <description>[PAWN_nameDef] was split from family in a night raid and lived in a ruined house on roots and rainwater. When the searchers did not return, [PAWN_pronoun] moved from camp to camp looking for a corner to stay.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -843,9 +843,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y012_NightWatchApprentice</defName>
     <slot>Childhood</slot>
-    <title>night watch apprentice</title>
-    <titleShort>night watch</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Night Watch Apprentice.</description>
+    <title>camp night sentry</title>
+    <titleShort>sentry</titleShort>
+    <description>[PAWN_nameDef] memorized the patrol routes in a refugee camp where the night watch could not stop grain thieves. One raid separated [PAWN_objective] from family, and [PAWN_pronoun] kept the campfire watch after that.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -857,9 +857,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A050_ElderSisterProtector</defName>
     <slot>Adulthood</slot>
-    <title>elder sister protector</title>
-    <titleShort>elder sister</titleShort>
-    <description>[PAWN_nameDef] made a living as a e while the Ratkin settlements ran out of food.lder Sister Protector</description>
+    <title>sibling caretaker</title>
+    <titleShort>caretaker</titleShort>
+    <description>[PAWN_nameDef] cared for younger siblings in a small settlement after the parents died on the refugee road. When the column left them by the road to lighten the load, [PAWN_pronoun] looked for a place that would take the eggs.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -871,9 +871,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A051_IllMotherLeavingA</defName>
     <slot>Adulthood</slot>
-    <title>ill mother leaving a child</title>
-    <titleShort>ill mother</titleShort>
-    <description>[PAWN_nameDef] made a living as a i while the Ratkin settlements ran out of food.ll Mother Leaving a Child</description>
+    <title>sick refugee mother</title>
+    <titleShort>mother</titleShort>
+    <description>[PAWN_nameDef] fled a rat-plague village with the children, living on broken grain and herbs. Too sick to reach the next camp, [PAWN_pronoun] left them at a strange settlement gate and collapsed.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -885,9 +885,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A052_BeggingRatkinMother</defName>
     <slot>Adulthood</slot>
-    <title>begging ratkin mother</title>
-    <titleShort>begging ratkin</titleShort>
-    <description>[PAWN_nameDef] made a living as a b while the Ratkin settlements ran out of food.egging Ratkin Mother</description>
+    <title>doorstep food beggar</title>
+    <titleShort>beggar</titleShort>
+    <description>[PAWN_nameDef] fed the children by washing clothes and tending livestock until the employers took back the grain and pay. [PAWN_pronoun] would not give the children to roadside strangers and begged a meal at door after door.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -899,9 +899,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A053_GrainThiefForFamily</defName>
     <slot>Adulthood</slot>
-    <title>grain thief for family</title>
-    <titleShort>grain thief</titleShort>
-    <description>[PAWN_nameDef] made a living as a g while the Ratkin settlements ran out of food.rain Thief for Family</description>
+    <title>family grain thief</title>
+    <titleShort>thief</titleShort>
+    <description>[PAWN_nameDef] guarded the family's last sack of grain until a child collapsed from hunger. After begging failed, [PAWN_pronoun] entered a storehouse at night, was caught before getting far, and left with the family's empty bowl.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -913,9 +913,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A054_WastelandSurvivor</defName>
     <slot>Adulthood</slot>
-    <title>wasteland survivor</title>
-    <titleShort>wasteland survivor</titleShort>
-    <description>[PAWN_nameDef] made a living as a w while the Ratkin settlements ran out of food.asteland Survivor</description>
+    <title>wasteland tracker</title>
+    <titleShort>tracker</titleShort>
+    <description>[PAWN_nameDef] woke in torn clothes on a strange waste road after night raiders scattered the settlement for its grain. With no family in sight, [PAWN_pronoun] followed animal tracks and distant cookfire smoke toward living people.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -928,8 +928,8 @@
     <defName>RHAH_History_A055_RefugeeCampSteward</defName>
     <slot>Adulthood</slot>
     <title>refugee camp steward</title>
-    <titleShort>refugee camp</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.efugee Camp Steward</description>
+    <titleShort>steward</titleShort>
+    <description>[PAWN_nameDef] assigned bedrolls and drinking water in a refugee camp until the crowd outgrew the grain, firewood, and patience. When the camp broke up, [PAWN_pronoun] had nowhere to return and left with the last group for a new settlement.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -941,9 +941,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A056_CageWatcher</defName>
     <slot>Adulthood</slot>
-    <title>cage watcher</title>
-    <titleShort>cage watcher</titleShort>
-    <description>[PAWN_nameDef] made a living as a c while the Ratkin settlements ran out of food.age Watcher</description>
+    <title>cage caravan guard</title>
+    <titleShort>guard</titleShort>
+    <description>[PAWN_nameDef] guarded cargo and cages for a caravan until the road failed and the caged children were offered for grain. The leader ran, and [PAWN_pronoun] took the living prisoners to find someone who would bargain.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -955,9 +955,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A057_RatEggMerchant</defName>
     <slot>Adulthood</slot>
-    <title>rat egg merchant</title>
-    <titleShort>rat egg</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.at Egg Merchant</description>
+    <title>rat egg trader</title>
+    <titleShort>trader</titleShort>
+    <description>[PAWN_nameDef] tried to place children with people who had grain enough for winter. When neither side would make a promise, [PAWN_pronoun] walked on with a string of silent eggs and no longer looked at their faces.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -969,9 +969,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A058_OutwallBeggar</defName>
     <slot>Adulthood</slot>
-    <title>outwall beggar</title>
-    <titleShort>outwall beggar</titleShort>
-    <description>[PAWN_nameDef] made a living as a o while the Ratkin settlements ran out of food.utwall Beggar</description>
+    <title>outer wall beggar</title>
+    <titleShort>beggar</titleShort>
+    <description>[PAWN_nameDef] built a shed with other refugees outside an abandoned wall and stayed out of the city. After the gate shut and the food was gone, [PAWN_pronoun] begged around the next settlement for relief.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -984,8 +984,8 @@
     <defName>RHAH_History_A059_ReliefKitchenCook</defName>
     <slot>Adulthood</slot>
     <title>relief kitchen cook</title>
-    <titleShort>relief kitchen</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.elief Kitchen Cook</description>
+    <titleShort>cook</titleShort>
+    <description>[PAWN_nameDef] boiled the refugee column's mixed grain in one pot until the pot itself was traded for firewood. When a relief group arrived, [PAWN_pronoun] brought the recipes and the mold-screening work and cooked one shared meal.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -997,9 +997,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A060_RefugeeMedic</defName>
     <slot>Adulthood</slot>
-    <title>refugee medic</title>
-    <titleShort>refugee medic</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.efugee Medic</description>
+    <title>refugee column medic</title>
+    <titleShort>medic</titleShort>
+    <description>[PAWN_nameDef] carried herbs in a small clinic until the clinic closed and the medicine started fights. [PAWN_pronoun] hid the last doses in [PAWN_possessive] clothes and walked fevered companions to a colony's edge for help.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1011,9 +1011,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A061_SilverTrader</defName>
     <slot>Adulthood</slot>
-    <title>silver trader</title>
-    <titleShort>silver trader</titleShort>
-    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.ilver Trader</description>
+    <title>silver road trader</title>
+    <titleShort>trader</titleShort>
+    <description>[PAWN_nameDef] sold the household tools, livestock, and house deed for silver meant to buy a safe road. After checkpoints raised the price and caravans changed route, [PAWN_pronoun] had enough silver for one more stretch and looked for a settlement that would trade.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1025,9 +1025,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A062_FragmentMapInformant</defName>
     <slot>Adulthood</slot>
-    <title>fragment map informant</title>
-    <titleShort>fragment map</titleShort>
-    <description>[PAWN_nameDef] made a living as a f while the Ratkin settlements ran out of food.ragment Map Informant</description>
+    <title>fragment map seller</title>
+    <titleShort>informant</titleShort>
+    <description>[PAWN_nameDef] took half a treasure map from a dead informant by the road, with the sites left incomplete. [PAWN_pronoun] brought the torn map to a colony to trade for grain, medicine, or silver.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1039,9 +1039,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A063_RuinInformant</defName>
     <slot>Adulthood</slot>
-    <title>ruin informant</title>
-    <titleShort>ruin informant</titleShort>
-    <description>[PAWN_nameDef] made a living as a r while the Ratkin settlements ran out of food.uin Informant</description>
+    <title>ruin map informant</title>
+    <titleShort>informant</titleShort>
+    <description>[PAWN_nameDef] hid in buildings hollowed out by rats and rain and memorized the usable doors, wells, and basements. After the others turned on one another over the map, [PAWN_pronoun] fled with the incomplete locations to trade for passage.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1053,9 +1053,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A064_SmallSettlementClerk</defName>
     <slot>Adulthood</slot>
-    <title>small settlement clerk</title>
-    <titleShort>small settlement</titleShort>
-    <description>[PAWN_nameDef] made a living as a s while the Ratkin settlements ran out of food.mall Settlement Clerk</description>
+    <title>settlement clerk</title>
+    <titleShort>clerk</titleShort>
+    <description>[PAWN_nameDef] recorded the affairs of a small settlement that still kept order, until someone rewrote the granary accounts. When the settlers split over the grain, [PAWN_pronoun] fled with directions to another camp and only the supplies [PAWN_pronoun] could carry.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1068,8 +1068,8 @@
     <defName>RHAH_History_A065_PregnantRefugee</defName>
     <slot>Adulthood</slot>
     <title>pregnant refugee</title>
-    <titleShort>pregnant refugee</titleShort>
-    <description>[PAWN_nameDef] made a living as a p while the Ratkin settlements ran out of food.regnant Refugee</description>
+    <titleShort>refugee</titleShort>
+    <description>[PAWN_nameDef] traveled pregnant with a group looking for shelter from the rain, but camps took only people ready to work. Plague and a fight over grain scattered them, and [PAWN_pronoun] reached a strange colony near birth to ask for a corner.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1081,9 +1081,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A066_MisdeliveredCargoCarrier</defName>
     <slot>Adulthood</slot>
-    <title>misdelivered cargo carrier</title>
-    <titleShort>misdelivered cargo</titleShort>
-    <description>[PAWN_nameDef] made a living as a m while the Ratkin settlements ran out of food.isdelivered Cargo Carrier</description>
+    <title>cargo hauler</title>
+    <titleShort>hauler</titleShort>
+    <description>[PAWN_nameDef] checked cargo lists and hauled supplies until a wrong coordinate dropped the whole load on empty ground. The sender fled first, so [PAWN_pronoun] carried the few recoverable goods to the wrong site and asked the real colony for help.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1095,9 +1095,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A067_MisidentifiedKin</defName>
     <slot>Adulthood</slot>
-    <title>misidentified kin</title>
-    <titleShort>misidentified kin</titleShort>
-    <description>[PAWN_nameDef] made a living as a m while the Ratkin settlements ran out of food.isidentified Kin</description>
+    <title>night evacuee</title>
+    <titleShort>evacuee</titleShort>
+    <description>[PAWN_nameDef] lost [PAWN_possessive] family in a night evacuation and later mistook a stranger for kin after hearing a matching description of a child. When the truth came out the old group was already gone, and [PAWN_pronoun] could neither keep the child nor go home.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1110,8 +1110,8 @@
     <defName>RHAH_History_A068_FamineFarmer</defName>
     <slot>Adulthood</slot>
     <title>famine farmer</title>
-    <titleShort>famine farmer</titleShort>
-    <description>[PAWN_nameDef] made a living as a f while the Ratkin settlements ran out of food.amine Farmer</description>
+    <titleShort>farmer</titleShort>
+    <description>[PAWN_nameDef] worked old fields through a famine year and found no seed left after repeated grain levies. Plague thinned the family, so [PAWN_pronoun] divided the last food and left the village.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1123,9 +1123,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A069_AmbushedEscort</defName>
     <slot>Adulthood</slot>
-    <title>ambushed escort</title>
-    <titleShort>ambushed escort</titleShort>
-    <description>[PAWN_nameDef] made a living as a a while the Ratkin settlements ran out of food.mbushed Escort</description>
+    <title>caravan escort</title>
+    <titleShort>escort</titleShort>
+    <description>[PAWN_nameDef] escorted medicine and grain until desperate refugees stopped the caravan. The traders abandoned the cargo and the wounded, and [PAWN_pronoun] crawled from a stripped wagon and would not follow a caravan banner again.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1137,9 +1137,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A070_PlaguezoneExile</defName>
     <slot>Adulthood</slot>
-    <title>plague-zone exile</title>
-    <titleShort>plague-zone exile</titleShort>
-    <description>[PAWN_nameDef] made a living as a p while the Ratkin settlements ran out of food.lague-zone Exile</description>
+    <title>plague refugee</title>
+    <titleShort>refugee</titleShort>
+    <description>[PAWN_nameDef] lived in a camp marked as a plague zone, barred from safe roads and clean food. Some people fell and some were left behind, and [PAWN_pronoun] led those still able to walk around the settlements toward a strange colony.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1151,9 +1151,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A071_QuarantineGatekeeper</defName>
     <slot>Adulthood</slot>
-    <title>quarantine gatekeeper</title>
-    <titleShort>quarantine gatekeeper</titleShort>
-    <description>[PAWN_nameDef] made a living as a q while the Ratkin settlements ran out of food.uarantine Gatekeeper</description>
+    <title>quarantine guard</title>
+    <titleShort>guard</titleShort>
+    <description>[PAWN_nameDef] guarded a village quarantine shed and each day decided who entered, who received medicine, and who stayed outside. When the drugs and grain ran out together, the sick and the guards were driven off, and [PAWN_pronoun] looked for shelter with the survivors.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1165,9 +1165,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A072_PlagueCampTunnelDigger</defName>
     <slot>Adulthood</slot>
-    <title>plague camp tunnel digger</title>
-    <titleShort>plague camp</titleShort>
-    <description>[PAWN_nameDef] made a living as a p while the Ratkin settlements ran out of food.lague Camp Tunnel Digger</description>
+    <title>tunnel digger</title>
+    <titleShort>digger</titleShort>
+    <description>[PAWN_nameDef] was shut in a plague camp with the hungry and the infected closing in and no food left inside. [PAWN_pronoun] dug a one-person tunnel from the foot of the wall and escaped without knowing whether anyone left behind still lived.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1179,9 +1179,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A073_EscapedPlagueMessenger</defName>
     <slot>Adulthood</slot>
-    <title>escaped plague messenger</title>
-    <titleShort>escaped plague</titleShort>
-    <description>[PAWN_nameDef] made a living as a e while the Ratkin settlements ran out of food.scaped Plague Messenger</description>
+    <title>plague messenger</title>
+    <titleShort>messenger</titleShort>
+    <description>[PAWN_nameDef] carried messages for infected ratkin who swore revenge on a harmer they could not name. When revenge became the group's only aim, [PAWN_pronoun] fled with a letter addressed to no one.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1193,9 +1193,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A074_EvacuationGuide</defName>
     <slot>Adulthood</slot>
-    <title>evacuation guide</title>
-    <titleShort>evacuation guide</titleShort>
-    <description>[PAWN_nameDef] made a living as a e while the Ratkin settlements ran out of food.vacuation Guide</description>
+    <title>camp guide</title>
+    <titleShort>guide</titleShort>
+    <description>[PAWN_nameDef] repaired wooden huts and portioned drinking water in a temporary refugee camp until a nearby power ordered the camp gone within days. Before the raid, [PAWN_pronoun] led those who could walk out the back and saw the huts burn.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1207,9 +1207,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y013_CrowdBornChild</defName>
     <slot>Childhood</slot>
-    <title>crowd-born child</title>
-    <titleShort>crowd-born child</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Crowd-Born Child.</description>
+    <title>refugee urchin</title>
+    <titleShort>urchin</titleShort>
+    <description>[PAWN_nameDef] was carried in the middle of a huge refugee column, where every halt pushed someone out of the line. After a scramble for grain, [PAWN_pronoun] remembered only the family's voices and was taken away by another group.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1221,9 +1221,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y014_AbandonedHouseRatEgg</defName>
     <slot>Childhood</slot>
-    <title>abandoned house rat egg</title>
-    <titleShort>abandoned house</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Abandoned House Rat Egg.</description>
+    <title>house foundling</title>
+    <titleShort>foundling</titleShort>
+    <description>[PAWN_nameDef] was left behind the door of an empty house with one piece of hard food and a promise of a quick return. Footsteps outside grew rare until passing refugees found [PAWN_objective] and took [PAWN_objective] from the house.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1235,9 +1235,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y015_DoorstepRatEgg</defName>
     <slot>Childhood</slot>
-    <title>doorstep rat egg</title>
-    <titleShort>doorstep rat</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Doorstep Rat Egg.</description>
+    <title>doorstep foundling</title>
+    <titleShort>foundling</titleShort>
+    <description>[PAWN_nameDef] was carried, feverish, to a strange settlement gate and remembered only a hand on [PAWN_possessive] brow. The mother could go no farther, pushed [PAWN_objective] through the door, and stayed outside.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1249,9 +1249,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y016_RationingApprentice</defName>
     <slot>Childhood</slot>
-    <title>rationing apprentice</title>
-    <titleShort>rationing apprentice</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Rationing Apprentice.</description>
+    <title>ration apprentice</title>
+    <titleShort>apprentice</titleShort>
+    <description>[PAWN_nameDef] followed a begging group and was set to remember who had already received a spoon of food. When there was not enough, [PAWN_pronoun] gave the last share to a smaller child and was driven out of the group.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1263,9 +1263,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y017_GrainBarrelHiddenChild</defName>
     <slot>Childhood</slot>
-    <title>grain barrel hidden child</title>
-    <titleShort>grain barrel</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Grain Barrel Hidden Child.</description>
+    <title>barrel stowaway</title>
+    <titleShort>stowaway</titleShort>
+    <description>[PAWN_nameDef] was brought into a storehouse to steal grain and left behind when the adults fled. [PAWN_pronoun] hid in an empty barrel until dawn and after that checked for a way out before trusting company.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1277,9 +1277,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y018_WastelandBurrowLitter</defName>
     <slot>Childhood</slot>
-    <title>wasteland burrow litter</title>
-    <titleShort>wasteland burrow</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Wasteland Burrow Litter.</description>
+    <title>burrow foundling</title>
+    <titleShort>foundling</titleShort>
+    <description>[PAWN_nameDef] lived with ratkin in a wasteland burrow until rain flooded the entrance and the adults left with those who could walk. [PAWN_pronoun] hid for days in brush and ruins until a passing group heard [PAWN_objective] cry.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1291,9 +1291,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y019_ChildByTheCage</defName>
     <slot>Childhood</slot>
-    <title>child by the cage</title>
-    <titleShort>child by</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Child by the Cage.</description>
+    <title>wagon hauler</title>
+    <titleShort>hauler</titleShort>
+    <description>[PAWN_nameDef] grew up beside merchant wagons where medicine, grain sacks, and children were locked in separate cages. When the route collapsed, the leader abandoned the cargo and the children, and [PAWN_pronoun] followed a guard toward a new trade stop.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1305,9 +1305,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y020_HiddenTradeChild</defName>
     <slot>Childhood</slot>
-    <title>hidden trade child</title>
-    <titleShort>hidden trade</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Hidden Trade Child.</description>
+    <title>trade stowaway</title>
+    <titleShort>stowaway</titleShort>
+    <description>[PAWN_nameDef] heard adults haggle over grain prices and which child could be taken, not knowing [PAWN_pronoun] was the goods. The deal failed, and [PAWN_pronoun] was hidden under a wagon and left the camp with the merchant and the other children.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1319,9 +1319,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y021_SiegeCampWaterRunner</defName>
     <slot>Childhood</slot>
-    <title>siege camp water runner</title>
-    <titleShort>siege camp</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Siege Camp Water Runner.</description>
+    <title>water runner</title>
+    <titleShort>runner</titleShort>
+    <description>[PAWN_nameDef] was trapped in a besieged camp where water could be fetched only through a narrow gap along the wall. Being small, [PAWN_pronoun] carried half-bowls to the gate guards and the younger children, then left with the others when the wall fell.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1333,9 +1333,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y022_ReliefLedgerChild</defName>
     <slot>Childhood</slot>
-    <title>relief ledger child</title>
-    <titleShort>relief ledger</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Relief Ledger Child.</description>
+    <title>relief clerk</title>
+    <titleShort>clerk</titleShort>
+    <description>[PAWN_nameDef] tracked each supply drop at a relief camp, including who received food and never got medicine. When the relief group left, [PAWN_pronoun] copied the remaining sacks and names onto a chip of wood and traveled on with the incomplete list.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1347,9 +1347,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y023_MapLostChild</defName>
     <slot>Childhood</slot>
-    <title>map-lost child</title>
-    <titleShort>map-lost child</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Map-Lost Child.</description>
+    <title>map carrier</title>
+    <titleShort>carrier</titleShort>
+    <description>[PAWN_nameDef] walked with an informant past marks for treasure, ruins, and small camps, taking the map circles for places to sleep. After a failed deal the informant fled alone, leaving [PAWN_objective] with only a few vague waypoints.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1361,9 +1361,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y024_BirthConvoyChild</defName>
     <slot>Childhood</slot>
-    <title>birth convoy child</title>
-    <titleShort>birth convoy</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Birth Convoy Child.</description>
+    <title>convoy child</title>
+    <titleShort>wanderer</titleShort>
+    <description>[PAWN_nameDef] crowded at the back of a column with a mother near birth, and every stop began with a search for shelter from the wind. Plague and scarce grain split them apart, and [PAWN_pronoun] reached a colony's edge holding the mother's empty bag.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1375,9 +1375,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y025_MisdeliveredChild</defName>
     <slot>Childhood</slot>
-    <title>misdelivered child</title>
-    <titleShort>misdelivered child</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Misdelivered Child.</description>
+    <title>crate foundling</title>
+    <titleShort>foundling</titleShort>
+    <description>[PAWN_nameDef] was supposed to travel with supplies to an agreed camp, but woke beside a transport crate at the wrong place. The haulers saw the bad coordinates and left, and [PAWN_pronoun] waited in the strange cargo until refugees took [PAWN_objective] away.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1389,9 +1389,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y026_MisnamedChild</defName>
     <slot>Childhood</slot>
-    <title>misnamed child</title>
-    <titleShort>misnamed child</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Misnamed Child.</description>
+    <title>named evacuee</title>
+    <titleShort>evacuee</titleShort>
+    <description>[PAWN_nameDef] was called by another child's name during an evacuation and did not correct the mistake, afraid of being left behind. The real family never came, and after a quarrel the person who had claimed [PAWN_objective] left, so [PAWN_pronoun] kept searching under the wrong name.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1404,8 +1404,8 @@
     <defName>RHAH_History_Y027_FamineCampChild</defName>
     <slot>Childhood</slot>
     <title>famine camp child</title>
-    <titleShort>famine camp</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Famine Camp Child.</description>
+    <titleShort>camp child</titleShort>
+    <description>[PAWN_nameDef] first saw a field already emptied by the grain levy, and the next season brought moldy seed and the sick. [PAWN_possessive] family split at the ration line, and [PAWN_pronoun] left with a refugee column without ever seeing a harvest.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1417,9 +1417,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y028_PlaguezoneChild</defName>
     <slot>Childhood</slot>
-    <title>plague-zone child</title>
-    <titleShort>plague-zone child</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Plague-zone Child.</description>
+    <title>plague zone child</title>
+    <titleShort>orderly</titleShort>
+    <description>[PAWN_nameDef] was turned out of a plague zone with [PAWN_possessive] family and waited outside each settlement for inspection. Fewer people brought food, kin stopped on the road, and [PAWN_pronoun] carried an empty medicine bag and unfinished names to the next quarantine shed.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1431,9 +1431,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y029_WoodenShelterOrphan</defName>
     <slot>Childhood</slot>
-    <title>wooden shelter orphan</title>
-    <titleShort>wooden shelter</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Wooden Shelter Orphan.</description>
+    <title>wooden hut orphan</title>
+    <titleShort>orphan</titleShort>
+    <description>[PAWN_nameDef] grew up in the wooden huts of a refugee camp and knew which door leaked and which well still held water. When the camp was ordered out, the children were split between columns, and [PAWN_pronoun] lost [PAWN_possessive] family at night with only a marked board.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1446,8 +1446,8 @@
     <defName>RHAH_History_Y030_DroughtFieldApprentice</defName>
     <slot>Childhood</slot>
     <title>drought field apprentice</title>
-    <titleShort>drought field</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Drought Field Apprentice.</description>
+    <titleShort>farmhand</titleShort>
+    <description>[PAWN_nameDef] worked a family field that had failed two seasons while the last water was saved for seed. [PAWN_pronoun] gathered windblown ears along the ridge until the dry field was abandoned, then left with the refugees.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1460,8 +1460,8 @@
     <defName>RHAH_History_Y031_SeedSortingApprentice</defName>
     <slot>Childhood</slot>
     <title>seed sorting apprentice</title>
-    <titleShort>seed sorting</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Seed Sorting Apprentice.</description>
+    <titleShort>seed sorter</titleShort>
+    <description>[PAWN_nameDef] helped [PAWN_possessive] family collect seed for a grain mill until damp mixed good seed with mold. [PAWN_pronoun] sorted sack by sack, and when the mill closed [PAWN_pronoun] left with only what [PAWN_pronoun] remembered about seed.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1474,8 +1474,8 @@
     <defName>RHAH_History_Y032_FenceHerdingChild</defName>
     <slot>Childhood</slot>
     <title>fence herding child</title>
-    <titleShort>fence herding</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Fence Herding Child.</description>
+    <titleShort>herder</titleShort>
+    <description>[PAWN_nameDef] was left in the fences of a farm whose people had been sent away, with a few animals not yet taken. When the water stopped, [PAWN_pronoun] drove the animals after a refugee column, and no one returned to the farm.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1487,9 +1487,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y033_DryWellWaterChild</defName>
     <slot>Childhood</slot>
-    <title>dry well water child</title>
-    <titleShort>dry well</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Dry Well Water Child.</description>
+    <title>dry well child</title>
+    <titleShort>water carrier</titleShort>
+    <description>[PAWN_nameDef] crawled down a distant dry well for water after the village well failed in late summer and adults barred their doors over one bucket. When the village was given up, [PAWN_pronoun] took the long road with the water crew.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1501,9 +1501,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y034_GrainSackRecorder</defName>
     <slot>Childhood</slot>
-    <title>grain sack recorder</title>
-    <titleShort>grain sack</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Grain Sack Recorder.</description>
+    <title>grain sack clerk</title>
+    <titleShort>clerk</titleShort>
+    <description>[PAWN_nameDef] waited by the barn door for [PAWN_possessive] family and learned the mark on every grain sack. After the owner moved the stores and locked the door, [PAWN_pronoun] left and never found that barn again.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1515,9 +1515,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y035_MillhandHelperChild</defName>
     <slot>Childhood</slot>
-    <title>millhand helper child</title>
-    <titleShort>millhand helper</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Millhand Helper Child.</description>
+    <title>mill helper child</title>
+    <titleShort>mill hand</titleShort>
+    <description>[PAWN_nameDef] cleared chaff at a grain mill and ate the broken grain left on the floor. After the mill was seized and spoiled grain was mixed into the rations, [PAWN_pronoun] and [PAWN_possessive] family left before the food was handed out.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1530,8 +1530,8 @@
     <defName>RHAH_History_Y036_WheelRepairApprentice</defName>
     <slot>Childhood</slot>
     <title>wheel repair apprentice</title>
-    <titleShort>wheel repair</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Wheel Repair Apprentice.</description>
+    <titleShort>wheelwright</titleShort>
+    <description>[PAWN_nameDef] mended broken spokes in the mud beside a carpenter fixing refugee carts. A flood scattered the column, [PAWN_possessive] family did not come, and [PAWN_pronoun] went on with the next cart that still rolled.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1544,8 +1544,8 @@
     <defName>RHAH_History_Y037_NeedleworkApprentice</defName>
     <slot>Childhood</slot>
     <title>needlework apprentice</title>
-    <titleShort>needlework apprentice</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Needlework Apprentice.</description>
+    <titleShort>tailor</titleShort>
+    <description>[PAWN_nameDef] threaded needles and patched strips cut from old clothes after the family weaving shop stopped. The last cloth burned in a fire, and [PAWN_pronoun] left with the refugees still able to sew those stitches.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1558,8 +1558,8 @@
     <defName>RHAH_History_Y038_HuntingGroundHelper</defName>
     <slot>Childhood</slot>
     <title>hunting ground helper</title>
-    <titleShort>hunting ground</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Hunting Ground Helper.</description>
+    <titleShort>hunter</titleShort>
+    <description>[PAWN_nameDef] followed [PAWN_possessive] family along the edge of a closed hunting ground, taking wounded beasts for meat. A hunt ran into a swarm of rats, the hunters did not return, and [PAWN_pronoun] joined a refugee column with the hides that were left.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1572,8 +1572,8 @@
     <defName>RHAH_History_Y039_HerbBasketApprentice</defName>
     <slot>Childhood</slot>
     <title>herb basket apprentice</title>
-    <titleShort>herb basket</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Herb Basket Apprentice.</description>
+    <titleShort>herbalist</titleShort>
+    <description>[PAWN_nameDef] carried an herb basket between quarantine sheds and houses for an herbalist too sick to walk. After the herbalist died and the shed was sealed, [PAWN_pronoun] left with the survivors and still knew which herbs could ease a fever for a while.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1585,9 +1585,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y040_KilnsideChildWorker</defName>
     <slot>Childhood</slot>
-    <title>kiln-side child worker</title>
-    <titleShort>kiln-side child</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Kiln-side Child Worker.</description>
+    <title>kiln child worker</title>
+    <titleShort>kiln hand</titleShort>
+    <description>[PAWN_nameDef] picked cinders and hauled broken brick beside the furnace with [PAWN_possessive] family at a brick kiln. The owner withheld pay and shut the lodging, and when the fire went out [PAWN_pronoun] sought shelter with the other kiln hands.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1600,8 +1600,8 @@
     <defName>RHAH_History_Y041_CampfireOrphan</defName>
     <slot>Childhood</slot>
     <title>campfire orphan</title>
-    <titleShort>campfire orphan</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Campfire Orphan.</description>
+    <titleShort>orphan</titleShort>
+    <description>[PAWN_nameDef] lost [PAWN_possessive] family in a ration crowd and remembered only the campfire [PAWN_possessive] family had kept. [PAWN_pronoun] followed night fires for days, found no one, and then walked on with people willing to share food.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1614,8 +1614,8 @@
     <defName>RHAH_History_Y042_RiverRaftApprentice</defName>
     <slot>Childhood</slot>
     <title>river raft apprentice</title>
-    <titleShort>river raft</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as River Raft Apprentice.</description>
+    <titleShort>boatman</titleShort>
+    <description>[PAWN_nameDef] was left on a riverbank after a storm and lashed a raft from driftwood and old doors with a few other children. The raft carried [PAWN_objective] to a strange shore, and flood and famine had already taken the old village.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1628,8 +1628,8 @@
     <defName>RHAH_History_Y043_RaidedVillageChild</defName>
     <slot>Childhood</slot>
     <title>raided village child</title>
-    <titleShort>raided village</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Raided Village Child.</description>
+    <titleShort>scavenger</titleShort>
+    <description>[PAWN_nameDef] went back with [PAWN_possessive] family to a raided village to find pots, cloth, and old blankets. Empty houses and rats filled the lanes, the family left [PAWN_objective] behind, and [PAWN_pronoun] fled with the next group of searchers.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1641,9 +1641,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y044_SnowprintApprentice</defName>
     <slot>Childhood</slot>
-    <title>snowprint apprentice</title>
-    <titleShort>snowprint apprentice</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Snowprint Apprentice.</description>
+    <title>snow track apprentice</title>
+    <titleShort>tracker</titleShort>
+    <description>[PAWN_nameDef] used footprints in the snow to find the next campfire after heavy snow closed the mountain road. An avalanche buried the old path, a caravan picked [PAWN_objective] up, and [PAWN_pronoun] learned to read the wind and the tracks.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1656,8 +1656,8 @@
     <defName>RHAH_History_Y045_PackAnimalApprentice</defName>
     <slot>Childhood</slot>
     <title>pack animal apprentice</title>
-    <titleShort>pack animal</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Pack Animal Apprentice.</description>
+    <titleShort>drover</titleShort>
+    <description>[PAWN_nameDef] took the last pack animals into the shade after thieves stole a caravan's water skins. The caravan broke up and no one came for [PAWN_objective], so [PAWN_pronoun] crossed the dry country with the animals and another band of refugees.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1669,9 +1669,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y046_NightWatchChild</defName>
     <slot>Childhood</slot>
-    <title>night watch child</title>
-    <titleShort>night watch</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Night Watch Child.</description>
+    <title>night watch apprentice</title>
+    <titleShort>sentry</titleShort>
+    <description>[PAWN_nameDef] lived in a refugee camp where grain was stolen night after night and the adults' watches could not stop the raids. [PAWN_pronoun] could not sleep, learned every kind of footstep, and still listened for those steps when the camp moved.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1683,9 +1683,9 @@
   <BackstoryDef>
     <defName>RHAH_History_Y047_CheckpointEvasionApprentice</defName>
     <slot>Childhood</slot>
-    <title>checkpoint evasion apprentice</title>
-    <titleShort>checkpoint evasion</titleShort>
-    <description>[PAWN_nameDef] was still young during the famine. That childhood is remembered as Checkpoint Evasion Apprentice.</description>
+    <title>checkpoint runner</title>
+    <titleShort>smuggler</titleShort>
+    <description>[PAWN_nameDef] hid under the carts with [PAWN_possessive] family to slip past grain-tax checkpoints, and the patrol hours became the landmarks [PAWN_pronoun] knew. At one inspection the family was held, and [PAWN_pronoun] escaped into another column and never saw them again.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1699,7 +1699,7 @@
     <slot>Childhood</slot>
     <title>famine newborn</title>
     <titleShort>newborn</titleShort>
-    <description>[PAWN_nameDef] was born while the famine was already in the settlements. There was no childhood work to remember, only the road.</description>
+    <description>[PAWN_nameDef] was born only after famine had entered the ratkin settlement. There was no childhood work worth remembering, only the road.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1710,7 +1710,7 @@
     <slot>Adulthood</slot>
     <title>famine refugee</title>
     <titleShort>refugee</titleShort>
-    <description>[PAWN_nameDef] left a Ratkin settlement after the stores ran out. The work that paid for the next meal is what remains.</description>
+    <description>[PAWN_nameDef] left the ratkin settlement after the storehouse ran empty. [PAWN_pronoun] still worked in exchange for the next meal.</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>

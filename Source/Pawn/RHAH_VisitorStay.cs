@@ -4,6 +4,7 @@ using Verse.AI.Group;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Identity;
 using Verse;
+using Verse.AI;
 
 namespace HungerAndHavoc.Pawn
 {
@@ -64,6 +65,43 @@ namespace HungerAndHavoc.Pawn
 
             RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
             return true;
+        }
+
+        internal static int Kind(Verse.Pawn pawn)
+        {
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            return comp == null ? (int)RHAH_StayKind.None : comp.State.stayKind;
+        }
+
+        internal static bool BlocksAssignedWork(Verse.Pawn pawn, int now)
+        {
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            if (comp == null || pawn == null)
+            {
+                return false;
+            }
+
+            return RHAH_VisitorRules.BlocksAssignedWork(
+                comp.State.stayKind,
+                now,
+                comp.State.leaveAfterGameTick,
+                pawn.Downed);
+        }
+
+        internal static bool RejectsAssignedJob(Verse.Pawn pawn, Job job, ThinkNode giver)
+        {
+            if (pawn == null || job == null || job.playerForced || RHAH_VisitorRules.IsPassiveDefense(job.def))
+            {
+                return false;
+            }
+
+            if (RHAH_VisitorRules.IsNeedFood(giver) || job.def == JobDefOf.Ingest)
+            {
+                return false;
+            }
+
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            return BlocksAssignedWork(pawn, now);
         }
 
         internal static void ClearTrade(Verse.Pawn pawn, RHAH_ReleaseReason reason, bool letterBatch)

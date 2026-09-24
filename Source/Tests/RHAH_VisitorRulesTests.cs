@@ -45,6 +45,10 @@ namespace HungerAndHavoc.Tests
             Assert.True(RHAH_VisitorRules.AddsColdClothes(0, true, false, -20f, 10f));
             Assert.False(RHAH_VisitorRules.AddsColdClothes(1, false, false, -20f, 10f));
             Assert.True(RHAH_VisitorRules.AddsColdClothes(2, false, false, -20f, 10f));
+            Assert.Equal("RHAH_Cold_StrawQuilt", RHAH_VisitorRules.SelectTemperatureApparel(-1, 16f, name => true, RHAH_VisitorRules.DefaultInsulation));
+            Assert.Equal("RHAH_Cold_HideWrap", RHAH_VisitorRules.SelectTemperatureApparel(-1, 80f, name => true, RHAH_VisitorRules.DefaultInsulation));
+            Assert.Equal("RHAH_Heat_BarkWrap", RHAH_VisitorRules.SelectTemperatureApparel(1, 24f, name => name != "RHAH_Heat_MudCoat", RHAH_VisitorRules.DefaultInsulation));
+            Assert.Null(RHAH_VisitorRules.SelectTemperatureApparel(0, 20f, name => true, RHAH_VisitorRules.DefaultInsulation));
             Assert.Equal(0, RHAH_VisitorRules.ClampOwnedTraits(-1));
             Assert.Equal(3, RHAH_VisitorRules.ClampOwnedTraits(9));
         }
@@ -96,17 +100,43 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void HireExpiresAndADownedWorkerKeepsTheRemainingTime()
         {
-            int deadline = RHAH_VisitorRules.BeginStay(0, RHAH_StayKind.Hire, 5, 60);
-            Assert.Equal(60 * RHAH_VisitorRules.TicksPerDay, deadline);
+            int deadline = RHAH_VisitorRules.BeginStay(0, RHAH_StayKind.Hire, 5, 240);
+            Assert.Equal(240 * RHAH_VisitorRules.TicksPerDay, deadline);
             Assert.False(RHAH_VisitorRules.StayExpired(deadline, deadline, true));
             int resumed = RHAH_VisitorRules.ResumeStay(deadline + 1000, deadline, 5000, false);
             Assert.Equal(deadline + 1000 + 5000, resumed);
             Assert.True(RHAH_VisitorRules.StayExpired(resumed, resumed, false));
+            Assert.Equal(5 * RHAH_VisitorRules.TicksPerDay, RHAH_VisitorRules.BeginStay(0, RHAH_StayKind.Recruit, 5, 240));
+            Assert.Equal(240, RHAH_VisitorRules.DefaultHireDays);
+            Assert.Equal(240, RHAH_VisitorRules.MaxShelterDays);
+            Assert.Equal(2400, RHAH_VisitorRules.MaxHireDays);
+            Assert.Equal(1, RHAH_VisitorRules.StayYears(60));
+            Assert.Equal(5, RHAH_VisitorRules.StayRestDays(65));
+            Assert.Equal(0, RHAH_VisitorRules.StayYears(5));
+            Assert.Equal(5, RHAH_VisitorRules.StayRestDays(5));
             Assert.True(RHAH_VisitorRules.ClearsTrade(RHAH_ReleaseReason.Recruited, false));
             Assert.True(RHAH_VisitorRules.AcceptsStone(true, false));
             Assert.False(RHAH_VisitorRules.AcceptsStone(true, true));
             Assert.True(RHAH_VisitorRules.LiftsAgeImmobility(false, true, true, false));
             Assert.False(RHAH_VisitorRules.LiftsAgeImmobility(false, true, true, true));
+        }
+
+        [Fact]
+        public void ColonyStayBlocksModBehaviorAndExpiredWorkKeepsDefense()
+        {
+            Assert.True(RHAH_VisitorRules.IsColonyStay((int)RHAH_StayKind.Shelter));
+            Assert.True(RHAH_VisitorRules.IsColonyStay((int)RHAH_StayKind.Hire));
+            Assert.True(RHAH_VisitorRules.IsColonyStay((int)RHAH_StayKind.Recruit));
+            Assert.False(RHAH_VisitorRules.IsColonyStay((int)RHAH_StayKind.None));
+            Assert.False(RHAH_VisitorRules.AllowsModBehavior((int)RHAH_StayKind.Recruit));
+            Assert.True(RHAH_VisitorRules.AllowsModBehavior((int)RHAH_StayKind.None));
+            Assert.False(RHAH_VisitorRules.BlocksAssignedWork((int)RHAH_StayKind.Hire, 10, 20, false));
+            Assert.True(RHAH_VisitorRules.BlocksAssignedWork((int)RHAH_StayKind.Hire, 20, 20, false));
+            Assert.False(RHAH_VisitorRules.BlocksAssignedWork((int)RHAH_StayKind.Hire, 20, 20, true));
+            Assert.False(RHAH_VisitorRules.AllowsGnaw(true, true, true, false, 0.01f, 0.05f, false, false));
+            Assert.False(RHAH_VisitorRules.AllowsGnaw(true, true, false, true, 0.01f, 0.05f, false, false));
+            Assert.True(RHAH_VisitorRules.AllowsGnaw(true, true, true, true, 0.049f, 0.05f, false, false));
+            Assert.False(RHAH_VisitorRules.AllowsGnaw(true, true, true, true, 0.05f, 0.05f, false, false));
         }
 
         [Fact]

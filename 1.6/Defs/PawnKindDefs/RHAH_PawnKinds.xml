@@ -6,6 +6,8 @@
     <race>Ratkin</race>
     <defaultFactionType>RHAH_Faction_Neutral</defaultFactionType>
     <combatPower>30</combatPower>
+    <initialWillRange>0~0</initialWillRange>
+    <initialResistanceRange>0~0</initialResistanceRange>
     <isFighter>false</isFighter>
     <apparelMoney>80~250</apparelMoney>
     <apparelAllowHeadgearChance>0.2</apparelAllowHeadgearChance>

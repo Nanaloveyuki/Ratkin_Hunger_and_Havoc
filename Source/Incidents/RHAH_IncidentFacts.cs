@@ -148,8 +148,8 @@ namespace HungerAndHavoc.Incidents
 
         static void SendLetter(RHAH_IncidentContext context, RHAH_ChoiceRecord record)
         {
-            string label = "RHAH_Choice_Label".Translate();
-            string text = "RHAH_Choice_Text".Translate(record.Amount, RHAH_RequestRules.ThingDefName(record.Kind) ?? record.DisplayId);
+            string label = LetterLabel(record);
+            string text = LetterText(record);
             ChoiceLetter letter;
             if (record.Kind == RHAH_RequestKind.None)
             {
@@ -173,6 +173,73 @@ namespace HungerAndHavoc.Incidents
             }
 
             Find.LetterStack.ReceiveLetter(letter);
+        }
+
+        static string LetterLabel(RHAH_ChoiceRecord record)
+        {
+            return (ChoiceKey(record) + "_Label").Translate();
+        }
+
+        static string LetterText(RHAH_ChoiceRecord record)
+        {
+            string key = ChoiceKey(record) + "_Text";
+            string incident = IncidentLabel(record.DisplayId);
+            if (record.Kind == RHAH_RequestKind.Baby)
+            {
+                return key.Translate(incident);
+            }
+
+            if (record.Kind == RHAH_RequestKind.None)
+            {
+                return key.Translate(incident);
+            }
+
+            return key.Translate(incident, record.Amount, GoodsLabel(record));
+        }
+
+        static string ChoiceKey(RHAH_ChoiceRecord record)
+        {
+            if (record.Kind == RHAH_RequestKind.Baby)
+            {
+                return "RHAH_Choice_Baby";
+            }
+
+            switch (record.Choice)
+            {
+                case RHAH_ChoiceKind.Aid: return "RHAH_Choice_Aid";
+                case RHAH_ChoiceKind.Intel: return "RHAH_Choice_Intel";
+                case RHAH_ChoiceKind.Refugees: return "RHAH_Choice_Refugees";
+                case RHAH_ChoiceKind.Abandoned: return "RHAH_Choice_Abandoned";
+                case RHAH_ChoiceKind.ChildExchange: return "RHAH_Choice_ChildExchange";
+                case RHAH_ChoiceKind.Kinship: return "RHAH_Choice_Kinship";
+                case RHAH_ChoiceKind.Airdrop: return "RHAH_Choice_Airdrop";
+                case RHAH_ChoiceKind.Visitors: return "RHAH_Choice_Visitors";
+                default: return "RHAH_Choice";
+            }
+        }
+
+        static string IncidentLabel(string displayId)
+        {
+            RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
+            if (entry == null)
+            {
+                return displayId;
+            }
+
+            return entry.LabelKey.Translate();
+        }
+
+        static string GoodsLabel(RHAH_ChoiceRecord record)
+        {
+            switch (record.Kind)
+            {
+                case RHAH_RequestKind.SimpleMeal: return "RHAH_Choice_SimpleMeal".Translate();
+                case RHAH_RequestKind.FineMeal: return "RHAH_Choice_FineMeal".Translate();
+                case RHAH_RequestKind.Medicine: return "RHAH_Choice_Medicine".Translate();
+                case RHAH_RequestKind.HerbalMedicine: return "RHAH_Choice_HerbalMedicine".Translate();
+                case RHAH_RequestKind.Silver: return "RHAH_Choice_Silver".Translate();
+                default: return record.DisplayId;
+            }
         }
     }
 }

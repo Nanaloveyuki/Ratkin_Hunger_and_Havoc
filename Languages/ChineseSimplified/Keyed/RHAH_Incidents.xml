@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <RHAH_Incident_LargeRefugeeWave_Label>大型流民冲击</RHAH_Incident_LargeRefugeeWave_Label>
+  <RHAH_Incident_LargeRefugeeWave_Label>大批逃难者</RHAH_Incident_LargeRefugeeWave_Label>
   <RHAH_Incident_AbandonedRatkinChildren_Label>幼年鼠族遗弃</RHAH_Incident_AbandonedRatkinChildren_Label>
   <RHAH_Incident_ShatteredMother_Label>耗子分妈</RHAH_Incident_ShatteredMother_Label>
-  <RHAH_Incident_BeggarFamily_Label>乞讨的灾荒鼠妈</RHAH_Incident_BeggarFamily_Label>
+  <RHAH_Incident_BeggarFamily_Label>乞讨的饥荒鼠族母亲</RHAH_Incident_BeggarFamily_Label>
   <RHAH_Incident_BeggarGroup_Label>乞讨的鼠族队伍</RHAH_Incident_BeggarGroup_Label>
   <RHAH_Incident_ThiefRatkinGroup_Label>偷窃的鼠族</RHAH_Incident_ThiefRatkinGroup_Label>
   <RHAH_Incident_ThiefRatkinChildGroup_Label>偷窃的幼年鼠族</RHAH_Incident_ThiefRatkinChildGroup_Label>
@@ -13,26 +13,26 @@
   <RHAH_Incident_FamineRefugees_Label>灾荒逃难者</RHAH_Incident_FamineRefugees_Label>
   <RHAH_Incident_RatkinTraderCaravan_Label>流民商队</RHAH_Incident_RatkinTraderCaravan_Label>
   <RHAH_Incident_ChildExchange_Label>易子而食</RHAH_Incident_ChildExchange_Label>
-  <RHAH_Incident_BeggarSiege_Label>鼠灾围攻</RHAH_Incident_BeggarSiege_Label>
+  <RHAH_Incident_BeggarSiege_Label>乞食围攻</RHAH_Incident_BeggarSiege_Label>
   <RHAH_Incident_AidSimpleMeal_Label>难民接济（简单餐）</RHAH_Incident_AidSimpleMeal_Label>
   <RHAH_Incident_AidFineMeal_Label>难民接济（精致餐）</RHAH_Incident_AidFineMeal_Label>
   <RHAH_Incident_AidMedicine_Label>难民接济（药品）</RHAH_Incident_AidMedicine_Label>
   <RHAH_Incident_AidSilver_Label>难民接济（白银）</RHAH_Incident_AidSilver_Label>
   <RHAH_Incident_AidBaby_Label>难民接济（婴儿）</RHAH_Incident_AidBaby_Label>
-  <RHAH_Incident_IntelTreasureSimpleMeal_Label>情报交易（宝藏·简单餐）</RHAH_Incident_IntelTreasureSimpleMeal_Label>
-  <RHAH_Incident_IntelTreasureHerbal_Label>情报交易（宝藏·草药）</RHAH_Incident_IntelTreasureHerbal_Label>
-  <RHAH_Incident_IntelTreasureSilver_Label>情报交易（宝藏·白银）</RHAH_Incident_IntelTreasureSilver_Label>
-  <RHAH_Incident_IntelStructureSimpleMeal_Label>情报交易（建筑·简单餐）</RHAH_Incident_IntelStructureSimpleMeal_Label>
-  <RHAH_Incident_IntelStructureHerbal_Label>情报交易（建筑·草药）</RHAH_Incident_IntelStructureHerbal_Label>
-  <RHAH_Incident_IntelStructureSilver_Label>情报交易（建筑·白银）</RHAH_Incident_IntelStructureSilver_Label>
-  <RHAH_Incident_IntelSettlementSimpleMeal_Label>情报交易（据点·简单餐）</RHAH_Incident_IntelSettlementSimpleMeal_Label>
-  <RHAH_Incident_IntelSettlementHerbal_Label>情报交易（据点·草药）</RHAH_Incident_IntelSettlementHerbal_Label>
-  <RHAH_Incident_IntelSettlementSilver_Label>情报交易（据点·白银）</RHAH_Incident_IntelSettlementSilver_Label>
+  <RHAH_Incident_IntelTreasureSimpleMeal_Label>情报（藏货，简单餐）</RHAH_Incident_IntelTreasureSimpleMeal_Label>
+  <RHAH_Incident_IntelTreasureHerbal_Label>情报（藏货，草药）</RHAH_Incident_IntelTreasureHerbal_Label>
+  <RHAH_Incident_IntelTreasureSilver_Label>情报（藏货，白银）</RHAH_Incident_IntelTreasureSilver_Label>
+  <RHAH_Incident_IntelStructureSimpleMeal_Label>情报（建筑，简单餐）</RHAH_Incident_IntelStructureSimpleMeal_Label>
+  <RHAH_Incident_IntelStructureHerbal_Label>情报（建筑，草药）</RHAH_Incident_IntelStructureHerbal_Label>
+  <RHAH_Incident_IntelStructureSilver_Label>情报（建筑，白银）</RHAH_Incident_IntelStructureSilver_Label>
+  <RHAH_Incident_IntelSettlementSimpleMeal_Label>情报（据点，简单餐）</RHAH_Incident_IntelSettlementSimpleMeal_Label>
+  <RHAH_Incident_IntelSettlementHerbal_Label>情报（据点，草药）</RHAH_Incident_IntelSettlementHerbal_Label>
+  <RHAH_Incident_IntelSettlementSilver_Label>情报（据点，白银）</RHAH_Incident_IntelSettlementSilver_Label>
   <RHAH_Incident_LaboringRefugees_Label>待产流民</RHAH_Incident_LaboringRefugees_Label>
   <RHAH_Incident_StrongSiege_Label>强势围攻</RHAH_Incident_StrongSiege_Label>
-  <RHAH_Incident_Passersby_Label>鼠灾路过</RHAH_Incident_Passersby_Label>
+  <RHAH_Incident_Passersby_Label>路过的鼠族</RHAH_Incident_Passersby_Label>
   <RHAH_Incident_AirdropMistake_Label>空投失误</RHAH_Incident_AirdropMistake_Label>
-  <RHAH_Incident_MisguidedKinship_Label>错误认知</RHAH_Incident_MisguidedKinship_Label>
+  <RHAH_Incident_MisguidedKinship_Label>认错亲人</RHAH_Incident_MisguidedKinship_Label>
   <RHAH_Incident_GreatFamine_Label>大灾荒</RHAH_Incident_GreatFamine_Label>
   <RHAH_Incident_CaravanMuggers_Label>商队劫掠</RHAH_Incident_CaravanMuggers_Label>
   <RHAH_Incident_PlagueWanderers_Label>鼠疫游荡者</RHAH_Incident_PlagueWanderers_Label>
@@ -46,7 +46,7 @@
   <RHAH_Incident_PlagueLaboringRefugees_Label>鼠疫待产流民</RHAH_Incident_PlagueLaboringRefugees_Label>
   <RHAH_Incident_PlagueStrongSiege_Label>鼠疫强势围攻</RHAH_Incident_PlagueStrongSiege_Label>
   <RHAH_Incident_PlagueAirdropMistake_Label>鼠疫空投失误</RHAH_Incident_PlagueAirdropMistake_Label>
-  <RHAH_Incident_PlagueMisguidedKinship_Label>鼠疫错误认知</RHAH_Incident_PlagueMisguidedKinship_Label>
+  <RHAH_Incident_PlagueMisguidedKinship_Label>鼠疫认错亲人</RHAH_Incident_PlagueMisguidedKinship_Label>
   <RHAH_Incident_PlagueGreatFamine_Label>鼠疫大灾荒</RHAH_Incident_PlagueGreatFamine_Label>
   <RHAH_Incident_PlagueRevenge_Label>鼠疫报复</RHAH_Incident_PlagueRevenge_Label>
   <RHAH_Incident_PlagueCaravanMuggers_Label>鼠疫商队劫掠</RHAH_Incident_PlagueCaravanMuggers_Label>

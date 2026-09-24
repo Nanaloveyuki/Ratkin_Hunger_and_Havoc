@@ -75,6 +75,58 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_ReliefFood.MatchesQuery(meal, "simple paste"));
             Assert.False(RHAH_ReliefFood.MatchesQuery(null, "meal"));
         }
+
+        [Fact]
+        public void GiveFoodDenylistStaysSeparateFromReliefFood()
+        {
+            RHAH_Settings settings = new RHAH_Settings();
+            settings.SetGiveFoodEnabled("MealSimple", false);
+            Assert.False(settings.IsGiveFoodEnabled("MealSimple"));
+            Assert.True(settings.IsGiveFoodEnabled("MealFine"));
+            Assert.True(settings.IsReliefFoodEnabled("MealSimple"));
+            settings.SetAllGiveFood(false, new List<string> { "MealFine" });
+            Assert.False(settings.IsGiveFoodEnabled("MealFine"));
+            Assert.True(settings.IsGiveFoodEnabled("MealSurvivalPack"));
+            settings.SetAllGiveFood(true, null);
+            Assert.True(settings.IsGiveFoodEnabled("MealFine"));
+            Assert.Equal(0, settings.giveFoodListMode);
+        }
+
+        [Fact]
+        public void GiveFoodGroupsByModNameAndVanillaCategory()
+        {
+            ThingDef meal = Categorized("MealSimple", "Core", "simple meal", "FoodMeals", "Foods");
+            ThingDef fine = Categorized("MealFine", "Core", "fine meal", "FoodMeals", "Foods");
+            ThingDef meat = Categorized("Meat_Cow", "Core", "cow meat", "MeatRaw", "FoodRaw");
+            ThingDef loose = Food("LooseBerry", null);
+            loose.label = "berry";
+
+            List<ThingDef> foods = new List<ThingDef> { meal, meat, fine, loose };
+            List<List<ThingDef>> byMod = RHAH_ReliefFood.GroupFoods(0, foods);
+            Assert.Equal(new[] { meal, meat, fine }, byMod[0]);
+            Assert.Equal(new[] { loose }, byMod[1]);
+            Assert.Equal("Core", RHAH_ReliefFood.GroupKey(0, meal));
+
+            List<List<ThingDef>> byName = RHAH_ReliefFood.GroupFoods(1, foods);
+            Assert.Equal(4, byName.Count);
+            Assert.Equal(new[] { loose }, byName[0]);
+            Assert.Equal(new[] { meat }, byName[1]);
+            Assert.Equal(new[] { fine }, byName[2]);
+            Assert.Equal(new[] { meal }, byName[3]);
+            Assert.Equal("B", RHAH_ReliefFood.GroupKey(1, loose));
+            Assert.Equal("C", RHAH_ReliefFood.GroupKey(1, meat));
+            Assert.Equal("F", RHAH_ReliefFood.GroupKey(1, fine));
+            Assert.Equal("S", RHAH_ReliefFood.GroupKey(1, meal));
+
+            List<List<ThingDef>> byCategory = RHAH_ReliefFood.GroupFoods(2, foods);
+            Assert.Equal("FoodMeals", RHAH_ReliefFood.GroupKey(2, fine));
+            Assert.Equal("FoodRaw", RHAH_ReliefFood.GroupKey(2, meat));
+            Assert.Equal("other", RHAH_ReliefFood.GroupKey(2, loose));
+            Assert.Equal(3, byCategory.Count);
+            Assert.Equal(new[] { fine, meal }, byCategory[0]);
+            Assert.Null(RHAH_ReliefFood.GroupTitle(2, "other"));
+            Assert.Empty(RHAH_ReliefFood.GroupFoods(2, null));
+        }
         static ThingDef Food(string defName, string modName)
         {
             ThingDef food = (ThingDef)FormatterServices.GetUninitializedObject(typeof(ThingDef));
@@ -87,6 +139,27 @@ namespace HungerAndHavoc.Tests
                 food.modContentPack = pack;
             }
 
+            return food;
+        }
+
+        static ThingDef Categorized(string defName, string modName, string label, string categoryName, string parentName)
+        {
+            ThingDef food = Food(defName, modName);
+            food.label = label;
+            ThingCategoryDef parent = (ThingCategoryDef)FormatterServices.GetUninitializedObject(typeof(ThingCategoryDef));
+            parent.defName = parentName;
+            ThingCategoryDef category = (ThingCategoryDef)FormatterServices.GetUninitializedObject(typeof(ThingCategoryDef));
+            category.defName = categoryName;
+            category.parent = parentName == "Foods" ? parent : null;
+            if (parentName != "Foods")
+            {
+                ThingCategoryDef foods = (ThingCategoryDef)FormatterServices.GetUninitializedObject(typeof(ThingCategoryDef));
+                foods.defName = "Foods";
+                parent.parent = foods;
+                category.parent = parent;
+            }
+
+            food.thingCategories = new List<ThingCategoryDef> { category };
             return food;
         }
     }

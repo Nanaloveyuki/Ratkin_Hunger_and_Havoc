@@ -132,7 +132,7 @@ namespace HungerAndHavoc.Generation
             float outdoor = request.Map?.mapTemperature == null ? 21f : request.Map.mapTemperature.OutdoorTemp;
             if (!profile.UseExplicitApparel)
             {
-                RHAH_RatkinAppearance.AddColdWrap(pawn, outdoor);
+                RHAH_TemperatureApparel.Apply(pawn, outdoor);
             }
             RHAH_ContentApplier.Apply(pawn, request, !profile.UseExplicitBackstory);
 
