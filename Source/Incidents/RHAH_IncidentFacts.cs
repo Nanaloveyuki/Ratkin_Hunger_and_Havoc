@@ -152,7 +152,7 @@ namespace HungerAndHavoc.Incidents
             if (record.Kind == RHAH_RequestKind.None)
             {
                 ChoiceLetter_RHAH_Visitors visitors = (ChoiceLetter_RHAH_Visitors)LetterMaker.MakeLetter(
-                    label, text, LetterDefOf.NeutralEvent);
+                    label, text, RHAH_DefOf.RHAH_ChoiceVisitors);
                 visitors.choiceId = record.Id;
                 visitors.choice = record.Choice;
                 letter = visitors;
@@ -160,7 +160,7 @@ namespace HungerAndHavoc.Incidents
             else
             {
                 ChoiceLetter_RHAH_Request request = (ChoiceLetter_RHAH_Request)LetterMaker.MakeLetter(
-                    label, text, LetterDefOf.NeutralEvent);
+                    label, text, RHAH_DefOf.RHAH_ChoiceRequest);
                 request.choiceId = record.Id;
                 request.mapId = record.MapId;
                 request.kind = record.Kind;

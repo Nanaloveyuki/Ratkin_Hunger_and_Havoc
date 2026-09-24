@@ -29,6 +29,8 @@ namespace HungerAndHavoc.Core
         public static FactionDef RHAH_Faction_Neutral;
         public static FactionDef RHAH_Faction_LeaningFriendly;
         public static FactionDef RHAH_Faction_Friendly;
+        public static LetterDef RHAH_ChoiceRequest;
+        public static LetterDef RHAH_ChoiceVisitors;
 
         static RHAH_DefOf()
         {
