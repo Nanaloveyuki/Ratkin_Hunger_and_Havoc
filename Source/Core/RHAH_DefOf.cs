@@ -33,6 +33,11 @@ namespace HungerAndHavoc.Core
         public static LetterDef RHAH_ChoiceVisitors;
         public static LetterDef RHAH_QuarantineLetter;
         public static PawnKindDef RHAH_PawnKind_Ratkin;
+        public static GeneDef RHAH_Gene_LargeLitter;
+        public static GeneDef RHAH_Gene_EarlyFertility;
+        public static GeneDef RHAH_Gene_HighFertility;
+        public static GeneDef RHAH_Gene_RoomFertility;
+        public static GeneDef RHAH_Gene_FastBirth;
 
         static RHAH_DefOf()
         {

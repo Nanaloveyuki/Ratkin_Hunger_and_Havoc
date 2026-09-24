@@ -218,6 +218,12 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_StayWorkPatch` 是 `internal`，Prefix `Pawn_JobTracker.StartJob`。长工、短工和招募的计时结束后，原版仍会派工作、休息和娱乐。补丁只拒绝这些非玩家强制、也不是近战反击、逃跑或进食的 Job。倒地期间计时暂停，不拦。
 `RHAH_IngestPatch` 是 `internal`，Postfix `Toils_Ingest.FinalizeIngest`。原版吃完不会写来源生命周期。补丁只给仍是访客的进食 Toil 加结束动作，结束时调用 `RHAH_Feeding.TryComplete`。啃食、未吃完和其它角色不改。
 `RHAH_DeathPatch` 是 `internal`，Postfix `Pawn.Kill`。原版死亡不改来源生命周期，也不拆访客 Lord。补丁只在目标已死亡且仍是活跃访客时写成 `Dead`，并调用 `NotifyDead`。已释放、已死亡和其它角色不改。
+`RHAH_EarlyFertilityPatch` 是 `internal`，Postfix `PregnancyUtility.CanEverProduceChild`。原版生育阶段从 13 岁起。补丁只在任一方有早熟、原版报告拒绝、且双方达到设定年龄时改成通过。死亡、同性、不育和已怀孕仍拒绝。
+`RHAH_HighFertilityPatch` 是 `internal`，Postfix `PregnancyUtility.PregnancyChanceForPartners`。原版几率不看本模组百分比。补丁只在任一方有高育时乘以设定百分比。其它配对不改。
+`RHAH_FastBirthPatch` 是 `internal`，Postfix `Hediff_Pregnant.TickInterval`。原版进度按种族孕期走，`GestationProgress` 不能从外部写入。补丁只在有速产且设定天数短于该种族孕期时，按天数比补上差额。到 1 后人类进产程，其它种族走原版分娩。没有速产的人走原版。
+`RHAH_RoomLovinPatch` 是 `internal`，Postfix `JobGiver_DoLovin.TryGiveJob`。原版只在冷却结束后自己找人。补丁只在结果为空、携带者有乱起、伴侣在同一张地图且双方能生育时补一个爱爱 Job。已有工作、征召中和睡着时不补。
+`RHAH_RoomBirthPatch` 是 `internal`，Postfix `JobDriver_Lovin.MakeNewToils`。原版爱爱结束按 5% 判定，哺乳把生育乘以 0.05。补丁只给携带乱起的母亲在爱爱结束时再判一次，几率仍是 5% 乘双方怀孕几率，并去掉哺乳这一项。其它来源的不育不改。其它爱爱不改。
+`RHAH_LargeLitterPatch` 是 `internal`，Postfix `PregnancyUtility.ApplyBirthOutcome`。原版人类一次只生一个。补丁只在母亲有多崽时按概率图补足数量。没有多崽的分娩不改。
 
 ## 检查门禁
 

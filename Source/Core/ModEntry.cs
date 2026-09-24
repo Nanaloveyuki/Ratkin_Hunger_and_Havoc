@@ -97,6 +97,19 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_PawnHistories_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_PawnTraits".Translate(), ref Settings.pawnTraitsEnabled,
                 "RHAH_Settings_PawnTraits_Tooltip".Translate());
+            listing.Label("RHAH_Settings_LitterMin".Translate(Settings.litterMin));
+            Settings.litterMin = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.litterMin, Generation.RHAH_FertilityRules.MinLitter, Generation.RHAH_FertilityRules.MaxLitter));
+            listing.Label("RHAH_Settings_LitterPeak".Translate(Settings.litterPeak));
+            Settings.litterPeak = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.litterPeak, Settings.litterMin, Settings.litterMax));
+            listing.Label("RHAH_Settings_LitterMax".Translate(Settings.litterMax));
+            Settings.litterMax = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.litterMax, Settings.litterMin, Generation.RHAH_FertilityRules.MaxLitter));
+            listing.Label("RHAH_Settings_FertileAge".Translate(Settings.fertileMinAge.ToString("0")));
+            Settings.fertileMinAge = UnityEngine.Mathf.Round(listing.Slider(Settings.fertileMinAge, Generation.RHAH_FertilityRules.MinFertileAge, Generation.RHAH_FertilityRules.MaxFertileAge));
+            listing.Label("RHAH_Settings_FertilityPercent".Translate(Settings.fertilityPercent.ToString("0")));
+            Settings.fertilityPercent = UnityEngine.Mathf.Round(listing.Slider(Settings.fertilityPercent, Generation.RHAH_FertilityRules.MinFertilityPercent, Generation.RHAH_FertilityRules.MaxFertilityPercent));
+            listing.Label("RHAH_Settings_GestationDays".Translate(Settings.gestationDays.ToString("0.0")));
+            Settings.gestationDays = listing.Slider(Settings.gestationDays, Generation.RHAH_FertilityRules.MinGestationDays, Generation.RHAH_FertilityRules.VanillaGestationFloorDays);
+            Generation.RHAH_FertilityRules.ClampLitter(ref Settings.litterMin, ref Settings.litterPeak, ref Settings.litterMax);
 
             listing.End();
             Settings.Write();

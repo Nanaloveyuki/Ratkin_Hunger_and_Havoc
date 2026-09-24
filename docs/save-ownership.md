@@ -288,6 +288,11 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_VisitorLeave | DutyDef | Remove |
 | RHAH_VisitorFallback | ThinkTreeDef | Remove |
 | RHAH_Gene_ThinRations | GeneDef | Remove。不替换成原版基因 |
+| RHAH_Gene_LargeLitter | GeneDef | Remove。不替换成原版基因 |
+| RHAH_Gene_EarlyFertility | GeneDef | Remove。不替换成原版基因 |
+| RHAH_Gene_HighFertility | GeneDef | Remove。不替换成原版基因 |
+| RHAH_Gene_RoomFertility | GeneDef | Remove。不替换成原版基因 |
+| RHAH_Gene_FastBirth | GeneDef | Remove。不替换成原版基因 |
 | RHAH_Xenotype_Ratkin | XenotypeDef | Remove。不替换成原版异种 |
 | RHAH_XenotypeIcon_Ratkin | XenotypeIconDef | Remove |
 | RHAH_Faction_Hostile | FactionDef | Remove。隐藏空派系，不替换成原版派系 |
@@ -333,6 +338,12 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.xenotypeWeights | 全局 ModSettings，默认空字典。缺键用登记建议权重。空字典不是全部禁用 |
 | RHAH_Settings.enabledXenotypeDefNames | 全局 ModSettings，默认空。玩家加入的外部异种 defName |
 | RHAH_Settings.enabledGeneDefNames | 全局 ModSettings，默认空。只允许 `RHAH_` 基因在生成后追加 |
+| RHAH_Settings.litterMin | 全局 ModSettings，默认 2。多崽一次分娩的最少数量，范围 1 到 12 |
+| RHAH_Settings.litterPeak | 全局 ModSettings，默认 4。多崽概率图的峰，夹在最少和最多之间 |
+| RHAH_Settings.litterMax | 全局 ModSettings，默认 6。多崽一次分娩的最多数量，不低于最少 |
+| RHAH_Settings.fertileMinAge | 全局 ModSettings，默认 1。早熟允许受孕的最小生理年龄，范围 1 到 14 |
+| RHAH_Settings.fertilityPercent | 全局 ModSettings，默认 300。高育相对常人的怀孕几率，范围 100 到 1000 |
+| RHAH_Settings.gestationDays | 全局 ModSettings，默认 5.661。速产最短孕期天数，范围 3 到原版下限 5.661 |
 | RHAH_Settings.reliefEnabled | 全局 ModSettings，默认 true。关闭后访客不受赈灾区限制 |
 | RHAH_Settings.allowEatOutsideRelief | 全局 ModSettings，默认 false。空值不是允许区外取食 |
 | RHAH_Settings.ignoreReliefAfterFed | 全局 ModSettings，默认 false |

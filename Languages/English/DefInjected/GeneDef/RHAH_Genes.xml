@@ -4,4 +4,28 @@
   <RHAH_Gene_ThinRations.description>Carriers of this gene need less food than normal. Hunger still comes, and they can still starve.</RHAH_Gene_ThinRations.description>
   <RHAH_Gene_ThinRations.customEffectDescriptions.0>Maximum nutrition need is 85% of normal</RHAH_Gene_ThinRations.customEffectDescriptions.0>
   <RHAH_Gene_ThinRations.customEffectDescriptions.1>Hunger still comes, and starvation still kills</RHAH_Gene_ThinRations.customEffectDescriptions.1>
+  <RHAH_Gene_LargeLitter.label>large litter</RHAH_Gene_LargeLitter.label>
+  <RHAH_Gene_LargeLitter.description>Carriers of this gene give birth to several young. The count falls between the set minimum and maximum, and the middle count is the most common.</RHAH_Gene_LargeLitter.description>
+  <RHAH_Gene_LargeLitter.customEffectDescriptions.0>Birth count falls between the set minimum and maximum</RHAH_Gene_LargeLitter.customEffectDescriptions.0>
+  <RHAH_Gene_LargeLitter.customEffectDescriptions.1>The middle count is the most common, and the ends are less so</RHAH_Gene_LargeLitter.customEffectDescriptions.1>
+  <RHAH_Gene_EarlyFertility.label>early fertility</RHAH_Gene_EarlyFertility.label>
+  <RHAH_Gene_EarlyFertility.description>Carriers of this gene can conceive once they reach the set age. Both partners must have reached that age. The usual life-stage limit no longer stops them.</RHAH_Gene_EarlyFertility.description>
+  <RHAH_Gene_EarlyFertility.customEffectDescriptions.0>Can conceive after the set age</RHAH_Gene_EarlyFertility.customEffectDescriptions.0>
+  <RHAH_Gene_EarlyFertility.customEffectDescriptions.1>Both partners must have reached that age</RHAH_Gene_EarlyFertility.customEffectDescriptions.1>
+  <RHAH_Gene_EarlyFertility.customEffectDescriptions.2>Age range is 1 to 14</RHAH_Gene_EarlyFertility.customEffectDescriptions.2>
+  <RHAH_Gene_HighFertility.label>high fertility</RHAH_Gene_HighFertility.label>
+  <RHAH_Gene_HighFertility.description>Carriers of this gene conceive at the set percent of the normal chance. The range is 100% to 1000%.</RHAH_Gene_HighFertility.description>
+  <RHAH_Gene_HighFertility.customEffectDescriptions.0>Pregnancy chance uses the set percent</RHAH_Gene_HighFertility.customEffectDescriptions.0>
+  <RHAH_Gene_HighFertility.customEffectDescriptions.1>Range is 100% to 1000% of normal</RHAH_Gene_HighFertility.customEffectDescriptions.1>
+  <RHAH_Gene_RoomFertility.label>room fertility</RHAH_Gene_RoomFertility.label>
+  <RHAH_Gene_RoomFertility.description>Carriers of this gene seek lovin' on their own. Conception is checked when lovin' ends, and it can happen while lactating. Both partners must be at least 1 year old.</RHAH_Gene_RoomFertility.description>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.0>Assigns lovin' on its own</RHAH_Gene_RoomFertility.customEffectDescriptions.0>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.1>Conception is checked after lovin' ends</RHAH_Gene_RoomFertility.customEffectDescriptions.1>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.2>Conception can happen while lactating</RHAH_Gene_RoomFertility.customEffectDescriptions.2>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.3>Both partners must be at least 1 year old</RHAH_Gene_RoomFertility.customEffectDescriptions.3>
+  <RHAH_Gene_FastBirth.label>fast birth</RHAH_Gene_FastBirth.label>
+  <RHAH_Gene_FastBirth.description>Carriers of this gene have a shorter pregnancy. It can be as short as 3 days, and no longer than the vanilla lower bound.</RHAH_Gene_FastBirth.description>
+  <RHAH_Gene_FastBirth.customEffectDescriptions.0>Pregnancy is shortened to the set length</RHAH_Gene_FastBirth.customEffectDescriptions.0>
+  <RHAH_Gene_FastBirth.customEffectDescriptions.1>Shortest pregnancy is 3 days</RHAH_Gene_FastBirth.customEffectDescriptions.1>
+  <RHAH_Gene_FastBirth.customEffectDescriptions.2>No longer than the vanilla lower bound</RHAH_Gene_FastBirth.customEffectDescriptions.2>
 </LanguageData>

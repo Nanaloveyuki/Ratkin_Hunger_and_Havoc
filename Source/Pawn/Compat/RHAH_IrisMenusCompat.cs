@@ -1311,7 +1311,7 @@ namespace HungerAndHavoc.Pawn.Compat
             return false;
         }
 
-        static void DrawGeneSwitches(Listing_Standard list, RHAH_Settings settings)
+        void DrawGeneSwitches(Listing_Standard list, RHAH_Settings settings)
         {
             Section(list, "RHAH_Menu_Genes_Switches");
             List<GeneDef> genes = RHAH_XenotypeResolver.LoadedOwnedGenes();
@@ -1326,6 +1326,53 @@ namespace HungerAndHavoc.Pawn.Compat
                 bool enabled = settings.IsGeneEnabled(genes[i].defName);
                 MenuControls.Checkbox(list, genes[i].LabelCap, ref enabled, genes[i].description);
                 settings.SetGeneEnabled(genes[i].defName, enabled);
+                DrawFertility(list, settings, genes[i].defName);
+            }
+        }
+        void DrawFertility(Listing_Standard list, RHAH_Settings settings, string defName)
+        {
+            if (!settings.IsGeneEnabled(defName))
+            {
+                return;
+            }
+
+            if (defName == RHAH_FertilityRules.LargeLitter)
+            {
+                string minimum = Buffer(weightBuffers, "litter-min", settings.litterMin, "0");
+                settings.litterMin = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_LitterMin".Translate(settings.litterMin), settings.litterMin, ref minimum, RHAH_FertilityRules.MinLitter, RHAH_FertilityRules.MaxLitter, "0", "RHAH_Menu_Genes_LitterMinTip".Translate());
+                weightBuffers["litter-min"] = minimum;
+                string maximum = Buffer(weightBuffers, "litter-max", settings.litterMax, "0");
+                settings.litterMax = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_LitterMax".Translate(settings.litterMax), settings.litterMax, ref maximum, settings.litterMin, RHAH_FertilityRules.MaxLitter, "0", "RHAH_Menu_Genes_LitterMaxTip".Translate());
+                weightBuffers["litter-max"] = maximum;
+                string peak = Buffer(weightBuffers, "litter-peak", settings.litterPeak, "0");
+                settings.litterPeak = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_LitterPeak".Translate(settings.litterPeak), settings.litterPeak, ref peak, settings.litterMin, settings.litterMax, "0", "RHAH_Menu_Genes_LitterPeakTip".Translate());
+                weightBuffers["litter-peak"] = peak;
+                RHAH_FertilityRules.ClampLitter(ref settings.litterMin, ref settings.litterPeak, ref settings.litterMax);
+                RHAH_IrisMenusWidgets.LitterCurve(list, "litter-curve", settings.litterMin, settings.litterPeak, settings.litterMax);
+                return;
+            }
+
+            if (defName == RHAH_FertilityRules.EarlyFertility)
+            {
+                string age = Buffer(weightBuffers, "fertile-age", settings.fertileMinAge, "0");
+                settings.fertileMinAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FertileAge".Translate(settings.fertileMinAge.ToString("0")), settings.fertileMinAge, ref age, RHAH_FertilityRules.MinFertileAge, RHAH_FertilityRules.MaxFertileAge, "0", "RHAH_Menu_Genes_FertileAgeTip".Translate());
+                weightBuffers["fertile-age"] = age;
+                return;
+            }
+
+            if (defName == RHAH_FertilityRules.HighFertility)
+            {
+                string percent = Buffer(weightBuffers, "fertility-percent", settings.fertilityPercent, "0");
+                settings.fertilityPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FertilityPercent".Translate(settings.fertilityPercent.ToString("0")), settings.fertilityPercent, ref percent, RHAH_FertilityRules.MinFertilityPercent, RHAH_FertilityRules.MaxFertilityPercent, "0", "RHAH_Menu_Genes_FertilityTip".Translate());
+                weightBuffers["fertility-percent"] = percent;
+                return;
+            }
+
+            if (defName == RHAH_FertilityRules.FastBirth)
+            {
+                string days = Buffer(weightBuffers, "gestation-days", settings.gestationDays, "0.0");
+                settings.gestationDays = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_GestationDays".Translate(settings.gestationDays.ToString("0.0")), settings.gestationDays, ref days, RHAH_FertilityRules.MinGestationDays, RHAH_FertilityRules.VanillaGestationFloorDays, "0.0", "RHAH_Menu_Genes_GestationTip".Translate());
+                weightBuffers["gestation-days"] = days;
             }
         }
 
@@ -1709,6 +1756,10 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             yield return Entry("genes-weights", "RHAH_Menu_Genes");
             yield return Entry("genes-switches", "RHAH_Menu_Genes_Switches");
+            yield return Entry("litter-curve", "RHAH_Menu_Genes_LitterCurve");
+            yield return Entry("fertile-age", "RHAH_Settings_FertileAge");
+            yield return Entry("fertility-percent", "RHAH_Settings_FertilityPercent");
+            yield return Entry("gestation-days", "RHAH_Settings_GestationDays");
         }
 
         IEnumerable<MenuSearchEntry> SearchPawnHistory()

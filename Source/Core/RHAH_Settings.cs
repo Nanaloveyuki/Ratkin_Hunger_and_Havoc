@@ -14,6 +14,12 @@ namespace HungerAndHavoc.Core
         Dictionary<string, float> xenotypeWeights = new Dictionary<string, float>();
         List<string> enabledXenotypeDefNames = new List<string>();
         List<string> enabledGeneDefNames = new List<string>();
+        public int litterMin = Generation.RHAH_FertilityRules.DefaultLitterMin;
+        public int litterPeak = Generation.RHAH_FertilityRules.DefaultLitterPeak;
+        public int litterMax = Generation.RHAH_FertilityRules.DefaultLitterMax;
+        public float fertileMinAge = Generation.RHAH_FertilityRules.DefaultFertileAge;
+        public float fertilityPercent = Generation.RHAH_FertilityRules.DefaultFertilityPercent;
+        public float gestationDays = Generation.RHAH_FertilityRules.DefaultGestationDays;
         public bool reliefEnabled = true;
         public bool allowEatOutsideRelief;
         public bool ignoreReliefAfterFed;
@@ -121,6 +127,12 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref xenotypeWeights, "xenotypeWeights", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref enabledXenotypeDefNames, "enabledXenotypeDefNames", LookMode.Value);
             Scribe_Collections.Look(ref enabledGeneDefNames, "enabledGeneDefNames", LookMode.Value);
+            Scribe_Values.Look(ref litterMin, "litterMin", Generation.RHAH_FertilityRules.DefaultLitterMin);
+            Scribe_Values.Look(ref litterPeak, "litterPeak", Generation.RHAH_FertilityRules.DefaultLitterPeak);
+            Scribe_Values.Look(ref litterMax, "litterMax", Generation.RHAH_FertilityRules.DefaultLitterMax);
+            Scribe_Values.Look(ref fertileMinAge, "fertileMinAge", Generation.RHAH_FertilityRules.DefaultFertileAge);
+            Scribe_Values.Look(ref fertilityPercent, "fertilityPercent", Generation.RHAH_FertilityRules.DefaultFertilityPercent);
+            Scribe_Values.Look(ref gestationDays, "gestationDays", Generation.RHAH_FertilityRules.DefaultGestationDays);
             Scribe_Values.Look(ref reliefEnabled, "reliefEnabled", true);
             Scribe_Values.Look(ref allowEatOutsideRelief, "allowEatOutsideRelief", false);
             Scribe_Values.Look(ref ignoreReliefAfterFed, "ignoreReliefAfterFed", false);
@@ -241,6 +253,7 @@ namespace HungerAndHavoc.Core
                 refugeePredationChancePercent = HungerAndHavoc.Incidents.RHAH_PredationRules.ClampChance(refugeePredationChancePercent);
                 ClampPlagueRules();
                 ClampFamilyWeights();
+                ClampFertility();
             }
         }
 
@@ -548,6 +561,7 @@ namespace HungerAndHavoc.Core
             maxOwnedTraits = Pawn.RHAH_VisitorRules.ClampOwnedTraits(maxOwnedTraits);
             contentListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(contentListMode, 3);
             giveFoodListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(giveFoodListMode, 3);
+            ClampFertility();
 
             reliefFoodScoreBonus = Pawn.RHAH_VisitorRules.ClampBonus(reliefFoodScoreBonus);
             fedStayDays = ClampStayDays(fedStayDays, 0.5f);
@@ -581,6 +595,14 @@ namespace HungerAndHavoc.Core
                 maximumEventTemperature = swap;
             }
         }
+        void ClampFertility()
+        {
+            Generation.RHAH_FertilityRules.ClampLitter(ref litterMin, ref litterPeak, ref litterMax);
+            fertileMinAge = Generation.RHAH_FertilityRules.ClampFertileAge(fertileMinAge);
+            fertilityPercent = Generation.RHAH_FertilityRules.ClampFertilityPercent(fertilityPercent);
+            gestationDays = Generation.RHAH_FertilityRules.ClampGestationDays(gestationDays);
+        }
+
 
 
         static float ClampStayDays(float days, float fallback)

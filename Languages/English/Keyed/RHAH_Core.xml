@@ -238,6 +238,20 @@
   <RHAH_Menu_Genes_Remove>Remove</RHAH_Menu_Genes_Remove>
   <RHAH_Menu_Genes_UnknownMod>Unknown source</RHAH_Menu_Genes_UnknownMod>
   <RHAH_Menu_Genes_NoOwned>No Hunger and Havoc genes are available to toggle.</RHAH_Menu_Genes_NoOwned>
+  <RHAH_Settings_LitterMin>Fewest young {0}</RHAH_Settings_LitterMin>
+  <RHAH_Settings_LitterPeak>Most common young {0}</RHAH_Settings_LitterPeak>
+  <RHAH_Settings_LitterMax>Most young {0}</RHAH_Settings_LitterMax>
+  <RHAH_Settings_FertileAge>Earliest fertile age {0}</RHAH_Settings_FertileAge>
+  <RHAH_Settings_FertilityPercent>Pregnancy chance {0}%</RHAH_Settings_FertilityPercent>
+  <RHAH_Settings_GestationDays>Shortest pregnancy {0} days</RHAH_Settings_GestationDays>
+  <RHAH_Menu_Genes_LitterCurve>Litter size</RHAH_Menu_Genes_LitterCurve>
+  <RHAH_Menu_Genes_LitterTip>{0} young, relative chance {1}</RHAH_Menu_Genes_LitterTip>
+  <RHAH_Menu_Genes_LitterMinTip>A birth has at least this many young. Range 1 to 12.</RHAH_Menu_Genes_LitterMinTip>
+  <RHAH_Menu_Genes_LitterPeakTip>This count is the most common. It stays between the minimum and the maximum.</RHAH_Menu_Genes_LitterPeakTip>
+  <RHAH_Menu_Genes_LitterMaxTip>A birth has at most this many young. It cannot fall below the minimum.</RHAH_Menu_Genes_LitterMaxTip>
+  <RHAH_Menu_Genes_FertileAgeTip>Both partners can conceive once they reach this age. Range 1 to 14.</RHAH_Menu_Genes_FertileAgeTip>
+  <RHAH_Menu_Genes_FertilityTip>Pregnancy chance compared with normal. Range 100% to 1000%.</RHAH_Menu_Genes_FertilityTip>
+  <RHAH_Menu_Genes_GestationTip>The shortest pregnancy is 3 days. It cannot run longer than the vanilla lower bound.</RHAH_Menu_Genes_GestationTip>
   <RHAH_Menu_PawnHistory_Note>New visitors draw one checked history. Someone whose story the event already wrote keeps it. Traits can still be drawn.</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>Enable all histories</RHAH_Menu_PawnHistory_EnableAll>
   <RHAH_Menu_PawnHistory_DisableAll>Disable all histories</RHAH_Menu_PawnHistory_DisableAll>

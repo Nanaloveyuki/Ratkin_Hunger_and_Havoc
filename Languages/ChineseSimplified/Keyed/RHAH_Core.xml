@@ -238,6 +238,20 @@
   <RHAH_Menu_Genes_Remove>移出</RHAH_Menu_Genes_Remove>
   <RHAH_Menu_Genes_UnknownMod>未知来源</RHAH_Menu_Genes_UnknownMod>
   <RHAH_Menu_Genes_NoOwned>当前没有可开关的饥与祸基因。</RHAH_Menu_Genes_NoOwned>
+  <RHAH_Settings_LitterMin>最少幼崽 {0}</RHAH_Settings_LitterMin>
+  <RHAH_Settings_LitterPeak>最常见幼崽 {0}</RHAH_Settings_LitterPeak>
+  <RHAH_Settings_LitterMax>最多幼崽 {0}</RHAH_Settings_LitterMax>
+  <RHAH_Settings_FertileAge>最早可孕年龄 {0}</RHAH_Settings_FertileAge>
+  <RHAH_Settings_FertilityPercent>怀孕几率 {0}%</RHAH_Settings_FertilityPercent>
+  <RHAH_Settings_GestationDays>最短孕期 {0} 天</RHAH_Settings_GestationDays>
+  <RHAH_Menu_Genes_LitterCurve>幼崽数量</RHAH_Menu_Genes_LitterCurve>
+  <RHAH_Menu_Genes_LitterTip>{0} 只，相对几率 {1}</RHAH_Menu_Genes_LitterTip>
+  <RHAH_Menu_Genes_LitterMinTip>一次分娩至少这个数量。范围 1 到 12。</RHAH_Menu_Genes_LitterMinTip>
+  <RHAH_Menu_Genes_LitterPeakTip>这个数量最常见。不能低于下限，也不能高于上限。</RHAH_Menu_Genes_LitterPeakTip>
+  <RHAH_Menu_Genes_LitterMaxTip>一次分娩最多这个数量。不能低于下限。</RHAH_Menu_Genes_LitterMaxTip>
+  <RHAH_Menu_Genes_FertileAgeTip>双方生理年龄达到这个岁数后可以受孕。范围 1 到 14。</RHAH_Menu_Genes_FertileAgeTip>
+  <RHAH_Menu_Genes_FertilityTip>相对常人的怀孕几率。范围 100% 到 1000%。</RHAH_Menu_Genes_FertilityTip>
+  <RHAH_Menu_Genes_GestationTip>最短 3 天。最长不超过原版孕期下限。</RHAH_Menu_Genes_GestationTip>
   <RHAH_Menu_PawnHistory_Note>新来客从已勾选的经历里抽一条。事件已经写好身世的人不再改经历，特质仍可抽。</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>启用全部经历</RHAH_Menu_PawnHistory_EnableAll>
   <RHAH_Menu_PawnHistory_DisableAll>停用全部经历</RHAH_Menu_PawnHistory_DisableAll>

@@ -1,5 +1,6 @@
 extern alias iris;
 using System;
+using HungerAndHavoc.Generation;
 using HungerAndHavoc.Incidents;
 using iris::IrisMenus;
 using UnityEngine;
@@ -153,6 +154,38 @@ namespace HungerAndHavoc.Pawn.Compat
             float scale = axisChance <= 0f ? 1f : axisChance;
             float y = graph.yMax - graph.height * Mathf.Clamp01(chance / scale);
             return new Vector2(x, y);
+        }
+        internal static void LitterCurve(Listing_Standard list, string anchor, int minimum, int peak, int maximum)
+        {
+            RHAH_FertilityRules.ClampLitter(ref minimum, ref peak, ref maximum);
+            Rect plot = Card(list, anchor, 148f);
+            Widgets.DrawBoxSolid(plot, new Color(0.08f, 0.08f, 0.08f, 0.55f));
+            int span = Mathf.Max(1, maximum - minimum);
+            Vector2 last = LitterPoint(plot, minimum, minimum, peak, maximum, span);
+            for (int count = minimum + 1; count <= maximum; count++)
+            {
+                Vector2 next = LitterPoint(plot, count, minimum, peak, maximum, span);
+                Widgets.DrawLine(last, next, new Color(0.78f, 0.62f, 0.38f), 1.5f);
+                last = next;
+            }
+
+            if (!Mouse.IsOver(plot) || plot.width <= 0f)
+            {
+                return;
+            }
+
+            float along = Mathf.Clamp01((Event.current.mousePosition.x - plot.x) / plot.width);
+            int countAt = Mathf.Clamp(Mathf.RoundToInt(minimum + along * span), minimum, maximum);
+            Widgets.DrawLineVertical(LitterPoint(plot, countAt, minimum, peak, maximum, span).x, plot.y, plot.height);
+            float chance = RHAH_FertilityRules.LitterChance(countAt, minimum, peak, maximum);
+            TooltipHandler.TipRegion(plot, () => "RHAH_Menu_Genes_LitterTip".Translate(countAt.ToString(), chance.ToString("P0")), anchor.GetHashCode());
+        }
+
+        static Vector2 LitterPoint(Rect graph, int count, int minimum, int peak, int maximum, int span)
+        {
+            float x = graph.x + graph.width * (count - minimum) / span;
+            float chance = RHAH_FertilityRules.LitterChance(count, minimum, peak, maximum);
+            return new Vector2(x, graph.yMax - graph.height * Mathf.Clamp01(chance));
         }
 
     }
