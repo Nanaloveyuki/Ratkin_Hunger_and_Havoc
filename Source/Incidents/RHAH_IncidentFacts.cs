@@ -30,7 +30,7 @@ namespace HungerAndHavoc.Incidents
                     AttitudeAtArrival = context.Attitude,
                     CarriesPlague = context.CarriesPlague,
                     Map = context.Map,
-                    PawnKind = PawnKindDefOf.Colonist,
+                    PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
                     Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(context.Attitude) ?? Faction.OfPlayer,
                     SpawnCell = context.SpawnCell,
                     BiologicalAge = GenerationAge(context.Role)

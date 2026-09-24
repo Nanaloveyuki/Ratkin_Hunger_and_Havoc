@@ -35,7 +35,7 @@ namespace HungerAndHavoc.Trade
                 AttitudeAtArrival = RHAH_Attitude.Neutral,
                 CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
-                PawnKind = PawnKindDefOf.Colonist,
+                PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
                 Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Neutral) ?? Faction.OfPlayer,
                 SpawnCell = cell
             });
@@ -72,7 +72,7 @@ namespace HungerAndHavoc.Trade
                     AttitudeAtArrival = attitude,
                     CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                     Map = null,
-                    PawnKind = PawnKindDefOf.Colonist,
+                    PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
                     Faction = faction
                 });
                 if (!result.Succeeded)

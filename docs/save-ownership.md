@@ -252,7 +252,9 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Suiyin | StorytellerDef | Remove。卸载后叙事者换成原版 Randy，不保留穗音定义 |
 | RHAH_ChoiceRequest | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_ChoiceVisitors | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
-尚无 PawnKind、TraderKind、Site。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
+| RHAH_PawnKind_Ratkin | PawnKindDef | Remove。不替换成原版 PawnKind。已生成 pawn 的 kindDef 不迁移 |
+
+尚无 TraderKind、Site。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
 
 ### Hediff_RHAH_ClaySatiety
 

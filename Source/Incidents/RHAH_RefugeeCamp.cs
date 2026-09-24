@@ -182,7 +182,7 @@ namespace HungerAndHavoc.Incidents
                 Role = adult ? RHAH_PawnRole.Refugee : RHAH_PawnRole.RatkinYoung,
                 AttitudeAtArrival = RHAH_Attitude.Neutral,
                 Map = map,
-                PawnKind = PawnKindDefOf.Colonist,
+                PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
                 Faction = site.Faction,
                 SpawnCell = CellFinder.RandomClosewalkCellNear(center, map, 8),
                 BiologicalAge = age

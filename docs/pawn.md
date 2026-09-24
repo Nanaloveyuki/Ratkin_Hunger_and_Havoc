@@ -84,6 +84,7 @@ JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规
 - `UseExplicitBackstory` 与 `Childhood` / `Adulthood`：直接替换背景。两者都空时清掉背景。未满 20 岁不写成年背景
 - `UseExplicitHealth` 与 `Hediffs`：只追加列表中的 Hediff，不删除生成器已有状态。空列表表示不追加
 - `UseExplicitXenotype` 与 `Xenotype` / `XenotypeDefName`：指定异种。两者都空时不指定基因
+生成请求未指定 `PawnKind` 时使用 `RHAH_PawnKind_Ratkin`，种族是 NewRatkinPlus 的 `Ratkin`。事件、难民营和交易都传这个 PawnKind。生成后读取该种族的 HAR 设置：头型不在 `headTypes` 里就重抽，发型不含 `styleTagsOverride` 的标签就重抽，`BeardDef` 或 `TattooDef` 的 `hasStyle` 为 false 时清成无胡须、无纹身。衣服不在 `apparelList` 或 `whiteApparelList` 里就脱掉并销毁。两个名单都读不到时不改衣服，避免在没有 NewRatkinPlus 数据时剥光。`UseExplicitApparel` 之后仍按事件列表穿衣，不再按名单剥除。调用方传入非鼠族 `PawnKind` 时不改外观。
 未设置显式背景时，生成后从 `Source/Data` 的经历表抽一条。自有特质在其后抽取，最多一条。身份仍只看 `RHAH_HungerMark`。经历槽位用发育阶段，年龄上下限仍按每条记录。`pawnHistoriesEnabled` 或 `pawnTraitsEnabled` 关闭、单条被禁用、特质权重为 0 时跳过对应抽取。显式背景不改经历，特质仍抽。成年经历同时写入保底童年 `RHAH_History_Newborn`。幼年关联只影响抽取权重，不预写成年背景。
 
 `optimizeGeneration` 默认开启，登记在 IrisMenus 实验页和原版设置窗口。开启时跳过关系、头衔、随机装备、成瘾、食物和世界角色重装。事件没有显式基因时，按基因页权重抽取已启用异种。权重合计为 0、生物科技未开或 Def 丢失时，依次尝试 `RK_XenoType_Ratkin` 和 `RHAH_Xenotype_Ratkin`。两者都不存在时保持原版默认。关闭优化不取消事件 Profile，也不取消经历和特质抽取。`RHAH_` 基因开关只在异种套上后追加，冲突则跳过。基因页的已启用异种和可加入异种按来源模组的显示名分组，组内保持原顺序。没有 `modContentPack` 或名称为空时归入未知来源。

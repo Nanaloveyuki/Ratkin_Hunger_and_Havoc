@@ -101,6 +101,11 @@ namespace HungerAndHavoc.Generation
 
             if (request.PawnKind == null)
             {
+                request.PawnKind = RHAH_DefOf.RHAH_PawnKind_Ratkin;
+            }
+
+            if (request.PawnKind == null)
+            {
                 return RHAH_PawnCreationResult.Failed(RHAH_PawnCreationFailure.NoPawnKind);
             }
 
@@ -123,6 +128,7 @@ namespace HungerAndHavoc.Generation
             }
 
             ApplyProfile(pawn, profile);
+            RHAH_RatkinAppearance.Apply(pawn, profile.UseExplicitApparel);
             RHAH_ContentApplier.Apply(pawn, request, !profile.UseExplicitBackstory);
 
             RHAH_XenotypeResolver.ApplyEnabledGenes(pawn);
