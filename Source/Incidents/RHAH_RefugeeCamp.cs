@@ -173,13 +173,21 @@ namespace HungerAndHavoc.Incidents
 
         static Verse.Pawn SpawnResident(WorldObject_RHAH_RefugeeCamp site, Map map, IntVec3 center, bool adult, int tick, int index)
         {
-            float age = adult ? Rand.Range(18f, 50f) : Rand.Range(0.1f, 8f);
+            RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            float min = settings == null ? 0f : settings.minGeneratedAge;
+            float max = settings == null ? 50f : settings.maxGeneratedAge;
+            bool youngFollows = settings != null && settings.youngAgeFollowsRange;
+            RHAH_PawnRole role = adult ? RHAH_PawnRole.Refugee : RHAH_PawnRole.RatkinYoung;
+            float? age = adult
+                ? Rand.Range(18f, 50f)
+                : HungerAndHavoc.Pawn.RHAH_VisitorRules.GenerationAge(role, null, min, max, Rand.Value, youngFollows);
+
             RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
             {
                 SourceIncidentDisplayId = "I-051",
                 SpawnBatchId = tick + 1 + index,
                 RelationshipGroupId = tick,
-                Role = adult ? RHAH_PawnRole.Refugee : RHAH_PawnRole.RatkinYoung,
+                Role = role,
                 AttitudeAtArrival = RHAH_Attitude.Neutral,
                 Map = map,
                 PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,

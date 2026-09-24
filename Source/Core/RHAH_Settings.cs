@@ -47,6 +47,15 @@ namespace HungerAndHavoc.Core
         public int maxEventPawns = 30;
         public float minGeneratedAge;
         public float maxGeneratedAge = 50f;
+        public bool youngAgeFollowsRange;
+        public bool allowImmobileBabies;
+        public int genderMode;
+        public int femaleSharePercent = 50;
+        public int apparelMode;
+        public int maxOwnedTraits = 1;
+        public bool allowVanillaTraits = true;
+        public bool traitAgeFilter = true;
+        public int contentListMode;
         public float reliefFoodScoreBonus = 0.1f;
         public float fedStayDays = 0.5f;
         public bool waitWhenNoFood = true;
@@ -140,6 +149,15 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref maxEventPawns, "maxEventPawns", 30);
             Scribe_Values.Look(ref minGeneratedAge, "minGeneratedAge", 0f);
             Scribe_Values.Look(ref maxGeneratedAge, "maxGeneratedAge", 50f);
+            Scribe_Values.Look(ref youngAgeFollowsRange, "youngAgeFollowsRange", false);
+            Scribe_Values.Look(ref allowImmobileBabies, "allowImmobileBabies", false);
+            Scribe_Values.Look(ref genderMode, "genderMode", 0);
+            Scribe_Values.Look(ref femaleSharePercent, "femaleSharePercent", 50);
+            Scribe_Values.Look(ref apparelMode, "apparelMode", 0);
+            Scribe_Values.Look(ref maxOwnedTraits, "maxOwnedTraits", 1);
+            Scribe_Values.Look(ref allowVanillaTraits, "allowVanillaTraits", true);
+            Scribe_Values.Look(ref traitAgeFilter, "traitAgeFilter", true);
+            Scribe_Values.Look(ref contentListMode, "contentListMode", 0);
             Scribe_Values.Look(ref reliefFoodScoreBonus, "reliefFoodScoreBonus", 0.1f);
             Scribe_Values.Look(ref fedStayDays, "fedStayDays", 0.5f);
             Scribe_Values.Look(ref waitWhenNoFood, "waitWhenNoFood", true);
@@ -412,6 +430,11 @@ namespace HungerAndHavoc.Core
             {
                 maxGeneratedAge = minGeneratedAge;
             }
+            genderMode = Pawn.RHAH_VisitorRules.ClampBodyMode(genderMode, 4);
+            femaleSharePercent = Pawn.RHAH_VisitorRules.ClampFemaleShare(femaleSharePercent);
+            apparelMode = Pawn.RHAH_VisitorRules.ClampBodyMode(apparelMode, 4);
+            maxOwnedTraits = Pawn.RHAH_VisitorRules.ClampOwnedTraits(maxOwnedTraits);
+            contentListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(contentListMode, 3);
 
             reliefFoodScoreBonus = Pawn.RHAH_VisitorRules.ClampBonus(reliefFoodScoreBonus);
             fedStayDays = ClampStayDays(fedStayDays, 0.5f);

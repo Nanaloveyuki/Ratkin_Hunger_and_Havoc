@@ -74,8 +74,10 @@ namespace HungerAndHavoc.Incidents
             RHAH_Settings settings = RHAH_Mod.Settings;
             float min = settings == null ? 0f : settings.minGeneratedAge;
             float max = settings == null ? 50f : settings.maxGeneratedAge;
-            return HungerAndHavoc.Pawn.RHAH_VisitorRules.GenerationAge(role, null, min, max, Rand.Value);
+            bool youngFollows = settings != null && settings.youngAgeFollowsRange;
+            return HungerAndHavoc.Pawn.RHAH_VisitorRules.GenerationAge(role, null, min, max, Rand.Value, youngFollows);
         }
+
 
         static void Rollback(List<RHAH_PawnCreationResult> created)
         {

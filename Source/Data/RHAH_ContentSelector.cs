@@ -15,7 +15,10 @@ namespace HungerAndHavoc.Data
             bool traitsEnabled,
             Func<string, bool> historyEnabled,
             Func<string, bool> traitEnabled,
-            Func<string, float> traitWeight)
+            Func<string, float> traitWeight,
+            bool male = false,
+            bool filterTraitAge = true,
+            Func<string, bool> traitAlreadyOwned = null)
         {
             AgeYears = ageYears;
             Adult = adult;
@@ -27,6 +30,9 @@ namespace HungerAndHavoc.Data
             HistoryEnabled = historyEnabled ?? (_ => true);
             TraitEnabled = traitEnabled ?? (_ => true);
             TraitWeight = traitWeight ?? (id => RHAH_ContentCatalog.DefaultTraitWeight(id));
+            Male = male;
+            FilterTraitAge = filterTraitAge;
+            TraitAlreadyOwned = traitAlreadyOwned ?? (_ => false);
         }
 
         internal float AgeYears { get; }
@@ -39,6 +45,9 @@ namespace HungerAndHavoc.Data
         internal Func<string, bool> HistoryEnabled { get; }
         internal Func<string, bool> TraitEnabled { get; }
         internal Func<string, float> TraitWeight { get; }
+        internal bool Male { get; }
+        internal bool FilterTraitAge { get; }
+        internal Func<string, bool> TraitAlreadyOwned { get; }
     }
 
     internal static class RHAH_ContentSelector
@@ -185,6 +194,47 @@ namespace HungerAndHavoc.Data
             return category == RHAH_ContentCategory.Siege && siege;
         }
 
+        internal static bool MatchesQuery(string title, string displayId, string extra, string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return true;
+            }
+
+            string[] terms = query.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string haystack = (title ?? string.Empty) + " " + (displayId ?? string.Empty) + " " + (extra ?? string.Empty);
+            for (int i = 0; i < terms.Length; i++)
+            {
+                if (haystack.IndexOf(terms[i], StringComparison.OrdinalIgnoreCase) < 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        internal static string ListKey(int mode, string displayId, RHAH_ContentCategory category, string sourceName, bool owned)
+        {
+            int safe = mode < 0 || mode > 2 ? 0 : mode;
+            if (safe == 1)
+            {
+                return string.IsNullOrEmpty(displayId) ? "#" : displayId.Substring(0, 1).ToUpperInvariant();
+            }
+
+            if (safe == 2)
+            {
+                if (!owned)
+                {
+                    return "vanilla";
+                }
+
+                return category == RHAH_ContentCategory.None ? "none" : category.ToString().ToLowerInvariant();
+            }
+
+            return string.IsNullOrEmpty(sourceName) ? string.Empty : sourceName;
+        }
+
         static List<RHAH_TraitRecord> CollectSlot(RHAH_ContentQuery query)
         {
             List<RHAH_TraitRecord> slot = new List<RHAH_TraitRecord>();
@@ -192,7 +242,9 @@ namespace HungerAndHavoc.Data
             for (int i = 0; i < all.Count; i++)
             {
                 RHAH_TraitRecord record = all[i];
-                if (!MatchesTraitSlot(record, query.Adult) || !query.TraitEnabled(record.DisplayId))
+                if ((query.FilterTraitAge && !MatchesTraitSlot(record, query.Adult)) ||
+                    !query.TraitEnabled(record.DisplayId) ||
+                    query.TraitAlreadyOwned(record.DisplayId))
                 {
                     continue;
                 }
@@ -238,6 +290,11 @@ namespace HungerAndHavoc.Data
             }
 
             if (record.Gender == RHAH_ContentGender.Female && !query.Female)
+            {
+                return false;
+            }
+
+            if (record.Gender == RHAH_ContentGender.Male && !query.Male)
             {
                 return false;
             }

@@ -22,10 +22,11 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void OrdinaryAgeUsesTheRangeAndFixedRolesKeepTheirs()
         {
-            Assert.Equal(12f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Beggar, null, 10f, 20f, 0.2f));
-            Assert.Equal(1.5f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, 1.5f, 20f, 40f, 1f));
-            Assert.Equal(28f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, 28f, 0f, 10f, 0f));
-            Assert.Null(RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.BeggarMother, null, 0f, 50f, 0f));
+            Assert.Equal(12f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Beggar, null, 10f, 20f, 0.2f, false));
+            Assert.Equal(1.5f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, 1.5f, 20f, 40f, 1f, false));
+            Assert.Equal(28f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, 28f, 0f, 10f, 0f, true));
+            Assert.Null(RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.BeggarMother, null, 0f, 50f, 0f, true));
+            Assert.Equal(24f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, null, 20f, 40f, 0.2f, true));
         }
 
         [Fact]
@@ -34,9 +35,26 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(-100, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Hostile));
             Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Friendly));
             Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Neutral));
-            Assert.Equal(3f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, false));
-            Assert.Equal(8f, RHAH_VisitorRules.WalkingAgeFloor(8f, false));
-            Assert.Equal(0.1f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, true));
+            Assert.Equal(3f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, false, false));
+            Assert.Equal(8f, RHAH_VisitorRules.WalkingAgeFloor(8f, false, false));
+            Assert.Equal(0.1f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, true, false));
+            Assert.Equal(0.1f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, false, true));
+            Assert.True(RHAH_VisitorRules.ClearsApparel(3, false));
+            Assert.False(RHAH_VisitorRules.ClearsApparel(3, true));
+            Assert.False(RHAH_VisitorRules.AddsColdClothes(3, true, false, -20f, 10f));
+            Assert.True(RHAH_VisitorRules.AddsColdClothes(0, true, false, -20f, 10f));
+            Assert.False(RHAH_VisitorRules.AddsColdClothes(1, false, false, -20f, 10f));
+            Assert.True(RHAH_VisitorRules.AddsColdClothes(2, false, false, -20f, 10f));
+            Assert.Equal(0, RHAH_VisitorRules.ClampOwnedTraits(-1));
+            Assert.Equal(3, RHAH_VisitorRules.ClampOwnedTraits(9));
+        }
+
+        [Fact]
+        public void GenderModeOverridesARandomRollButNotARequestedGender()
+        {
+            Assert.Equal(2, RHAH_VisitorRules.ResolveGender(null, 2, 0, 0f));
+            Assert.Equal(1, RHAH_VisitorRules.ResolveGender(null, 1, 0, 0f));
+            Assert.Equal(1, RHAH_VisitorRules.ResolveGender(1, 3, 0, 1f));
         }
 
         [Fact]

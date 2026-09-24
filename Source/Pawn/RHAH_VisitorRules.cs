@@ -37,6 +37,10 @@ namespace HungerAndHavoc.Pawn
         internal const float MinimumTemperatureBound = -35f;
         internal const float MaximumTemperatureBound = 70f;
 
+        internal const int DefaultMaxOwnedTraits = 1;
+        internal const int MaxOwnedTraits = 3;
+        internal const int DefaultFemaleSharePercent = 50;
+
         internal static int LimitCount(int requested, int minimum, int cap, bool keepTogether)
         {
             int safeMinimum = minimum < 1 ? 1 : minimum;
@@ -65,46 +69,25 @@ namespace HungerAndHavoc.Pawn
             return cap > MaxEventPawns ? MaxEventPawns : cap;
         }
 
-        internal static bool KeepsAge(RHAH_PawnRole role, bool fixedAge)
+        internal static bool KeepsAge(RHAH_PawnRole role, bool fixedAge, bool youngFollowsRange)
         {
-            return fixedAge ||
-                role == RHAH_PawnRole.RatkinYoung ||
-                role == RHAH_PawnRole.Mother ||
-                role == RHAH_PawnRole.BeggarMother;
-        }
-
-        internal const int HostileGoodwill = -100;
-        internal const int NeutralGoodwill = 0;
-        internal const float WalkingAge = 3f;
-
-        internal static int LockedGoodwill(RHAH_Attitude attitude)
-        {
-            return attitude == RHAH_Attitude.Hostile ? HostileGoodwill : NeutralGoodwill;
-        }
-
-        internal static float? WalkingAgeFloor(float? age, bool toddlersActive)
-        {
-            if (toddlersActive || !age.HasValue || float.IsNaN(age.Value) || float.IsInfinity(age.Value))
+            if (fixedAge || role == RHAH_PawnRole.Mother || role == RHAH_PawnRole.BeggarMother)
             {
-                return age;
+                return true;
             }
 
-            return age.Value < WalkingAge ? WalkingAge : age.Value;
+            return role == RHAH_PawnRole.RatkinYoung && !youngFollowsRange;
         }
 
-        internal static bool CanSelectBegTarget(
-            bool dead,
-            bool downed,
-            bool forbidden,
-            bool reachable,
-            bool reservable)
+        internal static float? GenerationAge(
+            RHAH_PawnRole role,
+            float? fixedAge,
+            float minAge,
+            float maxAge,
+            float roll,
+            bool youngFollowsRange)
         {
-            return !dead && !downed && !forbidden && reachable && reservable;
-        }
-
-        internal static float? GenerationAge(RHAH_PawnRole role, float? fixedAge, float minAge, float maxAge, float roll)
-        {
-            if (KeepsAge(role, fixedAge.HasValue))
+            if (KeepsAge(role, fixedAge.HasValue, youngFollowsRange))
             {
                 return fixedAge;
             }
@@ -122,6 +105,121 @@ namespace HungerAndHavoc.Pawn
             float safeRoll = roll < 0f || float.IsNaN(roll) ? 0f : roll > 1f ? 1f : roll;
             return lower + span * safeRoll;
         }
+
+        internal static float? WalkingAgeFloor(float? age, bool toddlersActive, bool allowImmobileBabies)
+        {
+            if (toddlersActive || allowImmobileBabies || !age.HasValue || float.IsNaN(age.Value) || float.IsInfinity(age.Value))
+            {
+                return age;
+            }
+
+            return age.Value < WalkingAge ? WalkingAge : age.Value;
+        }
+
+        internal static int ClampOwnedTraits(int count)
+        {
+            if (count < 0)
+            {
+                return 0;
+            }
+
+            return count > MaxOwnedTraits ? MaxOwnedTraits : count;
+        }
+
+        internal static int ClampFemaleShare(int percent)
+        {
+            if (percent < 0)
+            {
+                return 0;
+            }
+
+            return percent > 100 ? 100 : percent;
+        }
+
+        internal static int ClampBodyMode(int mode, int count)
+        {
+            if (mode < 0 || mode >= count)
+            {
+                return 0;
+            }
+
+            return mode;
+        }
+
+        internal static int? ResolveGender(int? requested, int mode, int femaleSharePercent, float roll)
+        {
+            const int male = 1;
+            const int female = 2;
+            if (requested.HasValue)
+            {
+                return requested.Value == female ? female : requested.Value == male ? male : male;
+            }
+
+            int safeMode = ClampBodyMode(mode, 4);
+            if (safeMode == 2)
+            {
+                return female;
+            }
+
+            if (safeMode == 3)
+            {
+                return male;
+            }
+
+            if (safeMode != 1)
+            {
+                return null;
+            }
+
+            float safeRoll = roll < 0f || float.IsNaN(roll) ? 0f : roll > 1f ? 1f : roll;
+            return safeRoll * 100f < ClampFemaleShare(femaleSharePercent) ? female : male;
+        }
+
+        internal static bool StripsRaceApparel(int apparelMode, bool explicitApparel)
+        {
+            return !explicitApparel && ClampBodyMode(apparelMode, 4) == 0;
+        }
+
+        internal static bool ClearsApparel(int apparelMode, bool explicitApparel)
+        {
+            return !explicitApparel && ClampBodyMode(apparelMode, 4) == 3;
+        }
+
+        internal static bool AddsColdClothes(int apparelMode, bool coldEnabled, bool explicitApparel, float temperature, float comfortableMinimum)
+        {
+            int mode = ClampBodyMode(apparelMode, 4);
+            if (explicitApparel || mode == 3)
+            {
+                return false;
+            }
+
+            if (mode != 2 && !coldEnabled)
+            {
+                return false;
+            }
+
+            return WantsColdClothes(true, temperature, comfortableMinimum);
+        }
+
+        internal const int HostileGoodwill = -100;
+        internal const int NeutralGoodwill = 0;
+        internal const float WalkingAge = 3f;
+
+        internal static int LockedGoodwill(RHAH_Attitude attitude)
+        {
+            return attitude == RHAH_Attitude.Hostile ? HostileGoodwill : NeutralGoodwill;
+        }
+        internal static bool CanSelectBegTarget(
+            bool dead,
+            bool downed,
+            bool forbidden,
+            bool reachable,
+            bool reservable)
+        {
+            return !dead && !downed && !forbidden && reachable && reservable;
+        }
+
+
 
         internal static float ClampAge(float age)
         {

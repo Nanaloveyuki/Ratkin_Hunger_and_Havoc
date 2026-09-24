@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
+using HungerAndHavoc.Data;
 using HungerAndHavoc.Generation;
 using HungerAndHavoc.Incidents;
 using HungerAndHavoc.Narrative;
@@ -78,6 +79,9 @@ namespace HungerAndHavoc.Pawn.Compat
         string foodQuery = string.Empty;
         string pendingFoodMod;
         readonly HashSet<string> collapsedFoodMods = new HashSet<string>();
+        string contentQuery = string.Empty;
+        string pendingContentGroup;
+        readonly HashSet<string> collapsedContentGroups = new HashSet<string>();
 
         string selectedPawnLabel = string.Empty;
 
@@ -1096,83 +1100,202 @@ namespace HungerAndHavoc.Pawn.Compat
                 Empty(list, "RHAH_Menu_Settings_Missing");
                 return;
             }
-
-            MenuControls.Checkbox(
-                list,
-                "RHAH_Settings_PawnHistories".Translate(),
-                ref settings.pawnHistoriesEnabled,
-                "RHAH_Settings_PawnHistories_Tooltip".Translate());
-            MenuControls.Checkbox(
-                list,
-                "RHAH_Settings_PawnTraits".Translate(),
-                ref settings.pawnTraitsEnabled,
-                "RHAH_Settings_PawnTraits_Tooltip".Translate());
+            DrawBodyControls(list, settings);
+            DrawContentSearch(list);
             DrawContentToggles(list, settings);
+        }
+
+        void DrawBodyControls(Listing_Standard list, RHAH_Settings settings)
+        {
+            string minAge = Buffer(weightBuffers, "body-age-min", settings.minGeneratedAge, "0.0");
+            settings.minGeneratedAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MinAge".Translate(settings.minGeneratedAge.ToString("0.0")), settings.minGeneratedAge, ref minAge, 0f, 100f, "0.0", "RHAH_Settings_Age_Tooltip".Translate());
+            weightBuffers["body-age-min"] = minAge;
+            string maxAge = Buffer(weightBuffers, "body-age-max", settings.maxGeneratedAge, "0.0");
+            settings.maxGeneratedAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaxAge".Translate(settings.maxGeneratedAge.ToString("0.0")), settings.maxGeneratedAge, ref maxAge, settings.minGeneratedAge, 100f, "0.0", "RHAH_Settings_Age_Tooltip".Translate());
+            weightBuffers["body-age-max"] = maxAge;
+            MenuControls.Anchor(list, "young-age");
+            MenuControls.Checkbox(list, "RHAH_Settings_YoungAge".Translate(), ref settings.youngAgeFollowsRange, "RHAH_Settings_YoungAge_Tooltip".Translate());
+            MenuControls.Anchor(list, "immobile-babies");
+            MenuControls.Checkbox(list, "RHAH_Settings_ImmobileBabies".Translate(), ref settings.allowImmobileBabies, ToddlersActive() ? "RHAH_Settings_ImmobileBabies_Toddlers".Translate() : "RHAH_Settings_ImmobileBabies_Tooltip".Translate());
+            DrawModeSelect(list, "gender-mode", "RHAH_Settings_Gender", settings.genderMode, 4, mode => settings.genderMode = mode);
+            if (settings.genderMode == 1)
+            {
+                string share = Buffer(weightBuffers, "female-share", settings.femaleSharePercent, "0");
+                settings.femaleSharePercent = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FemaleShare".Translate(settings.femaleSharePercent), settings.femaleSharePercent, ref share, 0f, 100f, "0", "RHAH_Settings_FemaleShare_Tooltip".Translate());
+                weightBuffers["female-share"] = share;
+            }
+
+            DrawModeSelect(list, "apparel-mode", "RHAH_Settings_Apparel", settings.apparelMode, 4, mode => settings.apparelMode = mode);
+            MenuControls.Anchor(list, "cold-clothes");
+            MenuControls.Checkbox(list, "RHAH_Settings_ColdClothes".Translate(), ref settings.coldClothesEnabled, "RHAH_Settings_ColdClothes_Tooltip".Translate());
+            string traits = Buffer(weightBuffers, "owned-traits", settings.maxOwnedTraits, "0");
+            settings.maxOwnedTraits = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaxTraits".Translate(settings.maxOwnedTraits), settings.maxOwnedTraits, ref traits, 0f, 3f, "0", "RHAH_Settings_MaxTraits_Tooltip".Translate());
+            weightBuffers["owned-traits"] = traits;
+            MenuControls.Anchor(list, "vanilla-traits");
+            MenuControls.Checkbox(list, "RHAH_Settings_VanillaTraits".Translate(), ref settings.allowVanillaTraits, "RHAH_Settings_VanillaTraits_Tooltip".Translate());
+            MenuControls.Anchor(list, "trait-age");
+            MenuControls.Checkbox(list, "RHAH_Settings_TraitAge".Translate(), ref settings.traitAgeFilter, "RHAH_Settings_TraitAge_Tooltip".Translate());
+            DrawModeSelect(list, "content-sort", "RHAH_Settings_ContentSort", settings.contentListMode, 3, mode => settings.contentListMode = mode);
+        }
+
+        void DrawModeSelect(Listing_Standard list, string anchor, string key, int selected, int count, Action<int> assign)
+        {
+            List<int> options = new List<int>(count);
+            for (int i = 0; i < count; i++)
+            {
+                options.Add(i);
+            }
+
+            MenuControls.Anchor(list, anchor);
+            MenuControls.Select(list, key.Translate(), selected, options, mode => (key + "_" + mode).Translate(), assign);
+        }
+
+        void DrawContentSearch(Listing_Standard list)
+        {
+            MenuControls.Anchor(list, "content-search", 32f);
+            Rect search = list.GetRect(28f);
+            contentQuery = Widgets.TextField(search, contentQuery ?? string.Empty);
+            if (string.IsNullOrEmpty(contentQuery))
+            {
+                GUI.color = Color.gray;
+                Widgets.Label(new Rect(search.x + 6f, search.y, search.width - 8f, search.height), "RHAH_Settings_ContentSearch".Translate());
+                GUI.color = Color.white;
+            }
+        }
+
+        static bool ToddlersActive()
+        {
+            return ModsConfig.IsActive("cyanobot.toddlers");
         }
 
         void DrawContentToggles(Listing_Standard list, RHAH_Settings settings)
         {
-            List<string> historyIds = new List<string>();
-            RHAH_Api.CopyHistoryIds(historyIds);
-            if (list.ButtonText("RHAH_Menu_PawnHistory_EnableAll".Translate()))
-            {
-                settings.SetAllHistories(true, historyIds);
-            }
-
-            if (list.ButtonText("RHAH_Menu_PawnHistory_DisableAll".Translate()))
-            {
-                settings.SetAllHistories(false, historyIds);
-            }
-
-            for (int i = 0; i < historyIds.Count; i++)
-            {
-                string id = historyIds[i];
-                string defName;
-                bool enabled = settings.IsHistoryEnabled(id);
-                string label = RHAH_Api.TryGetHistory(id, out defName)
-                    ? id + " " + BackstoryTitle(defName)
-                    : id;
-                MenuControls.Checkbox(list, label, ref enabled, "RHAH_Menu_PawnHistory_ItemTip".Translate());
-                settings.SetHistoryEnabled(id, enabled);
-            }
-
+            DrawGrouped(list, settings, true);
             Section(list, "RHAH_Menu_PawnTrait");
-            List<string> traitIds = new List<string>();
-            RHAH_Api.CopyTraitIds(traitIds);
-            if (list.ButtonText("RHAH_Menu_PawnTrait_EnableAll".Translate()))
+            DrawGrouped(list, settings, false);
+        }
+
+        void DrawGrouped(Listing_Standard list, RHAH_Settings settings, bool histories)
+        {
+            List<string> ids = new List<string>();
+            if (histories)
             {
-                settings.SetAllTraits(true, traitIds);
+                RHAH_Api.CopyHistoryIds(ids);
+            }
+            else
+            {
+                RHAH_Api.CopyTraitIds(ids);
             }
 
-            if (list.ButtonText("RHAH_Menu_PawnTrait_DisableAll".Translate()))
+            Dictionary<string, List<string>> groups = new Dictionary<string, List<string>>();
+            List<string> order = new List<string>();
+            for (int i = 0; i < ids.Count; i++)
             {
-                settings.SetAllTraits(false, traitIds);
+                string id = ids[i];
+                string title = histories ? HistoryLabel(id) : TraitLabel(id);
+                RHAH_ContentCategory category = histories
+                    ? (RHAH_ContentCatalog.FindHistory(id)?.Category ?? RHAH_ContentCategory.None)
+                    : (RHAH_ContentCatalog.FindTrait(id)?.Category ?? RHAH_ContentCategory.None);
+                if (!RHAH_ContentSelector.MatchesQuery(title, id, category.ToString(), contentQuery))
+                {
+                    continue;
+                }
+                string key = RHAH_ContentSelector.ListKey(settings.contentListMode, id, category, "RHAH_Menu_Content_Owned".Translate(), true);
+                List<string> bucket;
+                if (!groups.TryGetValue(key, out bucket))
+                {
+                    bucket = new List<string>();
+                    groups[key] = bucket;
+                    order.Add(key);
+                }
+
+                bucket.Add(id);
             }
 
-            for (int i = 0; i < traitIds.Count; i++)
+            order.Sort(StringComparer.CurrentCultureIgnoreCase);
+            bool searching = !string.IsNullOrEmpty(contentQuery);
+            for (int i = 0; i < order.Count; i++)
             {
-                string id = traitIds[i];
-                string defName;
-                bool enabled = settings.IsTraitEnabled(id);
-                string label = RHAH_Api.TryGetTrait(id, out defName)
-                    ? id + " " + TraitTitle(defName)
-                    : id;
-                MenuControls.Checkbox(list, label, ref enabled, "RHAH_Menu_PawnTrait_ItemTip".Translate());
-                settings.SetTraitEnabled(id, enabled);
-                float weight = settings.TraitWeight(id);
-                string buffer = Buffer(weightBuffers, "trait-" + id, weight, "0");
-                weight = RHAH_IrisMenusWidgets.TunedValue(
-                    list,
-                    "RHAH_Menu_PawnTrait_Weight".Translate(),
-                    weight,
-                    ref buffer,
-                    0f,
-                    100f,
-                    "0",
-                    "RHAH_Menu_PawnTrait_WeightTip".Translate());
-                weightBuffers["trait-" + id] = buffer;
-                settings.SetTraitWeight(id, weight);
+                string key = order[i];
+                string fold = (histories ? "history-" : "trait-") + key;
+                if (pendingContentGroup == fold)
+                {
+                    collapsedContentGroups.Remove(fold);
+                    pendingContentGroup = null;
+                }
+
+                bool open = searching || !collapsedContentGroups.Contains(fold);
+                MenuControls.Anchor(list, fold, 28f);
+                if (DrawFoodFold(list, GroupTitle(key) + "  " + groups[key].Count, open))
+                {
+                    if (open)
+                    {
+                        collapsedContentGroups.Add(fold);
+                    }
+                    else
+                    {
+                        collapsedContentGroups.Remove(fold);
+                    }
+
+                    open = !open;
+                }
+
+                if (!open)
+                {
+                    continue;
+                }
+
+                List<string> bucket = groups[key];
+                for (int j = 0; j < bucket.Count; j++)
+                {
+                    DrawContentRow(list, settings, bucket[j], histories);
+                }
             }
+        }
+
+        void DrawContentRow(Listing_Standard list, RHAH_Settings settings, string id, bool history)
+        {
+            string anchor = (history ? "history-" : "trait-") + id;
+            MenuControls.Anchor(list, anchor);
+            bool enabled = history ? settings.IsHistoryEnabled(id) : settings.IsTraitEnabled(id);
+            string label = history ? id + " " + HistoryLabel(id) : id + " " + TraitLabel(id);
+            MenuControls.Checkbox(list, label, ref enabled, (history ? "RHAH_Menu_PawnHistory_ItemTip" : "RHAH_Menu_PawnTrait_ItemTip").Translate());
+            if (history)
+            {
+                settings.SetHistoryEnabled(id, enabled);
+                return;
+            }
+
+            settings.SetTraitEnabled(id, enabled);
+            float weight = settings.TraitWeight(id);
+            string buffer = Buffer(weightBuffers, "trait-" + id, weight, "0");
+            weight = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Menu_PawnTrait_Weight".Translate(), weight, ref buffer, 0f, 100f, "0", "RHAH_Menu_PawnTrait_WeightTip".Translate());
+            weightBuffers["trait-" + id] = buffer;
+            settings.SetTraitWeight(id, weight);
+        }
+
+        static string HistoryLabel(string id)
+        {
+            string defName;
+            return RHAH_Api.TryGetHistory(id, out defName) ? BackstoryTitle(defName) : id;
+        }
+
+        static string TraitLabel(string id)
+        {
+            string defName;
+            return RHAH_Api.TryGetTrait(id, out defName) ? TraitTitle(defName) : id;
+        }
+
+        static string GroupTitle(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return "RHAH_Menu_Genes_UnknownMod".Translate();
+            }
+
+            string named = "RHAH_Menu_Content_" + key;
+            string translated = named.Translate();
+            return translated == named ? key : translated;
         }
 
         static string BackstoryTitle(string defName)
@@ -1325,10 +1448,42 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("genes-switches", "RHAH_Menu_Genes_Switches");
         }
 
-        static IEnumerable<MenuSearchEntry> SearchPawnHistory()
+        IEnumerable<MenuSearchEntry> SearchPawnHistory()
         {
-            yield return Entry("history-master", "RHAH_Settings_PawnHistories");
-            yield return Entry("trait-master", "RHAH_Settings_PawnTraits");
+            yield return Entry("young-age", "RHAH_Settings_YoungAge");
+            yield return Entry("immobile-babies", "RHAH_Settings_ImmobileBabies");
+            yield return Entry("gender-mode", "RHAH_Settings_Gender");
+            yield return Entry("apparel-mode", "RHAH_Settings_Apparel");
+            yield return Entry("cold-clothes", "RHAH_Settings_ColdClothes");
+            yield return Entry("vanilla-traits", "RHAH_Settings_VanillaTraits");
+            yield return Entry("trait-age", "RHAH_Settings_TraitAge");
+            yield return Entry("content-sort", "RHAH_Settings_ContentSort");
+            yield return Entry("content-search", "RHAH_Settings_ContentSearch");
+            List<string> histories = new List<string>();
+            RHAH_Api.CopyHistoryIds(histories);
+            for (int i = 0; i < histories.Count; i++)
+            {
+                string id = histories[i];
+                string label = HistoryLabel(id);
+                yield return new MenuSearchEntry("history-" + id, () => label, () => id, () =>
+                {
+                    pendingContentGroup = "history-" + RHAH_ContentSelector.ListKey(RHAH_Mod.Settings == null ? 0 : RHAH_Mod.Settings.contentListMode, id, RHAH_ContentCatalog.FindHistory(id)?.Category ?? RHAH_ContentCategory.None, "RHAH_Menu_Content_Owned".Translate(), true);
+                    return label;
+                });
+            }
+
+            List<string> traits = new List<string>();
+            RHAH_Api.CopyTraitIds(traits);
+            for (int i = 0; i < traits.Count; i++)
+            {
+                string id = traits[i];
+                string label = TraitLabel(id);
+                yield return new MenuSearchEntry("trait-" + id, () => label, () => id, () =>
+                {
+                    pendingContentGroup = "trait-" + RHAH_ContentSelector.ListKey(RHAH_Mod.Settings == null ? 0 : RHAH_Mod.Settings.contentListMode, id, RHAH_ContentCatalog.FindTrait(id)?.Category ?? RHAH_ContentCategory.None, "RHAH_Menu_Content_Owned".Translate(), true);
+                    return label;
+                });
+            }
         }
 
         static IEnumerable<MenuSearchEntry> SearchExperimental()

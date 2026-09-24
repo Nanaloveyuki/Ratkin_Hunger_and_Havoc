@@ -89,6 +89,16 @@ namespace HungerAndHavoc.Tests
             Assert.True(RHAH_ContentSelector.CategoryMatches(RHAH_ContentCategory.Theft, "I-043"));
             Assert.True(RHAH_ContentSelector.CategoryMatches(RHAH_ContentCategory.Siege, "I-045"));
         }
+        [Fact]
+        public void ListKeysSeparateSourceNameAndCategory()
+        {
+            Assert.Equal("饥与祸", RHAH_ContentSelector.ListKey(0, "A001", RHAH_ContentCategory.Plague, "饥与祸", true));
+            Assert.Equal("A", RHAH_ContentSelector.ListKey(1, "A001", RHAH_ContentCategory.None, "饥与祸", true));
+            Assert.Equal("plague", RHAH_ContentSelector.ListKey(2, "A001", RHAH_ContentCategory.Plague, "饥与祸", true));
+            Assert.Equal("vanilla", RHAH_ContentSelector.ListKey(2, "Kind", RHAH_ContentCategory.None, "Core", false));
+            Assert.True(RHAH_ContentSelector.MatchesQuery("井水", "A005", "none", "井"));
+            Assert.False(RHAH_ContentSelector.MatchesQuery("井水", "A005", "none", "围攻"));
+        }
 
         static RHAH_ContentQuery Query(
             float age,

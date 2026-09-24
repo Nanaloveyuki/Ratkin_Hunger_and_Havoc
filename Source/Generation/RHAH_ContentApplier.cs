@@ -18,7 +18,11 @@ namespace HungerAndHavoc.Generation
 
             RHAH_Settings settings = RHAH_Mod.Settings;
             bool histories = settings == null || settings.pawnHistoriesEnabled;
-            bool traits = settings == null || settings.pawnTraitsEnabled;
+            bool traits = settings != null && settings.pawnTraitsEnabled && settings.maxOwnedTraits > 0;
+            if (settings == null)
+            {
+                traits = true;
+            }
             if (!histories && !traits)
             {
                 return;
@@ -42,7 +46,10 @@ namespace HungerAndHavoc.Generation
                 traits,
                 id => settings == null || settings.IsHistoryEnabled(id),
                 id => settings == null || settings.IsTraitEnabled(id),
-                id => settings == null ? RHAH_ContentCatalog.DefaultTraitWeight(id) : settings.TraitWeight(id));
+                id => settings == null ? RHAH_ContentCatalog.DefaultTraitWeight(id) : settings.TraitWeight(id),
+                pawn.gender == Gender.Male,
+                settings == null || settings.traitAgeFilter,
+                id => OwnedTraitIds(pawn).Contains(id));
 
             RHAH_HistoryRecord history = RHAH_ContentSelector.SelectHistory(query, () => Rand.Value);
             if (history != null)
@@ -50,13 +57,23 @@ namespace HungerAndHavoc.Generation
                 ApplyHistory(pawn, history, adult);
             }
 
-            if (HasOwnedTrait(pawn))
-            {
-                return;
-            }
-
+            int cap = settings == null ? 1 : settings.maxOwnedTraits;
             string historyId = history != null ? history.DisplayId : null;
-            RHAH_ContentSelector.SelectTrait(query, historyId, () => Rand.Value, record => TryGain(pawn, record));
+            List<string> ownedIds = OwnedTraitIds(pawn);
+            while (traits && ownedIds.Count < cap)
+            {
+                RHAH_TraitRecord gained = RHAH_ContentSelector.SelectTrait(
+                    query,
+                    historyId,
+                    () => Rand.Value,
+                    record => !ownedIds.Contains(record.DisplayId) && TryGain(pawn, record));
+                if (gained == null)
+                {
+                    break;
+                }
+
+                ownedIds.Add(gained.DisplayId);
+            }
         }
 
         static void ApplyHistory(VersePawn pawn, RHAH_HistoryRecord history, bool adult)
@@ -182,24 +199,31 @@ namespace HungerAndHavoc.Generation
             return true;
         }
 
-        static bool HasOwnedTrait(VersePawn pawn)
+        static List<string> OwnedTraitIds(VersePawn pawn)
         {
+            List<string> ids = new List<string>();
             List<Trait> traits = pawn.story?.traits?.allTraits;
             if (traits == null)
             {
-                return false;
+                return ids;
             }
 
             for (int i = 0; i < traits.Count; i++)
             {
                 Trait trait = traits[i];
-                if (trait?.def != null && RHAH_ContentCatalog.IsOwnedTrait(trait.def.defName))
+                if (trait?.def == null || !RHAH_ContentCatalog.IsOwnedTrait(trait.def.defName))
                 {
-                    return true;
+                    continue;
+                }
+
+                RHAH_TraitRecord record = RHAH_ContentCatalog.FindTraitByDef(trait.def.defName);
+                if (record != null && !ids.Contains(record.DisplayId))
+                {
+                    ids.Add(record.DisplayId);
                 }
             }
 
-            return false;
+            return ids;
         }
 
         static bool Conflicts(VersePawn pawn, TraitDef def)

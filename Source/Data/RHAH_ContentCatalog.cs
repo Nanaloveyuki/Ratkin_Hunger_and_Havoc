@@ -1516,6 +1516,23 @@ namespace HungerAndHavoc.Data
 
             return null;
         }
+        internal static RHAH_TraitRecord FindTraitByDef(string defName)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return null;
+            }
+
+            for (int i = 0; i < traits.Length; i++)
+            {
+                if (string.Equals(traits[i].TraitDefName, defName, StringComparison.Ordinal))
+                {
+                    return traits[i];
+                }
+            }
+
+            return null;
+        }
 
         internal static float DefaultTraitWeight(string displayId)
         {

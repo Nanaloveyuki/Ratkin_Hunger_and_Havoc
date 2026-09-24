@@ -25,7 +25,42 @@
   <RHAH_Settings_FoodWait_Tooltip>找不到食物时最多等这么久。范围 0 到 5 天，默认半天。</RHAH_Settings_FoodWait_Tooltip>
   <RHAH_Settings_MinAge>最低生成年龄：{0}</RHAH_Settings_MinAge>
   <RHAH_Settings_MaxAge>最高生成年龄：{0}</RHAH_Settings_MaxAge>
-  <RHAH_Settings_Age_Tooltip>普通来客的年龄落在这个区间。0 到 100，默认 0 到 50。幼年鼠族、固定年龄和母亲仍按事件来。</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_Age_Tooltip>普通来客的年龄落在这个区间。0 到 100，默认 0 到 50。母亲仍按事件来。幼年鼠族默认不跟这个区间，除非打开下面的开关。</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_YoungAge>幼年鼠族使用这个年龄区间</RHAH_Settings_YoungAge>
+  <RHAH_Settings_YoungAge_Tooltip>打开后，幼年鼠族也落在上面的年龄里。母亲仍按事件来。已经在场的人不变。</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_ImmobileBabies>允许生成不能走路的婴幼</RHAH_Settings_ImmobileBabies>
+  <RHAH_Settings_ImmobileBabies_Tooltip>没有幼童模组时，3 岁以下的原版婴幼会一直躺着，离场要由大人抱走。关闭后，幼年鼠族至少 3 岁。</RHAH_Settings_ImmobileBabies_Tooltip>
+  <RHAH_Settings_ImmobileBabies_Toddlers>幼童模组已启用。3 岁以下可以自己移动。这个开关不再抬高年龄。</RHAH_Settings_ImmobileBabies_Toddlers>
+  <RHAH_Settings_Gender>性别</RHAH_Settings_Gender>
+  <RHAH_Settings_Gender_0>随机</RHAH_Settings_Gender_0>
+  <RHAH_Settings_Gender_1>按比例</RHAH_Settings_Gender_1>
+  <RHAH_Settings_Gender_2>全部女性</RHAH_Settings_Gender_2>
+  <RHAH_Settings_Gender_3>全部男性</RHAH_Settings_Gender_3>
+  <RHAH_Settings_FemaleShare>女性比例：{0}%</RHAH_Settings_FemaleShare>
+  <RHAH_Settings_FemaleShare_Tooltip>只在按比例时生效。0 全是男性，100 全是女性。事件已经指定性别的人不变。</RHAH_Settings_FemaleShare_Tooltip>
+  <RHAH_Settings_Apparel>衣物</RHAH_Settings_Apparel>
+  <RHAH_Settings_Apparel_0>鼠族衣着</RHAH_Settings_Apparel_0>
+  <RHAH_Settings_Apparel_1>原版衣着</RHAH_Settings_Apparel_1>
+  <RHAH_Settings_Apparel_2>防寒优先</RHAH_Settings_Apparel_2>
+  <RHAH_Settings_Apparel_3>不穿衣</RHAH_Settings_Apparel_3>
+  <RHAH_Settings_MaxTraits>本模组特质上限：{0}</RHAH_Settings_MaxTraits>
+  <RHAH_Settings_MaxTraits_Tooltip>新来客最多获得这么多条本模组特质。0 不抽。范围 0 到 3。已经在场的人不变。</RHAH_Settings_MaxTraits_Tooltip>
+  <RHAH_Settings_VanillaTraits>保留原版特质</RHAH_Settings_VanillaTraits>
+  <RHAH_Settings_VanillaTraits_Tooltip>关闭后，新来客不再获得随年龄出现的原版特质。本模组特质仍按上面的上限抽取。</RHAH_Settings_VanillaTraits_Tooltip>
+  <RHAH_Settings_TraitAge>特质跟随年龄</RHAH_Settings_TraitAge>
+  <RHAH_Settings_TraitAge_Tooltip>关闭后，幼年特质和成年特质都可以抽到。打开时，小孩不抽成年特质，大人不抽幼年特质。</RHAH_Settings_TraitAge_Tooltip>
+  <RHAH_Settings_ContentSort>列表分类</RHAH_Settings_ContentSort>
+  <RHAH_Settings_ContentSort_0>按来源</RHAH_Settings_ContentSort_0>
+  <RHAH_Settings_ContentSort_1>按名称</RHAH_Settings_ContentSort_1>
+  <RHAH_Settings_ContentSort_2>按类别</RHAH_Settings_ContentSort_2>
+  <RHAH_Settings_ContentSearch>搜索经历或特质</RHAH_Settings_ContentSearch>
+  <RHAH_Menu_Content_Owned>饥与祸</RHAH_Menu_Content_Owned>
+  <RHAH_Menu_Content_vanilla>原版</RHAH_Menu_Content_vanilla>
+  <RHAH_Menu_Content_none>普通</RHAH_Menu_Content_none>
+  <RHAH_Menu_Content_plague>鼠疫</RHAH_Menu_Content_plague>
+  <RHAH_Menu_Content_theft>偷窃</RHAH_Menu_Content_theft>
+  <RHAH_Menu_Content_conflict>冲突</RHAH_Menu_Content_conflict>
+  <RHAH_Menu_Content_siege>围攻</RHAH_Menu_Content_siege>
   <RHAH_Settings_ShelterDays>短工天数：{0}</RHAH_Settings_ShelterDays>
   <RHAH_Settings_ShelterDays_Tooltip>收留到期后离开。范围 5 到 60 天，默认 5 天。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_ShelterDays_Tooltip>
   <RHAH_Settings_HireDays>长工天数：{0}</RHAH_Settings_HireDays>
@@ -190,7 +225,7 @@
   <RHAH_Settings_PawnHistories>为新来客抽取经历</RHAH_Settings_PawnHistories>
   <RHAH_Settings_PawnHistories_Tooltip>关闭后，新来客不再获得这些经历。已经在场的人不变。</RHAH_Settings_PawnHistories_Tooltip>
   <RHAH_Settings_PawnTraits>为新来客抽取特质</RHAH_Settings_PawnTraits>
-  <RHAH_Settings_PawnTraits_Tooltip>关闭后，新来客不再获得本模组特质。已经在场的角色不变。每人最多一条。</RHAH_Settings_PawnTraits_Tooltip>
+  <RHAH_Settings_PawnTraits_Tooltip>关闭后，新来客不再获得本模组特质。已经在场的角色不变。每人最多按上面的上限。</RHAH_Settings_PawnTraits_Tooltip>
   <RHAH_Menu_Experimental_Gap>生成优化已登记在本页。其它实验项尚未加入。</RHAH_Menu_Experimental_Gap>
   <RHAH_Menu_Experimental_Note>这些选项会改变生成来客的耗时。关闭后，来客仍按各事件自己的装备、经历、健康和基因生成。</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>加快来客生成</RHAH_Settings_OptimizeGeneration>

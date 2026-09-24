@@ -18,6 +18,7 @@ namespace HungerAndHavoc.Generation
             bool explicitBackstory = resolved.UseExplicitBackstory;
             bool explicitApparel = resolved.UseExplicitApparel;
             float? age = WalkingAge(request);
+            Gender? gender = request.Gender ?? ResolveGender();
             PawnGenerationRequest generation = new PawnGenerationRequest(
                 request.PawnKind,
                 request.Faction,
@@ -32,12 +33,17 @@ namespace HungerAndHavoc.Generation
                 developmentalStages: StageFor(age),
                 dontGiveWeapon: true,
                 onlyUseForcedBackstories: explicitBackstory,
-                forceNoGear: explicitApparel)
+                forceNoGear: explicitApparel || ClearsGeneratedApparel())
             {
-                FixedGender = request.Gender,
+                FixedGender = gender,
                 FixedBiologicalAge = age,
                 ForceNoBackstory = explicitBackstory && resolved.Childhood == null && resolved.Adulthood == null
             };
+            if (SuppressVanillaTraits())
+            {
+                generation.MinimumAgeTraits = 0;
+                generation.MaximumAgeTraits = 0;
+            }
             return generation;
         }
 
@@ -66,8 +72,32 @@ namespace HungerAndHavoc.Generation
 
             return HungerAndHavoc.Pawn.RHAH_VisitorRules.WalkingAgeFloor(
                 request.BiologicalAge,
-                ModsConfig.IsActive("cyanobot.toddlers"));
+                ModsConfig.IsActive("cyanobot.toddlers"),
+                Core.RHAH_Mod.Settings != null && Core.RHAH_Mod.Settings.allowImmobileBabies);
         }
+
+        static bool ClearsGeneratedApparel()
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            return settings != null && HungerAndHavoc.Pawn.RHAH_VisitorRules.ClearsApparel(settings.apparelMode, false);
+        }
+
+        static bool SuppressVanillaTraits()
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            return settings != null && !settings.allowVanillaTraits;
+        }
+        static Gender? ResolveGender()
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            int? resolved = HungerAndHavoc.Pawn.RHAH_VisitorRules.ResolveGender(
+                null,
+                settings == null ? 0 : settings.genderMode,
+                settings == null ? 50 : settings.femaleSharePercent,
+                Rand.Value);
+            return resolved.HasValue ? (Gender)resolved.Value : (Gender?)null;
+        }
+
 
         internal static XenotypeDef ResolveXenotype(RHAH_PawnProfile profile)
         {

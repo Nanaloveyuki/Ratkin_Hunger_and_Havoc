@@ -12,7 +12,8 @@ namespace HungerAndHavoc.Data
     internal enum RHAH_ContentGender
     {
         Any = 0,
-        Female = 1
+        Female = 1,
+        Male = 2
     }
 
     internal enum RHAH_ContentCategory
