@@ -45,6 +45,10 @@ namespace HungerAndHavoc.Core
             TickStays(Find.TickManager.TicksGame);
             Pawn.RHAH_AttitudeFactions.LockGoodwill();
             HungerAndHavoc.Narrative.RHAH_EndingRuntime.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Narrative.RHAH_EntrustCare.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Narrative.RHAH_JournalRuntime.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Narrative.RHAH_Envoy.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Narrative.RHAH_RecordSite.Tick(Find.TickManager.TicksGame);
         }
 
         public override void GameComponentUpdate()
@@ -286,6 +290,7 @@ namespace HungerAndHavoc.Core
         bool predationSelected;
         int predationPendingTick = -1;
         int predationNextTick = -1;
+        int holeThingId;
 
         public IReadOnlyList<int> VisitorPawnLoadIds => visitorPawnLoadIds;
         public List<int> PlagueQuarantineLoadIds => plagueQuarantineLoadIds;
@@ -296,6 +301,7 @@ namespace HungerAndHavoc.Core
         public bool PredationSelected { get => predationSelected; set => predationSelected = value; }
         public int PredationPendingTick { get => predationPendingTick; set => predationPendingTick = value; }
         public int PredationNextTick { get => predationNextTick; set => predationNextTick = value; }
+        public int HoleThingId { get => holeThingId; set => holeThingId = value; }
         public List<Verse.Pawn> PredationPrey => predationPrey;
         public List<HungerAndHavoc.Incidents.RHAH_PredatorRecord> Predators => predators;
         public MapComponent_RHAH_Map(Map map) : base(map)
@@ -415,6 +421,7 @@ namespace HungerAndHavoc.Core
         public override void MapComponentTick()
         {
             HungerAndHavoc.Incidents.RHAH_CampPredation.Tick(this, map);
+            HungerAndHavoc.Incidents.RHAH_GrainHole.Tick(map);
         }
 
 
@@ -433,6 +440,7 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref predationSelected, "predationSelected", false);
             Scribe_Values.Look(ref predationPendingTick, "predationPendingTick", -1);
             Scribe_Values.Look(ref predationNextTick, "predationNextTick", -1);
+            Scribe_Values.Look(ref holeThingId, "holeThingId", 0);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 visitorPawnLoadIds = visitorPawnLoadIds ?? new List<int>();

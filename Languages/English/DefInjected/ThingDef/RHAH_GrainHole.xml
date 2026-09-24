@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_GrainHole.label>grain hole</RHAH_GrainHole.label>
+  <RHAH_GrainHole.description>A small hole beside stored food. Until it is plugged, one nearby meal goes missing each day, up to three. It can be plugged with wood.</RHAH_GrainHole.description>
+</LanguageData>

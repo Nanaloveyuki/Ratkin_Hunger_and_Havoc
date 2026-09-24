@@ -223,8 +223,8 @@ namespace HungerAndHavoc.Tests
             SuiyinBook book = new SuiyinBook();
             Assert.Equal(14, SuiyinBook.JournalFor("I-015"));
             Assert.Equal(5, SuiyinBook.JournalFor("I-006"));
-            Assert.True(book.OpenJournal(14, 1, 9, 0, 1, true));
-            Assert.False(book.OpenJournal(14, 1, 9, 1, 1, true));
+            Assert.True(book.OpenJournal(14, 1, 9, 0, new[] { 41 }, true));
+            Assert.False(book.OpenJournal(14, 1, 9, 1, new[] { 41 }, true));
             SuiyinJournalCase record = book.Journals[0];
             Assert.False(book.CloseJournal(record, 1000));
             record.People[0].Presence = SuiyinPresence.Left;
@@ -308,6 +308,59 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(SuiyinN009Outcome.Taken, loaded.N009.Outcome);
         }
 
+        [Fact]
+        public void ProofStillAllowsOneTrade()
+        {
+            SuiyinBook book = new SuiyinBook();
+            for (int i = 1; i <= 5; i++)
+            {
+                book.Note("I-" + i.ToString("000"), 1, i, false, true);
+            }
+
+            Assert.True(book.ArriveEnvoy(4, 9, 10));
+            SuiyinN008Case envoy = book.N008[0];
+            envoy.ProofAvailable = true;
+            Assert.True(book.ChooseEnvoy(envoy, SuiyinN008Action.Proof, 20));
+            Assert.Equal(SuiyinN008Outcome.Checking, envoy.Outcome);
+            envoy.MealsReady = false;
+            Assert.False(book.ChooseEnvoy(envoy, SuiyinN008Action.Trade, 30));
+            envoy.MealsReady = true;
+            Assert.True(book.ChooseEnvoy(envoy, SuiyinN008Action.Trade, 40));
+            Assert.Equal(SuiyinN008Outcome.Traded, envoy.Outcome);
+            Assert.True(book.RelicClue);
+        }
+
+        [Fact]
+        public void EnvoyLeavesAfterRefusalTimeoutAndAFailedCheck()
+        {
+            Assert.Equal(RHAH_EnvoyHold.Stay, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Waiting));
+            Assert.Equal(RHAH_EnvoyHold.Stay, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Checking));
+            Assert.Equal(RHAH_EnvoyHold.Leave, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Refused));
+            Assert.Equal(RHAH_EnvoyHold.Leave, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Driven));
+            Assert.Equal(RHAH_EnvoyHold.Leave, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.NoProof));
+            Assert.Equal(RHAH_EnvoyHold.Leave, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.TimedOut));
+            Assert.Equal(RHAH_EnvoyHold.None, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Traded));
+        }
+
+        [Fact]
+        public void NarrativeScansUseSeparateSlots()
+        {
+            Assert.True(RHAH_NarrativePace.Due(250, 2500, 250));
+            Assert.False(RHAH_NarrativePace.Due(250, 2500, 500));
+            Assert.True(RHAH_NarrativePace.Due(500, 2500, 500));
+            Assert.False(RHAH_NarrativePace.Due(0, 2500, 250));
+        }
+
+        [Fact]
+        public void JournalKeepsRealPawnIds()
+        {
+            SuiyinBook book = new SuiyinBook();
+            Assert.True(book.OpenJournal(14, 1, 9, 0, new[] { 41, 42 }, true));
+            Assert.Equal(41, book.Journals[0].People[0].LoadId);
+            Assert.Equal(42, book.Journals[0].People[1].LoadId);
+            Assert.False(book.OpenJournal(14, 1, 9, 1, new[] { 41 }, true));
+            Assert.False(book.OpenJournal(14, 1, 10, 1, new int[0], true));
+        }
         static SuiyinBook Copy(SuiyinBook source)
         {
             SuiyinBook copy = new SuiyinBook();

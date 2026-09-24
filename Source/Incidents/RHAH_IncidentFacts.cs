@@ -59,12 +59,19 @@ namespace HungerAndHavoc.Incidents
             }
 
             Pawn.Compat.RHAH_LeashBridge.TryLeashArrivals(arrived);
+            List<int> loadIds = new List<int>(arrived.Count);
+            for (int i = 0; i < arrived.Count; i++)
+            {
+                loadIds.Add(arrived[i].thingIDNumber);
+            }
+
             Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new Narrative.SuiyinIncidentFact(
                 context.DisplayId,
                 context.Map.uniqueID,
                 context.SpawnBatchId,
                 created.Count,
                 context.CarriesPlague));
+            Narrative.RHAH_JournalRuntime.Open(context, loadIds);
             OpenChoice(context, created);
 
             return true;

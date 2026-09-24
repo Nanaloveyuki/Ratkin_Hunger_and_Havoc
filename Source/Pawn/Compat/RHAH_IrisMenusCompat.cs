@@ -475,12 +475,19 @@ namespace HungerAndHavoc.Pawn.Compat
             Section(list, "RHAH_Menu_Narrative_Journals");
             for (int journal = 1; journal <= 14; journal++)
             {
-                string label = "RHAH_Menu_Narrative_JournalOpen".Translate(journal);
+                string label = "RHAH_Suiyin_Journal_Label".Translate(journal);
+                bool known = RHAH_JournalRuntime.HasJournal(journal);
+                if (!known)
+                {
+                    list.Label(label);
+                    continue;
+                }
+
                 if (list.ButtonText(label))
                 {
                     Find.LetterStack.ReceiveLetter(
-                        "RHAH_Suiyin_Journal_Label".Translate(journal),
-                        "RHAH_Suiyin_Journal_Text".Translate(),
+                        label,
+                        ("RHAH_Journal_" + journal).Translate(),
                         LetterDefOf.NeutralEvent);
                 }
             }

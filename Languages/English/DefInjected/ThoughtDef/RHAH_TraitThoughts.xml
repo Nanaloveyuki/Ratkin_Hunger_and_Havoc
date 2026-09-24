@@ -74,4 +74,20 @@
   <RHAH_Thought_FamilyThief.stages.0.description>The young in the den are still hungry.</RHAH_Thought_FamilyThief.stages.0.description>
   <RHAH_Thought_FamilyThief.stages.1.label>den down</RHAH_Thought_FamilyThief.stages.1.label>
   <RHAH_Thought_FamilyThief.stages.1.description>The young in the den are sick or down.</RHAH_Thought_FamilyThief.stages.1.description>
+  <RHAH_Thought_LeftAlone.stages.0.label>left alone</RHAH_Thought_LeftAlone.stages.0.label>
+  <RHAH_Thought_LeftAlone.stages.0.description>The basket is gone. Nobody came back for me today.</RHAH_Thought_LeftAlone.stages.0.description>
+  <RHAH_Thought_CaptiveYear.stages.0.label>captive for a year</RHAH_Thought_CaptiveYear.stages.0.label>
+  <RHAH_Thought_CaptiveYear.stages.0.description>The door comes before the person. That is how a year goes.</RHAH_Thought_CaptiveYear.stages.0.description>
+  <RHAH_Thought_FamilyHere.stages.0.label>still here</RHAH_Thought_FamilyHere.stages.0.label>
+  <RHAH_Thought_FamilyHere.stages.0.description>The child is still here, and not grown yet.</RHAH_Thought_FamilyHere.stages.0.description>
+  <RHAH_Thought_Regret.stages.0.label>if that day</RHAH_Thought_Regret.stages.0.label>
+  <RHAH_Thought_Regret.stages.0.description>The old place is still there. The child is not.</RHAH_Thought_Regret.stages.0.description>
+  <RHAH_Thought_LeftAlone.label>left alone</RHAH_Thought_LeftAlone.label>
+  <RHAH_Thought_LeftAlone.description>The basket is gone. Nobody came back for me today.</RHAH_Thought_LeftAlone.description>
+  <RHAH_Thought_CaptiveYear.label>captive for a year</RHAH_Thought_CaptiveYear.label>
+  <RHAH_Thought_CaptiveYear.description>The door comes before the person. That is how a year goes.</RHAH_Thought_CaptiveYear.description>
+  <RHAH_Thought_FamilyHere.label>still here</RHAH_Thought_FamilyHere.label>
+  <RHAH_Thought_FamilyHere.description>The child is still here, and not grown yet.</RHAH_Thought_FamilyHere.description>
+  <RHAH_Thought_Regret.label>if that day</RHAH_Thought_Regret.label>
+  <RHAH_Thought_Regret.description>The old place is still there. The child is not.</RHAH_Thought_Regret.description>
 </LanguageData>

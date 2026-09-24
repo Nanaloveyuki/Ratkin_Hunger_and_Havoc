@@ -170,24 +170,28 @@ namespace HungerAndHavoc.Incidents
             {
                 Release(record, RHAH_ReleaseReason.JoinedPlayerFaction);
                 NoteEnding(record);
+                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.Hires(record.Settled))
             {
                 Stay(record, HungerAndHavoc.Pawn.RHAH_StayKind.Hire);
+                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.Recruits(record.Settled))
             {
                 Stay(record, HungerAndHavoc.Pawn.RHAH_StayKind.Recruit);
+                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.Enslaves(record.Settled))
             {
                 RHAH_VisitorBatch.Enslave(Pawns(record));
+                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
@@ -195,18 +199,21 @@ namespace HungerAndHavoc.Incidents
             {
                 bool move = record.Settled == RHAH_ChoiceAction.Prison;
                 RHAH_VisitorBatch.Capture(Pawns(record), move);
+                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.Attacks(record.Settled))
             {
                 Leave(record);
+                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.WaitsForFood(record.Settled))
             {
                 RHAH_FoodHandoff.Begin(Pawns(record));
+                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
@@ -214,10 +221,12 @@ namespace HungerAndHavoc.Incidents
             if (RHAH_RequestRules.Leaves(record.Settled))
             {
                 Leave(record);
+                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             NoteEnding(record);
+            HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
         }
 
         static void Release(RHAH_ChoiceRecord record, RHAH_ReleaseReason reason)

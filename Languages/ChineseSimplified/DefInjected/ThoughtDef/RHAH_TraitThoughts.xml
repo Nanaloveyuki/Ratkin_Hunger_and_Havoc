@@ -74,4 +74,12 @@
   <RHAH_Thought_FamilyThief.stages.0.description>窝里的幼小还在挨饿。</RHAH_Thought_FamilyThief.stages.0.description>
   <RHAH_Thought_FamilyThief.stages.1.label>窝里病了</RHAH_Thought_FamilyThief.stages.1.label>
   <RHAH_Thought_FamilyThief.stages.1.description>窝里的幼小病了或倒下了。</RHAH_Thought_FamilyThief.stages.1.description>
+  <RHAH_Thought_LeftAlone.stages.0.label>独自留下</RHAH_Thought_LeftAlone.stages.0.label>
+  <RHAH_Thought_LeftAlone.stages.0.description>篮子已经不在。今天没有人回来接我。</RHAH_Thought_LeftAlone.stages.0.description>
+  <RHAH_Thought_CaptiveYear.stages.0.label>关了一年</RHAH_Thought_CaptiveYear.stages.0.label>
+  <RHAH_Thought_CaptiveYear.stages.0.description>先看门，再看人。这一年就是这样过的。</RHAH_Thought_CaptiveYear.stages.0.description>
+  <RHAH_Thought_FamilyHere.stages.0.label>还在</RHAH_Thought_FamilyHere.stages.0.label>
+  <RHAH_Thought_FamilyHere.stages.0.description>孩子还在，也还没长大。</RHAH_Thought_FamilyHere.stages.0.description>
+  <RHAH_Thought_Regret.stages.0.label>要是那天</RHAH_Thought_Regret.stages.0.label>
+  <RHAH_Thought_Regret.stages.0.description>原来的位置还在。孩子不在了。</RHAH_Thought_Regret.stages.0.description>
 </LanguageData>

@@ -43,7 +43,7 @@
   <RHAH_Suiyin_N005Broken_Label>交易破裂</RHAH_Suiyin_N005Broken_Label>
   <RHAH_Suiyin_N005Broken_Text>原定的交接没有完成。先前谈好的条件已经作废。</RHAH_Suiyin_N005Broken_Text>
   <RHAH_Suiyin_N006Entry_Label>墙根漏粮</RHAH_Suiyin_N006Entry_Label>
-  <RHAH_Suiyin_N006Entry_Text>储粮处少了几口吃的。墙根的洞很窄，边上挂着碎屑。\n\n可以现在用 20 木材封上，也可以留一份诱饵，或者把洞边清掉。三天不管，洞口会自己消失。</RHAH_Suiyin_N006Entry_Text>
+  <RHAH_Suiyin_N006Entry_Text>储粮处少了几口吃的。墙根的洞很窄，边上挂着碎屑。\n\n可以现在用 20 木材封上，也可以留一份诱饵，或者清掉洞边。清掉会毁掉附近最多五份食物。三天不管，洞口会自己消失。</RHAH_Suiyin_N006Entry_Text>
   <RHAH_Suiyin_N006Sealed_Label>洞口填好了</RHAH_Suiyin_N006Sealed_Label>
   <RHAH_Suiyin_N006Sealed_Text>洞口填好了。今天清点的数目终于能对上。\n\n谁在另一头，没人再去看。</RHAH_Suiyin_N006Sealed_Text>
   <RHAH_Suiyin_N006BaitSet_Label>诱饵留下了</RHAH_Suiyin_N006BaitSet_Label>
@@ -58,6 +58,15 @@
   <RHAH_Suiyin_N006Cleaned_Text>你们把洞边能藏东西的地方翻了一遍。碎粮扫出来，没法再吃了。\n\n至少今晚不用守着这个缺口。</RHAH_Suiyin_N006Cleaned_Text>
   <RHAH_Suiyin_N006Gone_Label>洞口不见了</RHAH_Suiyin_N006Gone_Label>
   <RHAH_Suiyin_N006Gone_Text>再去找时，洞口已经不见了。原先那条路没法继续追下去。</RHAH_Suiyin_N006Gone_Text>
+  <RHAH_Hole_Seal>封上（20 木材）</RHAH_Hole_Seal>
+  <RHAH_Hole_Bait>留一份诱饵</RHAH_Hole_Bait>
+  <RHAH_Hole_Clean>清掉洞边（至多 5 份食物）</RHAH_Hole_Clean>
+  <RHAH_Hole_Ignore>先不管</RHAH_Hole_Ignore>
+  <RHAH_Hole_Trace>顺着痕迹找</RHAH_Hole_Trace>
+  <RHAH_Hole_Stop>不再追</RHAH_Hole_Stop>
+  <RHAH_Hole_NoWood>木材不够 20，洞还在。</RHAH_Hole_NoWood>
+  <RHAH_Hole_NoFood>洞边没有能当诱饵的食物。</RHAH_Hole_NoFood>
+  <RHAH_Hole_Stale>这个洞已经不能再处理。</RHAH_Hole_Stale>
   <RHAH_Suiyin_N007Choice_Label>来客得了鼠疫</RHAH_Suiyin_N007Choice_Label>
   <RHAH_Suiyin_N007Choice_Text>来客中有人得了鼠疫。他们还在这里，去留却不能再按普通访客处理。\n\n可以先让他们留下观察，也可以放他们走，或者先不处理。病不会因为作了决定就停下来。加入、雇佣和买卖仍按检疫处理。病不会自己好。</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>病人暂时留下</RHAH_Suiyin_N007Quarantine_Label>
@@ -81,13 +90,13 @@
   <RHAH_Suiyin_N008Trade_Label>位置交出来了</RHAH_Suiyin_N008Trade_Label>
   <RHAH_Suiyin_N008Trade_Text>「够了。别再拿了，我一个人背不了那么多。」\n\n{0} 交出了约好的位置，又确认了一遍回程方向。</RHAH_Suiyin_N008Trade_Text>
   <RHAH_Suiyin_N008Proof_Label>对得上</RHAH_Suiyin_N008Proof_Label>
-  <RHAH_Suiyin_N008Proof_Text>「这件事对得上。别的我不能保证，你也不用现在就信。」\n\n已经能核对的记录有 {0} 条。交换还可以再做一次。</RHAH_Suiyin_N008Proof_Text>
+  <RHAH_Suiyin_N008Proof_Text>「这件事对得上。别的我不能保证，你也不用现在就信。」\n\n已经能对上的事件有 {0} 种。交换还可以再做一次。</RHAH_Suiyin_N008Proof_Text>
   <RHAH_Suiyin_N008NoProof_Label>可能找错地方了</RHAH_Suiyin_N008NoProof_Label>
   <RHAH_Suiyin_N008NoProof_Text>「我可能找错地方了。」\n\n他离开了。没有额外的战斗，也不扣信任。</RHAH_Suiyin_N008NoProof_Text>
   <RHAH_Suiyin_N008Refuse_Label>那就算了</RHAH_Suiyin_N008Refuse_Label>
   <RHAH_Suiyin_N008Refuse_Text>「那就算了。我还得在天黑前走出去。」\n\n普通拒绝不扣信任。</RHAH_Suiyin_N008Refuse_Text>
   <RHAH_Suiyin_N008Drive_Label>赶走了</RHAH_Suiyin_N008Drive_Label>
-  <RHAH_Suiyin_N008Drive_Text>你用武力把来客赶走了。这件事单独记一笔，不自动变成报复。</RHAH_Suiyin_N008Drive_Text>
+  <RHAH_Suiyin_N008Drive_Text>你用武力把来客赶走了。信任下降。这件事不自动变成报复。</RHAH_Suiyin_N008Drive_Text>
   <RHAH_Suiyin_N008Dead_Label>人死了</RHAH_Suiyin_N008Dead_Label>
   <RHAH_Suiyin_N008Dead_Text>来问路的人死了。口信到此为止。</RHAH_Suiyin_N008Dead_Text>
   <RHAH_Suiyin_N008Left_Label>人走了</RHAH_Suiyin_N008Left_Label>
@@ -95,7 +104,12 @@
   <RHAH_Suiyin_N008Missing_Label>找不到人</RHAH_Suiyin_N008Missing_Label>
   <RHAH_Suiyin_N008Missing_Text>来问路的人失联了。这封信不把他写成死亡。</RHAH_Suiyin_N008Missing_Text>
   <RHAH_Suiyin_N008Timeout_Label>三天过去了</RHAH_Suiyin_N008Timeout_Label>
-  <RHAH_Suiyin_N008Timeout_Text>三天等候结束了。人还在，交换没有做成。</RHAH_Suiyin_N008Timeout_Text>
+  <RHAH_Suiyin_N008Timeout_Text>三天到了，交换没有做成。他离开了。</RHAH_Suiyin_N008Timeout_Text>
+  <RHAH_Envoy_Trade>交出六份简单餐</RHAH_Envoy_Trade>
+  <RHAH_Envoy_Proof>先核对他说的</RHAH_Envoy_Proof>
+  <RHAH_Envoy_Refuse>拒绝</RHAH_Envoy_Refuse>
+  <RHAH_Envoy_Drive>赶走</RHAH_Envoy_Drive>
+  <RHAH_Envoy_NoMeals>简单餐不足六份。</RHAH_Envoy_NoMeals>
   <RHAH_Suiyin_N009Arrive_Label>旧存放点</RHAH_Suiyin_N009Arrive_Label>
   <RHAH_Suiyin_N009Arrive_Text>这里没有预想中的粮食。箱子里是搬运清单、配给数量和一叠受潮的纸。\n\n最上面一页有个数被改了两遍。最后一次没有签名。地点保留十五天。</RHAH_Suiyin_N009Arrive_Text>
   <RHAH_Suiyin_N009Take_Label>记录带走了</RHAH_Suiyin_N009Take_Label>
@@ -103,7 +117,7 @@
   <RHAH_Suiyin_N009Leave_Label>留在原地</RHAH_Suiyin_N009Leave_Label>
   <RHAH_Suiyin_N009Leave_Text>你们没有带走箱子。位置已经记下。下一批来的人会不会拿走，不由这里决定。</RHAH_Suiyin_N009Leave_Text>
   <RHAH_Suiyin_N009Hand_Label>交给来者</RHAH_Suiyin_N009Hand_Label>
-  <RHAH_Suiyin_N009Hand_Text>「留一份给我们。」对方说，「搬走以后，别让我们再求你一遍。」\n\n记录交给他们了。白银是 {0}。</RHAH_Suiyin_N009Hand_Text>
+  <RHAH_Suiyin_N009Hand_Text>记录交给他们了。白银是 {0}。</RHAH_Suiyin_N009Hand_Text>
   <RHAH_Suiyin_N009Share_Label>各留一份</RHAH_Suiyin_N009Share_Label>
   <RHAH_Suiyin_N009Share_Text>你们留了副本，对方留了另一份。这次没有白银，也没有答应以后归还。</RHAH_Suiyin_N009Share_Text>
   <RHAH_Suiyin_N009Destroy_Label>记录毁了</RHAH_Suiyin_N009Destroy_Label>
@@ -112,6 +126,20 @@
   <RHAH_Suiyin_N009Empty_Text>约好的位置还在，能取的东西已经没有了。这趟路白走了。</RHAH_Suiyin_N009Empty_Text>
   <RHAH_Suiyin_Journal_Label>记录 {0}</RHAH_Suiyin_Journal_Label>
   <RHAH_Suiyin_Journal_Text>这一批的结果记下了。安全离开或持续安置才算一次接济。同一批不会再记第二次。</RHAH_Suiyin_Journal_Text>
+  <RHAH_Journal_1>舱门打开时，孩子已经在里面。地点对不上运单。</RHAH_Journal_1>
+  <RHAH_Journal_2>来人叫错了名字。称呼改得过来，人留不留另说。</RHAH_Journal_2>
+  <RHAH_Journal_3>孩子在路上出生了。母亲和新生儿分开记。</RHAH_Journal_3>
+  <RHAH_Journal_4>这一批没有留下。路过就是路过。</RHAH_Journal_4>
+  <RHAH_Journal_5>粮袋少了。人后来怎样，和粮找没找回是两笔账。</RHAH_Journal_5>
+  <RHAH_Journal_6>门口人很多。能确认的去向先记下。</RHAH_Journal_6>
+  <RHAH_Journal_7>情报交出去了。地图上的点还不是手里的东西。</RHAH_Journal_7>
+  <RHAH_Journal_8>买卖谈完了。商队还要走自己的路，交易不算接济。</RHAH_Journal_8>
+  <RHAH_Journal_9>围攻的人带着敌意来。挡住他们，不记成主动失信。</RHAH_Journal_9>
+  <RHAH_Journal_10>这一批经过以后，地上的粮和活着的人都变了。</RHAH_Journal_10>
+  <RHAH_Journal_11>来的人带着病。说是报复，还指不出谁派的。</RHAH_Journal_11>
+  <RHAH_Journal_12>拦路的人要的是路上的物资。交或打，远行队自己承担。</RHAH_Journal_12>
+  <RHAH_Journal_13>他们独自来的。没有同行的人能替他们答话。</RHAH_Journal_13>
+  <RHAH_Journal_14>接济已经送到。人安全离开或留下安置，这一笔才算送走。</RHAH_Journal_14>
   <RHAH_Suiyin_Aside_1_Label>又有人谈孩子</RHAH_Suiyin_Aside_1_Label>
   <RHAH_Suiyin_Aside_1_Text>这次又有人谈起了孩子的去留。上一次的事不能替这一次作决定。</RHAH_Suiyin_Aside_1_Text>
   <RHAH_Suiyin_Aside_2_Label>另一处位置</RHAH_Suiyin_Aside_2_Label>
@@ -131,4 +159,13 @@
   <RHAH_Menu_Narrative_JournalOpen>打开记录 {0}</RHAH_Menu_Narrative_JournalOpen>
   <RHAH_Menu_Narrative_Aside>插话</RHAH_Menu_Narrative_Aside>
   <RHAH_Menu_Narrative_TrustClosed>信任太低，插话已关闭。结果信仍会送来。</RHAH_Menu_Narrative_TrustClosed>
+  <RHAH_Record_Take>取走</RHAH_Record_Take>
+  <RHAH_Record_Leave>留下</RHAH_Record_Leave>
+  <RHAH_Record_Hand>交付</RHAH_Record_Hand>
+  <RHAH_Record_Share>各留一份</RHAH_Record_Share>
+  <RHAH_Record_Destroy>毁弃</RHAH_Record_Destroy>
+  <RHAH_Revisit_Leave>留在路边</RHAH_Revisit_Leave>
+  <RHAH_Revisit_Pay>付 {0} 白银</RHAH_Revisit_Pay>
+  <RHAH_Revisit_Kill>杀掉</RHAH_Revisit_Kill>
+  <RHAH_Revisit_NoSilver>商队白银不足 {0}。</RHAH_Revisit_NoSilver>
 </LanguageData>

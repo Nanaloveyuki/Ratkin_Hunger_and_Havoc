@@ -43,7 +43,7 @@
   <RHAH_Suiyin_N005Broken_Label>The trade breaks</RHAH_Suiyin_N005Broken_Label>
   <RHAH_Suiyin_N005Broken_Text>The handover does not finish. The terms are void.</RHAH_Suiyin_N005Broken_Text>
   <RHAH_Suiyin_N006Entry_Label>Grain at the wall</RHAH_Suiyin_N006Entry_Label>
-  <RHAH_Suiyin_N006Entry_Text>The store is short a few mouthfuls. The hole at the wall is narrow, and crumbs hang at the edge.\n\nYou can seal it with 20 wood, leave bait, or clear the edge. Leave it for three days and the hole is gone.</RHAH_Suiyin_N006Entry_Text>
+  <RHAH_Suiyin_N006Entry_Text>The store is short a few mouthfuls. The hole at the wall is narrow, and crumbs hang at the edge.\n\nYou can seal it with 20 wood, leave bait, or clear the edge. Clearing it destroys up to five nearby meals. Leave it for three days and the hole is gone.</RHAH_Suiyin_N006Entry_Text>
   <RHAH_Suiyin_N006Sealed_Label>The hole is filled</RHAH_Suiyin_N006Sealed_Label>
   <RHAH_Suiyin_N006Sealed_Text>The hole is filled. Today's count matches again.\n\nNobody goes to see who was on the other side.</RHAH_Suiyin_N006Sealed_Text>
   <RHAH_Suiyin_N006BaitSet_Label>Bait left</RHAH_Suiyin_N006BaitSet_Label>
@@ -58,6 +58,15 @@
   <RHAH_Suiyin_N006Cleaned_Text>You turn over the places around the hole where food could hide. The scraps come out, and they cannot be eaten.\n\nAt least nobody has to watch the gap tonight.</RHAH_Suiyin_N006Cleaned_Text>
   <RHAH_Suiyin_N006Gone_Label>The hole is gone</RHAH_Suiyin_N006Gone_Label>
   <RHAH_Suiyin_N006Gone_Text>When you look again, the hole is gone. That path cannot be followed.</RHAH_Suiyin_N006Gone_Text>
+  <RHAH_Hole_Seal>Seal it (20 wood)</RHAH_Hole_Seal>
+  <RHAH_Hole_Bait>Leave one bait</RHAH_Hole_Bait>
+  <RHAH_Hole_Clean>Clear the edge (up to 5 meals)</RHAH_Hole_Clean>
+  <RHAH_Hole_Ignore>Leave it</RHAH_Hole_Ignore>
+  <RHAH_Hole_Trace>Follow the trail</RHAH_Hole_Trace>
+  <RHAH_Hole_Stop>Stop here</RHAH_Hole_Stop>
+  <RHAH_Hole_NoWood>Fewer than 20 wood. The hole stays.</RHAH_Hole_NoWood>
+  <RHAH_Hole_NoFood>No food by the hole to use as bait.</RHAH_Hole_NoFood>
+  <RHAH_Hole_Stale>This hole can no longer be handled.</RHAH_Hole_Stale>
   <RHAH_Suiyin_N007Choice_Label>Visitors with plague</RHAH_Suiyin_N007Choice_Label>
   <RHAH_Suiyin_N007Choice_Text>Some of these visitors have the plague. They are still here, and they cannot be handled like ordinary guests.\n\nYou can hold them for watch, let them go, or leave the choice for later. The disease does not stop because a choice was made. Joining, hiring, and trade still follow quarantine. Nobody gets well on their own.</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>The sick stay</RHAH_Suiyin_N007Quarantine_Label>
@@ -81,13 +90,13 @@
   <RHAH_Suiyin_N008Trade_Label>The place is given</RHAH_Suiyin_N008Trade_Label>
   <RHAH_Suiyin_N008Trade_Text>"That is enough. Do not add more. I cannot carry it."\n\n{0} hands over the place and checks the way back.</RHAH_Suiyin_N008Trade_Text>
   <RHAH_Suiyin_N008Proof_Label>It matches</RHAH_Suiyin_N008Proof_Label>
-  <RHAH_Suiyin_N008Proof_Text>"This part matches. I cannot promise the rest, and you do not have to believe it now."\n\n{0} finished records can be checked. The trade can still be made once.</RHAH_Suiyin_N008Proof_Text>
+  <RHAH_Suiyin_N008Proof_Text>"This part matches. I cannot promise the rest, and you do not have to believe it now."\n\n{0} kinds of finished events can be checked. The trade can still be made once.</RHAH_Suiyin_N008Proof_Text>
   <RHAH_Suiyin_N008NoProof_Label>Wrong place</RHAH_Suiyin_N008NoProof_Label>
   <RHAH_Suiyin_N008NoProof_Text>"I may have the wrong place."\n\nHe leaves. There is no fight, and no loss of trust.</RHAH_Suiyin_N008NoProof_Text>
   <RHAH_Suiyin_N008Refuse_Label>Then not</RHAH_Suiyin_N008Refuse_Label>
   <RHAH_Suiyin_N008Refuse_Text>"Then not. I still have to be outside before dark."\n\nA plain refusal does not cost trust.</RHAH_Suiyin_N008Refuse_Text>
   <RHAH_Suiyin_N008Drive_Label>Driven off</RHAH_Suiyin_N008Drive_Label>
-  <RHAH_Suiyin_N008Drive_Text>You drive the visitor off by force. That is recorded on its own. It does not become revenge by itself.</RHAH_Suiyin_N008Drive_Text>
+  <RHAH_Suiyin_N008Drive_Text>You drive the visitor off by force. Trust falls. It does not become revenge by itself.</RHAH_Suiyin_N008Drive_Text>
   <RHAH_Suiyin_N008Dead_Label>Dead</RHAH_Suiyin_N008Dead_Label>
   <RHAH_Suiyin_N008Dead_Text>The one who asked the way is dead. The message ends there.</RHAH_Suiyin_N008Dead_Text>
   <RHAH_Suiyin_N008Left_Label>Gone</RHAH_Suiyin_N008Left_Label>
@@ -95,7 +104,12 @@
   <RHAH_Suiyin_N008Missing_Label>No sign</RHAH_Suiyin_N008Missing_Label>
   <RHAH_Suiyin_N008Missing_Text>The one who asked the way is missing. This letter does not call that death.</RHAH_Suiyin_N008Missing_Text>
   <RHAH_Suiyin_N008Timeout_Label>Three days</RHAH_Suiyin_N008Timeout_Label>
-  <RHAH_Suiyin_N008Timeout_Text>The three days are over. The visitor is still here, and the trade was not made.</RHAH_Suiyin_N008Timeout_Text>
+  <RHAH_Suiyin_N008Timeout_Text>The three days are over. The trade was not made. He leaves.</RHAH_Suiyin_N008Timeout_Text>
+  <RHAH_Envoy_Trade>Hand over six simple meals</RHAH_Envoy_Trade>
+  <RHAH_Envoy_Proof>Check the story first</RHAH_Envoy_Proof>
+  <RHAH_Envoy_Refuse>Refuse</RHAH_Envoy_Refuse>
+  <RHAH_Envoy_Drive>Drive off</RHAH_Envoy_Drive>
+  <RHAH_Envoy_NoMeals>Fewer than six simple meals.</RHAH_Envoy_NoMeals>
   <RHAH_Suiyin_N009Arrive_Label>An old store</RHAH_Suiyin_N009Arrive_Label>
   <RHAH_Suiyin_N009Arrive_Text>There is no grain here. The box holds haul lists, ration counts, and damp paper.\n\nThe number on the top page was changed twice. The last change has no name. The place lasts fifteen days.</RHAH_Suiyin_N009Arrive_Text>
   <RHAH_Suiyin_N009Take_Label>Records taken</RHAH_Suiyin_N009Take_Label>
@@ -103,7 +117,7 @@
   <RHAH_Suiyin_N009Leave_Label>Left in place</RHAH_Suiyin_N009Leave_Label>
   <RHAH_Suiyin_N009Leave_Text>You do not take the box. The place is noted. Whether the next group takes it is not decided here.</RHAH_Suiyin_N009Leave_Text>
   <RHAH_Suiyin_N009Hand_Label>Given over</RHAH_Suiyin_N009Hand_Label>
-  <RHAH_Suiyin_N009Hand_Text>"Leave one with us," the other says. "After you take the rest, do not make us ask again."\n\nThe records go to them. The silver is {0}.</RHAH_Suiyin_N009Hand_Text>
+  <RHAH_Suiyin_N009Hand_Text>The records go to them. The silver is {0}.</RHAH_Suiyin_N009Hand_Text>
   <RHAH_Suiyin_N009Share_Label>One copy each</RHAH_Suiyin_N009Share_Label>
   <RHAH_Suiyin_N009Share_Text>You keep a copy. They keep the other. There is no silver now, and no promise that it comes back.</RHAH_Suiyin_N009Share_Text>
   <RHAH_Suiyin_N009Destroy_Label>Records destroyed</RHAH_Suiyin_N009Destroy_Label>
@@ -112,6 +126,20 @@
   <RHAH_Suiyin_N009Empty_Text>The place is still there. What could be taken is already gone. The walk brought nothing back.</RHAH_Suiyin_N009Empty_Text>
   <RHAH_Suiyin_Journal_Label>Record {0}</RHAH_Suiyin_Journal_Label>
   <RHAH_Suiyin_Journal_Text>This batch is recorded. A broad relief counts only after a safe leaving or continued settlement. The same batch is not counted twice.</RHAH_Suiyin_Journal_Text>
+  <RHAH_Journal_1>The child was already in the pod. The place does not match the list.</RHAH_Journal_1>
+  <RHAH_Journal_2>The visitor used the wrong name. The name can be corrected. Staying is separate.</RHAH_Journal_2>
+  <RHAH_Journal_3>A child was born on the road. The mother and the newborn are counted apart.</RHAH_Journal_3>
+  <RHAH_Journal_4>This group did not stay. Passing through can stay passing through.</RHAH_Journal_4>
+  <RHAH_Journal_5>A grain sack is short. What happened to the thieves is not the same as finding the grain.</RHAH_Journal_5>
+  <RHAH_Journal_6>There were many people at the gate. The fates that can be checked are written down.</RHAH_Journal_6>
+  <RHAH_Journal_7>The lead was paid for. A mark on the map is not the thing in hand.</RHAH_Journal_7>
+  <RHAH_Journal_8>The trade is done. The caravan still has its own road. A sale is not relief.</RHAH_Journal_8>
+  <RHAH_Journal_9>The siege came hostile. Holding them off is not a broken promise.</RHAH_Journal_9>
+  <RHAH_Journal_10>After this group passed, the food on the ground and the living both changed.</RHAH_Journal_10>
+  <RHAH_Journal_11>The visitors arrived sick. Calling it revenge does not name who sent them.</RHAH_Journal_11>
+  <RHAH_Journal_12>The people on the road wanted the caravan's supplies. Paying or fighting is the caravan's own cost.</RHAH_Journal_12>
+  <RHAH_Journal_13>They came alone. Nobody traveling with them can answer for them.</RHAH_Journal_13>
+  <RHAH_Journal_14>The relief was handed over. It counts as sent only after a safe leaving or continued settlement.</RHAH_Journal_14>
   <RHAH_Suiyin_Aside_1_Label>Another child</RHAH_Suiyin_Aside_1_Label>
   <RHAH_Suiyin_Aside_1_Text>Someone is talking about a child's place again. The last time does not decide this one.</RHAH_Suiyin_Aside_1_Text>
   <RHAH_Suiyin_Aside_2_Label>Another place</RHAH_Suiyin_Aside_2_Label>
@@ -131,4 +159,13 @@
   <RHAH_Menu_Narrative_JournalOpen>Open record {0}</RHAH_Menu_Narrative_JournalOpen>
   <RHAH_Menu_Narrative_Aside>Asides</RHAH_Menu_Narrative_Aside>
   <RHAH_Menu_Narrative_TrustClosed>Trust is too low for asides. Result letters still arrive.</RHAH_Menu_Narrative_TrustClosed>
+  <RHAH_Record_Take>Take</RHAH_Record_Take>
+  <RHAH_Record_Leave>Leave</RHAH_Record_Leave>
+  <RHAH_Record_Hand>Hand over</RHAH_Record_Hand>
+  <RHAH_Record_Share>One copy each</RHAH_Record_Share>
+  <RHAH_Record_Destroy>Destroy</RHAH_Record_Destroy>
+  <RHAH_Revisit_Leave>Leave them</RHAH_Revisit_Leave>
+  <RHAH_Revisit_Pay>Pay {0} silver</RHAH_Revisit_Pay>
+  <RHAH_Revisit_Kill>Kill them</RHAH_Revisit_Kill>
+  <RHAH_Revisit_NoSilver>The caravan has less than {0} silver.</RHAH_Revisit_NoSilver>
 </LanguageData>

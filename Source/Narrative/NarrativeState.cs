@@ -347,10 +347,17 @@ namespace HungerAndHavoc.Narrative
             Scribe_Collections.Look(ref suiyinEnabled, "suiyinEnabled", LookMode.Value);
             Scribe_Collections.Look(ref suiyinStarted, "suiyinStarted", LookMode.Value);
             Scribe_Collections.Look(ref suiyinDeadlineTick, "suiyinDeadlineTick", LookMode.Value);
+            Scribe_Collections.Look(ref book.N004, "entrustCases", LookMode.Deep);
+            Scribe_Collections.Look(ref book.N005, "exchangeCases", LookMode.Deep);
+            Scribe_Collections.Look(ref book.N006, "holeCases", LookMode.Deep);
+            Scribe_Collections.Look(ref book.N007, "quarantineCases", LookMode.Deep);
+            Scribe_Collections.Look(ref book.N008, "envoyCases", LookMode.Deep);
+            Scribe_Deep.Look(ref book.N009, "relicCase");
+            Scribe_Collections.Look(ref book.Journals, "journalCases", LookMode.Deep);
+            Scribe_Collections.Look(ref book.Pending, "pendingNotices", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 suiyinEnabled = suiyinEnabled ?? new List<bool>();
-                seenKinds = seenKinds ?? new List<string>();
                 theftMaps = theftMaps ?? new List<int>();
                 theftCounts = theftCounts ?? new List<int>();
                 journalNoted = journalNoted ?? new List<int>();
@@ -369,6 +376,13 @@ namespace HungerAndHavoc.Narrative
                 book.RelicClue = relicClue;
                 book.LastAsideTick = lastAsideTick;
                 book.NextCaseId = nextCaseId < 1 ? 1 : nextCaseId;
+                book.N004 = book.N004 ?? new System.Collections.Generic.List<SuiyinN004Case>();
+                book.N005 = book.N005 ?? new System.Collections.Generic.List<SuiyinN005Case>();
+                book.N006 = book.N006 ?? new System.Collections.Generic.List<SuiyinN006Case>();
+                book.N007 = book.N007 ?? new System.Collections.Generic.List<SuiyinN007Case>();
+                book.N008 = book.N008 ?? new System.Collections.Generic.List<SuiyinN008Case>();
+                book.Journals = book.Journals ?? new System.Collections.Generic.List<SuiyinJournalCase>();
+                book.Pending = book.Pending ?? new System.Collections.Generic.List<SuiyinNotice>();
                 book.ImportSave(seenKinds, theftMaps, theftCounts, journalNoted, asidesSent);
             }
         }

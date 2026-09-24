@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using Verse;
 namespace HungerAndHavoc.Narrative
 {
     internal enum SuiyinLetter
@@ -212,17 +212,28 @@ namespace HungerAndHavoc.Narrative
         Empty = 6
     }
 
-    internal readonly struct SuiyinNotice
+    public sealed class SuiyinNotice : IExposable
     {
-        internal readonly SuiyinLetter Letter;
-        internal readonly int Arg;
-        internal readonly bool Private;
+        internal SuiyinLetter Letter;
+        internal int Arg;
+        internal bool Private;
+
+        public SuiyinNotice()
+        {
+        }
 
         internal SuiyinNotice(SuiyinLetter letter, int arg, bool isPrivate)
         {
             Letter = letter;
             Arg = arg;
             Private = isPrivate;
+        }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref Letter, "letter", SuiyinLetter.None);
+            Scribe_Values.Look(ref Arg, "arg", 0);
+            Scribe_Values.Look(ref Private, "privateNotice", false);
         }
     }
 
@@ -252,7 +263,7 @@ namespace HungerAndHavoc.Narrative
         internal int AdultYears = 18;
     }
 
-    internal sealed class SuiyinMember
+    public sealed class SuiyinMember : IExposable
     {
         internal int LoadId;
         internal SuiyinPresence Presence = SuiyinPresence.Here;
@@ -260,37 +271,89 @@ namespace HungerAndHavoc.Narrative
         internal bool Child;
         internal int CareTicks;
         internal int MissingSince = -1;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref LoadId, "loadId", 0);
+            Scribe_Values.Look(ref Presence, "presence", SuiyinPresence.Here);
+            Scribe_Values.Look(ref Care, "care", SuiyinCare.Free);
+            Scribe_Values.Look(ref Child, "child", false);
+            Scribe_Values.Look(ref CareTicks, "careTicks", 0);
+            Scribe_Values.Look(ref MissingSince, "missingSince", -1);
+        }
     }
 
-    internal sealed class SuiyinN004Case
+    public sealed class SuiyinN004Case : IExposable
     {
         internal int Id;
         internal int MotherId;
         internal int MapId;
         internal int StartedTick;
         internal SuiyinN004Outcome Outcome;
-        internal bool EffectsApplied;
-        internal int RevisitDeadline = -1;
-        internal bool RevisitSeen;
+        internal SuiyinPresence Mother = SuiyinPresence.Here;
+        internal int MissingSince = -1;
         internal SuiyinN004Revisit Revisit;
+        internal bool RevisitSeen;
+        internal int RevisitDeadline = -1;
+        internal int MeetingCaravanId;
         internal int RescueDueTick = -1;
         internal bool RescuePaid;
         internal int BreakUntil = -1;
         internal bool BreakTrait;
-        internal readonly List<SuiyinMember> Children = new List<SuiyinMember>();
+        internal bool EffectsApplied;
+        internal List<SuiyinMember> Children = new List<SuiyinMember>();
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref Id, "id", 0);
+            Scribe_Values.Look(ref MotherId, "motherId", 0);
+            Scribe_Values.Look(ref MapId, "mapId", 0);
+            Scribe_Values.Look(ref StartedTick, "startedTick", 0);
+            Scribe_Values.Look(ref Outcome, "outcome", SuiyinN004Outcome.Pending);
+            Scribe_Values.Look(ref Mother, "mother", SuiyinPresence.Here);
+            Scribe_Values.Look(ref MissingSince, "missingSince", -1);
+            Scribe_Values.Look(ref Revisit, "revisit", SuiyinN004Revisit.None);
+            Scribe_Values.Look(ref RevisitSeen, "revisitSeen", false);
+            Scribe_Values.Look(ref RevisitDeadline, "revisitDeadline", -1);
+            Scribe_Values.Look(ref MeetingCaravanId, "meetingCaravanId", 0);
+            Scribe_Values.Look(ref RescueDueTick, "rescueDueTick", -1);
+            Scribe_Values.Look(ref RescuePaid, "rescuePaid", false);
+            Scribe_Values.Look(ref BreakUntil, "breakUntil", -1);
+            Scribe_Values.Look(ref BreakTrait, "breakTrait", false);
+            Scribe_Values.Look(ref EffectsApplied, "effectsApplied", false);
+            Scribe_Collections.Look(ref Children, "children", LookMode.Deep);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                Children = Children ?? new List<SuiyinMember>();
+            }
+        }
     }
 
-    internal sealed class SuiyinN005Case
+    public sealed class SuiyinN005Case : IExposable
     {
         internal int Id;
         internal int MapId;
         internal int StartedTick;
         internal SuiyinN005Outcome Outcome;
         internal bool CareClosed;
-        internal readonly List<SuiyinMember> Children = new List<SuiyinMember>();
+        internal List<SuiyinMember> Children = new List<SuiyinMember>();
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref Id, "id", 0);
+            Scribe_Values.Look(ref MapId, "mapId", 0);
+            Scribe_Values.Look(ref StartedTick, "startedTick", 0);
+            Scribe_Values.Look(ref Outcome, "outcome", SuiyinN005Outcome.Pending);
+            Scribe_Values.Look(ref CareClosed, "careClosed", false);
+            Scribe_Collections.Look(ref Children, "children", LookMode.Deep);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                Children = Children ?? new List<SuiyinMember>();
+            }
+        }
     }
 
-    internal sealed class SuiyinN006Case
+    public sealed class SuiyinN006Case : IExposable
     {
         internal int MapId;
         internal int Thefts;
@@ -302,9 +365,27 @@ namespace HungerAndHavoc.Narrative
         internal int Wood;
         internal bool BaitStock;
         internal SuiyinN006Outcome Outcome;
+        internal int Losses;
+        internal int NextLossTick = -1;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref MapId, "mapId", 0);
+            Scribe_Values.Look(ref Thefts, "thefts", 0);
+            Scribe_Values.Look(ref StartedTick, "startedTick", -1);
+            Scribe_Values.Look(ref IgnoreUntil, "ignoreUntil", -1);
+            Scribe_Values.Look(ref BaitUntil, "baitUntil", -1);
+            Scribe_Values.Look(ref Hole, "hole", false);
+            Scribe_Values.Look(ref FoodPresent, "foodPresent", true);
+            Scribe_Values.Look(ref Wood, "wood", 0);
+            Scribe_Values.Look(ref BaitStock, "baitStock", false);
+            Scribe_Values.Look(ref Outcome, "outcome", SuiyinN006Outcome.Pending);
+            Scribe_Values.Look(ref Losses, "losses", 0);
+            Scribe_Values.Look(ref NextLossTick, "nextLossTick", -1);
+        }
     }
 
-    internal sealed class SuiyinN007Case
+    public sealed class SuiyinN007Case : IExposable
     {
         internal int MapId;
         internal int StartedTick;
@@ -312,10 +393,25 @@ namespace HungerAndHavoc.Narrative
         internal int ReturnDueTick = -1;
         internal int ReturnPawnId;
         internal bool ReturnDone;
-        internal readonly List<SuiyinMember> Visitors = new List<SuiyinMember>();
+        internal List<SuiyinMember> Visitors = new List<SuiyinMember>();
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref MapId, "mapId", 0);
+            Scribe_Values.Look(ref StartedTick, "startedTick", 0);
+            Scribe_Values.Look(ref Outcome, "outcome", SuiyinN007Outcome.Pending);
+            Scribe_Values.Look(ref ReturnDueTick, "returnDueTick", -1);
+            Scribe_Values.Look(ref ReturnPawnId, "returnPawnId", 0);
+            Scribe_Values.Look(ref ReturnDone, "returnDone", false);
+            Scribe_Collections.Look(ref Visitors, "visitors", LookMode.Deep);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                Visitors = Visitors ?? new List<SuiyinMember>();
+            }
+        }
     }
 
-    internal sealed class SuiyinN008Case
+    public sealed class SuiyinN008Case : IExposable
     {
         internal int MapId;
         internal int PawnId;
@@ -327,9 +423,23 @@ namespace HungerAndHavoc.Narrative
         internal SuiyinN008Outcome Outcome;
         internal bool MealsReady;
         internal bool ProofAvailable;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref MapId, "mapId", 0);
+            Scribe_Values.Look(ref PawnId, "pawnId", 0);
+            Scribe_Values.Look(ref StartedTick, "startedTick", 0);
+            Scribe_Values.Look(ref Deadline, "deadline", -1);
+            Scribe_Values.Look(ref CheckUntil, "checkUntil", -1);
+            Scribe_Values.Look(ref Presence, "presence", SuiyinPresence.Here);
+            Scribe_Values.Look(ref MissingSince, "missingSince", -1);
+            Scribe_Values.Look(ref Outcome, "outcome", SuiyinN008Outcome.Pending);
+            Scribe_Values.Look(ref MealsReady, "mealsReady", false);
+            Scribe_Values.Look(ref ProofAvailable, "proofAvailable", false);
+        }
     }
 
-    internal sealed class SuiyinN009Case
+    public sealed class SuiyinN009Case : IExposable
     {
         internal int StartedTick;
         internal int Deadline = -1;
@@ -338,9 +448,26 @@ namespace HungerAndHavoc.Narrative
         internal bool EnvoyHere;
         internal bool BoxDestroyed;
         internal SuiyinN009Outcome Outcome;
+        internal int SiteId;
+        internal int BoxId;
+        internal bool MapEntered;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref StartedTick, "startedTick", 0);
+            Scribe_Values.Look(ref Deadline, "deadline", -1);
+            Scribe_Values.Look(ref MapPresent, "mapPresent", true);
+            Scribe_Values.Look(ref PlayersInside, "playersInside", false);
+            Scribe_Values.Look(ref EnvoyHere, "envoyHere", false);
+            Scribe_Values.Look(ref BoxDestroyed, "boxDestroyed", false);
+            Scribe_Values.Look(ref Outcome, "outcome", SuiyinN009Outcome.Pending);
+            Scribe_Values.Look(ref SiteId, "siteId", 0);
+            Scribe_Values.Look(ref BoxId, "boxId", 0);
+            Scribe_Values.Look(ref MapEntered, "mapEntered", false);
+        }
     }
 
-    internal sealed class SuiyinJournalCase
+    public sealed class SuiyinJournalCase : IExposable
     {
         internal int Id;
         internal int MapId;
@@ -350,7 +477,24 @@ namespace HungerAndHavoc.Narrative
         internal bool Driven;
         internal bool Closed;
         internal bool Counted;
-        internal readonly List<SuiyinMember> People = new List<SuiyinMember>();
+        internal List<SuiyinMember> People = new List<SuiyinMember>();
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref Id, "id", 0);
+            Scribe_Values.Look(ref MapId, "mapId", 0);
+            Scribe_Values.Look(ref BatchId, "batchId", 0);
+            Scribe_Values.Look(ref StartedTick, "startedTick", 0);
+            Scribe_Values.Look(ref Delivered, "delivered", false);
+            Scribe_Values.Look(ref Driven, "driven", false);
+            Scribe_Values.Look(ref Closed, "closed", false);
+            Scribe_Values.Look(ref Counted, "counted", false);
+            Scribe_Collections.Look(ref People, "people", LookMode.Deep);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                People = People ?? new List<SuiyinMember>();
+            }
+        }
     }
 
     internal sealed class SuiyinBook
@@ -360,13 +504,13 @@ namespace HungerAndHavoc.Narrative
         internal readonly List<string> Seen = new List<string>();
         internal readonly List<int> TheftMaps = new List<int>();
         internal readonly List<int> TheftCounts = new List<int>();
-        internal readonly List<SuiyinN004Case> N004 = new List<SuiyinN004Case>();
-        internal readonly List<SuiyinN005Case> N005 = new List<SuiyinN005Case>();
-        internal readonly List<SuiyinN006Case> N006 = new List<SuiyinN006Case>();
-        internal readonly List<SuiyinN007Case> N007 = new List<SuiyinN007Case>();
-        internal readonly List<SuiyinN008Case> N008 = new List<SuiyinN008Case>();
+        internal List<SuiyinN004Case> N004 = new List<SuiyinN004Case>();
+        internal List<SuiyinN005Case> N005 = new List<SuiyinN005Case>();
+        internal List<SuiyinN006Case> N006 = new List<SuiyinN006Case>();
+        internal List<SuiyinN007Case> N007 = new List<SuiyinN007Case>();
+        internal List<SuiyinN008Case> N008 = new List<SuiyinN008Case>();
         internal SuiyinN009Case N009;
-        internal readonly List<SuiyinJournalCase> Journals = new List<SuiyinJournalCase>();
+        internal List<SuiyinJournalCase> Journals = new List<SuiyinJournalCase>();
         internal readonly List<int> JournalNoted = new List<int>();
         internal readonly List<int> AsidesSent = new List<int>();
         internal bool OpeningSent;
@@ -379,7 +523,7 @@ namespace HungerAndHavoc.Narrative
         internal int NextCaseId = 1;
         internal int Trust;
         internal bool Narrator = true;
-        internal readonly List<SuiyinNotice> Pending = new List<SuiyinNotice>();
+        internal List<SuiyinNotice> Pending = new List<SuiyinNotice>();
 
         internal int Distinct => Seen.Count;
         internal void ExportSave(
@@ -408,7 +552,6 @@ namespace HungerAndHavoc.Narrative
             Replace(TheftCounts, theftCounts);
             Replace(JournalNoted, journalNoted);
             Replace(AsidesSent, asides);
-            Pending.Clear();
         }
 
         static void Copy<T>(List<T> source, List<T> destination)
@@ -495,11 +638,6 @@ namespace HungerAndHavoc.Narrative
             if (IsTheft(displayId))
             {
                 NoteTheft(mapId, tick);
-            }
-
-            if (displayId == "I-013" && Allows(SuiyinNode.N005))
-            {
-                Queue(SuiyinLetter.N005Accepted, 0, false);
             }
 
             TryEnvoy(tick);
@@ -1105,7 +1243,7 @@ namespace HungerAndHavoc.Narrative
                 return false;
             }
 
-            if (action == SuiyinN008Action.Trade && record.Outcome == SuiyinN008Outcome.Waiting)
+            if (action == SuiyinN008Action.Trade && (record.Outcome == SuiyinN008Outcome.Waiting || record.Outcome == SuiyinN008Outcome.Checking))
             {
                 if (!record.MealsReady || record.Outcome == SuiyinN008Outcome.Traded)
                 {
@@ -1135,14 +1273,14 @@ namespace HungerAndHavoc.Narrative
                 return true;
             }
 
-            if (action == SuiyinN008Action.Refuse && record.Outcome == SuiyinN008Outcome.Waiting)
+            if (action == SuiyinN008Action.Refuse && (record.Outcome == SuiyinN008Outcome.Waiting || record.Outcome == SuiyinN008Outcome.Checking))
             {
                 record.Outcome = SuiyinN008Outcome.Refused;
                 Queue(SuiyinLetter.N008Refuse, record.PawnId, false);
                 return true;
             }
 
-            if (action == SuiyinN008Action.Drive && record.Outcome == SuiyinN008Outcome.Waiting)
+            if (action == SuiyinN008Action.Drive && (record.Outcome == SuiyinN008Outcome.Waiting || record.Outcome == SuiyinN008Outcome.Checking))
             {
                 record.Outcome = SuiyinN008Outcome.Driven;
                 Trust = SuiyinNodes.ClampTrust(Trust - 2);
@@ -1190,7 +1328,7 @@ namespace HungerAndHavoc.Narrative
                 }
             }
 
-            if (record.Outcome == SuiyinN008Outcome.Waiting && record.Deadline >= 0 && tick >= record.Deadline)
+            if ((record.Outcome == SuiyinN008Outcome.Waiting || record.Outcome == SuiyinN008Outcome.Checking) && record.Deadline >= 0 && tick >= record.Deadline)
             {
                 record.Outcome = SuiyinN008Outcome.TimedOut;
                 Queue(SuiyinLetter.N008Timeout, record.PawnId, false);
@@ -1294,9 +1432,15 @@ namespace HungerAndHavoc.Narrative
             return false;
         }
 
-        internal bool OpenJournal(int journal, int mapId, int batchId, int tick, int people, bool delivered)
+        internal bool OpenJournal(int journal, int mapId, int batchId, int tick, IList<int> loadIds, bool delivered)
         {
             if (journal < 1 || journal > 14 || batchId <= 0 || FindJournal(batchId) != null)
+            {
+                return false;
+            }
+
+            List<int> ids = RHAH_NarrativePace.MemberIds(loadIds, loadIds == null ? 0 : loadIds.Count);
+            if (ids.Count == 0)
             {
                 return false;
             }
@@ -1309,9 +1453,9 @@ namespace HungerAndHavoc.Narrative
                 StartedTick = tick,
                 Delivered = delivered
             };
-            for (int i = 0; i < people; i++)
+            for (int i = 0; i < ids.Count; i++)
             {
-                record.People.Add(new SuiyinMember { LoadId = batchId * 100 + i + 1 });
+                record.People.Add(new SuiyinMember { LoadId = ids[i] });
             }
 
             Journals.Add(record);
