@@ -17,7 +17,6 @@
     <thinkNode Class="ThinkNode_Priority">
       <subNodes>
         <li Class="HungerAndHavoc.Pawn.JobGiver_RHAH_Leave" />
-        <li Class="JobGiver_ExitMapBest" />
       </subNodes>
     </thinkNode>
   </DutyDef>

@@ -47,7 +47,7 @@ namespace HungerAndHavoc.Identity
                 case RHAH_BehaviorGate.Leash:
                     return IsYoungRole(role);
                 case RHAH_BehaviorGate.Carry:
-                    return IsYoungRole(role);
+                    return !IsYoungRole(role);
                 case RHAH_BehaviorGate.JoinColony:
                     return true;
                 case RHAH_BehaviorGate.Hire:

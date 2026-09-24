@@ -176,6 +176,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_GrainHole` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
 | `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Envoy` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
 | `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Revisit` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
+| `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Quarantine` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_DropChild` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_MotherFeed` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
@@ -215,6 +216,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_TradePawnGatePatch` 是 `internal`，Prefix `Tradeable_Pawn.ResolveTrade`。原版角色买卖不看来源闸门。补丁只检查这笔要成交的本模组来源，任一 `Transfer` 被拒则整笔不成交，通过则 `ReleaseToColony(ModRequest)`。物品交易和其它角色走原版。
 `RHAH_GnawFoodPatch` 是 `internal`，Postfix `JobGiver_GetFood.TryGiveJob`。原版饥饿觅食找不到食物就结束。补丁只在结果为空、目标是本模组来客、且食物比例低于 5% 时补一个啃树皮或墙皮的 Job。寻食 duty、工作和工作优先级都不发啃食。
 `RHAH_StayWorkPatch` 是 `internal`，Prefix `Pawn_JobTracker.StartJob`。长工、短工和招募的计时结束后，原版仍会派工作、休息和娱乐。补丁只拒绝这些非玩家强制、也不是近战反击、逃跑或进食的 Job。倒地期间计时暂停，不拦。
+`RHAH_IngestPatch` 是 `internal`，Postfix `Toils_Ingest.FinalizeIngest`。原版吃完不会写来源生命周期。补丁只给仍是访客的进食 Toil 加结束动作，结束时调用 `RHAH_Feeding.TryComplete`。啃食、未吃完和其它角色不改。
+`RHAH_DeathPatch` 是 `internal`，Postfix `Pawn.Kill`。原版死亡不改来源生命周期，也不拆访客 Lord。补丁只在目标已死亡且仍是活跃访客时写成 `Dead`，并调用 `NotifyDead`。已释放、已死亡和其它角色不改。
 
 ## 检查门禁
 

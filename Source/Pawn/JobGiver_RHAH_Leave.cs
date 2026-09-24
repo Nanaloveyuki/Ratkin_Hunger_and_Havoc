@@ -1,3 +1,4 @@
+using HungerAndHavoc.Identity;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Pawn.Compat;
@@ -40,7 +41,12 @@ namespace HungerAndHavoc.Pawn
                 now,
                 snapshot.LeaveAfterGameTick,
                 pawn.Downed);
-            if (fedLeave && !exit && !fedDue)
+            bool foodWaitExpired = snapshot != null && RHAH_VisitorRules.NoFoodWaitExpired(
+                true,
+                snapshot.HasBeenFed,
+                now,
+                FoodWaitDeadline(pawn));
+            if (fedLeave && !exit && !fedDue && !foodWaitExpired)
             {
                 return null;
             }
@@ -55,9 +61,17 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            if (!RHAH_ChildMovement.CanWalkOut(pawn))
+            if (RHAH_ChildMovement.CanWalkOut(pawn))
             {
-                return CarryDependent(pawn);
+                Job carry = CarryDependent(pawn);
+                if (carry != null)
+                {
+                    return carry;
+                }
+            }
+            else
+            {
+                return null;
             }
 
             IntVec3 spot;
@@ -74,9 +88,18 @@ namespace HungerAndHavoc.Pawn
             return job;
         }
 
+        static int FoodWaitDeadline(Verse.Pawn pawn)
+        {
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            return comp == null ? -1 : comp.State.foodWaitUntilTick;
+        }
+
         static Job CarryDependent(Verse.Pawn pawn)
         {
-            if (pawn.Downed || pawn.CarriedBy != null || !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Carry))
+            if (pawn.Downed ||
+                pawn.CarriedBy != null ||
+                !RHAH_ChildMovement.CanWalkOut(pawn) ||
+                !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Carry))
             {
                 return null;
             }

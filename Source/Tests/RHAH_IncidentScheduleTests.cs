@@ -125,5 +125,28 @@ namespace HungerAndHavoc.Tests
             Assert.True(hostile > 0f);
             Assert.True(friendly > hostile);
         }
+
+        [Fact]
+        public void SavedTargetsKeepTheirOriginalMapOrCaravan()
+        {
+            Assert.Equal(12, RHAH_IncidentSchedule.TargetId(caravan: false, 12));
+            Assert.Equal(-7, RHAH_IncidentSchedule.TargetId(caravan: true, 7));
+            Assert.Equal(0, RHAH_IncidentSchedule.TargetId(caravan: true, 0));
+            Assert.Equal(12, RHAH_IncidentSchedule.DecodeTargetId(12, RHAH_IncidentTarget.Map));
+            Assert.Equal(7, RHAH_IncidentSchedule.DecodeTargetId(-7, RHAH_IncidentTarget.Caravan));
+            Assert.Equal(0, RHAH_IncidentSchedule.DecodeTargetId(12, RHAH_IncidentTarget.Caravan));
+            Assert.Equal(0, RHAH_IncidentSchedule.DecodeTargetId(-7, RHAH_IncidentTarget.Map));
+        }
+
+        [Fact]
+        public void UnavailableHeadDoesNotBlockAReadyLaterTarget()
+        {
+            bool[] terminal = { false, true, false };
+            bool[] ready = { false, false, true };
+
+            Assert.Equal(1, RHAH_IncidentSchedule.NextExecutable(terminal, ready));
+            Assert.Equal(2, RHAH_IncidentSchedule.NextExecutable(new[] { false, false, false }, ready));
+            Assert.Equal(-1, RHAH_IncidentSchedule.NextExecutable(new[] { false }, new[] { false }));
+        }
     }
 }

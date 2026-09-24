@@ -67,6 +67,10 @@
   <RHAH_Hole_NoWood>Fewer than 20 wood. The hole stays.</RHAH_Hole_NoWood>
   <RHAH_Hole_NoFood>No food by the hole to use as bait.</RHAH_Hole_NoFood>
   <RHAH_Hole_Stale>This hole can no longer be handled.</RHAH_Hole_Stale>
+  <RHAH_Quarantine_Hold>Hold them</RHAH_Quarantine_Hold>
+  <RHAH_Quarantine_Release>Let them go</RHAH_Quarantine_Release>
+  <RHAH_Quarantine_Defer>Leave it for later</RHAH_Quarantine_Defer>
+  <RHAH_Quarantine_Stale>This group can no longer take that choice.</RHAH_Quarantine_Stale>
   <RHAH_Suiyin_N007Choice_Label>Visitors with plague</RHAH_Suiyin_N007Choice_Label>
   <RHAH_Suiyin_N007Choice_Text>Some of these visitors have the plague. They are still here, and they cannot be handled like ordinary guests.\n\nYou can hold them for watch, let them go, or leave the choice for later. The disease does not stop because a choice was made. Joining, hiring, and trade still follow quarantine. Nobody gets well on their own.</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>The sick stay</RHAH_Suiyin_N007Quarantine_Label>

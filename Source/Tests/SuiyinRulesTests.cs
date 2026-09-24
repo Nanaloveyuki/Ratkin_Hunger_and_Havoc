@@ -44,6 +44,65 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void ChoiceTrustReturnsToTheNarrativeState()
+        {
+            NarrativeState state = new NarrativeState(null);
+            state.RecordTrust(4);
+            SuiyinN004Case record = new SuiyinN004Case();
+            state.Book.N004.Add(record);
+            record.Children.Add(new SuiyinMember { LoadId = 8, Child = false, Presence = SuiyinPresence.Here });
+            Assert.Equal(SuiyinN004Outcome.FamilyHere, state.Commit(book => book.ResolveEntrust(record, 10, SuiyinPresence.Here)));
+            Assert.Equal(9, state.Snapshot().Trust);
+            Assert.Equal(9, state.Book.Trust);
+        }
+
+        [Fact]
+        public void PlagueVisitorsOpenOneChoiceAndKeepTheirIds()
+        {
+            SuiyinBook book = new SuiyinBook();
+            book.Note("I-042", 2, 10, true, true, 900, new[] { 41, 0, 41, 42 });
+            Assert.Equal(1, book.N007.Count);
+            Assert.True(book.N007[0].ChoiceOpen);
+            Assert.Equal(2, book.N007[0].Visitors.Count);
+            Assert.Equal(41, book.N007[0].Visitors[0].LoadId);
+            Assert.Equal(42, book.N007[0].Visitors[1].LoadId);
+            Assert.Equal(0, Count(book, SuiyinLetter.N007Opened));
+            book.QueueOpened(2);
+            Assert.Equal(2, Arg(book, SuiyinLetter.N007Opened));
+            book.Note("I-042", 2, 20, true, true, 901, new[] { 43 });
+            Assert.Equal(1, book.N007.Count);
+        }
+
+        [Fact]
+        public void RewardDueMatchesTheLedgerOnce()
+        {
+            NarrativeState state = new NarrativeState(null);
+            for (int i = 1; i <= 8; i++)
+            {
+                state.NoteIncident(new SuiyinIncidentFact("I-" + i.ToString("000"), 1, i * 10, i, 1, false, null));
+            }
+
+            Assert.Equal(300, state.Book.RewardPaid);
+            Assert.Equal(300, state.TakeRewardDue());
+            Assert.Equal(0, state.TakeRewardDue());
+            state.NoteIncident(new SuiyinIncidentFact("I-009", 1, 90, 9, 1, false, null));
+            Assert.Equal(0, state.TakeRewardDue());
+        }
+
+        [Fact]
+        public void CompletedJournalKindsCountOnce()
+        {
+            NarrativeState state = new NarrativeState(null);
+            Assert.True(state.NoteCompletedKind(10, 14));
+            Assert.False(state.NoteCompletedKind(20, 14));
+            Assert.True(state.NoteCompletedKind(30, 5));
+            Assert.False(state.NoteCompletedKind(40, 0));
+            Assert.Equal(2, state.CompletedKindCount);
+            Assert.Equal(2, state.EndingFacts(60000, true).CompletedKinds);
+        }
+
+
+        [Fact]
         public void DisabledNodesDoNotSendPrivateLetters()
         {
             SuiyinBook book = new SuiyinBook();
@@ -67,7 +126,8 @@ namespace HungerAndHavoc.Tests
             Assert.True(book.OpeningSent);
             Assert.Equal(0, Count(book, SuiyinLetter.N001));
             book.Note("I-036", 1, 1, true, true);
-            Assert.Equal(1, Count(book, SuiyinLetter.N007Choice));
+            Assert.Equal(1, book.N007.Count);
+            Assert.True(book.N007[0].ChoiceOpen);
         }
 
         [Fact]
@@ -241,6 +301,8 @@ namespace HungerAndHavoc.Tests
             Assert.Equal("RHAH_Suiyin_Aside_1", SuiyinBook.LetterKey(SuiyinLetter.Aside, 1));
             Assert.Null(SuiyinBook.LetterKey(SuiyinLetter.Aside, 0));
             Assert.Null(SuiyinBook.LetterKey(SuiyinLetter.None, 0));
+            Assert.Null(SuiyinBook.LetterKey(SuiyinLetter.N007Opened, 2));
+
             HashSet<string> keys = Keyed("Languages/English/Keyed/RHAH_Suiyin.xml");
             HashSet<string> chinese = Keyed("Languages/ChineseSimplified/Keyed/RHAH_Suiyin.xml");
             foreach (SuiyinLetter letter in Enum.GetValues(typeof(SuiyinLetter)))

@@ -56,9 +56,9 @@ namespace HungerAndHavoc.Incidents
         void Seal()
         {
             Map map = ResolveMap();
-            SuiyinBook book = Book();
+            NarrativeState state = State();
             SuiyinN006Case record = FindRecord();
-            if (map == null || book == null || record == null || record.Outcome != SuiyinN006Outcome.Pending)
+            if (map == null || state == null || record == null || record.Outcome != SuiyinN006Outcome.Pending)
             {
                 Stale();
                 return;
@@ -71,7 +71,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             record.Wood = RHAH_GrainHole.WoodCost;
-            if (!book.ChooseHole(record, SuiyinN006Action.Seal, Now()))
+            if (!state.Commit(book => book.ChooseHole(record, SuiyinN006Action.Seal, Now())))
             {
                 record.Wood = 0;
                 Stale();
@@ -90,10 +90,10 @@ namespace HungerAndHavoc.Incidents
         void Bait()
         {
             Map map = ResolveMap();
-            SuiyinBook book = Book();
+            NarrativeState state = State();
             SuiyinN006Case record = FindRecord();
             Thing hole = Hole(map);
-            if (map == null || book == null || record == null || hole == null || record.Outcome != SuiyinN006Outcome.Pending)
+            if (map == null || state == null || record == null || hole == null || record.Outcome != SuiyinN006Outcome.Pending)
             {
                 Stale();
                 return;
@@ -106,7 +106,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             record.BaitStock = true;
-            if (!book.ChooseHole(record, SuiyinN006Action.Bait, Now()))
+            if (!state.Commit(book => book.ChooseHole(record, SuiyinN006Action.Bait, Now())))
             {
                 record.BaitStock = false;
                 Stale();
@@ -119,10 +119,10 @@ namespace HungerAndHavoc.Incidents
         void Clean()
         {
             Map map = ResolveMap();
-            SuiyinBook book = Book();
+            NarrativeState state = State();
             SuiyinN006Case record = FindRecord();
             Thing hole = Hole(map);
-            if (map == null || book == null || record == null || record.Outcome != SuiyinN006Outcome.Pending)
+            if (map == null || state == null || record == null || record.Outcome != SuiyinN006Outcome.Pending)
             {
                 Stale();
                 return;
@@ -133,7 +133,7 @@ namespace HungerAndHavoc.Incidents
                 RHAH_GrainHole.TakeFood(map, hole.Position, RHAH_GrainHole.CleanPortions, RHAH_GrainHole.LossRange);
             }
 
-            if (!book.ChooseHole(record, SuiyinN006Action.Clean, Now()))
+            if (!state.Commit(book => book.ChooseHole(record, SuiyinN006Action.Clean, Now())))
             {
                 Stale();
                 return;
@@ -161,16 +161,16 @@ namespace HungerAndHavoc.Incidents
         void Finish(bool trace)
         {
             Map map = ResolveMap();
-            SuiyinBook book = Book();
+            NarrativeState state = State();
             SuiyinN006Case record = FindRecord();
-            if (map == null || book == null || record == null || record.Outcome != SuiyinN006Outcome.BaitSet)
+            if (map == null || state == null || record == null || record.Outcome != SuiyinN006Outcome.BaitSet)
             {
                 Stale();
                 return;
             }
 
             bool followed = trace && RHAH_ChoiceRuntime.TryCreateSite(map, RHAH_IntelSiteKind.Treasure);
-            if (!book.FinishBait(record, Now(), followed))
+            if (!state.Commit(book => book.FinishBait(record, Now(), followed)))
             {
                 Stale();
                 return;
@@ -244,9 +244,14 @@ namespace HungerAndHavoc.Incidents
             return null;
         }
 
+        static NarrativeState State()
+        {
+            return Current.Game?.GetComponent<NarrativeState>();
+        }
+
         static SuiyinBook Book()
         {
-            return Current.Game?.GetComponent<NarrativeState>()?.Book;
+            return State()?.Book;
         }
 
         Map ResolveMap()

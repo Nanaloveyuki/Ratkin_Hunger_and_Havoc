@@ -18,7 +18,8 @@ namespace HungerAndHavoc.Narrative
                 return;
             }
 
-            SuiyinBook book = Current.Game.GetComponent<NarrativeState>()?.Book;
+            NarrativeState state = Current.Game.GetComponent<NarrativeState>();
+            SuiyinBook book = state?.Book;
             if (book == null)
             {
                 return;
@@ -27,13 +28,13 @@ namespace HungerAndHavoc.Narrative
             int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
             if (record.DisplayId == "I-037")
             {
-                OpenEntrust(book, record, tick);
+                OpenEntrust(state, record, tick);
                 return;
             }
 
             if (record.DisplayId == "I-013" && record.Settled == RHAH_ChoiceAction.Deliver)
             {
-                book.AcceptExchange(record.Id, record.MapId, tick, ChildIds(record));
+                state.Commit(item => item.AcceptExchange(record.Id, record.MapId, tick, ChildIds(record)));
             }
         }
 
@@ -44,18 +45,20 @@ namespace HungerAndHavoc.Narrative
                 return;
             }
 
-            SuiyinBook book = Current.Game.GetComponent<NarrativeState>()?.Book;
+            NarrativeState state = Current.Game.GetComponent<NarrativeState>();
+            SuiyinBook book = state?.Book;
             if (book == null)
             {
                 return;
             }
 
-            TickEntrust(book, tick);
+            TickEntrust(state, book, tick);
             RHAH_Revisit.Tick(tick);
+            TickCare(state, book, tick);
             TickReturn(book, tick);
         }
 
-        static void OpenEntrust(SuiyinBook book, RHAH_ChoiceRecord record, int tick)
+        static void OpenEntrust(NarrativeState state, RHAH_ChoiceRecord record, int tick)
         {
             if (record.Settled != RHAH_ChoiceAction.Join &&
                 record.Settled != RHAH_ChoiceAction.Ignore &&
@@ -96,11 +99,11 @@ namespace HungerAndHavoc.Narrative
 
             if (motherId > 0 && children.Count > 0)
             {
-                book.OpenEntrust(motherId, record.MapId, tick, children);
+                state.Commit(item => item.OpenEntrust(motherId, record.MapId, tick, children));
             }
         }
 
-        static void TickEntrust(SuiyinBook book, int tick)
+        static void TickEntrust(NarrativeState state, SuiyinBook book, int tick)
         {
             List<SuiyinN004Case> cases = book.N004;
             if (cases == null)
@@ -128,7 +131,7 @@ namespace HungerAndHavoc.Narrative
                         }
                     }
 
-                    book.ResolveEntrust(record, tick, mother);
+                    state.Commit(item => item.ResolveEntrust(record, tick, mother));
                 }
 
                 if (record.Outcome == SuiyinN004Outcome.ChildAlone)
@@ -229,7 +232,7 @@ namespace HungerAndHavoc.Narrative
             }
         }
 
-        static void TickCare(SuiyinBook book, int tick)
+        static void TickCare(NarrativeState state, SuiyinBook book, int tick)
         {
             List<SuiyinN005Case> cases = book.N005;
             if (cases == null)
@@ -250,7 +253,7 @@ namespace HungerAndHavoc.Narrative
                     ReadMember(record.Children[childIndex], tick, true);
                 }
 
-                book.AdvanceCare(record, tick, CheckInterval);
+                state.Commit(item => item.AdvanceCare(record, tick, CheckInterval));
             }
         }
 

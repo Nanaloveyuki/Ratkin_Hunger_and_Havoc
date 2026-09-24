@@ -84,6 +84,11 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(0, RHAH_VisitorRules.WaitTicks(false, 0.5f));
             Assert.Equal(40000, RHAH_VisitorRules.NextWaitTick(10000, 20000, true, true, 0.5f));
             Assert.Equal(20000, RHAH_VisitorRules.NextWaitTick(10000, 20000, false, true, 0.5f));
+            Assert.True(RHAH_VisitorRules.NoFoodWaitExpired(true, false, 20000, 20000));
+            Assert.False(RHAH_VisitorRules.NoFoodWaitExpired(true, false, 19999, 20000));
+            Assert.False(RHAH_VisitorRules.NoFoodWaitExpired(true, true, 20000, 20000));
+            Assert.False(RHAH_VisitorRules.NoFoodWaitExpired(false, false, 20000, 20000));
+            Assert.False(RHAH_VisitorRules.NoFoodWaitExpired(true, false, 20000, -1));
         }
 
         [Fact]

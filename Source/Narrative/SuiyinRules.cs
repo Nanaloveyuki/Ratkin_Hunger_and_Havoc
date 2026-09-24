@@ -34,7 +34,7 @@ namespace HungerAndHavoc.Narrative
         N006Stopped,
         N006Cleaned,
         N006Gone,
-        N007Choice,
+        N007Opened,
         N007Quarantine,
         N007Release,
         N007Defer,
@@ -390,6 +390,7 @@ namespace HungerAndHavoc.Narrative
         internal int MapId;
         internal int StartedTick;
         internal SuiyinN007Outcome Outcome;
+        internal bool ChoiceOpen;
         internal int ReturnDueTick = -1;
         internal int ReturnPawnId;
         internal bool ReturnDone;
@@ -400,6 +401,7 @@ namespace HungerAndHavoc.Narrative
             Scribe_Values.Look(ref MapId, "mapId", 0);
             Scribe_Values.Look(ref StartedTick, "startedTick", 0);
             Scribe_Values.Look(ref Outcome, "outcome", SuiyinN007Outcome.Pending);
+            Scribe_Values.Look(ref ChoiceOpen, "choiceOpen", false);
             Scribe_Values.Look(ref ReturnDueTick, "returnDueTick", -1);
             Scribe_Values.Look(ref ReturnPawnId, "returnPawnId", 0);
             Scribe_Values.Look(ref ReturnDone, "returnDone", false);
@@ -590,6 +592,11 @@ namespace HungerAndHavoc.Narrative
 
         internal void Note(string displayId, int mapId, int tick, bool plague, bool enabled)
         {
+            Note(displayId, mapId, tick, plague, enabled, 0, null);
+        }
+
+        internal void Note(string displayId, int mapId, int tick, bool plague, bool enabled, int batchId, IList<int> visitorIds)
+        {
             if (string.IsNullOrEmpty(displayId))
             {
                 return;
@@ -629,10 +636,11 @@ namespace HungerAndHavoc.Narrative
                 SuiyinN007Case quarantine = new SuiyinN007Case
                 {
                     MapId = mapId,
-                    StartedTick = tick
+                    StartedTick = tick,
+                    ChoiceOpen = true
                 };
+                RememberVisitors(quarantine, visitorIds);
                 N007.Add(quarantine);
-                Queue(SuiyinLetter.N007Choice, mapId, false);
             }
 
             if (IsTheft(displayId))
@@ -1781,17 +1789,41 @@ namespace HungerAndHavoc.Narrative
             return null;
         }
 
-        SuiyinN007Case OpenN007(int mapId)
+        static void RememberVisitors(SuiyinN007Case record, IList<int> visitorIds)
         {
-            for (int i = 0; i < N007.Count; i++)
+            if (record == null || visitorIds == null)
             {
-                if (N007[i].MapId == mapId && N007[i].Outcome == SuiyinN007Outcome.Pending)
-                {
-                    return N007[i];
-                }
+                return;
             }
 
-            return null;
+            for (int i = 0; i < visitorIds.Count; i++)
+            {
+                int id = visitorIds[i];
+                if (id <= 0)
+                {
+                    continue;
+                }
+
+                bool known = false;
+                for (int j = 0; j < record.Visitors.Count; j++)
+                {
+                    if (record.Visitors[j] != null && record.Visitors[j].LoadId == id)
+                    {
+                        known = true;
+                        break;
+                    }
+                }
+
+                if (!known)
+                {
+                    record.Visitors.Add(new SuiyinMember
+                    {
+                        LoadId = id,
+                        Presence = SuiyinPresence.Here,
+                        Care = SuiyinCare.Plague
+                    });
+                }
+            }
         }
 
         SuiyinN008Case FindN008()
@@ -1824,6 +1856,24 @@ namespace HungerAndHavoc.Narrative
 
             return false;
         }
+
+        SuiyinN007Case OpenN007(int mapId)
+        {
+            for (int i = 0; i < N007.Count; i++)
+            {
+                if (N007[i].MapId == mapId && N007[i].Outcome == SuiyinN007Outcome.Pending)
+                {
+                    return N007[i];
+                }
+            }
+
+            return null;
+        }
+        internal void QueueOpened(int mapId)
+        {
+            Queue(SuiyinLetter.N007Opened, mapId, false);
+        }
+
 
         bool Allows(SuiyinNode node)
         {
@@ -1859,10 +1909,11 @@ namespace HungerAndHavoc.Narrative
         }
         internal static string LetterKey(SuiyinLetter letter, int arg)
         {
-            if (letter == SuiyinLetter.None)
+            if (letter == SuiyinLetter.None || letter == SuiyinLetter.N007Opened)
             {
                 return null;
             }
+
 
             if (letter == SuiyinLetter.Aside)
             {

@@ -56,7 +56,7 @@ namespace HungerAndHavoc.Pawn
             if (RHAH_Api.Allows(clickedPawn, RHAH_BehaviorGate.FeedFromRelief))
             {
                 yield return new FloatMenuOption("RHAH_Choice_Feed".Translate(), () =>
-                    RHAH_Api.SetLifecycle(clickedPawn, RHAH_Lifecycle.Fed));
+                    RHAH_Feeding.TryComplete(clickedPawn));
             }
         }
         static string StayText(bool hire)

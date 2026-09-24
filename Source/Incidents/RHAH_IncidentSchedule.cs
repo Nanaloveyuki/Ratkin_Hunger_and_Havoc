@@ -139,7 +139,7 @@ namespace HungerAndHavoc.Incidents
             string displayId = Select(pool, trust, season, mapHome, playerCaravan, Rand.Range(0f, total));
             if (displayId != null)
             {
-                game.QueueIncident(displayId);
+                game.QueueIncident(displayId, PointsFor(displayId), TargetId(playerCaravan, RawId(target)));
             }
         }
 
@@ -225,6 +225,76 @@ namespace HungerAndHavoc.Incidents
                 case Season.Winter: return RHAH_IncidentSeason.Winter;
                 default: return RHAH_IncidentSeason.Undefined;
             }
+        }
+
+        internal const int UnspecifiedTargetId = 0;
+
+        internal static int RawId(IIncidentTarget target)
+        {
+            if (target is RimWorld.Planet.Caravan caravan)
+            {
+                return caravan.ID;
+            }
+
+            if (target is Map map)
+            {
+                return map.uniqueID;
+            }
+
+            return UnspecifiedTargetId;
+        }
+
+        static float PointsFor(string displayId)
+        {
+            RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
+            float catalog = entry == null ? RHAH_IncidentTuning.MinDebugPoints : entry.DebugPoints;
+            return RHAH_Mod.Settings == null
+                ? catalog
+                : RHAH_Mod.Settings.IncidentDebugPoints(displayId, catalog);
+        }
+
+        internal static int TargetId(bool caravan, int rawId)
+        {
+            if (rawId <= 0)
+            {
+                return UnspecifiedTargetId;
+            }
+
+            return caravan ? -rawId : rawId;
+        }
+
+        internal static int DecodeTargetId(int savedId, RHAH_IncidentTarget kind)
+        {
+            if (savedId == UnspecifiedTargetId)
+            {
+                return UnspecifiedTargetId;
+            }
+
+            if (kind == RHAH_IncidentTarget.Caravan)
+            {
+                return savedId < 0 ? -savedId : UnspecifiedTargetId;
+            }
+
+            return savedId > 0 ? savedId : UnspecifiedTargetId;
+        }
+
+        internal static int NextExecutable(bool[] terminal, bool[] ready)
+        {
+            if (terminal == null || ready == null)
+            {
+                return -1;
+            }
+
+            int count = terminal.Length < ready.Length ? terminal.Length : ready.Length;
+            for (int i = 0; i < count; i++)
+            {
+                if (terminal[i] || ready[i])
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
     }
 

@@ -12,7 +12,8 @@ namespace HungerAndHavoc.Core
             RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
             RHAH_Settings settings = RHAH_Mod.Settings;
             GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
-            bool targetReady = ResolveTarget(entry) != null;
+            IIncidentTarget target = ResolveTarget(entry);
+            bool targetReady = target != null;
             if (!CanQueueDebug(entry, settings, game != null, targetReady))
             {
                 Log.Warning(DebugRejectText(
@@ -29,7 +30,7 @@ namespace HungerAndHavoc.Core
             float points = settings == null
                 ? catalog
                 : settings.IncidentDebugPoints(entry.DisplayId, catalog);
-            if (!game.QueueIncident(entry.DisplayId, points))
+            if (!game.QueueIncident(entry.DisplayId, points, RHAH_IncidentSchedule.TargetId(entry.Target == RHAH_IncidentTarget.Caravan, RHAH_IncidentSchedule.RawId(target))))
             {
                 Log.Warning("[RHAH] Debug trigger did not queue " + entry.DisplayId +
                     ". It is already pending or the id is empty. points=" + points.ToString("0.##"));

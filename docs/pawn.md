@@ -68,7 +68,7 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 
 有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。寻食 duty 在没有进食、乞讨、偷窃、啃咬或等待 Job 时，在等待点附近游荡，不走向地图出口。`ExitMap` 只在生命周期已经是 `Leaving` 时放行；吃饱离开仍问 `LeaveAfterFed`。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
 
-不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 的大人带出。
+不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 且能自己走到出口的成年照护者带出。`Carry` 默认只放行非幼年角色；幼年角色可以 `Leash`，但不能发出携带 Job。断粮等待到达 `foodWaitUntilTick` 后，仍未进食的活跃访客离场，不再停在寻食游荡。
 
 招募、短工和长工仍保留来源标记，但停留期间不发乞讨、偷窃、啃咬、赈灾取食、等待和本模组离场。期限结束且不再倒地后，拒绝工作、休息、娱乐和任何非玩家强制任务，只保留被动近战反击、逃跑和进食。倒地期间计时暂停，这些限制先不生效。
 

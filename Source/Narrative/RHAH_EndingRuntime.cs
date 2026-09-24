@@ -50,10 +50,12 @@ namespace HungerAndHavoc.Narrative
             if (!Counts(narrator, settings))
             {
                 DeliverNotices(state, narrator);
+                DropReward(state);
                 return;
             }
 
             DeliverNotices(state, narrator);
+            DropReward(state);
 
             RHAH_EndingGoals goals = settings == null ? RHAH_EndingGoals.Defaults() : settings.EndingGoals();
             RHAH_EndingId ending = state.PendingEnding(tick, narrator, goals);
@@ -103,6 +105,16 @@ namespace HungerAndHavoc.Narrative
                     continue;
                 }
 
+                if (notice.Letter == SuiyinLetter.N007Opened)
+                {
+                    if (!RHAH_Quarantine.OpenLetter(notice.Arg))
+                    {
+                        book.Pending.Add(notice);
+                    }
+
+                    continue;
+                }
+
                 string key = SuiyinBook.LetterKey(notice.Letter, notice.Arg);
                 if (key == null)
                 {
@@ -112,6 +124,34 @@ namespace HungerAndHavoc.Narrative
                 Find.LetterStack.ReceiveLetter((key + "_Label").Translate(), (key + "_Text").Translate(notice.Arg), LetterDefOf.NeutralEvent);
             }
         }
+        static void DropReward(NarrativeState state)
+        {
+            int due = state.TakeRewardDue();
+            Map map = Find.AnyPlayerHomeMap;
+            if (due <= 0)
+            {
+                return;
+            }
+
+            if (map == null || ThingDefOf.Silver == null)
+            {
+                state.RestoreReward(due);
+                return;
+            }
+
+            Thing silver = ThingMaker.MakeThing(ThingDefOf.Silver);
+            silver.stackCount = due;
+            DropPodUtility.DropThingsNear(
+                DropCellFinder.TradeDropSpot(map),
+                map,
+                new List<Thing> { silver },
+                110,
+                false,
+                false,
+                true,
+                false);
+        }
+
 
 
         internal static int CountAdults()

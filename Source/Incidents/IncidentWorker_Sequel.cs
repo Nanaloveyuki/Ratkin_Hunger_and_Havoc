@@ -22,7 +22,7 @@ namespace HungerAndHavoc.Incidents
 
             if (entry.Target == RHAH_IncidentTarget.Caravan)
             {
-                return Caravan.CaravanTargetResolver.ResolvePlayerCaravan() != null;
+                return Caravan.CaravanTargetResolver.Resolve(parms == null ? null : parms.target as RimWorld.Planet.Caravan, parms == null || parms.target == null) != null;
             }
 
             Map map = Core.RHAH_MapResolver.Resolve(parms?.target as Map);
@@ -53,7 +53,7 @@ namespace HungerAndHavoc.Incidents
 
             if (entry.Target == RHAH_IncidentTarget.Caravan)
             {
-                return TradeEventRouter.TrySpawnCaravanAmbush(entry, parms == null ? 0f : parms.points);
+                return TradeEventRouter.TrySpawnCaravanAmbush(entry, parms == null ? 0f : parms.points, parms == null ? null : parms.target as RimWorld.Planet.Caravan, parms == null || parms.target == null);
             }
 
             Map map = Core.RHAH_MapResolver.Resolve(parms?.target as Map);

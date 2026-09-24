@@ -14,6 +14,7 @@ namespace HungerAndHavoc.Tests
             GameComponent_RHAH_Game game = new GameComponent_RHAH_Game(null);
             Assert.True(game.QueueIncident("I-001", 240f));
             Assert.Equal(new[] { "I-001" }, game.PendingIncidentDisplayIds);
+            Assert.Equal(new[] { 0 }, game.PendingIncidentTargetIds);
         }
 
         [Fact]
@@ -36,6 +37,16 @@ namespace HungerAndHavoc.Tests
                 settings.staggerGeneration = stagger;
                 RHAH_Mod.Settings = previous;
             }
+        }
+
+        [Fact]
+        public void QueueKeepsDistinctTargetsForTheSameIncidentKind()
+        {
+            GameComponent_RHAH_Game game = new GameComponent_RHAH_Game(null);
+            Assert.True(game.QueueIncident("I-001", 240f, 4));
+            Assert.True(game.QueueIncident("I-004", 80f, 9));
+            Assert.Equal(new[] { "I-001", "I-004" }, game.PendingIncidentDisplayIds);
+            Assert.Equal(new[] { 4, 9 }, game.PendingIncidentTargetIds);
         }
 
         [Fact]
@@ -86,7 +97,6 @@ namespace HungerAndHavoc.Tests
             int deferred = source.IndexOf("registerBatch: false", create);
             int commit = source.IndexOf("RHAH_Runtime.RegisterBatch(context.Map, context.SpawnBatchId)", deferred);
             Assert.True(create >= 0, "RHAH_IncidentFacts must create pawns through RHAH_PawnFactory");
-            Assert.True(deferred > create, "multi-pawn incident creation must defer batch registration");
             Assert.True(commit > deferred, "batch registration must happen after deferred creation");
         }
 
@@ -95,15 +105,19 @@ namespace HungerAndHavoc.Tests
         {
             string source = File.ReadAllText(GameComponentPath());
             int catchBlock = source.IndexOf("catch (Exception exception)");
-            int catchDrop = source.IndexOf("DropPending();", catchBlock);
+            int catchDrop = source.IndexOf("DropPending(index);", catchBlock);
             int falseBlock = source.IndexOf("if (!executed)");
-            int falseDrop = source.IndexOf("DropPending();", falseBlock);
+            int falseDrop = source.IndexOf("DropPending(index);", falseBlock);
             Assert.True(catchBlock >= 0 && catchDrop > catchBlock,
                 "worker exceptions must consume the failed queue item");
             Assert.True(falseBlock >= 0 && falseDrop > falseBlock,
                 "worker false results must consume the failed queue item");
-            Assert.Contains("No usable map", source);
-            Assert.Contains("return false;", source.Substring(source.IndexOf("No usable map")));
+            Assert.Contains("NextExecutable", source);
+            int unavailable = source.IndexOf("if (queued.Unavailable)");
+            int unavailableDrop = unavailable < 0 ? -1 : source.IndexOf("DropPending(index);", unavailable);
+            int nextCheck = unavailable < 0 ? -1 : source.IndexOf("if (queued.", unavailable + 1);
+            Assert.True(unavailable >= 0 && (unavailableDrop < 0 || (nextCheck >= 0 && unavailableDrop > nextCheck)),
+                "a temporarily unavailable target must stay queued");
         }
 
         static string GameComponentPath([CallerFilePath] string testFile = null)

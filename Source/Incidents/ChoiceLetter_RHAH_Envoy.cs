@@ -59,9 +59,9 @@ namespace HungerAndHavoc.Incidents
         void Trade()
         {
             Map map = ResolveMap();
-            SuiyinBook book = Book();
+            NarrativeState state = State();
             SuiyinN008Case record = FindRecord();
-            if (map == null || book == null || record == null || !RHAH_Envoy.OpenCase(record.Outcome))
+            if (map == null || state == null || record == null || !RHAH_Envoy.OpenCase(record.Outcome))
             {
                 return;
             }
@@ -72,10 +72,10 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            if (book.N009 == null && !book.RelicClue)
+            if (state.Book.N009 == null && !state.Book.RelicClue)
             {
                 record.MealsReady = true;
-                if (!book.ChooseEnvoy(record, SuiyinN008Action.Trade, Now()))
+                if (!state.Commit(book => book.ChooseEnvoy(record, SuiyinN008Action.Trade, Now())))
                 {
                     record.MealsReady = false;
                     return;
@@ -92,7 +92,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             record.MealsReady = true;
-            if (!book.ChooseEnvoy(record, SuiyinN008Action.Trade, Now()))
+            if (!state.Commit(book => book.ChooseEnvoy(record, SuiyinN008Action.Trade, Now())))
             {
                 record.MealsReady = false;
                 return;
@@ -104,15 +104,15 @@ namespace HungerAndHavoc.Incidents
 
         void Proof()
         {
-            SuiyinBook book = Book();
+            NarrativeState state = State();
             SuiyinN008Case record = FindRecord();
-            if (book == null || record == null || record.Outcome != SuiyinN008Outcome.Waiting)
+            if (state == null || record == null || record.Outcome != SuiyinN008Outcome.Waiting)
             {
                 return;
             }
 
-            record.ProofAvailable = RHAH_Envoy.HasProof(book);
-            if (!book.ChooseEnvoy(record, SuiyinN008Action.Proof, Now()))
+            record.ProofAvailable = RHAH_Envoy.HasProof(state.Book);
+            if (!state.Commit(book => book.ChooseEnvoy(record, SuiyinN008Action.Proof, Now())))
             {
                 record.ProofAvailable = false;
                 return;
@@ -133,14 +133,14 @@ namespace HungerAndHavoc.Incidents
 
         void Choose(SuiyinN008Action action)
         {
-            SuiyinBook book = Book();
+            NarrativeState state = State();
             SuiyinN008Case record = FindRecord();
-            if (book == null || record == null || !RHAH_Envoy.OpenCase(record.Outcome))
+            if (state == null || record == null || !RHAH_Envoy.OpenCase(record.Outcome))
             {
                 return;
             }
 
-            if (!book.ChooseEnvoy(record, action, Now()))
+            if (!state.Commit(book => book.ChooseEnvoy(record, action, Now())))
             {
                 return;
             }
@@ -182,9 +182,14 @@ namespace HungerAndHavoc.Incidents
             return book.N008.Count == 0 ? null : book.N008[0];
         }
 
+        static NarrativeState State()
+        {
+            return Current.Game?.GetComponent<NarrativeState>();
+        }
+
         static SuiyinBook Book()
         {
-            return Current.Game?.GetComponent<NarrativeState>()?.Book;
+            return State()?.Book;
         }
 
         Map ResolveMap()

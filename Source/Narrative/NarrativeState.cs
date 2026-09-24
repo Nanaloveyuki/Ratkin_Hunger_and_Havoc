@@ -52,6 +52,7 @@ namespace HungerAndHavoc.Narrative
         bool progressSent;
         bool rewardClaimed;
         int rewardPaid;
+        int rewardDue;
         bool envoyClue;
         bool relicClue;
         int lastAsideTick = -1;
@@ -61,6 +62,7 @@ namespace HungerAndHavoc.Narrative
         int expulsionCount;
         int adultCount;
         int completedKindCount;
+        List<int> completedJournals = new List<int>();
         int firstFactTick = -1;
         int nextAdultCheckTick = -1;
         bool relicDone;
@@ -83,7 +85,8 @@ namespace HungerAndHavoc.Narrative
 
         public void RecordTrust(int amount)
         {
-            trust += amount;
+            trust = SuiyinNodes.ClampTrust(book.Trust + amount);
+            book.Trust = trust;
         }
 
         public void RecordRescue()
@@ -127,23 +130,58 @@ namespace HungerAndHavoc.Narrative
                 return;
             }
 
-            book.Gates = suiyin;
-            book.Trust = trust;
-            book.Note(fact.DisplayId, fact.MapId, fact.Tick, fact.CarriesPlague, true);
-            trust = book.Trust;
-            if (!string.IsNullOrEmpty(fact.DisplayId) && !seenKinds.Contains(fact.DisplayId))
+            PullBook();
+            book.Note(fact.DisplayId, fact.MapId, fact.Tick, fact.CarriesPlague, true, fact.BatchId, fact.VisitorIds);
+            PushBook();
+            if (!string.IsNullOrEmpty(fact.DisplayId))
             {
                 revealedCount = book.Distinct;
             }
+
+            NoteFirstFact(fact.Tick);
         }
 
         internal void NotePlague(SuiyinPlagueFact fact)
         {
+            PullBook();
+            book.NotePlague(fact.MapId, fact.Recovered, fact.Died);
+            PushBook();
+        }
+
+        internal void PullBook()
+        {
             book.Gates = suiyin;
             book.Trust = trust;
-            book.NotePlague(fact.MapId, fact.Recovered, fact.Died);
-            trust = book.Trust;
         }
+
+        internal void PushBook()
+        {
+            trust = book.Trust;
+            rewardClaimed = book.RewardClaimed;
+            if (book.RewardPaid > rewardPaid)
+            {
+                rewardDue += book.RewardPaid - rewardPaid;
+                rewardPaid = book.RewardPaid;
+            }
+        }
+        internal T Commit<T>(System.Func<SuiyinBook, T> change)
+        {
+            PullBook();
+            T result = change(book);
+            PushBook();
+            return result;
+        }
+        internal void RestoreReward(int amount)
+        {
+            if (amount <= 0)
+            {
+                return;
+            }
+
+            rewardDue += amount;
+        }
+
+
         internal int AidCount => aidCount;
         internal int BroadcastCount => broadcastCount;
         internal int ExpulsionCount => expulsionCount;
@@ -175,10 +213,24 @@ namespace HungerAndHavoc.Narrative
             NoteFirstFact(tick);
         }
 
-        internal void NoteCompletedKind(int tick)
+        internal bool NoteCompletedKind(int tick, int journal)
         {
-            completedKindCount++;
+            if (journal < 1 || journal > 14 || completedJournals.Contains(journal))
+            {
+                return false;
+            }
+
+            completedJournals.Add(journal);
+            completedKindCount = completedJournals.Count;
             NoteFirstFact(tick);
+            return true;
+        }
+
+        internal int TakeRewardDue()
+        {
+            int due = rewardDue;
+            rewardDue = 0;
+            return due;
         }
 
         internal void NoteRelicDone(int tick)
@@ -302,12 +354,12 @@ namespace HungerAndHavoc.Narrative
             Scribe_Values.Look(ref failed, "failed", false);
             if (Scribe.mode == LoadSaveMode.Saving)
             {
-                book.Trust = trust;
+                PullBook();
+                PushBook();
                 book.ExportSave(seenKinds, theftMaps, theftCounts, journalNoted, asidesSent);
                 openingSent = book.OpeningSent;
                 progressSent = book.ProgressSent;
                 rewardClaimed = book.RewardClaimed;
-                rewardPaid = book.RewardPaid;
                 envoyClue = book.EnvoyClue;
                 relicClue = book.RelicClue;
                 lastAsideTick = book.LastAsideTick;
@@ -324,6 +376,7 @@ namespace HungerAndHavoc.Narrative
             Scribe_Values.Look(ref progressSent, "progressSent", false);
             Scribe_Values.Look(ref rewardClaimed, "rewardClaimed", false);
             Scribe_Values.Look(ref rewardPaid, "rewardPaid", 0);
+            Scribe_Values.Look(ref rewardDue, "rewardDue", 0);
             Scribe_Values.Look(ref envoyClue, "envoyClue", false);
             Scribe_Values.Look(ref relicClue, "relicClue", false);
             Scribe_Values.Look(ref lastAsideTick, "lastAsideTick", -1);
@@ -333,6 +386,7 @@ namespace HungerAndHavoc.Narrative
             Scribe_Values.Look(ref expulsionCount, "expulsionCount", 0);
             Scribe_Values.Look(ref adultCount, "adultCount", 0);
             Scribe_Values.Look(ref completedKindCount, "completedKindCount", 0);
+            Scribe_Collections.Look(ref completedJournals, "completedJournals", LookMode.Value);
             Scribe_Values.Look(ref firstFactTick, "firstFactTick", -1);
             Scribe_Values.Look(ref nextAdultCheckTick, "nextAdultCheckTick", -1);
             Scribe_Values.Look(ref relicDone, "relicDone", false);
@@ -362,8 +416,15 @@ namespace HungerAndHavoc.Narrative
                 theftCounts = theftCounts ?? new List<int>();
                 journalNoted = journalNoted ?? new List<int>();
                 asidesSent = asidesSent ?? new List<int>();
+                completedJournals = completedJournals ?? new List<int>();
                 suiyinStarted = suiyinStarted ?? new List<bool>();
                 suiyinDeadlineTick = suiyinDeadlineTick ?? new List<int>();
+                completedKindCount = completedJournals.Count;
+                if (rewardDue < 0)
+                {
+                    rewardDue = 0;
+                }
+
                 suiyin.Import(suiyinEnabled, suiyinStarted, suiyinDeadlineTick);
                 book.Gates = suiyin;
                 book.Trust = trust;

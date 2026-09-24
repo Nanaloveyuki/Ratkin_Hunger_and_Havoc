@@ -55,7 +55,7 @@ namespace HungerAndHavoc.Narrative
             if (site == null)
             {
                 record.MapPresent = false;
-                book.ExpireRelic(tick);
+                state.Commit(item => item.ExpireRelic(tick));
                 return;
             }
 
@@ -73,7 +73,7 @@ namespace HungerAndHavoc.Narrative
                 RefreshBox(record, map);
             }
 
-            book.ExpireRelic(tick);
+            state.Commit(item => item.ExpireRelic(tick));
             NoteDone(state, book, tick);
         }
 
@@ -226,7 +226,7 @@ namespace HungerAndHavoc.Narrative
             }
 
             IntVec3 spot = box.Position;
-            int silver = book.ChooseRelic(action, tick);
+            int silver = state.Commit(item => item.ChooseRelic(action, tick));
             if (record.Outcome == SuiyinN009Outcome.Pending)
             {
                 return;

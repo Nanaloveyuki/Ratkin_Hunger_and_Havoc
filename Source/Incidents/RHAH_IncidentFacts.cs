@@ -65,12 +65,15 @@ namespace HungerAndHavoc.Incidents
                 loadIds.Add(arrived[i].thingIDNumber);
             }
 
+            int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
             Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new Narrative.SuiyinIncidentFact(
                 context.DisplayId,
                 context.Map.uniqueID,
+                tick,
                 context.SpawnBatchId,
                 created.Count,
-                context.CarriesPlague));
+                context.CarriesPlague,
+                loadIds.ToArray()));
             Narrative.RHAH_JournalRuntime.Open(context, loadIds);
             OpenChoice(context, created);
 

@@ -24,4 +24,12 @@
     <flashInterval>90</flashInterval>
     <arriveSound>LetterArrive</arriveSound>
   </LetterDef>
+  <LetterDef>
+    <defName>RHAH_QuarantineLetter</defName>
+    <letterClass>HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Quarantine</letterClass>
+    <color>(168, 142, 142)</color>
+    <flashColor>(168, 142, 142)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>LetterArrive</arriveSound>
+  </LetterDef>
 </Defs>

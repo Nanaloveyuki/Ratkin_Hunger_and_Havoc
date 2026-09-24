@@ -87,14 +87,14 @@ namespace HungerAndHavoc.Incidents
 
         bool Choose(SuiyinN004Revisit choice)
         {
-            SuiyinBook book = Book();
+            NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
             SuiyinN004Case record = FindRecord();
-            if (book == null || record == null || record.Revisit != SuiyinN004Revisit.None)
+            if (state == null || record == null || record.Revisit != SuiyinN004Revisit.None)
             {
                 return false;
             }
 
-            if (!book.ChooseRevisit(record, choice, Now(), choice != SuiyinN004Revisit.Rescue || RHAH_Revisit.CanPay(record)))
+            if (!state.Commit(book => book.ChooseRevisit(record, choice, Now(), choice != SuiyinN004Revisit.Rescue || RHAH_Revisit.CanPay(record))))
             {
                 return false;
             }
@@ -125,9 +125,5 @@ namespace HungerAndHavoc.Incidents
             return RHAH_Revisit.FindCase(caseId);
         }
 
-        static SuiyinBook Book()
-        {
-            return Current.Game?.GetComponent<NarrativeState>()?.Book;
-        }
     }
 }

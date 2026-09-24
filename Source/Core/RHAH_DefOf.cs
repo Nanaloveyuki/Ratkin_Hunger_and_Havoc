@@ -31,6 +31,7 @@ namespace HungerAndHavoc.Core
         public static FactionDef RHAH_Faction_Friendly;
         public static LetterDef RHAH_ChoiceRequest;
         public static LetterDef RHAH_ChoiceVisitors;
+        public static LetterDef RHAH_QuarantineLetter;
         public static PawnKindDef RHAH_PawnKind_Ratkin;
 
         static RHAH_DefOf()

@@ -40,16 +40,32 @@ namespace HungerAndHavoc.Trade
                 SpawnCell = cell
             });
 
-            if (result.Succeeded && result.Pawns != null && result.Pawns.Count > 0)
+            if (!result.Succeeded || result.Pawns == null || result.Pawns.Count == 0)
             {
-                HungerAndHavoc.Pawn.Compat.RHAH_LeashBridge.TryLeashTravel(result.Pawns[0].GetLord());
+                return false;
             }
-            return result.Succeeded;
+
+            int[] visitors = new int[result.Pawns.Count];
+            for (int i = 0; i < result.Pawns.Count; i++)
+            {
+                visitors[i] = result.Pawns[i] == null ? 0 : result.Pawns[i].thingIDNumber;
+            }
+
+            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new Narrative.SuiyinIncidentFact(
+                entry.DisplayId,
+                map.uniqueID,
+                tick,
+                tick,
+                result.Pawns.Count,
+                entry.Category == RHAH_IncidentCategory.Plague,
+                visitors));
+            HungerAndHavoc.Pawn.Compat.RHAH_LeashBridge.TryLeashTravel(result.Pawns[0].GetLord());
+            return true;
         }
 
-        internal static bool TrySpawnCaravanAmbush(RHAH_IncidentEntry entry, float points)
+        internal static bool TrySpawnCaravanAmbush(RHAH_IncidentEntry entry, float points, RimWorld.Planet.Caravan selected, bool allowFallback)
         {
-            RimWorld.Planet.Caravan caravan = CaravanTargetResolver.ResolvePlayerCaravan();
+            RimWorld.Planet.Caravan caravan = CaravanTargetResolver.Resolve(selected, allowFallback);
             RHAH_Attitude attitude = IncidentWorker_Sequel.ArrivalAttitude(entry);
             Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(attitude);
             if (entry == null || caravan == null || faction == null ||

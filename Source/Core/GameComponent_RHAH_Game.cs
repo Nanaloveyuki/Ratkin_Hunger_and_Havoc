@@ -11,6 +11,7 @@ namespace HungerAndHavoc.Core
         List<string> activeGenerationBatches = new List<string>();
         List<string> pendingIncidentDisplayIds = new List<string>();
         List<float> pendingIncidentPoints = new List<float>();
+        List<int> pendingIncidentTargetIds = new List<int>();
         int plagueReturnLoadId;
         int plagueReturnMapId;
         int plagueReturnPhase;
@@ -23,6 +24,7 @@ namespace HungerAndHavoc.Core
 
         public IReadOnlyList<string> ActiveGenerationBatches => activeGenerationBatches;
         public IReadOnlyList<string> PendingIncidentDisplayIds => pendingIncidentDisplayIds;
+        public IReadOnlyList<int> PendingIncidentTargetIds => pendingIncidentTargetIds;
         public int PlagueReturnLoadId { get => plagueReturnLoadId; set => plagueReturnLoadId = value; }
         public int PlagueReturnMapId { get => plagueReturnMapId; set => plagueReturnMapId = value; }
         public int PlagueReturnPhase { get => plagueReturnPhase; set => plagueReturnPhase = value; }
@@ -46,6 +48,7 @@ namespace HungerAndHavoc.Core
             Pawn.RHAH_AttitudeFactions.LockGoodwill();
             HungerAndHavoc.Narrative.RHAH_EndingRuntime.Tick(Find.TickManager.TicksGame);
             HungerAndHavoc.Narrative.RHAH_EntrustCare.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Narrative.RHAH_Quarantine.Tick(Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>(), Find.TickManager.TicksGame);
             HungerAndHavoc.Narrative.RHAH_JournalRuntime.Tick(Find.TickManager.TicksGame);
             HungerAndHavoc.Narrative.RHAH_Envoy.Tick(Find.TickManager.TicksGame);
             HungerAndHavoc.Narrative.RHAH_RecordSite.Tick(Find.TickManager.TicksGame);
@@ -77,23 +80,34 @@ namespace HungerAndHavoc.Core
                 return false;
             }
 
-            string displayId = pendingIncidentDisplayIds[0];
-            float points = pendingIncidentPoints.Count > 0
-                ? pendingIncidentPoints[0]
+            int index = NextPendingIndex();
+            if (index < 0)
+            {
+                return false;
+            }
+
+            string displayId = pendingIncidentDisplayIds[index];
+            float points = index < pendingIncidentPoints.Count
+                ? pendingIncidentPoints[index]
                 : PointsFor(displayId);
+            int targetId = index < pendingIncidentTargetIds.Count
+                ? pendingIncidentTargetIds[index]
+                : RHAH_IncidentSchedule.UnspecifiedTargetId;
             HungerAndHavoc.Incidents.RHAH_IncidentEntry entry =
                 HungerAndHavoc.Incidents.RHAH_IncidentCatalog.GetByDisplayId(displayId);
             if (entry == null)
             {
                 Log.Warning("[RHAH] Dropped queued incident " + displayId + ". It is not in the catalog.");
-                DropPending();
+                DropPending(index);
                 return false;
             }
 
-            Map map = entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map ? RHAH_MapResolver.Resolve() : null;
-            if (entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map && map == null)
+            RHAH_QueuedTarget queued = RHAH_QueuedTarget.Resolve(entry.Target, targetId);
+            if (queued.Terminal)
             {
-                Log.Warning("[RHAH] Queued " + displayId + " is still waiting. No usable map. points=" + points.ToString("0.##"));
+                Log.Warning("[RHAH] Dropped queued incident " + displayId + ". " + queued.Reason +
+                    " points=" + points.ToString("0.##") + " target=" + targetId);
+                DropPending(index);
                 return false;
             }
 
@@ -101,11 +115,11 @@ namespace HungerAndHavoc.Core
             if (def == null || def.Worker == null)
             {
                 Log.Warning("[RHAH] Dropped queued incident " + displayId + ". Def " + entry.DefName + " or its worker is missing.");
-                DropPending();
+                DropPending(index);
                 return false;
             }
 
-            IncidentParms parms = new IncidentParms { target = map };
+            IncidentParms parms = new IncidentParms { target = queued.Target };
             parms.points = points;
             bool executed;
             try
@@ -115,32 +129,72 @@ namespace HungerAndHavoc.Core
             catch (Exception exception)
             {
                 Log.Error("[RHAH] Queued " + displayId + " threw while spawning. def=" + entry.DefName +
-                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, map) + "\n" + exception);
-                DropPending();
+                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, queued.Target) + "\n" + exception);
+                DropPending(index);
                 return false;
             }
 
             if (!executed)
             {
                 Log.Warning("[RHAH] Dropped queued " + displayId + ". Worker did not spawn. def=" + entry.DefName +
-                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, map));
-                DropPending();
+                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, queued.Target));
+                DropPending(index);
                 return false;
             }
 
             Log.Message("[RHAH] Spawned queued " + displayId + ". def=" + entry.DefName +
-                " points=" + points.ToString("0.##") + " target=" + TargetText(entry, map));
-            DropPending();
+                " points=" + points.ToString("0.##") + " target=" + TargetText(entry, queued.Target));
+            DropPending(index);
             return true;
         }
 
-        static string TargetText(HungerAndHavoc.Incidents.RHAH_IncidentEntry entry, Map map)
+        int NextPendingIndex()
+        {
+            int count = pendingIncidentDisplayIds.Count;
+            bool[] terminal = new bool[count];
+            bool[] ready = new bool[count];
+            for (int i = 0; i < count; i++)
+            {
+                HungerAndHavoc.Incidents.RHAH_IncidentEntry entry =
+                    HungerAndHavoc.Incidents.RHAH_IncidentCatalog.GetByDisplayId(pendingIncidentDisplayIds[i]);
+                if (entry == null)
+                {
+                    terminal[i] = true;
+                    continue;
+                }
+
+                int targetId = i < pendingIncidentTargetIds.Count
+                    ? pendingIncidentTargetIds[i]
+                    : RHAH_IncidentSchedule.UnspecifiedTargetId;
+                RHAH_QueuedTarget queued = RHAH_QueuedTarget.Resolve(entry.Target, targetId);
+                if (queued.Terminal)
+                {
+                    terminal[i] = true;
+                    continue;
+                }
+
+                if (queued.Unavailable)
+                {
+                    continue;
+                }
+
+                IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
+                ready[i] = def != null && def.Worker != null;
+                terminal[i] = !ready[i];
+            }
+
+            return RHAH_IncidentSchedule.NextExecutable(terminal, ready);
+        }
+
+        static string TargetText(HungerAndHavoc.Incidents.RHAH_IncidentEntry entry, IIncidentTarget target)
         {
             if (entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Caravan)
             {
-                return "caravan";
+                RimWorld.Planet.Caravan caravan = target as RimWorld.Planet.Caravan;
+                return caravan == null ? "caravan:none" : "caravan:" + caravan.ID;
             }
 
+            Map map = target as Map;
             return map == null ? "map:none" : "map:" + map.uniqueID;
         }
 
@@ -154,10 +208,15 @@ namespace HungerAndHavoc.Core
 
         public bool QueueIncident(string displayId)
         {
-            return QueueIncident(displayId, PointsFor(displayId));
+            return QueueIncident(displayId, PointsFor(displayId), RHAH_IncidentSchedule.UnspecifiedTargetId);
         }
 
         public bool QueueIncident(string displayId, float points)
+        {
+            return QueueIncident(displayId, points, RHAH_IncidentSchedule.UnspecifiedTargetId);
+        }
+
+        public bool QueueIncident(string displayId, float points, int targetId)
         {
             if (string.IsNullOrEmpty(displayId) || pendingIncidentDisplayIds.Contains(displayId))
             {
@@ -166,10 +225,11 @@ namespace HungerAndHavoc.Core
 
             pendingIncidentDisplayIds.Add(displayId);
             pendingIncidentPoints.Add(RHAH_IncidentTuning.ClampPoints(points));
+            pendingIncidentTargetIds.Add(targetId);
             return true;
         }
 
-        static float PointsFor(string displayId)
+        internal static float PointsFor(string displayId)
         {
             RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
             float catalog = entry == null ? RHAH_IncidentTuning.MinDebugPoints : entry.DebugPoints;
@@ -178,16 +238,26 @@ namespace HungerAndHavoc.Core
                 : RHAH_Mod.Settings.IncidentDebugPoints(displayId, catalog);
         }
 
-        void DropPending()
+        void DropPending(int index)
         {
-            if (pendingIncidentDisplayIds.Count > 0)
+            if (index < 0)
             {
-                pendingIncidentDisplayIds.RemoveAt(0);
+                return;
             }
 
-            if (pendingIncidentPoints.Count > 0)
+            if (index < pendingIncidentDisplayIds.Count)
             {
-                pendingIncidentPoints.RemoveAt(0);
+                pendingIncidentDisplayIds.RemoveAt(index);
+            }
+
+            if (index < pendingIncidentPoints.Count)
+            {
+                pendingIncidentPoints.RemoveAt(index);
+            }
+
+            if (index < pendingIncidentTargetIds.Count)
+            {
+                pendingIncidentTargetIds.RemoveAt(index);
             }
         }
         void TickPlague()
@@ -213,6 +283,7 @@ namespace HungerAndHavoc.Core
         public override void ExposeData()
         {
             Scribe_Collections.Look(ref activeGenerationBatches, "activeGenerationBatches", LookMode.Value);
+            Scribe_Collections.Look(ref pendingIncidentTargetIds, "pendingIncidentTargetIds", LookMode.Value);
             Scribe_Collections.Look(ref pendingIncidentDisplayIds, "pendingIncidentDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref pendingIncidentPoints, "pendingIncidentPoints", LookMode.Value);
             Scribe_Values.Look(ref plagueReturnLoadId, "plagueReturnLoadId", 0);
@@ -229,14 +300,25 @@ namespace HungerAndHavoc.Core
                 activeGenerationBatches = activeGenerationBatches ?? new List<string>();
                 pendingIncidentDisplayIds = pendingIncidentDisplayIds ?? new List<string>();
                 pendingIncidentPoints = pendingIncidentPoints ?? new List<float>();
+                pendingIncidentTargetIds = pendingIncidentTargetIds ?? new List<int>();
                 while (pendingIncidentPoints.Count < pendingIncidentDisplayIds.Count)
                 {
                     pendingIncidentPoints.Add(PointsFor(pendingIncidentDisplayIds[pendingIncidentPoints.Count]));
                 }
 
+                while (pendingIncidentTargetIds.Count < pendingIncidentDisplayIds.Count)
+                {
+                    pendingIncidentTargetIds.Add(RHAH_IncidentSchedule.UnspecifiedTargetId);
+                }
+
                 while (pendingIncidentPoints.Count > pendingIncidentDisplayIds.Count)
                 {
                     pendingIncidentPoints.RemoveAt(pendingIncidentPoints.Count - 1);
+                }
+
+                while (pendingIncidentTargetIds.Count > pendingIncidentDisplayIds.Count)
+                {
+                    pendingIncidentTargetIds.RemoveAt(pendingIncidentTargetIds.Count - 1);
                 }
                 openChoices = openChoices ?? new List<RHAH_ChoiceRecord>();
                 for (int i = openChoices.Count - 1; i >= 0; i--)

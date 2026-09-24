@@ -253,6 +253,7 @@ namespace HungerAndHavoc.Incidents
             }
         }
 
+
         static void Leave(RHAH_ChoiceRecord record)
         {
             List<Verse.Pawn> pawns = Pawns(record);

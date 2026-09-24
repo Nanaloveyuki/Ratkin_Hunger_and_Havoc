@@ -27,16 +27,14 @@ namespace HungerAndHavoc.Pawn
             }
 
             bool already = snapshot.HasBeenFed;
-            if (!already && snapshot.Lifecycle == RHAH_Lifecycle.SeekingFood)
+            if (already)
             {
-                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed);
+                return true;
             }
 
-            if (!already)
-            {
-                ScheduleStay(pawn);
-                TryAddRefeeding(pawn);
-            }
+            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed);
+            ScheduleStay(pawn);
+            TryAddRefeeding(pawn);
 
             return RHAH_Api.Get(pawn) != null && RHAH_Api.Get(pawn).HasBeenFed;
         }

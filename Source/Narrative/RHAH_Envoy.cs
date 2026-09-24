@@ -35,7 +35,7 @@ namespace HungerAndHavoc.Narrative
 
             if (RHAH_NarrativePace.Due(tick, CheckInterval, RHAH_NarrativePace.Spread * 4))
             {
-                Watch(book, tick);
+                Watch(state, book, tick);
             }
 
             if (tick % DayTicks != 0)
@@ -109,7 +109,7 @@ namespace HungerAndHavoc.Narrative
             OpenLetter(map, pawn);
         }
 
-        static void Watch(SuiyinBook book, int tick)
+        static void Watch(NarrativeState state, SuiyinBook book, int tick)
         {
             if (book.N008 == null)
             {
@@ -133,7 +133,7 @@ namespace HungerAndHavoc.Narrative
 
                 RHAH_EnvoyHold hold = RHAH_NarrativePace.HoldFor(record.Outcome);
                 ApplyHold(pawn, hold);
-                book.FinishEnvoy(record, tick);
+                state.Commit(item => item.FinishEnvoy(record, tick));
                 if (hold == RHAH_EnvoyHold.Stay && RHAH_NarrativePace.HoldFor(record.Outcome) == RHAH_EnvoyHold.Leave)
                 {
                     Release(pawn);

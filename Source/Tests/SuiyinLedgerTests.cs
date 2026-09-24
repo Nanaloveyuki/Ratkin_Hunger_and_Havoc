@@ -55,10 +55,12 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void Facts_DoNotImplyLetters()
         {
-            SuiyinIncidentFact incident = new SuiyinIncidentFact("I-042", 3, 20, 2, true);
+            SuiyinIncidentFact incident = new SuiyinIncidentFact("I-042", 3, 20, 900, 2, true, new[] { 7 });
             SuiyinPlagueFact plague = new SuiyinPlagueFact(3, 1, 1);
             Assert.Equal("I-042", incident.DisplayId);
-            Assert.True(incident.CarriesPlague);
+            Assert.Equal(20, incident.Tick);
+            Assert.Equal(900, incident.BatchId);
+            Assert.Equal(7, incident.VisitorIds[0]);
             Assert.Equal(1, plague.Recovered);
             Assert.Equal(1, plague.Died);
         }

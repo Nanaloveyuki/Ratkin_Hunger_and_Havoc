@@ -67,6 +67,10 @@
   <RHAH_Hole_NoWood>木材不够 20，洞还在。</RHAH_Hole_NoWood>
   <RHAH_Hole_NoFood>洞边没有能当诱饵的食物。</RHAH_Hole_NoFood>
   <RHAH_Hole_Stale>这个洞已经不能再处理。</RHAH_Hole_Stale>
+  <RHAH_Quarantine_Hold>留下观察</RHAH_Quarantine_Hold>
+  <RHAH_Quarantine_Release>放他们走</RHAH_Quarantine_Release>
+  <RHAH_Quarantine_Defer>先不处理</RHAH_Quarantine_Defer>
+  <RHAH_Quarantine_Stale>这批病人已经不能再作这个选择。</RHAH_Quarantine_Stale>
   <RHAH_Suiyin_N007Choice_Label>来客得了鼠疫</RHAH_Suiyin_N007Choice_Label>
   <RHAH_Suiyin_N007Choice_Text>来客中有人得了鼠疫。他们还在这里，去留却不能再按普通访客处理。\n\n可以先让他们留下观察，也可以放他们走，或者先不处理。病不会因为作了决定就停下来。加入、雇佣和买卖仍按检疫处理。病不会自己好。</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>病人暂时留下</RHAH_Suiyin_N007Quarantine_Label>

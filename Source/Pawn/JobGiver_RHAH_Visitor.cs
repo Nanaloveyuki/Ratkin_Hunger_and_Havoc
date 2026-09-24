@@ -75,14 +75,5 @@ namespace HungerAndHavoc.Pawn
                 RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.SeekingFood);
             }
         }
-
-        internal static void MarkFed(Verse.Pawn pawn)
-        {
-            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
-            if (snapshot != null && snapshot.Lifecycle == RHAH_Lifecycle.SeekingFood)
-            {
-                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed);
-            }
-        }
     }
 }

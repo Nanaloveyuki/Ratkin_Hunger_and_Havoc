@@ -62,7 +62,10 @@ namespace HungerAndHavoc.Narrative
                 }
 
                 Watch(record, tick);
-                book.CloseJournal(record, tick);
+                if (book.CloseJournal(record, tick))
+                {
+                    state.NoteCompletedKind(tick, record.Id);
+                }
             }
         }
 

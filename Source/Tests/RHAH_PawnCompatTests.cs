@@ -153,7 +153,7 @@ namespace HungerAndHavoc.Tests
 
                 RHAH_PawnState child = ChildVisitor();
                 Assert.True(child.Allows(RHAH_BehaviorGate.Leash));
-                Assert.True(child.Allows(RHAH_BehaviorGate.Carry));
+                Assert.False(child.Allows(RHAH_BehaviorGate.Carry));
                 Assert.True(child.Allows(RHAH_BehaviorGate.Imprison));
                 Assert.Null(RHAH_PawnCompat.TryQuery(null, RHAH_BehaviorGate.Leash));
                 Assert.False(typeof(RHAH_LeashCompat).IsPublic);

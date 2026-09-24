@@ -103,7 +103,7 @@ namespace HungerAndHavoc.Tests
             state.NoteAid(0);
             state.NoteBroadcast(60000);
             state.NoteExpulsion(120000);
-            state.NoteCompletedKind(120000);
+            state.NoteCompletedKind(120000, 1);
             state.NoteRelicDone(180000);
             state.SetAdultCount(12, 180000);
             state.MarkEnding(RHAH_EndingId.E03);
@@ -126,9 +126,9 @@ namespace HungerAndHavoc.Tests
                 loaded.NoteExpulsion(120000);
             }
 
-            for (int i = 0; i < state.CompletedKindCount; i++)
+            for (int journal = 1; journal <= state.CompletedKindCount; journal++)
             {
-                loaded.NoteCompletedKind(120000);
+                loaded.NoteCompletedKind(120000, journal);
             }
 
             if (state.RelicDone)

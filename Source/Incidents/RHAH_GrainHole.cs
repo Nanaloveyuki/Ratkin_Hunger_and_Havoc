@@ -176,7 +176,7 @@ namespace HungerAndHavoc.Incidents
             {
                 if (component != null && component.HoleThingId > 0 && record.Outcome == SuiyinN006Outcome.Pending && tick >= record.IgnoreUntil)
                 {
-                    book.ChooseHole(record, SuiyinN006Action.Ignore, tick);
+                    Current.Game?.GetComponent<NarrativeState>()?.Commit(item => item.ChooseHole(record, SuiyinN006Action.Ignore, tick));
                 }
 
                 return;

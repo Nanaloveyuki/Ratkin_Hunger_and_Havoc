@@ -40,13 +40,14 @@ namespace HungerAndHavoc.Pawn
                 return new FloatMenuOption("RHAH_Broadcast_Empty".Translate(), null);
             }
 
-            return new FloatMenuOption("RHAH_Broadcast_Label".Translate(), () => Queue(game, candidates, tick, settings.broadcastCooldownDays));
+            return new FloatMenuOption("RHAH_Broadcast_Label".Translate(), () => Queue(game, candidates, tick, settings.broadcastCooldownDays, console.Map));
         }
 
-        static void Queue(GameComponent_RHAH_Game game, List<string> candidates, int tick, int days)
+        static void Queue(GameComponent_RHAH_Game game, List<string> candidates, int tick, int days, Map map)
         {
             string displayId = RHAH_BroadcastRules.Pick(candidates, tick % candidates.Count);
-            if (displayId != null && game.QueueIncident(displayId))
+            int targetId = map == null ? RHAH_IncidentSchedule.UnspecifiedTargetId : RHAH_IncidentSchedule.TargetId(false, map.uniqueID);
+            if (displayId != null && game.QueueIncident(displayId, GameComponent_RHAH_Game.PointsFor(displayId), targetId))
             {
                 game.BroadcastCooldownUntilTick = RHAH_BroadcastRules.NextCooldown(tick, days);
                 if (HungerAndHavoc.Narrative.RHAH_EndingRuntime.CountsNow())

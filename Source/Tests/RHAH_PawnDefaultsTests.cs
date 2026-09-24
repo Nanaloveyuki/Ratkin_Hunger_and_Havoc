@@ -98,17 +98,22 @@ namespace HungerAndHavoc.Tests
         [InlineData(RHAH_PawnRole.BeggarChild)]
         [InlineData(RHAH_PawnRole.ThiefChild)]
         [InlineData(RHAH_PawnRole.WildChild)]
-        public void ChildRoles_CanLeashAndCarry(RHAH_PawnRole role)
+        public void ChildRoles_CanLeashButCannotCarry(RHAH_PawnRole role)
         {
             Assert.True(AllowVisitor(role, RHAH_BehaviorGate.Leash));
-            Assert.True(AllowVisitor(role, RHAH_BehaviorGate.Carry));
+            Assert.False(AllowVisitor(role, RHAH_BehaviorGate.Carry));
         }
 
-        [Fact]
-        public void AdultVisitor_CannotLeashOrCarry()
+        [Theory]
+        [InlineData(RHAH_PawnRole.Beggar)]
+        [InlineData(RHAH_PawnRole.Mother)]
+        [InlineData(RHAH_PawnRole.BeggarMother)]
+        [InlineData(RHAH_PawnRole.Trader)]
+        [InlineData(RHAH_PawnRole.Escort)]
+        public void AdultCaregivers_CanCarryButCannotLeash(RHAH_PawnRole role)
         {
-            Assert.False(AllowVisitor(RHAH_PawnRole.Beggar, RHAH_BehaviorGate.Leash));
-            Assert.False(AllowVisitor(RHAH_PawnRole.Mother, RHAH_BehaviorGate.Carry));
+            Assert.False(AllowVisitor(role, RHAH_BehaviorGate.Leash));
+            Assert.True(AllowVisitor(role, RHAH_BehaviorGate.Carry));
         }
 
         [Theory]

@@ -63,6 +63,7 @@ namespace HungerAndHavoc.Pawn
                 pawn.SetFaction(null);
             }
 
+            RHAH_VisitorGroup.NotifyReleased(pawn);
             RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
             return true;
         }

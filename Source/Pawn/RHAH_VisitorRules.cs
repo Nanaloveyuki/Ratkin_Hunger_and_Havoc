@@ -427,6 +427,11 @@ namespace HungerAndHavoc.Pawn
             return previousDeadline;
         }
 
+        internal static bool NoFoodWaitExpired(bool waiting, bool hasBeenFed, int now, int deadline)
+        {
+            return waiting && !hasBeenFed && deadline >= 0 && now >= deadline;
+        }
+
         internal static bool FedLeaveDue(bool leaveEnabled, bool hasBeenFed, int now, int leaveTick, bool downed)
         {
             return leaveEnabled && hasBeenFed && !downed && leaveTick >= 0 && now >= leaveTick;

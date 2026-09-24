@@ -21,16 +21,20 @@ namespace HungerAndHavoc.Narrative
         internal readonly string DisplayId;
         internal readonly int MapId;
         internal readonly int Tick;
+        internal readonly int BatchId;
         internal readonly int PawnCount;
         internal readonly bool CarriesPlague;
+        internal readonly int[] VisitorIds;
 
-        internal SuiyinIncidentFact(string displayId, int mapId, int tick, int pawnCount, bool carriesPlague)
+        internal SuiyinIncidentFact(string displayId, int mapId, int tick, int batchId, int pawnCount, bool carriesPlague, int[] visitorIds)
         {
             DisplayId = displayId;
             MapId = mapId;
             Tick = tick;
+            BatchId = batchId;
             PawnCount = pawnCount;
             CarriesPlague = carriesPlague;
+            VisitorIds = visitorIds;
         }
     }
 
