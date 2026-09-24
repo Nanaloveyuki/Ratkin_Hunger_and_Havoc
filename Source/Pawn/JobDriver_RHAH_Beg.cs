@@ -10,7 +10,7 @@ namespace HungerAndHavoc.Pawn
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            return pawn.Reserve(job.GetTarget(TargetIndex.A), job, 1, -1, null, errorOnFailed);
+            return pawn.Reserve(job.GetTarget(TargetIndex.A), job, 1, -1, null, false);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()

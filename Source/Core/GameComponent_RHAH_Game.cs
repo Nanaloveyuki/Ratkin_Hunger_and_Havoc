@@ -1,3 +1,4 @@
+using System;
 using HungerAndHavoc.Incidents;
 using System.Collections.Generic;
 using RimWorld;
@@ -42,8 +43,23 @@ namespace HungerAndHavoc.Core
             RHAH_ChoiceRuntime.Tick(this, Find.TickManager.TicksGame, RHAH_Mod.Settings == null || RHAH_Mod.Settings.visitorChoicesEnabled);
             TrySpawnPending(Find.TickManager.TicksGame);
             TickStays(Find.TickManager.TicksGame);
+            Pawn.RHAH_AttitudeFactions.LockGoodwill();
             HungerAndHavoc.Narrative.RHAH_EndingRuntime.Tick(Find.TickManager.TicksGame);
         }
+
+        public override void GameComponentUpdate()
+        {
+            if (!RHAH_Scheduler.ShouldDrainOnFrame(
+                Find.TickManager != null && Find.TickManager.Paused,
+                Find.WindowStack != null && Find.WindowStack.WindowsForcePause,
+                pendingIncidentDisplayIds.Count))
+            {
+                return;
+            }
+
+            TrySpawnPending(0);
+        }
+
 
         internal bool TrySpawnPending(int tick)
         {
@@ -65,6 +81,7 @@ namespace HungerAndHavoc.Core
                 HungerAndHavoc.Incidents.RHAH_IncidentCatalog.GetByDisplayId(displayId);
             if (entry == null)
             {
+                Log.Warning("[RHAH] Dropped queued incident " + displayId + ". It is not in the catalog.");
                 DropPending();
                 return false;
             }
@@ -72,25 +89,55 @@ namespace HungerAndHavoc.Core
             Map map = entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map ? RHAH_MapResolver.Resolve() : null;
             if (entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map && map == null)
             {
+                Log.Warning("[RHAH] Queued " + displayId + " is still waiting. No usable map. points=" + points.ToString("0.##"));
                 return false;
             }
 
             IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
-            if (def == null)
+            if (def == null || def.Worker == null)
             {
+                Log.Warning("[RHAH] Dropped queued incident " + displayId + ". Def " + entry.DefName + " or its worker is missing.");
                 DropPending();
                 return false;
             }
 
             IncidentParms parms = new IncidentParms { target = map };
             parms.points = points;
-            if (!def.Worker.TryExecute(parms))
+            bool executed;
+            try
             {
+                executed = def.Worker.TryExecute(parms);
+            }
+            catch (Exception exception)
+            {
+                Log.Error("[RHAH] Queued " + displayId + " threw while spawning. def=" + entry.DefName +
+                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, map) + "\n" + exception);
+                DropPending();
                 return false;
             }
 
+            if (!executed)
+            {
+                Log.Warning("[RHAH] Dropped queued " + displayId + ". Worker did not spawn. def=" + entry.DefName +
+                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, map));
+                DropPending();
+                return false;
+            }
+
+            Log.Message("[RHAH] Spawned queued " + displayId + ". def=" + entry.DefName +
+                " points=" + points.ToString("0.##") + " target=" + TargetText(entry, map));
             DropPending();
             return true;
+        }
+
+        static string TargetText(HungerAndHavoc.Incidents.RHAH_IncidentEntry entry, Map map)
+        {
+            if (entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Caravan)
+            {
+                return "caravan";
+            }
+
+            return map == null ? "map:none" : "map:" + map.uniqueID;
         }
 
         public void RegisterBatch(string batchKey)

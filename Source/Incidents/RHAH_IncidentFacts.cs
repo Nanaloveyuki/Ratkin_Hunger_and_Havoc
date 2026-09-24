@@ -34,7 +34,7 @@ namespace HungerAndHavoc.Incidents
                     Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(context.Attitude) ?? Faction.OfPlayer,
                     SpawnCell = context.SpawnCell,
                     BiologicalAge = GenerationAge(context.Role)
-                });
+                }, registerBatch: false);
 
                 if (!result.Succeeded)
                 {
@@ -44,6 +44,8 @@ namespace HungerAndHavoc.Incidents
 
                 created.Add(result);
             }
+
+            RHAH_Runtime.RegisterBatch(context.Map, context.SpawnBatchId);
             List<Verse.Pawn> arrived = new List<Verse.Pawn>();
             for (int i = 0; i < created.Count; i++)
             {

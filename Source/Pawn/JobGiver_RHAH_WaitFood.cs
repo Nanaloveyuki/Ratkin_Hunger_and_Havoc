@@ -63,7 +63,20 @@ namespace HungerAndHavoc.Pawn
 
 
             IntVec3 spot = WaitSpot(pawn);
-            Job job = JobMaker.MakeJob(JobDefOf.Wait, spot);
+            if (!spot.IsValid)
+            {
+                return null;
+            }
+
+            if (spot != pawn.Position && JobDefOf.Goto != null)
+            {
+                Job gotoJob = JobMaker.MakeJob(JobDefOf.Goto, spot);
+                gotoJob.expiryInterval = RHAH_ReliefFood.RetryBaseTicks;
+                gotoJob.checkOverrideOnExpire = true;
+                return gotoJob;
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.Wait);
             job.expiryInterval = RHAH_ReliefFood.RetryBaseTicks;
             job.checkOverrideOnExpire = true;
             return job;
@@ -81,7 +94,8 @@ namespace HungerAndHavoc.Pawn
             float bestDist = float.MaxValue;
             foreach (IntVec3 cell in area.ActiveCells)
             {
-                if (!cell.Standable(pawn.Map))
+                if (!cell.Standable(pawn.Map) ||
+                    !pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
                 {
                     continue;
                 }

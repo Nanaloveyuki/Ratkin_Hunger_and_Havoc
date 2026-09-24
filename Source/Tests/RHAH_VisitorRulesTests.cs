@@ -1,3 +1,5 @@
+using System.IO;
+using System.Runtime.CompilerServices;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Identity;
 using HungerAndHavoc.Incidents;
@@ -27,6 +29,17 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void GoodwillStaysHostileOrNeutralAndYoungNeedThreeWithoutToddlers()
+        {
+            Assert.Equal(-100, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Hostile));
+            Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Friendly));
+            Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Neutral));
+            Assert.Equal(3f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, false));
+            Assert.Equal(8f, RHAH_VisitorRules.WalkingAgeFloor(8f, false));
+            Assert.Equal(0.1f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, true));
+        }
+
+        [Fact]
         public void FirstFedStayLandsBetweenHalfAndOneAndAHalf()
         {
             int half = RHAH_VisitorRules.FedStayTicks(0.5f, 0f);
@@ -52,6 +65,17 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void BegTargetMustBeReachableAndAvailable()
+        {
+            Assert.True(RHAH_VisitorRules.CanSelectBegTarget(false, false, false, true, true));
+            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(false, false, false, false, true));
+            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(false, false, false, true, false));
+            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(true, false, false, true, true));
+            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(false, true, false, true, true));
+            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(false, false, true, true, true));
+        }
+
+        [Fact]
         public void HireExpiresAndADownedWorkerKeepsTheRemainingTime()
         {
             int deadline = RHAH_VisitorRules.BeginStay(0, RHAH_StayKind.Hire, 5, 60);
@@ -65,6 +89,35 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_VisitorRules.AcceptsStone(true, true));
             Assert.True(RHAH_VisitorRules.LiftsAgeImmobility(false, true, true, false));
             Assert.False(RHAH_VisitorRules.LiftsAgeImmobility(false, true, true, true));
+        }
+
+        [Fact]
+        public void AttitudeFactionsUseRealFieldsAndDoNotDropRaidLoot()
+        {
+            string xml = File.ReadAllText(FactionPath());
+            Assert.DoesNotContain("naturalColonyGoodwill", xml);
+            Assert.Contains("<naturalEnemy>true</naturalEnemy>", xml);
+            Assert.Contains("<raidLootValueFromPointsCurve>", xml);
+            Assert.Equal(1, Count(xml, "<raidLootValueFromPointsCurve>"));
+        }
+
+        static int Count(string text, string token)
+        {
+            int count = 0;
+            int index = 0;
+            while ((index = text.IndexOf(token, index)) >= 0)
+            {
+                count++;
+                index += token.Length;
+            }
+
+            return count;
+        }
+
+        static string FactionPath([CallerFilePath] string testFile = null)
+        {
+            return Path.GetFullPath(Path.Combine(
+                Path.GetDirectoryName(testFile), "..", "..", "1.6", "Defs", "FactionDefs", "RHAH_Factions.xml"));
         }
     }
 }

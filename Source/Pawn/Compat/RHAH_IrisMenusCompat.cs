@@ -321,7 +321,10 @@ namespace HungerAndHavoc.Pawn.Compat
 
             if (RHAH_Scheduler.QueueDebugIncident(entry.DisplayId))
             {
-                return "RHAH_Menu_Queue_Queued".Translate();
+                GameComponent_RHAH_Game game = Current.Game.GetComponent<GameComponent_RHAH_Game>();
+                return game != null && game.PendingIncidentDisplayIds.Contains(entry.DisplayId)
+                    ? "RHAH_Menu_Queue_Queued".Translate()
+                    : "RHAH_Menu_Queue_Fired".Translate();
             }
 
             return "RHAH_Menu_Queue_Failed".Translate();

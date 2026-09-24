@@ -45,9 +45,9 @@ namespace HungerAndHavoc.Identity
                 case RHAH_BehaviorGate.TailBite:
                     return true;
                 case RHAH_BehaviorGate.Leash:
-                    return IsChild(role);
+                    return IsYoungRole(role);
                 case RHAH_BehaviorGate.Carry:
-                    return IsChild(role);
+                    return IsYoungRole(role);
                 case RHAH_BehaviorGate.JoinColony:
                     return true;
                 case RHAH_BehaviorGate.Hire:
@@ -108,7 +108,7 @@ namespace HungerAndHavoc.Identity
             return role == RHAH_PawnRole.Thief || role == RHAH_PawnRole.ThiefChild;
         }
 
-        static bool IsChild(RHAH_PawnRole role)
+        internal static bool IsYoungRole(RHAH_PawnRole role)
         {
             return role == RHAH_PawnRole.RatkinYoung ||
                    role == RHAH_PawnRole.BeggarChild ||

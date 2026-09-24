@@ -73,6 +73,35 @@ namespace HungerAndHavoc.Pawn
                 role == RHAH_PawnRole.BeggarMother;
         }
 
+        internal const int HostileGoodwill = -100;
+        internal const int NeutralGoodwill = 0;
+        internal const float WalkingAge = 3f;
+
+        internal static int LockedGoodwill(RHAH_Attitude attitude)
+        {
+            return attitude == RHAH_Attitude.Hostile ? HostileGoodwill : NeutralGoodwill;
+        }
+
+        internal static float? WalkingAgeFloor(float? age, bool toddlersActive)
+        {
+            if (toddlersActive || !age.HasValue || float.IsNaN(age.Value) || float.IsInfinity(age.Value))
+            {
+                return age;
+            }
+
+            return age.Value < WalkingAge ? WalkingAge : age.Value;
+        }
+
+        internal static bool CanSelectBegTarget(
+            bool dead,
+            bool downed,
+            bool forbidden,
+            bool reachable,
+            bool reservable)
+        {
+            return !dead && !downed && !forbidden && reachable && reservable;
+        }
+
         internal static float? GenerationAge(RHAH_PawnRole role, float? fixedAge, float minAge, float maxAge, float roll)
         {
             if (KeepsAge(role, fixedAge.HasValue))

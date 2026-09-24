@@ -12,6 +12,11 @@ namespace HungerAndHavoc.Generation
     {
         internal static RHAH_PawnCreationResult Create(RHAH_PawnRequest request)
         {
+            return Create(request, true);
+        }
+
+        internal static RHAH_PawnCreationResult Create(RHAH_PawnRequest request, bool registerBatch)
+        {
             RHAH_PawnCreationResult validation = Validate(request);
             if (validation != null)
             {
@@ -48,7 +53,6 @@ namespace HungerAndHavoc.Generation
                 return RHAH_PawnCreationResult.Failed(RHAH_PawnCreationFailure.MarkingFailed);
             }
 
-
             if (!TryApplyRelationships(pawn, request))
             {
                 Cleanup(created);
@@ -78,9 +82,13 @@ namespace HungerAndHavoc.Generation
             }
 
             RHAH_VisitorGroup.TryStart(created, request.Map, request.SpawnCell, request.Role);
-            RHAH_Runtime.RegisterBatch(request.Map, request.SpawnBatchId);
+            if (registerBatch)
+            {
+                RHAH_Runtime.RegisterBatch(request.Map, request.SpawnBatchId);
+            }
             return RHAH_PawnCreationResult.Success(created);
         }
+
 
         static RHAH_PawnCreationResult Validate(RHAH_PawnRequest request)
         {

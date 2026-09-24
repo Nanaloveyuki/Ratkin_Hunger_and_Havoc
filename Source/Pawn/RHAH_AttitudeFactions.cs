@@ -48,5 +48,49 @@ namespace HungerAndHavoc.Pawn
                    def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_LeaningFriendly ||
                    def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Friendly;
         }
+
+        internal static void LockGoodwill()
+        {
+            Faction player = Faction.OfPlayer;
+            if (player == null || Find.FactionManager == null)
+            {
+                return;
+            }
+
+            RHAH_Attitude[] attitudes =
+            {
+                RHAH_Attitude.Hostile,
+                RHAH_Attitude.LeaningHostile,
+                RHAH_Attitude.Neutral,
+                RHAH_Attitude.LeaningFriendly,
+                RHAH_Attitude.Friendly
+            };
+            for (int i = 0; i < attitudes.Length; i++)
+            {
+                Pin(player, Resolve(attitudes[i]), RHAH_VisitorRules.LockedGoodwill(attitudes[i]));
+            }
+        }
+
+        static void Pin(Faction player, Faction faction, int goodwill)
+        {
+            if (faction == null || faction == player)
+            {
+                return;
+            }
+
+            FactionRelation relation = player.RelationWith(faction, true);
+            if (relation == null)
+            {
+                player.TryMakeInitialRelationsWith(faction);
+                relation = player.RelationWith(faction, true);
+            }
+
+            if (relation == null || relation.baseGoodwill == goodwill)
+            {
+                return;
+            }
+
+            player.TryAffectGoodwillWith(faction, goodwill - relation.baseGoodwill, false, false, null, null);
+        }
     }
 }

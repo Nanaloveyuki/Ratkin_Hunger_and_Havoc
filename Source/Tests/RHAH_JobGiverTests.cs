@@ -85,6 +85,27 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("CurLevel", gnaw);
         }
 
+        [Fact]
+        public void BegChecksReservationBeforeCreatingJobAndDriverDoesNotLogRace()
+        {
+            string giver = ReadPawn("JobGiver_RHAH_Beg.cs");
+            string driver = ReadPawn("JobDriver_RHAH_Beg.cs");
+            Assert.Contains("CanReserve(colonist, 1, -1, null, false)", giver);
+            Assert.Contains("CanSelectBegTarget", giver);
+            Assert.Contains("Reserve(job.GetTarget(TargetIndex.A), job, 1, -1, null, false)", driver);
+        }
+
+        [Fact]
+        public void ReliefWaitMovesToTheAreaBeforeWaiting()
+        {
+            string wait = ReadPawn("JobGiver_RHAH_WaitFood.cs");
+            Assert.Contains("JobDefOf.Goto", wait);
+            Assert.Contains("PathEndMode.OnCell", wait);
+            Assert.Contains("cell.Standable(pawn.Map)", wait);
+            Assert.Contains("pawn.CanReach(cell", wait);
+            Assert.DoesNotContain("JobMaker.MakeJob(JobDefOf.Wait, spot)", wait);
+        }
+
         static void AssertVisitorThenAllows(string fileName, string gate)
         {
             string source = ReadPawn(fileName);

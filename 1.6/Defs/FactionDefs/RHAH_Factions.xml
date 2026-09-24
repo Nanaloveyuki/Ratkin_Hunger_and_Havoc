@@ -25,6 +25,11 @@
     <hostileToFactionlessHumanlikes>false</hostileToFactionlessHumanlikes>
     <techLevel>Neolithic</techLevel>
     <basicMemberKind>Colonist</basicMemberKind>
+    <raidLootValueFromPointsCurve>
+      <points>
+        <li>(0, 0)</li>
+      </points>
+    </raidLootValueFromPointsCurve>
     <backstoryFilters>
       <li>
         <categories>
@@ -40,10 +45,7 @@
     <label>hostile famine ratkin</label>
     <fixedName>Hostile famine ratkin</fixedName>
     <description>Ratkin driven out of a ruined settlement. They have no tools and little food left, and they take what they can reach.\n\nThey are hostile to the colony. Hurting them does not start a raid.</description>
-    <naturalColonyGoodwill>
-      <min>-100</min>
-      <max>-100</max>
-    </naturalColonyGoodwill>
+    <naturalEnemy>true</naturalEnemy>
   </FactionDef>
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
@@ -51,10 +53,7 @@
     <label>wary famine ratkin</label>
     <fixedName>Wary famine ratkin</fixedName>
     <description>Ratkin driven out of a ruined settlement. They watch the colony and keep their distance.\n\nThey are not hostile yet. If a colonist hurts one of them, that whole group turns hostile. They still do not raid.</description>
-    <naturalColonyGoodwill>
-      <min>0</min>
-      <max>0</max>
-    </naturalColonyGoodwill>
+    <naturalEnemy>false</naturalEnemy>
   </FactionDef>
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
@@ -62,10 +61,7 @@
     <label>famine ratkin</label>
     <fixedName>Famine ratkin</fixedName>
     <description>Ratkin driven out of a ruined settlement. They beg, steal, or pass through, depending on the group.\n\nThey stay neutral if a colonist hurts one of them. Forcing the group out makes them hostile. They do not raid.</description>
-    <naturalColonyGoodwill>
-      <min>0</min>
-      <max>0</max>
-    </naturalColonyGoodwill>
+    <naturalEnemy>false</naturalEnemy>
   </FactionDef>
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
@@ -73,10 +69,7 @@
     <label>approachable famine ratkin</label>
     <fixedName>Approachable famine ratkin</fixedName>
     <description>Ratkin driven out of a ruined settlement. They will come to the gate for food.\n\nIf a colonist hurts one of them, that whole group leaves. They do not turn hostile, and they do not raid.</description>
-    <naturalColonyGoodwill>
-      <min>0</min>
-      <max>0</max>
-    </naturalColonyGoodwill>
+    <naturalEnemy>false</naturalEnemy>
   </FactionDef>
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
@@ -84,9 +77,6 @@
     <label>friendly famine ratkin</label>
     <fixedName>Friendly famine ratkin</fixedName>
     <description>Ratkin driven out of a ruined settlement. They will take food only from a relief area, if one is marked.\n\nIf a colonist hurts one of them, that whole group leaves. They stay friendly, and they do not raid.</description>
-    <naturalColonyGoodwill>
-      <min>100</min>
-      <max>100</max>
-    </naturalColonyGoodwill>
+    <naturalEnemy>false</naturalEnemy>
   </FactionDef>
 </Defs>

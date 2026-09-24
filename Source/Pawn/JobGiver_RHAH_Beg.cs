@@ -52,12 +52,19 @@ namespace HungerAndHavoc.Pawn
             float bestDist = float.MaxValue;
             foreach (Verse.Pawn colonist in pawn.Map.mapPawns.FreeColonistsSpawned)
             {
-                if (colonist == null || colonist == pawn || colonist.Dead || colonist.Downed)
+                if (colonist == null || colonist == pawn)
                 {
                     continue;
                 }
 
-                if (!pawn.CanReach(colonist, PathEndMode.Touch, Danger.Deadly))
+                bool reachable = pawn.CanReach(colonist, PathEndMode.Touch, Danger.Deadly);
+                bool reservable = pawn.CanReserve(colonist, 1, -1, null, false);
+                if (!RHAH_VisitorRules.CanSelectBegTarget(
+                    colonist.Dead,
+                    colonist.Downed,
+                    colonist.IsForbidden(pawn),
+                    reachable,
+                    reservable))
                 {
                     continue;
                 }

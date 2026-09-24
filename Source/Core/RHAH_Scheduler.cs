@@ -12,8 +12,16 @@ namespace HungerAndHavoc.Core
             RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
             RHAH_Settings settings = RHAH_Mod.Settings;
             GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
-            if (!CanQueueDebug(entry, settings, game != null, ResolveTarget(entry) != null))
+            bool targetReady = ResolveTarget(entry) != null;
+            if (!CanQueueDebug(entry, settings, game != null, targetReady))
             {
+                Log.Warning(DebugRejectText(
+                    displayId,
+                    RHAH_Runtime.AllowsNewContent,
+                    entry != null,
+                    game != null,
+                    targetReady,
+                    settings == null || entry == null || settings.IsIncidentEnabled(entry == null ? displayId : entry.DisplayId)));
                 return false;
             }
 
@@ -21,7 +29,47 @@ namespace HungerAndHavoc.Core
             float points = settings == null
                 ? catalog
                 : settings.IncidentDebugPoints(entry.DisplayId, catalog);
-            return game.QueueIncident(entry.DisplayId, points);
+            if (!game.QueueIncident(entry.DisplayId, points))
+            {
+                Log.Warning("[RHAH] Debug trigger did not queue " + entry.DisplayId +
+                    ". It is already pending or the id is empty. points=" + points.ToString("0.##"));
+                return false;
+            }
+
+            bool paused = Find.WindowStack != null && Find.WindowStack.WindowsForcePause;
+            Log.Message("[RHAH] Debug trigger queued " + entry.DisplayId +
+                ". def=" + entry.DefName +
+                " points=" + points.ToString("0.##") +
+                " target=" + entry.Target +
+                " forcePause=" + paused +
+                ". A paused menu waits until the next unpaused frame.");
+            if (!paused)
+            {
+                game.TrySpawnPending(0);
+            }
+
+            return true;
+        }
+
+        internal static bool ShouldDrainOnFrame(bool paused, bool forcePause, int pending)
+        {
+            return paused && !forcePause && pending > 0;
+        }
+
+        internal static string DebugRejectText(
+            string displayId,
+            bool content,
+            bool catalog,
+            bool game,
+            bool target,
+            bool enabled)
+        {
+            return "[RHAH] Debug trigger rejected " + (displayId ?? "none") +
+                ". content=" + content +
+                " catalog=" + catalog +
+                " game=" + game +
+                " target=" + target +
+                " enabled=" + enabled;
         }
 
         internal static bool CanQueueDebug(

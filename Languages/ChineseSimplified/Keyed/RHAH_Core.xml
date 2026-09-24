@@ -141,9 +141,9 @@
   <RHAH_Menu_Queue_NoMap>没有可用地图。</RHAH_Menu_Queue_NoMap>
   <RHAH_Menu_Queue_NoCaravan>没有玩家商队。</RHAH_Menu_Queue_NoCaravan>
   <RHAH_Menu_Queue_Fired>已生成。</RHAH_Menu_Queue_Fired>
-  <RHAH_Menu_Queue_Queued>已排队。关闭菜单后生成。</RHAH_Menu_Queue_Queued>
+  <RHAH_Menu_Queue_Queued>已排队。关闭暂停窗口后生成。</RHAH_Menu_Queue_Queued>
   <RHAH_Menu_Queue_Failed>没有排队。</RHAH_Menu_Queue_Failed>
-  <RHAH_Menu_DevEvents_Note>把这条事件排进队列，不走自然抽取。关闭菜单、游戏继续运行后才会生成。</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_DevEvents_Note>把这条事件排进队列，不走自然抽取。关闭暂停窗口后的下一帧生成，不要求游戏继续走时间。</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>没有当前地图。</RHAH_Menu_Pawns_NoMap>
   <RHAH_Menu_Pawns_None>这张地图上没有饥与祸角色。</RHAH_Menu_Pawns_None>
   <RHAH_Menu_Pawns_Invalid>这个角色已经不在了。</RHAH_Menu_Pawns_Invalid>
