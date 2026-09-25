@@ -23,6 +23,9 @@ M0 工程对齐对实验性存档格式做 **破坏性重建**，不读旧键、
 - `HungerAndHavoc.Identity.CompRHAH_Pawn`
 - `HungerAndHavoc.Identity.CompProperties_RHAH_Pawn`
 
+
+穗音深存档类型从 `HungerAndHavoc.Narrative.Suiyin*` 迁到 `HungerAndHavoc.Storyteller.Suiyin.Suiyin*`。破坏性重建，不读旧类型名，不提供迁移。受影响的是 `SuiyinMember`、`SuiyinN004Case`、`SuiyinN005Case`、`SuiyinN006Case`、`SuiyinN007Case`、`SuiyinN008Case`、`SuiyinN009Case`、`SuiyinJournalCase`、`SuiyinNotice`。`NarrativeState` 仍是 `HungerAndHavoc.Narrative.NarrativeState`，存档键不变。
+
 Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集合；null 与空集合加载后语义相同，都是空集合。`SetExtra(key, null)` 删除键。
 
 ## 游戏存档键
@@ -271,15 +274,15 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_RefugeeMassacre | IncidentDef | Remove |
 | RHAH_ChildExchange | IncidentDef | Remove |
 | HungerAndHavoc.Narrative.NarrativeState | revealedCount, trust, rescued, lost, failed, suiyinEnabled, suiyinStarted, suiyinDeadlineTick, seenKinds, theftMaps, theftCounts, journalNoted, asidesSent, openingSent, progressSent, rewardClaimed, rewardPaid, rewardDue, envoyClue, relicClue, lastAsideTick, nextCaseId, aidCount, broadcastCount, expulsionCount, adultCount, completedKindCount, completedJournals, firstFactTick, nextAdultCheckTick, relicDone, endingE01, endingE02, endingE03, endingE04, endingE05, identityTier, identityRefused, entrustCases, exchangeCases, holeCases, quarantineCases, envoyCases, relicCase, journalCases, pendingNotices | 同上 | Remove。0.1.0 破坏性重建：结局计数与标记无旧档迁移。`rewardDue` 默认 0，读档后小于 0 归 0。`completedJournals` 为已计入结局的记录编号，空集合与 null 相同，读档后 `completedKindCount` 以它的数量为准 |
-| HungerAndHavoc.Narrative.SuiyinMember | loadId, presence, care, child, careTicks, missingSince | 嵌在案子里 | Remove。随叙事组件删除 |
-| HungerAndHavoc.Narrative.SuiyinN004Case | id, motherId, mapId, startedTick, outcome, mother, missingSince, revisit, revisitSeen, revisitDeadline, meetingCaravanId, rescueDueTick, rescuePaid, breakUntil, breakTrait, effectsApplied, children | 嵌在 entrustCases | Remove |
-| HungerAndHavoc.Narrative.SuiyinN005Case | id, mapId, startedTick, outcome, careClosed, children | 嵌在 exchangeCases | Remove |
-| HungerAndHavoc.Narrative.SuiyinN006Case | mapId, thefts, startedTick, ignoreUntil, baitUntil, hole, foodPresent, wood, baitStock, outcome, losses, nextLossTick | 嵌在 holeCases | Remove |
-| HungerAndHavoc.Narrative.SuiyinN007Case | mapId, startedTick, outcome, choiceOpen, returnDueTick, returnPawnId, returnDone, visitors | 嵌在 quarantineCases | Remove。`choiceOpen` 默认 false，true 表示还没把选择信放进队列 |
-| HungerAndHavoc.Narrative.SuiyinN008Case | mapId, pawnId, startedTick, deadline, checkUntil, presence, missingSince, outcome, mealsReady, proofAvailable | 嵌在 envoyCases | Remove |
-| HungerAndHavoc.Narrative.SuiyinN009Case | startedTick, deadline, mapPresent, playersInside, envoyHere, boxDestroyed, outcome, siteId, boxId, mapEntered | relicCase | Remove |
-| HungerAndHavoc.Narrative.SuiyinJournalCase | id, mapId, batchId, startedTick, delivered, driven, closed, counted, people | 嵌在 journalCases | Remove |
-| HungerAndHavoc.Narrative.SuiyinNotice | letter, arg, privateNotice | 嵌在 pendingNotices | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinMember | loadId, presence, care, child, careTicks, missingSince | 嵌在案子里 | Remove。随叙事组件删除 |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinN004Case | id, motherId, mapId, startedTick, outcome, mother, missingSince, revisit, revisitSeen, revisitDeadline, meetingCaravanId, rescueDueTick, rescuePaid, breakUntil, breakTrait, effectsApplied, children | 嵌在 entrustCases | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinN005Case | id, mapId, startedTick, outcome, careClosed, children | 嵌在 exchangeCases | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinN006Case | mapId, thefts, startedTick, ignoreUntil, baitUntil, hole, foodPresent, wood, baitStock, outcome, losses, nextLossTick | 嵌在 holeCases | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinN007Case | mapId, startedTick, outcome, choiceOpen, returnDueTick, returnPawnId, returnDone, visitors | 嵌在 quarantineCases | Remove。`choiceOpen` 默认 false，true 表示还没把选择信放进队列 |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinN008Case | mapId, pawnId, startedTick, deadline, checkUntil, presence, missingSince, outcome, mealsReady, proofAvailable | 嵌在 envoyCases | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinN009Case | startedTick, deadline, mapPresent, playersInside, envoyHere, boxDestroyed, outcome, siteId, boxId, mapEntered | relicCase | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinJournalCase | id, mapId, batchId, startedTick, delivered, driven, closed, counted, people | 嵌在 journalCases | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinNotice | letter, arg, privateNotice | 嵌在 pendingNotices | Remove |
 | RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
 | RHAH_Gnaw | JobDef | Remove |

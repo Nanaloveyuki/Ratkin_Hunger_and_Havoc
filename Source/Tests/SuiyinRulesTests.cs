@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using HungerAndHavoc.Narrative;
+using HungerAndHavoc.Storyteller.Suiyin;
 using Xunit;
 
 namespace HungerAndHavoc.Tests

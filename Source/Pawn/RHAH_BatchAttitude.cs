@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Identity;
 using HungerAndHavoc.Narrative;
+using HungerAndHavoc.Storyteller.Suiyin;
 using RimWorld;
 using Verse;
 using Verse.AI;

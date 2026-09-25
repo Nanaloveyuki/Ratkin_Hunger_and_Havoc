@@ -1011,9 +1011,9 @@ namespace HungerAndHavoc.Core
             return visitorChoicesEnabled;
         }
 
-        internal HungerAndHavoc.Narrative.RHAH_EndingGoals EndingGoals()
+        internal HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingGoals EndingGoals()
         {
-            return new HungerAndHavoc.Narrative.RHAH_EndingGoals(
+            return new HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingGoals(
                 endingAidGoal,
                 endingBroadcastGoal,
                 endingExpulsionLimit,
@@ -1135,11 +1135,11 @@ namespace HungerAndHavoc.Core
 
         void ClampEndingGoals()
         {
-            endingAidGoal = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampAid(endingAidGoal);
-            endingBroadcastGoal = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampBroadcasts(endingBroadcastGoal);
-            endingExpulsionLimit = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampExpulsions(endingExpulsionLimit);
-            endingAdultGoal = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampAdults(endingAdultGoal);
-            endingWaitDays = HungerAndHavoc.Narrative.RHAH_EndingRules.ClampWait(endingWaitDays);
+            endingAidGoal = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampAid(endingAidGoal);
+            endingBroadcastGoal = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampBroadcasts(endingBroadcastGoal);
+            endingExpulsionLimit = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampExpulsions(endingExpulsionLimit);
+            endingAdultGoal = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampAdults(endingAdultGoal);
+            endingWaitDays = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampWait(endingWaitDays);
         }
     }
 }

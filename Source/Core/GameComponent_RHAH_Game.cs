@@ -50,12 +50,12 @@ namespace HungerAndHavoc.Core
             TrySpawnPending(Find.TickManager.TicksGame);
             TickStays(Find.TickManager.TicksGame);
             Pawn.RHAH_AttitudeFactions.LockGoodwill();
-            HungerAndHavoc.Narrative.RHAH_EndingRuntime.Tick(Find.TickManager.TicksGame);
-            HungerAndHavoc.Narrative.RHAH_EntrustCare.Tick(Find.TickManager.TicksGame);
-            HungerAndHavoc.Narrative.RHAH_Quarantine.Tick(Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>(), Find.TickManager.TicksGame);
-            HungerAndHavoc.Narrative.RHAH_JournalRuntime.Tick(Find.TickManager.TicksGame);
-            HungerAndHavoc.Narrative.RHAH_Envoy.Tick(Find.TickManager.TicksGame);
-            HungerAndHavoc.Narrative.RHAH_RecordSite.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_Quarantine.Tick(Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>(), Find.TickManager.TicksGame);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_Envoy.Tick(Find.TickManager.TicksGame);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_RecordSite.Tick(Find.TickManager.TicksGame);
         }
 
         public override void GameComponentUpdate()

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HungerAndHavoc.Storyteller.Suiyin;
 using Verse;
 
 namespace HungerAndHavoc.Narrative

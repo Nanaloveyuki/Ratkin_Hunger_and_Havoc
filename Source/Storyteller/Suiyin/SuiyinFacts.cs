@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-namespace HungerAndHavoc.Narrative
+namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal enum SuiyinNode
     {

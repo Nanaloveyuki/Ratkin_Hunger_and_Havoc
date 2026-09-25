@@ -51,7 +51,7 @@ namespace HungerAndHavoc.Trade
                 visitors[i] = result.Pawns[i] == null ? 0 : result.Pawns[i].thingIDNumber;
             }
 
-            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new Narrative.SuiyinIncidentFact(
+            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new HungerAndHavoc.Storyteller.Suiyin.SuiyinIncidentFact(
                 entry.DisplayId,
                 map.uniqueID,
                 tick,

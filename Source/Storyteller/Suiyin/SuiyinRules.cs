@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Verse;
-namespace HungerAndHavoc.Narrative
+namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal enum SuiyinLetter
     {

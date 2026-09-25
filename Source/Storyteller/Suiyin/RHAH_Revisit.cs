@@ -3,8 +3,9 @@ using HungerAndHavoc.Incidents;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
+using HungerAndHavoc.Narrative;
 
-namespace HungerAndHavoc.Narrative
+namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal static class RHAH_Revisit
     {

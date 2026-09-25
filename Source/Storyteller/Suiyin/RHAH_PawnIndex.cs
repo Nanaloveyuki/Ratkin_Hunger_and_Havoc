@@ -2,7 +2,7 @@ using RimWorld;
 using System.Collections.Generic;
 using Verse;
 
-namespace HungerAndHavoc.Narrative
+namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal static class RHAH_PawnIndex
     {

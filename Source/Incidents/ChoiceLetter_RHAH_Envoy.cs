@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Narrative;
+using HungerAndHavoc.Storyteller.Suiyin;
 using RimWorld;
 using Verse;
 

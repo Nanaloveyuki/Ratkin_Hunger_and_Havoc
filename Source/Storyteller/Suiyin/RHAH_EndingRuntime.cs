@@ -4,8 +4,9 @@ using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
 using RimWorld;
 using Verse;
+using HungerAndHavoc.Narrative;
 
-namespace HungerAndHavoc.Narrative
+namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal static class RHAH_EndingRuntime
     {

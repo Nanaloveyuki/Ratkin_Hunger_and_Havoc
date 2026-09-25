@@ -23,7 +23,7 @@ namespace HungerAndHavoc.Incidents
                 return 0f;
             }
 
-            return Storyteller.CheckInterval / (days * GenDate.TicksPerDay);
+            return RimWorld.Storyteller.CheckInterval / (days * GenDate.TicksPerDay);
         }
 
         internal static float DailyOccurrenceChance(float averageDays)
@@ -298,12 +298,12 @@ namespace HungerAndHavoc.Incidents
         }
     }
 
-    [HarmonyLib.HarmonyPatch(typeof(Storyteller), nameof(Storyteller.StorytellerTick))]
+    [HarmonyLib.HarmonyPatch(typeof(RimWorld.Storyteller), nameof(RimWorld.Storyteller.StorytellerTick))]
     internal static class RHAH_IncidentSchedulePatch
     {
         internal static void Postfix()
         {
-            if (Find.TickManager == null || Find.TickManager.TicksGame % Storyteller.CheckInterval != 0)
+            if (Find.TickManager == null || Find.TickManager.TicksGame % RimWorld.Storyteller.CheckInterval != 0)
             {
                 return;
             }
@@ -314,7 +314,7 @@ namespace HungerAndHavoc.Incidents
                 GenDate.DaysPassedSinceSettleFloat,
                 trust,
                 season,
-                Storyteller.CheckInterval);
+                RimWorld.Storyteller.CheckInterval);
         }
     }
 }

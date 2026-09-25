@@ -1,4 +1,4 @@
-namespace HungerAndHavoc.Narrative
+namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal enum RHAH_EndingId
     {

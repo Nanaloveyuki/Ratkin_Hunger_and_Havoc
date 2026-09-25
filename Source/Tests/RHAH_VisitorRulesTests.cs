@@ -199,7 +199,7 @@ namespace HungerAndHavoc.Tests
         {
             string facts = File.ReadAllText(SourcePath("Incidents/RHAH_IncidentFacts.cs"));
             string trade = File.ReadAllText(SourcePath("Trade/TradeEventRouter.cs"));
-            string envoy = File.ReadAllText(SourcePath("Narrative/RHAH_Envoy.cs"));
+            string envoy = File.ReadAllText(SourcePath("Storyteller/Suiyin/RHAH_Envoy.cs"));
             string factory = File.ReadAllText(SourcePath("Generation/RHAH_PawnFactory.cs"));
             Assert.DoesNotContain("?? Faction.OfPlayer", facts);
             Assert.DoesNotContain("?? Faction.OfPlayer", trade);

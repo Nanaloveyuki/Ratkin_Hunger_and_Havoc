@@ -170,28 +170,28 @@ namespace HungerAndHavoc.Incidents
             {
                 Release(record, RHAH_ReleaseReason.JoinedPlayerFaction);
                 NoteEnding(record);
-                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.Hires(record.Settled))
             {
                 Stay(record, HungerAndHavoc.Pawn.RHAH_StayKind.Hire);
-                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.Recruits(record.Settled))
             {
                 Stay(record, HungerAndHavoc.Pawn.RHAH_StayKind.Recruit);
-                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.Enslaves(record.Settled))
             {
                 RHAH_VisitorBatch.Enslave(Pawns(record));
-                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
@@ -199,21 +199,21 @@ namespace HungerAndHavoc.Incidents
             {
                 bool move = record.Settled == RHAH_ChoiceAction.Prison;
                 RHAH_VisitorBatch.Capture(Pawns(record), move);
-                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.Attacks(record.Settled))
             {
                 Leave(record);
-                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             if (RHAH_RequestRules.WaitsForFood(record.Settled))
             {
                 RHAH_FoodHandoff.Begin(Pawns(record));
-                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
@@ -221,12 +221,12 @@ namespace HungerAndHavoc.Incidents
             if (RHAH_RequestRules.Leaves(record.Settled))
             {
                 Leave(record);
-                HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
 
             NoteEnding(record);
-            HungerAndHavoc.Narrative.RHAH_EntrustCare.OnChoice(record);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
         }
 
         static void Release(RHAH_ChoiceRecord record, RHAH_ReleaseReason reason)
@@ -266,8 +266,8 @@ namespace HungerAndHavoc.Incidents
         }
         static void NoteEnding(RHAH_ChoiceRecord record)
         {
-            Narrative.RHAH_EndingRules.RHAH_EndingEvent ending = Narrative.RHAH_EndingRules.FromChoice(record.Choice, record.Settled);
-            if (ending != Narrative.RHAH_EndingRules.RHAH_EndingEvent.Aid || !Narrative.RHAH_EndingRuntime.CountsNow())
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.RHAH_EndingEvent ending = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.FromChoice(record.Choice, record.Settled);
+            if (ending != HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.RHAH_EndingEvent.Aid || !HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.CountsNow())
             {
                 return;
             }

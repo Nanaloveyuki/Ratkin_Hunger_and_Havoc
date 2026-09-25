@@ -50,7 +50,7 @@ namespace HungerAndHavoc.Pawn
             if (displayId != null && game.QueueIncident(displayId, GameComponent_RHAH_Game.PointsFor(displayId), targetId))
             {
                 game.BroadcastCooldownUntilTick = RHAH_BroadcastRules.NextCooldown(tick, days);
-                if (HungerAndHavoc.Narrative.RHAH_EndingRuntime.CountsNow())
+                if (HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.CountsNow())
                 {
                     Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>()?.NoteBroadcast(tick);
                 }

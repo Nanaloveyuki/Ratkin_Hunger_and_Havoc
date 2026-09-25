@@ -3,8 +3,9 @@ using HungerAndHavoc.Identity;
 using HungerAndHavoc.Incidents;
 using RimWorld;
 using Verse;
+using HungerAndHavoc.Narrative;
 
-namespace HungerAndHavoc.Narrative
+namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal static class RHAH_Quarantine
     {

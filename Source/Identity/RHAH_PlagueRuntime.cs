@@ -174,7 +174,7 @@ namespace HungerAndHavoc.Identity
             if (tally.Recovered > 0 || tally.Died > 0)
             {
                 Current.Game?.GetComponent<Narrative.NarrativeState>()?.NotePlague(
-                    new Narrative.SuiyinPlagueFact(map.uniqueID, tally.Recovered, tally.Died));
+                    new HungerAndHavoc.Storyteller.Suiyin.SuiyinPlagueFact(map.uniqueID, tally.Recovered, tally.Died));
             }
 
             RememberReturnCandidate();

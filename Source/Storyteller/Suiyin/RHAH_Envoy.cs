@@ -8,8 +8,9 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
+using HungerAndHavoc.Narrative;
 
-namespace HungerAndHavoc.Narrative
+namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal static class RHAH_Envoy
     {

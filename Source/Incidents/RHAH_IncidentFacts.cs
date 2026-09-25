@@ -70,7 +70,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
-            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new Narrative.SuiyinIncidentFact(
+            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new HungerAndHavoc.Storyteller.Suiyin.SuiyinIncidentFact(
                 context.DisplayId,
                 context.Map.uniqueID,
                 tick,
@@ -78,7 +78,7 @@ namespace HungerAndHavoc.Incidents
                 created.Count,
                 context.CarriesPlague,
                 loadIds.ToArray()));
-            Narrative.RHAH_JournalRuntime.Open(context, loadIds);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Open(context, loadIds);
             OpenChoice(context, created);
 
             return true;

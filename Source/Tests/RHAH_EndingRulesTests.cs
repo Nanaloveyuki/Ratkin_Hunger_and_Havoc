@@ -1,5 +1,6 @@
 using HungerAndHavoc.Incidents;
 using HungerAndHavoc.Narrative;
+using HungerAndHavoc.Storyteller.Suiyin;
 using Xunit;
 
 namespace HungerAndHavoc.Tests

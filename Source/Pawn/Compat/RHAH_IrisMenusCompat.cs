@@ -8,6 +8,7 @@ using HungerAndHavoc.Data;
 using HungerAndHavoc.Generation;
 using HungerAndHavoc.Incidents;
 using HungerAndHavoc.Narrative;
+using HungerAndHavoc.Storyteller.Suiyin;
 using iris::IrisMenus;
 using RimWorld;
 using UnityEngine;
