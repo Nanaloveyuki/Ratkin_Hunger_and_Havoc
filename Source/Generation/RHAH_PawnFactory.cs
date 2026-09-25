@@ -109,6 +109,11 @@ namespace HungerAndHavoc.Generation
                 return RHAH_PawnCreationResult.Failed(RHAH_PawnCreationFailure.NoPawnKind);
             }
 
+            if (request.Faction == null || request.Faction.IsPlayer)
+            {
+                return RHAH_PawnCreationResult.Failed(RHAH_PawnCreationFailure.InvalidRequest);
+            }
+
             if (request.Map != null &&
                 (request.SpawnCell == IntVec3.Invalid || !request.SpawnCell.InBounds(request.Map)))
             {

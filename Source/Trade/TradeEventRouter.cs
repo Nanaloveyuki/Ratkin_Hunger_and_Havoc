@@ -36,7 +36,7 @@ namespace HungerAndHavoc.Trade
                 CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
                 PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
-                Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Neutral) ?? Faction.OfPlayer,
+                Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(RHAH_Attitude.Neutral),
                 SpawnCell = cell
             });
 

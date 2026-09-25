@@ -154,6 +154,20 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(1, Count(xml, "<raidLootValueFromPointsCurve>"));
         }
 
+        [Fact]
+        public void SpawnDoesNotFallBackToThePlayerFaction()
+        {
+            string facts = File.ReadAllText(SourcePath("Incidents/RHAH_IncidentFacts.cs"));
+            string trade = File.ReadAllText(SourcePath("Trade/TradeEventRouter.cs"));
+            string envoy = File.ReadAllText(SourcePath("Narrative/RHAH_Envoy.cs"));
+            string factory = File.ReadAllText(SourcePath("Generation/RHAH_PawnFactory.cs"));
+            Assert.DoesNotContain("?? Faction.OfPlayer", facts);
+            Assert.DoesNotContain("?? Faction.OfPlayer", trade);
+            Assert.DoesNotContain("?? Faction.OfPlayer", envoy);
+            Assert.Contains("request.Faction.IsPlayer", factory);
+            Assert.Contains("RHAH_AttitudeFactions.Require", facts);
+        }
+
         static int Count(string text, string token)
         {
             int count = 0;
@@ -171,6 +185,12 @@ namespace HungerAndHavoc.Tests
         {
             return Path.GetFullPath(Path.Combine(
                 Path.GetDirectoryName(testFile), "..", "..", "1.6", "Defs", "FactionDefs", "RHAH_Factions.xml"));
+        }
+
+        static string SourcePath(string relative, [CallerFilePath] string testFile = null)
+        {
+            return Path.GetFullPath(Path.Combine(
+                Path.GetDirectoryName(testFile), "..", "..", "Source", relative));
         }
     }
 }

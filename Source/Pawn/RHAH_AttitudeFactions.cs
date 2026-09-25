@@ -17,6 +17,48 @@ namespace HungerAndHavoc.Pawn
             return Find.FactionManager.FirstFactionOfDef(def);
         }
 
+        internal static Faction Require(RHAH_Attitude attitude)
+        {
+            Faction faction = Resolve(attitude);
+            if (faction == null || faction.IsPlayer)
+            {
+                Ensure(attitude);
+                faction = Resolve(attitude);
+            }
+
+            return faction != null && !faction.IsPlayer ? faction : null;
+        }
+
+        internal static void Ensure(RHAH_Attitude attitude)
+        {
+            if (Resolve(attitude) != null || Find.FactionManager == null)
+            {
+                return;
+            }
+
+            FactionDef def = DefFor(attitude);
+            if (def == null)
+            {
+                return;
+            }
+
+            FactionGenerator.CreateFactionAndAddToManager(def);
+        }
+
+        internal static void EnsureAll()
+        {
+            if (Find.FactionManager == null)
+            {
+                return;
+            }
+
+            Ensure(RHAH_Attitude.Hostile);
+            Ensure(RHAH_Attitude.LeaningHostile);
+            Ensure(RHAH_Attitude.Neutral);
+            Ensure(RHAH_Attitude.LeaningFriendly);
+            Ensure(RHAH_Attitude.Friendly);
+        }
+
         internal static FactionDef DefFor(RHAH_Attitude attitude)
         {
             switch (attitude)
@@ -51,6 +93,7 @@ namespace HungerAndHavoc.Pawn
 
         internal static void LockGoodwill()
         {
+            EnsureAll();
             Faction player = Faction.OfPlayer;
             if (player == null || Find.FactionManager == null)
             {

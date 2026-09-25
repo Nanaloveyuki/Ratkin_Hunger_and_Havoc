@@ -85,7 +85,7 @@ namespace HungerAndHavoc.Narrative
                 AttitudeAtArrival = RHAH_Attitude.Neutral,
                 Map = map,
                 PawnKind = RHAH_DefOf.RHAH_PawnKind_Ratkin,
-                Faction = RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Neutral) ?? Faction.OfPlayer,
+                Faction = RHAH_AttitudeFactions.Require(RHAH_Attitude.Neutral),
                 SpawnCell = cell,
                 BiologicalAge = AdultAge
             });

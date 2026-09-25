@@ -31,7 +31,7 @@ namespace HungerAndHavoc.Incidents
                     CarriesPlague = context.CarriesPlague,
                     Map = context.Map,
                     PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
-                    Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(context.Attitude) ?? Faction.OfPlayer,
+                    Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(context.Attitude),
                     SpawnCell = context.SpawnCell,
                     BiologicalAge = GenerationAge(context.Role)
                 }, registerBatch: false);
