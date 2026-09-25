@@ -559,6 +559,12 @@ namespace HungerAndHavoc.Pawn
             return IsColonyStay(stayKind) && StayExpired(now, deadline, downed);
         }
 
+        // 未到期的短工长工招募必须留在玩家派系 囚犯和奴隶除外
+        internal static bool RestoresPlayerFaction(int stayKind, int now, int deadline, bool downed, bool dead, bool prisoner, bool slave, bool playerFaction)
+        {
+            return IsColonyStay(stayKind) && !dead && !prisoner && !slave && !playerFaction && !StayExpired(now, deadline, downed);
+        }
+
         internal static bool AllowsModBehavior(int stayKind)
         {
             return !IsColonyStay(stayKind);

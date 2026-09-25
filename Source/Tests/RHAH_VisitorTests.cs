@@ -182,6 +182,8 @@ namespace HungerAndHavoc.Tests
             int clear = stay.IndexOf("RHAH_VisitorGroup.NotifyReleased(pawn)");
             int leaving = stay.IndexOf("RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving)");
             Assert.True(clear >= 0 && leaving > clear, "expired stay must clear the lord before Leaving");
+            Assert.Contains("RestoresPlayerFaction", stay);
+            Assert.Contains("pawn.SetFaction(Faction.OfPlayer)", stay);
             Assert.Contains("RHAH_StayKind.Recruit", File.ReadAllText(IncidentPath("RHAH_ChoiceRuntime.cs")));
             Assert.DoesNotContain("MarkFed", File.ReadAllText(PawnPath("JobGiver_RHAH_Visitor.cs")));
         }

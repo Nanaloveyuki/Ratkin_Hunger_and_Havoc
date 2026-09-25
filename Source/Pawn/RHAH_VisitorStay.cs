@@ -54,6 +54,20 @@ namespace HungerAndHavoc.Pawn
             comp.SetStay(comp.State.stayKind, deadline, remaining);
             if (!RHAH_VisitorRules.StayExpired(now, deadline, downed))
             {
+                if (RHAH_VisitorRules.RestoresPlayerFaction(
+                    comp.State.stayKind,
+                    now,
+                    deadline,
+                    downed,
+                    pawn.Dead,
+                    pawn.IsPrisoner,
+                    pawn.IsSlave,
+                    pawn.Faction == Faction.OfPlayer) &&
+                    pawn.Faction != Faction.OfPlayer)
+                {
+                    pawn.SetFaction(Faction.OfPlayer);
+                }
+
                 return false;
             }
 

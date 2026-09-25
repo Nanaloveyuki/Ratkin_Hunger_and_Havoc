@@ -140,6 +140,15 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_VisitorRules.BlocksAssignedWork((int)RHAH_StayKind.Hire, 10, 20, false));
             Assert.True(RHAH_VisitorRules.BlocksAssignedWork((int)RHAH_StayKind.Hire, 20, 20, false));
             Assert.False(RHAH_VisitorRules.BlocksAssignedWork((int)RHAH_StayKind.Hire, 20, 20, true));
+            Assert.True(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.Shelter, 10, 20, false, false, false, false, false));
+            Assert.True(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.Hire, 10, 20, false, false, false, false, false));
+            Assert.True(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.Recruit, 10, 20, true, false, false, false, false));
+            Assert.False(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.Shelter, 10, 20, false, false, false, false, true));
+            Assert.False(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.Shelter, 20, 20, false, false, false, false, false));
+            Assert.False(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.Hire, 10, 20, false, false, true, false, false));
+            Assert.False(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.Recruit, 10, 20, false, false, false, true, false));
+            Assert.False(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.None, 10, 20, false, false, false, false, false));
+            Assert.False(RHAH_VisitorRules.RestoresPlayerFaction((int)RHAH_StayKind.Shelter, 10, 20, false, true, false, false, false));
             Assert.False(RHAH_VisitorRules.AllowsGnaw(true, true, true, false, 0.01f, 0.05f, false, false));
             Assert.False(RHAH_VisitorRules.AllowsGnaw(true, true, false, true, 0.01f, 0.05f, false, false));
             Assert.True(RHAH_VisitorRules.AllowsGnaw(true, true, true, true, 0.049f, 0.05f, false, false));
