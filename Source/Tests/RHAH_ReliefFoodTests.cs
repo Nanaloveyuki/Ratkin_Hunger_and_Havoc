@@ -90,6 +90,17 @@ namespace HungerAndHavoc.Tests
             settings.SetAllGiveFood(true, null);
             Assert.True(settings.IsGiveFoodEnabled("MealFine"));
             Assert.Equal(0, settings.giveFoodListMode);
+            settings.SetBegFoodEnabled("MealSimple", false);
+            Assert.False(settings.IsBegFoodEnabled("MealSimple"));
+            Assert.True(settings.IsGiveFoodEnabled("MealSimple"));
+            settings.SetAllBegFood(false, new List<string> { "MealFine" });
+            Assert.False(settings.IsBegFoodEnabled("MealFine"));
+            Assert.True(settings.IsBegFoodEnabled("MealSurvivalPack"));
+            settings.SetAllBegFood(true, null);
+            Assert.True(settings.IsBegFoodEnabled("MealFine"));
+            Assert.False(settings.begAutoGiveEnabled);
+            Assert.Equal(35, settings.begSuccessChancePercent);
+            Assert.Equal(3, settings.begSocialBonusPercent);
         }
 
         [Fact]

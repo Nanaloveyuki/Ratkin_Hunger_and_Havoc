@@ -305,6 +305,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Trait_* | TraitDef | Remove。不替换成原版特质 |
 | RHAH_Thought_EggKeeperYoung, RHAH_Thought_HungerRage, RHAH_Thought_FoodSnatcher, RHAH_Thought_PlagueDreadSick, RHAH_Thought_PlagueDreadNearby | ThoughtDef | Remove |
 | RHAH_Thought_NightTerrors, RHAH_Thought_GrainGreed, RHAH_Thought_Chillblood, RHAH_Thought_FamineGloom, RHAH_Thought_AilingMother, RHAH_Thought_FamilyThief | ThoughtDef | Remove |
+| RHAH_Thought_BeggingSucceeded, RHAH_Thought_BeggingRejected, RHAH_Thought_BeggingSlapped | ThoughtDef | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed | 无存档字段 | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease | 无存档字段 | Remove |
 
@@ -352,6 +353,8 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.disabledReliefFoodDefNames | 全局 ModSettings，默认空。空名单表示当前食物可用，不是全部禁用 |
 | RHAH_Settings.disabledGiveFoodDefNames | 全局 ModSettings，默认空。空名单表示当前食物可以交给来客，不是全部禁止。不随赈灾区开关 |
 | RHAH_Settings.giveFoodListMode | 全局 ModSettings，默认 0。0 按模组，1 按名称，2 按原版分类。只影响给予食物菜单 |
+| RHAH_Settings.disabledBegFoodDefNames | 全局 ModSettings，默认空。空名单表示当前正餐可以被乞讨拿走，不是全部禁止。生食不进名单。不随给予食物名单 |
+| RHAH_Settings.begFoodListMode | 全局 ModSettings，默认 0。0 按模组，1 按名称，2 按原版分类。只影响乞讨食物菜单 |
 | RHAH_Settings.aidRequestsEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.intelTradesEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.visitorChoicesEnabled | 全局 ModSettings，默认 true |
@@ -393,7 +396,8 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.traitAgeFilter | 全局 ModSettings，默认 true。关闭后幼年特质和成年特质不再按年龄分开 |
 | RHAH_Settings.contentListMode | 全局 ModSettings，默认 0。0 按来源，1 按名称，2 按类别。只影响菜单 |
 | RHAH_Settings.reliefFoodScoreBonus | 全局 ModSettings，默认 0.1。赈灾区食物额外加分，0 到 1 |
-| RHAH_Settings.fedStayDays | 全局 ModSettings，默认 0.5。首次吃饱后停留基准，实际为 50% 到 150%，0 到 5 天 |
+| RHAH_Settings.fedWanderEnabled | 全局 ModSettings，默认 true。开启后吃饱先闲逛再离开，关闭后立刻走向出口。仍受 leaveAfterFed 控制 |
+| RHAH_Settings.fedWanderHours | 全局 ModSettings，默认 12，范围 1 到 48。吃饱后闲逛的小时数 |
 | RHAH_Settings.waitWhenNoFood | 全局 ModSettings，默认 true。关闭后找不到食物直接离开 |
 | RHAH_Settings.noFoodWaitDays | 全局 ModSettings，默认 0.5，范围 0 到 5 |
 | RHAH_Settings.shelterDays | 全局 ModSettings，默认 5，范围 5 到 240。短工，1 年按 60 天 |
@@ -427,6 +431,11 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.plagueReturnDelayDays | 全局 ModSettings，默认 15，范围 0 到 60 |
 | RHAH_Settings.plagueReturnStayDays | 全局 ModSettings，默认 1，范围 0 到 15 |
 | RHAH_Settings.beggingEnabled | 全局 ModSettings，默认 true |
+| RHAH_Settings.begAutoGiveEnabled | 全局 ModSettings，默认 false。开启后乞讨成功才从对方背包拿走一份允许乞讨的食物 |
+| RHAH_Settings.begSuccessChancePercent | 全局 ModSettings，默认 35，范围 0 到 100。对同一殖民者第一次乞讨的基础成功率 |
+| RHAH_Settings.begSocialBonusPercent | 全局 ModSettings，默认 3，范围 0 到 20。乞讨者每级社交额外增加的成功率 |
+| RHAH_Settings.begFailCooldownHours | 全局 ModSettings，默认 3，范围 3 到 12。合适的人都讨不到后闲逛这么多小时才再乞讨 |
+| RHAH_Settings.begSlapChancePercent | 全局 ModSettings，默认 50，范围 0 到 100。同一殖民者第二次及以后被乞讨时抽巴掌的几率 |
 | RHAH_Settings.stealingEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.fightingEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.gnawingEnabled | 全局 ModSettings，默认 true |

@@ -17,8 +17,10 @@
   <RHAH_Settings_MaxEventPawns_Tooltip>一次事件的人数不超过这个数。1 到 100，默认 30。低于该事件最少人数时仍按最少人数来。母亲和孩子不拆开。</RHAH_Settings_MaxEventPawns_Tooltip>
   <RHAH_Settings_ReliefScore>赈灾区食物加分：{0}%</RHAH_Settings_ReliefScore>
   <RHAH_Settings_ReliefScore_Tooltip>区内食物在距离和是否合适之外再加这一成。范围 0 到 100%，默认 10%。</RHAH_Settings_ReliefScore_Tooltip>
-  <RHAH_Settings_FedStay>吃饱后停留：{0} 天</RHAH_Settings_FedStay>
-  <RHAH_Settings_FedStay_Tooltip>第一次吃饱后，停留这个时长的一半到一倍半，然后离开。0 到 5 天，默认半天。</RHAH_Settings_FedStay_Tooltip>
+  <RHAH_Settings_FedWander>吃饱后闲逛再离开</RHAH_Settings_FedWander>
+  <RHAH_Settings_FedWander_Tooltip>开启后，来客吃饱后先闲逛，到点再离开。关闭后立刻走向出口。吃完后离开地图关掉时，吃饱的来客仍留在地图上。</RHAH_Settings_FedWander_Tooltip>
+  <RHAH_Settings_FedWanderHours>吃饱后闲逛：{0} 小时</RHAH_Settings_FedWanderHours>
+  <RHAH_Settings_FedWanderHours_Tooltip>闲逛这么久再离开。1 到 48 小时，默认 12。关掉闲逛时不使用。</RHAH_Settings_FedWanderHours_Tooltip>
   <RHAH_Settings_WaitFood>找不到食物时等待</RHAH_Settings_WaitFood>
   <RHAH_Settings_WaitFood_Tooltip>开启后，来客在划定时间内继续找吃的。找到后，下一次断粮重新计时。关闭后直接离开。</RHAH_Settings_WaitFood_Tooltip>
   <RHAH_Settings_FoodWait>断粮等待：{0} 天</RHAH_Settings_FoodWait>
@@ -92,6 +94,27 @@
   <RHAH_Menu_Plague>鼠疫</RHAH_Menu_Plague>
   <RHAH_Settings_Begging>允许乞讨</RHAH_Settings_Begging>
   <RHAH_Settings_Begging_Tooltip>关闭后，来客不再向殖民者乞讨。</RHAH_Settings_Begging_Tooltip>
+  <RHAH_Settings_BegAutoGive>乞讨成功时自动交出背包食物</RHAH_Settings_BegAutoGive>
+  <RHAH_Settings_BegAutoGive_Tooltip>默认关闭。开启后，乞讨成功会从对方背包拿走一份允许乞讨的食物，营养高的优先。关掉时仍会乞讨，但不自动给食，也不算成功。不影响右键交给来客、赈灾区取食和照料喂食。</RHAH_Settings_BegAutoGive_Tooltip>
+  <RHAH_Settings_BegSuccessChance>首次乞讨成功：{0}%</RHAH_Settings_BegSuccessChance>
+  <RHAH_Settings_BegSuccessChance_Tooltip>对同一名殖民者第一次乞讨时的基础成功率。社交技能再按下方加成提高，最高 100%。默认 35。</RHAH_Settings_BegSuccessChance_Tooltip>
+  <RHAH_Settings_BegSocialBonus>社交每级成功率：+{0}%</RHAH_Settings_BegSocialBonus>
+  <RHAH_Settings_BegSocialBonus_Tooltip>乞讨者每级社交技能额外增加的成功率。0 到 20，默认 3。第二次及以后对同一人不再算成功。</RHAH_Settings_BegSocialBonus_Tooltip>
+  <RHAH_Settings_BegFoods>可乞讨的食物</RHAH_Settings_BegFoods>
+  <RHAH_Settings_BegFoods_Tooltip>关掉的食物不会在乞讨成功时从背包交出。生食和原料不在这份名单里。</RHAH_Settings_BegFoods_Tooltip>
+  <RHAH_Settings_BegFoods_All>全部允许</RHAH_Settings_BegFoods_All>
+  <RHAH_Settings_BegFoods_None>全部禁止</RHAH_Settings_BegFoods_None>
+  <RHAH_Settings_BegFoods_Search>搜索食物或模组</RHAH_Settings_BegFoods_Search>
+  <RHAH_Settings_BegFoods_Empty>没有符合的食物。</RHAH_Settings_BegFoods_Empty>
+  <RHAH_Settings_BegFoods_Quote>关掉的食物不能被乞讨拿走。之后新加入的正餐默认仍可乞讨。右键交给来客另有一份名单。</RHAH_Settings_BegFoods_Quote>
+  <RHAH_Settings_BegFoods_Sort>乞讨食物分类</RHAH_Settings_BegFoods_Sort>
+  <RHAH_Settings_BegFoods_Sort_0>按模组</RHAH_Settings_BegFoods_Sort_0>
+  <RHAH_Settings_BegFoods_Sort_1>按名称</RHAH_Settings_BegFoods_Sort_1>
+  <RHAH_Settings_BegFoods_Sort_2>按原版分类</RHAH_Settings_BegFoods_Sort_2>
+  <RHAH_Settings_BegFailCooldown>乞讨失败后闲逛：{0} 小时</RHAH_Settings_BegFailCooldown>
+  <RHAH_Settings_BegFailCooldown_Tooltip>合适的人都讨不到后，来客闲逛这么久才再乞讨。3 到 12 小时，默认 3 小时。</RHAH_Settings_BegFailCooldown_Tooltip>
+  <RHAH_Settings_BegSlapChance>重复乞讨被抽耳光：{0}%</RHAH_Settings_BegSlapChance>
+  <RHAH_Settings_BegSlapChance_Tooltip>同一名殖民者第二次及以后被乞讨时，按这个几率抽乞讨者一巴掌。0 到 100，默认 50。</RHAH_Settings_BegSlapChance_Tooltip>
   <RHAH_Settings_Stealing>允许偷窃</RHAH_Settings_Stealing>
   <RHAH_Settings_Stealing_Tooltip>关闭后，来客不再偷东西。</RHAH_Settings_Stealing_Tooltip>
   <RHAH_Settings_Fighting>允许反击</RHAH_Settings_Fighting>

@@ -17,8 +17,10 @@
   <RHAH_Settings_MaxEventPawns_Tooltip>One event stays under this count. 1 to 100, default 30. A count below the event minimum still uses that minimum. A mother and child stay together.</RHAH_Settings_MaxEventPawns_Tooltip>
   <RHAH_Settings_ReliefScore>Relief food bonus: {0}%</RHAH_Settings_ReliefScore>
   <RHAH_Settings_ReliefScore_Tooltip>Food inside the zone also gains this bonus, on top of distance and whether it is suitable. Range 0 to 100%, default 10%.</RHAH_Settings_ReliefScore_Tooltip>
-  <RHAH_Settings_FedStay>Stay after eating: {0} days</RHAH_Settings_FedStay>
-  <RHAH_Settings_FedStay_Tooltip>After the first full meal, a visitor stays for half to one and a half times this long, then leaves. 0 to 5 days, default half a day.</RHAH_Settings_FedStay_Tooltip>
+  <RHAH_Settings_FedWander>Wander after eating, then leave</RHAH_Settings_FedWander>
+  <RHAH_Settings_FedWander_Tooltip>A full visitor wanders, then leaves. With this off, they head for an exit at once. If leaving after eating is off, a full visitor stays on the map.</RHAH_Settings_FedWander_Tooltip>
+  <RHAH_Settings_FedWanderHours>Wander after eating: {0} hours</RHAH_Settings_FedWanderHours>
+  <RHAH_Settings_FedWanderHours_Tooltip>How long a full visitor wanders before leaving. 1 to 48 hours, default 12. Unused while wandering is off.</RHAH_Settings_FedWanderHours_Tooltip>
   <RHAH_Settings_WaitFood>Wait when no food is found</RHAH_Settings_WaitFood>
   <RHAH_Settings_WaitFood_Tooltip>Visitors keep looking for the set time. Food found later starts the next wait over. With this off, they leave.</RHAH_Settings_WaitFood_Tooltip>
   <RHAH_Settings_FoodWait>Wait without food: {0} days</RHAH_Settings_FoodWait>
@@ -92,6 +94,27 @@
   <RHAH_Menu_Plague>Plague</RHAH_Menu_Plague>
   <RHAH_Settings_Begging>Allow begging</RHAH_Settings_Begging>
   <RHAH_Settings_Begging_Tooltip>Visitors no longer beg from colonists.</RHAH_Settings_Begging_Tooltip>
+  <RHAH_Settings_BegAutoGive>Give carried food when begging succeeds</RHAH_Settings_BegAutoGive>
+  <RHAH_Settings_BegAutoGive_Tooltip>Off by default. When on, a successful beg takes one allowed food from the colonist's inventory, highest nutrition first. When off, begging still happens, but nothing is given and it does not count as success. Handing food over, relief food, and childcare feeding stay separate.</RHAH_Settings_BegAutoGive_Tooltip>
+  <RHAH_Settings_BegSuccessChance>First beg succeeds: {0}%</RHAH_Settings_BegSuccessChance>
+  <RHAH_Settings_BegSuccessChance_Tooltip>Base chance the first time a colonist is begged. Social skill adds the bonus below, capped at 100%. Default 35.</RHAH_Settings_BegSuccessChance_Tooltip>
+  <RHAH_Settings_BegSocialBonus>Social skill bonus: +{0}% per level</RHAH_Settings_BegSocialBonus>
+  <RHAH_Settings_BegSocialBonus_Tooltip>Extra success chance per social skill level. 0 to 20, default 3. A later beg to the same colonist cannot succeed.</RHAH_Settings_BegSocialBonus_Tooltip>
+  <RHAH_Settings_BegFoods>Food that can be begged</RHAH_Settings_BegFoods>
+  <RHAH_Settings_BegFoods_Tooltip>Food turned off is not taken from inventory when begging succeeds. Raw food and ingredients are not on this list.</RHAH_Settings_BegFoods_Tooltip>
+  <RHAH_Settings_BegFoods_All>Allow all</RHAH_Settings_BegFoods_All>
+  <RHAH_Settings_BegFoods_None>Forbid all</RHAH_Settings_BegFoods_None>
+  <RHAH_Settings_BegFoods_Search>Search foods or mods</RHAH_Settings_BegFoods_Search>
+  <RHAH_Settings_BegFoods_Empty>No foods match.</RHAH_Settings_BegFoods_Empty>
+  <RHAH_Settings_BegFoods_Quote>Food you turn off cannot be taken by begging. Meals added later can still be begged. Handing food over uses a separate list.</RHAH_Settings_BegFoods_Quote>
+  <RHAH_Settings_BegFoods_Sort>Begging food grouping</RHAH_Settings_BegFoods_Sort>
+  <RHAH_Settings_BegFoods_Sort_0>By mod</RHAH_Settings_BegFoods_Sort_0>
+  <RHAH_Settings_BegFoods_Sort_1>By name</RHAH_Settings_BegFoods_Sort_1>
+  <RHAH_Settings_BegFoods_Sort_2>By vanilla category</RHAH_Settings_BegFoods_Sort_2>
+  <RHAH_Settings_BegFailCooldown>Wander after failed begging: {0} hours</RHAH_Settings_BegFailCooldown>
+  <RHAH_Settings_BegFailCooldown_Tooltip>After every suitable colonist refuses, the visitor wanders this long before begging again. 3 to 12 hours, default 3.</RHAH_Settings_BegFailCooldown_Tooltip>
+  <RHAH_Settings_BegSlapChance>Slap on a repeat beg: {0}%</RHAH_Settings_BegSlapChance>
+  <RHAH_Settings_BegSlapChance_Tooltip>The second time the same colonist is begged, and every time after, they may slap the beggar. 0 to 100, default 50.</RHAH_Settings_BegSlapChance_Tooltip>
   <RHAH_Settings_Stealing>Allow stealing</RHAH_Settings_Stealing>
   <RHAH_Settings_Stealing_Tooltip>Visitors no longer steal.</RHAH_Settings_Stealing_Tooltip>
   <RHAH_Settings_Fighting>Allow fighting back</RHAH_Settings_Fighting>

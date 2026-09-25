@@ -26,7 +26,9 @@ namespace HungerAndHavoc.Core
         public bool leaveAfterFed = true;
         List<string> disabledReliefFoodDefNames = new List<string>();
         List<string> disabledGiveFoodDefNames = new List<string>();
+        List<string> disabledBegFoodDefNames = new List<string>();
         public int giveFoodListMode;
+        public int begFoodListMode;
         public bool aidRequestsEnabled = true;
         public bool intelTradesEnabled = true;
         public bool visitorChoicesEnabled = true;
@@ -68,7 +70,8 @@ namespace HungerAndHavoc.Core
         public bool traitAgeFilter = true;
         public int contentListMode;
         public float reliefFoodScoreBonus = 0.1f;
-        public float fedStayDays = 0.5f;
+        public bool fedWanderEnabled = true;
+        public int fedWanderHours = 12;
         public bool waitWhenNoFood = true;
         public float noFoodWaitDays = 0.5f;
         public int shelterDays = 5;
@@ -102,6 +105,11 @@ namespace HungerAndHavoc.Core
         public int plagueReturnDelayDays = 15;
         public int plagueReturnStayDays = 1;
         public bool beggingEnabled = true;
+        public bool begAutoGiveEnabled = false;
+        public int begFailCooldownHours = 3;
+        public int begSlapChancePercent = 50;
+        public int begSuccessChancePercent = 35;
+        public int begSocialBonusPercent = 3;
         public bool stealingEnabled = true;
         public bool fightingEnabled = true;
         public bool gnawingEnabled = true;
@@ -141,7 +149,9 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref leaveAfterFed, "leaveAfterFed", true);
             Scribe_Collections.Look(ref disabledReliefFoodDefNames, "disabledReliefFoodDefNames", LookMode.Value);
             Scribe_Collections.Look(ref disabledGiveFoodDefNames, "disabledGiveFoodDefNames", LookMode.Value);
+            Scribe_Collections.Look(ref disabledBegFoodDefNames, "disabledBegFoodDefNames", LookMode.Value);
             Scribe_Values.Look(ref giveFoodListMode, "giveFoodListMode", 0);
+            Scribe_Values.Look(ref begFoodListMode, "begFoodListMode", 0);
             Scribe_Values.Look(ref aidRequestsEnabled, "aidRequestsEnabled", true);
             Scribe_Values.Look(ref intelTradesEnabled, "intelTradesEnabled", true);
             Scribe_Values.Look(ref visitorChoicesEnabled, "visitorChoicesEnabled", true);
@@ -183,7 +193,8 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref traitAgeFilter, "traitAgeFilter", true);
             Scribe_Values.Look(ref contentListMode, "contentListMode", 0);
             Scribe_Values.Look(ref reliefFoodScoreBonus, "reliefFoodScoreBonus", 0.1f);
-            Scribe_Values.Look(ref fedStayDays, "fedStayDays", 0.5f);
+            Scribe_Values.Look(ref fedWanderEnabled, "fedWanderEnabled", true);
+            Scribe_Values.Look(ref fedWanderHours, "fedWanderHours", 12);
             Scribe_Values.Look(ref waitWhenNoFood, "waitWhenNoFood", true);
             Scribe_Values.Look(ref noFoodWaitDays, "noFoodWaitDays", 0.5f);
             Scribe_Values.Look(ref shelterDays, "shelterDays", 5);
@@ -216,6 +227,11 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref plagueReturnDelayDays, "plagueReturnDelayDays", 15);
             Scribe_Values.Look(ref plagueReturnStayDays, "plagueReturnStayDays", 1);
             Scribe_Values.Look(ref beggingEnabled, "beggingEnabled", true);
+            Scribe_Values.Look(ref begAutoGiveEnabled, "begAutoGiveEnabled", false);
+            Scribe_Values.Look(ref begFailCooldownHours, "begFailCooldownHours", 3);
+            Scribe_Values.Look(ref begSlapChancePercent, "begSlapChancePercent", 50);
+            Scribe_Values.Look(ref begSuccessChancePercent, "begSuccessChancePercent", 35);
+            Scribe_Values.Look(ref begSocialBonusPercent, "begSocialBonusPercent", 3);
             Scribe_Values.Look(ref stealingEnabled, "stealingEnabled", true);
             Scribe_Values.Look(ref fightingEnabled, "fightingEnabled", true);
             Scribe_Values.Look(ref gnawingEnabled, "gnawingEnabled", true);
@@ -240,6 +256,7 @@ namespace HungerAndHavoc.Core
                 enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
                 disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
                 disabledGiveFoodDefNames = disabledGiveFoodDefNames ?? new List<string>();
+            disabledBegFoodDefNames = disabledBegFoodDefNames ?? new List<string>();
                 disabledRefugeeApparelDefNames = disabledRefugeeApparelDefNames ?? new List<string>();
                 temperatureApparelInsulation = temperatureApparelInsulation ?? new Dictionary<string, float>();
                 disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();
@@ -456,6 +473,47 @@ namespace HungerAndHavoc.Core
             }
         }
 
+        public bool IsBegFoodEnabled(string defName)
+        {
+            EnsureCollections();
+            return string.IsNullOrEmpty(defName) || !disabledBegFoodDefNames.Contains(defName);
+        }
+
+        public void SetBegFoodEnabled(string defName, bool enabled)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            if (enabled)
+            {
+                disabledBegFoodDefNames.Remove(defName);
+            }
+            else if (!disabledBegFoodDefNames.Contains(defName))
+            {
+                disabledBegFoodDefNames.Add(defName);
+            }
+        }
+
+        public void SetAllBegFood(bool enabled, List<string> candidates)
+        {
+            EnsureCollections();
+            disabledBegFoodDefNames.Clear();
+            if (!enabled && candidates != null)
+            {
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty(candidates[i]) && !disabledBegFoodDefNames.Contains(candidates[i]))
+                    {
+                        disabledBegFoodDefNames.Add(candidates[i]);
+                    }
+                }
+            }
+        }
+
+
 
         public bool IsRefugeeApparelEnabled(string defName)
         {
@@ -583,6 +641,7 @@ namespace HungerAndHavoc.Core
             enabledGeneDefNames = Clean(enabledGeneDefNames);
             disabledReliefFoodDefNames = Clean(disabledReliefFoodDefNames);
             disabledGiveFoodDefNames = Clean(disabledGiveFoodDefNames);
+            disabledBegFoodDefNames = Clean(disabledBegFoodDefNames);
             disabledRefugeeApparelDefNames = Clean(disabledRefugeeApparelDefNames);
             temperatureApparelInsulation = ClampWeights(temperatureApparelInsulation, ClampStoredInsulation);
             disabledTemperatureApparelDefNames = Clean(disabledTemperatureApparelDefNames);
@@ -606,13 +665,18 @@ namespace HungerAndHavoc.Core
             maxOwnedTraits = Pawn.RHAH_VisitorRules.ClampOwnedTraits(maxOwnedTraits);
             contentListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(contentListMode, 3);
             giveFoodListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(giveFoodListMode, 3);
+            begFoodListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(begFoodListMode, 3);
+            begSuccessChancePercent = Pawn.RHAH_VisitorRules.ClampPercent(begSuccessChancePercent, Pawn.RHAH_VisitorRules.MinBegSuccessChancePercent, Pawn.RHAH_VisitorRules.MaxBegSuccessChancePercent);
+            begSocialBonusPercent = Pawn.RHAH_VisitorRules.ClampPercent(begSocialBonusPercent, Pawn.RHAH_VisitorRules.MinBegSocialBonusPercent, Pawn.RHAH_VisitorRules.MaxBegSocialBonusPercent);
             apparelListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(apparelListMode, 3);
             ClampFertility();
 
             reliefFoodScoreBonus = Pawn.RHAH_VisitorRules.ClampBonus(reliefFoodScoreBonus);
-            fedStayDays = ClampStayDays(fedStayDays, 0.5f);
+            fedWanderHours = Pawn.RHAH_VisitorRules.ClampFedWanderHours(fedWanderHours);
             noFoodWaitDays = ClampStayDays(noFoodWaitDays, 0.5f);
             shelterDays = Pawn.RHAH_VisitorRules.ClampShelterDays(shelterDays);
+            begFailCooldownHours = Pawn.RHAH_VisitorRules.ClampBegFailCooldownHours(begFailCooldownHours);
+            begSlapChancePercent = Pawn.RHAH_VisitorRules.ClampBegSlapChance(begSlapChancePercent);
             hireDays = Pawn.RHAH_VisitorRules.ClampHireDays(hireDays);
             if (float.IsNaN(minimumEventTemperature) || float.IsInfinity(minimumEventTemperature))
             {
@@ -743,6 +807,7 @@ namespace HungerAndHavoc.Core
             enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
             disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
             disabledGiveFoodDefNames = disabledGiveFoodDefNames ?? new List<string>();
+                disabledBegFoodDefNames = disabledBegFoodDefNames ?? new List<string>();
             disabledRefugeeApparelDefNames = disabledRefugeeApparelDefNames ?? new List<string>();
             temperatureApparelInsulation = temperatureApparelInsulation ?? new Dictionary<string, float>();
             disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();

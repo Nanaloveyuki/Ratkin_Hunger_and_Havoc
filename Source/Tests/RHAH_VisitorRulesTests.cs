@@ -64,12 +64,12 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void FirstFedStayLandsBetweenHalfAndOneAndAHalf()
+        public void FedWanderUsesHoursAndLeaveNowUsesZero()
         {
-            int half = RHAH_VisitorRules.FedStayTicks(0.5f, 0f);
-            int full = RHAH_VisitorRules.FedStayTicks(0.5f, 1f);
-            Assert.Equal(15000, half);
-            Assert.Equal(45000, full);
+            Assert.Equal(0, RHAH_VisitorRules.FedWanderTicks(false, 12));
+            Assert.Equal(2500, RHAH_VisitorRules.FedWanderTicks(true, 0));
+            Assert.Equal(30000, RHAH_VisitorRules.FedWanderTicks(true, 12));
+            Assert.Equal(48, RHAH_VisitorRules.ClampFedWanderHours(80));
             RHAH_PawnState state = new RHAH_PawnState();
             state.TrySetLifecycle(RHAH_Lifecycle.SeekingFood);
             state.TrySetLifecycle(RHAH_Lifecycle.Fed);
@@ -94,14 +94,43 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void BegTargetMustBeReachableAndAvailable()
+        public void BegTargetSkipsSleepMedicalBedAndYoungChildren()
         {
-            Assert.True(RHAH_VisitorRules.CanSelectBegTarget(false, false, false, true, true));
-            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(false, false, false, false, true));
-            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(false, false, false, true, false));
-            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(true, false, false, true, true));
-            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(false, true, false, true, true));
-            Assert.False(RHAH_VisitorRules.CanSelectBegTarget(false, false, true, true, true));
+            Assert.True(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, false, true, true, 4f, false));
+            Assert.False(RHAH_VisitorRules.CanReceiveBeg(false, false, false, true, false, true, true, 20f, false));
+            Assert.False(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, true, true, true, 20f, false));
+            Assert.False(RHAH_VisitorRules.CanReceiveBeg(false, true, false, false, false, true, true, 20f, false));
+            Assert.False(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, false, false, true, 20f, false));
+            Assert.False(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, false, true, false, 20f, false));
+            Assert.False(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, false, true, true, 3.9f, false));
+            Assert.True(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, false, true, true, 4f, false));
+            Assert.False(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, false, true, true, 1f + 46f / 60f, true));
+            Assert.True(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, false, true, true, 1f + 47f / 60f, true));
+            Assert.Equal(3, RHAH_VisitorRules.ClampBegFailCooldownHours(1));
+            Assert.Equal(12, RHAH_VisitorRules.ClampBegFailCooldownHours(20));
+            Assert.Equal(7500, RHAH_VisitorRules.BegFailCooldownTicks(3));
+            Assert.True(RHAH_VisitorRules.BegCooldownReady(7500, 7500));
+            Assert.False(RHAH_VisitorRules.BegCooldownReady(7499, 7500));
+            Assert.Equal(50, RHAH_VisitorRules.ClampBegSlapChance(50));
+            Assert.False(RHAH_VisitorRules.RollsSlap(50, 0.5f));
+            Assert.True(RHAH_VisitorRules.RollsSlap(50, 0.49f));
+            Assert.False(RHAH_VisitorRules.RollsSlap(0, 0f));
+            Assert.True(RHAH_VisitorRules.RollsSlap(100, 0.99f));
+            Assert.Equal(0, RHAH_VisitorRules.SlapWoundKind(false, 0f));
+            Assert.Equal(1, RHAH_VisitorRules.SlapWoundKind(true, 4f));
+            Assert.Equal(2, RHAH_VisitorRules.SlapWoundKind(true, 16f));
+            Assert.Equal(8f, RHAH_VisitorRules.NextBruiseSeverity(4f));
+            Assert.Equal(16f, RHAH_VisitorRules.NextBruiseSeverity(16f));
+            Assert.Equal(-5, RHAH_VisitorRules.BegFailMood);
+            Assert.Equal(3, RHAH_VisitorRules.BegSuccessMood);
+            Assert.Equal(0.35f, RHAH_VisitorRules.BegSuccessChance(35, 0, 3));
+            Assert.Equal(1f, RHAH_VisitorRules.BegSuccessChance(35, 30, 3));
+            Assert.Equal(0.41f, RHAH_VisitorRules.BegSuccessChance(35, 2, 3));
+            Assert.True(RHAH_VisitorRules.BegFoodEligible(true, true, 7, 5));
+            Assert.False(RHAH_VisitorRules.BegFoodEligible(true, true, 4, 5));
+            Assert.False(RHAH_VisitorRules.BegFoodEligible(true, false, 7, 5));
+            Assert.Equal(-10, RHAH_VisitorRules.BegSlapMood);
+            Assert.Equal(-1, RHAH_VisitorRules.UnlimitedThoughtStack);
         }
 
         [Fact]

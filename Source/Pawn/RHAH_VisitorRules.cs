@@ -23,7 +23,9 @@ namespace HungerAndHavoc.Pawn
         internal const float DefaultMinGeneratedAge = 0f;
         internal const float DefaultMaxGeneratedAge = 50f;
         internal const float MaxGeneratedAge = 100f;
-        internal const float DefaultFedStayDays = 0.5f;
+        internal const int MinFedWanderHours = 1;
+        internal const int DefaultFedWanderHours = 12;
+        internal const int MaxFedWanderHours = 48;
         internal const float DefaultNoFoodWaitDays = 0.5f;
         internal const float MaxStayDays = 5f;
         internal const float MinStayFraction = 0.5f;
@@ -35,6 +37,30 @@ namespace HungerAndHavoc.Pawn
         internal const int DefaultHireDays = 60 * 4;
         internal const int MaxHireDays = 60 * 4 * 10;
         internal const int TicksPerDay = 60000;
+        internal const int TicksPerHour = 2500;
+        internal const int MinBegFailCooldownHours = 3;
+        internal const int DefaultBegFailCooldownHours = 3;
+        internal const int MaxBegFailCooldownHours = 12;
+        internal const float ToddlerBegAge = 1f + 47f / 60f;
+        internal const int BegFailMood = -5;
+        internal const int BegSuccessMood = 3;
+        internal const int BegSuccessStack = 1;
+        internal const int UnlimitedThoughtStack = -1;
+        internal const int MinBegSuccessChancePercent = 0;
+        internal const int DefaultBegSuccessChancePercent = 35;
+        internal const int MaxBegSuccessChancePercent = 100;
+        internal const int MinBegSocialBonusPercent = 0;
+        internal const int DefaultBegSocialBonusPercent = 3;
+        internal const int MaxBegSocialBonusPercent = 20;
+        internal const int MinBegSlapChancePercent = 0;
+        internal const int DefaultBegSlapChancePercent = 50;
+        internal const int MaxBegSlapChancePercent = 100;
+        internal const int BegSlapKnockoutHours = 3;
+        internal const int BegSlapMood = -10;
+        internal const float MinorBruiseSeverity = 4f;
+        internal const float BruiseSeverityStep = 4f;
+        internal const float MaxBruiseSeverity = 16f;
+        internal const float ModerateBleedSeverity = 8f;
         internal const float DefaultReliefScoreBonus = 0.1f;
         internal const float DefaultMinimumTemperature = -35f;
         internal const float DefaultMaximumTemperature = 70f;
@@ -372,14 +398,146 @@ namespace HungerAndHavoc.Pawn
         {
             return attitude == RHAH_Attitude.Hostile ? HostileGoodwill : NeutralGoodwill;
         }
-        internal static bool CanSelectBegTarget(
+        internal static int ClampBegFailCooldownHours(int hours)
+        {
+            if (hours < MinBegFailCooldownHours)
+            {
+                return MinBegFailCooldownHours;
+            }
+
+            return hours > MaxBegFailCooldownHours ? MaxBegFailCooldownHours : hours;
+        }
+
+        internal static int BegFailCooldownTicks(int hours)
+        {
+            return ClampBegFailCooldownHours(hours) * TicksPerHour;
+        }
+
+        internal static bool BegCooldownReady(int now, int untilTick)
+        {
+            return untilTick < 0 || now >= untilTick;
+        }
+
+        internal static int NextBegTick(int now, int hours)
+        {
+            if (now < 0)
+            {
+                now = 0;
+            }
+
+            return now + BegFailCooldownTicks(hours);
+        }
+
+        internal static float BegAgeFloor(bool toddlers)
+        {
+            return toddlers ? ToddlerBegAge : WalkingAge;
+        }
+
+
+        internal static int ClampPercent(int percent, int min, int max)
+        {
+            if (percent < min)
+            {
+                return min;
+            }
+
+            return percent > max ? max : percent;
+        }
+
+        internal static float BegSuccessChance(int basePercent, int socialLevel, int socialBonusPercent)
+        {
+            int level = socialLevel < 0 ? 0 : socialLevel;
+            float chance = ClampPercent(basePercent, MinBegSuccessChancePercent, MaxBegSuccessChancePercent) / 100f;
+            chance += level * ClampPercent(socialBonusPercent, MinBegSocialBonusPercent, MaxBegSocialBonusPercent) / 100f;
+            if (chance < 0f)
+            {
+                return 0f;
+            }
+
+            return chance > 1f ? 1f : chance;
+        }
+
+        internal static bool BegFoodEligible(bool ingestible, bool nutrition, int preferability, int awful)
+        {
+            return ingestible && nutrition && preferability >= awful;
+        }
+
+        internal static int ClampBegSlapChance(int percent)
+        {
+            if (percent < MinBegSlapChancePercent)
+            {
+                return MinBegSlapChancePercent;
+            }
+
+            return percent > MaxBegSlapChancePercent ? MaxBegSlapChancePercent : percent;
+        }
+
+        internal static bool RollsSlap(int percent, float roll)
+        {
+            int safe = ClampBegSlapChance(percent);
+            if (safe <= 0)
+            {
+                return false;
+            }
+
+            if (safe >= 100)
+            {
+                return true;
+            }
+
+            float safeRoll = float.IsNaN(roll) || float.IsInfinity(roll) || roll < 0f ? 1f : roll;
+            return safeRoll < safe / 100f;
+        }
+
+        // 0 新增轻度瘀伤 1 加重已有瘀伤 2 瘀伤已满改中度流血
+        internal static int SlapWoundKind(bool hasBruise, float bruiseSeverity)
+        {
+            if (!hasBruise)
+            {
+                return 0;
+            }
+
+            if (float.IsNaN(bruiseSeverity) || float.IsInfinity(bruiseSeverity))
+            {
+                return 0;
+            }
+
+            return bruiseSeverity >= MaxBruiseSeverity ? 2 : 1;
+        }
+
+        internal static float NextBruiseSeverity(float current)
+        {
+            if (float.IsNaN(current) || float.IsInfinity(current) || current < MinorBruiseSeverity)
+            {
+                return MinorBruiseSeverity;
+            }
+
+            float next = current + BruiseSeverityStep;
+            return next > MaxBruiseSeverity ? MaxBruiseSeverity : next;
+        }
+        // 睡着、医疗床、倒地和还不能行动的幼童不接受乞讨
+        internal static bool CanReceiveBeg(
             bool dead,
             bool downed,
             bool forbidden,
+            bool sleeping,
+            bool medicalBed,
             bool reachable,
-            bool reservable)
+            bool reservable,
+            float age,
+            bool toddlers)
         {
-            return !dead && !downed && !forbidden && reachable && reservable;
+            if (dead || downed || forbidden || sleeping || medicalBed || !reachable || !reservable)
+            {
+                return false;
+            }
+
+            if (float.IsNaN(age) || float.IsInfinity(age))
+            {
+                return false;
+            }
+
+            return age >= BegAgeFloor(toddlers);
         }
 
 
@@ -422,12 +580,24 @@ namespace HungerAndHavoc.Pawn
             return bonus > 1f ? 1f : bonus;
         }
 
-        internal static int FedStayTicks(float days, float roll)
+        internal static int ClampFedWanderHours(int hours)
         {
-            float safeDays = ClampDays(days, DefaultFedStayDays);
-            float safeRoll = roll < 0f || float.IsNaN(roll) ? MinStayFraction : roll > 1f ? 1f : roll;
-            float fraction = MinStayFraction + (MaxStayFraction - MinStayFraction) * safeRoll;
-            return (int)(safeDays * TicksPerDay * fraction);
+            if (hours < MinFedWanderHours)
+            {
+                return MinFedWanderHours;
+            }
+
+            return hours > MaxFedWanderHours ? MaxFedWanderHours : hours;
+        }
+
+        internal static int FedWanderTicks(bool wander, int hours)
+        {
+            if (!wander)
+            {
+                return 0;
+            }
+
+            return ClampFedWanderHours(hours) * TicksPerHour;
         }
 
         internal static int WaitTicks(bool wait, float days)

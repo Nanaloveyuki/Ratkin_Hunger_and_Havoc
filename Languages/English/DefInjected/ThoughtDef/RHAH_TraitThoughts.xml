@@ -90,4 +90,10 @@
   <RHAH_Thought_FamilyHere.description>The child is still here, and not grown yet.</RHAH_Thought_FamilyHere.description>
   <RHAH_Thought_Regret.label>if that day</RHAH_Thought_Regret.label>
   <RHAH_Thought_Regret.description>The old place is still there. The child is not.</RHAH_Thought_Regret.description>
+  <RHAH_Thought_BeggingSucceeded.stages.0.label>someone gave me food</RHAH_Thought_BeggingSucceeded.stages.0.label>
+  <RHAH_Thought_BeggingSucceeded.stages.0.description>At last, something I can eat. I can last another day.</RHAH_Thought_BeggingSucceeded.stages.0.description>
+  <RHAH_Thought_BeggingRejected.stages.0.label>turned away</RHAH_Thought_BeggingRejected.stages.0.label>
+  <RHAH_Thought_BeggingRejected.stages.0.description>I only wanted something to eat. They sent me off.</RHAH_Thought_BeggingRejected.stages.0.description>
+  <RHAH_Thought_BeggingSlapped.stages.0.label>slapped</RHAH_Thought_BeggingSlapped.stages.0.label>
+  <RHAH_Thought_BeggingSlapped.stages.0.description>They slapped me. My face still stings.</RHAH_Thought_BeggingSlapped.stages.0.description>
 </LanguageData>

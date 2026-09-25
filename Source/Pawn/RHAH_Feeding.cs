@@ -52,9 +52,10 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            float days = settings == null ? RHAH_VisitorRules.DefaultFedStayDays : settings.fedStayDays;
+            bool wander = settings == null || settings.fedWanderEnabled;
+            int hours = settings == null ? RHAH_VisitorRules.DefaultFedWanderHours : settings.fedWanderHours;
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            comp.SetLeaveAfter(now + RHAH_VisitorRules.FedStayTicks(days, Rand.Value));
+            comp.SetLeaveAfter(now + RHAH_VisitorRules.FedWanderTicks(wander, hours));
         }
 
         static void TryAddRefeeding(Verse.Pawn pawn)

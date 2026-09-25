@@ -66,13 +66,13 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 
 访客 AI 在 `Source/Pawn`，命名空间 `HungerAndHavoc.Pawn`。Identity 只管标记和闸门数据，不发 Job。
 
-有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。寻食 duty 在没有进食、乞讨、偷窃、啃咬或等待 Job 时，在等待点附近游荡，不走向地图出口。`ExitMap` 只在生命周期已经是 `Leaving` 时放行；吃饱离开仍问 `LeaveAfterFed`。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
+有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。寻食 duty 在没有进食、乞讨、偷窃、啃咬或等待 Job 时，在等待点附近游荡，不走向地图出口。`ExitMap` 只在生命周期已经是 `Leaving` 时放行；吃饱离开仍问 `LeaveAfterFed`。`fedWanderEnabled` 开启时先闲逛 `fedWanderHours` 小时再走，默认 12，范围 1 到 48。关闭时离开时刻就是吃饱这一刻，下一轮离场直接走向出口。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
 
 不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 且能自己走到出口的成年照护者带出。`Carry` 默认只放行非幼年角色；幼年角色可以 `Leash`，但不能发出携带 Job。断粮等待到达 `foodWaitUntilTick` 后，仍未进食的活跃访客离场，不再停在寻食游荡。
 
 招募、短工和长工仍保留来源标记，但停留期间不发乞讨、偷窃、啃咬、赈灾取食、等待和本模组离场。期限结束且不再倒地后，拒绝工作、休息、娱乐和任何非玩家强制任务，只保留被动近战反击、逃跑和进食。倒地期间计时暂停，这些限制先不生效。
 
-JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规则只在 `RHAH_PawnDefaults` 和闸门覆盖里。吃饱后不再乞讨、偷窃、啃咬或由本模组安排进食。啃树皮和墙只从原版饥饿觅食补上：食物比例低于 5%、当前没有 Job，并且 40 格内有可预订、可走到的树、植物或实心墙。寻食 duty 不主动发啃食。啃完只加营养和伤口，不把生命周期改成 `Fed`，也不因此离场。
+乞讨不选睡着、躺在医疗床上、倒地、禁止接触，或还不能自己行动的殖民者。无幼童模组时年龄不足 4 岁，有幼童模组时不足 1 岁 47 天。当前目标不合适就换下一个。全部失败后闲逛，`begFailCooldownHours` 小时内不再乞讨，默认 3，范围 3 到 12。成功要同时掷中几率并且 `begAutoGiveEnabled` 开启。默认关闭。开启后从对方背包拿走一份 `disabledBegFoodDefNames` 允许的正餐，营养高的优先，放进乞讨者背包，放不下就丢在脚下。关掉、背包没有允许的食物，或同一人已经被乞讨过，都不算成功，继续换人。基础成功率 `begSuccessChancePercent` 默认 35，范围 0 到 100，每级社交再加 `begSocialBonusPercent`，默认 3，范围 0 到 20，合计不超过 100。成功给乞讨者 `RHAH_Thought_BeggingSucceeded`，心情 +3，不叠加。失败给乞讨者 `RHAH_Thought_BeggingRejected`，心情 -5，可无限叠加。同一殖民者第二次及以后被乞讨时，按 `begSlapChancePercent` 抽一巴掌，默认 50。抽中则昏迷 3 小时，头部没有瘀伤时加轻度瘀伤，已有则加重，瘀伤已到上限则头部中度流血，并给乞讨者 `RHAH_Thought_BeggingSlapped`，心情 -10，可无限叠加。重复乞讨不再算成功。JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规则只在 `RHAH_PawnDefaults` 和闸门覆盖里。吃饱后不再乞讨、偷窃、啃咬或由本模组安排进食。啃树皮和墙只从原版饥饿觅食补上：食物比例低于 5%、当前没有 Job，并且 40 格内有可预订、可走到的树、植物或实心墙。寻食 duty 不主动发啃食。啃完只加营养和伤口，不把生命周期改成 `Fed`，也不因此离场。
 
 `ReleaseToColony` 必须拆 Lord、清 duty、停访客 JobGiver。标记 Hediff 保留。
 

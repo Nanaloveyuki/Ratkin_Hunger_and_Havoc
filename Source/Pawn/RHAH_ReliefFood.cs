@@ -316,6 +316,49 @@ namespace HungerAndHavoc.Pawn
             return settings == null || settings.IsGiveFoodEnabled(def.defName);
         }
 
+        internal static bool BegFoodAllowed(ThingDef def)
+        {
+            if (!BegFoodCandidate(def))
+            {
+                return false;
+            }
+
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            return settings == null || settings.IsBegFoodEnabled(def.defName);
+        }
+
+        internal static bool BegFoodCandidate(ThingDef def)
+        {
+            if (def == null || def.ingestible == null)
+            {
+                return false;
+            }
+
+            return RHAH_VisitorRules.BegFoodEligible(
+                def.IsIngestible,
+                def.IsNutritionGivingIngestible,
+                (int)def.ingestible.preferability,
+                (int)FoodPreferability.MealAwful);
+        }
+
+        internal static void AppendBegFoods(List<ThingDef> result)
+        {
+            if (result == null)
+            {
+                return;
+            }
+
+            List<ThingDef> foods = new List<ThingDef>();
+            AppendCandidateFoods(foods);
+            for (int i = 0; i < foods.Count; i++)
+            {
+                if (BegFoodCandidate(foods[i]))
+                {
+                    result.Add(foods[i]);
+                }
+            }
+        }
+
         internal static string GroupKey(int mode, ThingDef food)
         {
             int safe = mode < 0 || mode > 2 ? 0 : mode;

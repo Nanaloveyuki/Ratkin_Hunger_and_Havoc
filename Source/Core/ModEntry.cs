@@ -63,6 +63,10 @@ namespace HungerAndHavoc.Core
                 Settings.leaveAfterFed = leave;
                 Settings.InvalidateReliefSearch();
             }
+            listing.CheckboxLabeled("RHAH_Settings_FedWander".Translate(), ref Settings.fedWanderEnabled,
+                "RHAH_Settings_FedWander_Tooltip".Translate());
+            listing.Label("RHAH_Settings_FedWanderHours".Translate(Settings.fedWanderHours));
+            Settings.fedWanderHours = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.fedWanderHours, Pawn.RHAH_VisitorRules.MinFedWanderHours, Pawn.RHAH_VisitorRules.MaxFedWanderHours));
             listing.CheckboxLabeled("RHAH_Settings_AidRequests".Translate(), ref Settings.aidRequestsEnabled,
                 "RHAH_Settings_AidRequests_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_IntelTrades".Translate(), ref Settings.intelTradesEnabled,
@@ -85,6 +89,16 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_PrisonerScavenge_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_TailBite".Translate(), ref Settings.tailBiteEnabled,
                 "RHAH_Settings_TailBite_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_BegAutoGive".Translate(), ref Settings.begAutoGiveEnabled,
+                "RHAH_Settings_BegAutoGive_Tooltip".Translate());
+            listing.Label("RHAH_Settings_BegSuccessChance".Translate(Settings.begSuccessChancePercent));
+            Settings.begSuccessChancePercent = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.begSuccessChancePercent, Pawn.RHAH_VisitorRules.MinBegSuccessChancePercent, Pawn.RHAH_VisitorRules.MaxBegSuccessChancePercent));
+            listing.Label("RHAH_Settings_BegSocialBonus".Translate(Settings.begSocialBonusPercent));
+            Settings.begSocialBonusPercent = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.begSocialBonusPercent, Pawn.RHAH_VisitorRules.MinBegSocialBonusPercent, Pawn.RHAH_VisitorRules.MaxBegSocialBonusPercent));
+            listing.Label("RHAH_Settings_BegFailCooldown".Translate(Settings.begFailCooldownHours));
+            Settings.begFailCooldownHours = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.begFailCooldownHours, Pawn.RHAH_VisitorRules.MinBegFailCooldownHours, Pawn.RHAH_VisitorRules.MaxBegFailCooldownHours));
+            listing.Label("RHAH_Settings_BegSlapChance".Translate(Settings.begSlapChancePercent));
+            Settings.begSlapChancePercent = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.begSlapChancePercent, Pawn.RHAH_VisitorRules.MinBegSlapChancePercent, Pawn.RHAH_VisitorRules.MaxBegSlapChancePercent));
             listing.CheckboxLabeled("RHAH_Settings_Broadcast".Translate(), ref Settings.broadcastEnabled,
                 "RHAH_Settings_Broadcast_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_Stagger".Translate(), ref Settings.staggerGeneration,

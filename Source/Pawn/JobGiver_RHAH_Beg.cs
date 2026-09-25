@@ -37,11 +37,19 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            Verse.Pawn colonist = FindClosestColonist(pawn);
-            if (colonist == null)
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (!RHAH_Begging.CanBegAgain(pawn, now))
             {
                 return null;
             }
+
+            Verse.Pawn colonist = FindClosestColonist(pawn);
+            if (colonist == null)
+            {
+                RHAH_Begging.StartFailCooldown(pawn, now, RHAH_Begging.CooldownHours());
+                return null;
+            }
+
 
             return JobMaker.MakeJob(RHAH_DefOf.RHAH_Beg, colonist);
         }
@@ -59,12 +67,7 @@ namespace HungerAndHavoc.Pawn
 
                 bool reachable = pawn.CanReach(colonist, PathEndMode.Touch, Danger.Deadly);
                 bool reservable = pawn.CanReserve(colonist, 1, -1, null, false);
-                if (!RHAH_VisitorRules.CanSelectBegTarget(
-                    colonist.Dead,
-                    colonist.Downed,
-                    colonist.IsForbidden(pawn),
-                    reachable,
-                    reservable))
+                if (!RHAH_Begging.CanReceive(pawn, colonist, reachable, reservable))
                 {
                     continue;
                 }

@@ -98,8 +98,14 @@ namespace HungerAndHavoc.Tests
             string giver = ReadPawn("JobGiver_RHAH_Beg.cs");
             string driver = ReadPawn("JobDriver_RHAH_Beg.cs");
             Assert.Contains("CanReserve(colonist, 1, -1, null, false)", giver);
-            Assert.Contains("CanSelectBegTarget", giver);
+            Assert.Contains("CanReceive", giver);
+            Assert.Contains("StartFailCooldown", giver);
             Assert.Contains("Reserve(job.GetTarget(TargetIndex.A), job, 1, -1, null, false)", driver);
+            Assert.Contains("TrySlap", driver);
+            Assert.Contains("TryTakeFood", driver);
+            Assert.Contains("BegSuccessChance", driver);
+            Assert.Contains("RememberBeg", driver);
+            Assert.Contains("JobDefOf.GotoWander", driver);
         }
 
         [Fact]

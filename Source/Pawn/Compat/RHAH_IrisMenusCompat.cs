@@ -78,13 +78,16 @@ namespace HungerAndHavoc.Pawn.Compat
         readonly Dictionary<string, string> weightBuffers = new Dictionary<string, string>();
         string foodQuery = string.Empty;
         string giveFoodQuery = string.Empty;
+        string begFoodQuery = string.Empty;
         string apparelQuery = string.Empty;
         string pendingApparelGroup;
         readonly HashSet<string> collapsedApparelGroups = new HashSet<string>();
         string pendingGiveFoodGroup;
+        string pendingBegFoodGroup;
         string pendingFoodMod;
         readonly HashSet<string> collapsedFoodMods = new HashSet<string>();
         readonly HashSet<string> collapsedGiveFoodGroups = new HashSet<string>();
+        readonly HashSet<string> collapsedBegFoodGroups = new HashSet<string>();
         string contentQuery = string.Empty;
         string pendingContentGroup;
         readonly HashSet<string> collapsedContentGroups = new HashSet<string>();
@@ -653,6 +656,7 @@ namespace HungerAndHavoc.Pawn.Compat
             DrawVisitorNumbers(list, settings);
             DrawFoodList(list, settings);
             DrawGiveFoodList(list, settings);
+            DrawBegFoodList(list, settings);
         }
         void DrawVisitors(Listing_Standard list)
         {
@@ -665,6 +669,19 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             MenuControls.Checkbox(list, "RHAH_Settings_Begging".Translate(), ref settings.beggingEnabled, "RHAH_Settings_Begging_Tooltip".Translate());
+            MenuControls.Checkbox(list, "RHAH_Settings_BegAutoGive".Translate(), ref settings.begAutoGiveEnabled, "RHAH_Settings_BegAutoGive_Tooltip".Translate());
+            string begChance = Buffer(weightBuffers, "beg-chance", settings.begSuccessChancePercent, "0");
+            settings.begSuccessChancePercent = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_BegSuccessChance".Translate(settings.begSuccessChancePercent), settings.begSuccessChancePercent, ref begChance, 0f, 100f, "0", "RHAH_Settings_BegSuccessChance_Tooltip".Translate());
+            weightBuffers["beg-chance"] = begChance;
+            string begSocial = Buffer(weightBuffers, "beg-social", settings.begSocialBonusPercent, "0");
+            settings.begSocialBonusPercent = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_BegSocialBonus".Translate(settings.begSocialBonusPercent), settings.begSocialBonusPercent, ref begSocial, 0f, 20f, "0", "RHAH_Settings_BegSocialBonus_Tooltip".Translate());
+            weightBuffers["beg-social"] = begSocial;
+            string begHours = Buffer(weightBuffers, "beg-hours", settings.begFailCooldownHours, "0");
+            settings.begFailCooldownHours = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_BegFailCooldown".Translate(settings.begFailCooldownHours), settings.begFailCooldownHours, ref begHours, 3f, 12f, "0", "RHAH_Settings_BegFailCooldown_Tooltip".Translate());
+            weightBuffers["beg-hours"] = begHours;
+            string begSlap = Buffer(weightBuffers, "beg-slap", settings.begSlapChancePercent, "0");
+            settings.begSlapChancePercent = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_BegSlapChance".Translate(settings.begSlapChancePercent), settings.begSlapChancePercent, ref begSlap, 0f, 100f, "0", "RHAH_Settings_BegSlapChance_Tooltip".Translate());
+            weightBuffers["beg-slap"] = begSlap;
             MenuControls.Checkbox(list, "RHAH_Settings_Stealing".Translate(), ref settings.stealingEnabled, "RHAH_Settings_Stealing_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Settings_Fighting".Translate(), ref settings.fightingEnabled, "RHAH_Settings_Fighting_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Settings_Gnawing".Translate(), ref settings.gnawingEnabled, "RHAH_Settings_Gnawing_Tooltip".Translate());
@@ -684,6 +701,7 @@ namespace HungerAndHavoc.Pawn.Compat
         static IEnumerable<MenuSearchEntry> SearchVisitors()
         {
             yield return Entry("visitors-beg", "RHAH_Settings_Begging");
+            yield return Entry("visitors-beg-give", "RHAH_Settings_BegAutoGive");
             yield return Entry("visitors-broadcast", "RHAH_Settings_Broadcast");
             yield return Entry("visitors-camp", "RHAH_Settings_RefugeeCamp");
         }
@@ -757,9 +775,10 @@ namespace HungerAndHavoc.Pawn.Compat
             float percent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_ReliefScore".Translate((settings.reliefFoodScoreBonus * 100f).ToString("0")), settings.reliefFoodScoreBonus * 100f, ref bonus, 0f, 100f, "0", "RHAH_Settings_ReliefScore_Tooltip".Translate());
             settings.reliefFoodScoreBonus = percent / 100f;
             weightBuffers["relief-bonus"] = bonus;
-            string stay = Buffer(weightBuffers, "fed-stay", settings.fedStayDays, "0.00");
-            settings.fedStayDays = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FedStay".Translate(settings.fedStayDays.ToString("0.00")), settings.fedStayDays, ref stay, 0f, 5f, "0.00", "RHAH_Settings_FedStay_Tooltip".Translate());
-            weightBuffers["fed-stay"] = stay;
+            MenuControls.Checkbox(list, "RHAH_Settings_FedWander".Translate(), ref settings.fedWanderEnabled, "RHAH_Settings_FedWander_Tooltip".Translate());
+            string stay = Buffer(weightBuffers, "fed-wander", settings.fedWanderHours, "0");
+            settings.fedWanderHours = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FedWanderHours".Translate(settings.fedWanderHours), settings.fedWanderHours, ref stay, 1f, 48f, "0", "RHAH_Settings_FedWanderHours_Tooltip".Translate());
+            weightBuffers["fed-wander"] = stay;
             MenuControls.Checkbox(list, "RHAH_Settings_WaitFood".Translate(), ref settings.waitWhenNoFood, "RHAH_Settings_WaitFood_Tooltip".Translate());
             string wait = Buffer(weightBuffers, "food-wait", settings.noFoodWaitDays, "0.00");
             settings.noFoodWaitDays = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FoodWait".Translate(settings.noFoodWaitDays.ToString("0.00")), settings.noFoodWaitDays, ref wait, 0f, 5f, "0.00", "RHAH_Settings_FoodWait_Tooltip".Translate());
@@ -960,6 +979,118 @@ namespace HungerAndHavoc.Pawn.Compat
             }
         }
 
+
+        void DrawBegFoodList(Listing_Standard list, RHAH_Settings settings)
+        {
+            MenuControls.Anchor(list, "beg-foods", 120f);
+            RHAH_IrisMenusWidgets.Quote(list, "beg-foods-note", "RHAH_Settings_BegFoods_Quote".Translate());
+            DrawModeSelect(list, "beg-food-sort", "RHAH_Settings_BegFoods_Sort", settings.begFoodListMode, 3, mode => settings.begFoodListMode = mode);
+            Rect buttons = list.GetRect(28f);
+            if (Widgets.ButtonText(new Rect(buttons.x, buttons.y, 140f, 26f),
+                "RHAH_Settings_BegFoods_All".Translate()))
+            {
+                settings.SetAllBegFood(true, null);
+            }
+
+            if (Widgets.ButtonText(new Rect(buttons.x + 148f, buttons.y, 140f, 26f),
+                "RHAH_Settings_BegFoods_None".Translate()))
+            {
+                List<ThingDef> foods = new List<ThingDef>();
+                RHAH_ReliefFood.AppendBegFoods(foods);
+                List<string> names = new List<string>(foods.Count);
+                for (int i = 0; i < foods.Count; i++)
+                {
+                    names.Add(foods[i].defName);
+                }
+
+                settings.SetAllBegFood(false, names);
+            }
+
+            list.Gap(4f);
+            Rect search = list.GetRect(28f);
+            begFoodQuery = Widgets.TextField(search, begFoodQuery ?? string.Empty);
+            if (string.IsNullOrEmpty(begFoodQuery))
+            {
+                GUI.color = Color.gray;
+                Widgets.Label(new Rect(search.x + 6f, search.y, search.width - 8f, search.height),
+                    "RHAH_Settings_BegFoods_Search".Translate());
+                GUI.color = Color.white;
+            }
+
+            list.Gap(4f);
+            List<ThingDef> listed = new List<ThingDef>();
+            RHAH_ReliefFood.AppendBegFoods(listed);
+            List<List<ThingDef>> groups = RHAH_ReliefFood.GroupFoods(settings.begFoodListMode, listed);
+            bool searching = !string.IsNullOrEmpty(begFoodQuery);
+            bool any = false;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                List<ThingDef> matched = MatchedBegFoods(groups[i]);
+                if (matched.Count == 0)
+                {
+                    continue;
+                }
+
+                any = true;
+                string key = RHAH_ReliefFood.GroupKey(settings.begFoodListMode, groups[i][0]);
+                if (pendingBegFoodGroup != null && string.Equals(pendingBegFoodGroup, key, StringComparison.Ordinal))
+                {
+                    collapsedBegFoodGroups.Remove(key);
+                    pendingBegFoodGroup = null;
+                }
+
+                bool open = searching || !collapsedBegFoodGroups.Contains(key);
+                string title = GiveFoodTitle(settings.begFoodListMode, key) + "  " + matched.Count;
+                MenuControls.Anchor(list, "beg-food-group-" + key, 28f);
+                if (DrawFoodFold(list, title, open))
+                {
+                    if (open)
+                    {
+                        collapsedBegFoodGroups.Add(key);
+                    }
+                    else
+                    {
+                        collapsedBegFoodGroups.Remove(key);
+                    }
+
+                    open = !open;
+                }
+
+                if (!open)
+                {
+                    continue;
+                }
+
+                for (int foodIndex = 0; foodIndex < matched.Count; foodIndex++)
+                {
+                    ThingDef food = matched[foodIndex];
+                    bool enabled = settings.IsBegFoodEnabled(food.defName);
+                    MenuControls.Anchor(list, "beg-food-" + food.defName);
+                    MenuControls.Checkbox(list, food.LabelCap, ref enabled);
+                    settings.SetBegFoodEnabled(food.defName, enabled);
+                }
+            }
+
+            if (!any)
+            {
+                Empty(list, "RHAH_Settings_BegFoods_Empty");
+            }
+        }
+
+        List<ThingDef> MatchedBegFoods(List<ThingDef> foods)
+        {
+            List<ThingDef> matched = new List<ThingDef>();
+            for (int i = 0; i < foods.Count; i++)
+            {
+                if (RHAH_ReliefFood.MatchesQuery(foods[i], begFoodQuery))
+                {
+                    matched.Add(foods[i]);
+                }
+            }
+
+            return matched;
+        }
+
         List<ThingDef> MatchedGiveFoods(List<ThingDef> foods)
         {
             List<ThingDef> matched = new List<ThingDef>();
@@ -1010,6 +1141,7 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("relief-outside", "RHAH_Settings_EatOutsideRelief");
             yield return Entry("relief-foods", "RHAH_Settings_ReliefFoods");
             yield return Entry("give-foods", "RHAH_Settings_GiveFoods");
+            yield return Entry("beg-foods", "RHAH_Settings_BegFoods");
             yield return Entry("give-food-sort", "RHAH_Settings_GiveFoods_Sort");
             List<ThingDef> foods = new List<ThingDef>();
             RHAH_ReliefFood.AppendCandidateFoods(foods);
