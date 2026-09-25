@@ -27,8 +27,8 @@ namespace HungerAndHavoc.Tests
             Assert.Equal((float?)0f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, null, 0f, 10f, 0f, true));
             Assert.Equal((float?)0f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.BeggarMother, null, 0f, 50f, 0f, true));
             Assert.Equal((float?)28f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, 28f, 0f, 10f, 0f, true));
-            Assert.Equal((float?)3.78f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, null, 20f, 40f, 0.2f, true));
-            Assert.Equal(RHAH_VisitorRules.RatEggMaxAge, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.BeggarChild, null, 20f, 40f, 1f, false));
+            Assert.Equal(24f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, null, 20f, 40f, 0.2f, true));
+            Assert.Equal((float?)3.78f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, null, 20f, 40f, 0.2f, false));
         }
 
         [Fact]

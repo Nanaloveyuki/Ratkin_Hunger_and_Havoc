@@ -161,12 +161,12 @@ namespace HungerAndHavoc.Pawn
             float roll,
             bool youngFollowsRange)
         {
-            if (KeepsAge(role, fixedAge.HasValue, youngFollowsRange))
+            if (fixedAge.HasValue)
             {
                 return fixedAge;
             }
 
-            if (IsYoungRole(role))
+            if (IsYoungRole(role) && !youngFollowsRange)
             {
                 return YoungAge(role, roll);
             }

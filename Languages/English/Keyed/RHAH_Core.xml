@@ -27,11 +27,11 @@
   <RHAH_Settings_FoodWait_Tooltip>How long a visitor waits after finding nothing to eat. Range 0 to 5 days, default half a day.</RHAH_Settings_FoodWait_Tooltip>
   <RHAH_Settings_MinAge>Minimum arrival age: {0}</RHAH_Settings_MinAge>
   <RHAH_Settings_MaxAge>Maximum arrival age: {0}</RHAH_Settings_MaxAge>
-  <RHAH_Settings_Age_Tooltip>Ordinary visitors fall inside this range. 0 to 100, default 0 to 50. Mothers keep the age the event asks for. Ratkin young stay outside it unless the switch below is on.</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_Age_Tooltip>Ordinary visitors fall inside this range. 0 to 100, default 0 to 50. Mothers keep the age the event asks for. Ratkin young keep their own ages unless the switch below is on.</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_YoungAge>Ratkin young use this age range</RHAH_Settings_YoungAge>
-  <RHAH_Settings_YoungAge_Tooltip>With this on, ratkin young also fall inside the range above. Mothers keep the event age. People already here stay as they are.</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_YoungAge_Tooltip>With this on, ratkin young also fall inside the range above. Off, beggar young are 1 day to 2.9 years, and other young are 3 to 6.9. Mothers keep the event age. People already here stay as they are.</RHAH_Settings_YoungAge_Tooltip>
   <RHAH_Settings_ImmobileBabies>Allow babies who cannot walk</RHAH_Settings_ImmobileBabies>
-  <RHAH_Settings_ImmobileBabies_Tooltip>Without a toddler mod, vanilla babies under 3 stay down. An adult has to carry them out. With this off, ratkin young are at least 3.</RHAH_Settings_ImmobileBabies_Tooltip>
+  <RHAH_Settings_ImmobileBabies_Tooltip>Without a toddler mod, ratkin babies under 4 stay down. An adult has to carry them out. With this off, ratkin young are at least 4.</RHAH_Settings_ImmobileBabies_Tooltip>
   <RHAH_Settings_ImmobileBabies_Toddlers>Toddlers is active. Children under 3 can move. This switch no longer raises their age.</RHAH_Settings_ImmobileBabies_Toddlers>
   <RHAH_Settings_Gender>Gender</RHAH_Settings_Gender>
   <RHAH_Settings_Gender_0>Random</RHAH_Settings_Gender_0>
@@ -41,9 +41,9 @@
   <RHAH_Settings_FemaleShare>Female share: {0}%</RHAH_Settings_FemaleShare>
   <RHAH_Settings_FemaleShare_Tooltip>Used only by share. 0 is all male. 100 is all female. Someone whose gender the event already set keeps it.</RHAH_Settings_FemaleShare_Tooltip>
   <RHAH_Settings_Apparel>Clothing</RHAH_Settings_Apparel>
-  <RHAH_Settings_Apparel_0>Ratkin clothing</RHAH_Settings_Apparel_0>
-  <RHAH_Settings_Apparel_1>Vanilla clothing</RHAH_Settings_Apparel_1>
-  <RHAH_Settings_Apparel_2>Cold first</RHAH_Settings_Apparel_2>
+  <RHAH_Settings_Apparel_0>Plain clothes</RHAH_Settings_Apparel_0>
+  <RHAH_Settings_Apparel_1>Plain clothes</RHAH_Settings_Apparel_1>
+  <RHAH_Settings_Apparel_2>Plain clothes, then a temperature wrap</RHAH_Settings_Apparel_2>
   <RHAH_Settings_Apparel_3>No clothing</RHAH_Settings_Apparel_3>
   <RHAH_Settings_MaxTraits>Mod traits: {0}</RHAH_Settings_MaxTraits>
   <RHAH_Settings_MaxTraits_Tooltip>A new visitor gains at most this many mod traits. 0 draws none. Range 0 to 3. People already here keep theirs.</RHAH_Settings_MaxTraits_Tooltip>

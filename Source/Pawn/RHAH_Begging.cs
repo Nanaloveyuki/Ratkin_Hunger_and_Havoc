@@ -5,7 +5,7 @@ using Verse;
 
 namespace HungerAndHavoc.Pawn
 {
-    // 乞讨冷却只活在本局 不进存档
+    // 乞讨冷却和已讨对象存在档里 读档后同一人不能再算第一次
     internal static class RHAH_Begging
     {
         static readonly Dictionary<int, int> NextBegTickByPawnId = new Dictionary<int, int>();
@@ -15,6 +15,41 @@ namespace HungerAndHavoc.Pawn
         {
             NextBegTickByPawnId.Clear();
             BeggedColonists.Clear();
+            Store();
+        }
+
+        internal static void Load(List<int> pawnIds, List<int> ticks, List<int> beggarIds, List<int> colonistIds)
+        {
+            NextBegTickByPawnId.Clear();
+            BeggedColonists.Clear();
+            int cooldown = pawnIds == null || ticks == null ? 0 : pawnIds.Count < ticks.Count ? pawnIds.Count : ticks.Count;
+            for (int i = 0; i < cooldown; i++)
+            {
+                if (ticks[i] >= 0)
+                {
+                    NextBegTickByPawnId[pawnIds[i]] = ticks[i];
+                }
+            }
+
+            int begged = beggarIds == null || colonistIds == null
+                ? 0
+                : beggarIds.Count < colonistIds.Count ? beggarIds.Count : colonistIds.Count;
+            for (int i = 0; i < begged; i++)
+            {
+                HashSet<int> targets;
+                if (!BeggedColonists.TryGetValue(beggarIds[i], out targets))
+                {
+                    targets = new HashSet<int>();
+                    BeggedColonists[beggarIds[i]] = targets;
+                }
+
+                targets.Add(colonistIds[i]);
+            }
+        }
+
+        static void Store()
+        {
+            Current.Game?.GetComponent<GameComponent_RHAH_Game>()?.StoreBegging(NextBegTickByPawnId, BeggedColonists);
         }
 
         internal static bool CanBegAgain(Verse.Pawn pawn, int now)
@@ -33,6 +68,7 @@ namespace HungerAndHavoc.Pawn
             if (RHAH_VisitorRules.BegCooldownReady(now, until))
             {
                 NextBegTickByPawnId.Remove(pawn.thingIDNumber);
+                Store();
                 return true;
             }
 
@@ -47,6 +83,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             NextBegTickByPawnId[pawn.thingIDNumber] = RHAH_VisitorRules.NextBegTick(now, hours);
+            Store();
         }
 
         internal static int CooldownHours()
@@ -120,6 +157,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             targets.Add(colonist.thingIDNumber);
+            Store();
         }
 
         internal static bool ShouldSlap(Verse.Pawn beggar, Verse.Pawn colonist, float roll)

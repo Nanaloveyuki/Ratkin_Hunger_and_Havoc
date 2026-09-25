@@ -27,11 +27,11 @@
   <RHAH_Settings_FoodWait_Tooltip>找不到食物时最多等这么久。范围 0 到 5 天，默认半天。</RHAH_Settings_FoodWait_Tooltip>
   <RHAH_Settings_MinAge>最低到来年龄：{0}</RHAH_Settings_MinAge>
   <RHAH_Settings_MaxAge>最高到来年龄：{0}</RHAH_Settings_MaxAge>
-  <RHAH_Settings_Age_Tooltip>普通来客的年龄落在这个区间。0 到 100，默认 0 到 50。母亲仍按事件来。幼年鼠族默认不跟这个区间，除非打开下面的开关。</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_Age_Tooltip>普通来客的年龄落在这个区间。0 到 100，默认 0 到 50。母亲仍按事件来。幼年鼠族默认用自己的年龄，除非打开下面的开关。</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_YoungAge>幼年鼠族使用这个年龄区间</RHAH_Settings_YoungAge>
-  <RHAH_Settings_YoungAge_Tooltip>打开后，幼年鼠族也落在上面的年龄里。母亲仍按事件来。已经在场的人不变。</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_YoungAge_Tooltip>打开后，幼年鼠族也落在上面的年龄里。关闭时，乞讨幼崽是 1 天到 2.9 岁，其它幼年是 3 到 6.9 岁。母亲仍按事件来。已经在场的人不变。</RHAH_Settings_YoungAge_Tooltip>
   <RHAH_Settings_ImmobileBabies>允许不能走路的婴幼到来</RHAH_Settings_ImmobileBabies>
-  <RHAH_Settings_ImmobileBabies_Tooltip>没有幼童模组时，3 岁以下的原版婴幼会一直躺着，离场要由大人抱走。关闭后，幼年鼠族至少 3 岁。</RHAH_Settings_ImmobileBabies_Tooltip>
+  <RHAH_Settings_ImmobileBabies_Tooltip>没有幼童模组时，4 岁以下的鼠族婴幼会一直躺着，离场要由大人抱走。关闭后，幼年鼠族至少 4 岁。</RHAH_Settings_ImmobileBabies_Tooltip>
   <RHAH_Settings_ImmobileBabies_Toddlers>幼童模组已启用。3 岁以下可以自己移动。这个开关不再抬高年龄。</RHAH_Settings_ImmobileBabies_Toddlers>
   <RHAH_Settings_Gender>性别</RHAH_Settings_Gender>
   <RHAH_Settings_Gender_0>随机</RHAH_Settings_Gender_0>
@@ -41,9 +41,9 @@
   <RHAH_Settings_FemaleShare>女性比例：{0}%</RHAH_Settings_FemaleShare>
   <RHAH_Settings_FemaleShare_Tooltip>只在按比例时生效。0 全是男性，100 全是女性。事件已经指定性别的人不变。</RHAH_Settings_FemaleShare_Tooltip>
   <RHAH_Settings_Apparel>衣物</RHAH_Settings_Apparel>
-  <RHAH_Settings_Apparel_0>鼠族衣着</RHAH_Settings_Apparel_0>
-  <RHAH_Settings_Apparel_1>原版衣着</RHAH_Settings_Apparel_1>
-  <RHAH_Settings_Apparel_2>防寒优先</RHAH_Settings_Apparel_2>
+  <RHAH_Settings_Apparel_0>平民衣装</RHAH_Settings_Apparel_0>
+  <RHAH_Settings_Apparel_1>平民衣装</RHAH_Settings_Apparel_1>
+  <RHAH_Settings_Apparel_2>平民衣装，再加温度衣</RHAH_Settings_Apparel_2>
   <RHAH_Settings_Apparel_3>不穿衣</RHAH_Settings_Apparel_3>
   <RHAH_Settings_MaxTraits>本模组特质上限：{0}</RHAH_Settings_MaxTraits>
   <RHAH_Settings_MaxTraits_Tooltip>新来客最多获得这么多条本模组特质。0 不抽。范围 0 到 3。已经在场的人不变。</RHAH_Settings_MaxTraits_Tooltip>

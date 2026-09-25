@@ -12,6 +12,10 @@ namespace HungerAndHavoc.Core
         List<string> pendingIncidentDisplayIds = new List<string>();
         List<float> pendingIncidentPoints = new List<float>();
         List<int> pendingIncidentTargetIds = new List<int>();
+        List<int> begCooldownPawnIds = new List<int>();
+        List<int> begCooldownTicks = new List<int>();
+        List<int> beggedPawnIds = new List<int>();
+        List<int> beggedColonistIds = new List<int>();
         int plagueReturnLoadId;
         int plagueReturnMapId;
         int plagueReturnPhase;
@@ -295,6 +299,10 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref nextChoiceId, "nextChoiceId", 1);
             Scribe_Values.Look(ref broadcastCooldownUntilTick, "broadcastCooldownUntilTick", -1);
             Scribe_Values.Look(ref generationCursor, "generationCursor", 0);
+            Scribe_Collections.Look(ref begCooldownPawnIds, "begCooldownPawnIds", LookMode.Value);
+            Scribe_Collections.Look(ref begCooldownTicks, "begCooldownTicks", LookMode.Value);
+            Scribe_Collections.Look(ref beggedPawnIds, "beggedPawnIds", LookMode.Value);
+            Scribe_Collections.Look(ref beggedColonistIds, "beggedColonistIds", LookMode.Value);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 activeGenerationBatches = activeGenerationBatches ?? new List<string>();
@@ -321,6 +329,13 @@ namespace HungerAndHavoc.Core
                     pendingIncidentTargetIds.RemoveAt(pendingIncidentTargetIds.Count - 1);
                 }
                 openChoices = openChoices ?? new List<RHAH_ChoiceRecord>();
+                begCooldownPawnIds = begCooldownPawnIds ?? new List<int>();
+                begCooldownTicks = begCooldownTicks ?? new List<int>();
+                beggedPawnIds = beggedPawnIds ?? new List<int>();
+                beggedColonistIds = beggedColonistIds ?? new List<int>();
+                Align(begCooldownPawnIds, begCooldownTicks, -1);
+                Align(beggedPawnIds, beggedColonistIds, 0);
+                Pawn.RHAH_Begging.Load(begCooldownPawnIds, begCooldownTicks, beggedPawnIds, beggedColonistIds);
                 for (int i = openChoices.Count - 1; i >= 0; i--)
                 {
                     if (openChoices[i] == null)
@@ -353,6 +368,54 @@ namespace HungerAndHavoc.Core
                 {
                     HungerAndHavoc.Pawn.RHAH_VisitorStay.Tick(pawns[i], tick);
                 }
+            }
+        }
+
+        internal void StoreBegging(Dictionary<int, int> cooldowns, Dictionary<int, HashSet<int>> begged)
+        {
+            begCooldownPawnIds.Clear();
+            begCooldownTicks.Clear();
+            beggedPawnIds.Clear();
+            beggedColonistIds.Clear();
+            if (cooldowns != null)
+            {
+                foreach (KeyValuePair<int, int> pair in cooldowns)
+                {
+                    begCooldownPawnIds.Add(pair.Key);
+                    begCooldownTicks.Add(pair.Value);
+                }
+            }
+
+            if (begged == null)
+            {
+                return;
+            }
+
+            foreach (KeyValuePair<int, HashSet<int>> pair in begged)
+            {
+                if (pair.Value == null)
+                {
+                    continue;
+                }
+
+                foreach (int colonist in pair.Value)
+                {
+                    beggedPawnIds.Add(pair.Key);
+                    beggedColonistIds.Add(colonist);
+                }
+            }
+        }
+
+        static void Align(List<int> left, List<int> right, int fill)
+        {
+            while (right.Count < left.Count)
+            {
+                right.Add(fill);
+            }
+
+            while (right.Count > left.Count)
+            {
+                right.RemoveAt(right.Count - 1);
             }
         }
     }

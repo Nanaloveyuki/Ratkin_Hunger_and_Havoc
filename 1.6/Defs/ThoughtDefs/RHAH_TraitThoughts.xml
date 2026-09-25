@@ -301,6 +301,7 @@
   </ThoughtDef>
   <ThoughtDef>
     <defName>RHAH_Thought_LeftAlone</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
     <durationDays>1</durationDays>
     <stackLimit>1</stackLimit>
     <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
@@ -314,6 +315,7 @@
   </ThoughtDef>
   <ThoughtDef>
     <defName>RHAH_Thought_CaptiveYear</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
     <durationDays>60</durationDays>
     <stackLimit>1</stackLimit>
     <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
@@ -327,6 +329,7 @@
   </ThoughtDef>
   <ThoughtDef>
     <defName>RHAH_Thought_FamilyHere</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
     <durationDays>1</durationDays>
     <stackLimit>1</stackLimit>
     <developmentalStageFilter>Adult</developmentalStageFilter>
@@ -340,6 +343,7 @@
   </ThoughtDef>
   <ThoughtDef>
     <defName>RHAH_Thought_Regret</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
     <durationDays>15</durationDays>
     <stackLimit>1</stackLimit>
     <developmentalStageFilter>Adult</developmentalStageFilter>

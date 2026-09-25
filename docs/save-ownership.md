@@ -212,6 +212,10 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | next choice id | nextChoiceId | Remove |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | broadcast cooldown tick | broadcastCooldownUntilTick | Remove |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | generation cursor | generationCursor | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | beg cooldown pawn ids | begCooldownPawnIds | Remove。与冷却 tick 等长。旧档缺列表时为空。null 与空集合相同 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | beg cooldown ticks | begCooldownTicks | Remove。与 pawn id 等长。缺一边时按另一边截齐，短的一边补 -1 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | begged pawn ids | beggedPawnIds | Remove。与殖民者 id 等长。旧档缺列表时为空 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | begged colonist ids | beggedColonistIds | Remove。与乞讨者 id 等长。不等长时按短的一边截齐 |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | visitor pawn load IDs | visitorPawnLoadIds | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | food search ticks | foodSearchTicks | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | plague quarantine load IDs | plagueQuarantineLoadIds | Remove |
@@ -384,8 +388,8 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.maxEventPawns | 全局 ModSettings，默认 30，范围 1 到 100。低于事件最低人数时保留最低人数。母子固定组合不拆 |
 | RHAH_Settings.minGeneratedAge | 全局 ModSettings，默认 0。普通来客年龄下限 |
 | RHAH_Settings.maxGeneratedAge | 全局 ModSettings，默认 50。普通来客年龄上限，不超过 100 |
-| RHAH_Settings.youngAgeFollowsRange | 全局 ModSettings，默认 false。打开后幼年鼠族使用年龄区间。母亲仍按事件 |
-| RHAH_Settings.allowImmobileBabies | 全局 ModSettings，默认 false。打开后无幼童模组也可以生成 3 岁以下。幼童模组启用时不抬龄 |
+| RHAH_Settings.youngAgeFollowsRange | 全局 ModSettings，默认 false。打开后幼年角色使用普通年龄区间。关闭时乞讨幼崽 1 天到 2.9 岁，其它幼年 3 到 6.9 岁。已指定年龄不改 |
+| RHAH_Settings.allowImmobileBabies | 全局 ModSettings，默认 false。打开后无幼童模组也可以生成 4 岁以下。幼童模组启用时不抬龄 |
 | RHAH_Settings.genderMode | 全局 ModSettings，默认 0。0 随机，1 按比例，2 女性，3 男性 |
 | RHAH_Settings.femaleSharePercent | 全局 ModSettings，默认 50，范围 0 到 100。只在按比例时使用 |
 | RHAH_Settings.apparelMode | 全局 ModSettings，默认 0。0 和 1 都重配平民衣装，2 重配后再补温度衣，3 不穿衣 |
