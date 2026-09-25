@@ -61,6 +61,8 @@ namespace HungerAndHavoc.Core
         public int genderMode;
         public int femaleSharePercent = 50;
         public int apparelMode;
+        public int apparelListMode;
+        List<string> disabledRefugeeApparelDefNames = new List<string>();
         public int maxOwnedTraits = 1;
         public bool allowVanillaTraits = true;
         public bool traitAgeFilter = true;
@@ -174,6 +176,8 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref genderMode, "genderMode", 0);
             Scribe_Values.Look(ref femaleSharePercent, "femaleSharePercent", 50);
             Scribe_Values.Look(ref apparelMode, "apparelMode", 0);
+            Scribe_Values.Look(ref apparelListMode, "apparelListMode", 0);
+            Scribe_Collections.Look(ref disabledRefugeeApparelDefNames, "disabledRefugeeApparelDefNames", LookMode.Value);
             Scribe_Values.Look(ref maxOwnedTraits, "maxOwnedTraits", 1);
             Scribe_Values.Look(ref allowVanillaTraits, "allowVanillaTraits", true);
             Scribe_Values.Look(ref traitAgeFilter, "traitAgeFilter", true);
@@ -236,12 +240,11 @@ namespace HungerAndHavoc.Core
                 enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
                 disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
                 disabledGiveFoodDefNames = disabledGiveFoodDefNames ?? new List<string>();
+                disabledRefugeeApparelDefNames = disabledRefugeeApparelDefNames ?? new List<string>();
                 temperatureApparelInsulation = temperatureApparelInsulation ?? new Dictionary<string, float>();
                 disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();
                 disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
                 incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
-                incidentWeights = incidentWeights ?? new Dictionary<string, float>();
-                disabledHistoryDisplayIds = disabledHistoryDisplayIds ?? new List<string>();
                 disabledTraitDisplayIds = disabledTraitDisplayIds ?? new List<string>();
                 traitWeights = traitWeights ?? new Dictionary<string, float>();
                 broadcastCooldownDays = HungerAndHavoc.Incidents.RHAH_BroadcastRules.ClampDays(broadcastCooldownDays);
@@ -453,6 +456,47 @@ namespace HungerAndHavoc.Core
             }
         }
 
+
+        public bool IsRefugeeApparelEnabled(string defName)
+        {
+            EnsureCollections();
+            return string.IsNullOrEmpty(defName) || !disabledRefugeeApparelDefNames.Contains(defName);
+        }
+
+        public void SetRefugeeApparelEnabled(string defName, bool enabled)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            if (enabled)
+            {
+                disabledRefugeeApparelDefNames.Remove(defName);
+            }
+            else if (!disabledRefugeeApparelDefNames.Contains(defName))
+            {
+                disabledRefugeeApparelDefNames.Add(defName);
+            }
+        }
+
+        public void SetAllRefugeeApparel(bool enabled, List<string> candidates)
+        {
+            EnsureCollections();
+            disabledRefugeeApparelDefNames.Clear();
+            if (!enabled && candidates != null)
+            {
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty(candidates[i]) && !disabledRefugeeApparelDefNames.Contains(candidates[i]))
+                    {
+                        disabledRefugeeApparelDefNames.Add(candidates[i]);
+                    }
+                }
+            }
+        }
+
         public void InvalidateReliefSearch()
         {
             if (Current.Game == null || Current.Game.Maps == null)
@@ -539,6 +583,7 @@ namespace HungerAndHavoc.Core
             enabledGeneDefNames = Clean(enabledGeneDefNames);
             disabledReliefFoodDefNames = Clean(disabledReliefFoodDefNames);
             disabledGiveFoodDefNames = Clean(disabledGiveFoodDefNames);
+            disabledRefugeeApparelDefNames = Clean(disabledRefugeeApparelDefNames);
             temperatureApparelInsulation = ClampWeights(temperatureApparelInsulation, ClampStoredInsulation);
             disabledTemperatureApparelDefNames = Clean(disabledTemperatureApparelDefNames);
             disabledIncidentDisplayIds = Clean(disabledIncidentDisplayIds);
@@ -561,6 +606,7 @@ namespace HungerAndHavoc.Core
             maxOwnedTraits = Pawn.RHAH_VisitorRules.ClampOwnedTraits(maxOwnedTraits);
             contentListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(contentListMode, 3);
             giveFoodListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(giveFoodListMode, 3);
+            apparelListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(apparelListMode, 3);
             ClampFertility();
 
             reliefFoodScoreBonus = Pawn.RHAH_VisitorRules.ClampBonus(reliefFoodScoreBonus);
@@ -697,6 +743,7 @@ namespace HungerAndHavoc.Core
             enabledGeneDefNames = enabledGeneDefNames ?? new List<string>();
             disabledReliefFoodDefNames = disabledReliefFoodDefNames ?? new List<string>();
             disabledGiveFoodDefNames = disabledGiveFoodDefNames ?? new List<string>();
+            disabledRefugeeApparelDefNames = disabledRefugeeApparelDefNames ?? new List<string>();
             temperatureApparelInsulation = temperatureApparelInsulation ?? new Dictionary<string, float>();
             disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();
             disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();

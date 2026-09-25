@@ -4,6 +4,8 @@
 
 规范冲突时以 `docs/engineering.md` 为准。玩法只对照旧仓库，禁止拷贝其源码、存档字段或 `MouseDisaster` 命名。
 
+功能和修复原则: YAGNI 和消融实验
+
 ## 本仓库
 
 - 显示名：`鼠族: 饥与祸` / `Ratkin: Hunger and Havoc`

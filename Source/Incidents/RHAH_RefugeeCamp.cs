@@ -207,16 +207,6 @@ namespace HungerAndHavoc.Incidents
 
         static void Equip(Verse.Pawn pawn, bool adult)
         {
-            if (pawn.apparel != null)
-            {
-                pawn.apparel.DestroyAll();
-                ThingDef tribal = DefDatabase<ThingDef>.GetNamedSilentFail("Apparel_TribalA");
-                if (tribal != null && ApparelUtility.HasPartsToWear(pawn, tribal))
-                {
-                    pawn.apparel.Wear((Apparel)ThingMaker.MakeThing(tribal, ThingDefOf.Cloth));
-                }
-            }
-
             if (!adult || pawn.equipment == null || pawn.WorkTagIsDisabled(WorkTags.Violent))
             {
                 return;

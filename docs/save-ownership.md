@@ -180,6 +180,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety | Hediff `Class` / `hediffClass` | Remove，随饱腹 Hediff 删除 |
 | HungerAndHavoc.Pawn.Comp_RHAH_Clay | ThingComp `Class` | Remove，随观音土物品删除 |
 | HungerAndHavoc.Pawn.CompProperties_RHAH_Clay | Def XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Generation.RHAH_GenerationExtension | ThingDef `modExtensions` XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.StatPart_RHAH_TemperatureApparel | StatDef `parts` XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Incidents.RHAH_PredatorRecord | 捕食者深存档，嵌在 `predators` | Remove。随地图组件删除，不替换成原版动物 |
 
@@ -384,7 +385,9 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.allowImmobileBabies | 全局 ModSettings，默认 false。打开后无幼童模组也可以生成 3 岁以下。幼童模组启用时不抬龄 |
 | RHAH_Settings.genderMode | 全局 ModSettings，默认 0。0 随机，1 按比例，2 女性，3 男性 |
 | RHAH_Settings.femaleSharePercent | 全局 ModSettings，默认 50，范围 0 到 100。只在按比例时使用 |
-| RHAH_Settings.apparelMode | 全局 ModSettings，默认 0。0 鼠族名单，1 保留原版衣着，2 防寒优先，3 不穿衣 |
+| RHAH_Settings.apparelMode | 全局 ModSettings，默认 0。0 和 1 都重配平民衣装，2 重配后再补温度衣，3 不穿衣 |
+| RHAH_Settings.apparelListMode | 全局 ModSettings，默认 0。0 按来源，1 按名称，2 按类别。只影响菜单 |
+| RHAH_Settings.disabledRefugeeApparelDefNames | 全局 ModSettings，默认空。空名单表示平民衣装都可生成。新加入的衣服默认可生成 |
 | RHAH_Settings.maxOwnedTraits | 全局 ModSettings，默认 1，范围 0 到 3。0 不抽本模组特质 |
 | RHAH_Settings.allowVanillaTraits | 全局 ModSettings，默认 true。关闭后新来客不获得随年龄出现的原版特质 |
 | RHAH_Settings.traitAgeFilter | 全局 ModSettings，默认 true。关闭后幼年特质和成年特质不再按年龄分开 |

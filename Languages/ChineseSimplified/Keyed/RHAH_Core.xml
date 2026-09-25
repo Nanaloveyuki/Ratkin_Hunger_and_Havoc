@@ -152,6 +152,17 @@
   <RHAH_Settings_GiveFoods_Sort_1>按名称</RHAH_Settings_GiveFoods_Sort_1>
   <RHAH_Settings_GiveFoods_Sort_2>按原版分类</RHAH_Settings_GiveFoods_Sort_2>
   <RHAH_Settings_GiveFoods_Other>其他</RHAH_Settings_GiveFoods_Other>
+  <RHAH_Settings_RefugeeApparel>可生成的衣物</RHAH_Settings_RefugeeApparel>
+  <RHAH_Settings_RefugeeApparel_Tooltip>关掉的衣物不再发给新来客。温度衣另在环境页设置，并且先穿上。</RHAH_Settings_RefugeeApparel_Tooltip>
+  <RHAH_Settings_RefugeeApparel_All>全部允许</RHAH_Settings_RefugeeApparel_All>
+  <RHAH_Settings_RefugeeApparel_None>全部禁止</RHAH_Settings_RefugeeApparel_None>
+  <RHAH_Settings_RefugeeApparel_Search>搜索衣物或模组</RHAH_Settings_RefugeeApparel_Search>
+  <RHAH_Settings_RefugeeApparel_Empty>没有符合的衣物。</RHAH_Settings_RefugeeApparel_Empty>
+  <RHAH_Settings_RefugeeApparel_Quote>关掉的衣物不再发给新来客。之后新加入的衣物默认仍可发放。温度衣先穿上，普通衣物不再占它的位置。</RHAH_Settings_RefugeeApparel_Quote>
+  <RHAH_Settings_RefugeeApparel_Sort>衣物分类</RHAH_Settings_RefugeeApparel_Sort>
+  <RHAH_Settings_RefugeeApparel_Sort_0>按模组</RHAH_Settings_RefugeeApparel_Sort_0>
+  <RHAH_Settings_RefugeeApparel_Sort_1>按名称</RHAH_Settings_RefugeeApparel_Sort_1>
+  <RHAH_Settings_RefugeeApparel_Sort_2>按原版分类</RHAH_Settings_RefugeeApparel_Sort_2>
   <RHAH_Menu_Overview>总览</RHAH_Menu_Overview>
   <RHAH_Menu_Events>事件</RHAH_Menu_Events>
   <RHAH_Menu_Pawns>来客</RHAH_Menu_Pawns>

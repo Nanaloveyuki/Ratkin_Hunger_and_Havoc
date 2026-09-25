@@ -152,6 +152,17 @@
   <RHAH_Settings_GiveFoods_Sort_1>By name</RHAH_Settings_GiveFoods_Sort_1>
   <RHAH_Settings_GiveFoods_Sort_2>By vanilla category</RHAH_Settings_GiveFoods_Sort_2>
   <RHAH_Settings_GiveFoods_Other>Other</RHAH_Settings_GiveFoods_Other>
+  <RHAH_Settings_RefugeeApparel>Clothing that can be generated</RHAH_Settings_RefugeeApparel>
+  <RHAH_Settings_RefugeeApparel_Tooltip>Clothing you turn off is not given to new visitors. Temperature wraps are set on the environment page, and they go on first.</RHAH_Settings_RefugeeApparel_Tooltip>
+  <RHAH_Settings_RefugeeApparel_All>Allow all</RHAH_Settings_RefugeeApparel_All>
+  <RHAH_Settings_RefugeeApparel_None>Forbid all</RHAH_Settings_RefugeeApparel_None>
+  <RHAH_Settings_RefugeeApparel_Search>Search clothing or mods</RHAH_Settings_RefugeeApparel_Search>
+  <RHAH_Settings_RefugeeApparel_Empty>No clothing matches.</RHAH_Settings_RefugeeApparel_Empty>
+  <RHAH_Settings_RefugeeApparel_Quote>Clothing you turn off is not given to new visitors. Clothing added later stays available. Temperature wraps go on first, so ordinary clothing does not take their place.</RHAH_Settings_RefugeeApparel_Quote>
+  <RHAH_Settings_RefugeeApparel_Sort>Clothing grouping</RHAH_Settings_RefugeeApparel_Sort>
+  <RHAH_Settings_RefugeeApparel_Sort_0>By mod</RHAH_Settings_RefugeeApparel_Sort_0>
+  <RHAH_Settings_RefugeeApparel_Sort_1>By name</RHAH_Settings_RefugeeApparel_Sort_1>
+  <RHAH_Settings_RefugeeApparel_Sort_2>By vanilla category</RHAH_Settings_RefugeeApparel_Sort_2>
   <RHAH_Menu_Overview>Overview</RHAH_Menu_Overview>
   <RHAH_Menu_Events>Events</RHAH_Menu_Events>
   <RHAH_Menu_Pawns>Visitors</RHAH_Menu_Pawns>

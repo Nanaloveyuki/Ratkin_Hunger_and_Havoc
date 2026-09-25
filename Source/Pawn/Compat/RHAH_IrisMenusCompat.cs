@@ -78,6 +78,9 @@ namespace HungerAndHavoc.Pawn.Compat
         readonly Dictionary<string, string> weightBuffers = new Dictionary<string, string>();
         string foodQuery = string.Empty;
         string giveFoodQuery = string.Empty;
+        string apparelQuery = string.Empty;
+        string pendingApparelGroup;
+        readonly HashSet<string> collapsedApparelGroups = new HashSet<string>();
         string pendingGiveFoodGroup;
         string pendingFoodMod;
         readonly HashSet<string> collapsedFoodMods = new HashSet<string>();
@@ -1412,6 +1415,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             DrawModeSelect(list, "apparel-mode", "RHAH_Settings_Apparel", settings.apparelMode, 4, mode => settings.apparelMode = mode);
+            DrawApparelList(list, settings);
             string traits = Buffer(weightBuffers, "owned-traits", settings.maxOwnedTraits, "0");
             settings.maxOwnedTraits = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaxTraits".Translate(settings.maxOwnedTraits), settings.maxOwnedTraits, ref traits, 0f, 3f, "0", "RHAH_Settings_MaxTraits_Tooltip".Translate());
             weightBuffers["owned-traits"] = traits;
@@ -1420,6 +1424,121 @@ namespace HungerAndHavoc.Pawn.Compat
             MenuControls.Anchor(list, "trait-age");
             MenuControls.Checkbox(list, "RHAH_Settings_TraitAge".Translate(), ref settings.traitAgeFilter, "RHAH_Settings_TraitAge_Tooltip".Translate());
             DrawModeSelect(list, "content-sort", "RHAH_Settings_ContentSort", settings.contentListMode, 3, mode => settings.contentListMode = mode);
+        }
+
+
+        void DrawApparelList(Listing_Standard list, RHAH_Settings settings)
+        {
+            MenuControls.Anchor(list, "refugee-apparel", 120f);
+            RHAH_IrisMenusWidgets.Quote(list, "refugee-apparel-note", "RHAH_Settings_RefugeeApparel_Quote".Translate());
+            DrawModeSelect(list, "refugee-apparel-sort", "RHAH_Settings_RefugeeApparel_Sort", settings.apparelListMode, 3, mode => settings.apparelListMode = mode);
+            Rect buttons = list.GetRect(28f);
+            if (Widgets.ButtonText(new Rect(buttons.x, buttons.y, 140f, 26f), "RHAH_Settings_RefugeeApparel_All".Translate()))
+            {
+                settings.SetAllRefugeeApparel(true, null);
+            }
+
+            if (Widgets.ButtonText(new Rect(buttons.x + 148f, buttons.y, 140f, 26f), "RHAH_Settings_RefugeeApparel_None".Translate()))
+            {
+                List<ThingDef> apparel = new List<ThingDef>();
+                RHAH_ApparelAssigner.AppendCandidates(apparel);
+                List<string> names = new List<string>(apparel.Count);
+                for (int i = 0; i < apparel.Count; i++)
+                {
+                    names.Add(apparel[i].defName);
+                }
+
+                settings.SetAllRefugeeApparel(false, names);
+            }
+
+            list.Gap(4f);
+            Rect search = list.GetRect(28f);
+            apparelQuery = Widgets.TextField(search, apparelQuery ?? string.Empty);
+            if (string.IsNullOrEmpty(apparelQuery))
+            {
+                GUI.color = Color.gray;
+                Widgets.Label(new Rect(search.x + 6f, search.y, search.width - 8f, search.height), "RHAH_Settings_RefugeeApparel_Search".Translate());
+                GUI.color = Color.white;
+            }
+
+            list.Gap(4f);
+            List<ThingDef> listed = new List<ThingDef>();
+            RHAH_ApparelAssigner.AppendCandidates(listed);
+            List<List<ThingDef>> groups = RHAH_ReliefFood.GroupFoods(settings.apparelListMode, listed);
+            bool searching = !string.IsNullOrEmpty(apparelQuery);
+            bool any = false;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                List<ThingDef> matched = MatchedApparel(groups[i]);
+                if (matched.Count == 0)
+                {
+                    continue;
+                }
+
+                any = true;
+                string key = RHAH_ReliefFood.GroupKey(settings.apparelListMode, groups[i][0]);
+                if (pendingApparelGroup != null && string.Equals(pendingApparelGroup, key, StringComparison.Ordinal))
+                {
+                    collapsedApparelGroups.Remove(key);
+                    pendingApparelGroup = null;
+                }
+
+                bool open = searching || !collapsedApparelGroups.Contains(key);
+                string title = ApparelTitle(settings.apparelListMode, key) + "  " + matched.Count;
+                MenuControls.Anchor(list, "refugee-apparel-group-" + key, 28f);
+                if (DrawFoodFold(list, title, open))
+                {
+                    if (open)
+                    {
+                        collapsedApparelGroups.Add(key);
+                    }
+                    else
+                    {
+                        collapsedApparelGroups.Remove(key);
+                    }
+
+                    open = !open;
+                }
+
+                if (!open)
+                {
+                    continue;
+                }
+
+                for (int apparelIndex = 0; apparelIndex < matched.Count; apparelIndex++)
+                {
+                    ThingDef def = matched[apparelIndex];
+                    bool enabled = settings.IsRefugeeApparelEnabled(def.defName);
+                    MenuControls.Anchor(list, "refugee-apparel-" + def.defName);
+                    MenuControls.Checkbox(list, def.LabelCap, ref enabled, "RHAH_Settings_RefugeeApparel_Tooltip".Translate());
+                    settings.SetRefugeeApparelEnabled(def.defName, enabled);
+                }
+            }
+
+            if (!any)
+            {
+                Empty(list, "RHAH_Settings_RefugeeApparel_Empty");
+            }
+        }
+
+        List<ThingDef> MatchedApparel(List<ThingDef> apparel)
+        {
+            List<ThingDef> matched = new List<ThingDef>();
+            for (int i = 0; i < apparel.Count; i++)
+            {
+                if (RHAH_ReliefFood.MatchesQuery(apparel[i], apparelQuery))
+                {
+                    matched.Add(apparel[i]);
+                }
+            }
+
+            return matched;
+        }
+
+        static string ApparelTitle(int mode, string key)
+        {
+            string title = RHAH_ReliefFood.GroupTitle(mode, key);
+            return title ?? (mode == 2 ? "RHAH_Settings_GiveFoods_Other".Translate() : "RHAH_Menu_Genes_UnknownMod".Translate());
         }
 
         void DrawModeSelect(Listing_Standard list, string anchor, string key, int selected, int count, Action<int> assign)
@@ -1768,6 +1887,28 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("immobile-babies", "RHAH_Settings_ImmobileBabies");
             yield return Entry("gender-mode", "RHAH_Settings_Gender");
             yield return Entry("apparel-mode", "RHAH_Settings_Apparel");
+            yield return Entry("refugee-apparel", "RHAH_Settings_RefugeeApparel");
+            yield return Entry("refugee-apparel-sort", "RHAH_Settings_RefugeeApparel_Sort");
+            List<ThingDef> apparel = new List<ThingDef>();
+            RHAH_ApparelAssigner.AppendCandidates(apparel);
+            int apparelMode = RHAH_Mod.Settings == null ? 0 : RHAH_Mod.Settings.apparelListMode;
+            for (int i = 0; i < apparel.Count; i++)
+            {
+                ThingDef def = apparel[i];
+                if (def == null || string.IsNullOrEmpty(def.defName))
+                {
+                    continue;
+                }
+
+                string key = RHAH_ReliefFood.GroupKey(apparelMode, def);
+                string id = "refugee-apparel-" + def.defName;
+                string label = def.LabelCap;
+                yield return new MenuSearchEntry(id, () => label, () => def.defName + " " + key, () =>
+                {
+                    pendingApparelGroup = key;
+                    return ApparelTitle(apparelMode, key);
+                });
+            }
             yield return Entry("vanilla-traits", "RHAH_Settings_VanillaTraits");
             yield return Entry("trait-age", "RHAH_Settings_TraitAge");
             yield return Entry("content-sort", "RHAH_Settings_ContentSort");

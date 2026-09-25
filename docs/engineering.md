@@ -149,6 +149,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Identity.CompRHAH_Pawn` | `HediffCompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 HediffComp；类型名写入 `.rws` |
 | `HungerAndHavoc.Identity.CompProperties_RHAH_Pawn` | Def XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Identity.RHAH_RaceExtension` | ThingDef `modExtensions` XML `Class` | `HungerAndHavoc.dll` | Verse 按 DefModExtension XML `Class` 创建 |
+| `HungerAndHavoc.Generation.RHAH_GenerationExtension` | ThingDef `modExtensions` XML `Class` | `HungerAndHavoc.dll` | 外部衣物 Def 用 `allowRefugeeApparel` 进入平民衣装池。Verse 按 XML `Class` 创建，不能 internal |
 | `HungerAndHavoc.Core.RHAH_Mod` | Verse 扫描 `Mod` 子类 | `HungerAndHavoc.dll` | 模组入口必须可被 Verse 发现并构造 |
 | `HungerAndHavoc.Core.RHAH_Settings` | `Mod.GetSettings<T>()` | `HungerAndHavoc.dll` | Verse 按类型参数创建 `ModSettings` |
 | `HungerAndHavoc.Core.RHAH_DefOf` | `[DefOf]` 静态字段 | `HungerAndHavoc.dll` | `DefOfHelper` 反射绑定公开静态 Def 字段 |
