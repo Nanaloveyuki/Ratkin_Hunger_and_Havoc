@@ -133,6 +133,16 @@ namespace HungerAndHavoc.Generation
             }
 
             ApplyProfile(pawn, profile);
+            if (request.Shatter)
+            {
+                RHAH_PawnBody.Shatter(pawn);
+            }
+
+            if (request.StartLabor)
+            {
+                RHAH_PawnBody.StartLabor(pawn);
+            }
+
             RHAH_RatkinAppearance.Apply(pawn, profile.UseExplicitApparel);
             float outdoor = request.Map?.mapTemperature == null ? 21f : request.Map.mapTemperature.OutdoorTemp;
             if (!profile.UseExplicitApparel)

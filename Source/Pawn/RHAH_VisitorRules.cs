@@ -100,12 +100,31 @@ namespace HungerAndHavoc.Pawn
 
         internal static bool KeepsAge(RHAH_PawnRole role, bool fixedAge, bool youngFollowsRange)
         {
-            if (fixedAge || role == RHAH_PawnRole.Mother || role == RHAH_PawnRole.BeggarMother)
-            {
-                return true;
-            }
+            return fixedAge;
+        }
 
-            return role == RHAH_PawnRole.RatkinYoung && !youngFollowsRange;
+        internal static bool IsYoungRole(RHAH_PawnRole role)
+        {
+            return role == RHAH_PawnRole.RatkinYoung ||
+                   role == RHAH_PawnRole.BeggarChild ||
+                   role == RHAH_PawnRole.ThiefChild ||
+                   role == RHAH_PawnRole.WildChild;
+        }
+
+        internal static float? YoungAge(RHAH_PawnRole role, float roll)
+        {
+            float safeRoll = roll < 0f || float.IsNaN(roll) ? 0f : roll > 1f ? 1f : roll;
+            switch (role)
+            {
+                case RHAH_PawnRole.BeggarChild:
+                    return RatEggMinAge + (RatEggMaxAge - RatEggMinAge) * safeRoll;
+                case RHAH_PawnRole.RatkinYoung:
+                case RHAH_PawnRole.ThiefChild:
+                case RHAH_PawnRole.WildChild:
+                    return ChildMinAge + (ChildMaxAge - ChildMinAge) * safeRoll;
+                default:
+                    return null;
+            }
         }
 
         internal static float? GenerationAge(
@@ -119,6 +138,11 @@ namespace HungerAndHavoc.Pawn
             if (KeepsAge(role, fixedAge.HasValue, youngFollowsRange))
             {
                 return fixedAge;
+            }
+
+            if (IsYoungRole(role))
+            {
+                return YoungAge(role, roll);
             }
 
             float lower = ClampAge(float.IsNaN(minAge) ? DefaultMinGeneratedAge : minAge);
@@ -339,6 +363,10 @@ namespace HungerAndHavoc.Pawn
         internal const int HostileGoodwill = -100;
         internal const int NeutralGoodwill = 0;
         internal const float WalkingAge = 4f;
+        internal const float RatEggMinAge = 1f / 60f;
+        internal const float RatEggMaxAge = 2.9f;
+        internal const float ChildMinAge = 3f;
+        internal const float ChildMaxAge = 6.9f;
 
         internal static int LockedGoodwill(RHAH_Attitude attitude)
         {

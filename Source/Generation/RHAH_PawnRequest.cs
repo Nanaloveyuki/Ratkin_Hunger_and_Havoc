@@ -21,5 +21,7 @@ namespace HungerAndHavoc.Generation
         public int ParentPawnLoadId { get; set; }
         public int[] ChildPawnLoadIds { get; set; }
         public RHAH_PawnProfile Profile { get; set; }
+        public bool StartLabor { get; set; }
+        public bool Shatter { get; set; }
     }
 }

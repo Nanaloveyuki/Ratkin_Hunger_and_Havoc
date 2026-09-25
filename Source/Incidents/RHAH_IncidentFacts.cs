@@ -21,19 +21,23 @@ namespace HungerAndHavoc.Incidents
             List<RHAH_PawnCreationResult> created = new List<RHAH_PawnCreationResult>();
             for (int i = 0; i < context.PawnCount; i++)
             {
+                RHAH_PawnRole role = RHAH_IncidentRoster.RoleAt(context.DisplayId, context.Role, i);
                 RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
                 {
                     SourceIncidentDisplayId = context.DisplayId,
                     SpawnBatchId = context.SpawnBatchId,
                     RelationshipGroupId = context.RelationshipGroupId,
-                    Role = context.Role,
+                    Role = role,
                     AttitudeAtArrival = context.Attitude,
                     CarriesPlague = context.CarriesPlague,
                     Map = context.Map,
                     PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
                     Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(context.Attitude),
                     SpawnCell = context.SpawnCell,
-                    BiologicalAge = GenerationAge(context.Role)
+                    Gender = RHAH_IncidentRoster.GenderAt(context.DisplayId, i),
+                    BiologicalAge = GenerationAge(role),
+                    StartLabor = RHAH_IncidentRoster.StartsLabor(context.DisplayId),
+                    Shatter = RHAH_IncidentRoster.Shatters(context.DisplayId, i)
                 }, registerBatch: false);
 
                 if (!result.Succeeded)

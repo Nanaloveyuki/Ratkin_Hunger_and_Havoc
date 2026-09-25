@@ -1,3 +1,6 @@
+using HungerAndHavoc.Api;
+using Verse;
+using RimWorld;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Incidents;
 using Xunit;
@@ -144,6 +147,31 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(1, RHAH_IncidentScale.Count("I-008", 10000f));
             Assert.Equal(10, RHAH_IncidentScale.Count("I-001", 1f));
             Assert.Equal(50, RHAH_IncidentScale.Count("I-001", 10000f));
+        }
+
+        [Fact]
+        public void EggEventsStayYoungAndLaboringMothersStartLabor()
+        {
+            Assert.Equal(RHAH_PawnRole.BeggarChild, RHAH_IncidentRoster.RoleAt("I-002", RHAH_PawnRole.Beggar, 0));
+            Assert.Equal(RHAH_PawnRole.Mother, RHAH_IncidentRoster.RoleAt("I-003", RHAH_PawnRole.Mother, 0));
+            Assert.Equal(RHAH_PawnRole.RatkinYoung, RHAH_IncidentRoster.RoleAt("I-003", RHAH_PawnRole.Mother, 1));
+            Assert.Equal(RHAH_PawnRole.BeggarMother, RHAH_IncidentRoster.RoleAt("I-004", RHAH_PawnRole.Refugee, 0));
+            Assert.Equal(RHAH_PawnRole.BeggarChild, RHAH_IncidentRoster.RoleAt("I-004", RHAH_PawnRole.Refugee, 4));
+            Assert.Equal(RHAH_PawnRole.ThiefChild, RHAH_IncidentRoster.RoleAt("I-007", RHAH_PawnRole.Thief, 2));
+            Assert.Equal(RHAH_PawnRole.WildChild, RHAH_IncidentRoster.RoleAt("I-009", RHAH_PawnRole.Wild, 0));
+            Assert.Equal(RHAH_PawnRole.RatkinYoung, RHAH_IncidentRoster.RoleAt("I-013", RHAH_PawnRole.RatkinYoung, 3));
+            Assert.Equal(RHAH_PawnRole.RatkinYoung, RHAH_IncidentRoster.RoleAt("I-032", RHAH_PawnRole.Refugee, 0));
+            Assert.Equal(RHAH_PawnRole.RatkinYoung, RHAH_IncidentRoster.RoleAt("I-033", RHAH_PawnRole.Refugee, 0));
+            Assert.Equal(RHAH_PawnRole.BeggarMother, RHAH_IncidentRoster.RoleAt("I-029", RHAH_PawnRole.Beggar, 0));
+            Assert.Equal(RHAH_PawnRole.BeggarMother, RHAH_IncidentRoster.RoleAt("I-044", RHAH_PawnRole.Beggar, 1));
+            Assert.Equal(RHAH_PawnRole.Refugee, RHAH_IncidentRoster.RoleAt("I-001", RHAH_PawnRole.Refugee, 8));
+            Assert.True(RHAH_IncidentRoster.StartsLabor("I-029"));
+            Assert.True(RHAH_IncidentRoster.StartsLabor("I-044"));
+            Assert.False(RHAH_IncidentRoster.StartsLabor("I-004"));
+            Assert.True(RHAH_IncidentRoster.Shatters("I-003", 0));
+            Assert.False(RHAH_IncidentRoster.Shatters("I-003", 1));
+            Assert.Equal(Gender.Female, RHAH_IncidentRoster.GenderAt("I-003", 0));
+            Assert.Null(RHAH_IncidentRoster.GenderAt("I-003", 1));
         }
 
         [Fact]
