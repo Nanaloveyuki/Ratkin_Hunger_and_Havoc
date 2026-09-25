@@ -24,6 +24,7 @@ namespace HungerAndHavoc.Generation
                 request.Faction,
                 PawnGenerationContext.NonPlayer,
                 forceGenerateNewPawn: true,
+                allowDowned: StageFor(age) == DevelopmentalStage.Baby,
                 canGeneratePawnRelations: false,
                 allowPregnant: false,
                 allowFood: false,
@@ -47,7 +48,7 @@ namespace HungerAndHavoc.Generation
             return generation;
         }
 
-        // 与原版人类阶段一致 婴儿阶段会永久倒地 不能按成人生成
+        // 鼠族 HumanlikeBaby 到 4 岁 儿童到 12 岁 按人类 3 岁切会撞上永久倒地阶段
         internal static DevelopmentalStage StageFor(float? age)
         {
             if (!age.HasValue || float.IsNaN(age.Value) || float.IsInfinity(age.Value))
@@ -55,12 +56,12 @@ namespace HungerAndHavoc.Generation
                 return DevelopmentalStage.Adult;
             }
 
-            if (age.Value < 3f)
+            if (age.Value < 4f)
             {
                 return DevelopmentalStage.Baby;
             }
 
-            return age.Value < 13f ? DevelopmentalStage.Child : DevelopmentalStage.Adult;
+            return age.Value < 12f ? DevelopmentalStage.Child : DevelopmentalStage.Adult;
         }
 
         static float? WalkingAge(RHAH_PawnRequest request)

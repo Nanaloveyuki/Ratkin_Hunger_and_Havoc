@@ -57,6 +57,8 @@ namespace HungerAndHavoc.Pawn
             {
                 pawn.mindState.duty = null;
             }
+
+            pawn.jobs?.StopAll();
         }
 
         internal static void NotifyDead(Verse.Pawn pawn)

@@ -338,7 +338,7 @@ namespace HungerAndHavoc.Pawn
 
         internal const int HostileGoodwill = -100;
         internal const int NeutralGoodwill = 0;
-        internal const float WalkingAge = 3f;
+        internal const float WalkingAge = 4f;
 
         internal static int LockedGoodwill(RHAH_Attitude attitude)
         {

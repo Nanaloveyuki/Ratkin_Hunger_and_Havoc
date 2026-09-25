@@ -13,4 +13,5 @@
 | 存档 | 无新键。已在图上的来客不改写 |
 | 归属表 | 否 |
 | 回归 | `SpecFor("I-012")` 与 `SpecFor("I-038")` 仍是 `ChoiceKind.None`，`OffersVisitorControl` 和 `OffersBatchControl` 为 false。两条事件成功后派系是 `RHAH_Faction_Neutral`，不是玩家派系，且会发商队到达信。派系解析返回 null 时事件失败，不生成玩家派系 pawn。已有来客信未选择时派系不变，`Timeout` 后离场且仍不是玩家派系 |
+| 日志补充 | 玩家日志补充：I-001 已生成，但原版报 `non-downed Baby famine ratkin`，生命阶段是婴儿。鼠族 `HumanlikeBaby` 到 4 岁且 `alwaysDowned`。本模组按人类 3 岁切阶段，3 到 4 岁被标成儿童，生成时撞上永久倒地阶段。已改为婴儿到 4 岁、儿童到 12 岁，会走路下限同步到 4 岁，婴儿阶段允许倒地。另一反馈：入籍后仍像敌对派系搬走家具和物品。原版偷窃包含可拆卸建筑。释放只拆 Lord 和 duty，进行中的偷窃 Job 不停止。`NotifyReleased` 现在同时 `StopAll`。 |
 | 后续债 | 五个隐藏态度派系在部分存档里可能没有实例。反馈 1 仍缺可复现存档，不能把“数秒后入籍”写成已定位 |

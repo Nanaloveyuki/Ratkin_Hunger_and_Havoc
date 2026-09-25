@@ -20,10 +20,10 @@ namespace HungerAndHavoc.Tests
         public void StageFollowsBiologicalAgeInsteadOfAlwaysAdult()
         {
             Assert.Equal(DevelopmentalStage.Baby, RHAH_GenerationOptimizer.StageFor(0.85f));
-            Assert.Equal(DevelopmentalStage.Baby, RHAH_GenerationOptimizer.StageFor(1.72f));
-            Assert.Equal(DevelopmentalStage.Child, RHAH_GenerationOptimizer.StageFor(3f));
-            Assert.Equal(DevelopmentalStage.Child, RHAH_GenerationOptimizer.StageFor(12.9f));
-            Assert.Equal(DevelopmentalStage.Adult, RHAH_GenerationOptimizer.StageFor(13f));
+            Assert.Equal(DevelopmentalStage.Baby, RHAH_GenerationOptimizer.StageFor(3.9f));
+            Assert.Equal(DevelopmentalStage.Child, RHAH_GenerationOptimizer.StageFor(4f));
+            Assert.Equal(DevelopmentalStage.Child, RHAH_GenerationOptimizer.StageFor(11.9f));
+            Assert.Equal(DevelopmentalStage.Adult, RHAH_GenerationOptimizer.StageFor(12f));
             Assert.Equal(DevelopmentalStage.Adult, RHAH_GenerationOptimizer.StageFor(null));
             Assert.Equal(DevelopmentalStage.Adult, RHAH_GenerationOptimizer.StageFor(float.NaN));
         }

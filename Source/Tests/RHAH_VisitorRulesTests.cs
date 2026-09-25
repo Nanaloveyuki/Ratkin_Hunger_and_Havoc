@@ -35,7 +35,7 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(-100, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Hostile));
             Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Friendly));
             Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Neutral));
-            Assert.Equal(3f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, false, false));
+            Assert.Equal(4f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, false, false));
             Assert.Equal(8f, RHAH_VisitorRules.WalkingAgeFloor(8f, false, false));
             Assert.Equal(0.1f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, true, false));
             Assert.Equal(0.1f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, false, true));

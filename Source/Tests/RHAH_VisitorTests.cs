@@ -92,6 +92,7 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("GetLord", body);
             Assert.Contains("RemovePawn", body);
             Assert.Contains("mindState.duty = null", body);
+            Assert.Contains("pawn.jobs?.StopAll()", body);
         }
 
         [Fact]
