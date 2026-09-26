@@ -25,7 +25,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal static bool Counts(bool narrator, RHAH_Settings settings)
         {
-            return narrator || settings == null || settings.countEndingsWithoutNarrator;
+            return narrator;
         }
 
         internal static void Tick(int tick)

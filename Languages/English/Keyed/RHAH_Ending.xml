@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <RHAH_Menu_Ending_Note>These switches only stop endings that have not appeared yet. An ending already recorded stays recorded. Without Suiyin, a high ending uses the public chronicle and does not include her letters.</RHAH_Menu_Ending_Note>
-  <RHAH_Ending_CountWithout>Count without Suiyin</RHAH_Ending_CountWithout>
-  <RHAH_Ending_CountWithout_Tooltip>When off, saves told by another storyteller stop adding aid, broadcasts, expulsions, and completed results.</RHAH_Ending_CountWithout_Tooltip>
-  <RHAH_Ending_WithoutNarrator>Endings without Suiyin</RHAH_Ending_WithoutNarrator>
-  <RHAH_Ending_WithoutNarrator_Tooltip>When off, other storytellers do not start a new ending. Endings already shown stay shown.</RHAH_Ending_WithoutNarrator_Tooltip>
-  <RHAH_Ending_Toggle_Tooltip>When off, this ending does not start again. One already shown is not rolled back.</RHAH_Ending_Toggle_Tooltip>
+  <RHAH_Menu_Ending_Note>Endings appear only while Suiyin is the storyteller, and a save gets one. Turning one off stops that ending from starting. One already recorded stays recorded, and another ending is not substituted for it.</RHAH_Menu_Ending_Note>
+  <RHAH_Ending_Toggle_Tooltip>When off, this ending does not start. One already shown is not rolled back, and another ending is not substituted for it.</RHAH_Ending_Toggle_Tooltip>
   <RHAH_Ending_Identity>Identity question</RHAH_Ending_Identity>
   <RHAH_Ending_Identity_Tooltip>Asked once, and only while Suiyin is the storyteller. Refusing costs no trust and does not ask again.</RHAH_Ending_Identity_Tooltip>
   <RHAH_Ending_Aid>Aid required: {0}</RHAH_Ending_Aid>

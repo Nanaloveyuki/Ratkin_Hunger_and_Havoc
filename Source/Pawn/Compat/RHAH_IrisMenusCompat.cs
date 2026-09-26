@@ -1259,8 +1259,6 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
-            MenuControls.Checkbox(list, "RHAH_Ending_CountWithout".Translate(), ref settings.countEndingsWithoutNarrator, "RHAH_Ending_CountWithout_Tooltip".Translate());
-            MenuControls.Checkbox(list, "RHAH_Ending_WithoutNarrator".Translate(), ref settings.endingsWithoutNarrator, "RHAH_Ending_WithoutNarrator_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Ending_E01_Label".Translate(), ref settings.endingE01, "RHAH_Ending_Toggle_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Ending_E02_Label".Translate(), ref settings.endingE02, "RHAH_Ending_Toggle_Tooltip".Translate());
             MenuControls.Checkbox(list, "RHAH_Ending_E03_Label".Translate(), ref settings.endingE03, "RHAH_Ending_Toggle_Tooltip".Translate());
@@ -1998,8 +1996,7 @@ namespace HungerAndHavoc.Pawn.Compat
 
         static IEnumerable<MenuSearchEntry> SearchEnding()
         {
-            yield return Entry("ending-count", "RHAH_Ending_CountWithout");
-            yield return Entry("ending-without", "RHAH_Ending_WithoutNarrator");
+            yield return Entry("ending-e01", "RHAH_Ending_E01_Label");
             yield return Entry("ending-aid", "RHAH_Ending_Aid");
             yield return Entry("ending-identity", "RHAH_Ending_Identity");
         }

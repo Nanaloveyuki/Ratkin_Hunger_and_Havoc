@@ -266,14 +266,12 @@ namespace HungerAndHavoc.Incidents
         }
         static void NoteEnding(RHAH_ChoiceRecord record)
         {
-            HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.RHAH_EndingEvent ending = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.FromChoice(record.Choice, record.Settled);
-            if (ending != HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.RHAH_EndingEvent.Aid || !HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.CountsNow())
+            if (!RHAH_RequestRules.PromisesAid(record.Choice, record.Settled))
             {
                 return;
             }
 
-            int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
-            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteAid(tick);
+            Current.Game?.GetComponent<Narrative.NarrativeState>()?.Book?.MarkJournalDelivered(record.BatchId);
         }
 
         static List<Verse.Pawn> Pawns(RHAH_ChoiceRecord record)

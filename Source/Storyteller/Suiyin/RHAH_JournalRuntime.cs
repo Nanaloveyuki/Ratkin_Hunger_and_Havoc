@@ -63,8 +63,9 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 }
 
                 Watch(record, tick);
-                if (book.CloseJournal(record, tick))
+                if (book.CloseJournal(record, tick) && RHAH_EndingRuntime.CountsNow())
                 {
+                    state.NoteAid(tick);
                     state.NoteCompletedKind(tick, record.Id);
                 }
             }

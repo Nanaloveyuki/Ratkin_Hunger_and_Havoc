@@ -281,7 +281,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN007Case | mapId, startedTick, outcome, choiceOpen, returnDueTick, returnPawnId, returnDone, visitors | 嵌在 quarantineCases | Remove。`choiceOpen` 默认 false，true 表示还没把选择信放进队列 |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN008Case | mapId, pawnId, startedTick, deadline, checkUntil, presence, missingSince, outcome, mealsReady, proofAvailable | 嵌在 envoyCases | Remove |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN009Case | startedTick, deadline, mapPresent, playersInside, envoyHere, boxDestroyed, outcome, siteId, boxId, mapEntered | relicCase | Remove |
-| HungerAndHavoc.Storyteller.Suiyin.SuiyinJournalCase | id, mapId, batchId, startedTick, delivered, driven, closed, counted, people | 嵌在 journalCases | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinJournalCase | id, mapId, batchId, startedTick, delivered, driven, failed, empty, closed, counted, people | 嵌在 journalCases | Remove |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinNotice | letter, arg, privateNotice | 嵌在 pendingNotices | Remove |
 | RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
@@ -414,8 +414,8 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.disabledTemperatureApparelDefNames | 全局 ModSettings。关闭的温度衣 defName，默认空 |
 | RHAH_Settings.minimumEventTemperature | 全局 ModSettings，默认 -35。地图事件下限 |
 | RHAH_Settings.maximumEventTemperature | 全局 ModSettings，默认 70。地图事件上限。商队不受限 |
-| RHAH_Settings.countEndingsWithoutNarrator | 全局 ModSettings，默认 true。关闭后非穗音不累计结局计数 |
-| RHAH_Settings.endingsWithoutNarrator | 全局 ModSettings，默认 true。关闭后非穗音不新触发结局 |
+| RHAH_Settings.countEndingsWithoutNarrator | 全局 ModSettings，遗留键。结局只在穗音下计数，这个开关不再读 |
+| RHAH_Settings.endingsWithoutNarrator | 全局 ModSettings，遗留键。结局只在穗音下触发，这个开关不再读 |
 | RHAH_Settings.endingAidGoal | 全局 ModSettings，默认 99，范围 1 到 999 |
 | RHAH_Settings.endingBroadcastGoal | 全局 ModSettings，默认 3，范围 1 到 99 |
 | RHAH_Settings.endingExpulsionLimit | 全局 ModSettings，默认 3，范围 0 到 99 |

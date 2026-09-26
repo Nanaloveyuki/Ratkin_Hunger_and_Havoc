@@ -295,6 +295,44 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void JournalIgnoresNaturalDeathAndFailsOnPlayerKill()
+        {
+            SuiyinBook book = new SuiyinBook();
+            Assert.True(book.OpenJournal(14, 1, 9, 0, new[] { 41, 42 }, false));
+            SuiyinJournalCase record = book.Journals[0];
+            record.People[0].Presence = SuiyinPresence.Dead;
+            record.People[1].Presence = SuiyinPresence.Left;
+            Assert.False(book.CloseJournal(record, 1000));
+            Assert.True(record.Closed);
+            Assert.False(record.Counted);
+
+            SuiyinBook promised = new SuiyinBook();
+            Assert.True(promised.OpenJournal(14, 1, 12, 0, new[] { 46, 47 }, false));
+            Assert.True(promised.MarkJournalDelivered(12));
+            promised.Journals[0].People[0].Presence = SuiyinPresence.Dead;
+            promised.Journals[0].People[1].Presence = SuiyinPresence.Left;
+            Assert.True(promised.CloseJournal(promised.Journals[0], 2000));
+            Assert.True(promised.Journals[0].Counted);
+
+            SuiyinBook empty = new SuiyinBook();
+            Assert.True(empty.OpenJournal(14, 1, 10, 0, new[] { 43 }, true));
+            empty.Journals[0].People[0].Presence = SuiyinPresence.Dead;
+            Assert.False(empty.CloseJournal(empty.Journals[0], 1000));
+            Assert.True(empty.Journals[0].Closed);
+            Assert.True(empty.Journals[0].Empty);
+            Assert.False(empty.Journals[0].Counted);
+
+            SuiyinBook killed = new SuiyinBook();
+            Assert.True(killed.OpenJournal(14, 1, 11, 0, new[] { 44, 45 }, true));
+            Assert.True(killed.MarkJournalFailed(11));
+            Assert.False(killed.CloseJournal(killed.Journals[0], 1000));
+            killed.Journals[0].People[1].Presence = SuiyinPresence.Left;
+            Assert.False(killed.CloseJournal(killed.Journals[0], 2000));
+            Assert.False(killed.Journals[0].Counted);
+            Assert.False(killed.MarkJournalFailed(11));
+        }
+
+        [Fact]
         public void QueuedLettersUseExistingKeys()
         {
             Assert.Equal("RHAH_Suiyin_N001", SuiyinBook.LetterKey(SuiyinLetter.N001, 0));

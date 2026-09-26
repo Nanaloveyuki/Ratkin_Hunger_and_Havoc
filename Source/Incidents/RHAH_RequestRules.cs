@@ -276,6 +276,21 @@ namespace HungerAndHavoc.Incidents
             return action == RHAH_ChoiceAction.Deliver && site != RHAH_IntelSiteKind.None;
         }
 
+        internal static bool PromisesAid(RHAH_ChoiceKind choice, RHAH_ChoiceAction action)
+        {
+            if (action != RHAH_ChoiceAction.Deliver && action != RHAH_ChoiceAction.Join)
+            {
+                return false;
+            }
+
+            return choice == RHAH_ChoiceKind.Aid ||
+                choice == RHAH_ChoiceKind.ChildExchange ||
+                choice == RHAH_ChoiceKind.Refugees ||
+                choice == RHAH_ChoiceKind.Abandoned ||
+                choice == RHAH_ChoiceKind.Kinship ||
+                choice == RHAH_ChoiceKind.Airdrop;
+        }
+
         internal static bool Joins(RHAH_ChoiceAction action)
         {
             return action == RHAH_ChoiceAction.Join;

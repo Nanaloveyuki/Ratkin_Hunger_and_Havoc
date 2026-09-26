@@ -477,6 +477,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal int StartedTick;
         internal bool Delivered;
         internal bool Driven;
+        internal bool Failed;
+        internal bool Empty;
         internal bool Closed;
         internal bool Counted;
         internal List<SuiyinMember> People = new List<SuiyinMember>();
@@ -489,6 +491,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             Scribe_Values.Look(ref StartedTick, "startedTick", 0);
             Scribe_Values.Look(ref Delivered, "delivered", false);
             Scribe_Values.Look(ref Driven, "driven", false);
+            Scribe_Values.Look(ref Failed, "failed", false);
+            Scribe_Values.Look(ref Empty, "empty", false);
             Scribe_Values.Look(ref Closed, "closed", false);
             Scribe_Values.Look(ref Counted, "counted", false);
             Scribe_Collections.Look(ref People, "people", LookMode.Deep);
@@ -1483,12 +1487,25 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return false;
             }
 
+            if (record.Failed)
+            {
+                record.Closed = true;
+                record.Counted = false;
+                return false;
+            }
+
+            int living = 0;
             int left = 0;
             int settled = 0;
             int pending = 0;
             for (int i = 0; i < record.People.Count; i++)
             {
                 SuiyinMember person = record.People[i];
+                if (person.Presence == SuiyinPresence.Dead)
+                {
+                    continue;
+                }
+
                 if (person.Presence == SuiyinPresence.Unknown)
                 {
                     if (person.MissingSince < 0)
@@ -1502,7 +1519,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     }
                 }
 
-                if (person.Presence == SuiyinPresence.Here && person.Care != SuiyinCare.Hungry && person.Care != SuiyinCare.Plague)
+                living++;
+                if (person.Presence == SuiyinPresence.Here && person.Care != SuiyinCare.Hungry && person.Care != SuiyinCare.Plague && person.Care != SuiyinCare.Captive)
                 {
                     if (tick - record.StartedTick >= Days(Config.CareDays))
                     {
@@ -1517,10 +1535,18 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 {
                     left++;
                 }
-                else if (person.Presence == SuiyinPresence.Here || person.Presence == SuiyinPresence.Unknown)
+                else
                 {
                     pending++;
                 }
+            }
+
+            if (living == 0)
+            {
+                record.Closed = true;
+                record.Counted = false;
+                record.Empty = true;
+                return false;
             }
 
             if (pending > 0 && tick - record.StartedTick < Days(Config.ObserveDays))
@@ -1529,9 +1555,35 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             record.Closed = true;
-            bool aid = record.People.Count > 0 && !record.Driven && left + settled == record.People.Count && (record.Delivered || settled == record.People.Count);
+            bool aid = !record.Driven && pending == 0 && left + settled == living && (record.Delivered || settled == living);
             record.Counted = aid;
             return aid;
+        }
+
+        internal bool MarkJournalFailed(int batchId)
+        {
+            SuiyinJournalCase record = FindJournal(batchId);
+            if (record == null || record.Failed || record.Counted)
+            {
+                return false;
+            }
+
+            record.Failed = true;
+            record.Closed = true;
+            record.Counted = false;
+            return true;
+        }
+
+        internal bool MarkJournalDelivered(int batchId)
+        {
+            SuiyinJournalCase record = FindJournal(batchId);
+            if (record == null || record.Closed || record.Failed)
+            {
+                return false;
+            }
+
+            record.Delivered = true;
+            return true;
         }
 
         internal int TakeNotices(List<SuiyinNotice> destination)

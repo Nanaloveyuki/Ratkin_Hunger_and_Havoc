@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <RHAH_Menu_Ending_Note>这些开关只拦住还没出现的结尾。已经记下的结尾不会撤掉。非穗音时，高条件结尾使用公开纪事，不出现她的私信。</RHAH_Menu_Ending_Note>
-  <RHAH_Ending_CountWithout>非穗音也计数</RHAH_Ending_CountWithout>
-  <RHAH_Ending_CountWithout_Tooltip>关闭后，其它叙事者的存档不再累计接济、广播、驱逐和完成结果。</RHAH_Ending_CountWithout_Tooltip>
-  <RHAH_Ending_WithoutNarrator>非穗音也出结局</RHAH_Ending_WithoutNarrator>
-  <RHAH_Ending_WithoutNarrator_Tooltip>关闭后，其它叙事者不再新触发结局。已出现的结尾保留。</RHAH_Ending_WithoutNarrator_Tooltip>
-  <RHAH_Ending_Toggle_Tooltip>关闭后这项不再新触发。已经出现的不撤掉。</RHAH_Ending_Toggle_Tooltip>
+  <RHAH_Menu_Ending_Note>结局只在穗音叙事下出现，每档只落一个。关掉的那一条不再新触发，已经记下的不撤掉，也不会改去触发另一条。</RHAH_Menu_Ending_Note>
+  <RHAH_Ending_Toggle_Tooltip>关闭后这项不再新触发。已经出现的不撤掉。关掉它不会改触发另一条结局。</RHAH_Ending_Toggle_Tooltip>
   <RHAH_Ending_Identity>身份询问</RHAH_Ending_Identity>
   <RHAH_Ending_Identity_Tooltip>只在穗音叙事下出现一次。拒绝不扣信任，也不会再问。</RHAH_Ending_Identity_Tooltip>
   <RHAH_Ending_Aid>接济门槛：{0}</RHAH_Ending_Aid>

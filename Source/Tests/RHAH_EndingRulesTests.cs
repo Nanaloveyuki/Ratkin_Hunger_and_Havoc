@@ -19,15 +19,15 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void LowEnding_DoesNotBlockLaterHighEnding()
+        public void OneEnding_BlocksAnyLaterEnding()
         {
             RHAH_EndingFacts low = Facts(10, true, 10, 0, 0, 0, 6, false, 30, false, false, false, false, false, 0);
             Assert.Equal(RHAH_EndingId.E03, RHAH_EndingRules.Next(low, RHAH_EndingGoals.Defaults()));
 
-            RHAH_EndingFacts after = Facts(80, true, 99, 3, 3, 100, 6, false, 30, false, false, true, false, false, 0);
-            Assert.Equal(RHAH_EndingId.E02, RHAH_EndingRules.Next(after, RHAH_EndingGoals.Defaults()));
+            RHAH_EndingFacts shown = Facts(80, true, 99, 3, 3, 100, 6, false, 30, false, false, true, false, false, 0);
+            Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(shown, RHAH_EndingGoals.Defaults()));
             Assert.Equal(RHAH_EndingId.E01, RHAH_EndingRules.Next(
-                Facts(60, true, 99, 3, 1, 10, 6, false, 30, false, false, true, false, false, 0),
+                Facts(60, true, 99, 3, 1, 10, 6, false, 30, false, false, false, false, false, 0),
                 RHAH_EndingGoals.Defaults()));
         }
 
@@ -49,16 +49,16 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void OtherNarrator_IgnoresSuiyinTrustAndIdentity()
+        public void OtherNarrator_GetsNoEnding()
         {
-            Assert.Equal(RHAH_EndingId.E02, RHAH_EndingRules.Next(
+            Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(
                 Facts(0, false, 99, 3, 0, 100, 6, true, 30, false, false, false, false, false, 0),
                 RHAH_EndingGoals.Defaults()));
             Assert.False(RHAH_EndingRules.IdentityDue(
                 Facts(90, false, 99, 3, 0, 100, 6, true, 30, true, true, false, false, false, 0),
                 RHAH_EndingGoals.Defaults()));
-            Assert.Equal("RHAH_Ending_Public", RHAH_EndingRuntime.TextKey(RHAH_EndingId.E02, false));
-            Assert.Equal("RHAH_Ending_E03", RHAH_EndingRuntime.TextKey(RHAH_EndingId.E03, false));
+            Assert.False(RHAH_EndingRuntime.Counts(false, null));
+            Assert.True(RHAH_EndingRuntime.Counts(true, null));
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(12, loaded.AdultCount);
             Assert.True(loaded.EndingShown(RHAH_EndingId.E03));
             Assert.False(loaded.IdentityDue(200000, true, RHAH_EndingGoals.Defaults()));
-            Assert.Equal(RHAH_EndingId.E01, loaded.PendingEnding(200000, true, new RHAH_EndingGoals(1, 1, 3, 100, 30, true, true, true, true, true, true, true, true)));
+            Assert.Equal(RHAH_EndingId.None, loaded.PendingEnding(200000, true, new RHAH_EndingGoals(1, 1, 3, 100, 30, true, true, true, true, true, true, true, true)));
         }
 
         static RHAH_EndingFacts Facts(
@@ -170,12 +170,12 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void CompletedAidAndForcedExpulsionCountOnce()
+        public void PromiseMarksAidWithoutCountingDelivery()
         {
-            Assert.Equal(RHAH_EndingRules.RHAH_EndingEvent.Aid, RHAH_EndingRules.FromChoice(RHAH_ChoiceKind.Aid, RHAH_ChoiceAction.Deliver));
-            Assert.Equal(RHAH_EndingRules.RHAH_EndingEvent.Aid, RHAH_EndingRules.FromChoice(RHAH_ChoiceKind.ChildExchange, RHAH_ChoiceAction.Deliver));
-            Assert.Equal(RHAH_EndingRules.RHAH_EndingEvent.None, RHAH_EndingRules.FromChoice(RHAH_ChoiceKind.Aid, RHAH_ChoiceAction.Reject));
-            Assert.Equal(RHAH_EndingRules.RHAH_EndingEvent.None, RHAH_EndingRules.FromChoice(RHAH_ChoiceKind.Intel, RHAH_ChoiceAction.Deliver));
+            Assert.True(RHAH_RequestRules.PromisesAid(RHAH_ChoiceKind.Aid, RHAH_ChoiceAction.Deliver));
+            Assert.True(RHAH_RequestRules.PromisesAid(RHAH_ChoiceKind.Abandoned, RHAH_ChoiceAction.Join));
+            Assert.False(RHAH_RequestRules.PromisesAid(RHAH_ChoiceKind.Aid, RHAH_ChoiceAction.Reject));
+            Assert.False(RHAH_RequestRules.PromisesAid(RHAH_ChoiceKind.Intel, RHAH_ChoiceAction.Deliver));
             Assert.True(RHAH_EndingRules.CountsExpulsion(true, true));
             Assert.False(RHAH_EndingRules.CountsExpulsion(false, true));
         }

@@ -290,41 +290,42 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return false;
         }
 
-        // 先 E-02 再 E-01 再中低信任 低条件不挡住后来的高条件
+        // 只在穗音下判定 每档只落一个 先 E-02 再 E-01 再中低信任
         internal static RHAH_EndingId Next(RHAH_EndingFacts facts, RHAH_EndingGoals goals)
         {
-            if (facts.Narrator || goals.EndingsWithoutNarrator)
+            if (!facts.Narrator || facts.E01Shown || facts.E02Shown || facts.E03Shown || facts.E04Shown || facts.E05Shown)
             {
-                bool scale = ScaleMet(facts, goals);
-                if (scale && facts.Adults >= goals.Adults && (!facts.Narrator || facts.Trust >= HopeTrust) &&
-                    goals.E02Enabled && !facts.E02Shown)
+                return RHAH_EndingId.None;
+            }
+
+            bool scale = ScaleMet(facts, goals);
+            if (scale && facts.Adults >= goals.Adults && facts.Trust >= HopeTrust &&
+                goals.E02Enabled)
+            {
+                return RHAH_EndingId.E02;
+            }
+
+            if (scale && facts.Trust >= TrustFloor && goals.E01Enabled)
+            {
+                return RHAH_EndingId.E01;
+            }
+
+            if (facts.Trust <= HaltTrust && facts.CompletedKinds > 0 && goals.E05Enabled)
+            {
+                return RHAH_EndingId.E05;
+            }
+
+            if (LowReady(facts, goals))
+            {
+                RHAH_EndingId low = facts.Trust < 0 ? RHAH_EndingId.E04 : RHAH_EndingId.E03;
+                if (low == RHAH_EndingId.E04 && facts.Trust < HaltTrust)
                 {
-                    return RHAH_EndingId.E02;
+                    low = RHAH_EndingId.None;
                 }
 
-                if (scale && (!facts.Narrator || facts.Trust >= TrustFloor) && goals.E01Enabled && !facts.E01Shown)
+                if (low != RHAH_EndingId.None && Enabled(goals, low))
                 {
-                    return RHAH_EndingId.E01;
-                }
-
-                if (facts.Narrator && facts.Trust <= HaltTrust && facts.CompletedKinds > 0 &&
-                    goals.E05Enabled && !facts.E05Shown)
-                {
-                    return RHAH_EndingId.E05;
-                }
-
-                if (LowReady(facts, goals))
-                {
-                    RHAH_EndingId low = facts.Narrator && facts.Trust < 0 ? RHAH_EndingId.E04 : RHAH_EndingId.E03;
-                    if (low == RHAH_EndingId.E04 && facts.Trust < HaltTrust)
-                    {
-                        low = RHAH_EndingId.None;
-                    }
-
-                    if (low != RHAH_EndingId.None && Enabled(goals, low) && !Shown(facts, low))
-                    {
-                        return low;
-                    }
+                    return low;
                 }
             }
 
