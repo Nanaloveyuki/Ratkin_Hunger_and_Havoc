@@ -81,6 +81,10 @@ namespace HungerAndHavoc.Incidents
                         cells ? "RHAH_Choice_NoRecruit" : "RHAH_Choice_NoPrison");
                 }
 
+                if (RHAH_RequestRules.ShowsAlly(present.Count > 0, RHAH_ChoiceRuntime.HasAllyDestination()))
+                {
+                    yield return AllyOption(quarantine);
+                }
                 yield return Action("RHAH_Choice_Reject", RHAH_ChoiceAction.Reject);
                 yield return Action("RHAH_Choice_Ignore", RHAH_ChoiceAction.Ignore);
                 if (lookTargets.IsValid())
@@ -97,6 +101,29 @@ namespace HungerAndHavoc.Incidents
             base.ExposeData();
             Scribe_Values.Look(ref choiceId, "choiceId", 0);
             Scribe_Values.Look(ref choice, "choice", RHAH_ChoiceKind.Visitors);
+        }
+
+        DiaOption AllyOption(bool quarantine)
+        {
+            RimWorld.Faction faction = RHAH_ChoiceRuntime.AllyDestination();
+            string name = faction == null ? string.Empty : faction.Name;
+            string label = "RHAH_Choice_Ally".Translate(name).ToString();
+            DiaOption option = new DiaOption(label);
+            if (quarantine)
+            {
+                option.Disable("RHAH_Choice_Quarantine".Translate());
+                return option;
+            }
+
+            if (faction == null)
+            {
+                option.Disable("RHAH_Choice_NoAlly".Translate());
+                return option;
+            }
+
+            option.action = () => Settle(RHAH_ChoiceAction.Ally);
+            option.resolveTree = true;
+            return option;
         }
 
         DiaOption Gated(string key, RHAH_ChoiceAction action, bool allowed, bool quarantine, string emptyKey = "RHAH_Choice_NoRecruit", int durationDays = 0)
@@ -156,6 +183,13 @@ namespace HungerAndHavoc.Incidents
             {
                 ShowFoodHint(settings);
                 Messages.Message("RHAH_Choice_FeedWaiting".Translate(), MessageTypeDefOf.NeutralEvent);
+            }
+            else if (settled == RHAH_ChoiceAction.Ally)
+            {
+                RimWorld.Faction faction = RHAH_ChoiceRuntime.AllyDestination();
+                int count = record == null ? 0 : RHAH_ChoiceRuntime.Pawns(record).Count;
+                string name = faction == null ? string.Empty : faction.Name;
+                Messages.Message("RHAH_Choice_AllySent".Translate(count, name), MessageTypeDefOf.NeutralEvent);
             }
 
             Find.LetterStack.RemoveLetter(this);

@@ -128,7 +128,15 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                return JobMaker.MakeJob(JobDefOf.CarryDownedPawnToExit, child);
+                IntVec3 exit;
+                if (!RCellFinder.TryFindBestExitSpot(pawn, out exit, TraverseMode.ByPawn, true))
+                {
+                    continue;
+                }
+
+                Job carry = JobMaker.MakeJob(JobDefOf.CarryDownedPawnToExit, child, exit);
+                carry.count = 1;
+                return carry;
             }
 
             return null;

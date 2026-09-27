@@ -49,7 +49,8 @@ namespace HungerAndHavoc.Incidents
         Enslave = 9,
         Capture = 10,
         Attack = 11,
-        Prison = 12
+        Prison = 12,
+        Ally = 13
     }
 
     internal readonly struct RHAH_RequestSpec
@@ -335,6 +336,11 @@ namespace HungerAndHavoc.Incidents
             return action == RHAH_ChoiceAction.Reject || action == RHAH_ChoiceAction.Timeout;
         }
 
+        internal static bool SendsToAlly(RHAH_ChoiceAction action)
+        {
+            return action == RHAH_ChoiceAction.Ally;
+        }
+
         internal const int FoodPerVisitor = 1;
         internal const int MaxFoodRequest = 12;
 
@@ -415,6 +421,16 @@ namespace HungerAndHavoc.Incidents
             return prisonEnabled && hasCells && present && OffersBatchControl(displayId);
         }
 
+        internal static bool ShowsAlly(bool present, bool hasAlly)
+        {
+            return present && hasAlly;
+        }
+
+        internal static bool IsAllyDestination(bool player, bool hidden, bool defeated, bool temporary, bool humanlike, bool hostile, bool ally, bool hasSettlement, bool attitudeFaction)
+        {
+            return !player && !hidden && !defeated && !temporary && humanlike && !hostile && ally && hasSettlement && !attitudeFaction;
+        }
+
         internal static bool ShowsFoodGive(RHAH_ChoiceKind choice)
         {
             return choice == RHAH_ChoiceKind.Visitors ||
@@ -476,6 +492,8 @@ namespace HungerAndHavoc.Incidents
         internal int ExpireTick = -1;
         internal RHAH_ChoiceAction Settled;
         internal List<int> PawnLoadIds = new List<int>();
+        internal int AllyFactionId;
+        internal List<int> AllyPawnIds = new List<int>();
 
         internal bool Open => Settled == RHAH_ChoiceAction.None;
 
@@ -492,10 +510,13 @@ namespace HungerAndHavoc.Incidents
             Scribe_Values.Look(ref ExpireTick, "expireTick", -1);
             Scribe_Values.Look(ref Settled, "settled", RHAH_ChoiceAction.None);
             Scribe_Collections.Look(ref PawnLoadIds, "pawnLoadIds", LookMode.Value);
+            Scribe_Values.Look(ref AllyFactionId, "allyFactionId", 0);
+            Scribe_Collections.Look(ref AllyPawnIds, "allyPawnIds", LookMode.Value);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 DisplayId = DisplayId ?? string.Empty;
                 PawnLoadIds = PawnLoadIds ?? new List<int>();
+                AllyPawnIds = AllyPawnIds ?? new List<int>();
             }
         }
     }

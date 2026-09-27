@@ -70,6 +70,11 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
+            if (HungerAndHavoc.Incidents.RHAH_ChoiceRuntime.TryJoinAlly(__instance))
+            {
+                return;
+            }
+
             RHAH_SuiyinTrust.Note(1, RHAH_SuiyinTrust.Value(RHAH_SuiyinTrust.Leave, RHAH_Mod.Settings == null ? RHAH_SuiyinTrust.Leave : RHAH_Mod.Settings.trustLeave));
         }
     }

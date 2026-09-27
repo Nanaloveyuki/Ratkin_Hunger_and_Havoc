@@ -84,6 +84,7 @@ namespace HungerAndHavoc.Incidents
                     Leave(record);
                 }
             }
+
         }
 
         internal static bool TryConsume(Map map, RHAH_RequestKind kind, int amount)
@@ -211,6 +212,13 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
+            if (RHAH_RequestRules.SendsToAlly(record.Settled))
+            {
+                SendToAlly(record, Pawns(record));
+                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
+                return;
+            }
+
             if (RHAH_RequestRules.WaitsForFood(record.Settled))
             {
                 RHAH_FoodHandoff.Begin(Pawns(record));
@@ -228,6 +236,167 @@ namespace HungerAndHavoc.Incidents
 
             NoteEnding(record);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
+        }
+
+        internal static bool HasAllyDestination()
+        {
+            return AllyDestination() != null;
+        }
+
+        internal static Faction AllyDestination()
+        {
+            if (Find.FactionManager == null || Find.WorldObjects == null)
+            {
+                return null;
+            }
+
+            List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
+            Faction chosen = null;
+            for (int i = 0; i < factions.Count; i++)
+            {
+                Faction faction = factions[i];
+                if (!AcceptsAlly(faction))
+                {
+                    continue;
+                }
+
+                if (chosen == null || faction.loadID < chosen.loadID)
+                {
+                    chosen = faction;
+                }
+            }
+
+            return chosen;
+        }
+
+        static bool AcceptsAlly(Faction faction)
+        {
+            if (faction == null || faction.def == null)
+            {
+                return false;
+            }
+
+            return RHAH_RequestRules.IsAllyDestination(
+                faction.IsPlayer,
+                faction.Hidden,
+                faction.defeated,
+                faction.temporary,
+                faction.def.humanlikeFaction,
+                faction.HostileTo(Faction.OfPlayer),
+                faction.PlayerRelationKind == FactionRelationKind.Ally,
+                HasSettlement(faction),
+                RHAH_AttitudeFactions.IsAttitudeFaction(faction));
+        }
+
+        static bool HasSettlement(Faction faction)
+        {
+            List<Settlement> settlements = Find.WorldObjects.Settlements;
+            for (int i = 0; i < settlements.Count; i++)
+            {
+                Settlement settlement = settlements[i];
+                if (settlement != null && settlement.Faction == faction && !settlement.Destroyed)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        static void SendToAlly(RHAH_ChoiceRecord record, List<Verse.Pawn> pawns)
+        {
+            Faction faction = AllyDestination();
+            if (faction == null || record == null)
+            {
+                return;
+            }
+
+            record.AllyFactionId = faction.loadID;
+            record.AllyPawnIds.Clear();
+            List<Verse.Pawn> leaving = new List<Verse.Pawn>();
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Verse.Pawn pawn = pawns[i];
+                if (pawn == null || pawn.Dead || pawn.Destroyed || !pawn.Spawned || !RHAH_Api.IsVisitor(pawn))
+                {
+                    continue;
+                }
+
+                if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Transfer))
+                {
+                    continue;
+                }
+
+                record.AllyPawnIds.Add(pawn.thingIDNumber);
+                leaving.Add(pawn);
+            }
+
+            if (leaving.Count == 0)
+            {
+                record.AllyFactionId = 0;
+                return;
+            }
+
+            RHAH_BatchAttitude.OrderVisitorLeave(leaving);
+        }
+
+        internal static bool TryJoinAlly(Verse.Pawn pawn)
+        {
+            if (pawn == null || pawn.Spawned || pawn.Dead)
+            {
+                return false;
+            }
+
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+            if (game == null)
+            {
+                return false;
+            }
+
+            List<RHAH_ChoiceRecord> records = Records(game);
+            for (int i = 0; i < records.Count; i++)
+            {
+                RHAH_ChoiceRecord record = records[i];
+                if (record.AllyFactionId <= 0 || record.AllyPawnIds == null || !record.AllyPawnIds.Contains(pawn.thingIDNumber))
+                {
+                    continue;
+                }
+
+                Faction faction = FindFaction(record.AllyFactionId);
+                record.AllyPawnIds.Remove(pawn.thingIDNumber);
+                if (record.AllyPawnIds.Count == 0)
+                {
+                    record.AllyFactionId = 0;
+                }
+
+                if (faction != null)
+                {
+                    pawn.SetFaction(faction);
+                }
+
+                return faction != null;
+            }
+
+            return false;
+        }
+
+        static Faction FindFaction(int loadId)
+        {
+            if (Find.FactionManager == null || loadId <= 0)
+            {
+                return null;
+            }
+
+            List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
+            for (int i = 0; i < factions.Count; i++)
+            {
+                if (factions[i] != null && factions[i].loadID == loadId)
+                {
+                    return factions[i];
+                }
+            }
+
+            return null;
         }
 
         static void Release(RHAH_ChoiceRecord record, RHAH_ReleaseReason reason)
@@ -276,7 +445,7 @@ namespace HungerAndHavoc.Incidents
             RHAH_SuiyinTrust.Note(Pawns(record).Count, RHAH_SuiyinTrust.Value(RHAH_SuiyinTrust.Deliver, RHAH_Mod.Settings == null ? RHAH_SuiyinTrust.Deliver : RHAH_Mod.Settings.trustDeliver));
         }
 
-        static List<Verse.Pawn> Pawns(RHAH_ChoiceRecord record)
+        internal static List<Verse.Pawn> Pawns(RHAH_ChoiceRecord record)
         {
             List<Verse.Pawn> result = new List<Verse.Pawn>();
             if (record.PawnLoadIds == null)

@@ -425,7 +425,7 @@
   <RHAH_Choice_Airdrop_Label>Airdrop</RHAH_Choice_Airdrop_Label>
   <RHAH_Choice_Airdrop_Text>{0} arrived.\n\nThe drop landed in the wrong place. The people are still here. You can take them in, or refuse. Refusing sends them off.</RHAH_Choice_Airdrop_Text>
   <RHAH_Choice_Visitors_Label>Visitors</RHAH_Choice_Visitors_Label>
-  <RHAH_Choice_Visitors_Text>{0} arrived.\n\nYou can take them in, hire them long-term, take them in short-term, capture them, or feed them. After feeding, select a colonist and right-click a visitor to hand over food. Refusing sends them off.</RHAH_Choice_Visitors_Text>
+  <RHAH_Choice_Visitors_Text>{0} arrived.\n\nYou can take them in, hire them long-term, take them in short-term, capture them, feed them, or send them to an allied faction. After feeding, select a colonist and right-click a visitor to hand over food. Refusing sends them off. Sending them makes them that faction's people and they leave. They do not appear at the ally's settlement.</RHAH_Choice_Visitors_Text>
   <RHAH_Choice_SimpleMeal>simple meals</RHAH_Choice_SimpleMeal>
   <RHAH_Choice_FineMeal>fine meals</RHAH_Choice_FineMeal>
   <RHAH_Choice_Medicine>medicine</RHAH_Choice_Medicine>
@@ -442,9 +442,9 @@
   <RHAH_Choice_Capture>Capture (make them prisoners)</RHAH_Choice_Capture>
   <RHAH_Choice_Attack>Attack (the group turns hostile)</RHAH_Choice_Attack>
   <RHAH_Choice_Prison>Send to prison (make them prisoners)</RHAH_Choice_Prison>
-  <RHAH_Choice_NoRecruit>None of them can be handled that way.</RHAH_Choice_NoRecruit>
-  <RHAH_Choice_NoIdeology>Ideology is not active, so they cannot be enslaved.</RHAH_Choice_NoIdeology>
-  <RHAH_Choice_NoPrison>No empty prison cell.</RHAH_Choice_NoPrison>
+  <RHAH_Choice_Ally>Send to {0}</RHAH_Choice_Ally>
+  <RHAH_Choice_NoAlly>No allied faction can take them.</RHAH_Choice_NoAlly>
+  <RHAH_Choice_AllySent>Sent {0} to {1}. They leave. They do not appear at that settlement. Goodwill is only the vanilla amount for leaving healthy.</RHAH_Choice_AllySent>
   <RHAH_Choice_Quarantine>Visitors in quarantine cannot join, be hired, or be transferred.</RHAH_Choice_Quarantine>
   <RHAH_Choice_FeedHint>They will wait where they are. Select a colonist, then right-click a waiting visitor to hand over food. Nobody is sent to deliver it.</RHAH_Choice_FeedHint>
   <RHAH_Choice_FeedHintDismiss>Do not show this again</RHAH_Choice_FeedHintDismiss>

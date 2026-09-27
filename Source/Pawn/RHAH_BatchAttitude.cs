@@ -93,6 +93,16 @@ namespace HungerAndHavoc.Pawn
             }
         }
 
+        internal static void OrderVisitorLeave(List<Verse.Pawn> members)
+        {
+            if (members == null || members.Count == 0)
+            {
+                return;
+            }
+
+            OrderLeave(members);
+        }
+
         static void OrderLeave(List<Verse.Pawn> members)
         {
             Lord lord = members[0].GetLord();

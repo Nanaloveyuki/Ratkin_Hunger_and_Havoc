@@ -425,7 +425,7 @@
   <RHAH_Choice_Airdrop_Label>空投</RHAH_Choice_Airdrop_Label>
   <RHAH_Choice_Airdrop_Text>{0}到了。\n\n空投落错了地方，人还在这里。可以收留，也可以拒绝。拒绝后他们离开。</RHAH_Choice_Airdrop_Text>
   <RHAH_Choice_Visitors_Label>来客</RHAH_Choice_Visitors_Label>
-  <RHAH_Choice_Visitors_Text>{0}到了。\n\n可以收留、收为短工、雇佣为长工、俘虏或投喂。投喂后选中殖民者，右键来客把食物交过去。拒绝后他们离开。</RHAH_Choice_Visitors_Text>
+  <RHAH_Choice_Visitors_Text>{0}到了。\n\n可以收留、收为短工、雇佣为长工、俘虏、投喂，或发配到盟友派系。投喂后选中殖民者，右键来客把食物交过去。拒绝后他们离开。发配后他们改入盟友派系并离开，不会出现在盟友据点里。</RHAH_Choice_Visitors_Text>
   <RHAH_Choice_SimpleMeal>简单餐</RHAH_Choice_SimpleMeal>
   <RHAH_Choice_FineMeal>精致餐</RHAH_Choice_FineMeal>
   <RHAH_Choice_Medicine>药品</RHAH_Choice_Medicine>
@@ -442,9 +442,9 @@
   <RHAH_Choice_Capture>俘虏（转变身份为囚犯）</RHAH_Choice_Capture>
   <RHAH_Choice_Attack>攻击（整批转为敌对）</RHAH_Choice_Attack>
   <RHAH_Choice_Prison>送进监狱（转变身份为囚犯）</RHAH_Choice_Prison>
-  <RHAH_Choice_NoRecruit>没有可以这样处理的来客。</RHAH_Choice_NoRecruit>
-  <RHAH_Choice_NoIdeology>没有文化扩展，不能奴役。</RHAH_Choice_NoIdeology>
-  <RHAH_Choice_NoPrison>没有空的囚室。</RHAH_Choice_NoPrison>
+  <RHAH_Choice_Ally>发配到{0}</RHAH_Choice_Ally>
+  <RHAH_Choice_NoAlly>没有可以接收他们的盟友派系。</RHAH_Choice_NoAlly>
+  <RHAH_Choice_AllySent>已把{0}人发配到{1}。他们会离开，不会直接出现在对方据点里。好感只在健康离图时按原版结算。</RHAH_Choice_AllySent>
   <RHAH_Choice_Quarantine>检疫中的来客不能加入、雇佣或转移。</RHAH_Choice_Quarantine>
   <RHAH_Choice_FeedHint>他们会等在原地。选中一名殖民者，右键正在等待的来客，把食物交给对方。这不会自动派一个人去送。</RHAH_Choice_FeedHint>
   <RHAH_Choice_FeedHintDismiss>不再提示</RHAH_Choice_FeedHintDismiss>

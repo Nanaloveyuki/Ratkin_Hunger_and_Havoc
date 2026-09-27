@@ -145,6 +145,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | ExpireTick | expireTick | -1 | 否 | |
 | Settled | settled | None | 否 | `RHAH_ChoiceAction` |
 | PawnLoadIds | pawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
+| AllyFactionId | allyFactionId | 0 | 否 | 发配目标派系 loadID。0 表示没有待入籍的人。旧档缺键为 0 |
+| AllyPawnIds | allyPawnIds | 空集合 | 是 | 已下令离场、离图后才改入盟友的 pawn thingID。`PostLoadInit` 补空列表；null 与空集合语义相同。人离图或死亡后移除 |
 
 ### WorldObject_RHAH_RefugeeCamp
 
