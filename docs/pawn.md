@@ -69,7 +69,7 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。寻食 duty 在没有进食、乞讨、偷窃、啃咬或等待 Job 时，在等待点附近游荡，不走向地图出口。`ExitMap` 只在生命周期已经是 `Leaving` 时放行；吃饱离开仍问 `LeaveAfterFed`。`fedWanderEnabled` 开启时先闲逛 `fedWanderHours` 小时再走，默认 12，范围 1 到 48。关闭时离开时刻就是吃饱这一刻，下一轮离场直接走向出口。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
 五个隐藏态度派系对玩家的好感固定：敌对 −100，偏敌对、中立、偏友好和友善都是 0。对玩家以外的派系也固定，不进设置。敌对派系对任何非态度派系是敌对、−100。另外四个对非态度派系是中立、0。五个态度派系互相是中立、0。隐藏派系没有好感通道，所以直接改双向关系。对玩家每 tick 校正。对其余派系在来客生成前和批次转入敌对派系前校正，不按小时扫描。
 
-不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 且能自己走到出口的成年照护者带出。`Carry` 默认只放行非幼年角色；幼年角色可以 `Leash`，但不能发出携带 Job。断粮等待到达 `foodWaitUntilTick` 后，仍未进食的活跃访客离场，不再停在寻食游荡。
+不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 且能自己走到出口的成年照护者带出。`Carry` 默认只放行非幼年角色；幼年角色可以 `Leash`，但不能发出携带 Job。外部若对这种来客直接下 `exitMapOnArrival` 的 `Goto`，`StartJob` 会拒绝，来客留在原地等照护者。能自己走到出口的来客不拦。断粮等待到达 `foodWaitUntilTick` 后，仍未进食的活跃访客离场，不再停在寻食游荡。
 
 家庭 Job 走同一条寻食调度和囚犯 `Humanlike_PostDuty`。母亲离场且 `familyDropEnabled` 开启时，先放下仍抱着、并登记在 `childPawnLoadIds` 里的孩子，放下成功才写入 `droppedChildLoadIds`。`motherFeedEnabled` 开启时，母亲把背包里一份可吃的食物交给食物低于 30% 的已登记孩子，放不进背包就丢在孩子脚下。本模组来源的饥饿囚犯在 `prisonerScavengeEnabled` 开启时舔掉 12 格内的一层污物，营养 +0.15，并获得 `RHAH_Thought_ScavengedFilth`。`tailBiteEnabled` 默认关闭；开启后，允许 `TailBite` 的饥饿囚犯咬掉 12 格内睡着、不满 3 岁、仍有 `RK_BodyPart_Tail` 的囚犯的天然鼠尾。睡着时尾巴变为新鲜缺失，咬的人营养 +0.35。对方中途醒来则只造成 4 点咬伤，不获得这两份心情。找不到污物或尾巴时，沿用一小时寻食冷却。
 

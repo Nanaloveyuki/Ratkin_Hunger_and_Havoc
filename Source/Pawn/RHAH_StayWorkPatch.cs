@@ -1,3 +1,4 @@
+using HungerAndHavoc.Api;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -30,6 +31,14 @@ namespace HungerAndHavoc.Pawn
     {
         static bool Prefix(Verse.Pawn ___pawn, Job newJob, ThinkNode jobGiver)
         {
+            if (RHAH_VisitorRules.RejectsSelfExit(
+                RHAH_Api.IsVisitor(___pawn),
+                newJob != null && newJob.exitMapOnArrival,
+                Compat.RHAH_ChildMovement.CanWalkOut(___pawn)))
+            {
+                return false;
+            }
+
             return !RHAH_VisitorStay.RejectsAssignedJob(___pawn, newJob, jobGiver);
         }
     }

@@ -166,6 +166,10 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_VisitorRules.AcceptsStone(true, true));
             Assert.True(RHAH_VisitorRules.LiftsAgeImmobility(false, true, true, false));
             Assert.False(RHAH_VisitorRules.LiftsAgeImmobility(false, true, true, true));
+            Assert.True(RHAH_VisitorRules.RejectsSelfExit(true, true, false));
+            Assert.False(RHAH_VisitorRules.RejectsSelfExit(true, true, true));
+            Assert.False(RHAH_VisitorRules.RejectsSelfExit(true, false, false));
+            Assert.False(RHAH_VisitorRules.RejectsSelfExit(false, true, false));
         }
 
         [Fact]

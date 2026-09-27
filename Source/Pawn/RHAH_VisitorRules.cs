@@ -787,6 +787,12 @@ namespace HungerAndHavoc.Pawn
             return !toddlersActive && eventBaby && ageDowned && !injuredDowned;
         }
 
+        // 倒地或还不能走的来客不接受别人塞来的离图 Goto
+        internal static bool RejectsSelfExit(bool visitor, bool exitOnArrival, bool canWalkOut)
+        {
+            return visitor && exitOnArrival && !canWalkOut;
+        }
+
         internal static bool AcceptsStone(bool stoneChunk, bool slag)
         {
             return stoneChunk && !slag;
