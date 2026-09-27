@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Storyteller.Suiyin;
 using Verse;
+using HungerAndHavoc.Core;
 
 namespace HungerAndHavoc.Narrative
 {
@@ -194,7 +195,7 @@ namespace HungerAndHavoc.Narrative
             return RHAH_EndingRules.Shown(EndingFacts(0, true), id);
         }
 
-        internal bool AsidesClosed => RHAH_EndingRules.AsidesClosed(trust, endingE05);
+        internal bool AsidesClosed => RHAH_EndingRules.AsidesClosed(trust, endingE05, RHAH_Mod.Settings == null ? RHAH_EndingRules.HaltTrust : RHAH_Mod.Settings.endingHaltTrust);
 
         internal void NoteAid(int tick)
         {

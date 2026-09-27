@@ -66,7 +66,7 @@ namespace HungerAndHavoc.EventMgr
             }
 
             predatorRolled.Add(instanceId);
-            int chance = RHAH_EventFollowRules.ShortPredatorPercent;
+            int chance = Core.RHAH_Mod.Settings == null ? RHAH_EventFollowRules.ShortPredatorPercent : Core.RHAH_Mod.Settings.followPredatorPercent;
             if (!RHAH_EventFollowRules.PredatorSelected(chance, Rand.Value))
             {
                 return;
@@ -128,7 +128,7 @@ namespace HungerAndHavoc.EventMgr
                     continue;
                 }
 
-                if (RHAH_EventFollowRules.IsYoung(comp.State.role) && pawn.ageTracker.AgeBiologicalYearsFloat >= RHAH_EventFollowRules.AdultAge)
+                if (RHAH_EventFollowRules.IsYoung(comp.State.role) && pawn.ageTracker.AgeBiologicalYearsFloat >= (Core.RHAH_Mod.Settings == null ? RHAH_EventFollowRules.AdultAge : Core.RHAH_Mod.Settings.followAdultAge))
                 {
                     return displayId != "I-012" || comp.State.lifecycle == RHAH_Lifecycle.Released;
                 }

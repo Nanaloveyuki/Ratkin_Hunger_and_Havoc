@@ -308,6 +308,11 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         static int Cost()
         {
             SuiyinBook book = Current.Game?.GetComponent<NarrativeState>()?.Book;
+            if (Core.RHAH_Mod.Settings != null)
+            {
+                return Core.RHAH_Mod.Settings.narrativeRescueCost;
+            }
+
             return book == null ? 250 : book.Config.RescueCost;
         }
 

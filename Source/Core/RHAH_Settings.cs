@@ -128,7 +128,118 @@ namespace HungerAndHavoc.Core
         public float weightIntel = 0.12f;
         public float weightSeason = 1.1f;
         public float weightPlague = 0.5f;
-
+        public int requestMinSimple = 6;
+        public int requestMaxSimple = 28;
+        public int requestMinFine = 4;
+        public int requestMaxFine = 18;
+        public int requestMinMedicine = 2;
+        public int requestMaxMedicine = 10;
+        public int requestMinSilver = 80;
+        public int requestMaxSilver = 1200;
+        public int requestMinHerbal = 3;
+        public int requestMaxHerbal = 15;
+        public int requestDays = 1;
+        public float requestPointScale = 300f;
+        public int foodPerChild = 10;
+        public int foodPerVisitor = 1;
+        public int maxFoodRequest = 12;
+        public int envoyMealCost = 6;
+        public int campMinAdults = 2;
+        public int campMaxAdults = 4;
+        public int campMinChildren = 8;
+        public int campMaxChildren = 16;
+        public int campGoodwill = 12;
+        public int campDays = 15;
+        public int campHuts = 4;
+        public int holeWoodCost = 20;
+        public int holeCleanPortions = 5;
+        public int holeLossRange = 12;
+        public int holeMaxLosses = 3;
+        public int apparelAwfulPercent = 35;
+        public int apparelPoorPercent = 50;
+        public int apparelMinDurabilityPercent = 10;
+        public int apparelMaxDurabilityPercent = 60;
+        public int apparelCorpsePercent = 25;
+        public int apparelClothPercent = 65;
+        public int apparelMaxPieces = 4;
+        public int begFailMood = -5;
+        public int begSuccessMood = 3;
+        public int begSlapMood = -10;
+        public int begSlapKnockoutHours = 3;
+        public float begBruiseSeverity = 4f;
+        public float begBruiseStep = 4f;
+        public float begBruiseMax = 16f;
+        public float barkNutrition = 0.2f;
+        public float barkDamage = 2f;
+        public float wallNutrition = 0.5f;
+        public float wallDamage = 5f;
+        public int clayMaxBites = 3;
+        public int clayWindowDays = 15;
+        public float claySeverityPerBite = 0.33f;
+        public float childHungryPercent = 30f;
+        public float prisonerHungryPercent = 20f;
+        public float tailBiteAge = 3f;
+        public float scavengeNutrition = 0.15f;
+        public float tailNutrition = 0.35f;
+        public float tailFailDamage = 4f;
+        public float satisfiedFoodPercent = 82f;
+        public float refeedMalnutrition = 0.4f;
+        public float plagueSeverityMax = 0.1f;
+        public int followPredatorPercent = 10;
+        public int followBirthWatchDays = 3;
+        public int followPlagueBirthDays = 5;
+        public int followMotherReturnDays = 15;
+        public int followLongReturnYears = 2;
+        public float followAdultAge = 14f;
+        public int followMoodScalePercent = 100;
+        public int endingTrustFloor = 50;
+        public int endingHopeTrust = 75;
+        public int endingHaltTrust = -75;
+        public int endingLowKinds = 6;
+        public float endingThreatDays = 13f;
+        public int trustKill = -10;
+        public int trustCaptive = -5;
+        public int trustEntrustGood = 5;
+        public int trustEntrustCaptive = -5;
+        public int trustEntrustStory = -2;
+        public int trustEntrustRegret = -3;
+        public int trustEntrustBanished = -1;
+        public int trustExchange = 3;
+        public int trustHoleOpen = 1;
+        public int trustHoleIgnore = -1;
+        public int trustHoleBait = 3;
+        public int trustQuarantineStay = 1;
+        public int trustQuarantineRecover = 2;
+        public int trustQuarantineFail = -2;
+        public int trustEnvoyFail = -2;
+        public int trustRelicFail = -2;
+        public int trustHold = -1;
+        public int trustDeliver = 1;
+        public int trustLeave = 1;
+        public int trustExpel = -1;
+        public int narrativeRewardSilver = 300;
+        public int narrativeRescueCost = 250;
+        public int narrativeRescueReward = 2500;
+        public int narrativeRelicTake = 200;
+        public int narrativeRelicHand = 100;
+        public int narrativeTrustBonusPercent = 25;
+        public int narrativeCareDays = 5;
+        public int narrativeMissingDays = 1;
+        public int narrativeObserveDays = 30;
+        public int narrativeHoleIgnoreDays = 3;
+        public int narrativeEnvoyWaitDays = 3;
+        public int narrativeEnvoyCheckDays = 1;
+        public int narrativeRelicDays = 15;
+        public int narrativeReturnDays = 15;
+        public int narrativeRevisitYears = 4;
+        public int narrativeAsideCooldownDays = 3;
+        public int narrativeAsideCutoff = -75;
+        public int narrativeAdultYears = 18;
+        public int narrativeTheftKinds = 2;
+        public int narrativeProgressKinds = 3;
+        public int narrativeRewardKinds = 8;
+        public int narrativeEnvoyKinds = 5;
+        public int narrativeRelicKinds = 8;
 
         public override void ExposeData()
         {
@@ -253,6 +364,118 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref weightSeason, "weightSeason", 1.1f);
             Scribe_Values.Look(ref weightPlague, "weightPlague", 0.5f);
             Scribe_Values.Look(ref endingIdentity, "endingIdentity", true);
+            Scribe_Values.Look(ref requestMinSimple, "requestMinSimple", 6);
+            Scribe_Values.Look(ref requestMaxSimple, "requestMaxSimple", 28);
+            Scribe_Values.Look(ref requestMinFine, "requestMinFine", 4);
+            Scribe_Values.Look(ref requestMaxFine, "requestMaxFine", 18);
+            Scribe_Values.Look(ref requestMinMedicine, "requestMinMedicine", 2);
+            Scribe_Values.Look(ref requestMaxMedicine, "requestMaxMedicine", 10);
+            Scribe_Values.Look(ref requestMinSilver, "requestMinSilver", 80);
+            Scribe_Values.Look(ref requestMaxSilver, "requestMaxSilver", 1200);
+            Scribe_Values.Look(ref requestMinHerbal, "requestMinHerbal", 3);
+            Scribe_Values.Look(ref requestMaxHerbal, "requestMaxHerbal", 15);
+            Scribe_Values.Look(ref requestDays, "requestDays", 1);
+            Scribe_Values.Look(ref requestPointScale, "requestPointScale", 300f);
+            Scribe_Values.Look(ref foodPerChild, "foodPerChild", 10);
+            Scribe_Values.Look(ref foodPerVisitor, "foodPerVisitor", 1);
+            Scribe_Values.Look(ref maxFoodRequest, "maxFoodRequest", 12);
+            Scribe_Values.Look(ref envoyMealCost, "envoyMealCost", 6);
+            Scribe_Values.Look(ref campMinAdults, "campMinAdults", 2);
+            Scribe_Values.Look(ref campMaxAdults, "campMaxAdults", 4);
+            Scribe_Values.Look(ref campMinChildren, "campMinChildren", 8);
+            Scribe_Values.Look(ref campMaxChildren, "campMaxChildren", 16);
+            Scribe_Values.Look(ref campGoodwill, "campGoodwill", 12);
+            Scribe_Values.Look(ref campDays, "campDays", 15);
+            Scribe_Values.Look(ref campHuts, "campHuts", 4);
+            Scribe_Values.Look(ref holeWoodCost, "holeWoodCost", 20);
+            Scribe_Values.Look(ref holeCleanPortions, "holeCleanPortions", 5);
+            Scribe_Values.Look(ref holeLossRange, "holeLossRange", 12);
+            Scribe_Values.Look(ref holeMaxLosses, "holeMaxLosses", 3);
+            Scribe_Values.Look(ref apparelAwfulPercent, "apparelAwfulPercent", 35);
+            Scribe_Values.Look(ref apparelPoorPercent, "apparelPoorPercent", 50);
+            Scribe_Values.Look(ref apparelMinDurabilityPercent, "apparelMinDurabilityPercent", 10);
+            Scribe_Values.Look(ref apparelMaxDurabilityPercent, "apparelMaxDurabilityPercent", 60);
+            Scribe_Values.Look(ref apparelCorpsePercent, "apparelCorpsePercent", 25);
+            Scribe_Values.Look(ref apparelClothPercent, "apparelClothPercent", 65);
+            Scribe_Values.Look(ref apparelMaxPieces, "apparelMaxPieces", 4);
+            Scribe_Values.Look(ref begFailMood, "begFailMood", -5);
+            Scribe_Values.Look(ref begSuccessMood, "begSuccessMood", 3);
+            Scribe_Values.Look(ref begSlapMood, "begSlapMood", -10);
+            Scribe_Values.Look(ref begSlapKnockoutHours, "begSlapKnockoutHours", 3);
+            Scribe_Values.Look(ref begBruiseSeverity, "begBruiseSeverity", 4f);
+            Scribe_Values.Look(ref begBruiseStep, "begBruiseStep", 4f);
+            Scribe_Values.Look(ref begBruiseMax, "begBruiseMax", 16f);
+            Scribe_Values.Look(ref barkNutrition, "barkNutrition", 0.2f);
+            Scribe_Values.Look(ref barkDamage, "barkDamage", 2f);
+            Scribe_Values.Look(ref wallNutrition, "wallNutrition", 0.5f);
+            Scribe_Values.Look(ref wallDamage, "wallDamage", 5f);
+            Scribe_Values.Look(ref clayMaxBites, "clayMaxBites", 3);
+            Scribe_Values.Look(ref clayWindowDays, "clayWindowDays", 15);
+            Scribe_Values.Look(ref claySeverityPerBite, "claySeverityPerBite", 0.33f);
+            Scribe_Values.Look(ref childHungryPercent, "childHungryPercent", 30f);
+            Scribe_Values.Look(ref prisonerHungryPercent, "prisonerHungryPercent", 20f);
+            Scribe_Values.Look(ref tailBiteAge, "tailBiteAge", 3f);
+            Scribe_Values.Look(ref scavengeNutrition, "scavengeNutrition", 0.15f);
+            Scribe_Values.Look(ref tailNutrition, "tailNutrition", 0.35f);
+            Scribe_Values.Look(ref tailFailDamage, "tailFailDamage", 4f);
+            Scribe_Values.Look(ref satisfiedFoodPercent, "satisfiedFoodPercent", 82f);
+            Scribe_Values.Look(ref refeedMalnutrition, "refeedMalnutrition", 0.4f);
+            Scribe_Values.Look(ref plagueSeverityMax, "plagueSeverityMax", 0.1f);
+            Scribe_Values.Look(ref followPredatorPercent, "followPredatorPercent", 10);
+            Scribe_Values.Look(ref followBirthWatchDays, "followBirthWatchDays", 3);
+            Scribe_Values.Look(ref followPlagueBirthDays, "followPlagueBirthDays", 5);
+            Scribe_Values.Look(ref followMotherReturnDays, "followMotherReturnDays", 15);
+            Scribe_Values.Look(ref followLongReturnYears, "followLongReturnYears", 2);
+            Scribe_Values.Look(ref followAdultAge, "followAdultAge", 14f);
+            Scribe_Values.Look(ref followMoodScalePercent, "followMoodScalePercent", 100);
+            Scribe_Values.Look(ref endingTrustFloor, "endingTrustFloor", 50);
+            Scribe_Values.Look(ref endingHopeTrust, "endingHopeTrust", 75);
+            Scribe_Values.Look(ref endingHaltTrust, "endingHaltTrust", -75);
+            Scribe_Values.Look(ref endingLowKinds, "endingLowKinds", 6);
+            Scribe_Values.Look(ref endingThreatDays, "endingThreatDays", 13f);
+            Scribe_Values.Look(ref trustKill, "trustKill", -10);
+            Scribe_Values.Look(ref trustCaptive, "trustCaptive", -5);
+            Scribe_Values.Look(ref trustEntrustGood, "trustEntrustGood", 5);
+            Scribe_Values.Look(ref trustEntrustCaptive, "trustEntrustCaptive", -5);
+            Scribe_Values.Look(ref trustEntrustStory, "trustEntrustStory", -2);
+            Scribe_Values.Look(ref trustEntrustRegret, "trustEntrustRegret", -3);
+            Scribe_Values.Look(ref trustEntrustBanished, "trustEntrustBanished", -1);
+            Scribe_Values.Look(ref trustExchange, "trustExchange", 3);
+            Scribe_Values.Look(ref trustHoleOpen, "trustHoleOpen", 1);
+            Scribe_Values.Look(ref trustHoleIgnore, "trustHoleIgnore", -1);
+            Scribe_Values.Look(ref trustHoleBait, "trustHoleBait", 3);
+            Scribe_Values.Look(ref trustQuarantineStay, "trustQuarantineStay", 1);
+            Scribe_Values.Look(ref trustQuarantineRecover, "trustQuarantineRecover", 2);
+            Scribe_Values.Look(ref trustQuarantineFail, "trustQuarantineFail", -2);
+            Scribe_Values.Look(ref trustEnvoyFail, "trustEnvoyFail", -2);
+            Scribe_Values.Look(ref trustRelicFail, "trustRelicFail", -2);
+            Scribe_Values.Look(ref trustHold, "trustHold", -1);
+            Scribe_Values.Look(ref trustDeliver, "trustDeliver", 1);
+            Scribe_Values.Look(ref trustLeave, "trustLeave", 1);
+            Scribe_Values.Look(ref trustExpel, "trustExpel", -1);
+            Scribe_Values.Look(ref narrativeRewardSilver, "narrativeRewardSilver", 300);
+            Scribe_Values.Look(ref narrativeRescueCost, "narrativeRescueCost", 250);
+            Scribe_Values.Look(ref narrativeRescueReward, "narrativeRescueReward", 2500);
+            Scribe_Values.Look(ref narrativeRelicTake, "narrativeRelicTake", 200);
+            Scribe_Values.Look(ref narrativeRelicHand, "narrativeRelicHand", 100);
+            Scribe_Values.Look(ref narrativeTrustBonusPercent, "narrativeTrustBonusPercent", 25);
+            Scribe_Values.Look(ref narrativeCareDays, "narrativeCareDays", 5);
+            Scribe_Values.Look(ref narrativeMissingDays, "narrativeMissingDays", 1);
+            Scribe_Values.Look(ref narrativeObserveDays, "narrativeObserveDays", 30);
+            Scribe_Values.Look(ref narrativeHoleIgnoreDays, "narrativeHoleIgnoreDays", 3);
+            Scribe_Values.Look(ref narrativeEnvoyWaitDays, "narrativeEnvoyWaitDays", 3);
+            Scribe_Values.Look(ref narrativeEnvoyCheckDays, "narrativeEnvoyCheckDays", 1);
+            Scribe_Values.Look(ref narrativeRelicDays, "narrativeRelicDays", 15);
+            Scribe_Values.Look(ref narrativeReturnDays, "narrativeReturnDays", 15);
+            Scribe_Values.Look(ref narrativeRevisitYears, "narrativeRevisitYears", 4);
+            Scribe_Values.Look(ref narrativeAsideCooldownDays, "narrativeAsideCooldownDays", 3);
+            Scribe_Values.Look(ref narrativeAsideCutoff, "narrativeAsideCutoff", -75);
+            Scribe_Values.Look(ref narrativeAdultYears, "narrativeAdultYears", 18);
+            Scribe_Values.Look(ref narrativeTheftKinds, "narrativeTheftKinds", 2);
+            Scribe_Values.Look(ref narrativeProgressKinds, "narrativeProgressKinds", 3);
+            Scribe_Values.Look(ref narrativeRewardKinds, "narrativeRewardKinds", 8);
+            Scribe_Values.Look(ref narrativeEnvoyKinds, "narrativeEnvoyKinds", 5);
+            Scribe_Values.Look(ref narrativeRelicKinds, "narrativeRelicKinds", 8);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 xenotypeWeights = xenotypeWeights ?? new Dictionary<string, float>();
@@ -277,6 +500,7 @@ namespace HungerAndHavoc.Core
                 negativeIncidentDays = HungerAndHavoc.Incidents.RHAH_IncidentSchedule.ClampDays(negativeIncidentDays);
                 ClampVisitorRules();
                 ClampEndingGoals();
+                ClampTunables();
                 refugeePredationChancePercent = HungerAndHavoc.Incidents.RHAH_PredationRules.ClampChance(refugeePredationChancePercent);
                 ClampPlagueRules();
                 ClampFamilyWeights();
@@ -1108,7 +1332,44 @@ namespace HungerAndHavoc.Core
                 endingE03,
                 endingE04,
                 endingE05,
-                endingIdentity);
+                endingIdentity,
+                endingTrustFloor,
+                endingHopeTrust,
+                endingHaltTrust,
+                endingLowKinds,
+                endingThreatDays);
+        }
+
+        internal void CopyNarrative(HungerAndHavoc.Storyteller.Suiyin.SuiyinConfig config)
+        {
+            if (config == null)
+            {
+                return;
+            }
+
+            config.ProgressKinds = narrativeProgressKinds;
+            config.RewardKinds = narrativeRewardKinds;
+            config.EnvoyKinds = narrativeEnvoyKinds;
+            config.RelicKinds = narrativeRelicKinds;
+            config.TheftKinds = narrativeTheftKinds;
+            config.RewardSilver = narrativeRewardSilver;
+            config.RescueCost = narrativeRescueCost;
+            config.RescueReward = narrativeRescueReward;
+            config.RelicTakeSilver = narrativeRelicTake;
+            config.RelicHandSilver = narrativeRelicHand;
+            config.CareDays = narrativeCareDays;
+            config.MissingDays = narrativeMissingDays;
+            config.ObserveDays = narrativeObserveDays;
+            config.HoleIgnoreDays = narrativeHoleIgnoreDays;
+            config.EnvoyWaitDays = narrativeEnvoyWaitDays;
+            config.EnvoyCheckDays = narrativeEnvoyCheckDays;
+            config.RelicDays = narrativeRelicDays;
+            config.ReturnDays = narrativeReturnDays;
+            config.RevisitYears = narrativeRevisitYears;
+            config.AsideCooldownDays = narrativeAsideCooldownDays;
+            config.TrustAsideCutoff = narrativeAsideCutoff;
+            config.AdultYears = narrativeAdultYears;
+            config.TrustBonusPercent = narrativeTrustBonusPercent;
         }
 
         internal HungerAndHavoc.Incidents.RHAH_WeightFactors WeightFactors()
@@ -1222,6 +1483,149 @@ namespace HungerAndHavoc.Core
             endingExpulsionLimit = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampExpulsions(endingExpulsionLimit);
             endingAdultGoal = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampAdults(endingAdultGoal);
             endingWaitDays = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampWait(endingWaitDays);
+            endingTrustFloor = ClampSigned(endingTrustFloor, -100, 100);
+            endingHopeTrust = ClampSigned(endingHopeTrust, endingTrustFloor, 100);
+            endingHaltTrust = ClampSigned(endingHaltTrust, -100, 0);
+            endingLowKinds = ClampSigned(endingLowKinds, 1, 14);
+            endingThreatDays = ClampFloat(endingThreatDays, 1f, 60f, 13f);
+        }
+
+        void ClampTunables()
+        {
+            Order(ref requestMinSimple, ref requestMaxSimple, 0, 200, 6, 28);
+            Order(ref requestMinFine, ref requestMaxFine, 0, 200, 4, 18);
+            Order(ref requestMinMedicine, ref requestMaxMedicine, 0, 100, 2, 10);
+            Order(ref requestMinSilver, ref requestMaxSilver, 0, 10000, 80, 1200);
+            Order(ref requestMinHerbal, ref requestMaxHerbal, 0, 100, 3, 15);
+            requestDays = ClampSigned(requestDays, 0, 30);
+            requestPointScale = ClampFloat(requestPointScale, 1f, 10000f, 300f);
+            foodPerChild = ClampSigned(foodPerChild, 0, 100);
+            foodPerVisitor = ClampSigned(foodPerVisitor, 0, 20);
+            maxFoodRequest = ClampSigned(maxFoodRequest, 0, 100);
+            envoyMealCost = ClampSigned(envoyMealCost, 0, 100);
+            Order(ref campMinAdults, ref campMaxAdults, 0, 40, 2, 4);
+            Order(ref campMinChildren, ref campMaxChildren, 0, 80, 8, 16);
+            campGoodwill = ClampSigned(campGoodwill, -100, 100);
+            campDays = ClampSigned(campDays, 1, 120);
+            campHuts = ClampSigned(campHuts, 0, 12);
+            holeWoodCost = ClampSigned(holeWoodCost, 0, 200);
+            holeCleanPortions = ClampSigned(holeCleanPortions, 0, 50);
+            holeLossRange = ClampSigned(holeLossRange, 1, 60);
+            holeMaxLosses = ClampSigned(holeMaxLosses, 0, 20);
+            apparelAwfulPercent = ClampSigned(apparelAwfulPercent, 0, 100);
+            apparelPoorPercent = ClampSigned(apparelPoorPercent, 0, 100 - apparelAwfulPercent);
+            Order(ref apparelMinDurabilityPercent, ref apparelMaxDurabilityPercent, 1, 100, 10, 60);
+            apparelCorpsePercent = ClampSigned(apparelCorpsePercent, 0, 100);
+            apparelClothPercent = ClampSigned(apparelClothPercent, 0, 100);
+            apparelMaxPieces = ClampSigned(apparelMaxPieces, 1, 8);
+            begFailMood = ClampSigned(begFailMood, -50, 50);
+            begSuccessMood = ClampSigned(begSuccessMood, -50, 50);
+            begSlapMood = ClampSigned(begSlapMood, -50, 50);
+            begSlapKnockoutHours = ClampSigned(begSlapKnockoutHours, 0, 24);
+            begBruiseSeverity = ClampFloat(begBruiseSeverity, 0f, 40f, 4f);
+            begBruiseStep = ClampFloat(begBruiseStep, 0f, 40f, 4f);
+            begBruiseMax = ClampFloat(begBruiseMax, begBruiseSeverity, 40f, 16f);
+            barkNutrition = ClampFloat(barkNutrition, 0f, 2f, 0.2f);
+            barkDamage = ClampFloat(barkDamage, 0f, 50f, 2f);
+            wallNutrition = ClampFloat(wallNutrition, 0f, 2f, 0.5f);
+            wallDamage = ClampFloat(wallDamage, 0f, 50f, 5f);
+            clayMaxBites = ClampSigned(clayMaxBites, 0, 12);
+            clayWindowDays = ClampSigned(clayWindowDays, 1, 60);
+            claySeverityPerBite = ClampFloat(claySeverityPerBite, 0f, 1f, 0.33f);
+            childHungryPercent = ClampFloat(childHungryPercent, 0f, 100f, 30f);
+            prisonerHungryPercent = ClampFloat(prisonerHungryPercent, 0f, 100f, 20f);
+            tailBiteAge = ClampFloat(tailBiteAge, 0f, 18f, 3f);
+            scavengeNutrition = ClampFloat(scavengeNutrition, 0f, 2f, 0.15f);
+            tailNutrition = ClampFloat(tailNutrition, 0f, 2f, 0.35f);
+            tailFailDamage = ClampFloat(tailFailDamage, 0f, 50f, 4f);
+            satisfiedFoodPercent = ClampFloat(satisfiedFoodPercent, 1f, 100f, 82f);
+            refeedMalnutrition = ClampFloat(refeedMalnutrition, 0f, 1f, 0.4f);
+            plagueSeverityMax = ClampFloat(plagueSeverityMax, 0.01f, 1f, 0.1f);
+            followPredatorPercent = ClampSigned(followPredatorPercent, 0, 100);
+            followBirthWatchDays = ClampSigned(followBirthWatchDays, 0, 60);
+            followPlagueBirthDays = ClampSigned(followPlagueBirthDays, 0, 60);
+            followMotherReturnDays = ClampSigned(followMotherReturnDays, 0, 120);
+            followLongReturnYears = ClampSigned(followLongReturnYears, 0, 20);
+            followAdultAge = ClampFloat(followAdultAge, 1f, 80f, 14f);
+            followMoodScalePercent = ClampSigned(followMoodScalePercent, 0, 300);
+            trustKill = ClampSigned(trustKill, -100, 100);
+            trustCaptive = ClampSigned(trustCaptive, -100, 100);
+            trustEntrustGood = ClampSigned(trustEntrustGood, -100, 100);
+            trustEntrustCaptive = ClampSigned(trustEntrustCaptive, -100, 100);
+            trustEntrustStory = ClampSigned(trustEntrustStory, -100, 100);
+            trustEntrustRegret = ClampSigned(trustEntrustRegret, -100, 100);
+            trustEntrustBanished = ClampSigned(trustEntrustBanished, -100, 100);
+            trustExchange = ClampSigned(trustExchange, -100, 100);
+            trustHoleOpen = ClampSigned(trustHoleOpen, -100, 100);
+            trustHoleIgnore = ClampSigned(trustHoleIgnore, -100, 100);
+            trustHoleBait = ClampSigned(trustHoleBait, -100, 100);
+            trustQuarantineStay = ClampSigned(trustQuarantineStay, -100, 100);
+            trustQuarantineRecover = ClampSigned(trustQuarantineRecover, -100, 100);
+            trustQuarantineFail = ClampSigned(trustQuarantineFail, -100, 100);
+            trustEnvoyFail = ClampSigned(trustEnvoyFail, -100, 100);
+            trustRelicFail = ClampSigned(trustRelicFail, -100, 100);
+            trustHold = ClampSigned(trustHold, -100, 100);
+            trustDeliver = ClampSigned(trustDeliver, -100, 100);
+            trustLeave = ClampSigned(trustLeave, -100, 100);
+            trustExpel = ClampSigned(trustExpel, -100, 100);
+            narrativeRewardSilver = ClampSigned(narrativeRewardSilver, 0, 10000);
+            narrativeRescueCost = ClampSigned(narrativeRescueCost, 0, 10000);
+            narrativeRescueReward = ClampSigned(narrativeRescueReward, 0, 20000);
+            narrativeRelicTake = ClampSigned(narrativeRelicTake, 0, 10000);
+            narrativeRelicHand = ClampSigned(narrativeRelicHand, 0, 10000);
+            narrativeTrustBonusPercent = ClampSigned(narrativeTrustBonusPercent, 0, 100);
+            narrativeCareDays = ClampSigned(narrativeCareDays, 0, 120);
+            narrativeMissingDays = ClampSigned(narrativeMissingDays, 0, 60);
+            narrativeObserveDays = ClampSigned(narrativeObserveDays, 0, 120);
+            narrativeHoleIgnoreDays = ClampSigned(narrativeHoleIgnoreDays, 0, 30);
+            narrativeEnvoyWaitDays = ClampSigned(narrativeEnvoyWaitDays, 0, 30);
+            narrativeEnvoyCheckDays = ClampSigned(narrativeEnvoyCheckDays, 0, 30);
+            narrativeRelicDays = ClampSigned(narrativeRelicDays, 0, 120);
+            narrativeReturnDays = ClampSigned(narrativeReturnDays, 0, 120);
+            narrativeRevisitYears = ClampSigned(narrativeRevisitYears, 0, 20);
+            narrativeAsideCooldownDays = ClampSigned(narrativeAsideCooldownDays, 0, 30);
+            narrativeAsideCutoff = ClampSigned(narrativeAsideCutoff, -100, 0);
+            narrativeAdultYears = ClampSigned(narrativeAdultYears, 1, 80);
+            narrativeTheftKinds = ClampSigned(narrativeTheftKinds, 1, 14);
+            narrativeProgressKinds = ClampSigned(narrativeProgressKinds, 1, 14);
+            narrativeRewardKinds = ClampSigned(narrativeRewardKinds, 1, 14);
+            narrativeEnvoyKinds = ClampSigned(narrativeEnvoyKinds, 1, 14);
+            narrativeRelicKinds = ClampSigned(narrativeRelicKinds, 1, 14);
+        }
+
+        static int ClampSigned(int value, int min, int max)
+        {
+            if (value < min)
+            {
+                return min;
+            }
+
+            return value > max ? max : value;
+        }
+
+        static float ClampFloat(float value, float min, float max, float fallback)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value))
+            {
+                return fallback;
+            }
+
+            if (value < min)
+            {
+                return min;
+            }
+
+            return value > max ? max : value;
+        }
+
+        static void Order(ref int low, ref int high, int min, int max, int fallbackLow, int fallbackHigh)
+        {
+            low = ClampSigned(low, min, max);
+            high = ClampSigned(high, min, max);
+            if (high < low)
+            {
+                high = low;
+            }
         }
     }
 }

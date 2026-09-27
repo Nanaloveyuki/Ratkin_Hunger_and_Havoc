@@ -110,13 +110,25 @@ namespace HungerAndHavoc.Generation
 
         internal static int Quality(float roll)
         {
+            return Quality(roll, AwfulShare, PoorShare);
+        }
+
+        internal static int Quality(float roll, float awfulShare, float poorShare)
+        {
             float safe = roll < 0f || float.IsNaN(roll) ? 0f : roll > 1f ? 1f : roll;
-            if (safe < AwfulShare)
+            float awful = awfulShare < 0f ? 0f : awfulShare > 1f ? 1f : awfulShare;
+            float poor = poorShare < 0f ? 0f : poorShare;
+            if (awful + poor > 1f)
+            {
+                poor = 1f - awful;
+            }
+
+            if (safe < awful)
             {
                 return 0;
             }
 
-            return safe < AwfulShare + PoorShare ? 1 : 2;
+            return safe < awful + poor ? 1 : 2;
         }
 
         internal static int HitPoints(int maxHitPoints, float fraction)
@@ -126,7 +138,16 @@ namespace HungerAndHavoc.Generation
                 return maxHitPoints;
             }
 
-            float safe = fraction < MinDurability || float.IsNaN(fraction) ? MinDurability : fraction > MaxDurability ? MaxDurability : fraction;
+            float low = MinDurability;
+            float high = MaxDurability;
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            if (settings != null)
+            {
+                low = settings.apparelMinDurabilityPercent / 100f;
+                high = settings.apparelMaxDurabilityPercent / 100f;
+            }
+
+            float safe = fraction < low || float.IsNaN(fraction) ? low : fraction > high ? high : fraction;
             int points = (int)System.Math.Round(maxHitPoints * safe);
             if (points < 1)
             {
@@ -149,7 +170,14 @@ namespace HungerAndHavoc.Generation
             }
 
             int adult = Weighted(roll, 0.02f, 0.16f, 0.34f, 0.30f, 0.18f);
-            return adult < 1 ? 1 : adult > MaxPieces ? MaxPieces : adult;
+            int cap = MaxPieces;
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            if (settings != null && settings.apparelMaxPieces > 0)
+            {
+                cap = settings.apparelMaxPieces;
+            }
+
+            return adult < 1 ? 1 : adult > cap ? cap : adult;
         }
 
         internal static string PreferredStuff(IList<string> allowed, float roll)
@@ -168,7 +196,14 @@ namespace HungerAndHavoc.Generation
             if (cloth && leather)
             {
                 float safe = roll < 0f || float.IsNaN(roll) ? 0f : roll > 1f ? 1f : roll;
-                return safe < ClothWeight ? ClothDefName : LeatherDefName;
+                float clothShare = ClothWeight;
+                Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+                if (settings != null)
+                {
+                    clothShare = settings.apparelClothPercent / 100f;
+                }
+
+                return safe < clothShare ? ClothDefName : LeatherDefName;
             }
 
             if (cloth)

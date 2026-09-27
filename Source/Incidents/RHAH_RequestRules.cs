@@ -159,6 +159,7 @@ namespace HungerAndHavoc.Incidents
 
         internal static int Amount(RHAH_RequestKind kind, float wealth, int roll, float points)
         {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
             int amount;
             int min;
             int max;
@@ -166,28 +167,28 @@ namespace HungerAndHavoc.Incidents
             {
                 case RHAH_RequestKind.SimpleMeal:
                     amount = 6 + Round(wealth / 12000f) + ClampRoll(roll, 0, 4);
-                    min = MinSimple;
-                    max = MaxSimple;
+                    min = settings == null ? MinSimple : settings.requestMinSimple;
+                    max = settings == null ? MaxSimple : settings.requestMaxSimple;
                     break;
                 case RHAH_RequestKind.FineMeal:
                     amount = 4 + Round(wealth / 18000f) + ClampRoll(roll, 0, 3);
-                    min = MinFine;
-                    max = MaxFine;
+                    min = settings == null ? MinFine : settings.requestMinFine;
+                    max = settings == null ? MaxFine : settings.requestMaxFine;
                     break;
                 case RHAH_RequestKind.Medicine:
                     amount = 2 + Round(wealth / 25000f) + ClampRoll(roll, 0, 2);
-                    min = MinMedicine;
-                    max = MaxMedicine;
+                    min = settings == null ? MinMedicine : settings.requestMinMedicine;
+                    max = settings == null ? MaxMedicine : settings.requestMaxMedicine;
                     break;
                 case RHAH_RequestKind.Silver:
                     amount = 80 + Round(wealth / 40f) + ClampRoll(roll, 0, 120);
-                    min = MinSilver;
-                    max = MaxSilver;
+                    min = settings == null ? MinSilver : settings.requestMinSilver;
+                    max = settings == null ? MaxSilver : settings.requestMaxSilver;
                     break;
                 case RHAH_RequestKind.HerbalMedicine:
                     amount = 3 + Round(wealth / 22000f) + ClampRoll(roll, 0, 3);
-                    min = MinHerbal;
-                    max = MaxHerbal;
+                    min = settings == null ? MinHerbal : settings.requestMinHerbal;
+                    max = settings == null ? MaxHerbal : settings.requestMaxHerbal;
                     break;
                 case RHAH_RequestKind.Baby:
                     return 1;
@@ -238,7 +239,10 @@ namespace HungerAndHavoc.Incidents
         }
         internal static int FoodForChildren(int childCount)
         {
-            return childCount <= 0 ? 0 : childCount * HungerAndHavoc.Trade.RHAH_CaravanStay.FoodPerChild;
+            int each = Core.RHAH_Mod.Settings == null
+                ? HungerAndHavoc.Trade.RHAH_CaravanStay.FoodPerChild
+                : Core.RHAH_Mod.Settings.foodPerChild;
+            return childCount <= 0 ? 0 : childCount * each;
         }
 
         internal static bool CanSubstituteFood(bool foodSubstitutionEnabled, RHAH_ChoiceKind choice, int foodStock, int childCount)
@@ -341,7 +345,10 @@ namespace HungerAndHavoc.Incidents
                 return 0;
             }
 
-            return visitorCount > MaxFoodRequest ? MaxFoodRequest : visitorCount;
+            int cap = Core.RHAH_Mod.Settings == null ? MaxFoodRequest : Core.RHAH_Mod.Settings.maxFoodRequest;
+            int each = Core.RHAH_Mod.Settings == null ? FoodPerVisitor : Core.RHAH_Mod.Settings.foodPerVisitor;
+            int count = visitorCount * each;
+            return count > cap ? cap : count;
         }
 
         internal static bool OffersBatchControl(string displayId)

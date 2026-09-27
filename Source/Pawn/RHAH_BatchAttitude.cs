@@ -7,6 +7,7 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
+using HungerAndHavoc.Core;
 
 namespace HungerAndHavoc.Pawn
 {
@@ -59,7 +60,7 @@ namespace HungerAndHavoc.Pawn
 
             if (forcedAway)
             {
-                RHAH_SuiyinTrust.Note(members.Count, RHAH_SuiyinTrust.Expel);
+                RHAH_SuiyinTrust.Note(members.Count, RHAH_SuiyinTrust.Value(RHAH_SuiyinTrust.Expel, RHAH_Mod.Settings == null ? RHAH_SuiyinTrust.Expel : RHAH_Mod.Settings.trustExpel));
             }
 
             return true;

@@ -174,7 +174,10 @@ namespace HungerAndHavoc.Incidents
             }
 
             float safe = RHAH_IncidentTuning.ClampPoints(points);
-            int scaled = Round(amount * (safe / ReferencePoints));
+            float reference = Core.RHAH_Mod.Settings == null || Core.RHAH_Mod.Settings.requestPointScale <= 0f
+                ? ReferencePoints
+                : Core.RHAH_Mod.Settings.requestPointScale;
+            int scaled = Round(amount * (safe / reference));
             if (scaled < min)
             {
                 return min;

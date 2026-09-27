@@ -460,4 +460,190 @@
   <RHAH_Broadcast_Cooldown>The broadcast is still cooling down</RHAH_Broadcast_Cooldown>
   <RHAH_Broadcast_Empty>No incident can be broadcast</RHAH_Broadcast_Empty>
   <RHAH_Broadcast_Queued>Queued {0}</RHAH_Broadcast_Queued>
+  <RHAH_Settings_EndingFloor>Good year trust: {0}</RHAH_Settings_EndingFloor>
+  <RHAH_Settings_EndingFloor_Tooltip>Trust required for the good year. 0 to 100, default 50. Hope City cannot sit below this.</RHAH_Settings_EndingFloor_Tooltip>
+  <RHAH_Settings_EndingHope>Hope City trust: {0}</RHAH_Settings_EndingHope>
+  <RHAH_Settings_EndingHope_Tooltip>Trust required for Hope City. It cannot sit below the good year. Up to 100, default 75.</RHAH_Settings_EndingHope_Tooltip>
+  <RHAH_Settings_EndingHalt>Trust collapse: {0}</RHAH_Settings_EndingHalt>
+  <RHAH_Settings_EndingHalt_Tooltip>Trust at or below this takes the collapse ending. -100 to 0, default -75.</RHAH_Settings_EndingHalt_Tooltip>
+  <RHAH_Settings_EndingKinds>Low ending kinds: {0}</RHAH_Settings_EndingKinds>
+  <RHAH_Settings_EndingKinds_Tooltip>The low endings need this many successful kinds. 1 to 14, default 6.</RHAH_Settings_EndingKinds_Tooltip>
+  <RHAH_Settings_EndingThreat>Major threat interval: {0} days</RHAH_Settings_EndingThreat>
+  <RHAH_Settings_EndingThreat_Tooltip>Base days Suiyin uses when trust changes major threats. 1 to 60, default 13.</RHAH_Settings_EndingThreat_Tooltip>
+  <RHAH_Menu_Narrative_TrustDeltas>Trust changes</RHAH_Menu_Narrative_TrustDeltas>
+  <RHAH_Settings_NarrativeKinds_Tooltip>Event kinds required before this letter. 1 to 14.</RHAH_Settings_NarrativeKinds_Tooltip>
+  <RHAH_Settings_NarrativeTheft>Grain-hole theft kinds: {0}</RHAH_Settings_NarrativeTheft>
+  <RHAH_Settings_NarrativeTheft_Tooltip>Thefts of this many kinds on one map open the grain hole. 1 to 14, default 2.</RHAH_Settings_NarrativeTheft_Tooltip>
+  <RHAH_Settings_NarrativeSilver>Record silver: {0}</RHAH_Settings_NarrativeSilver>
+  <RHAH_Settings_NarrativeSilver_Tooltip>Silver sent with the record letter. 0 to 10000, default 300. Positive trust adds a share.</RHAH_Settings_NarrativeSilver_Tooltip>
+  <RHAH_Settings_NarrativeBonus>Trust bonus: {0}%</RHAH_Settings_NarrativeBonus>
+  <RHAH_Settings_NarrativeBonus_Tooltip>At trust 100, silver gains this much extra. 0 to 100, default 25. Negative trust adds nothing.</RHAH_Settings_NarrativeBonus_Tooltip>
+  <RHAH_Settings_NarrativeRescue>Ransom silver: {0}</RHAH_Settings_NarrativeRescue>
+  <RHAH_Settings_NarrativeRescue_Tooltip>Silver paid to keep the banished mother or child. 0 to 10000, default 250.</RHAH_Settings_NarrativeRescue_Tooltip>
+  <RHAH_Settings_NarrativeRescueReward>Return silver: {0}</RHAH_Settings_NarrativeRescueReward>
+  <RHAH_Settings_NarrativeRescueReward_Tooltip>Silver dropped later after the ransom is paid. 0 to 20000, default 2500.</RHAH_Settings_NarrativeRescueReward_Tooltip>
+  <RHAH_Settings_NarrativeTake>Take the record: {0}</RHAH_Settings_NarrativeTake>
+  <RHAH_Settings_NarrativeTake_Tooltip>Silver gained by taking the migration record. 0 to 10000, default 200.</RHAH_Settings_NarrativeTake_Tooltip>
+  <RHAH_Settings_NarrativeHand>Hand over the record: {0}</RHAH_Settings_NarrativeHand>
+  <RHAH_Settings_NarrativeHand_Tooltip>Silver gained by handing the migration record over. 0 to 10000, default 100.</RHAH_Settings_NarrativeHand_Tooltip>
+  <RHAH_Settings_NarrativeCare>Settlement days: {0}</RHAH_Settings_NarrativeCare>
+  <RHAH_Settings_NarrativeCare_Tooltip>Days fed and healthy before a stay counts as settled. 0 to 120, default 5.</RHAH_Settings_NarrativeCare_Tooltip>
+  <RHAH_Settings_NarrativeMissing>Missing days: {0}</RHAH_Settings_NarrativeMissing>
+  <RHAH_Settings_NarrativeMissing_Tooltip>Days off the map before someone counts as missing. 0 to 60, default 1.</RHAH_Settings_NarrativeMissing_Tooltip>
+  <RHAH_Settings_NarrativeObserve>Watch days: {0}</RHAH_Settings_NarrativeObserve>
+  <RHAH_Settings_NarrativeObserve_Tooltip>Aid and entrusted children are watched this long. 0 to 120, default 30. Unsettled groups then close without a success.</RHAH_Settings_NarrativeObserve_Tooltip>
+  <RHAH_Settings_NarrativeHole>Ignore the grain hole: {0} days</RHAH_Settings_NarrativeHole>
+  <RHAH_Settings_NarrativeHole_Tooltip>Days before an untouched grain hole counts as ignored. 0 to 30, default 3.</RHAH_Settings_NarrativeHole_Tooltip>
+  <RHAH_Settings_NarrativeEnvoyWait>Envoy wait: {0} days</RHAH_Settings_NarrativeEnvoyWait>
+  <RHAH_Settings_NarrativeEnvoyWait_Tooltip>Days the envoy waits at the door. 0 to 30, default 3.</RHAH_Settings_NarrativeEnvoyWait_Tooltip>
+  <RHAH_Settings_NarrativeEnvoyCheck>Envoy check: {0} days</RHAH_Settings_NarrativeEnvoyCheck>
+  <RHAH_Settings_NarrativeEnvoyCheck_Tooltip>Extra days after agreeing to check the envoy's claim. 0 to 30, default 1.</RHAH_Settings_NarrativeEnvoyCheck_Tooltip>
+  <RHAH_Settings_NarrativeRelicDays>Record site: {0} days</RHAH_Settings_NarrativeRelicDays>
+  <RHAH_Settings_NarrativeRelicDays_Tooltip>Days the record site stays open. 0 to 120, default 15.</RHAH_Settings_NarrativeRelicDays_Tooltip>
+  <RHAH_Settings_NarrativeReturn>Recovery visit: {0} days</RHAH_Settings_NarrativeReturn>
+  <RHAH_Settings_NarrativeReturn_Tooltip>Days before someone who left quarantine comes back. 0 to 120, default 15.</RHAH_Settings_NarrativeReturn_Tooltip>
+  <RHAH_Settings_NarrativeYears>Banishment visit: {0} years</RHAH_Settings_NarrativeYears>
+  <RHAH_Settings_NarrativeYears_Tooltip>Years before a banished mother or child appears again. 0 to 20, default 4. A year is 60 days.</RHAH_Settings_NarrativeYears_Tooltip>
+  <RHAH_Settings_NarrativeAside>Aside gap: {0} days</RHAH_Settings_NarrativeAside>
+  <RHAH_Settings_NarrativeAside_Tooltip>Minimum days between asides. 0 to 30, default 3.</RHAH_Settings_NarrativeAside_Tooltip>
+  <RHAH_Settings_NarrativeCutoff>Asides stop: {0}</RHAH_Settings_NarrativeCutoff>
+  <RHAH_Settings_NarrativeCutoff_Tooltip>Asides stop at or below this trust. Result letters still arrive. -100 to 0, default -75.</RHAH_Settings_NarrativeCutoff_Tooltip>
+  <RHAH_Settings_NarrativeAdult>Envoy age: {0}</RHAH_Settings_NarrativeAdult>
+  <RHAH_Settings_NarrativeAdult_Tooltip>Age of the envoy Suiyin sends. 1 to 80, default 18.</RHAH_Settings_NarrativeAdult_Tooltip>
+  <RHAH_Settings_TrustRange_Tooltip>Trust added or removed for this outcome. -100 to 100. Zero changes nothing.</RHAH_Settings_TrustRange_Tooltip>
+  <RHAH_Settings_TrustKill>Killed: {0}</RHAH_Settings_TrustKill>
+  <RHAH_Settings_TrustCaptive>Captive: {0}</RHAH_Settings_TrustCaptive>
+  <RHAH_Settings_TrustEntrust>Child settled: {0}</RHAH_Settings_TrustEntrust>
+  <RHAH_Settings_TrustEntrustCaptive>Child captive: {0}</RHAH_Settings_TrustEntrustCaptive>
+  <RHAH_Settings_TrustStory>Story only: {0}</RHAH_Settings_TrustStory>
+  <RHAH_Settings_TrustRegret>Regret: {0}</RHAH_Settings_TrustRegret>
+  <RHAH_Settings_TrustBanished>Banished: {0}</RHAH_Settings_TrustBanished>
+  <RHAH_Settings_TrustExchange>Exchange care: {0}</RHAH_Settings_TrustExchange>
+  <RHAH_Settings_TrustHoleOpen>Seal the hole: {0}</RHAH_Settings_TrustHoleOpen>
+  <RHAH_Settings_TrustHoleIgnore>Clear the hole: {0}</RHAH_Settings_TrustHoleIgnore>
+  <RHAH_Settings_TrustHoleBait>Trace the hole: {0}</RHAH_Settings_TrustHoleBait>
+  <RHAH_Settings_TrustQuarantineStay>Stay after quarantine: {0}</RHAH_Settings_TrustQuarantineStay>
+  <RHAH_Settings_TrustQuarantineRecover>Leave after quarantine: {0}</RHAH_Settings_TrustQuarantineRecover>
+  <RHAH_Settings_TrustQuarantineFail>Quarantine broken: {0}</RHAH_Settings_TrustQuarantineFail>
+  <RHAH_Settings_TrustEnvoy>Drive off the envoy: {0}</RHAH_Settings_TrustEnvoy>
+  <RHAH_Settings_TrustRelic>Destroy the record: {0}</RHAH_Settings_TrustRelic>
+  <RHAH_Settings_TrustHold>Held: {0}</RHAH_Settings_TrustHold>
+  <RHAH_Settings_TrustDeliver>Delivered: {0}</RHAH_Settings_TrustDeliver>
+  <RHAH_Settings_TrustLeave>Left safely: {0}</RHAH_Settings_TrustLeave>
+  <RHAH_Settings_TrustExpel>Expelled: {0}</RHAH_Settings_TrustExpel>
+  <RHAH_Settings_BegFailMood>Beg refused: {0}</RHAH_Settings_BegFailMood>
+  <RHAH_Settings_BegFailMood_Tooltip>Mood after a refused beg. -50 to 50, default -5.</RHAH_Settings_BegFailMood_Tooltip>
+  <RHAH_Settings_BegSuccessMood>Beg succeeded: {0}</RHAH_Settings_BegSuccessMood>
+  <RHAH_Settings_BegSuccessMood_Tooltip>Mood after a successful beg. -50 to 50, default 3.</RHAH_Settings_BegSuccessMood_Tooltip>
+  <RHAH_Settings_BegSlapMood>Slapped: {0}</RHAH_Settings_BegSlapMood>
+  <RHAH_Settings_BegSlapMood_Tooltip>Mood after a slap for begging again. -50 to 50, default -10.</RHAH_Settings_BegSlapMood_Tooltip>
+  <RHAH_Settings_BegKnock>Slap stun: {0} hours</RHAH_Settings_BegKnock>
+  <RHAH_Settings_BegKnock_Tooltip>Hours a slap knocks the beggar down. 0 to 24, default 3. Zero does not stun.</RHAH_Settings_BegKnock_Tooltip>
+  <RHAH_Settings_BegBruise>Slap bruise: {0}</RHAH_Settings_BegBruise>
+  <RHAH_Settings_BegBruise_Tooltip>Severity of the first bruise. 0 to 40, default 4.</RHAH_Settings_BegBruise_Tooltip>
+  <RHAH_Settings_BegBruiseStep>Bruise step: {0}</RHAH_Settings_BegBruiseStep>
+  <RHAH_Settings_BegBruiseStep_Tooltip>Severity added by another slap on the same bruise. 0 to 40, default 4.</RHAH_Settings_BegBruiseStep_Tooltip>
+  <RHAH_Settings_BegBruiseMax>Bruise cap: {0}</RHAH_Settings_BegBruiseMax>
+  <RHAH_Settings_BegBruiseMax_Tooltip>A bruise at this severity becomes a cut. It cannot sit below the first hit. Up to 40, default 16.</RHAH_Settings_BegBruiseMax_Tooltip>
+  <RHAH_Settings_GnawBark>Bark nutrition: {0}</RHAH_Settings_GnawBark>
+  <RHAH_Settings_GnawBark_Tooltip>Nutrition from one bite of a plant. 0 to 2, default 0.20.</RHAH_Settings_GnawBark_Tooltip>
+  <RHAH_Settings_GnawBarkDamage>Bark damage: {0}</RHAH_Settings_GnawBarkDamage>
+  <RHAH_Settings_GnawBarkDamage_Tooltip>Damage from one bite of a plant. 0 to 50, default 2.</RHAH_Settings_GnawBarkDamage_Tooltip>
+  <RHAH_Settings_GnawWall>Wall nutrition: {0}</RHAH_Settings_GnawWall>
+  <RHAH_Settings_GnawWall_Tooltip>Nutrition from one bite of a wall. 0 to 2, default 0.50.</RHAH_Settings_GnawWall_Tooltip>
+  <RHAH_Settings_GnawWallDamage>Wall damage: {0}</RHAH_Settings_GnawWallDamage>
+  <RHAH_Settings_GnawWallDamage_Tooltip>Damage from one bite of a wall. 0 to 50, default 5.</RHAH_Settings_GnawWallDamage_Tooltip>
+  <RHAH_Settings_ClayBites>Clay bites: {0}</RHAH_Settings_ClayBites>
+  <RHAH_Settings_ClayBites_Tooltip>Bites of clay allowed in one window. 0 to 12, default 3. Zero allows none.</RHAH_Settings_ClayBites_Tooltip>
+  <RHAH_Settings_ClayDays>Clay window: {0} days</RHAH_Settings_ClayDays>
+  <RHAH_Settings_ClayDays_Tooltip>Days before the bite count starts over. 1 to 60, default 15.</RHAH_Settings_ClayDays_Tooltip>
+  <RHAH_Settings_ClaySeverity>Clay fullness: {0}</RHAH_Settings_ClaySeverity>
+  <RHAH_Settings_ClaySeverity_Tooltip>Fullness added by one bite. 0 to 1, default 0.33.</RHAH_Settings_ClaySeverity_Tooltip>
+  <RHAH_Settings_ChildHungry>Child hunger: {0}%</RHAH_Settings_ChildHungry>
+  <RHAH_Settings_ChildHungry_Tooltip>A mother feeds a child below this food level. 0 to 100, default 30.</RHAH_Settings_ChildHungry_Tooltip>
+  <RHAH_Settings_PrisonerHungry>Prisoner hunger: {0}%</RHAH_Settings_PrisonerHungry>
+  <RHAH_Settings_PrisonerHungry_Tooltip>A prisoner scavenges or bites a tail below this food level. 0 to 100, default 20.</RHAH_Settings_PrisonerHungry_Tooltip>
+  <RHAH_Settings_TailAge>Tail-bite age: {0}</RHAH_Settings_TailAge>
+  <RHAH_Settings_TailAge_Tooltip>Only a sleeping child under this age can be bitten. 0 to 18, default 3.</RHAH_Settings_TailAge_Tooltip>
+  <RHAH_Settings_Scavenge>Filth nutrition: {0}</RHAH_Settings_Scavenge>
+  <RHAH_Settings_Scavenge_Tooltip>Nutrition from licking filth once. 0 to 2, default 0.15.</RHAH_Settings_Scavenge_Tooltip>
+  <RHAH_Settings_TailFood>Tail nutrition: {0}</RHAH_Settings_TailFood>
+  <RHAH_Settings_TailFood_Tooltip>Nutrition from a successful tail bite. 0 to 2, default 0.35.</RHAH_Settings_TailFood_Tooltip>
+  <RHAH_Settings_TailFail>Failed bite damage: {0}</RHAH_Settings_TailFail>
+  <RHAH_Settings_TailFail_Tooltip>Damage when the bite does not take the tail. 0 to 50, default 4.</RHAH_Settings_TailFail_Tooltip>
+  <RHAH_Settings_FoodFull>Fed: {0}%</RHAH_Settings_FoodFull>
+  <RHAH_Settings_FoodFull_Tooltip>Food at or above this counts as fed. 1 to 100, default 82.</RHAH_Settings_FoodFull_Tooltip>
+  <RHAH_Settings_FoodRefeed>Eat again at malnutrition: {0}</RHAH_Settings_FoodRefeed>
+  <RHAH_Settings_FoodRefeed_Tooltip>Fed visitors look for food again at this malnutrition. 0 to 1, default 0.40.</RHAH_Settings_FoodRefeed_Tooltip>
+  <RHAH_Settings_PlagueSeverity>Plague severity: {0}</RHAH_Settings_PlagueSeverity>
+  <RHAH_Settings_PlagueSeverity_Tooltip>Highest severity rolled for a new infection. 0.01 to 1, default 0.10.</RHAH_Settings_PlagueSeverity_Tooltip>
+  <RHAH_Settings_FollowPredator>Short-chain predators: {0}%</RHAH_Settings_FollowPredator>
+  <RHAH_Settings_FollowPredator_Tooltip>Chance a short chain later sends predators. 0 to 100, default 10.</RHAH_Settings_FollowPredator_Tooltip>
+  <RHAH_Settings_FollowBirth>Birth watch: {0} days</RHAH_Settings_FollowBirth>
+  <RHAH_Settings_FollowBirth_Tooltip>Days after a laboring birth before the mood is written. 0 to 60, default 3.</RHAH_Settings_FollowBirth_Tooltip>
+  <RHAH_Settings_FollowPlagueBirth>Plague birth watch: {0} days</RHAH_Settings_FollowPlagueBirth>
+  <RHAH_Settings_FollowPlagueBirth_Tooltip>Days after a plague birth before the mood is written. 0 to 60, default 5.</RHAH_Settings_FollowPlagueBirth_Tooltip>
+  <RHAH_Settings_FollowMother>Mother returns: {0} days</RHAH_Settings_FollowMother>
+  <RHAH_Settings_FollowMother_Tooltip>Days before a plague mother comes back. 0 to 120, default 15.</RHAH_Settings_FollowMother_Tooltip>
+  <RHAH_Settings_FollowYears>Long-chain years: {0}</RHAH_Settings_FollowYears>
+  <RHAH_Settings_FollowYears_Tooltip>Years after the child reaches the follow-up age before the letter. 0 to 20, default 2.</RHAH_Settings_FollowYears_Tooltip>
+  <RHAH_Settings_FollowAdult>Follow-up age: {0}</RHAH_Settings_FollowAdult>
+  <RHAH_Settings_FollowAdult_Tooltip>Age used by long chains and follow-up moods. 1 to 80, default 14.</RHAH_Settings_FollowAdult_Tooltip>
+  <RHAH_Settings_FollowMood>Follow-up mood: {0}%</RHAH_Settings_FollowMood>
+  <RHAH_Settings_FollowMood_Tooltip>Scales follow-up mood. 0 to 300, default 100. Zero still keeps a 1-point sign.</RHAH_Settings_FollowMood_Tooltip>
+  <RHAH_Settings_RequestRange_Tooltip>Minimum or maximum for this request. Wealth still picks a count inside the range.</RHAH_Settings_RequestRange_Tooltip>
+  <RHAH_Settings_RequestSimpleMin>Simple meals, minimum: {0}</RHAH_Settings_RequestSimpleMin>
+  <RHAH_Settings_RequestSimpleMax>Simple meals, maximum: {0}</RHAH_Settings_RequestSimpleMax>
+  <RHAH_Settings_RequestFineMin>Fine meals, minimum: {0}</RHAH_Settings_RequestFineMin>
+  <RHAH_Settings_RequestFineMax>Fine meals, maximum: {0}</RHAH_Settings_RequestFineMax>
+  <RHAH_Settings_RequestMedicineMin>Medicine, minimum: {0}</RHAH_Settings_RequestMedicineMin>
+  <RHAH_Settings_RequestMedicineMax>Medicine, maximum: {0}</RHAH_Settings_RequestMedicineMax>
+  <RHAH_Settings_RequestHerbalMin>Herbal medicine, minimum: {0}</RHAH_Settings_RequestHerbalMin>
+  <RHAH_Settings_RequestHerbalMax>Herbal medicine, maximum: {0}</RHAH_Settings_RequestHerbalMax>
+  <RHAH_Settings_RequestSilverMin>Silver, minimum: {0}</RHAH_Settings_RequestSilverMin>
+  <RHAH_Settings_RequestSilverMax>Silver, maximum: {0}</RHAH_Settings_RequestSilverMax>
+  <RHAH_Settings_RequestDays>Request days: {0}</RHAH_Settings_RequestDays>
+  <RHAH_Settings_RequestDays_Tooltip>Days before an aid or intel letter expires. 0 to 30, default 1. Zero expires as soon as it arrives.</RHAH_Settings_RequestDays_Tooltip>
+  <RHAH_Settings_RequestPoints>Request points: {0}</RHAH_Settings_RequestPoints>
+  <RHAH_Settings_RequestPoints_Tooltip>Requests scale against this point value. 1 to 10000, default 300.</RHAH_Settings_RequestPoints_Tooltip>
+  <RHAH_Settings_FoodPerChild>Simple meals per child: {0}</RHAH_Settings_FoodPerChild>
+  <RHAH_Settings_FoodPerChild_Tooltip>Simple meals that replace one child. 0 to 100, default 10.</RHAH_Settings_FoodPerChild_Tooltip>
+  <RHAH_Settings_FoodPerVisitor>Food per visitor: {0}</RHAH_Settings_FoodPerVisitor>
+  <RHAH_Settings_FoodPerVisitor_Tooltip>Portions requested per visitor when feeding them. 0 to 20, default 1.</RHAH_Settings_FoodPerVisitor_Tooltip>
+  <RHAH_Settings_FoodRequestCap>Feeding cap: {0}</RHAH_Settings_FoodRequestCap>
+  <RHAH_Settings_FoodRequestCap_Tooltip>Most portions one feeding request can ask for. 0 to 100, default 12.</RHAH_Settings_FoodRequestCap_Tooltip>
+  <RHAH_Settings_EnvoyMeals>Envoy meals: {0}</RHAH_Settings_EnvoyMeals>
+  <RHAH_Settings_EnvoyMeals_Tooltip>Simple meals required to trade with the envoy. 0 to 100, default 6.</RHAH_Settings_EnvoyMeals_Tooltip>
+  <RHAH_Settings_CampRange_Tooltip>Minimum or maximum people in a camp of this age.</RHAH_Settings_CampRange_Tooltip>
+  <RHAH_Settings_CampAdultMin>Camp adults, minimum: {0}</RHAH_Settings_CampAdultMin>
+  <RHAH_Settings_CampAdultMax>Camp adults, maximum: {0}</RHAH_Settings_CampAdultMax>
+  <RHAH_Settings_CampChildMin>Camp children, minimum: {0}</RHAH_Settings_CampChildMin>
+  <RHAH_Settings_CampChildMax>Camp children, maximum: {0}</RHAH_Settings_CampChildMax>
+  <RHAH_Settings_CampGoodwill>Camp goodwill: {0}</RHAH_Settings_CampGoodwill>
+  <RHAH_Settings_CampGoodwill_Tooltip>Goodwill for clearing a camp. -100 to 100, default 12.</RHAH_Settings_CampGoodwill_Tooltip>
+  <RHAH_Settings_CampDays>Camp days: {0}</RHAH_Settings_CampDays>
+  <RHAH_Settings_CampDays_Tooltip>Days a camp quest lasts. 1 to 120, default 15.</RHAH_Settings_CampDays_Tooltip>
+  <RHAH_Settings_CampHuts>Huts: {0}</RHAH_Settings_CampHuts>
+  <RHAH_Settings_CampHuts_Tooltip>Huts placed in a camp. 0 to 12, default 4.</RHAH_Settings_CampHuts_Tooltip>
+  <RHAH_Settings_HoleWood>Wood to seal: {0}</RHAH_Settings_HoleWood>
+  <RHAH_Settings_HoleWood_Tooltip>Wood required to seal a grain hole. 0 to 200, default 20.</RHAH_Settings_HoleWood_Tooltip>
+  <RHAH_Settings_HoleClean>Food cleared: {0}</RHAH_Settings_HoleClean>
+  <RHAH_Settings_HoleClean_Tooltip>Food portions removed when a grain hole is cleared. 0 to 50, default 5.</RHAH_Settings_HoleClean_Tooltip>
+  <RHAH_Settings_HoleRange>Hole range: {0}</RHAH_Settings_HoleRange>
+  <RHAH_Settings_HoleRange_Tooltip>Tiles from the hole that food can be taken. 1 to 60, default 12.</RHAH_Settings_HoleRange_Tooltip>
+  <RHAH_Settings_HoleLosses>Hole losses: {0}</RHAH_Settings_HoleLosses>
+  <RHAH_Settings_HoleLosses_Tooltip>Most losses while a grain hole is left alone. 0 to 20, default 3.</RHAH_Settings_HoleLosses_Tooltip>
+  <RHAH_Settings_ApparelAwful>Awful clothes: {0}%</RHAH_Settings_ApparelAwful>
+  <RHAH_Settings_ApparelAwful_Tooltip>Chance a new visitor wears awful clothes. The rest is poor, then normal. 0 to 100, default 35.</RHAH_Settings_ApparelAwful_Tooltip>
+  <RHAH_Settings_ApparelPoor>Poor clothes: {0}%</RHAH_Settings_ApparelPoor>
+  <RHAH_Settings_ApparelPoor_Tooltip>Chance of poor clothes. Awful and poor together cannot pass 100. Default 50.</RHAH_Settings_ApparelPoor_Tooltip>
+  <RHAH_Settings_ApparelDurability_Tooltip>Durability percent of new clothes. The minimum cannot pass the maximum. 1 to 100.</RHAH_Settings_ApparelDurability_Tooltip>
+  <RHAH_Settings_ApparelMin>Clothes durability, minimum: {0}%</RHAH_Settings_ApparelMin>
+  <RHAH_Settings_ApparelMax>Clothes durability, maximum: {0}%</RHAH_Settings_ApparelMax>
+  <RHAH_Settings_ApparelCorpse>Corpse clothes: {0}%</RHAH_Settings_ApparelCorpse>
+  <RHAH_Settings_ApparelCorpse_Tooltip>Chance new clothes were worn by a corpse. 0 to 100, default 25.</RHAH_Settings_ApparelCorpse_Tooltip>
+  <RHAH_Settings_ApparelCloth>Cloth: {0}%</RHAH_Settings_ApparelCloth>
+  <RHAH_Settings_ApparelCloth_Tooltip>Chance of cloth when both cloth and human leather are allowed. The rest is human leather. 0 to 100, default 65.</RHAH_Settings_ApparelCloth_Tooltip>
+  <RHAH_Settings_ApparelPieces>Most clothes: {0}</RHAH_Settings_ApparelPieces>
+  <RHAH_Settings_ApparelPieces_Tooltip>Most pieces one adult visitor wears. 1 to 8, default 4.</RHAH_Settings_ApparelPieces_Tooltip>
 </LanguageData>

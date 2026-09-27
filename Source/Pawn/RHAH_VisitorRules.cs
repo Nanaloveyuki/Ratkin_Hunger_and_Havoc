@@ -502,18 +502,22 @@ namespace HungerAndHavoc.Pawn
                 return 0;
             }
 
-            return bruiseSeverity >= MaxBruiseSeverity ? 2 : 1;
+            float cap = Core.RHAH_Mod.Settings == null ? MaxBruiseSeverity : Core.RHAH_Mod.Settings.begBruiseMax;
+            return bruiseSeverity >= cap ? 2 : 1;
         }
 
         internal static float NextBruiseSeverity(float current)
         {
-            if (float.IsNaN(current) || float.IsInfinity(current) || current < MinorBruiseSeverity)
+            float start = Core.RHAH_Mod.Settings == null ? MinorBruiseSeverity : Core.RHAH_Mod.Settings.begBruiseSeverity;
+            float step = Core.RHAH_Mod.Settings == null ? BruiseSeverityStep : Core.RHAH_Mod.Settings.begBruiseStep;
+            float cap = Core.RHAH_Mod.Settings == null ? MaxBruiseSeverity : Core.RHAH_Mod.Settings.begBruiseMax;
+            if (float.IsNaN(current) || float.IsInfinity(current) || current < start)
             {
-                return MinorBruiseSeverity;
+                return start;
             }
 
-            float next = current + BruiseSeverityStep;
-            return next > MaxBruiseSeverity ? MaxBruiseSeverity : next;
+            float next = current + step;
+            return next > cap ? cap : next;
         }
         // 睡着、医疗床、倒地和还不能行动的幼童不接受乞讨
         internal static bool CanReceiveBeg(

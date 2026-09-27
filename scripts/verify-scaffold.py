@@ -160,7 +160,8 @@ def check_load_folders():
 
 
 def catalog_defs(catalog):
-    ids = re.findall(r'"(I-\d{3})"', catalog)
+    table = catalog.split("static readonly", 1)[-1].split("public static", 1)[0]
+    ids = re.findall(r'"(I-\d{3})"', table)
     defs = re.findall(
         r'(?:Original|Sequel)\(\s*"I-\d{3}",\s*"(RHAH_[A-Za-z0-9_]+)"',
         catalog,

@@ -188,7 +188,8 @@ namespace HungerAndHavoc.Incidents
                 OpenLetter(map, record, true);
             }
 
-            if (record.NextLossTick < 0 || tick < record.NextLossTick || record.Losses >= MaxLosses)
+            int maxLosses = Core.RHAH_Mod.Settings == null ? MaxLosses : Core.RHAH_Mod.Settings.holeMaxLosses;
+            if (record.NextLossTick < 0 || tick < record.NextLossTick || record.Losses >= maxLosses)
             {
                 return;
             }

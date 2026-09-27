@@ -30,14 +30,16 @@ namespace HungerAndHavoc.Pawn
                 return 0;
             }
 
-            return ticksPerDay * WindowDays;
+            int days = Core.RHAH_Mod.Settings == null ? WindowDays : Core.RHAH_Mod.Settings.clayWindowDays;
+            return ticksPerDay * days;
         }
 
         internal static ClayBite Register(int tick, int windowStart, int count, float severity, int ticksPerDay)
         {
             int start = FreshStart(tick, windowStart, ticksPerDay);
             int used = start == windowStart ? count : 0;
-            if (used >= MaxBites)
+            int maxBites = Core.RHAH_Mod.Settings == null ? MaxBites : Core.RHAH_Mod.Settings.clayMaxBites;
+            if (used >= maxBites)
             {
                 return new ClayBite(false, used, severity);
             }
@@ -47,15 +49,16 @@ namespace HungerAndHavoc.Pawn
                 start = tick;
             }
 
-            float next = severity + SeverityPerBite;
+            float step = Core.RHAH_Mod.Settings == null ? SeverityPerBite : Core.RHAH_Mod.Settings.claySeverityPerBite;
+            float next = severity + step;
             if (next > 1f)
             {
                 next = 1f;
             }
 
-            if (next < SeverityPerBite)
+            if (next < step)
             {
-                next = SeverityPerBite;
+                next = step;
             }
 
             return new ClayBite(true, used + 1, next);

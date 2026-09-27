@@ -103,9 +103,11 @@ namespace HungerAndHavoc.Incidents
             quest.AddInvolvedFaction(sponsor);
             quest.SpawnWorldObject(site);
             string cleared = QuestGenUtility.HardcodedSignalWithQuestID("site.ResidentsCleared");
-            quest.End(QuestEndOutcome.Success, RHAH_RefugeeCampRules.Goodwill, sponsor, cleared, QuestPart.SignalListenMode.OngoingOnly, true, false);
+            int goodwill = Core.RHAH_Mod.Settings == null ? RHAH_RefugeeCampRules.Goodwill : Core.RHAH_Mod.Settings.campGoodwill;
+            quest.End(QuestEndOutcome.Success, goodwill, sponsor, cleared, QuestPart.SignalListenMode.OngoingOnly, true, false);
             quest.End(QuestEndOutcome.Fail, 0, null, QuestGenUtility.HardcodedSignalWithQuestID("site.Destroyed"), QuestPart.SignalListenMode.OngoingOnly, true, false);
-            int ticks = RHAH_RefugeeCampRules.Days * GenDate.TicksPerDay;
+            int days = Core.RHAH_Mod.Settings == null ? RHAH_RefugeeCampRules.Days : Core.RHAH_Mod.Settings.campDays;
+            int ticks = days * GenDate.TicksPerDay;
             quest.WorldObjectTimeout(site, ticks);
             quest.Delay(ticks, () => quest.End(QuestEndOutcome.Fail, 0, null, null, QuestPart.SignalListenMode.OngoingOnly, true, false));
         }
@@ -151,7 +153,8 @@ namespace HungerAndHavoc.Incidents
 
         static void BuildHuts(Map map, Faction faction, IntVec3 center)
         {
-            for (int hut = 0; hut < RHAH_RefugeeCampRules.Huts; hut++)
+            int huts = Core.RHAH_Mod.Settings == null ? RHAH_RefugeeCampRules.Huts : Core.RHAH_Mod.Settings.campHuts;
+            for (int hut = 0; hut < huts; hut++)
             {
                 CellRect rect = new CellRect(center.x - 11 + (hut % 2) * 13, center.z - 11 + (hut / 2) * 13, 9, 9);
                 foreach (IntVec3 cell in rect)

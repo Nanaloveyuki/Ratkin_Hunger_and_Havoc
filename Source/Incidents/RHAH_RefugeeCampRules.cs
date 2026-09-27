@@ -30,7 +30,14 @@ namespace HungerAndHavoc.Incidents
 
         internal static RHAH_CampPlan Plan(int adultRoll, int childRoll)
         {
-            return new RHAH_CampPlan(Clamp(adultRoll, MinAdults, MaxAdults), Clamp(childRoll, MinChildren, MaxChildren), Goodwill, Days);
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            int minAdults = settings == null ? MinAdults : settings.campMinAdults;
+            int maxAdults = settings == null ? MaxAdults : settings.campMaxAdults;
+            int minChildren = settings == null ? MinChildren : settings.campMinChildren;
+            int maxChildren = settings == null ? MaxChildren : settings.campMaxChildren;
+            int goodwill = settings == null ? Goodwill : settings.campGoodwill;
+            int days = settings == null ? Days : settings.campDays;
+            return new RHAH_CampPlan(Clamp(adultRoll, minAdults, maxAdults), Clamp(childRoll, minChildren, maxChildren), goodwill, days);
         }
 
         internal static bool CanOffer(bool violentQuests, bool campEnabled, bool hasSponsor, bool tileValid)

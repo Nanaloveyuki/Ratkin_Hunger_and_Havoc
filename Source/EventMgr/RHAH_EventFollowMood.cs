@@ -91,7 +91,7 @@ namespace HungerAndHavoc.EventMgr
 
         internal static void OnBirthday(Verse.Pawn pawn, int age)
         {
-            if (age < RHAH_EventFollowRules.AdultAge)
+            if (age < (Core.RHAH_Mod.Settings == null ? RHAH_EventFollowRules.AdultAge : Core.RHAH_Mod.Settings.followAdultAge))
             {
                 return;
             }
@@ -107,7 +107,7 @@ namespace HungerAndHavoc.EventMgr
                 return;
             }
 
-            if (pawn.ageTracker.AgeBiologicalYearsFloat < RHAH_EventFollowRules.AdultAge)
+            if (pawn.ageTracker.AgeBiologicalYearsFloat < (Core.RHAH_Mod.Settings == null ? RHAH_EventFollowRules.AdultAge : Core.RHAH_Mod.Settings.followAdultAge))
             {
                 return;
             }

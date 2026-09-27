@@ -13,9 +13,9 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(1.25f, RHAH_EndingRules.ThreatFactor(-100));
             Assert.Equal(1f, RHAH_EndingRules.ThreatFactor(0));
             Assert.Equal(0.75f, RHAH_EndingRules.ThreatFactor(100));
-            Assert.Equal(13f / 1.25f, RHAH_EndingRules.ThreatInterval(-100), 3);
-            Assert.Equal(13f, RHAH_EndingRules.ThreatInterval(0), 3);
-            Assert.Equal(13f / 0.75f, RHAH_EndingRules.ThreatInterval(100), 3);
+            Assert.Equal(13f / 1.25f, RHAH_EndingRules.ThreatInterval(-100, 13f), 3);
+            Assert.Equal(13f, RHAH_EndingRules.ThreatInterval(0, 13f), 3);
+            Assert.Equal(13f / 0.75f, RHAH_EndingRules.ThreatInterval(100, 13f), 3);
         }
 
         [Fact]
@@ -68,20 +68,20 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(RHAH_EndingId.E05, RHAH_EndingRules.Next(halt, RHAH_EndingGoals.Defaults()));
             RHAH_EndingFacts again = Facts(-100, true, 0, 0, 9, 0, 1, false, 0, false, false, false, false, true, 0);
             Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(again, RHAH_EndingGoals.Defaults()));
-            Assert.True(RHAH_EndingRules.AsidesClosed(-80, false));
+            Assert.True(RHAH_EndingRules.AsidesClosed(-80, false, -75));
             Assert.False(RHAH_EndingRuntime.IsNarrator("Randy"));
         }
 
         [Fact]
         public void DisabledEnding_DoesNotStartAndShownEndingStays()
         {
-            RHAH_EndingGoals closed = new RHAH_EndingGoals(99, 3, 3, 100, 30, true, false, true, true, true, true, true, true);
+            RHAH_EndingGoals closed = new RHAH_EndingGoals(99, 3, 3, 100, 30, true, false, true, true, true, true, true, true, 50, 75, -75, 6, 13f);
             Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(
                 Facts(80, false, 99, 3, 0, 100, 6, false, 30, false, false, false, false, false, 0),
                 closed));
             Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(
                 Facts(10, true, 0, 0, 0, 0, 6, false, 30, false, false, false, false, false, 0),
-                new RHAH_EndingGoals(99, 3, 3, 100, 30, true, true, true, true, false, true, true, true)));
+                new RHAH_EndingGoals(99, 3, 3, 100, 30, true, true, true, true, false, true, true, true, 50, 75, -75, 6, 13f)));
         }
 
         [Fact]
@@ -90,8 +90,8 @@ namespace HungerAndHavoc.Tests
             RHAH_EndingGoals goals = RHAH_EndingGoals.Defaults();
             Assert.False(RHAH_EndingRules.IdentityDue(Facts(49, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 0), goals));
             Assert.True(RHAH_EndingRules.IdentityDue(Facts(50, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 0), goals));
-            Assert.Equal(RHAH_IdentityTier.Partial, RHAH_EndingRules.IdentityOffer(50));
-            Assert.Equal(RHAH_IdentityTier.Full, RHAH_EndingRules.IdentityOffer(75));
+            Assert.Equal(RHAH_IdentityTier.Partial, RHAH_EndingRules.IdentityOffer(50, 50, 75));
+            Assert.Equal(RHAH_IdentityTier.Full, RHAH_EndingRules.IdentityOffer(75, 50, 75));
             Assert.False(RHAH_EndingRules.IdentityDue(Facts(80, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 2), goals));
             Assert.Equal(50, Facts(50, true, 1, 0, 0, 0, 0, false, 0, false, false, false, false, false, 0).Trust);
         }
@@ -146,7 +146,7 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(12, loaded.AdultCount);
             Assert.True(loaded.EndingShown(RHAH_EndingId.E03));
             Assert.False(loaded.IdentityDue(200000, true, RHAH_EndingGoals.Defaults()));
-            Assert.Equal(RHAH_EndingId.None, loaded.PendingEnding(200000, true, new RHAH_EndingGoals(1, 1, 3, 100, 30, true, true, true, true, true, true, true, true)));
+            Assert.Equal(RHAH_EndingId.None, loaded.PendingEnding(200000, true, new RHAH_EndingGoals(1, 1, 3, 100, 30, true, true, true, true, true, true, true, true, 50, 75, -75, 6, 13f)));
         }
 
         static RHAH_EndingFacts Facts(

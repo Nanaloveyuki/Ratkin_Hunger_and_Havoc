@@ -147,7 +147,8 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                bool hungry = child.needs?.food != null && child.needs.food.CurLevelPercentage < RHAH_FamilyRules.ChildHungry;
+                float childHungry = settings == null ? RHAH_FamilyRules.ChildHungry : settings.childHungryPercent / 100f;
+                bool hungry = child.needs?.food != null && child.needs.food.CurLevelPercentage < childHungry;
                 if (!RHAH_FamilyRules.CanMotherFeed(comp.State.role, settings.motherFeedEnabled, hungry))
                 {
                     continue;
@@ -235,7 +236,8 @@ namespace HungerAndHavoc.Pawn
         internal static Job TryCreate(Verse.Pawn pawn)
         {
             RHAH_Settings settings = RHAH_Mod.Settings;
-            bool hungry = pawn != null && pawn.needs?.food != null && pawn.needs.food.CurLevelPercentage < RHAH_FamilyRules.PrisonerHungry;
+            float prisonerHungry = settings == null ? RHAH_FamilyRules.PrisonerHungry : settings.prisonerHungryPercent / 100f;
+            bool hungry = pawn != null && pawn.needs?.food != null && pawn.needs.food.CurLevelPercentage < prisonerHungry;
             if (pawn == null || pawn.Map == null || settings == null || !RHAH_Api.IsOrigin(pawn) ||
                 !RHAH_FamilyRules.CanScavenge(settings.prisonerScavengeEnabled, pawn.IsPrisoner, hungry))
             {
@@ -287,7 +289,7 @@ namespace HungerAndHavoc.Pawn
                 Need_Food food = pawn.needs?.food;
                 if (food != null)
                 {
-                    food.CurLevel += RHAH_FamilyRules.ScavengeNutrition;
+                    food.CurLevel += RHAH_Mod.Settings == null ? RHAH_FamilyRules.ScavengeNutrition : RHAH_Mod.Settings.scavengeNutrition;
                 }
 
                 pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(RHAH_DefOf.RHAH_Thought_ScavengedFilth);
@@ -314,7 +316,9 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            bool hungry = pawn.needs?.food != null && pawn.needs.food.CurLevelPercentage < RHAH_FamilyRules.PrisonerHungry;
+            RHAH_Settings biteSettings = RHAH_Mod.Settings;
+            float biteHungry = biteSettings == null ? RHAH_FamilyRules.PrisonerHungry : biteSettings.prisonerHungryPercent / 100f;
+            bool hungry = pawn.needs?.food != null && pawn.needs.food.CurLevelPercentage < biteHungry;
             if (!RHAH_Api.IsOrigin(pawn) || !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.TailBite))
             {
                 return null;
@@ -441,12 +445,12 @@ namespace HungerAndHavoc.Pawn
                     Need_Food food = pawn.needs?.food;
                     if (food != null)
                     {
-                        food.CurLevel += RHAH_FamilyRules.TailNutrition;
+                        food.CurLevel += RHAH_Mod.Settings == null ? RHAH_FamilyRules.TailNutrition : RHAH_Mod.Settings.tailNutrition;
                     }
                 }
                 else
                 {
-                    target.TakeDamage(new DamageInfo(DamageDefOf.Bite, RHAH_FamilyRules.TailFailDamage, instigator: pawn, hitPart: tail));
+                    target.TakeDamage(new DamageInfo(DamageDefOf.Bite, RHAH_Mod.Settings == null ? RHAH_FamilyRules.TailFailDamage : RHAH_Mod.Settings.tailFailDamage, instigator: pawn, hitPart: tail));
                 }
 
                 ThoughtDef biter = asleep ? RHAH_DefOf.RHAH_Thought_BitATail : null;

@@ -16,7 +16,8 @@ namespace HungerAndHavoc.Pawn
             get
             {
                 int shown = ingestionCount < 0 ? 0 : ingestionCount;
-                return shown + "/" + RHAH_ClaySatiety.MaxBites;
+                int maxBites = Core.RHAH_Mod.Settings == null ? RHAH_ClaySatiety.MaxBites : Core.RHAH_Mod.Settings.clayMaxBites;
+                return shown + "/" + maxBites;
             }
         }
 
@@ -74,7 +75,7 @@ namespace HungerAndHavoc.Pawn
         public bool CanEatNow(int tick)
         {
             Refresh(tick);
-            return ingestionCount < RHAH_ClaySatiety.MaxBites;
+            return ingestionCount < (Core.RHAH_Mod.Settings == null ? RHAH_ClaySatiety.MaxBites : Core.RHAH_Mod.Settings.clayMaxBites);
         }
 
         public bool RegisterBite(int tick)
@@ -121,9 +122,10 @@ namespace HungerAndHavoc.Pawn
                     ingestionCount = 0;
                 }
 
-                if (ingestionCount > RHAH_ClaySatiety.MaxBites)
+                int maxBites = Core.RHAH_Mod.Settings == null ? RHAH_ClaySatiety.MaxBites : Core.RHAH_Mod.Settings.clayMaxBites;
+                if (ingestionCount > maxBites)
                 {
-                    ingestionCount = RHAH_ClaySatiety.MaxBites;
+                    ingestionCount = maxBites;
                 }
             }
         }

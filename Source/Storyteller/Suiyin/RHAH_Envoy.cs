@@ -88,7 +88,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 PawnKind = RHAH_DefOf.RHAH_PawnKind_Ratkin,
                 Faction = RHAH_AttitudeFactions.Require(RHAH_Attitude.Neutral),
                 SpawnCell = cell,
-                BiologicalAge = AdultAge
+                BiologicalAge = Core.RHAH_Mod.Settings == null ? AdultAge : Core.RHAH_Mod.Settings.narrativeAdultYears
             });
             if (result == null || !result.Succeeded || result.Pawns.Count == 0 || result.Pawns[0] == null)
             {

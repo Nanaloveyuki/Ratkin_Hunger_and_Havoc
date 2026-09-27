@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
+using HungerAndHavoc.Core;
 using HungerAndHavoc.Incidents;
 using RimWorld;
 using Verse;
@@ -178,7 +179,8 @@ namespace HungerAndHavoc.Trade
                 return false;
             }
 
-            return foodCount >= childCount * FoodPerChild;
+            int each = RHAH_Mod.Settings == null ? FoodPerChild : RHAH_Mod.Settings.foodPerChild;
+            return foodCount >= childCount * each;
         }
 
         internal static bool NpcSellsFood(bool isTradeCaravan, bool foodIsNutrition)

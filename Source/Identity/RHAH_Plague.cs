@@ -49,7 +49,8 @@ namespace HungerAndHavoc.Identity
             }
 
             Hediff hediff = HediffMaker.MakeHediff(def, pawn);
-            hediff.Severity = severity ?? Rand.Range(SeverityMin, SeverityMax);
+            float cap = Core.RHAH_Mod.Settings == null ? SeverityMax : Core.RHAH_Mod.Settings.plagueSeverityMax;
+            hediff.Severity = severity ?? Rand.Range(SeverityMin, cap);
             pawn.health.AddHediff(hediff);
             return true;
         }

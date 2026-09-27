@@ -273,7 +273,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             Current.Game?.GetComponent<Narrative.NarrativeState>()?.Book?.MarkJournalDelivered(record.BatchId);
-            RHAH_SuiyinTrust.Note(Pawns(record).Count, RHAH_SuiyinTrust.Deliver);
+            RHAH_SuiyinTrust.Note(Pawns(record).Count, RHAH_SuiyinTrust.Value(RHAH_SuiyinTrust.Deliver, RHAH_Mod.Settings == null ? RHAH_SuiyinTrust.Deliver : RHAH_Mod.Settings.trustDeliver));
         }
 
         static List<Verse.Pawn> Pawns(RHAH_ChoiceRecord record)

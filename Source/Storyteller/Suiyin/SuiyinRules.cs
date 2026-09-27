@@ -261,6 +261,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal int AsideCooldownDays = 3;
         internal int TrustAsideCutoff = -75;
         internal int AdultYears = 18;
+        internal int TrustBonusPercent = 25;
     }
 
     public sealed class SuiyinMember : IExposable
@@ -599,8 +600,14 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             Note(displayId, mapId, tick, plague, enabled, 0, null);
         }
 
+        void PullConfig()
+        {
+            Core.RHAH_Mod.Settings?.CopyNarrative(Config);
+        }
+
         internal void Note(string displayId, int mapId, int tick, bool plague, bool enabled, int batchId, IList<int> visitorIds)
         {
+            PullConfig();
             if (string.IsNullOrEmpty(displayId))
             {
                 return;
@@ -679,6 +686,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool OpenEntrust(int motherId, int mapId, int tick, IList<int> childIds)
         {
+            PullConfig();
             if (motherId <= 0 || childIds == null || childIds.Count == 0 || !Allows(SuiyinNode.N004))
             {
                 return false;
@@ -818,6 +826,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool ChooseRevisit(SuiyinN004Case record, SuiyinN004Revisit choice, int tick, bool canPay)
         {
+            PullConfig();
             if (record == null || record.Outcome != SuiyinN004Outcome.Banished || record.Revisit != SuiyinN004Revisit.None || record.RevisitSeen == false)
             {
                 return false;
@@ -837,7 +846,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
             else if (choice == SuiyinN004Revisit.Kill)
             {
-                Trust = SuiyinNodes.ClampTrust(Trust - 10);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? -10 : Core.RHAH_Mod.Settings.trustKill));
                 Queue(SuiyinLetter.N004Killed, record.Id, true);
             }
 
@@ -846,6 +855,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal int ClaimRescue(SuiyinN004Case record, int tick)
         {
+            PullConfig();
             if (record == null || !record.RescuePaid || record.RescueDueTick < 0 || tick < record.RescueDueTick)
             {
                 return 0;
@@ -858,6 +868,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool AcceptExchange(int id, int mapId, int tick, IList<int> childIds)
         {
+            PullConfig();
             if (id <= 0 || !Allows(SuiyinNode.N005) || FindN005(id) != null)
             {
                 return false;
@@ -973,7 +984,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             else if (allSettled)
             {
                 record.Outcome = SuiyinN005Outcome.Cared;
-                Trust = SuiyinNodes.ClampTrust(Trust + 3);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 3 : Core.RHAH_Mod.Settings.trustExchange));
                 EnvoyClue = true;
                 Queue(SuiyinLetter.N005Cared, record.Id, true);
                 TryEnvoy(tick);
@@ -1000,6 +1011,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool NoteTheft(int mapId, int tick)
         {
+            PullConfig();
             int index = TheftMaps.IndexOf(mapId);
             if (index < 0)
             {
@@ -1049,6 +1061,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool ChooseHole(SuiyinN006Case record, SuiyinN006Action action, int tick)
         {
+            PullConfig();
             if (record == null || record.Outcome != SuiyinN006Outcome.Pending || !record.Hole)
             {
                 return false;
@@ -1061,10 +1074,10 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     return false;
                 }
 
-                record.Wood -= 20;
+                record.Wood -= Core.RHAH_Mod.Settings == null ? 20 : Core.RHAH_Mod.Settings.holeWoodCost;
                 record.Outcome = SuiyinN006Outcome.Sealed;
                 record.Hole = false;
-                Trust = SuiyinNodes.ClampTrust(Trust + 1);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 1 : Core.RHAH_Mod.Settings.trustHoleOpen));
                 Queue(SuiyinLetter.N006Sealed, record.MapId, false);
                 return true;
             }
@@ -1087,7 +1100,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             {
                 record.Outcome = SuiyinN006Outcome.Cleaned;
                 record.Hole = false;
-                Trust = SuiyinNodes.ClampTrust(Trust - 1);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? -1 : Core.RHAH_Mod.Settings.trustHoleIgnore));
                 Queue(SuiyinLetter.N006Cleaned, record.MapId, false);
                 return true;
             }
@@ -1105,6 +1118,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool FinishBait(SuiyinN006Case record, int tick, bool trace)
         {
+            PullConfig();
             if (record == null || record.Outcome != SuiyinN006Outcome.BaitSet || record.BaitUntil < 0 || tick < record.BaitUntil)
             {
                 return false;
@@ -1114,7 +1128,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             if (trace)
             {
                 record.Outcome = SuiyinN006Outcome.Traced;
-                Trust = SuiyinNodes.ClampTrust(Trust + 3);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 3 : Core.RHAH_Mod.Settings.trustHoleBait));
                 RelicClue = true;
                 Queue(SuiyinLetter.N006Traced, record.MapId, false);
                 TryRelic(tick);
@@ -1131,6 +1145,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool ChooseQuarantine(SuiyinN007Case record, SuiyinN007Action action)
         {
+            PullConfig();
             if (record == null || record.Outcome != SuiyinN007Outcome.Pending)
             {
                 return false;
@@ -1160,7 +1175,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             if (action == SuiyinN007Action.AcceptRecovered && HasRecovered(record))
             {
                 record.Outcome = SuiyinN007Outcome.RecoveredStayed;
-                Trust = SuiyinNodes.ClampTrust(Trust + 1);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 1 : Core.RHAH_Mod.Settings.trustQuarantineStay));
                 Queue(SuiyinLetter.N007Stayed, record.MapId, false);
                 return true;
             }
@@ -1170,6 +1185,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool CloseQuarantine(SuiyinN007Case record, SuiyinN007Outcome outcome, int tick, int returnPawnId)
         {
+            PullConfig();
             if (record == null || record.Outcome == SuiyinN007Outcome.AllDead || record.Outcome == SuiyinN007Outcome.RecoveredLeft || record.Outcome == SuiyinN007Outcome.RecoveredStayed || record.Outcome == SuiyinN007Outcome.Missing)
             {
                 return false;
@@ -1178,7 +1194,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             record.Outcome = outcome;
             if (outcome == SuiyinN007Outcome.RecoveredLeft)
             {
-                Trust = SuiyinNodes.ClampTrust(Trust + 2);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 2 : Core.RHAH_Mod.Settings.trustQuarantineRecover));
                 EnvoyClue = true;
                 if (returnPawnId > 0 && record.ReturnDueTick < 0)
                 {
@@ -1191,7 +1207,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
             else if (outcome == SuiyinN007Outcome.Broken)
             {
-                Trust = SuiyinNodes.ClampTrust(Trust - 2);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? -2 : Core.RHAH_Mod.Settings.trustQuarantineFail));
                 Queue(SuiyinLetter.N007Broken, record.MapId, false);
             }
             else if (outcome == SuiyinN007Outcome.AllDead)
@@ -1226,6 +1242,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool ArriveEnvoy(int mapId, int pawnId, int tick)
         {
+            PullConfig();
             if (!Allows(SuiyinNode.N008) || pawnId <= 0 || FindN008() != null)
             {
                 return false;
@@ -1250,6 +1267,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool ChooseEnvoy(SuiyinN008Case record, SuiyinN008Action action, int tick)
         {
+            PullConfig();
             if (record == null || record.Presence == SuiyinPresence.Dead)
             {
                 return false;
@@ -1295,7 +1313,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             if (action == SuiyinN008Action.Drive && (record.Outcome == SuiyinN008Outcome.Waiting || record.Outcome == SuiyinN008Outcome.Checking))
             {
                 record.Outcome = SuiyinN008Outcome.Driven;
-                Trust = SuiyinNodes.ClampTrust(Trust - 2);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? -2 : Core.RHAH_Mod.Settings.trustEnvoyFail));
                 Queue(SuiyinLetter.N008Drive, record.PawnId, false);
                 return true;
             }
@@ -1352,6 +1370,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool OpenRelic(int tick)
         {
+            PullConfig();
             if (N009 != null || !Allows(SuiyinNode.N009))
             {
                 return false;
@@ -1368,6 +1387,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal int ChooseRelic(SuiyinN009Action action, int tick)
         {
+            PullConfig();
             if (N009 == null || N009.Outcome != SuiyinN009Outcome.Pending)
             {
                 return 0;
@@ -1404,7 +1424,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             else if (action == SuiyinN009Action.Destroy || N009.BoxDestroyed)
             {
                 N009.Outcome = SuiyinN009Outcome.Destroyed;
-                Trust = SuiyinNodes.ClampTrust(Trust - 2);
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? -2 : Core.RHAH_Mod.Settings.trustRelicFail));
                 Queue(SuiyinLetter.N009Destroy, 0, false);
             }
             else
@@ -1446,6 +1466,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool OpenJournal(int journal, int mapId, int batchId, int tick, IList<int> loadIds, bool delivered)
         {
+            PullConfig();
             if (journal < 1 || journal > 14 || batchId <= 0 || FindJournal(batchId) != null)
             {
                 return false;
@@ -1482,6 +1503,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal bool CloseJournal(SuiyinJournalCase record, int tick)
         {
+            PullConfig();
             if (record == null || record.Closed || record.Counted)
             {
                 return false;
@@ -1631,7 +1653,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return silver < 0 ? 0 : silver;
             }
 
-            int bonus = Trust > 100 ? 25 : Trust * 25 / 100;
+            int percent = Core.RHAH_Mod.Settings == null ? Config.TrustBonusPercent : Core.RHAH_Mod.Settings.narrativeTrustBonusPercent;
+            int bonus = Trust > 100 ? percent : Trust * percent / 100;
             return silver + silver * bonus / 100;
         }
 
@@ -1667,11 +1690,32 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         static int TrustFor(SuiyinN004Outcome outcome)
         {
-            if (outcome == SuiyinN004Outcome.ChildAlone || outcome == SuiyinN004Outcome.FamilyHere) return 5;
-            if (outcome == SuiyinN004Outcome.Captive) return -5;
-            if (outcome == SuiyinN004Outcome.Story) return -2;
-            if (outcome == SuiyinN004Outcome.Regret) return -3;
-            if (outcome == SuiyinN004Outcome.Banished) return -1;
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            if (outcome == SuiyinN004Outcome.ChildAlone || outcome == SuiyinN004Outcome.FamilyHere)
+            {
+                return settings == null ? 5 : settings.trustEntrustGood;
+            }
+
+            if (outcome == SuiyinN004Outcome.Captive)
+            {
+                return settings == null ? -5 : settings.trustEntrustCaptive;
+            }
+
+            if (outcome == SuiyinN004Outcome.Story)
+            {
+                return settings == null ? -2 : settings.trustEntrustStory;
+            }
+
+            if (outcome == SuiyinN004Outcome.Regret)
+            {
+                return settings == null ? -3 : settings.trustEntrustRegret;
+            }
+
+            if (outcome == SuiyinN004Outcome.Banished)
+            {
+                return settings == null ? -1 : settings.trustEntrustBanished;
+            }
+
             return 0;
         }
 
@@ -1705,6 +1749,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         void TryAsides(int tick)
         {
+            PullConfig();
             if (!Narrator || Trust <= Config.TrustAsideCutoff)
             {
                 return;

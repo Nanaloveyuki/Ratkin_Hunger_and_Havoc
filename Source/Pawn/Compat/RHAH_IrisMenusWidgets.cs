@@ -1,4 +1,5 @@
 extern alias iris;
+using System.Collections.Generic;
 using System;
 using HungerAndHavoc.Generation;
 using HungerAndHavoc.Incidents;
@@ -186,6 +187,22 @@ namespace HungerAndHavoc.Pawn.Compat
             float x = graph.x + graph.width * (count - minimum) / span;
             float chance = RHAH_FertilityRules.LitterChance(count, minimum, peak, maximum);
             return new Vector2(x, graph.yMax - graph.height * Mathf.Clamp01(chance));
+        }
+
+        internal static int TuneInt(Listing_Standard list, Dictionary<string, string> buffers, string id, string label, int value, float min, float max, string tip)
+        {
+            string buffer = buffers.TryGetValue(id, out string stored) ? stored : value.ToString();
+            int next = (int)TunedValue(list, label, value, ref buffer, min, max, "0", tip);
+            buffers[id] = buffer;
+            return next;
+        }
+
+        internal static float TuneFloat(Listing_Standard list, Dictionary<string, string> buffers, string id, string label, float value, float min, float max, string format, string tip)
+        {
+            string buffer = buffers.TryGetValue(id, out string stored) ? stored : value.ToString(format);
+            float next = TunedValue(list, label, value, ref buffer, min, max, format, tip);
+            buffers[id] = buffer;
+            return next;
         }
 
     }

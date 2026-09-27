@@ -534,11 +534,12 @@ namespace HungerAndHavoc.Pawn.Compat
             DrawNode(list, state, SuiyinNode.N008, "N-008");
             DrawNode(list, state, SuiyinNode.N009, "N-009");
             Section(list, "RHAH_Menu_Narrative_Thresholds");
-            SuiyinConfig config = state.Book.Config;
-            config.ProgressKinds = ClampKinds(list, "narrative-progress", "RHAH_Menu_Narrative_Progress", config.ProgressKinds);
-            config.RewardKinds = ClampKinds(list, "narrative-reward", "RHAH_Menu_Narrative_Reward", config.RewardKinds);
-            config.EnvoyKinds = ClampKinds(list, "narrative-envoy", "RHAH_Menu_Narrative_Envoy", config.EnvoyKinds);
-            config.RelicKinds = ClampKinds(list, "narrative-relic", "RHAH_Menu_Narrative_Relic", config.RelicKinds);
+            RHAH_Settings narrative = RHAH_Mod.Settings;
+            if (narrative != null)
+            {
+                DrawNarrativeNumbers(list, narrative);
+                narrative.CopyNarrative(state.Book.Config);
+            }
             Section(list, "RHAH_Menu_Narrative_Journals");
             for (int journal = 1; journal <= 14; journal++)
             {
@@ -559,7 +560,8 @@ namespace HungerAndHavoc.Pawn.Compat
                 }
             }
 
-            if (snapshot.Trust <= -75)
+            int cutoff = RHAH_Mod.Settings == null ? -75 : RHAH_Mod.Settings.narrativeAsideCutoff;
+            if (snapshot.Trust <= cutoff)
             {
                 Note(list, "RHAH_Menu_Narrative_TrustClosed");
             }
@@ -757,6 +759,7 @@ namespace HungerAndHavoc.Pawn.Compat
             settings.broadcastCooldownDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_BroadcastCooldown".Translate(settings.broadcastCooldownDays), settings.broadcastCooldownDays, ref cooldown, 0f, 10f, "0", "RHAH_Settings_BroadcastCooldown_Tooltip".Translate());
             weightBuffers["broadcast-days"] = cooldown;
             MenuControls.Checkbox(list, "RHAH_Settings_RefugeeCamp".Translate(), ref settings.refugeeCampEnabled, "RHAH_Settings_RefugeeCamp_Tooltip".Translate());
+            DrawVisitorIntensity(list, settings);
         }
 
         static IEnumerable<MenuSearchEntry> SearchVisitors()
@@ -778,6 +781,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             MenuControls.Checkbox(list, "RHAH_Settings_Plague".Translate(), ref settings.plagueEnabled, "RHAH_Settings_Plague_Tooltip".Translate());
+            settings.plagueSeverityMax = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "plague-severity", "RHAH_Settings_PlagueSeverity".Translate(settings.plagueSeverityMax.ToString("0.00")), settings.plagueSeverityMax, 0.01f, 1f, "0.00", "RHAH_Settings_PlagueSeverity_Tooltip".Translate());
             string per = Buffer(weightBuffers, "plague-per", settings.plagueSpreadChancePerCarrier * 100f, "0.0");
             float perPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PlaguePerCarrier".Translate((settings.plagueSpreadChancePerCarrier * 100f).ToString("0.0")), settings.plagueSpreadChancePerCarrier * 100f, ref per, 0f, 100f, "0.0", "RHAH_Settings_PlaguePerCarrier_Tooltip".Translate());
             settings.plagueSpreadChancePerCarrier = perPercent / 100f;
@@ -844,6 +848,8 @@ namespace HungerAndHavoc.Pawn.Compat
             string wait = Buffer(weightBuffers, "food-wait", settings.noFoodWaitDays, "0.00");
             settings.noFoodWaitDays = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_FoodWait".Translate(settings.noFoodWaitDays.ToString("0.00")), settings.noFoodWaitDays, ref wait, 0f, 5f, "0.00", "RHAH_Settings_FoodWait_Tooltip".Translate());
             weightBuffers["food-wait"] = wait;
+            settings.satisfiedFoodPercent = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "food-full", "RHAH_Settings_FoodFull".Translate(settings.satisfiedFoodPercent.ToString("0")), settings.satisfiedFoodPercent, 1f, 100f, "0", "RHAH_Settings_FoodFull_Tooltip".Translate());
+            settings.refeedMalnutrition = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "food-refeed", "RHAH_Settings_FoodRefeed".Translate(settings.refeedMalnutrition.ToString("0.00")), settings.refeedMalnutrition, 0f, 1f, "0.00", "RHAH_Settings_FoodRefeed_Tooltip".Translate());
         }
 
         void DrawFoodList(Listing_Standard list, RHAH_Settings settings)
@@ -1340,6 +1346,12 @@ namespace HungerAndHavoc.Pawn.Compat
             string wait = Buffer(weightBuffers, "ending-wait", settings.endingWaitDays, "0");
             settings.endingWaitDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Ending_Wait".Translate(settings.endingWaitDays), settings.endingWaitDays, ref wait, 0f, 120f, "0", "RHAH_Ending_Wait_Tooltip".Translate());
             weightBuffers["ending-wait"] = wait;
+            settings.endingTrustFloor = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "ending-floor", "RHAH_Settings_EndingFloor".Translate(settings.endingTrustFloor), settings.endingTrustFloor, 0f, 100f, "RHAH_Settings_EndingFloor_Tooltip".Translate());
+            settings.endingHopeTrust = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "ending-hope", "RHAH_Settings_EndingHope".Translate(settings.endingHopeTrust), settings.endingHopeTrust, settings.endingTrustFloor, 100f, "RHAH_Settings_EndingHope_Tooltip".Translate());
+            settings.endingHaltTrust = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "ending-halt", "RHAH_Settings_EndingHalt".Translate(settings.endingHaltTrust), settings.endingHaltTrust, -100f, 0f, "RHAH_Settings_EndingHalt_Tooltip".Translate());
+            settings.endingLowKinds = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "ending-kinds", "RHAH_Settings_EndingKinds".Translate(settings.endingLowKinds), settings.endingLowKinds, 1f, 14f, "RHAH_Settings_EndingKinds_Tooltip".Translate());
+            settings.endingThreatDays = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "ending-threat", "RHAH_Settings_EndingThreat".Translate(settings.endingThreatDays.ToString("0")), settings.endingThreatDays, 1f, 60f, "0", "RHAH_Settings_EndingThreat_Tooltip".Translate());
+
             if (Prefs.DevMode)
             {
                 RHAH_IrisMenusWidgets.Quote(list, "ending-preview", "RHAH_Ending_Preview_Note".Translate());
@@ -1606,6 +1618,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             DrawModeSelect(list, "apparel-mode", "RHAH_Settings_Apparel", settings.apparelMode, 4, mode => settings.apparelMode = mode);
+            DrawApparelIntensity(list, settings);
             DrawApparelList(list, settings);
             string traits = Buffer(weightBuffers, "owned-traits", settings.maxOwnedTraits, "0");
             settings.maxOwnedTraits = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaxTraits".Translate(settings.maxOwnedTraits), settings.maxOwnedTraits, ref traits, 0f, 3f, "0", "RHAH_Settings_MaxTraits_Tooltip".Translate());
@@ -2141,6 +2154,128 @@ namespace HungerAndHavoc.Pawn.Compat
             Empty(list, "RHAH_Menu_Unavailable");
             Note(list, gapKey);
         }
+        void DrawNarrativeNumbers(Listing_Standard list, RHAH_Settings settings)
+        {
+            settings.narrativeProgressKinds = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-progress", "RHAH_Menu_Narrative_Progress".Translate(settings.narrativeProgressKinds), settings.narrativeProgressKinds, 1f, 14f, "RHAH_Settings_NarrativeKinds_Tooltip".Translate());
+            settings.narrativeRewardKinds = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-reward", "RHAH_Menu_Narrative_Reward".Translate(settings.narrativeRewardKinds), settings.narrativeRewardKinds, 1f, 14f, "RHAH_Settings_NarrativeKinds_Tooltip".Translate());
+            settings.narrativeEnvoyKinds = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-envoy", "RHAH_Menu_Narrative_Envoy".Translate(settings.narrativeEnvoyKinds), settings.narrativeEnvoyKinds, 1f, 14f, "RHAH_Settings_NarrativeKinds_Tooltip".Translate());
+            settings.narrativeRelicKinds = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-relic", "RHAH_Menu_Narrative_Relic".Translate(settings.narrativeRelicKinds), settings.narrativeRelicKinds, 1f, 14f, "RHAH_Settings_NarrativeKinds_Tooltip".Translate());
+            settings.narrativeTheftKinds = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-theft", "RHAH_Settings_NarrativeTheft".Translate(settings.narrativeTheftKinds), settings.narrativeTheftKinds, 1f, 14f, "RHAH_Settings_NarrativeTheft_Tooltip".Translate());
+            settings.narrativeRewardSilver = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-silver", "RHAH_Settings_NarrativeSilver".Translate(settings.narrativeRewardSilver), settings.narrativeRewardSilver, 0f, 10000f, "RHAH_Settings_NarrativeSilver_Tooltip".Translate());
+            settings.narrativeTrustBonusPercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-bonus", "RHAH_Settings_NarrativeBonus".Translate(settings.narrativeTrustBonusPercent), settings.narrativeTrustBonusPercent, 0f, 100f, "RHAH_Settings_NarrativeBonus_Tooltip".Translate());
+            settings.narrativeRescueCost = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-rescue", "RHAH_Settings_NarrativeRescue".Translate(settings.narrativeRescueCost), settings.narrativeRescueCost, 0f, 10000f, "RHAH_Settings_NarrativeRescue_Tooltip".Translate());
+            settings.narrativeRescueReward = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-reward-silver", "RHAH_Settings_NarrativeRescueReward".Translate(settings.narrativeRescueReward), settings.narrativeRescueReward, 0f, 20000f, "RHAH_Settings_NarrativeRescueReward_Tooltip".Translate());
+            settings.narrativeRelicTake = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-take", "RHAH_Settings_NarrativeTake".Translate(settings.narrativeRelicTake), settings.narrativeRelicTake, 0f, 10000f, "RHAH_Settings_NarrativeTake_Tooltip".Translate());
+            settings.narrativeRelicHand = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-hand", "RHAH_Settings_NarrativeHand".Translate(settings.narrativeRelicHand), settings.narrativeRelicHand, 0f, 10000f, "RHAH_Settings_NarrativeHand_Tooltip".Translate());
+            settings.narrativeCareDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-care", "RHAH_Settings_NarrativeCare".Translate(settings.narrativeCareDays), settings.narrativeCareDays, 0f, 120f, "RHAH_Settings_NarrativeCare_Tooltip".Translate());
+            settings.narrativeMissingDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-missing", "RHAH_Settings_NarrativeMissing".Translate(settings.narrativeMissingDays), settings.narrativeMissingDays, 0f, 60f, "RHAH_Settings_NarrativeMissing_Tooltip".Translate());
+            settings.narrativeObserveDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-observe", "RHAH_Settings_NarrativeObserve".Translate(settings.narrativeObserveDays), settings.narrativeObserveDays, 0f, 120f, "RHAH_Settings_NarrativeObserve_Tooltip".Translate());
+            settings.narrativeHoleIgnoreDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-hole", "RHAH_Settings_NarrativeHole".Translate(settings.narrativeHoleIgnoreDays), settings.narrativeHoleIgnoreDays, 0f, 30f, "RHAH_Settings_NarrativeHole_Tooltip".Translate());
+            settings.narrativeEnvoyWaitDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-envoy-wait", "RHAH_Settings_NarrativeEnvoyWait".Translate(settings.narrativeEnvoyWaitDays), settings.narrativeEnvoyWaitDays, 0f, 30f, "RHAH_Settings_NarrativeEnvoyWait_Tooltip".Translate());
+            settings.narrativeEnvoyCheckDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-envoy-check", "RHAH_Settings_NarrativeEnvoyCheck".Translate(settings.narrativeEnvoyCheckDays), settings.narrativeEnvoyCheckDays, 0f, 30f, "RHAH_Settings_NarrativeEnvoyCheck_Tooltip".Translate());
+            settings.narrativeRelicDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-relic-days", "RHAH_Settings_NarrativeRelicDays".Translate(settings.narrativeRelicDays), settings.narrativeRelicDays, 0f, 120f, "RHAH_Settings_NarrativeRelicDays_Tooltip".Translate());
+            settings.narrativeReturnDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-return", "RHAH_Settings_NarrativeReturn".Translate(settings.narrativeReturnDays), settings.narrativeReturnDays, 0f, 120f, "RHAH_Settings_NarrativeReturn_Tooltip".Translate());
+            settings.narrativeRevisitYears = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-years", "RHAH_Settings_NarrativeYears".Translate(settings.narrativeRevisitYears), settings.narrativeRevisitYears, 0f, 20f, "RHAH_Settings_NarrativeYears_Tooltip".Translate());
+            settings.narrativeAsideCooldownDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-aside", "RHAH_Settings_NarrativeAside".Translate(settings.narrativeAsideCooldownDays), settings.narrativeAsideCooldownDays, 0f, 30f, "RHAH_Settings_NarrativeAside_Tooltip".Translate());
+            settings.narrativeAsideCutoff = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-cutoff", "RHAH_Settings_NarrativeCutoff".Translate(settings.narrativeAsideCutoff), settings.narrativeAsideCutoff, -100f, 0f, "RHAH_Settings_NarrativeCutoff_Tooltip".Translate());
+            settings.narrativeAdultYears = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-adult", "RHAH_Settings_NarrativeAdult".Translate(settings.narrativeAdultYears), settings.narrativeAdultYears, 1f, 80f, "RHAH_Settings_NarrativeAdult_Tooltip".Translate());
+            DrawTrustNumbers(list, settings);
+        }
+
+        void DrawTrustNumbers(Listing_Standard list, RHAH_Settings settings)
+        {
+            Section(list, "RHAH_Menu_Narrative_TrustDeltas");
+            settings.trustKill = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-kill", "RHAH_Settings_TrustKill".Translate(settings.trustKill), settings.trustKill, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustCaptive = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-captive", "RHAH_Settings_TrustCaptive".Translate(settings.trustCaptive), settings.trustCaptive, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustEntrustGood = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-entrust", "RHAH_Settings_TrustEntrust".Translate(settings.trustEntrustGood), settings.trustEntrustGood, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustEntrustCaptive = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-entrust-captive", "RHAH_Settings_TrustEntrustCaptive".Translate(settings.trustEntrustCaptive), settings.trustEntrustCaptive, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustEntrustStory = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-story", "RHAH_Settings_TrustStory".Translate(settings.trustEntrustStory), settings.trustEntrustStory, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustEntrustRegret = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-regret", "RHAH_Settings_TrustRegret".Translate(settings.trustEntrustRegret), settings.trustEntrustRegret, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustEntrustBanished = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-banished", "RHAH_Settings_TrustBanished".Translate(settings.trustEntrustBanished), settings.trustEntrustBanished, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustExchange = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-exchange", "RHAH_Settings_TrustExchange".Translate(settings.trustExchange), settings.trustExchange, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustHoleOpen = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-hole-open", "RHAH_Settings_TrustHoleOpen".Translate(settings.trustHoleOpen), settings.trustHoleOpen, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustHoleIgnore = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-hole-ignore", "RHAH_Settings_TrustHoleIgnore".Translate(settings.trustHoleIgnore), settings.trustHoleIgnore, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustHoleBait = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-hole-bait", "RHAH_Settings_TrustHoleBait".Translate(settings.trustHoleBait), settings.trustHoleBait, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustQuarantineStay = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-quarantine-stay", "RHAH_Settings_TrustQuarantineStay".Translate(settings.trustQuarantineStay), settings.trustQuarantineStay, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustQuarantineRecover = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-quarantine-recover", "RHAH_Settings_TrustQuarantineRecover".Translate(settings.trustQuarantineRecover), settings.trustQuarantineRecover, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustQuarantineFail = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-quarantine-fail", "RHAH_Settings_TrustQuarantineFail".Translate(settings.trustQuarantineFail), settings.trustQuarantineFail, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustEnvoyFail = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-envoy", "RHAH_Settings_TrustEnvoy".Translate(settings.trustEnvoyFail), settings.trustEnvoyFail, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustRelicFail = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-relic", "RHAH_Settings_TrustRelic".Translate(settings.trustRelicFail), settings.trustRelicFail, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustHold = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-hold", "RHAH_Settings_TrustHold".Translate(settings.trustHold), settings.trustHold, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustDeliver = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-deliver", "RHAH_Settings_TrustDeliver".Translate(settings.trustDeliver), settings.trustDeliver, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustLeave = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-leave", "RHAH_Settings_TrustLeave".Translate(settings.trustLeave), settings.trustLeave, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+            settings.trustExpel = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "trust-expel", "RHAH_Settings_TrustExpel".Translate(settings.trustExpel), settings.trustExpel, -100f, 100f, "RHAH_Settings_TrustRange_Tooltip".Translate());
+        }
+
+        void DrawVisitorIntensity(Listing_Standard list, RHAH_Settings settings)
+        {
+            settings.begFailMood = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "beg-fail-mood", "RHAH_Settings_BegFailMood".Translate(settings.begFailMood), settings.begFailMood, -50f, 50f, "RHAH_Settings_BegFailMood_Tooltip".Translate());
+            settings.begSuccessMood = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "beg-success-mood", "RHAH_Settings_BegSuccessMood".Translate(settings.begSuccessMood), settings.begSuccessMood, -50f, 50f, "RHAH_Settings_BegSuccessMood_Tooltip".Translate());
+            settings.begSlapMood = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "beg-slap-mood", "RHAH_Settings_BegSlapMood".Translate(settings.begSlapMood), settings.begSlapMood, -50f, 50f, "RHAH_Settings_BegSlapMood_Tooltip".Translate());
+            settings.begSlapKnockoutHours = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "beg-knock", "RHAH_Settings_BegKnock".Translate(settings.begSlapKnockoutHours), settings.begSlapKnockoutHours, 0f, 24f, "RHAH_Settings_BegKnock_Tooltip".Translate());
+            settings.begBruiseSeverity = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "beg-bruise", "RHAH_Settings_BegBruise".Translate(settings.begBruiseSeverity.ToString("0")), settings.begBruiseSeverity, 0f, 40f, "0", "RHAH_Settings_BegBruise_Tooltip".Translate());
+            settings.begBruiseStep = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "beg-bruise-step", "RHAH_Settings_BegBruiseStep".Translate(settings.begBruiseStep.ToString("0")), settings.begBruiseStep, 0f, 40f, "0", "RHAH_Settings_BegBruiseStep_Tooltip".Translate());
+            settings.begBruiseMax = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "beg-bruise-max", "RHAH_Settings_BegBruiseMax".Translate(settings.begBruiseMax.ToString("0")), settings.begBruiseMax, settings.begBruiseSeverity, 40f, "0", "RHAH_Settings_BegBruiseMax_Tooltip".Translate());
+            settings.barkNutrition = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "gnaw-bark", "RHAH_Settings_GnawBark".Translate(settings.barkNutrition.ToString("0.00")), settings.barkNutrition, 0f, 2f, "0.00", "RHAH_Settings_GnawBark_Tooltip".Translate());
+            settings.barkDamage = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "gnaw-bark-damage", "RHAH_Settings_GnawBarkDamage".Translate(settings.barkDamage.ToString("0")), settings.barkDamage, 0f, 50f, "0", "RHAH_Settings_GnawBarkDamage_Tooltip".Translate());
+            settings.wallNutrition = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "gnaw-wall", "RHAH_Settings_GnawWall".Translate(settings.wallNutrition.ToString("0.00")), settings.wallNutrition, 0f, 2f, "0.00", "RHAH_Settings_GnawWall_Tooltip".Translate());
+            settings.wallDamage = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "gnaw-wall-damage", "RHAH_Settings_GnawWallDamage".Translate(settings.wallDamage.ToString("0")), settings.wallDamage, 0f, 50f, "0", "RHAH_Settings_GnawWallDamage_Tooltip".Translate());
+            settings.clayMaxBites = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "clay-bites", "RHAH_Settings_ClayBites".Translate(settings.clayMaxBites), settings.clayMaxBites, 0f, 12f, "RHAH_Settings_ClayBites_Tooltip".Translate());
+            settings.clayWindowDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "clay-days", "RHAH_Settings_ClayDays".Translate(settings.clayWindowDays), settings.clayWindowDays, 1f, 60f, "RHAH_Settings_ClayDays_Tooltip".Translate());
+            settings.claySeverityPerBite = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "clay-severity", "RHAH_Settings_ClaySeverity".Translate(settings.claySeverityPerBite.ToString("0.00")), settings.claySeverityPerBite, 0f, 1f, "0.00", "RHAH_Settings_ClaySeverity_Tooltip".Translate());
+            settings.childHungryPercent = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "child-hungry", "RHAH_Settings_ChildHungry".Translate(settings.childHungryPercent.ToString("0")), settings.childHungryPercent, 0f, 100f, "0", "RHAH_Settings_ChildHungry_Tooltip".Translate());
+            settings.prisonerHungryPercent = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "prisoner-hungry", "RHAH_Settings_PrisonerHungry".Translate(settings.prisonerHungryPercent.ToString("0")), settings.prisonerHungryPercent, 0f, 100f, "0", "RHAH_Settings_PrisonerHungry_Tooltip".Translate());
+            settings.tailBiteAge = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "tail-age", "RHAH_Settings_TailAge".Translate(settings.tailBiteAge.ToString("0.0")), settings.tailBiteAge, 0f, 18f, "0.0", "RHAH_Settings_TailAge_Tooltip".Translate());
+            settings.scavengeNutrition = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "scavenge", "RHAH_Settings_Scavenge".Translate(settings.scavengeNutrition.ToString("0.00")), settings.scavengeNutrition, 0f, 2f, "0.00", "RHAH_Settings_Scavenge_Tooltip".Translate());
+            settings.tailNutrition = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "tail-food", "RHAH_Settings_TailFood".Translate(settings.tailNutrition.ToString("0.00")), settings.tailNutrition, 0f, 2f, "0.00", "RHAH_Settings_TailFood_Tooltip".Translate());
+            settings.tailFailDamage = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "tail-fail", "RHAH_Settings_TailFail".Translate(settings.tailFailDamage.ToString("0")), settings.tailFailDamage, 0f, 50f, "0", "RHAH_Settings_TailFail_Tooltip".Translate());
+            settings.followPredatorPercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "follow-predator", "RHAH_Settings_FollowPredator".Translate(settings.followPredatorPercent), settings.followPredatorPercent, 0f, 100f, "RHAH_Settings_FollowPredator_Tooltip".Translate());
+            settings.followBirthWatchDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "follow-birth", "RHAH_Settings_FollowBirth".Translate(settings.followBirthWatchDays), settings.followBirthWatchDays, 0f, 60f, "RHAH_Settings_FollowBirth_Tooltip".Translate());
+            settings.followPlagueBirthDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "follow-plague-birth", "RHAH_Settings_FollowPlagueBirth".Translate(settings.followPlagueBirthDays), settings.followPlagueBirthDays, 0f, 60f, "RHAH_Settings_FollowPlagueBirth_Tooltip".Translate());
+            settings.followMotherReturnDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "follow-mother", "RHAH_Settings_FollowMother".Translate(settings.followMotherReturnDays), settings.followMotherReturnDays, 0f, 120f, "RHAH_Settings_FollowMother_Tooltip".Translate());
+            settings.followLongReturnYears = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "follow-years", "RHAH_Settings_FollowYears".Translate(settings.followLongReturnYears), settings.followLongReturnYears, 0f, 20f, "RHAH_Settings_FollowYears_Tooltip".Translate());
+            settings.followAdultAge = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "follow-adult", "RHAH_Settings_FollowAdult".Translate(settings.followAdultAge.ToString("0")), settings.followAdultAge, 1f, 80f, "0", "RHAH_Settings_FollowAdult_Tooltip".Translate());
+            settings.followMoodScalePercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "follow-mood", "RHAH_Settings_FollowMood".Translate(settings.followMoodScalePercent), settings.followMoodScalePercent, 0f, 300f, "RHAH_Settings_FollowMood_Tooltip".Translate());
+            settings.requestMinSimple = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-simple-min", "RHAH_Settings_RequestSimpleMin".Translate(settings.requestMinSimple), settings.requestMinSimple, 0f, 200f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMaxSimple = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-simple-max", "RHAH_Settings_RequestSimpleMax".Translate(settings.requestMaxSimple), settings.requestMaxSimple, settings.requestMinSimple, 200f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMinFine = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-fine-min", "RHAH_Settings_RequestFineMin".Translate(settings.requestMinFine), settings.requestMinFine, 0f, 200f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMaxFine = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-fine-max", "RHAH_Settings_RequestFineMax".Translate(settings.requestMaxFine), settings.requestMaxFine, settings.requestMinFine, 200f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMinMedicine = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-med-min", "RHAH_Settings_RequestMedicineMin".Translate(settings.requestMinMedicine), settings.requestMinMedicine, 0f, 100f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMaxMedicine = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-med-max", "RHAH_Settings_RequestMedicineMax".Translate(settings.requestMaxMedicine), settings.requestMaxMedicine, settings.requestMinMedicine, 100f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMinHerbal = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-herb-min", "RHAH_Settings_RequestHerbalMin".Translate(settings.requestMinHerbal), settings.requestMinHerbal, 0f, 100f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMaxHerbal = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-herb-max", "RHAH_Settings_RequestHerbalMax".Translate(settings.requestMaxHerbal), settings.requestMaxHerbal, settings.requestMinHerbal, 100f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMinSilver = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-silver-min", "RHAH_Settings_RequestSilverMin".Translate(settings.requestMinSilver), settings.requestMinSilver, 0f, 10000f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestMaxSilver = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-silver-max", "RHAH_Settings_RequestSilverMax".Translate(settings.requestMaxSilver), settings.requestMaxSilver, settings.requestMinSilver, 10000f, "RHAH_Settings_RequestRange_Tooltip".Translate());
+            settings.requestDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "req-days", "RHAH_Settings_RequestDays".Translate(settings.requestDays), settings.requestDays, 0f, 30f, "RHAH_Settings_RequestDays_Tooltip".Translate());
+            settings.requestPointScale = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "req-points", "RHAH_Settings_RequestPoints".Translate(settings.requestPointScale.ToString("0")), settings.requestPointScale, 1f, 10000f, "0", "RHAH_Settings_RequestPoints_Tooltip".Translate());
+            settings.foodPerChild = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "food-child", "RHAH_Settings_FoodPerChild".Translate(settings.foodPerChild), settings.foodPerChild, 0f, 100f, "RHAH_Settings_FoodPerChild_Tooltip".Translate());
+            settings.foodPerVisitor = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "food-visitor", "RHAH_Settings_FoodPerVisitor".Translate(settings.foodPerVisitor), settings.foodPerVisitor, 0f, 20f, "RHAH_Settings_FoodPerVisitor_Tooltip".Translate());
+            settings.maxFoodRequest = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "food-cap", "RHAH_Settings_FoodRequestCap".Translate(settings.maxFoodRequest), settings.maxFoodRequest, 0f, 100f, "RHAH_Settings_FoodRequestCap_Tooltip".Translate());
+            settings.envoyMealCost = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "envoy-meals", "RHAH_Settings_EnvoyMeals".Translate(settings.envoyMealCost), settings.envoyMealCost, 0f, 100f, "RHAH_Settings_EnvoyMeals_Tooltip".Translate());
+            settings.campMinAdults = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "camp-adult-min", "RHAH_Settings_CampAdultMin".Translate(settings.campMinAdults), settings.campMinAdults, 0f, 40f, "RHAH_Settings_CampRange_Tooltip".Translate());
+            settings.campMaxAdults = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "camp-adult-max", "RHAH_Settings_CampAdultMax".Translate(settings.campMaxAdults), settings.campMaxAdults, settings.campMinAdults, 40f, "RHAH_Settings_CampRange_Tooltip".Translate());
+            settings.campMinChildren = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "camp-child-min", "RHAH_Settings_CampChildMin".Translate(settings.campMinChildren), settings.campMinChildren, 0f, 80f, "RHAH_Settings_CampRange_Tooltip".Translate());
+            settings.campMaxChildren = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "camp-child-max", "RHAH_Settings_CampChildMax".Translate(settings.campMaxChildren), settings.campMaxChildren, settings.campMinChildren, 80f, "RHAH_Settings_CampRange_Tooltip".Translate());
+            settings.campGoodwill = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "camp-goodwill", "RHAH_Settings_CampGoodwill".Translate(settings.campGoodwill), settings.campGoodwill, -100f, 100f, "RHAH_Settings_CampGoodwill_Tooltip".Translate());
+            settings.campDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "camp-days", "RHAH_Settings_CampDays".Translate(settings.campDays), settings.campDays, 1f, 120f, "RHAH_Settings_CampDays_Tooltip".Translate());
+            settings.campHuts = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "camp-huts", "RHAH_Settings_CampHuts".Translate(settings.campHuts), settings.campHuts, 0f, 12f, "RHAH_Settings_CampHuts_Tooltip".Translate());
+            settings.holeWoodCost = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "hole-wood", "RHAH_Settings_HoleWood".Translate(settings.holeWoodCost), settings.holeWoodCost, 0f, 200f, "RHAH_Settings_HoleWood_Tooltip".Translate());
+            settings.holeCleanPortions = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "hole-clean", "RHAH_Settings_HoleClean".Translate(settings.holeCleanPortions), settings.holeCleanPortions, 0f, 50f, "RHAH_Settings_HoleClean_Tooltip".Translate());
+            settings.holeLossRange = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "hole-range", "RHAH_Settings_HoleRange".Translate(settings.holeLossRange), settings.holeLossRange, 1f, 60f, "RHAH_Settings_HoleRange_Tooltip".Translate());
+            settings.holeMaxLosses = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "hole-losses", "RHAH_Settings_HoleLosses".Translate(settings.holeMaxLosses), settings.holeMaxLosses, 0f, 20f, "RHAH_Settings_HoleLosses_Tooltip".Translate());
+        }
+
+        void DrawApparelIntensity(Listing_Standard list, RHAH_Settings settings)
+        {
+            settings.apparelAwfulPercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "apparel-awful", "RHAH_Settings_ApparelAwful".Translate(settings.apparelAwfulPercent), settings.apparelAwfulPercent, 0f, 100f, "RHAH_Settings_ApparelAwful_Tooltip".Translate());
+            settings.apparelPoorPercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "apparel-poor", "RHAH_Settings_ApparelPoor".Translate(settings.apparelPoorPercent), settings.apparelPoorPercent, 0f, 100f - settings.apparelAwfulPercent, "RHAH_Settings_ApparelPoor_Tooltip".Translate());
+            settings.apparelMinDurabilityPercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "apparel-min", "RHAH_Settings_ApparelMin".Translate(settings.apparelMinDurabilityPercent), settings.apparelMinDurabilityPercent, 1f, 100f, "RHAH_Settings_ApparelDurability_Tooltip".Translate());
+            settings.apparelMaxDurabilityPercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "apparel-max", "RHAH_Settings_ApparelMax".Translate(settings.apparelMaxDurabilityPercent), settings.apparelMaxDurabilityPercent, settings.apparelMinDurabilityPercent, 100f, "RHAH_Settings_ApparelDurability_Tooltip".Translate());
+            settings.apparelCorpsePercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "apparel-corpse", "RHAH_Settings_ApparelCorpse".Translate(settings.apparelCorpsePercent), settings.apparelCorpsePercent, 0f, 100f, "RHAH_Settings_ApparelCorpse_Tooltip".Translate());
+            settings.apparelClothPercent = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "apparel-cloth", "RHAH_Settings_ApparelCloth".Translate(settings.apparelClothPercent), settings.apparelClothPercent, 0f, 100f, "RHAH_Settings_ApparelCloth_Tooltip".Translate());
+            settings.apparelMaxPieces = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "apparel-pieces", "RHAH_Settings_ApparelPieces".Translate(settings.apparelMaxPieces), settings.apparelMaxPieces, 1f, 8f, "RHAH_Settings_ApparelPieces_Tooltip".Translate());
+        }
+
         static void DrawNode(Listing_Standard list, NarrativeState state, SuiyinNode node, string label)
         {
             bool enabled = state.SuiyinEnabled(node);

@@ -167,7 +167,7 @@ namespace HungerAndHavoc.Incidents
                 Site = spec.Site,
                 Choice = choice,
                 Amount = amount,
-                ExpireTick = Find.TickManager.TicksGame + RHAH_RequestRules.TicksPerDay
+                ExpireTick = Find.TickManager.TicksGame + RHAH_RequestRules.TicksPerDay * (Core.RHAH_Mod.Settings == null ? RHAH_RequestRules.RequestDays : Core.RHAH_Mod.Settings.requestDays)
             });
             if (record == null)
             {

@@ -35,12 +35,17 @@ namespace HungerAndHavoc.Pawn
 
         internal static GnawBite ForTarget(bool wall)
         {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
             if (wall)
             {
-                return new GnawBite(true, WallNutrition, WallDamage, WallSeverity, 0f);
+                float nutrition = settings == null ? WallNutrition : settings.wallNutrition;
+                float damage = settings == null ? WallDamage : settings.wallDamage;
+                return new GnawBite(true, nutrition, damage, WallSeverity, 0f);
             }
 
-            return new GnawBite(false, BarkNutrition, BarkDamage, BarkSeverity, BarkToxic);
+            float barkNutrition = settings == null ? BarkNutrition : settings.barkNutrition;
+            float barkDamage = settings == null ? BarkDamage : settings.barkDamage;
+            return new GnawBite(false, barkNutrition, barkDamage, BarkSeverity, BarkToxic);
         }
 
         internal static int NextWallCount(Dictionary<int, int> counts, int pawnLoadId)

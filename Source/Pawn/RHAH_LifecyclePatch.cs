@@ -4,6 +4,7 @@ using HungerAndHavoc.Identity;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using HungerAndHavoc.Core;
 namespace HungerAndHavoc.Pawn
 {
     // 原版吃完一口后才记吃饱 啃树皮不走这条
@@ -43,7 +44,7 @@ namespace HungerAndHavoc.Pawn
 
             RHAH_Api.SetLifecycle(__instance, RHAH_Lifecycle.Dead);
             RHAH_VisitorGroup.NotifyDead(__instance);
-            RHAH_SuiyinTrust.Note(1, RHAH_SuiyinTrust.Kill);
+            RHAH_SuiyinTrust.Note(1, RHAH_SuiyinTrust.Value(RHAH_SuiyinTrust.Kill, RHAH_Mod.Settings == null ? RHAH_SuiyinTrust.Kill : RHAH_Mod.Settings.trustCaptive));
         }
     }
 
@@ -69,7 +70,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            RHAH_SuiyinTrust.Note(1, RHAH_SuiyinTrust.Leave);
+            RHAH_SuiyinTrust.Note(1, RHAH_SuiyinTrust.Value(RHAH_SuiyinTrust.Leave, RHAH_Mod.Settings == null ? RHAH_SuiyinTrust.Leave : RHAH_Mod.Settings.trustLeave));
         }
     }
 

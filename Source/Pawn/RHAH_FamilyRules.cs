@@ -58,7 +58,8 @@ namespace HungerAndHavoc.Pawn
 
         internal static bool CanTailBite(bool enabled, bool prisoner, bool hungry, bool targetAsleep, float targetAge)
         {
-            return enabled && prisoner && hungry && targetAsleep && targetAge >= 0f && targetAge < 3f;
+            float age = Core.RHAH_Mod.Settings == null ? TailAge : Core.RHAH_Mod.Settings.tailBiteAge;
+            return enabled && prisoner && hungry && targetAsleep && targetAge >= 0f && targetAge < age;
         }
 
         internal const float ChildHungry = 0.3f;

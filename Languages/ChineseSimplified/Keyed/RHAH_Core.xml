@@ -460,4 +460,190 @@
   <RHAH_Broadcast_Cooldown>广播仍在冷却</RHAH_Broadcast_Cooldown>
   <RHAH_Broadcast_Empty>没有可广播的事件</RHAH_Broadcast_Empty>
   <RHAH_Broadcast_Queued>已排队 {0}</RHAH_Broadcast_Queued>
+  <RHAH_Settings_EndingFloor>丰年信任：{0}</RHAH_Settings_EndingFloor>
+  <RHAH_Settings_EndingFloor_Tooltip>丰年需要的信任。0 到 100，默认 50。希望之城不能低于这一档。</RHAH_Settings_EndingFloor_Tooltip>
+  <RHAH_Settings_EndingHope>希望之城信任：{0}</RHAH_Settings_EndingHope>
+  <RHAH_Settings_EndingHope_Tooltip>希望之城需要的信任。不能低于丰年，上限 100，默认 75。</RHAH_Settings_EndingHope_Tooltip>
+  <RHAH_Settings_EndingHalt>信任崩盘：{0}</RHAH_Settings_EndingHalt>
+  <RHAH_Settings_EndingHalt_Tooltip>信任降到这里或更低时走崩盘结局。-100 到 0，默认 -75。</RHAH_Settings_EndingHalt_Tooltip>
+  <RHAH_Settings_EndingKinds>低结局种类：{0}</RHAH_Settings_EndingKinds>
+  <RHAH_Settings_EndingKinds_Tooltip>低结局需要这么多种成功经历。1 到 14，默认 6。</RHAH_Settings_EndingKinds_Tooltip>
+  <RHAH_Settings_EndingThreat>大型威胁间隔：{0} 天</RHAH_Settings_EndingThreat>
+  <RHAH_Settings_EndingThreat_Tooltip>穗音按信任缩放大型威胁时使用的基准天数。1 到 60，默认 13。</RHAH_Settings_EndingThreat_Tooltip>
+  <RHAH_Menu_Narrative_TrustDeltas>信任变化</RHAH_Menu_Narrative_TrustDeltas>
+  <RHAH_Settings_NarrativeKinds_Tooltip>打开这条信件需要经历过的事件种类。1 到 14。</RHAH_Settings_NarrativeKinds_Tooltip>
+  <RHAH_Settings_NarrativeTheft>粮洞偷窃种类：{0}</RHAH_Settings_NarrativeTheft>
+  <RHAH_Settings_NarrativeTheft_Tooltip>同一张地图偷过这么多种之后才开粮洞。1 到 14，默认 2。</RHAH_Settings_NarrativeTheft_Tooltip>
+  <RHAH_Settings_NarrativeSilver>记录白银：{0}</RHAH_Settings_NarrativeSilver>
+  <RHAH_Settings_NarrativeSilver_Tooltip>记录来信附带的白银。0 到 10000，默认 300。正信任还会按比例加。</RHAH_Settings_NarrativeSilver_Tooltip>
+  <RHAH_Settings_NarrativeBonus>信任加成：{0}%</RHAH_Settings_NarrativeBonus>
+  <RHAH_Settings_NarrativeBonus_Tooltip>信任满 100 时，银两额外增加这么多。0 到 100，默认 25。信任为负不加。</RHAH_Settings_NarrativeBonus_Tooltip>
+  <RHAH_Settings_NarrativeRescue>赎回白银：{0}</RHAH_Settings_NarrativeRescue>
+  <RHAH_Settings_NarrativeRescue_Tooltip>放逐回访时留下母亲或孩子要付的白银。0 到 10000，默认 250。</RHAH_Settings_NarrativeRescue_Tooltip>
+  <RHAH_Settings_NarrativeRescueReward>回馈白银：{0}</RHAH_Settings_NarrativeRescueReward>
+  <RHAH_Settings_NarrativeRescueReward_Tooltip>付完赎回之后，到期空投的白银。0 到 20000，默认 2500。</RHAH_Settings_NarrativeRescueReward_Tooltip>
+  <RHAH_Settings_NarrativeTake>取走记录：{0}</RHAH_Settings_NarrativeTake>
+  <RHAH_Settings_NarrativeTake_Tooltip>把迁徙记录拿走时得到的白银。0 到 10000，默认 200。</RHAH_Settings_NarrativeTake_Tooltip>
+  <RHAH_Settings_NarrativeHand>交出记录：{0}</RHAH_Settings_NarrativeHand>
+  <RHAH_Settings_NarrativeHand_Tooltip>把迁徙记录交出去时得到的白银。0 到 10000，默认 100。</RHAH_Settings_NarrativeHand_Tooltip>
+  <RHAH_Settings_NarrativeCare>安置天数：{0}</RHAH_Settings_NarrativeCare>
+  <RHAH_Settings_NarrativeCare_Tooltip>吃饱、没病地住满这么多天才算安置。0 到 120，默认 5。</RHAH_Settings_NarrativeCare_Tooltip>
+  <RHAH_Settings_NarrativeMissing>失踪天数：{0}</RHAH_Settings_NarrativeMissing>
+  <RHAH_Settings_NarrativeMissing_Tooltip>离开地图这么多天后记成失踪。0 到 60，默认 1。</RHAH_Settings_NarrativeMissing_Tooltip>
+  <RHAH_Settings_NarrativeObserve>观察天数：{0}</RHAH_Settings_NarrativeObserve>
+  <RHAH_Settings_NarrativeObserve_Tooltip>救济和托孤最多观察这么多天。0 到 120，默认 30。到期仍没安顿就不计成功。</RHAH_Settings_NarrativeObserve_Tooltip>
+  <RHAH_Settings_NarrativeHole>粮洞忽视：{0} 天</RHAH_Settings_NarrativeHole>
+  <RHAH_Settings_NarrativeHole_Tooltip>不处理粮洞时，这么多天后按忽视结算。0 到 30，默认 3。</RHAH_Settings_NarrativeHole_Tooltip>
+  <RHAH_Settings_NarrativeEnvoyWait>使者等待：{0} 天</RHAH_Settings_NarrativeEnvoyWait>
+  <RHAH_Settings_NarrativeEnvoyWait_Tooltip>使者在门口等到期的天数。0 到 30，默认 3。</RHAH_Settings_NarrativeEnvoyWait_Tooltip>
+  <RHAH_Settings_NarrativeEnvoyCheck>使者核对：{0} 天</RHAH_Settings_NarrativeEnvoyCheck>
+  <RHAH_Settings_NarrativeEnvoyCheck_Tooltip>答应核对之后，再给这么多天。0 到 30，默认 1。</RHAH_Settings_NarrativeEnvoyCheck_Tooltip>
+  <RHAH_Settings_NarrativeRelicDays>记录地点：{0} 天</RHAH_Settings_NarrativeRelicDays>
+  <RHAH_Settings_NarrativeRelicDays_Tooltip>记录地点开放的天数。0 到 120，默认 15。</RHAH_Settings_NarrativeRelicDays_Tooltip>
+  <RHAH_Settings_NarrativeReturn>康复回访：{0} 天</RHAH_Settings_NarrativeReturn>
+  <RHAH_Settings_NarrativeReturn_Tooltip>检疫后离开的人，这么多天后再回来。0 到 120，默认 15。</RHAH_Settings_NarrativeReturn_Tooltip>
+  <RHAH_Settings_NarrativeYears>放逐回访：{0} 年</RHAH_Settings_NarrativeYears>
+  <RHAH_Settings_NarrativeYears_Tooltip>放逐之后，母亲或孩子再出现的年数。0 到 20，默认 4。一年按 60 天。</RHAH_Settings_NarrativeYears_Tooltip>
+  <RHAH_Settings_NarrativeAside>插话间隔：{0} 天</RHAH_Settings_NarrativeAside>
+  <RHAH_Settings_NarrativeAside_Tooltip>两封插话之间至少隔这么多天。0 到 30，默认 3。</RHAH_Settings_NarrativeAside_Tooltip>
+  <RHAH_Settings_NarrativeCutoff>插话关闭：{0}</RHAH_Settings_NarrativeCutoff>
+  <RHAH_Settings_NarrativeCutoff_Tooltip>信任降到这里或更低后不再插话。结果信仍会送来。-100 到 0，默认 -75。</RHAH_Settings_NarrativeCutoff_Tooltip>
+  <RHAH_Settings_NarrativeAdult>使者年龄：{0}</RHAH_Settings_NarrativeAdult>
+  <RHAH_Settings_NarrativeAdult_Tooltip>穗音派来的使者按这个岁数生成。1 到 80，默认 18。</RHAH_Settings_NarrativeAdult_Tooltip>
+  <RHAH_Settings_TrustRange_Tooltip>这一次信任加减。-100 到 100。0 表示这次不改信任。</RHAH_Settings_TrustRange_Tooltip>
+  <RHAH_Settings_TrustKill>杀死：{0}</RHAH_Settings_TrustKill>
+  <RHAH_Settings_TrustCaptive>俘虏：{0}</RHAH_Settings_TrustCaptive>
+  <RHAH_Settings_TrustEntrust>托孤安顿：{0}</RHAH_Settings_TrustEntrust>
+  <RHAH_Settings_TrustEntrustCaptive>托孤被俘：{0}</RHAH_Settings_TrustEntrustCaptive>
+  <RHAH_Settings_TrustStory>托孤只听故事：{0}</RHAH_Settings_TrustStory>
+  <RHAH_Settings_TrustRegret>托孤后悔：{0}</RHAH_Settings_TrustRegret>
+  <RHAH_Settings_TrustBanished>托孤放逐：{0}</RHAH_Settings_TrustBanished>
+  <RHAH_Settings_TrustExchange>交换照料：{0}</RHAH_Settings_TrustExchange>
+  <RHAH_Settings_TrustHoleOpen>封上粮洞：{0}</RHAH_Settings_TrustHoleOpen>
+  <RHAH_Settings_TrustHoleIgnore>清掉粮洞：{0}</RHAH_Settings_TrustHoleIgnore>
+  <RHAH_Settings_TrustHoleBait>粮洞追踪：{0}</RHAH_Settings_TrustHoleBait>
+  <RHAH_Settings_TrustQuarantineStay>检疫后留下：{0}</RHAH_Settings_TrustQuarantineStay>
+  <RHAH_Settings_TrustQuarantineRecover>检疫后离开：{0}</RHAH_Settings_TrustQuarantineRecover>
+  <RHAH_Settings_TrustQuarantineFail>检疫破裂：{0}</RHAH_Settings_TrustQuarantineFail>
+  <RHAH_Settings_TrustEnvoy>赶走使者：{0}</RHAH_Settings_TrustEnvoy>
+  <RHAH_Settings_TrustRelic>毁掉记录：{0}</RHAH_Settings_TrustRelic>
+  <RHAH_Settings_TrustHold>扣下：{0}</RHAH_Settings_TrustHold>
+  <RHAH_Settings_TrustDeliver>交付：{0}</RHAH_Settings_TrustDeliver>
+  <RHAH_Settings_TrustLeave>安全离开：{0}</RHAH_Settings_TrustLeave>
+  <RHAH_Settings_TrustExpel>驱逐：{0}</RHAH_Settings_TrustExpel>
+  <RHAH_Settings_BegFailMood>乞讨被拒心情：{0}</RHAH_Settings_BegFailMood>
+  <RHAH_Settings_BegFailMood_Tooltip>讨不到时的心情。-50 到 50，默认 -5。</RHAH_Settings_BegFailMood_Tooltip>
+  <RHAH_Settings_BegSuccessMood>乞讨成功心情：{0}</RHAH_Settings_BegSuccessMood>
+  <RHAH_Settings_BegSuccessMood_Tooltip>讨到吃的时的心情。-50 到 50，默认 3。</RHAH_Settings_BegSuccessMood_Tooltip>
+  <RHAH_Settings_BegSlapMood>被抽耳光心情：{0}</RHAH_Settings_BegSlapMood>
+  <RHAH_Settings_BegSlapMood_Tooltip>重复乞讨被抽耳光时的心情。-50 到 50，默认 -10。</RHAH_Settings_BegSlapMood_Tooltip>
+  <RHAH_Settings_BegKnock>耳光击晕：{0} 小时</RHAH_Settings_BegKnock>
+  <RHAH_Settings_BegKnock_Tooltip>抽耳光后倒地的小时数。0 到 24，默认 3。0 不击晕。</RHAH_Settings_BegKnock_Tooltip>
+  <RHAH_Settings_BegBruise>耳光瘀伤：{0}</RHAH_Settings_BegBruise>
+  <RHAH_Settings_BegBruise_Tooltip>第一下瘀伤的严重度。0 到 40，默认 4。</RHAH_Settings_BegBruise_Tooltip>
+  <RHAH_Settings_BegBruiseStep>瘀伤加重：{0}</RHAH_Settings_BegBruiseStep>
+  <RHAH_Settings_BegBruiseStep_Tooltip>同一处再被抽时增加的严重度。0 到 40，默认 4。</RHAH_Settings_BegBruiseStep_Tooltip>
+  <RHAH_Settings_BegBruiseMax>瘀伤上限：{0}</RHAH_Settings_BegBruiseMax>
+  <RHAH_Settings_BegBruiseMax_Tooltip>瘀伤到这个严重度后改成割伤。不能低于第一下，上限 40，默认 16。</RHAH_Settings_BegBruiseMax_Tooltip>
+  <RHAH_Settings_GnawBark>啃树皮营养：{0}</RHAH_Settings_GnawBark>
+  <RHAH_Settings_GnawBark_Tooltip>啃一次植物补的营养。0 到 2，默认 0.20。</RHAH_Settings_GnawBark_Tooltip>
+  <RHAH_Settings_GnawBarkDamage>啃树皮伤害：{0}</RHAH_Settings_GnawBarkDamage>
+  <RHAH_Settings_GnawBarkDamage_Tooltip>啃一次植物造成的伤害。0 到 50，默认 2。</RHAH_Settings_GnawBarkDamage_Tooltip>
+  <RHAH_Settings_GnawWall>啃墙皮营养：{0}</RHAH_Settings_GnawWall>
+  <RHAH_Settings_GnawWall_Tooltip>啃一次墙补的营养。0 到 2，默认 0.50。</RHAH_Settings_GnawWall_Tooltip>
+  <RHAH_Settings_GnawWallDamage>啃墙皮伤害：{0}</RHAH_Settings_GnawWallDamage>
+  <RHAH_Settings_GnawWallDamage_Tooltip>啃一次墙造成的伤害。0 到 50，默认 5。</RHAH_Settings_GnawWallDamage_Tooltip>
+  <RHAH_Settings_ClayBites>观音土口数：{0}</RHAH_Settings_ClayBites>
+  <RHAH_Settings_ClayBites_Tooltip>一段时间内最多吃这么多口。0 到 12，默认 3。0 一口都不能吃。</RHAH_Settings_ClayBites_Tooltip>
+  <RHAH_Settings_ClayDays>观音土窗口：{0} 天</RHAH_Settings_ClayDays>
+  <RHAH_Settings_ClayDays_Tooltip>口数在这么多天后重新计算。1 到 60，默认 15。</RHAH_Settings_ClayDays_Tooltip>
+  <RHAH_Settings_ClaySeverity>观音土饱腹：{0}</RHAH_Settings_ClaySeverity>
+  <RHAH_Settings_ClaySeverity_Tooltip>每口增加的饱腹严重度。0 到 1，默认 0.33。</RHAH_Settings_ClaySeverity_Tooltip>
+  <RHAH_Settings_ChildHungry>孩子饥饿：{0}%</RHAH_Settings_ChildHungry>
+  <RHAH_Settings_ChildHungry_Tooltip>孩子食物低于这个比例时，母亲才会喂。0 到 100，默认 30。</RHAH_Settings_ChildHungry_Tooltip>
+  <RHAH_Settings_PrisonerHungry>囚犯饥饿：{0}%</RHAH_Settings_PrisonerHungry>
+  <RHAH_Settings_PrisonerHungry_Tooltip>囚犯食物低于这个比例时才会舔污物或咬尾巴。0 到 100，默认 20。</RHAH_Settings_PrisonerHungry_Tooltip>
+  <RHAH_Settings_TailAge>咬尾年龄：{0}</RHAH_Settings_TailAge>
+  <RHAH_Settings_TailAge_Tooltip>只咬不满这个岁数、睡着的幼年。0 到 18，默认 3。</RHAH_Settings_TailAge_Tooltip>
+  <RHAH_Settings_Scavenge>舔污物营养：{0}</RHAH_Settings_Scavenge>
+  <RHAH_Settings_Scavenge_Tooltip>舔一次污物补的营养。0 到 2，默认 0.15。</RHAH_Settings_Scavenge_Tooltip>
+  <RHAH_Settings_TailFood>咬尾营养：{0}</RHAH_Settings_TailFood>
+  <RHAH_Settings_TailFood_Tooltip>咬断尾巴后补的营养。0 到 2，默认 0.35。</RHAH_Settings_TailFood_Tooltip>
+  <RHAH_Settings_TailFail>咬尾失败伤害：{0}</RHAH_Settings_TailFail>
+  <RHAH_Settings_TailFail_Tooltip>没咬断时造成的伤害。0 到 50，默认 4。</RHAH_Settings_TailFail_Tooltip>
+  <RHAH_Settings_FoodFull>吃饱：{0}%</RHAH_Settings_FoodFull>
+  <RHAH_Settings_FoodFull_Tooltip>食物达到这个比例才算吃饱。1 到 100，默认 82。</RHAH_Settings_FoodFull_Tooltip>
+  <RHAH_Settings_FoodRefeed>再吃的营养不良：{0}</RHAH_Settings_FoodRefeed>
+  <RHAH_Settings_FoodRefeed_Tooltip>营养不良达到这个严重度时，吃饱的人还会再找吃的。0 到 1，默认 0.40。</RHAH_Settings_FoodRefeed_Tooltip>
+  <RHAH_Settings_PlagueSeverity>鼠疫严重度：{0}</RHAH_Settings_PlagueSeverity>
+  <RHAH_Settings_PlagueSeverity_Tooltip>新感染时抽到的最高严重度。0.01 到 1，默认 0.10。</RHAH_Settings_PlagueSeverity_Tooltip>
+  <RHAH_Settings_FollowPredator>短链捕食：{0}%</RHAH_Settings_FollowPredator>
+  <RHAH_Settings_FollowPredator_Tooltip>短链到期后，给这一批排捕食者的几率。0 到 100，默认 10。</RHAH_Settings_FollowPredator_Tooltip>
+  <RHAH_Settings_FollowBirth>出生观察：{0} 天</RHAH_Settings_FollowBirth>
+  <RHAH_Settings_FollowBirth_Tooltip>待产流民生下孩子后，观察这么多天才写心情。0 到 60，默认 3。</RHAH_Settings_FollowBirth_Tooltip>
+  <RHAH_Settings_FollowPlagueBirth>鼠疫出生观察：{0} 天</RHAH_Settings_FollowPlagueBirth>
+  <RHAH_Settings_FollowPlagueBirth_Tooltip>鼠疫待产观察这么多天才写心情。0 到 60，默认 5。</RHAH_Settings_FollowPlagueBirth_Tooltip>
+  <RHAH_Settings_FollowMother>母亲回归：{0} 天</RHAH_Settings_FollowMother>
+  <RHAH_Settings_FollowMother_Tooltip>鼠疫母亲离开后再回来的天数。0 到 120，默认 15。</RHAH_Settings_FollowMother_Tooltip>
+  <RHAH_Settings_FollowYears>长链年数：{0}</RHAH_Settings_FollowYears>
+  <RHAH_Settings_FollowYears_Tooltip>长链等孩子长到后续年龄之后，再过这么多年发信。0 到 20，默认 2。</RHAH_Settings_FollowYears_Tooltip>
+  <RHAH_Settings_FollowAdult>后续年龄：{0}</RHAH_Settings_FollowAdult>
+  <RHAH_Settings_FollowAdult_Tooltip>长链和后续心情使用的岁数。1 到 80，默认 14。</RHAH_Settings_FollowAdult_Tooltip>
+  <RHAH_Settings_FollowMood>后续心情：{0}%</RHAH_Settings_FollowMood>
+  <RHAH_Settings_FollowMood_Tooltip>十四岁后续心情按这个比例缩放。0 到 300，默认 100。0 仍保留 1 点方向。</RHAH_Settings_FollowMood_Tooltip>
+  <RHAH_Settings_RequestRange_Tooltip>这一档索取的最少或最多。实际数量仍按财富在上下限之间取。</RHAH_Settings_RequestRange_Tooltip>
+  <RHAH_Settings_RequestSimpleMin>简单餐最少：{0}</RHAH_Settings_RequestSimpleMin>
+  <RHAH_Settings_RequestSimpleMax>简单餐最多：{0}</RHAH_Settings_RequestSimpleMax>
+  <RHAH_Settings_RequestFineMin>精致餐最少：{0}</RHAH_Settings_RequestFineMin>
+  <RHAH_Settings_RequestFineMax>精致餐最多：{0}</RHAH_Settings_RequestFineMax>
+  <RHAH_Settings_RequestMedicineMin>药品最少：{0}</RHAH_Settings_RequestMedicineMin>
+  <RHAH_Settings_RequestMedicineMax>药品最多：{0}</RHAH_Settings_RequestMedicineMax>
+  <RHAH_Settings_RequestHerbalMin>草药最少：{0}</RHAH_Settings_RequestHerbalMin>
+  <RHAH_Settings_RequestHerbalMax>草药最多：{0}</RHAH_Settings_RequestHerbalMax>
+  <RHAH_Settings_RequestSilverMin>白银最少：{0}</RHAH_Settings_RequestSilverMin>
+  <RHAH_Settings_RequestSilverMax>白银最多：{0}</RHAH_Settings_RequestSilverMax>
+  <RHAH_Settings_RequestDays>索取期限：{0} 天</RHAH_Settings_RequestDays>
+  <RHAH_Settings_RequestDays_Tooltip>接济和情报信到期的天数。0 到 30，默认 1。0 生成后立即到期。</RHAH_Settings_RequestDays_Tooltip>
+  <RHAH_Settings_RequestPoints>索取点数：{0}</RHAH_Settings_RequestPoints>
+  <RHAH_Settings_RequestPoints_Tooltip>索取量按事件点数相对这个数缩放。1 到 10000，默认 300。</RHAH_Settings_RequestPoints_Tooltip>
+  <RHAH_Settings_FoodPerChild>每个孩子的简单餐：{0}</RHAH_Settings_FoodPerChild>
+  <RHAH_Settings_FoodPerChild_Tooltip>易子而食用简单餐代替一个孩子时要交的份数。0 到 100，默认 10。</RHAH_Settings_FoodPerChild_Tooltip>
+  <RHAH_Settings_FoodPerVisitor>投喂每人份数：{0}</RHAH_Settings_FoodPerVisitor>
+  <RHAH_Settings_FoodPerVisitor_Tooltip>来客投喂按人数乘这个份数。0 到 20，默认 1。</RHAH_Settings_FoodPerVisitor_Tooltip>
+  <RHAH_Settings_FoodRequestCap>投喂上限：{0}</RHAH_Settings_FoodRequestCap>
+  <RHAH_Settings_FoodRequestCap_Tooltip>一次投喂最多这么多份。0 到 100，默认 12。</RHAH_Settings_FoodRequestCap_Tooltip>
+  <RHAH_Settings_EnvoyMeals>使者简单餐：{0}</RHAH_Settings_EnvoyMeals>
+  <RHAH_Settings_EnvoyMeals_Tooltip>和使者成交要交的简单餐。0 到 100，默认 6。</RHAH_Settings_EnvoyMeals_Tooltip>
+  <RHAH_Settings_CampRange_Tooltip>安居点这一档的最少或最多人数。</RHAH_Settings_CampRange_Tooltip>
+  <RHAH_Settings_CampAdultMin>安居点成人最少：{0}</RHAH_Settings_CampAdultMin>
+  <RHAH_Settings_CampAdultMax>安居点成人最多：{0}</RHAH_Settings_CampAdultMax>
+  <RHAH_Settings_CampChildMin>安居点幼年最少：{0}</RHAH_Settings_CampChildMin>
+  <RHAH_Settings_CampChildMax>安居点幼年最多：{0}</RHAH_Settings_CampChildMax>
+  <RHAH_Settings_CampGoodwill>安居点好感：{0}</RHAH_Settings_CampGoodwill>
+  <RHAH_Settings_CampGoodwill_Tooltip>清掉安居点后获得的好感。-100 到 100，默认 12。</RHAH_Settings_CampGoodwill_Tooltip>
+  <RHAH_Settings_CampDays>安居点天数：{0}</RHAH_Settings_CampDays>
+  <RHAH_Settings_CampDays_Tooltip>安居点任务持续的天数。1 到 120，默认 15。</RHAH_Settings_CampDays_Tooltip>
+  <RHAH_Settings_CampHuts>棚屋：{0}</RHAH_Settings_CampHuts>
+  <RHAH_Settings_CampHuts_Tooltip>安居点生成的棚屋数。0 到 12，默认 4。</RHAH_Settings_CampHuts_Tooltip>
+  <RHAH_Settings_HoleWood>封洞木材：{0}</RHAH_Settings_HoleWood>
+  <RHAH_Settings_HoleWood_Tooltip>封上粮洞需要的木材。0 到 200，默认 20。</RHAH_Settings_HoleWood_Tooltip>
+  <RHAH_Settings_HoleClean>清洞食物：{0}</RHAH_Settings_HoleClean>
+  <RHAH_Settings_HoleClean_Tooltip>清掉粮洞时取走的食物份数。0 到 50，默认 5。</RHAH_Settings_HoleClean_Tooltip>
+  <RHAH_Settings_HoleRange>粮洞范围：{0}</RHAH_Settings_HoleRange>
+  <RHAH_Settings_HoleRange_Tooltip>粮洞取食的格子距离。1 到 60，默认 12。</RHAH_Settings_HoleRange_Tooltip>
+  <RHAH_Settings_HoleLosses>粮洞损失：{0}</RHAH_Settings_HoleLosses>
+  <RHAH_Settings_HoleLosses_Tooltip>不处理时最多损失这么多次。0 到 20，默认 3。</RHAH_Settings_HoleLosses_Tooltip>
+  <RHAH_Settings_ApparelAwful>破旧衣：{0}%</RHAH_Settings_ApparelAwful>
+  <RHAH_Settings_ApparelAwful_Tooltip>新来客抽到破旧品质的几率。剩下的先给较差，再给普通。0 到 100，默认 35。</RHAH_Settings_ApparelAwful_Tooltip>
+  <RHAH_Settings_ApparelPoor>较差衣：{0}%</RHAH_Settings_ApparelPoor>
+  <RHAH_Settings_ApparelPoor_Tooltip>较差品质的几率。和破旧加起来不超过 100，默认 50。</RHAH_Settings_ApparelPoor_Tooltip>
+  <RHAH_Settings_ApparelDurability_Tooltip>新衣服耐久的百分比。最低不能高于最高，1 到 100。</RHAH_Settings_ApparelDurability_Tooltip>
+  <RHAH_Settings_ApparelMin>衣服耐久最低：{0}%</RHAH_Settings_ApparelMin>
+  <RHAH_Settings_ApparelMax>衣服耐久最高：{0}%</RHAH_Settings_ApparelMax>
+  <RHAH_Settings_ApparelCorpse>尸衣：{0}%</RHAH_Settings_ApparelCorpse>
+  <RHAH_Settings_ApparelCorpse_Tooltip>新衣服曾经穿过尸体的几率。0 到 100，默认 25。</RHAH_Settings_ApparelCorpse_Tooltip>
+  <RHAH_Settings_ApparelCloth>布料：{0}%</RHAH_Settings_ApparelCloth>
+  <RHAH_Settings_ApparelCloth_Tooltip>布和人皮都能做时，用布的几率。剩下用人皮。0 到 100，默认 65。</RHAH_Settings_ApparelCloth_Tooltip>
+  <RHAH_Settings_ApparelPieces>最多衣物：{0}</RHAH_Settings_ApparelPieces>
+  <RHAH_Settings_ApparelPieces_Tooltip>一个成年来客最多穿这么多件。1 到 8，默认 4。</RHAH_Settings_ApparelPieces_Tooltip>
 </LanguageData>

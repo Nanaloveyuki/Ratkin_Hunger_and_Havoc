@@ -213,7 +213,10 @@ namespace HungerAndHavoc.EventMgr
                 return -1;
             }
 
-            int days = displayId == "I-037" ? MotherReturnDays : LongReturnYears * 60;
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            int motherDays = settings == null ? MotherReturnDays : settings.followMotherReturnDays;
+            int years = settings == null ? LongReturnYears : settings.followLongReturnYears;
+            int days = displayId == "I-037" ? motherDays : years * 60;
             return startedTick + days * TicksPerDay;
         }
 
@@ -249,7 +252,8 @@ namespace HungerAndHavoc.EventMgr
 
         internal static RHAH_FollowOutcome AtFourteen(RHAH_FollowSubject subject, bool motherAlive, bool motherOnMap, float roll)
         {
-            if (!subject.Alive || subject.Age < AdultAge)
+            float adult = Core.RHAH_Mod.Settings == null ? AdultAge : Core.RHAH_Mod.Settings.followAdultAge;
+            if (!subject.Alive || subject.Age < adult)
             {
                 return RHAH_FollowOutcome.None;
             }
@@ -399,7 +403,8 @@ namespace HungerAndHavoc.EventMgr
 
         internal static RHAH_FollowOutcome OnBirth(string displayId, bool motherAlive, bool childAlive, bool childSick, int days, bool motherKind, bool motherTwisted, float roll)
         {
-            if (displayId == "I-029" && motherAlive && childAlive && days >= BirthWatchDays)
+            int birthDays = Core.RHAH_Mod.Settings == null ? BirthWatchDays : Core.RHAH_Mod.Settings.followBirthWatchDays;
+            if (displayId == "I-029" && motherAlive && childAlive && days >= birthDays)
             {
                 return BirthMood(motherKind, motherTwisted, roll, ExtraMouth, -4, BornAlive, 2, true);
             }
@@ -414,7 +419,8 @@ namespace HungerAndHavoc.EventMgr
                 return Mood(BornSick, -6, false);
             }
 
-            if (childAlive && days >= PlagueBirthWatchDays)
+            int plagueDays = Core.RHAH_Mod.Settings == null ? PlagueBirthWatchDays : Core.RHAH_Mod.Settings.followPlagueBirthDays;
+            if (childAlive && days >= plagueDays)
             {
                 return BirthMood(motherKind, motherTwisted, roll, CleanBirth, 3, NextBirth, -3, true);
             }
@@ -460,8 +466,28 @@ namespace HungerAndHavoc.EventMgr
             return percent > 100 ? 100 : percent;
         }
 
+        static int Scaled(int mood)
+        {
+            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+            int percent = settings == null ? 100 : settings.followMoodScalePercent;
+            if (percent == 100 || mood == 0)
+            {
+                return mood;
+            }
+
+            int scaled = mood * percent / 100;
+            if (scaled == 0)
+            {
+                return mood < 0 ? -1 : 1;
+            }
+
+            return scaled;
+        }
+
         static RHAH_FollowOutcome Pair(RHAH_FollowSubject subject, float roll, string dark, int darkMood, string light, int lightMood, bool grantTrait)
         {
+            darkMood = Scaled(darkMood);
+            lightMood = Scaled(lightMood);
             if (subject.Kind)
             {
                 RHAH_FollowTrait trait = grantTrait ? RHAH_FollowTrait.Kind : RHAH_FollowTrait.None;
@@ -491,6 +517,8 @@ namespace HungerAndHavoc.EventMgr
 
         static RHAH_FollowOutcome BirthMood(bool kind, bool twisted, float roll, string first, int firstMood, string second, int secondMood, bool kindTakesSecond)
         {
+            firstMood = Scaled(firstMood);
+            secondMood = Scaled(secondMood);
             if (kind)
             {
                 return Mood(kindTakesSecond ? second : first, kindTakesSecond ? secondMood : firstMood, false);

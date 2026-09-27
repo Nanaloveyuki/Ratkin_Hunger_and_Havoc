@@ -149,10 +149,16 @@ namespace HungerAndHavoc.Generation
             CompQuality quality = apparel.TryGetComp<CompQuality>();
             if (quality != null)
             {
-                quality.SetQuality((QualityCategory)RHAH_ApparelPolicy.Quality(Rand.Value), ArtGenerationContext.Outsider);
+                Core.RHAH_Settings qualitySettings = Core.RHAH_Mod.Settings;
+                int category = qualitySettings == null
+                    ? RHAH_ApparelPolicy.Quality(Rand.Value)
+                    : RHAH_ApparelPolicy.Quality(Rand.Value, qualitySettings.apparelAwfulPercent / 100f, qualitySettings.apparelPoorPercent / 100f);
+                quality.SetQuality((QualityCategory)category, ArtGenerationContext.Outsider);
             }
 
-            apparel.WornByCorpse = Rand.Chance(RHAH_ApparelPolicy.CorpseChance);
+            Core.RHAH_Settings apparelSettings = Core.RHAH_Mod.Settings;
+            float corpse = apparelSettings == null ? RHAH_ApparelPolicy.CorpseChance : apparelSettings.apparelCorpsePercent / 100f;
+            apparel.WornByCorpse = Rand.Chance(corpse);
             pawn.apparel.Wear(apparel, false, false);
             apparel.HitPoints = RHAH_ApparelPolicy.HitPoints(apparel.MaxHitPoints, Rand.Range(RHAH_ApparelPolicy.MinDurability, RHAH_ApparelPolicy.MaxDurability));
             return pawn.apparel.WornApparel.Contains(apparel);

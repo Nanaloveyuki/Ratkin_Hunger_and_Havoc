@@ -65,13 +65,13 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            if (RHAH_GrainHole.CountWood(map) < RHAH_GrainHole.WoodCost)
+            if (RHAH_GrainHole.CountWood(map) < (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost))
             {
                 Messages.Message("RHAH_Hole_NoWood".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            record.Wood = RHAH_GrainHole.WoodCost;
+            record.Wood = (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost);
             if (!state.Commit(book => book.ChooseHole(record, SuiyinN006Action.Seal, Now())))
             {
                 record.Wood = 0;
@@ -79,7 +79,7 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            if (!RHAH_GrainHole.SpendWood(map, RHAH_GrainHole.WoodCost))
+            if (!RHAH_GrainHole.SpendWood(map, (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost)))
             {
                 Messages.Message("RHAH_Hole_NoWood".Translate(), MessageTypeDefOf.RejectInput);
             }
@@ -100,7 +100,7 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            if (!RHAH_GrainHole.TakeFood(map, hole.Position, 1, RHAH_GrainHole.LossRange))
+            if (!RHAH_GrainHole.TakeFood(map, hole.Position, 1, (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.LossRange : Core.RHAH_Mod.Settings.holeLossRange)))
             {
                 Messages.Message("RHAH_Hole_NoFood".Translate(), MessageTypeDefOf.RejectInput);
                 return;
@@ -131,7 +131,7 @@ namespace HungerAndHavoc.Incidents
 
             if (hole != null)
             {
-                RHAH_GrainHole.TakeFood(map, hole.Position, RHAH_GrainHole.CleanPortions, RHAH_GrainHole.LossRange);
+                RHAH_GrainHole.TakeFood(map, hole.Position, (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.CleanPortions : Core.RHAH_Mod.Settings.holeCleanPortions), (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.LossRange : Core.RHAH_Mod.Settings.holeLossRange));
             }
 
             if (!state.Commit(book => book.ChooseHole(record, SuiyinN006Action.Clean, Now())))

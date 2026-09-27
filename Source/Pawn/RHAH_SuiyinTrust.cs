@@ -1,3 +1,4 @@
+using HungerAndHavoc.Core;
 using HungerAndHavoc.Narrative;
 using HungerAndHavoc.Storyteller.Suiyin;
 using Verse;
@@ -11,6 +12,11 @@ namespace HungerAndHavoc.Pawn
         internal const int Deliver = 1;
         internal const int Leave = 1;
         internal const int Expel = -1;
+
+        internal static int Value(int fallback, int configured)
+        {
+            return Core.RHAH_Mod.Settings == null ? fallback : configured;
+        }
 
         internal static void Note(int people, int each)
         {

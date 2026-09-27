@@ -25,7 +25,7 @@ namespace HungerAndHavoc.Incidents
                 }
 
                 Map map = ResolveMap();
-                bool meals = map != null && RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= RHAH_Envoy.MealCost;
+                bool meals = map != null && RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost);
                 DiaOption trade = new DiaOption("RHAH_Envoy_Trade".Translate());
                 if (!meals)
                 {
@@ -67,7 +67,7 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            if (RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) < RHAH_Envoy.MealCost)
+            if (RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) < (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost))
             {
                 Messages.Message("RHAH_Envoy_NoMeals".Translate(), MessageTypeDefOf.RejectInput);
                 return;
@@ -82,7 +82,7 @@ namespace HungerAndHavoc.Incidents
                     return;
                 }
 
-                RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, RHAH_Envoy.MealCost);
+                RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost));
                 Find.LetterStack.RemoveLetter(this);
                 return;
             }
@@ -99,7 +99,7 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, RHAH_Envoy.MealCost);
+            RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost));
             Find.LetterStack.RemoveLetter(this);
         }
 

@@ -15,7 +15,8 @@ namespace HungerAndHavoc.Pawn
             }
 
             float level = pawn.needs.food.CurLevelPercentage;
-            if (float.IsNaN(level) || float.IsInfinity(level) || level < RHAH_ReliefFood.SatisfiedLevel)
+            float satisfied = Core.RHAH_Mod.Settings == null ? RHAH_ReliefFood.SatisfiedLevel : Core.RHAH_Mod.Settings.satisfiedFoodPercent / 100f;
+            if (float.IsNaN(level) || float.IsInfinity(level) || level < satisfied)
             {
                 return false;
             }
@@ -72,7 +73,8 @@ namespace HungerAndHavoc.Pawn
             }
 
             Hediff malnutrition = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Malnutrition);
-            if (malnutrition == null || malnutrition.Severity < RHAH_ReliefFood.RefeedMalnutrition)
+            float refeed = Core.RHAH_Mod.Settings == null ? RHAH_ReliefFood.RefeedMalnutrition : Core.RHAH_Mod.Settings.refeedMalnutrition;
+            if (malnutrition == null || malnutrition.Severity < refeed)
             {
                 return;
             }

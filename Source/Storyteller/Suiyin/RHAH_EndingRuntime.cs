@@ -68,7 +68,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
             if (state.IdentityDue(tick, narrator, goals))
             {
-                RHAH_IdentityTier offer = RHAH_EndingRules.IdentityOffer(state.Snapshot().Trust);
+                RHAH_IdentityTier offer = RHAH_EndingRules.IdentityOffer(state.Snapshot().Trust, goals.TrustFloor, goals.HopeTrust);
                 state.MarkIdentity(offer, false);
                 ShowIdentity(offer);
             }

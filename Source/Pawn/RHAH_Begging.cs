@@ -223,7 +223,9 @@ namespace HungerAndHavoc.Pawn
             ThoughtDef rejected = DefDatabase<ThoughtDef>.GetNamedSilentFail("RHAH_Thought_BeggingRejected");
             if (rejected != null && beggar.needs != null && beggar.needs.mood != null && beggar.needs.mood.thoughts != null)
             {
-                beggar.needs.mood.thoughts.memories.TryGainMemory(rejected, target);
+                Thought_Memory memory = (Thought_Memory)ThoughtMaker.MakeThought(rejected);
+                memory.moodOffset = RHAH_Mod.Settings == null ? RHAH_VisitorRules.BegFailMood : RHAH_Mod.Settings.begFailMood;
+                beggar.needs.mood.thoughts.memories.TryGainMemory(memory, target);
             }
 
             string label = target != null ? target.LabelShort : "...";
@@ -316,7 +318,9 @@ namespace HungerAndHavoc.Pawn
             ThoughtDef succeeded = DefDatabase<ThoughtDef>.GetNamedSilentFail("RHAH_Thought_BeggingSucceeded");
             if (succeeded != null && beggar.needs != null && beggar.needs.mood != null && beggar.needs.mood.thoughts != null)
             {
-                beggar.needs.mood.thoughts.memories.TryGainMemory(succeeded, target);
+                Thought_Memory memory = (Thought_Memory)ThoughtMaker.MakeThought(succeeded);
+                memory.moodOffset = RHAH_Mod.Settings == null ? RHAH_VisitorRules.BegSuccessMood : RHAH_Mod.Settings.begSuccessMood;
+                beggar.needs.mood.thoughts.memories.TryGainMemory(memory, target);
             }
 
             int roll = Rand.Range(1, 4);
@@ -357,8 +361,9 @@ namespace HungerAndHavoc.Pawn
             ApplyHeadWound(beggar, head);
             if (beggar.stances != null && beggar.stances.stunner != null)
             {
+                int hours = RHAH_Mod.Settings == null ? RHAH_VisitorRules.BegSlapKnockoutHours : RHAH_Mod.Settings.begSlapKnockoutHours;
                 beggar.stances.stunner.StunFor(
-                    RHAH_VisitorRules.BegSlapKnockoutHours * RHAH_VisitorRules.TicksPerHour,
+                    hours * RHAH_VisitorRules.TicksPerHour,
                     colonist,
                     true,
                     true,
@@ -368,7 +373,9 @@ namespace HungerAndHavoc.Pawn
             ThoughtDef slapped = DefDatabase<ThoughtDef>.GetNamedSilentFail("RHAH_Thought_BeggingSlapped");
             if (slapped != null && beggar.needs != null && beggar.needs.mood != null && beggar.needs.mood.thoughts != null)
             {
-                beggar.needs.mood.thoughts.memories.TryGainMemory(slapped, colonist);
+                Thought_Memory memory = (Thought_Memory)ThoughtMaker.MakeThought(slapped);
+                memory.moodOffset = RHAH_Mod.Settings == null ? RHAH_VisitorRules.BegSlapMood : RHAH_Mod.Settings.begSlapMood;
+                beggar.needs.mood.thoughts.memories.TryGainMemory(memory, colonist);
             }
 
             if (beggar.Spawned)
@@ -403,7 +410,7 @@ namespace HungerAndHavoc.Pawn
             if (bruise == null)
             {
                 bruise = HediffMaker.MakeHediff(DefDatabase<HediffDef>.GetNamed("Bruise"), beggar, head);
-                bruise.Severity = RHAH_VisitorRules.MinorBruiseSeverity;
+                bruise.Severity = RHAH_Mod.Settings == null ? RHAH_VisitorRules.MinorBruiseSeverity : RHAH_Mod.Settings.begBruiseSeverity;
                 beggar.health.AddHediff(bruise, head, null, null);
                 return;
             }

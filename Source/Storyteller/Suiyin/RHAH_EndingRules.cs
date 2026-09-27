@@ -86,6 +86,11 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal readonly bool E04Enabled;
         internal readonly bool E05Enabled;
         internal readonly bool R01Enabled;
+        internal readonly int TrustFloor;
+        internal readonly int HopeTrust;
+        internal readonly int HaltTrust;
+        internal readonly int LowKinds;
+        internal readonly float ThreatDays;
 
         internal RHAH_EndingGoals(
             int aid,
@@ -100,7 +105,12 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             bool e03Enabled,
             bool e04Enabled,
             bool e05Enabled,
-            bool r01Enabled)
+            bool r01Enabled,
+            int trustFloor,
+            int hopeTrust,
+            int haltTrust,
+            int lowKinds,
+            float threatDays)
         {
             Aid = aid;
             Broadcasts = broadcasts;
@@ -115,11 +125,16 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             E04Enabled = e04Enabled;
             E05Enabled = e05Enabled;
             R01Enabled = r01Enabled;
+            TrustFloor = trustFloor;
+            HopeTrust = hopeTrust;
+            HaltTrust = haltTrust;
+            LowKinds = lowKinds;
+            ThreatDays = threatDays;
         }
 
         internal static RHAH_EndingGoals Defaults()
         {
-            return new RHAH_EndingGoals(99, 3, 3, 100, 30, true, true, true, true, true, true, true, true);
+            return new RHAH_EndingGoals(99, 3, 3, 100, 30, true, true, true, true, true, true, true, true, 50, 75, -75, 6, 13f);
         }
     }
 
@@ -209,15 +224,16 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return 1f - clamped / 400f;
         }
 
-        internal static float ThreatInterval(int trust)
+        internal static float ThreatInterval(int trust, float threatDays)
         {
+            float days = threatDays <= 0f ? ThreatIntervalDays : threatDays;
             float factor = ThreatFactor(trust);
             if (factor <= 0f)
             {
-                return ThreatIntervalDays;
+                return days;
             }
 
-            return ThreatIntervalDays / factor;
+            return days / factor;
         }
 
         internal static bool ScaleMet(RHAH_EndingFacts facts, RHAH_EndingGoals goals)
@@ -227,7 +243,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal static bool LowReady(RHAH_EndingFacts facts, RHAH_EndingGoals goals)
         {
-            return facts.CompletedKinds >= LowKindMinimum && facts.WaitedDays >= goals.WaitDays;
+            return facts.CompletedKinds >= goals.LowKinds && facts.WaitedDays >= goals.WaitDays;
         }
 
         internal static bool Shown(RHAH_EndingFacts facts, RHAH_EndingId id)
@@ -299,18 +315,18 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             bool scale = ScaleMet(facts, goals);
-            if (scale && facts.Adults >= goals.Adults && facts.Trust >= HopeTrust &&
+            if (scale && facts.Adults >= goals.Adults && facts.Trust >= goals.HopeTrust &&
                 goals.E02Enabled)
             {
                 return RHAH_EndingId.E02;
             }
 
-            if (scale && facts.Trust >= TrustFloor && goals.E01Enabled)
+            if (scale && facts.Trust >= goals.TrustFloor && goals.E01Enabled)
             {
                 return RHAH_EndingId.E01;
             }
 
-            if (facts.Trust <= HaltTrust && facts.CompletedKinds > 0 && goals.E05Enabled)
+            if (facts.Trust <= goals.HaltTrust && facts.CompletedKinds > 0 && goals.E05Enabled)
             {
                 return RHAH_EndingId.E05;
             }
@@ -318,7 +334,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             if (LowReady(facts, goals))
             {
                 RHAH_EndingId low = facts.Trust < 0 ? RHAH_EndingId.E04 : RHAH_EndingId.E03;
-                if (low == RHAH_EndingId.E04 && facts.Trust < HaltTrust)
+                if (low == RHAH_EndingId.E04 && facts.Trust < goals.HaltTrust)
                 {
                     low = RHAH_EndingId.None;
                 }
@@ -332,14 +348,14 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return RHAH_EndingId.None;
         }
 
-        internal static bool AsidesClosed(int trust, bool e05Shown)
+        internal static bool AsidesClosed(int trust, bool e05Shown, int haltTrust)
         {
-            return e05Shown || SuiyinNodes.ClampTrust(trust) <= HaltTrust;
+            return e05Shown || SuiyinNodes.ClampTrust(trust) <= haltTrust;
         }
 
         internal static bool IdentityDue(RHAH_EndingFacts facts, RHAH_EndingGoals goals)
         {
-            if (!facts.Narrator || !goals.R01Enabled || facts.Trust < TrustFloor)
+            if (!facts.Narrator || !goals.R01Enabled || facts.Trust < goals.TrustFloor)
             {
                 return false;
             }
@@ -349,18 +365,18 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return false;
             }
 
-            int offered = facts.Trust >= HopeTrust ? (int)RHAH_IdentityTier.Full : (int)RHAH_IdentityTier.Partial;
+            int offered = facts.Trust >= goals.HopeTrust ? (int)RHAH_IdentityTier.Full : (int)RHAH_IdentityTier.Partial;
             return facts.IdentityTier < offered;
         }
 
-        internal static RHAH_IdentityTier IdentityOffer(int trust)
+        internal static RHAH_IdentityTier IdentityOffer(int trust, int trustFloor, int hopeTrust)
         {
-            if (trust >= HopeTrust)
+            if (trust >= hopeTrust)
             {
                 return RHAH_IdentityTier.Full;
             }
 
-            if (trust >= TrustFloor)
+            if (trust >= trustFloor)
             {
                 return RHAH_IdentityTier.Partial;
             }
