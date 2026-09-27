@@ -1,4 +1,6 @@
+using RimWorld;
 using HungerAndHavoc.Incidents;
+using Verse;
 using Xunit;
 
 namespace HungerAndHavoc.Tests
@@ -40,25 +42,27 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void IdleMapsDoNotScanAndActiveHuntersWaitTwoFiftyTicks()
+        public void IdleMapsDoNotScanAndActiveHuntersWaitTwoHours()
         {
+            int interval = RHAH_PredationRules.SearchIntervalTicks;
+            Assert.Equal(GenDate.TicksPerHour * 2, interval);
             Assert.False(RHAH_PredationRules.ShouldScan(0, 1000, 0));
-            Assert.False(RHAH_PredationRules.ShouldScan(1, 249, 250));
-            Assert.True(RHAH_PredationRules.ShouldScan(1, 250, 250));
+            Assert.False(RHAH_PredationRules.ShouldScan(1, interval - 1, interval));
+            Assert.True(RHAH_PredationRules.ShouldScan(1, interval, interval));
 
-            RHAH_PredationDecision waiting = RHAH_PredationRules.Decide(true, false, true, false, 100, 250, true, false, 0, -1);
-            RHAH_PredationDecision hunting = RHAH_PredationRules.Decide(true, false, true, false, 250, 250, true, false, 2, -1);
-            RHAH_PredationDecision leaving = RHAH_PredationRules.Decide(true, false, true, false, 250, 250, false, false, -1, -1);
-            RHAH_PredationDecision vanilla = RHAH_PredationRules.Decide(true, true, true, false, 250, 250, false, false, -1, -1);
+            RHAH_PredationDecision waiting = RHAH_PredationRules.Decide(true, false, true, false, 100, interval, true, false, 0, -1);
+            RHAH_PredationDecision hunting = RHAH_PredationRules.Decide(true, false, true, false, interval, interval, true, false, 2, -1);
+            RHAH_PredationDecision leaving = RHAH_PredationRules.Decide(true, false, true, false, interval, interval, false, false, -1, -1);
+            RHAH_PredationDecision vanilla = RHAH_PredationRules.Decide(true, true, true, false, interval, interval, false, false, -1, -1);
 
             Assert.Equal(RHAH_PredationAction.Wait, waiting.Action);
-            Assert.Equal(250, waiting.NextSearchTick);
+            Assert.Equal(interval, waiting.NextSearchTick);
             Assert.Equal(RHAH_PredationAction.Hunt, hunting.Action);
-            Assert.Equal(500, hunting.NextSearchTick);
+            Assert.Equal(interval * 2, hunting.NextSearchTick);
             Assert.Equal(RHAH_PredationAction.Leave, leaving.Action);
             Assert.Equal(RHAH_PredationAction.Vanilla, vanilla.Action);
             Assert.False(RHAH_PredationRules.FightsBack(true, false));
             Assert.True(RHAH_PredationRules.FightsBack(true, true));
         }
-    }
+}
 }

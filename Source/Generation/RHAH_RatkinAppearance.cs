@@ -11,6 +11,93 @@ namespace HungerAndHavoc.Generation
     {
         const string RaceDefName = "Ratkin";
         const string HairTag = "RK_Style";
+        // 鼠族婴儿阶段到 4 岁 原版只藏人类 3 岁前的头发
+        internal const float HairlessAge = 4f;
+        static void ApplyHair(Verse.Pawn pawn, IList<string> hairTags)
+        {
+            if (KeepsNoHair(pawn))
+            {
+                pawn.story.hairDef = HairDefOf.Bald;
+                return;
+            }
+
+            List<string> tags = Names(hairTags);
+            if (tags.Count == 0)
+            {
+                Log.Error("RHAH ratkin hair tags are missing");
+                return;
+            }
+
+            List<HairDef> choices = new List<HairDef>();
+            List<HairDef> all = DefDatabase<HairDef>.AllDefsListForReading;
+            for (int i = 0; i < all.Count; i++)
+            {
+                HairDef hair = all[i];
+                if (HairAllowed(hair, pawn == null ? Gender.None : pawn.gender, tags) &&
+                    PawnStyleItemChooser.AgeAppropriateHairStyle(pawn, hair))
+                {
+                    choices.Add(hair);
+                }
+            }
+
+            if (choices.Count == 0)
+            {
+                Log.Error("RHAH ratkin hair defs are missing");
+                return;
+            }
+
+            pawn.story.hairDef = choices[Rand.Range(0, choices.Count)];
+        }
+
+        internal static bool HairAllowed(bool hasTag, StyleGender styleGender, Gender pawnGender)
+        {
+            if (!hasTag)
+            {
+                return false;
+            }
+
+            if (pawnGender == Gender.Female)
+            {
+                return styleGender != StyleGender.Male;
+            }
+
+            if (pawnGender == Gender.Male)
+            {
+                return styleGender != StyleGender.Female;
+            }
+
+            return true;
+        }
+
+        static bool HairAllowed(HairDef hair, Gender pawnGender, IList<string> tags)
+        {
+            if (hair == null || tags == null)
+            {
+                return false;
+            }
+
+            bool tagged = false;
+            for (int i = 0; i < tags.Count; i++)
+            {
+                if (HasTag(hair, tags[i]))
+                {
+                    tagged = true;
+                    break;
+                }
+            }
+
+            return HairAllowed(tagged, hair.styleGender, pawnGender);
+        }
+
+        internal static bool KeepsNoHair(float age)
+        {
+            return !float.IsNaN(age) && !float.IsInfinity(age) && age >= 0f && age < HairlessAge;
+        }
+
+        static bool KeepsNoHair(Verse.Pawn pawn)
+        {
+            return pawn?.ageTracker != null && KeepsNoHair(pawn.ageTracker.AgeBiologicalYearsFloat);
+        }
         const string NoStyleTag = "alienNoStyle";
         internal static bool UsesRatkinAppearance(string raceDefName)
         {
@@ -129,39 +216,6 @@ namespace HungerAndHavoc.Generation
             pawn.story.headType = choices[Rand.Range(0, choices.Count)];
         }
 
-        static void ApplyHair(Verse.Pawn pawn, IList<string> hairTags)
-        {
-            List<string> tags = Names(hairTags);
-            if (tags.Count == 0)
-            {
-                Log.Error("RHAH ratkin hair tags are missing");
-                return;
-            }
-
-            if (HasTag(pawn.story.hairDef, HairTag))
-            {
-                return;
-            }
-
-            List<HairDef> choices = new List<HairDef>();
-            List<HairDef> all = DefDatabase<HairDef>.AllDefsListForReading;
-            for (int i = 0; i < all.Count; i++)
-            {
-                HairDef hair = all[i];
-                if (hair != null && HasTag(hair, HairTag) && PawnStyleItemChooser.AgeAppropriateHairStyle(pawn, hair))
-                {
-                    choices.Add(hair);
-                }
-            }
-
-            if (choices.Count == 0)
-            {
-                Log.Error("RHAH ratkin hair defs are missing");
-                return;
-            }
-
-            pawn.story.hairDef = choices[Rand.Range(0, choices.Count)];
-        }
 
         static void ApplyBeard(Verse.Pawn pawn, bool disabled)
         {
@@ -372,6 +426,24 @@ namespace HungerAndHavoc.Generation
 
             PropertyInfo property = target.GetType().GetProperty(name, flags);
             return property == null ? null : property.GetValue(target, null);
+        }
+    }
+
+    // 原版婴儿头发节点不看鼠族 4 岁阶段 这里只藏未满 4 岁的鼠族头发
+    [HarmonyLib.HarmonyPatch(typeof(PawnRenderNode_Hair), nameof(PawnRenderNode_Hair.GraphicFor))]
+    internal static class RHAH_RatkinHairGraphicPatch
+    {
+        static void Postfix(Verse.Pawn pawn, ref Graphic __result)
+        {
+            if (__result == null || pawn?.story == null || !RHAH_RatkinAppearance.UsesRatkinAppearance(pawn.def?.defName))
+            {
+                return;
+            }
+
+            if (pawn.ageTracker != null && RHAH_RatkinAppearance.KeepsNoHair(pawn.ageTracker.AgeBiologicalYearsFloat))
+            {
+                __result = null;
+            }
         }
     }
 

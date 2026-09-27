@@ -63,10 +63,18 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 }
 
                 Watch(record, tick);
-                if (book.CloseJournal(record, tick) && RHAH_EndingRuntime.CountsNow())
+                if (book.CloseJournal(record, tick))
                 {
-                    state.NoteAid(tick);
-                    state.NoteCompletedKind(tick, record.Id);
+                    if (record.Id == 14)
+                    {
+                        HungerAndHavoc.EventMgr.RHAH_EventFollowMood.OnRelief(AidDisplay(record), Living(record));
+                    }
+
+                    if (RHAH_EndingRuntime.CountsNow())
+                    {
+                        state.NoteAid(tick);
+                        state.NoteCompletedKind(tick, record.Id);
+                    }
                 }
             }
         }
@@ -103,6 +111,57 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             return false;
+        }
+
+        static string AidDisplay(SuiyinJournalCase record)
+        {
+            if (record?.People == null)
+            {
+                return "";
+            }
+
+            for (int i = 0; i < record.People.Count; i++)
+            {
+                Verse.Pawn pawn = Member(record.People[i]);
+                Identity.CompRHAH_Pawn comp = Identity.CompRHAH_Pawn.TryGet(pawn);
+                if (comp != null && !string.IsNullOrEmpty(comp.State.sourceIncidentDisplayId))
+                {
+                    return comp.State.sourceIncidentDisplayId;
+                }
+            }
+
+            return "";
+        }
+
+        static List<Verse.Pawn> Living(SuiyinJournalCase record)
+        {
+            List<Verse.Pawn> living = new List<Verse.Pawn>();
+            if (record?.People == null)
+            {
+                return living;
+            }
+
+            for (int i = 0; i < record.People.Count; i++)
+            {
+                Verse.Pawn pawn = Member(record.People[i]);
+                if (pawn != null && !pawn.Dead)
+                {
+                    living.Add(pawn);
+                }
+            }
+
+            return living;
+        }
+
+        static Verse.Pawn Member(SuiyinMember member)
+        {
+            if (member == null)
+            {
+                return null;
+            }
+
+            int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            return RHAH_PawnIndex.Find(member.LoadId, tick);
         }
 
         static void Watch(SuiyinJournalCase record, int tick)

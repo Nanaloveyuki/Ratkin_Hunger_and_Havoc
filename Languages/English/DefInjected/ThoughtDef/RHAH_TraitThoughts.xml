@@ -96,4 +96,157 @@
   <RHAH_Thought_BeggingRejected.stages.0.description>I only wanted something to eat. They sent me off.</RHAH_Thought_BeggingRejected.stages.0.description>
   <RHAH_Thought_BeggingSlapped.stages.0.label>slapped</RHAH_Thought_BeggingSlapped.stages.0.label>
   <RHAH_Thought_BeggingSlapped.stages.0.description>They slapped me. My face still stings.</RHAH_Thought_BeggingSlapped.stages.0.description>
+  <RHAH_Thought_MotherGoneBad.label>left me here</RHAH_Thought_MotherGoneBad.label>
+  <RHAH_Thought_MotherGoneBad.description>I still remember where she put me.</RHAH_Thought_MotherGoneBad.description>
+  <RHAH_Thought_MotherGoneBad.stages.0.label>left me here</RHAH_Thought_MotherGoneBad.stages.0.label>
+  <RHAH_Thought_MotherGoneGood.label>she left and I ate</RHAH_Thought_MotherGoneGood.label>
+  <RHAH_Thought_MotherGoneGood.description>She left. The food stayed.</RHAH_Thought_MotherGoneGood.description>
+  <RHAH_Thought_MotherGoneGood.stages.0.label>she left and I ate</RHAH_Thought_MotherGoneGood.stages.0.label>
+  <RHAH_Thought_AteMotherGuilt.label>I ate my mother</RHAH_Thought_AteMotherGuilt.label>
+  <RHAH_Thought_AteMotherGuilt.description>That bite is still there.</RHAH_Thought_AteMotherGuilt.description>
+  <RHAH_Thought_AteMotherGuilt.stages.0.label>I ate my mother</RHAH_Thought_AteMotherGuilt.stages.0.label>
+  <RHAH_Thought_AteMotherFine.label>hunger made it right</RHAH_Thought_AteMotherFine.label>
+  <RHAH_Thought_AteMotherFine.description>That is what hunger does.</RHAH_Thought_AteMotherFine.description>
+  <RHAH_Thought_AteMotherFine.stages.0.label>hunger made it right</RHAH_Thought_AteMotherFine.stages.0.label>
+  <RHAH_Thought_AidAgain.label>they can be asked again</RHAH_Thought_AidAgain.label>
+  <RHAH_Thought_AidAgain.description>They gave this time. They can be asked next time.</RHAH_Thought_AidAgain.description>
+  <RHAH_Thought_AidAgain.stages.0.label>they can be asked again</RHAH_Thought_AidAgain.stages.0.label>
+  <RHAH_Thought_AidEmpty.label>the sack will empty</RHAH_Thought_AidEmpty.label>
+  <RHAH_Thought_AidEmpty.description>The sack will be empty again.</RHAH_Thought_AidEmpty.description>
+  <RHAH_Thought_AidEmpty.stages.0.label>the sack will empty</RHAH_Thought_AidEmpty.stages.0.label>
+  <RHAH_Thought_TraderSilent.label>the caravan said nothing</RHAH_Thought_TraderSilent.label>
+  <RHAH_Thought_TraderSilent.description>They left. The sickness stayed.</RHAH_Thought_TraderSilent.description>
+  <RHAH_Thought_TraderSilent.stages.0.label>the caravan said nothing</RHAH_Thought_TraderSilent.stages.0.label>
+  <RHAH_Thought_MotherSorry.label>I am sorry</RHAH_Thought_MotherSorry.label>
+  <RHAH_Thought_MotherSorry.description>She is still here.</RHAH_Thought_MotherSorry.description>
+  <RHAH_Thought_MotherSorry.stages.0.label>I am sorry</RHAH_Thought_MotherSorry.stages.0.label>
+  <RHAH_Thought_MotherFine.label>she is still alive</RHAH_Thought_MotherFine.label>
+  <RHAH_Thought_MotherFine.description>She is still alive.</RHAH_Thought_MotherFine.description>
+  <RHAH_Thought_MotherFine.stages.0.label>she is still alive</RHAH_Thought_MotherFine.stages.0.label>
+  <RHAH_Thought_ChildDeadGlad.label>that one is dead</RHAH_Thought_ChildDeadGlad.label>
+  <RHAH_Thought_ChildDeadGlad.description>One less mouth that bit me.</RHAH_Thought_ChildDeadGlad.description>
+  <RHAH_Thought_ChildDeadGlad.stages.0.label>that one is dead</RHAH_Thought_ChildDeadGlad.stages.0.label>
+  <RHAH_Thought_ChildDeadSad.label>my young one</RHAH_Thought_ChildDeadSad.label>
+  <RHAH_Thought_ChildDeadSad.description>That one is gone.</RHAH_Thought_ChildDeadSad.description>
+  <RHAH_Thought_ChildDeadSad.stages.0.label>my young one</RHAH_Thought_ChildDeadSad.stages.0.label>
+  <RHAH_Thought_ChildStarvedSad.label>the one I brought did not eat</RHAH_Thought_ChildStarvedSad.label>
+  <RHAH_Thought_ChildStarvedSad.description>The one I brought out did not get food.</RHAH_Thought_ChildStarvedSad.description>
+  <RHAH_Thought_ChildStarvedSad.stages.0.label>the one I brought did not eat</RHAH_Thought_ChildStarvedSad.stages.0.label>
+  <RHAH_Thought_ChildStarvedGlad.label>one less mouth</RHAH_Thought_ChildStarvedGlad.label>
+  <RHAH_Thought_ChildStarvedGlad.description>One less mouth.</RHAH_Thought_ChildStarvedGlad.description>
+  <RHAH_Thought_ChildStarvedGlad.stages.0.label>one less mouth</RHAH_Thought_ChildStarvedGlad.stages.0.label>
+  <RHAH_Thought_StealHurtBad.label>I saw the sack first</RHAH_Thought_StealHurtBad.label>
+  <RHAH_Thought_StealHurtBad.description>I saw the sack first.</RHAH_Thought_StealHurtBad.description>
+  <RHAH_Thought_StealHurtBad.stages.0.label>I saw the sack first</RHAH_Thought_StealHurtBad.stages.0.label>
+  <RHAH_Thought_StealHurtGood.label>the beating was worth it</RHAH_Thought_StealHurtGood.label>
+  <RHAH_Thought_StealHurtGood.description>The beating was worth it.</RHAH_Thought_StealHurtGood.description>
+  <RHAH_Thought_StealHurtGood.stages.0.label>the beating was worth it</RHAH_Thought_StealHurtGood.stages.0.label>
+  <RHAH_Thought_StealMine.label>that was mine</RHAH_Thought_StealMine.label>
+  <RHAH_Thought_StealMine.description>That was already mine.</RHAH_Thought_StealMine.description>
+  <RHAH_Thought_StealMine.stages.0.label>that was mine</RHAH_Thought_StealMine.stages.0.label>
+  <RHAH_Thought_StealGot.label>I got it</RHAH_Thought_StealGot.label>
+  <RHAH_Thought_StealGot.description>I got the bite.</RHAH_Thought_StealGot.description>
+  <RHAH_Thought_StealGot.stages.0.label>I got it</RHAH_Thought_StealGot.stages.0.label>
+  <RHAH_Thought_SoldAway.label>they led me away</RHAH_Thought_SoldAway.label>
+  <RHAH_Thought_SoldAway.description>They led me away.</RHAH_Thought_SoldAway.description>
+  <RHAH_Thought_SoldAway.stages.0.label>they led me away</RHAH_Thought_SoldAway.stages.0.label>
+  <RHAH_Thought_SoldFed.label>there is food</RHAH_Thought_SoldFed.label>
+  <RHAH_Thought_SoldFed.description>Food is enough.</RHAH_Thought_SoldFed.description>
+  <RHAH_Thought_SoldFed.stages.0.label>there is food</RHAH_Thought_SoldFed.stages.0.label>
+  <RHAH_Thought_TradedAway.label>they traded me away</RHAH_Thought_TradedAway.label>
+  <RHAH_Thought_TradedAway.description>They traded me away.</RHAH_Thought_TradedAway.description>
+  <RHAH_Thought_TradedAway.stages.0.label>they traded me away</RHAH_Thought_TradedAway.stages.0.label>
+  <RHAH_Thought_TradedFed.label>traded to a place with food</RHAH_Thought_TradedFed.label>
+  <RHAH_Thought_TradedFed.description>Traded to a place with food.</RHAH_Thought_TradedFed.description>
+  <RHAH_Thought_TradedFed.stages.0.label>traded to a place with food</RHAH_Thought_TradedFed.stages.0.label>
+  <RHAH_Thought_FineGood.label>this one was good</RHAH_Thought_FineGood.label>
+  <RHAH_Thought_FineGood.description>This meal was good.</RHAH_Thought_FineGood.description>
+  <RHAH_Thought_FineGood.stages.0.label>this one was good</RHAH_Thought_FineGood.stages.0.label>
+  <RHAH_Thought_FineKeep.label>the good food waits</RHAH_Thought_FineKeep.label>
+  <RHAH_Thought_FineKeep.description>The good food will be kept for next time.</RHAH_Thought_FineKeep.description>
+  <RHAH_Thought_FineKeep.stages.0.label>the good food waits</RHAH_Thought_FineKeep.stages.0.label>
+  <RHAH_Thought_MedicineEnough.label>enough medicine for now</RHAH_Thought_MedicineEnough.label>
+  <RHAH_Thought_MedicineEnough.description>Enough medicine for this time.</RHAH_Thought_MedicineEnough.description>
+  <RHAH_Thought_MedicineEnough.stages.0.label>enough medicine for now</RHAH_Thought_MedicineEnough.stages.0.label>
+  <RHAH_Thought_MedicineNext.label>none next time</RHAH_Thought_MedicineNext.label>
+  <RHAH_Thought_MedicineNext.description>There will be none next time.</RHAH_Thought_MedicineNext.description>
+  <RHAH_Thought_MedicineNext.stages.0.label>none next time</RHAH_Thought_MedicineNext.stages.0.label>
+  <RHAH_Thought_SilverLight.label>silver is lighter than food</RHAH_Thought_SilverLight.label>
+  <RHAH_Thought_SilverLight.description>Silver is lighter than food.</RHAH_Thought_SilverLight.description>
+  <RHAH_Thought_SilverLight.stages.0.label>silver is lighter than food</RHAH_Thought_SilverLight.stages.0.label>
+  <RHAH_Thought_SilverHard.label>silver cannot be bitten</RHAH_Thought_SilverHard.label>
+  <RHAH_Thought_SilverHard.description>Silver cannot be bitten.</RHAH_Thought_SilverHard.description>
+  <RHAH_Thought_SilverHard.stages.0.label>silver cannot be bitten</RHAH_Thought_SilverHard.stages.0.label>
+  <RHAH_Thought_TakenBad.label>they asked for me</RHAH_Thought_TakenBad.label>
+  <RHAH_Thought_TakenBad.description>They asked for me and took me.</RHAH_Thought_TakenBad.description>
+  <RHAH_Thought_TakenBad.stages.0.label>they asked for me</RHAH_Thought_TakenBad.stages.0.label>
+  <RHAH_Thought_TakenFed.label>there was food</RHAH_Thought_TakenFed.label>
+  <RHAH_Thought_TakenFed.description>There was food.</RHAH_Thought_TakenFed.description>
+  <RHAH_Thought_TakenFed.stages.0.label>there was food</RHAH_Thought_TakenFed.stages.0.label>
+  <RHAH_Thought_ExtraMouth.label>another mouth</RHAH_Thought_ExtraMouth.label>
+  <RHAH_Thought_ExtraMouth.description>Another mouth.</RHAH_Thought_ExtraMouth.description>
+  <RHAH_Thought_ExtraMouth.stages.0.label>another mouth</RHAH_Thought_ExtraMouth.stages.0.label>
+  <RHAH_Thought_BornAlive.label>born</RHAH_Thought_BornAlive.label>
+  <RHAH_Thought_BornAlive.description>It was born.</RHAH_Thought_BornAlive.description>
+  <RHAH_Thought_BornAlive.stages.0.label>born</RHAH_Thought_BornAlive.stages.0.label>
+  <RHAH_Thought_FellBad.label>I fell from the sky</RHAH_Thought_FellBad.label>
+  <RHAH_Thought_FellBad.description>I fell out of the sky.</RHAH_Thought_FellBad.description>
+  <RHAH_Thought_FellBad.stages.0.label>I fell from the sky</RHAH_Thought_FellBad.stages.0.label>
+  <RHAH_Thought_FellGood.label>I fell where there is food</RHAH_Thought_FellGood.label>
+  <RHAH_Thought_FellGood.description>I fell where there is food.</RHAH_Thought_FellGood.description>
+  <RHAH_Thought_FellGood.stages.0.label>I fell where there is food</RHAH_Thought_FellGood.stages.0.label>
+  <RHAH_Thought_WrongKinBad.label>that was not mother</RHAH_Thought_WrongKinBad.label>
+  <RHAH_Thought_WrongKinBad.description>I called the wrong person mother.</RHAH_Thought_WrongKinBad.description>
+  <RHAH_Thought_WrongKinBad.stages.0.label>that was not mother</RHAH_Thought_WrongKinBad.stages.0.label>
+  <RHAH_Thought_WrongKinGood.label>wrong name, still food</RHAH_Thought_WrongKinGood.label>
+  <RHAH_Thought_WrongKinGood.description>The name was wrong. The food was real.</RHAH_Thought_WrongKinGood.description>
+  <RHAH_Thought_WrongKinGood.stages.0.label>wrong name, still food</RHAH_Thought_WrongKinGood.stages.0.label>
+  <RHAH_Thought_PlagueMotherDeadBad.label>she left me and died</RHAH_Thought_PlagueMotherDeadBad.label>
+  <RHAH_Thought_PlagueMotherDeadBad.description>She left me, then she was gone.</RHAH_Thought_PlagueMotherDeadBad.description>
+  <RHAH_Thought_PlagueMotherDeadBad.stages.0.label>she left me and died</RHAH_Thought_PlagueMotherDeadBad.stages.0.label>
+  <RHAH_Thought_PlagueMotherDeadGood.label>she died, I did not</RHAH_Thought_PlagueMotherDeadGood.label>
+  <RHAH_Thought_PlagueMotherDeadGood.description>She died. I did not.</RHAH_Thought_PlagueMotherDeadGood.description>
+  <RHAH_Thought_PlagueMotherDeadGood.stages.0.label>she died, I did not</RHAH_Thought_PlagueMotherDeadGood.stages.0.label>
+  <RHAH_Thought_PlagueLeft.label>she left the sickness too</RHAH_Thought_PlagueLeft.label>
+  <RHAH_Thought_PlagueLeft.description>She left the sickness with me.</RHAH_Thought_PlagueLeft.description>
+  <RHAH_Thought_PlagueLeft.stages.0.label>she left the sickness too</RHAH_Thought_PlagueLeft.stages.0.label>
+  <RHAH_Thought_PlagueLived.label>I lived</RHAH_Thought_PlagueLived.label>
+  <RHAH_Thought_PlagueLived.description>I lived.</RHAH_Thought_PlagueLived.description>
+  <RHAH_Thought_PlagueLived.stages.0.label>I lived</RHAH_Thought_PlagueLived.stages.0.label>
+  <RHAH_Thought_OrphanBad.label>the sickness nearly took me</RHAH_Thought_OrphanBad.label>
+  <RHAH_Thought_OrphanBad.description>The sickness nearly took me.</RHAH_Thought_OrphanBad.description>
+  <RHAH_Thought_OrphanBad.stages.0.label>the sickness nearly took me</RHAH_Thought_OrphanBad.stages.0.label>
+  <RHAH_Thought_OrphanGood.label>still here, still eating</RHAH_Thought_OrphanGood.label>
+  <RHAH_Thought_OrphanGood.description>It did not take me. I can still eat.</RHAH_Thought_OrphanGood.description>
+  <RHAH_Thought_OrphanGood.stages.0.label>still here, still eating</RHAH_Thought_OrphanGood.stages.0.label>
+  <RHAH_Thought_CleanBirth.label>this one is clean</RHAH_Thought_CleanBirth.label>
+  <RHAH_Thought_CleanBirth.description>This one has not caught it.</RHAH_Thought_CleanBirth.description>
+  <RHAH_Thought_CleanBirth.stages.0.label>this one is clean</RHAH_Thought_CleanBirth.stages.0.label>
+  <RHAH_Thought_NextBirth.label>the next one might not be</RHAH_Thought_NextBirth.label>
+  <RHAH_Thought_NextBirth.description>The next one might not be clean.</RHAH_Thought_NextBirth.description>
+  <RHAH_Thought_NextBirth.stages.0.label>the next one might not be</RHAH_Thought_NextBirth.stages.0.label>
+  <RHAH_Thought_BornSick.label>born with it</RHAH_Thought_BornSick.label>
+  <RHAH_Thought_BornSick.description>Born already carrying it.</RHAH_Thought_BornSick.description>
+  <RHAH_Thought_BornSick.stages.0.label>born with it</RHAH_Thought_BornSick.stages.0.label>
+  <RHAH_Thought_DropSick.label>sick when I fell</RHAH_Thought_DropSick.label>
+  <RHAH_Thought_DropSick.description>I was already sick when I fell.</RHAH_Thought_DropSick.description>
+  <RHAH_Thought_DropSick.stages.0.label>sick when I fell</RHAH_Thought_DropSick.stages.0.label>
+  <RHAH_Thought_DropLived.label>the sickness missed me</RHAH_Thought_DropLived.label>
+  <RHAH_Thought_DropLived.description>The sickness did not take me.</RHAH_Thought_DropLived.description>
+  <RHAH_Thought_DropLived.stages.0.label>the sickness missed me</RHAH_Thought_DropLived.stages.0.label>
+  <RHAH_Thought_WrongSick.label>wrong name, and the sickness</RHAH_Thought_WrongSick.label>
+  <RHAH_Thought_WrongSick.description>The name was wrong. The sickness stayed.</RHAH_Thought_WrongSick.description>
+  <RHAH_Thought_WrongSick.stages.0.label>wrong name, and the sickness</RHAH_Thought_WrongSick.stages.0.label>
+  <RHAH_Thought_WrongFed.label>wrong name, still food</RHAH_Thought_WrongFed.label>
+  <RHAH_Thought_WrongFed.description>The name was wrong. There is still food.</RHAH_Thought_WrongFed.description>
+  <RHAH_Thought_WrongFed.stages.0.label>wrong name, still food</RHAH_Thought_WrongFed.stages.0.label>
+  <RHAH_Thought_ScavengedFilth.label>licked the floor</RHAH_Thought_ScavengedFilth.label>
+  <RHAH_Thought_ScavengedFilth.description>I licked something off the floor. It stayed down.</RHAH_Thought_ScavengedFilth.description>
+  <RHAH_Thought_ScavengedFilth.stages.0.label>licked the floor</RHAH_Thought_ScavengedFilth.stages.0.label>
+  <RHAH_Thought_TailBitten.label>tail bitten off</RHAH_Thought_TailBitten.label>
+  <RHAH_Thought_TailBitten.description>My tail is gone. It was bitten off while I slept.</RHAH_Thought_TailBitten.description>
+  <RHAH_Thought_TailBitten.stages.0.label>tail bitten off</RHAH_Thought_TailBitten.stages.0.label>
+  <RHAH_Thought_BitATail.label>bit a tail</RHAH_Thought_BitATail.label>
+  <RHAH_Thought_BitATail.description>I bit off a tail. It filled me up.</RHAH_Thought_BitATail.description>
+  <RHAH_Thought_BitATail.stages.0.label>bit a tail</RHAH_Thought_BitATail.stages.0.label>
 </LanguageData>

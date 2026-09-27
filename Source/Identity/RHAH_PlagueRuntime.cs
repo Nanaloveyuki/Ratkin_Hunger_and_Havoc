@@ -40,7 +40,7 @@ namespace HungerAndHavoc.Identity
             }
 
             int spreadHour = settings == null ? RHAH_Plague.SpreadHour : settings.plagueSpreadHour;
-            if (Find.TickManager.TicksGame % 60 != 0 || GenLocalDate.HourInteger(map) != spreadHour)
+            if (GenLocalDate.HourInteger(map) != spreadHour)
             {
                 return;
             }
@@ -107,6 +107,7 @@ namespace HungerAndHavoc.Identity
                 if (RHAH_Plague.TryInfect(pawn, null))
                 {
                     infected.Add(pawn);
+                    HungerAndHavoc.EventMgr.RHAH_EventFollowMood.NoteTraderSpread(map);
                 }
             }
 

@@ -29,7 +29,7 @@ namespace HungerAndHavoc.Pawn
     {
         internal const float SatisfiedLevel = 0.82f;
         internal const float RefeedMalnutrition = 0.4f;
-        internal const int RetryBaseTicks = 250;
+        internal const int RetryBaseTicks = GenDate.TicksPerHour;
         internal const float SearchRadius = 40f;
 
         internal static bool ReliefRulesApply
@@ -70,7 +70,7 @@ namespace HungerAndHavoc.Pawn
 
         internal static RHAH_FoodReject Reject(Verse.Pawn pawn, Thing food, bool insideZone)
         {
-            return Reject(pawn, food, insideZone, false);
+            return Reject(pawn, food, insideZone, false, true);
         }
 
         internal static RHAH_FoodReject Reject(
@@ -78,6 +78,16 @@ namespace HungerAndHavoc.Pawn
             Thing food,
             bool insideZone,
             bool ignoreZone)
+        {
+            return Reject(pawn, food, insideZone, ignoreZone, true);
+        }
+
+        internal static RHAH_FoodReject Reject(
+            Verse.Pawn pawn,
+            Thing food,
+            bool insideZone,
+            bool ignoreZone,
+            bool checkPath)
         {
             if (pawn == null || food == null || food.Destroyed || food.MapHeld != pawn.Map)
             {
@@ -125,6 +135,11 @@ namespace HungerAndHavoc.Pawn
             if (food.IsForbidden(pawn))
             {
                 return RHAH_FoodReject.Forbidden;
+            }
+
+            if (!checkPath)
+            {
+                return RHAH_FoodReject.None;
             }
 
             if (!pawn.CanReserve(food))

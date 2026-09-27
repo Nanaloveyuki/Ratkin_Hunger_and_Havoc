@@ -361,9 +361,15 @@ namespace HungerAndHavoc.Generation
     [HarmonyPatch(typeof(PregnancyUtility), nameof(PregnancyUtility.ApplyBirthOutcome))]
     internal static class RHAH_LargeLitterPatch
     {
-        static void Postfix(VersePawn geneticMother, Thing birtherThing, VersePawn father)
+        static void Postfix(VersePawn geneticMother, Thing birtherThing, VersePawn father, Thing __result)
         {
             VersePawn mother = geneticMother ?? birtherThing as VersePawn;
+            VersePawn baby = __result as VersePawn;
+            if (mother != null && baby != null)
+            {
+                HungerAndHavoc.EventMgr.RHAH_EventFollowMood.NoteBirth(mother, baby);
+            }
+
             if (mother == null || !RHAH_Fertility.Has(mother, RHAH_FertilityRules.LargeLitter))
             {
                 return;
@@ -372,25 +378,25 @@ namespace HungerAndHavoc.Generation
             int extra = RHAH_Fertility.LitterCount(mother) - 1;
             for (int i = 0; i < extra; i++)
             {
-                VersePawn baby = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
+                VersePawn extraBaby = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
                     mother.kindDef,
                     mother.Faction,
                     PawnGenerationContext.NonPlayer,
                     developmentalStages: DevelopmentalStage.Newborn));
-                if (baby == null)
+                if (extraBaby == null)
                 {
                     continue;
                 }
 
                 if (mother.MapHeld != null)
                 {
-                    GenSpawn.Spawn(baby, mother.PositionHeld, mother.MapHeld);
+                    GenSpawn.Spawn(extraBaby, mother.PositionHeld, mother.MapHeld);
                 }
 
-                baby.relations.AddDirectRelation(PawnRelationDefOf.Parent, mother);
+                extraBaby.relations.AddDirectRelation(PawnRelationDefOf.Parent, mother);
                 if (father != null)
                 {
-                    baby.relations.AddDirectRelation(PawnRelationDefOf.Parent, father);
+                    extraBaby.relations.AddDirectRelation(PawnRelationDefOf.Parent, father);
                 }
             }
         }

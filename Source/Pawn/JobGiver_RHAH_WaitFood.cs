@@ -82,6 +82,8 @@ namespace HungerAndHavoc.Pawn
             return job;
         }
 
+        const int PathChecks = 4;
+
         static IntVec3 WaitSpot(Verse.Pawn pawn)
         {
             Area_RHAH_Relief area = RHAH_ReliefArea.Get(pawn.Map);
@@ -90,25 +92,51 @@ namespace HungerAndHavoc.Pawn
                 return pawn.Position;
             }
 
-            IntVec3 best = IntVec3.Invalid;
-            float bestDist = float.MaxValue;
+            IntVec3[] picked = new IntVec3[PathChecks];
+            float[] scores = new float[PathChecks];
+            int count = 0;
             foreach (IntVec3 cell in area.ActiveCells)
             {
-                if (!cell.Standable(pawn.Map) ||
-                    !pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
+                if (!cell.Standable(pawn.Map))
                 {
                     continue;
                 }
 
-                float dist = cell.DistanceToSquared(pawn.Position);
-                if (dist < bestDist)
+                Insert(picked, scores, ref count, cell, cell.DistanceToSquared(pawn.Position));
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                if (pawn.CanReach(picked[i], PathEndMode.OnCell, Danger.Deadly))
                 {
-                    bestDist = dist;
-                    best = cell;
+                    return picked[i];
                 }
             }
 
-            return best.IsValid ? best : pawn.Position;
+            return pawn.Position;
+        }
+
+        static void Insert(IntVec3[] picked, float[] scores, ref int count, IntVec3 cell, float distance)
+        {
+            int index = count < PathChecks ? count : PathChecks - 1;
+            if (count == PathChecks && distance >= scores[index])
+            {
+                return;
+            }
+
+            while (index > 0 && distance < scores[index - 1])
+            {
+                picked[index] = picked[index - 1];
+                scores[index] = scores[index - 1];
+                index--;
+            }
+
+            picked[index] = cell;
+            scores[index] = distance;
+            if (count < PathChecks)
+            {
+                count++;
+            }
         }
     }
 }

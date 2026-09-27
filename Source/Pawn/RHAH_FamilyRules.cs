@@ -60,5 +60,34 @@ namespace HungerAndHavoc.Pawn
         {
             return enabled && prisoner && hungry && targetAsleep && targetAge >= 0f && targetAge < 3f;
         }
+
+        internal const float ChildHungry = 0.3f;
+        internal const float PrisonerHungry = 0.2f;
+        internal const float TailAge = 3f;
+        internal const float ScavengeNutrition = 0.15f;
+        internal const float TailNutrition = 0.35f;
+        internal const float TailFailDamage = 4f;
+        internal const int WorkTicks = 150;
+        internal const string TailPartDef = "RK_BodyPart_Tail";
+
+        internal static bool StillCarried(bool childExists, bool carriedByMother)
+        {
+            return childExists && carriedByMother;
+        }
+
+        internal static bool CanGiveFood(bool motherHasFood, bool childCanEat)
+        {
+            return motherHasFood && childCanEat;
+        }
+
+        internal static bool ScavengeFilth(bool spawned, bool reachable, bool reservable)
+        {
+            return spawned && reachable && reservable;
+        }
+
+        internal static bool NaturalTail(bool partExists, bool missing, bool addedPart)
+        {
+            return partExists && !missing && !addedPart;
+        }
     }
 }

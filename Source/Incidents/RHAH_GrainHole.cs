@@ -9,7 +9,7 @@ namespace HungerAndHavoc.Incidents
 {
     internal static class RHAH_GrainHole
     {
-        internal const int CheckInterval = 250;
+        internal const int CheckInterval = GenDate.TicksPerHour * 2;
         internal const int DayTicks = 60000;
         internal const int LossRange = 12;
         internal const int MaxLosses = 3;

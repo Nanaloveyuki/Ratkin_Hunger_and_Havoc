@@ -132,6 +132,8 @@ namespace HungerAndHavoc.Pawn
             return best;
         }
 
+        const int PathChecks = 3;
+
         static void Consider(
             Verse.Pawn pawn,
             List<Thing> things,
@@ -139,16 +141,20 @@ namespace HungerAndHavoc.Pawn
             ref Thing best,
             ref float bestScore)
         {
-            if (things == null)
+            if (things == null || things.Count == 0)
             {
                 return;
             }
 
             float bonus = RHAH_Mod.Settings == null ? RHAH_VisitorRules.DefaultReliefScoreBonus : RHAH_Mod.Settings.reliefFoodScoreBonus;
+            int keep = PathChecks < things.Count ? PathChecks : things.Count;
+            Thing[] picked = new Thing[keep];
+            float[] scores = new float[keep];
+            int count = 0;
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
-                if (RHAH_ReliefFood.Reject(pawn, thing, insideZone) != RHAH_FoodReject.None)
+                if (RHAH_ReliefFood.Reject(pawn, thing, insideZone, false, false) != RHAH_FoodReject.None)
                 {
                     continue;
                 }
@@ -156,11 +162,44 @@ namespace HungerAndHavoc.Pawn
                 float distance = thing.PositionHeld.DistanceToSquared(pawn.Position);
                 bool inRelief = RHAH_ReliefArea.Contains(pawn.Map, thing.PositionHeld);
                 float score = RHAH_VisitorRules.Score(-distance, FoodFit(thing), inRelief, bonus);
-                if (score > bestScore)
+                Insert(picked, scores, ref count, keep, thing, score);
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                if (RHAH_ReliefFood.Reject(pawn, picked[i], insideZone) != RHAH_FoodReject.None)
                 {
-                    bestScore = score;
-                    best = thing;
+                    continue;
                 }
+
+                if (scores[i] > bestScore)
+                {
+                    bestScore = scores[i];
+                    best = picked[i];
+                }
+            }
+        }
+
+        static void Insert(Thing[] picked, float[] scores, ref int count, int keep, Thing thing, float score)
+        {
+            int index = count < keep ? count : keep - 1;
+            if (count == keep && score <= scores[index])
+            {
+                return;
+            }
+
+            while (index > 0 && score > scores[index - 1])
+            {
+                picked[index] = picked[index - 1];
+                scores[index] = scores[index - 1];
+                index--;
+            }
+
+            picked[index] = thing;
+            scores[index] = score;
+            if (count < keep)
+            {
+                count++;
             }
         }
 

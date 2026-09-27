@@ -56,10 +56,21 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
+            MapComponent_RHAH_Map mapState = pawn.Map.GetComponent<MapComponent_RHAH_Map>();
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (mapState != null && !mapState.FoodSearchReady(pawn.thingIDNumber, now))
+            {
+                return null;
+            }
 
             Thing target = FindGnawTarget(pawn);
             if (target == null)
             {
+                if (mapState != null)
+                {
+                    mapState.SetFoodSearchTick(pawn.thingIDNumber, now + RHAH_ReliefFood.RetryBaseTicks);
+                }
+
                 return null;
             }
 
@@ -69,7 +80,6 @@ namespace HungerAndHavoc.Pawn
         static Thing FindGnawTarget(Verse.Pawn pawn)
         {
             TraverseParms traverse = TraverseParms.For(pawn);
-            Predicate<Thing> tree = thing => IsPlant(thing, pawn, true);
             Thing found = GenClosest.ClosestThingReachable(
                 pawn.Position,
                 pawn.Map,
@@ -77,27 +87,12 @@ namespace HungerAndHavoc.Pawn
                 PathEndMode.Touch,
                 traverse,
                 SearchRadius,
-                tree);
+                thing => IsPlant(thing, pawn));
             if (found != null)
             {
                 return found;
             }
 
-            Predicate<Thing> plant = thing => IsPlant(thing, pawn, false);
-            found = GenClosest.ClosestThingReachable(
-                pawn.Position,
-                pawn.Map,
-                ThingRequest.ForGroup(ThingRequestGroup.Plant),
-                PathEndMode.Touch,
-                traverse,
-                SearchRadius,
-                plant);
-            if (found != null)
-            {
-                return found;
-            }
-
-            Predicate<Thing> wall = thing => IsWallLike(thing, pawn);
             return GenClosest.ClosestThingReachable(
                 pawn.Position,
                 pawn.Map,
@@ -105,17 +100,12 @@ namespace HungerAndHavoc.Pawn
                 PathEndMode.Touch,
                 traverse,
                 SearchRadius,
-                wall);
+                thing => IsWallLike(thing, pawn));
         }
 
-        static bool IsPlant(Thing thing, Verse.Pawn pawn, bool treeOnly)
+        static bool IsPlant(Thing thing, Verse.Pawn pawn)
         {
-            if (thing == null || thing.def.plant == null)
-            {
-                return false;
-            }
-
-            if (treeOnly && !thing.def.plant.IsTree)
+            if (thing == null || thing.def.plant == null || thing.def.plant.IsTree)
             {
                 return false;
             }

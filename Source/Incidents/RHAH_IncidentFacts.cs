@@ -63,6 +63,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             Pawn.Compat.RHAH_LeashBridge.TryLeashArrivals(arrived);
+            LinkFamily(context.DisplayId, arrived);
             List<int> loadIds = new List<int>(arrived.Count);
             for (int i = 0; i < arrived.Count; i++)
             {
@@ -80,10 +81,37 @@ namespace HungerAndHavoc.Incidents
                 loadIds.ToArray()));
             HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Open(context, loadIds);
             OpenChoice(context, created);
-            EventMgr.RHAH_EventChainClock.NoteStarted(context.DisplayId, context.Map.uniqueID, 0, tick);
+            EventMgr.RHAH_EventChainClock.NoteStarted(context.DisplayId, context.Map.uniqueID, 0, tick, context.SpawnBatchId);
 
             return true;
         }
+
+        static void LinkFamily(string displayId, List<Verse.Pawn> arrived)
+        {
+            if (arrived.Count < 2 || (displayId != "I-003" && displayId != "I-004"))
+            {
+                return;
+            }
+
+            Identity.CompRHAH_Pawn mother = Identity.CompRHAH_Pawn.TryGet(arrived[0]);
+            if (mother == null)
+            {
+                return;
+            }
+
+            for (int i = 1; i < arrived.Count; i++)
+            {
+                Identity.CompRHAH_Pawn child = Identity.CompRHAH_Pawn.TryGet(arrived[i]);
+                if (child == null || !EventMgr.RHAH_EventFollowRules.IsYoung(child.State.role))
+                {
+                    continue;
+                }
+
+                child.State.parentPawnLoadId = arrived[0].thingIDNumber;
+                mother.State.childPawnLoadIds.Add(arrived[i].thingIDNumber);
+            }
+        }
+
         static float? GenerationAge(RHAH_PawnRole role)
         {
             RHAH_Settings settings = RHAH_Mod.Settings;

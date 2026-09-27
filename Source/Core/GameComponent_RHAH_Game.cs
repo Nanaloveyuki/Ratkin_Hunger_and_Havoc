@@ -277,7 +277,8 @@ namespace HungerAndHavoc.Core
                 return;
             }
 
-            if (Find.TickManager.TicksGame % Identity.RHAH_Plague.CheckIntervalTicks != 0)
+            int tick = Find.TickManager.TicksGame;
+            if (tick % GenDate.TicksPerHour != 0)
             {
                 return;
             }
@@ -285,7 +286,19 @@ namespace HungerAndHavoc.Core
             for (int i = 0; i < Find.Maps.Count; i++)
             {
                 Map map = Find.Maps[i];
-                map?.GetComponent<MapComponent_RHAH_Map>()?.TickPlague();
+                if (map == null || !map.IsPlayerHome)
+                {
+                    continue;
+                }
+
+                RHAH_Settings settings = RHAH_Mod.Settings;
+                int spreadHour = settings == null ? Identity.RHAH_Plague.SpreadHour : settings.plagueSpreadHour;
+                if (GenLocalDate.HourInteger(map) != spreadHour)
+                {
+                    continue;
+                }
+
+                map.GetComponent<MapComponent_RHAH_Map>()?.TickPlague();
             }
         }
 
@@ -360,7 +373,7 @@ namespace HungerAndHavoc.Core
         }
         static void TickStays(int tick)
         {
-            if ((tick & 250) != 0 || Find.Maps == null)
+            if (tick % (GenDate.TicksPerHour * 2) != 0 || Find.Maps == null)
             {
                 return;
             }
@@ -595,8 +608,19 @@ namespace HungerAndHavoc.Core
 
         public override void MapComponentTick()
         {
-            HungerAndHavoc.Incidents.RHAH_CampPredation.Tick(this, map);
-            HungerAndHavoc.Incidents.RHAH_GrainHole.Tick(map);
+            int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            bool predatorsDue = Predators.Count > 0 && tick >= PredationNextTick;
+            bool arrivalDue = PredationPendingTick >= 0 && tick >= PredationPendingTick;
+            if (predatorsDue || arrivalDue)
+            {
+                bool camp = map.Parent is WorldObject_RHAH_RefugeeCamp;
+                HungerAndHavoc.Incidents.RHAH_CampPredation.TickSite(this, map, camp || predationPrey.Count > 0);
+            }
+
+            if (tick % (GenDate.TicksPerHour * 2) == map.uniqueID % (GenDate.TicksPerHour * 2))
+            {
+                HungerAndHavoc.Incidents.RHAH_GrainHole.Tick(map);
+            }
         }
 
 

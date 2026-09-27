@@ -1,3 +1,5 @@
+using RimWorld;
+using Verse;
 using System.Collections.Generic;
 using HungerAndHavoc.Generation;
 using Xunit;
@@ -53,6 +55,27 @@ namespace HungerAndHavoc.Tests
             Assert.False(partial.Complete);
             Assert.False(RHAH_RatkinAppearance.UsesRatkinAppearance("Human"));
             Assert.True(RHAH_RatkinAppearance.UsesRatkinAppearance("Ratkin"));
+        }
+
+        [Fact]
+        public void RatkinStayHairlessUntilTheBabyStageEnds()
+        {
+            Assert.True(RHAH_RatkinAppearance.KeepsNoHair(0f));
+            Assert.True(RHAH_RatkinAppearance.KeepsNoHair(2.9f));
+            Assert.True(RHAH_RatkinAppearance.KeepsNoHair(3.9f));
+            Assert.False(RHAH_RatkinAppearance.KeepsNoHair(4f));
+            Assert.False(RHAH_RatkinAppearance.KeepsNoHair(float.NaN));
+        }
+
+        [Fact]
+        public void HairRedrawKeepsGenderAndDropsUntaggedStyles()
+        {
+            Assert.True(RHAH_RatkinAppearance.HairAllowed(true, StyleGender.Any, Gender.Female));
+            Assert.True(RHAH_RatkinAppearance.HairAllowed(true, StyleGender.Female, Gender.Female));
+            Assert.False(RHAH_RatkinAppearance.HairAllowed(true, StyleGender.Male, Gender.Female));
+            Assert.True(RHAH_RatkinAppearance.HairAllowed(true, StyleGender.Any, Gender.Male));
+            Assert.False(RHAH_RatkinAppearance.HairAllowed(true, StyleGender.Female, Gender.Male));
+            Assert.False(RHAH_RatkinAppearance.HairAllowed(false, StyleGender.Any, Gender.Female));
         }
 
         sealed class RaceThing

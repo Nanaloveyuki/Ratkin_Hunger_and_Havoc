@@ -1,3 +1,5 @@
+using RimWorld;
+
 
 namespace HungerAndHavoc.Incidents
 {
@@ -27,7 +29,7 @@ namespace HungerAndHavoc.Incidents
 
     internal static class RHAH_PredationRules
     {
-        internal const int SearchIntervalTicks = 250;
+        internal const int SearchIntervalTicks = GenDate.TicksPerHour * 2;
         internal const int ArrivalDelayTicks = 120;
         internal const float DefaultChancePercent = 10f;
         internal const string CorePackageId = "ludeon.rimworld";

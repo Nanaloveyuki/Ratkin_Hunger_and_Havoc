@@ -14,9 +14,9 @@ namespace HungerAndHavoc.EventMgr
             return tick >= 0 && interval > 0 && tick % interval == 0;
         }
 
-        internal static void NoteStarted(string displayId, int mapId, int caravanId, int tick)
+        internal static void NoteStarted(string displayId, int mapId, int caravanId, int tick, int batchId)
         {
-            if (RHAH_EventChains.Find(displayId) == null)
+            if (string.IsNullOrEmpty(displayId))
             {
                 return;
             }
@@ -27,7 +27,17 @@ namespace HungerAndHavoc.EventMgr
                 return;
             }
 
-            game.StartEventChain(displayId, RHAH_EventChainRuntime.SiteId(mapId, caravanId), tick, -1, "");
+            int site = RHAH_EventChainRuntime.SiteId(mapId, caravanId);
+            bool longChain = RHAH_Mod.Settings != null && RHAH_Mod.Settings.IncidentUsesLongChain(displayId);
+            int deadline = RHAH_EventFollowRules.OpensLong(displayId, longChain)
+                ? RHAH_EventFollowRules.LongDeadline(displayId, tick)
+                : -1;
+            string payload = RHAH_EventFollowRules.Payload(displayId, batchId, site);
+            int id = game.StartEventChain(displayId, site, tick, deadline, payload);
+            if (id > 0)
+            {
+                game.SetEventChainStage(id, longChain ? 1 : 0, deadline, payload);
+            }
         }
 
         internal static void Check(int interval)

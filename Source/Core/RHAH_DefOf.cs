@@ -21,6 +21,9 @@ namespace HungerAndHavoc.Core
         public static JobDef RHAH_MotherFeed;
         public static JobDef RHAH_Scavenge;
         public static JobDef RHAH_TailBite;
+        public static ThoughtDef RHAH_Thought_ScavengedFilth;
+        public static ThoughtDef RHAH_Thought_TailBitten;
+        public static ThoughtDef RHAH_Thought_BitATail;
         public static DutyDef RHAH_VisitorSeek;
         public static DutyDef RHAH_VisitorLeave;
         public static ThinkTreeDef RHAH_VisitorFallback;

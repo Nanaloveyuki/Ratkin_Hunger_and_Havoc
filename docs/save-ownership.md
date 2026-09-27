@@ -332,6 +332,15 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Thought_EggKeeperYoung, RHAH_Thought_HungerRage, RHAH_Thought_FoodSnatcher, RHAH_Thought_PlagueDreadSick, RHAH_Thought_PlagueDreadNearby | ThoughtDef | Remove |
 | RHAH_Thought_NightTerrors, RHAH_Thought_GrainGreed, RHAH_Thought_Chillblood, RHAH_Thought_FamineGloom, RHAH_Thought_AilingMother, RHAH_Thought_FamilyThief | ThoughtDef | Remove |
 | RHAH_Thought_BeggingSucceeded, RHAH_Thought_BeggingRejected, RHAH_Thought_BeggingSlapped | ThoughtDef | Remove |
+| RHAH_Thought_MotherGoneBad, RHAH_Thought_MotherGoneGood, RHAH_Thought_AteMotherGuilt, RHAH_Thought_AteMotherFine, RHAH_Thought_MotherSorry, RHAH_Thought_MotherFine | ThoughtDef | Remove |
+| RHAH_Thought_ChildDeadGlad, RHAH_Thought_ChildDeadSad, RHAH_Thought_ChildStarvedSad, RHAH_Thought_ChildStarvedGlad, RHAH_Thought_StealHurtBad, RHAH_Thought_StealHurtGood | ThoughtDef | Remove |
+| RHAH_Thought_StealMine, RHAH_Thought_StealGot, RHAH_Thought_SoldAway, RHAH_Thought_SoldFed, RHAH_Thought_TradedAway, RHAH_Thought_TradedFed | ThoughtDef | Remove |
+| RHAH_Thought_AidAgain, RHAH_Thought_AidEmpty, RHAH_Thought_FineGood, RHAH_Thought_FineKeep, RHAH_Thought_MedicineEnough, RHAH_Thought_MedicineNext | ThoughtDef | Remove |
+| RHAH_Thought_SilverLight, RHAH_Thought_SilverHard, RHAH_Thought_TakenBad, RHAH_Thought_TakenFed, RHAH_Thought_ExtraMouth, RHAH_Thought_BornAlive | ThoughtDef | Remove |
+| RHAH_Thought_FellBad, RHAH_Thought_FellGood, RHAH_Thought_WrongKinBad, RHAH_Thought_WrongKinGood, RHAH_Thought_PlagueMotherDeadBad, RHAH_Thought_PlagueMotherDeadGood | ThoughtDef | Remove |
+| RHAH_Thought_PlagueLeft, RHAH_Thought_PlagueLived, RHAH_Thought_OrphanBad, RHAH_Thought_OrphanGood, RHAH_Thought_TraderSilent | ThoughtDef | Remove |
+| RHAH_Thought_CleanBirth, RHAH_Thought_NextBirth, RHAH_Thought_BornSick, RHAH_Thought_DropSick, RHAH_Thought_DropLived, RHAH_Thought_WrongSick, RHAH_Thought_WrongFed | ThoughtDef | Remove |
+| RHAH_Thought_ScavengedFilth, RHAH_Thought_TailBitten, RHAH_Thought_BitATail | ThoughtDef | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed | 无存档字段 | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease | 无存档字段 | Remove |
 

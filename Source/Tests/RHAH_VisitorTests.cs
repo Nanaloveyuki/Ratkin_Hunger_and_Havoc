@@ -73,6 +73,13 @@ namespace HungerAndHavoc.Tests
             Assert.DoesNotContain("JobGiver_RHAH_Gnaw.TryCreate(pawn)", source);
             Assert.Contains("AllowsModBehavior", source);
             Assert.Contains("JobGiver_RHAH_Leave.TryCreate(pawn)", source);
+            Assert.Contains("JobGiver_RHAH_DropChild.TryCreate(pawn)", source);
+            Assert.Contains("JobGiver_RHAH_MotherFeed.TryCreate(pawn)", source);
+            int feedChild = source.IndexOf("JobGiver_RHAH_MotherFeed.TryCreate(pawn)");
+            int relief = source.IndexOf("JobGiver_RHAH_Feed.TryCreate(pawn)");
+            int drop = source.IndexOf("JobGiver_RHAH_DropChild.TryCreate(pawn)");
+            int leave = source.IndexOf("JobGiver_RHAH_Leave.TryCreate(pawn)");
+            Assert.True(feedChild >= 0 && relief > feedChild && drop > relief && leave > drop);
         }
 
         [Fact]

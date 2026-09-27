@@ -119,6 +119,13 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_FamilyRules.CanScavenge(false, true, true));
             Assert.True(RHAH_FamilyRules.CanTailBite(true, true, true, true, 2.5f));
             Assert.False(RHAH_FamilyRules.CanTailBite(true, true, true, true, 3f));
+            Assert.True(RHAH_FamilyRules.StillCarried(true, true));
+            Assert.False(RHAH_FamilyRules.StillCarried(true, false));
+            Assert.True(RHAH_FamilyRules.CanGiveFood(true, true));
+            Assert.False(RHAH_FamilyRules.CanGiveFood(false, true));
+            Assert.True(RHAH_FamilyRules.NaturalTail(true, false, false));
+            Assert.False(RHAH_FamilyRules.NaturalTail(true, false, true));
+            Assert.False(RHAH_FamilyRules.ScavengeFilth(true, false, true));
         }
 
         [Fact]

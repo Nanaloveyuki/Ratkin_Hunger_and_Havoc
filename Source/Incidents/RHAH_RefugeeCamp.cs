@@ -45,7 +45,7 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            nextCheck = Find.TickManager.TicksGame + 250;
+            nextCheck = Find.TickManager.TicksGame + GenDate.TicksPerHour * 2;
             if (!AllDead())
             {
                 return;
@@ -274,7 +274,8 @@ namespace HungerAndHavoc.Incidents
             }
 
             QuestUtility.SendLetterQuestAvailable(quest);
-            EventMgr.RHAH_EventChainClock.NoteStarted("I-051", map.uniqueID, 0, Find.TickManager == null ? 0 : Find.TickManager.TicksGame);
+            int started = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            EventMgr.RHAH_EventChainClock.NoteStarted("I-051", map.uniqueID, 0, started, started);
             return true;
         }
 

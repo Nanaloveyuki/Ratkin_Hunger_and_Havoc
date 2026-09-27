@@ -383,13 +383,13 @@
   <RHAH_Settings_ChildExchangeFood>允许用食物换孩子</RHAH_Settings_ChildExchangeFood>
   <RHAH_Settings_ChildExchangeFood_Tooltip>开启后，易子而食可以用简单餐代替婴幼儿，每个孩子 10 份。商人不卖食物。关闭后，只能按原交易交出孩子。</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>携幼离场时放下孩子</RHAH_Settings_FamilyDrop>
-  <RHAH_Settings_FamilyDrop_Tooltip>关闭后，母亲离开时不再把孩子单独放下。</RHAH_Settings_FamilyDrop_Tooltip>
+  <RHAH_Settings_FamilyDrop_Tooltip>关闭后，母亲离开时不再放下仍抱着的孩子。</RHAH_Settings_FamilyDrop_Tooltip>
   <RHAH_Settings_MotherFeed>母亲给孩子喂食</RHAH_Settings_MotherFeed>
-  <RHAH_Settings_MotherFeed_Tooltip>关闭后，母亲不再走到饥饿的孩子身边喂食。</RHAH_Settings_MotherFeed_Tooltip>
+  <RHAH_Settings_MotherFeed_Tooltip>关闭后，母亲不再把背包里的一份食物交给饥饿的孩子。</RHAH_Settings_MotherFeed_Tooltip>
   <RHAH_Settings_PrisonerScavenge>囚犯在地上找吃的</RHAH_Settings_PrisonerScavenge>
-  <RHAH_Settings_PrisonerScavenge_Tooltip>关闭后，饥饿的囚犯不再趴在地上找能吃的东西。</RHAH_Settings_PrisonerScavenge_Tooltip>
+  <RHAH_Settings_PrisonerScavenge_Tooltip>关闭后，饥饿的囚犯不再舔掉地上的一层污物。</RHAH_Settings_PrisonerScavenge_Tooltip>
   <RHAH_Settings_TailBite>允许咬尾巴</RHAH_Settings_TailBite>
-  <RHAH_Settings_TailBite_Tooltip>开启后，饥饿的囚犯可能咬睡着的、不满 3 岁的囚犯。默认关闭。</RHAH_Settings_TailBite_Tooltip>
+  <RHAH_Settings_TailBite_Tooltip>开启后，饥饿的囚犯会咬掉近处睡着、不满 3 岁且仍有鼠尾的囚犯的尾巴。默认关闭。</RHAH_Settings_TailBite_Tooltip>
   <RHAH_Settings_Broadcast>允许广播求援</RHAH_Settings_Broadcast>
   <RHAH_Settings_Broadcast_Tooltip>关闭后，通讯台不再列出广播。冷却中的广播不会提前结束。</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_Stagger>分批到来</RHAH_Settings_Stagger>
@@ -429,17 +429,17 @@
   <RHAH_Choice_Medicine>药品</RHAH_Choice_Medicine>
   <RHAH_Choice_HerbalMedicine>草药</RHAH_Choice_HerbalMedicine>
   <RHAH_Choice_Silver>白银</RHAH_Choice_Silver>
-  <RHAH_Choice_Deliver>交付</RHAH_Choice_Deliver>
-  <RHAH_Choice_Reject>拒绝</RHAH_Choice_Reject>
-  <RHAH_Choice_Ignore>忽视</RHAH_Choice_Ignore>
-  <RHAH_Choice_Join>收留</RHAH_Choice_Join>
-  <RHAH_Choice_Hire>雇佣为长工（{0}）</RHAH_Choice_Hire>
-  <RHAH_Choice_Feed>投喂</RHAH_Choice_Feed>
-  <RHAH_Choice_Recruit>收为短工（{0}）</RHAH_Choice_Recruit>
-  <RHAH_Choice_Enslave>奴役</RHAH_Choice_Enslave>
-  <RHAH_Choice_Capture>俘虏</RHAH_Choice_Capture>
-  <RHAH_Choice_Attack>攻击</RHAH_Choice_Attack>
-  <RHAH_Choice_Prison>送进监狱</RHAH_Choice_Prison>
+  <RHAH_Choice_Deliver>交付（交出物资）</RHAH_Choice_Deliver>
+  <RHAH_Choice_Reject>拒绝（按来时态度离开或转脸）</RHAH_Choice_Reject>
+  <RHAH_Choice_Ignore>忽视（不管他们）</RHAH_Choice_Ignore>
+  <RHAH_Choice_Join>收留（加入殖民地）</RHAH_Choice_Join>
+  <RHAH_Choice_Hire>雇佣为长工（{0}，到期离开）</RHAH_Choice_Hire>
+  <RHAH_Choice_Feed>投喂（等着交食物）</RHAH_Choice_Feed>
+  <RHAH_Choice_Recruit>收为短工（{0}，到期离开）</RHAH_Choice_Recruit>
+  <RHAH_Choice_Enslave>奴役（转变身份为奴隶）</RHAH_Choice_Enslave>
+  <RHAH_Choice_Capture>俘虏（转变身份为囚犯）</RHAH_Choice_Capture>
+  <RHAH_Choice_Attack>攻击（整批转为敌对）</RHAH_Choice_Attack>
+  <RHAH_Choice_Prison>送进监狱（转变身份为囚犯）</RHAH_Choice_Prison>
   <RHAH_Choice_NoRecruit>没有可以这样处理的来客。</RHAH_Choice_NoRecruit>
   <RHAH_Choice_NoIdeology>没有文化扩展，不能奴役。</RHAH_Choice_NoIdeology>
   <RHAH_Choice_NoPrison>没有空的囚室。</RHAH_Choice_NoPrison>

@@ -43,6 +43,43 @@ namespace HungerAndHavoc.Pawn
 
             RHAH_Api.SetLifecycle(__instance, RHAH_Lifecycle.Dead);
             RHAH_VisitorGroup.NotifyDead(__instance);
+            RHAH_SuiyinTrust.Note(1, RHAH_SuiyinTrust.Kill);
+        }
+    }
+
+    // 走到边缘离图才算成功离开 俘虏和奴隶不算
+    [HarmonyPatch(typeof(Verse.Pawn), nameof(Verse.Pawn.ExitMap))]
+    internal static class RHAH_ExitTrustPatch
+    {
+        static void Postfix(Verse.Pawn __instance)
+        {
+            if (__instance == null || __instance.Spawned || __instance.Dead)
+            {
+                return;
+            }
+
+            if (__instance.IsPrisoner || __instance.IsSlave)
+            {
+                return;
+            }
+
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(__instance);
+            if (comp == null || comp.State.lifecycle != RHAH_Lifecycle.Leaving)
+            {
+                return;
+            }
+
+            RHAH_SuiyinTrust.Note(1, RHAH_SuiyinTrust.Leave);
+        }
+    }
+
+    // 十四岁心情只在生物学生日结算 不扫图
+    [HarmonyPatch(typeof(Pawn_AgeTracker), "BirthdayBiological")]
+    internal static class RHAH_BirthdayMoodPatch
+    {
+        static void Postfix(Verse.Pawn ___pawn, int birthdayAge)
+        {
+            HungerAndHavoc.EventMgr.RHAH_EventFollowMood.OnBirthday(___pawn, birthdayAge);
         }
     }
 }

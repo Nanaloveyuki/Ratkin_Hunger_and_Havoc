@@ -110,6 +110,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 访客 JobGiver 只问 `RHAH_Api.Allows`，不在 JobGiver 中复制角色规则
 - 全局运行时组件默认由 `GameComponent_RHAH_Game` 与 `MapComponent_RHAH_Map` 承担；增加其它全局组件必须登记职责、生命周期和存档范围
 - Tick 热路径包括每 tick 或高频批量执行的 Pawn、Map、组件和 Job 查询
+- 没有事件入口的慢状态按游戏内小时检查。一小时是 `GenDate.TicksPerHour`，两小时是它的两倍。二倍速和三倍速下不再用 250 tick 扫图或寻路。地图变化、失败冷却到期、生物学生日这类事件优先于轮询
 - Tick 热路径默认避免 LINQ、闭包、装箱、重复字符串拼接和临时集合；使用 `for`、缓存和可复用缓冲区时必须保持可读性
 - 性能约束以代码审查、分配分析或基准结果验证，不以机械行数或圈复杂度阈值替代判断
 
@@ -216,7 +217,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_PredationFleePatch` 是 `internal`，Prefix `JobGiver_ReactToCloseMeleeThreat.TryGiveJob`。关闭反击后，被本特殊情况追猎的安居点鼠族改为逃跑。默认反击，不能使用暴力的人不变。其它威胁走原版。
 `RHAH_CaptureGatePatch` 是 `internal`，Prefix `Pawn_GuestTracker.CapturedBy`。原版俘虏不看来源闸门。补丁只在捕获方是玩家且目标是本模组来源时问 `Imprison`，拒绝则不捕获，通过则 `ReleaseToColony(Imprisoned)`。其它俘虏走原版。
 `RHAH_TradePawnGatePatch` 是 `internal`，Prefix `Tradeable_Pawn.ResolveTrade`。原版角色买卖不看来源闸门。补丁只检查这笔要成交的本模组来源，任一 `Transfer` 被拒则整笔不成交，通过则 `ReleaseToColony(ModRequest)`。物品交易和其它角色走原版。
-`RHAH_GnawFoodPatch` 是 `internal`，Postfix `JobGiver_GetFood.TryGiveJob`。原版饥饿觅食找不到食物就结束。补丁只在结果为空、目标是本模组来客、且食物比例低于 5% 时补一个啃树皮或墙皮的 Job。寻食 duty、工作和工作优先级都不发啃食。
+`RHAH_GnawFoodPatch` 是 `internal`，Postfix `JobGiver_GetFood.TryGiveJob`。原版饥饿觅食找不到食物就结束。补丁只在结果为空、目标是本模组来客、且食物比例低于 5% 时补一个啃植物或墙皮的 Job。找不到目标后写入与赈灾寻食相同的一小时冷却。寻食 duty、工作和工作优先级都不发啃食。
+`RHAH_BirthdayMoodPatch` 是 `internal`，Postfix `Pawn_AgeTracker.BirthdayBiological`。十四岁后续心情只在这次生日结算，不再按小时扫描地图上的全部 pawn。其它年龄和没有来源组件的人不改。
 `RHAH_StayWorkPatch` 是 `internal`，Prefix `Pawn_JobTracker.StartJob`。长工、短工和招募的计时结束后，原版仍会派工作、休息和娱乐。补丁只拒绝这些非玩家强制、也不是近战反击、逃跑或进食的 Job。倒地期间计时暂停，不拦。
 `RHAH_IngestPatch` 是 `internal`，Postfix `Toils_Ingest.FinalizeIngest`。原版吃完不会写来源生命周期。补丁只给仍是访客的进食 Toil 加结束动作，结束时调用 `RHAH_Feeding.TryComplete`。啃食、未吃完和其它角色不改。
 `RHAH_DeathPatch` 是 `internal`，Postfix `Pawn.Kill`。原版死亡不改来源生命周期，也不拆访客 Lord。补丁只在目标已死亡且仍是活跃访客时写成 `Dead`，并调用 `NotifyDead`。已释放、已死亡和其它角色不改。
@@ -226,6 +228,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_RoomLovinPatch` 是 `internal`，Postfix `JobGiver_DoLovin.TryGiveJob`。原版只在冷却结束后自己找人。补丁只在结果为空、携带者有乱起、伴侣在同一张地图且双方能生育时补一个爱爱 Job。已有工作、征召中和睡着时不补。
 `RHAH_RoomBirthPatch` 是 `internal`，Postfix `JobDriver_Lovin.MakeNewToils`。原版爱爱结束按 5% 判定，哺乳把生育乘以 0.05。补丁只给携带乱起的母亲在爱爱结束时再判一次，几率仍是 5% 乘双方怀孕几率，并去掉哺乳这一项。其它来源的不育不改。其它爱爱不改。
 `RHAH_LargeLitterPatch` 是 `internal`，Postfix `PregnancyUtility.ApplyBirthOutcome`。原版人类一次只生一个。补丁只在母亲有多崽时按概率图补足数量。没有多崽的分娩不改。
+`RHAH_RatkinHairGraphicPatch` 是 `internal`，Postfix `PawnRenderNode_Hair.GraphicFor`。原版只在人类婴儿阶段藏头发，鼠族婴儿阶段到 4 岁。补丁只把未满 4 岁的鼠族头发图形清掉，其它种族和满 4 岁的鼠族不改。
 
 ## 检查门禁
 

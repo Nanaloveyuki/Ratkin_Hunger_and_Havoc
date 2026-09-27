@@ -15,7 +15,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
     internal static class RHAH_Envoy
     {
         internal const int DayTicks = 60000;
-        internal const int CheckInterval = 250;
+        internal const int CheckInterval = GenDate.TicksPerHour * 2;
         internal const int MealCost = 6;
         internal const float AdultAge = 18f;
         internal const string LetterDefName = "RHAH_EnvoyLetter";

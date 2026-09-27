@@ -383,13 +383,13 @@
   <RHAH_Settings_ChildExchangeFood>Allow food in place of children</RHAH_Settings_ChildExchangeFood>
   <RHAH_Settings_ChildExchangeFood_Tooltip>Child exchange accepts simple meals instead of a baby. Each child costs 10. The traders do not sell food. Off, the trade still asks for the child.</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>Set children down when leaving</RHAH_Settings_FamilyDrop>
-  <RHAH_Settings_FamilyDrop_Tooltip>A mother no longer sets her child down when she leaves.</RHAH_Settings_FamilyDrop_Tooltip>
+  <RHAH_Settings_FamilyDrop_Tooltip>A mother no longer sets down a child she is still carrying.</RHAH_Settings_FamilyDrop_Tooltip>
   <RHAH_Settings_MotherFeed>Mothers feed children</RHAH_Settings_MotherFeed>
-  <RHAH_Settings_MotherFeed_Tooltip>Mothers stop walking over to feed a hungry child.</RHAH_Settings_MotherFeed_Tooltip>
+  <RHAH_Settings_MotherFeed_Tooltip>A mother no longer hands one meal from her pack to a hungry child.</RHAH_Settings_MotherFeed_Tooltip>
   <RHAH_Settings_PrisonerScavenge>Prisoners scavenge the ground</RHAH_Settings_PrisonerScavenge>
-  <RHAH_Settings_PrisonerScavenge_Tooltip>Hungry prisoners stop searching the ground for something edible.</RHAH_Settings_PrisonerScavenge_Tooltip>
+  <RHAH_Settings_PrisonerScavenge_Tooltip>A hungry prisoner no longer licks one layer of filth off the ground.</RHAH_Settings_PrisonerScavenge_Tooltip>
   <RHAH_Settings_TailBite>Allow tail bites</RHAH_Settings_TailBite>
-  <RHAH_Settings_TailBite_Tooltip>A hungry prisoner may bite a sleeping prisoner under 3. Off by default.</RHAH_Settings_TailBite_Tooltip>
+  <RHAH_Settings_TailBite_Tooltip>A hungry prisoner bites off the tail of a nearby sleeping prisoner under 3 who still has one. Off by default.</RHAH_Settings_TailBite_Tooltip>
   <RHAH_Settings_Broadcast>Allow aid broadcasts</RHAH_Settings_Broadcast>
   <RHAH_Settings_Broadcast_Tooltip>The comms console stops listing a broadcast. A cooldown already running does not end early.</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_Stagger>Visitors arrive in batches</RHAH_Settings_Stagger>
@@ -429,17 +429,17 @@
   <RHAH_Choice_Medicine>medicine</RHAH_Choice_Medicine>
   <RHAH_Choice_HerbalMedicine>herbal medicine</RHAH_Choice_HerbalMedicine>
   <RHAH_Choice_Silver>silver</RHAH_Choice_Silver>
-  <RHAH_Choice_Deliver>Deliver</RHAH_Choice_Deliver>
-  <RHAH_Choice_Reject>Refuse</RHAH_Choice_Reject>
-  <RHAH_Choice_Ignore>Ignore</RHAH_Choice_Ignore>
-  <RHAH_Choice_Join>Take in</RHAH_Choice_Join>
-  <RHAH_Choice_Hire>Hire long-term ({0})</RHAH_Choice_Hire>
-  <RHAH_Choice_Feed>Feed</RHAH_Choice_Feed>
-  <RHAH_Choice_Recruit>Take in short-term ({0})</RHAH_Choice_Recruit>
-  <RHAH_Choice_Enslave>Enslave</RHAH_Choice_Enslave>
-  <RHAH_Choice_Capture>Capture</RHAH_Choice_Capture>
-  <RHAH_Choice_Attack>Attack</RHAH_Choice_Attack>
-  <RHAH_Choice_Prison>Send to prison</RHAH_Choice_Prison>
+  <RHAH_Choice_Deliver>Deliver (hand over the goods)</RHAH_Choice_Deliver>
+  <RHAH_Choice_Reject>Refuse (they leave or turn, as they arrived)</RHAH_Choice_Reject>
+  <RHAH_Choice_Ignore>Ignore (leave them alone)</RHAH_Choice_Ignore>
+  <RHAH_Choice_Join>Take in (join the colony)</RHAH_Choice_Join>
+  <RHAH_Choice_Hire>Hire long-term ({0}, then they leave)</RHAH_Choice_Hire>
+  <RHAH_Choice_Feed>Feed (they wait for food)</RHAH_Choice_Feed>
+  <RHAH_Choice_Recruit>Take in short-term ({0}, then they leave)</RHAH_Choice_Recruit>
+  <RHAH_Choice_Enslave>Enslave (make them slaves)</RHAH_Choice_Enslave>
+  <RHAH_Choice_Capture>Capture (make them prisoners)</RHAH_Choice_Capture>
+  <RHAH_Choice_Attack>Attack (the group turns hostile)</RHAH_Choice_Attack>
+  <RHAH_Choice_Prison>Send to prison (make them prisoners)</RHAH_Choice_Prison>
   <RHAH_Choice_NoRecruit>None of them can be handled that way.</RHAH_Choice_NoRecruit>
   <RHAH_Choice_NoIdeology>Ideology is not active, so they cannot be enslaved.</RHAH_Choice_NoIdeology>
   <RHAH_Choice_NoPrison>No empty prison cell.</RHAH_Choice_NoPrison>

@@ -52,7 +52,12 @@ namespace HungerAndHavoc.Incidents
 
         internal static void Tick(MapComponent_RHAH_Map component, Map map)
         {
-            if (component == null || map == null || map.Parent is not WorldObject_RHAH_RefugeeCamp)
+            TickSite(component, map, map != null && map.Parent is WorldObject_RHAH_RefugeeCamp);
+        }
+
+        internal static void TickSite(MapComponent_RHAH_Map component, Map map, bool allowed)
+        {
+            if (component == null || map == null || !allowed)
             {
                 return;
             }

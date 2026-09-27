@@ -54,11 +54,12 @@ namespace HungerAndHavoc.Pawn
 
             if (!forcedAway)
             {
-                NarrativeState narrative = Current.Game?.GetComponent<NarrativeState>();
-                if (narrative?.Book != null && narrative.Book.MarkJournalFailed(batchId) && RHAH_EndingRuntime.CountsNow())
-                {
-                    narrative.RecordTrust(-10);
-                }
+                HungerAndHavoc.EventMgr.RHAH_EventFollowMood.NoteHurt(harmed);
+            }
+
+            if (forcedAway)
+            {
+                RHAH_SuiyinTrust.Note(members.Count, RHAH_SuiyinTrust.Expel);
             }
 
             return true;

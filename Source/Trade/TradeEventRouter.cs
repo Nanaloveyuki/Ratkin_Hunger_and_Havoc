@@ -97,7 +97,7 @@ namespace HungerAndHavoc.Trade
                 return false;
             }
 
-            EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, 0, caravan.ID, tick);
+            EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, 0, caravan.ID, tick, tick + 1);
             return true;
         }
 

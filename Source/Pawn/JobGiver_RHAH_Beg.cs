@@ -54,10 +54,13 @@ namespace HungerAndHavoc.Pawn
             return JobMaker.MakeJob(RHAH_DefOf.RHAH_Beg, colonist);
         }
 
+        const int PathChecks = 3;
+
         static Verse.Pawn FindClosestColonist(Verse.Pawn pawn)
         {
-            Verse.Pawn best = null;
-            float bestDist = float.MaxValue;
+            Verse.Pawn[] picked = new Verse.Pawn[PathChecks];
+            float[] scores = new float[PathChecks];
+            int count = 0;
             foreach (Verse.Pawn colonist in pawn.Map.mapPawns.FreeColonistsSpawned)
             {
                 if (colonist == null || colonist == pawn)
@@ -65,22 +68,49 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                bool reachable = pawn.CanReach(colonist, PathEndMode.Touch, Danger.Deadly);
-                bool reservable = pawn.CanReserve(colonist, 1, -1, null, false);
-                if (!RHAH_Begging.CanReceive(pawn, colonist, reachable, reservable))
+                if (!RHAH_Begging.CanReceive(pawn, colonist, true, true))
                 {
                     continue;
                 }
 
-                float dist = colonist.Position.DistanceToSquared(pawn.Position);
-                if (dist < bestDist)
+                Insert(picked, scores, ref count, colonist, colonist.Position.DistanceToSquared(pawn.Position));
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                Verse.Pawn colonist = picked[i];
+                bool reachable = pawn.CanReach(colonist, PathEndMode.Touch, Danger.Deadly);
+                bool reservable = pawn.CanReserve(colonist, 1, -1, null, false);
+                if (RHAH_Begging.CanReceive(pawn, colonist, reachable, reservable))
                 {
-                    bestDist = dist;
-                    best = colonist;
+                    return colonist;
                 }
             }
 
-            return best;
+            return null;
+        }
+
+        static void Insert(Verse.Pawn[] picked, float[] scores, ref int count, Verse.Pawn colonist, float distance)
+        {
+            int index = count < PathChecks ? count : PathChecks - 1;
+            if (count == PathChecks && distance >= scores[index])
+            {
+                return;
+            }
+
+            while (index > 0 && distance < scores[index - 1])
+            {
+                picked[index] = picked[index - 1];
+                scores[index] = scores[index - 1];
+                index--;
+            }
+
+            picked[index] = colonist;
+            scores[index] = distance;
+            if (count < PathChecks)
+            {
+                count++;
+            }
         }
     }
 }

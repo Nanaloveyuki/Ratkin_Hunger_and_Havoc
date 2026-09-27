@@ -16,6 +16,12 @@ namespace HungerAndHavoc.Pawn
 
             MarkSeekingFood(pawn);
 
+            Job feedChild = JobGiver_RHAH_MotherFeed.TryCreate(pawn);
+            if (feedChild != null)
+            {
+                return feedChild;
+            }
+
             if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.FeedFromRelief))
             {
                 Job feed = JobGiver_RHAH_Feed.TryCreate(pawn);
@@ -51,6 +57,15 @@ namespace HungerAndHavoc.Pawn
                 if (wait != null)
                 {
                     return wait;
+                }
+            }
+
+            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.DropOffChild))
+            {
+                Job drop = JobGiver_RHAH_DropChild.TryCreate(pawn);
+                if (drop != null)
+                {
+                    return drop;
                 }
             }
 

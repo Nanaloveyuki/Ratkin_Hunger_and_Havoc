@@ -166,6 +166,7 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
+            HungerAndHavoc.EventMgr.RHAH_EventFollowMood.OnChoice(record);
             if (RHAH_RequestRules.Joins(record.Settled))
             {
                 Release(record, RHAH_ReleaseReason.JoinedPlayerFaction);
@@ -272,6 +273,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             Current.Game?.GetComponent<Narrative.NarrativeState>()?.Book?.MarkJournalDelivered(record.BatchId);
+            RHAH_SuiyinTrust.Note(Pawns(record).Count, RHAH_SuiyinTrust.Deliver);
         }
 
         static List<Verse.Pawn> Pawns(RHAH_ChoiceRecord record)
