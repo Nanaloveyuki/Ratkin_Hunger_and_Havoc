@@ -67,4 +67,9 @@
   <RHAH_Follow_I-037_Text>The mother who left the young has come back to the edge. She looks for them first.</RHAH_Follow_I-037_Text>
   <RHAH_Follow_I-041>the one nobody wanted</RHAH_Follow_I-041>
   <RHAH_Follow_I-041_Text>The child who recovered has started telling a story. The details do not match.</RHAH_Follow_I-041_Text>
+  <RHAH_Approach_Label>ratkin approach</RHAH_Approach_Label>
+  <RHAH_Approach_LetterLabel>ratkin approaching</RHAH_Approach_LetterLabel>
+  <RHAH_Approach_LetterText>A group of ratkin has started walking toward {1} from a few tiles away. They are not here yet. This one is {0}.\n\nThey cover about 3 tiles a day. If the colony is on an island, they start from the far shore and cross the water. They enter the map only after they arrive.</RHAH_Approach_LetterText>
+  <RHAH_Approach_Inspect>An approach. Nobody has arrived. This one is {0}.</RHAH_Approach_Inspect>
+  <RHAH_Approach_Target>Destination: {0}</RHAH_Approach_Target>
 </LanguageData>

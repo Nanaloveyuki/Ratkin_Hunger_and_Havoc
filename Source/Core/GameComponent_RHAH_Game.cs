@@ -121,6 +121,21 @@ namespace HungerAndHavoc.Core
                 return false;
             }
 
+            if (entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map)
+            {
+                int approachMap = HungerAndHavoc.Incidents.RHAH_Approach.PickMapId(
+                    queued.Target is Map saved ? saved.uniqueID : 0);
+                if (HungerAndHavoc.Incidents.RHAH_Approach.TrySend(displayId, points, approachMap))
+                {
+                    Log.Message("[RHAH] Approach started for " + displayId + ". points=" + points.ToString("0.##") +
+                        " map=" + approachMap);
+                    DropPending(index);
+                    return true;
+                }
+
+                Log.Warning("[RHAH] Approach failed for " + displayId + ". Spawning on the map instead.");
+            }
+
             IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
             if (def == null || def.Worker == null)
             {
@@ -130,16 +145,56 @@ namespace HungerAndHavoc.Core
             }
 
             IncidentParms parms = new IncidentParms { target = queued.Target };
+            return ExecutePending(index, displayId, entry, points, parms, queued.Target);
+        }
+
+        internal bool SpawnArrived(string displayId, float points, int mapId)
+        {
+            if (string.IsNullOrEmpty(displayId) || Current.Game == null)
+            {
+                return false;
+            }
+
+            HungerAndHavoc.Incidents.RHAH_IncidentEntry entry =
+                HungerAndHavoc.Incidents.RHAH_IncidentCatalog.GetByDisplayId(displayId);
+            RHAH_QueuedTarget queued = entry == null
+                ? default
+                : RHAH_QueuedTarget.Resolve(entry.Target, mapId);
+            if (entry == null || entry.Target != HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map || queued.Terminal || queued.Unavailable)
+            {
+                Log.Warning("[RHAH] Arrived approach dropped " + displayId + ". map=" + mapId);
+                return false;
+            }
+
+            IncidentParms parms = new IncidentParms { target = queued.Target };
             parms.points = points;
+            IncidentDef arrivedDef = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
+            if (arrivedDef == null || arrivedDef.Worker == null)
+            {
+                Log.Warning("[RHAH] Arrived approach dropped " + displayId + ". Worker is missing.");
+                return false;
+            }
+
+            return ExecutePending(-1, displayId, entry, points, parms, queued.Target);
+        }
+
+        bool ExecutePending(
+            int index,
+            string displayId,
+            HungerAndHavoc.Incidents.RHAH_IncidentEntry entry,
+            float points,
+            IncidentParms parms,
+            IIncidentTarget target)
+        {
             bool executed;
             try
             {
-                executed = def.Worker.TryExecute(parms);
+                executed = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName).Worker.TryExecute(parms);
             }
             catch (Exception exception)
             {
                 Log.Error("[RHAH] Queued " + displayId + " threw while spawning. def=" + entry.DefName +
-                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, queued.Target) + "\n" + exception);
+                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, target) + "\n" + exception);
                 DropPending(index);
                 return false;
             }
@@ -147,16 +202,17 @@ namespace HungerAndHavoc.Core
             if (!executed)
             {
                 Log.Warning("[RHAH] Dropped queued " + displayId + ". Worker did not spawn. def=" + entry.DefName +
-                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, queued.Target));
+                    " points=" + points.ToString("0.##") + " target=" + TargetText(entry, target));
                 DropPending(index);
                 return false;
             }
 
             Log.Message("[RHAH] Spawned queued " + displayId + ". def=" + entry.DefName +
-                " points=" + points.ToString("0.##") + " target=" + TargetText(entry, queued.Target));
+                " points=" + points.ToString("0.##") + " target=" + TargetText(entry, target));
             DropPending(index);
             return true;
         }
+
 
         int NextPendingIndex()
         {

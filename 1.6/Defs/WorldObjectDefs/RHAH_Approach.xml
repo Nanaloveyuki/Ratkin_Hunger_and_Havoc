@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <WorldObjectDef>
+    <defName>RHAH_Approach</defName>
+    <label>鼠族远行队</label>
+    <description>一队鼠族正在向殖民地走来。人还没到。</description>
+    <worldObjectClass>HungerAndHavoc.Incidents.WorldObject_RHAH_Approach</worldObjectClass>
+    <texture>World/WorldObjects/Caravan</texture>
+    <useDynamicDrawer>true</useDynamicDrawer>
+    <expandingIcon>true</expandingIcon>
+    <expandingIconTexture>World/WorldObjects/Expanding/Caravan</expandingIconTexture>
+    <expandingIconPriority>90</expandingIconPriority>
+    <expandMore>true</expandMore>
+    <validLaunchTarget>false</validLaunchTarget>
+  </WorldObjectDef>
+</Defs>

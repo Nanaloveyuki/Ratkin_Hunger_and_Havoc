@@ -67,4 +67,9 @@
   <RHAH_Follow_I-037_Text>当天留下鼠蛋的那只回到边上。她先看孩子还在不在。</RHAH_Follow_I-037_Text>
   <RHAH_Follow_I-041>不受待见的那一只</RHAH_Follow_I-041>
   <RHAH_Follow_I-041_Text>病好留下的那只开始说自己的来历。细处对不上。</RHAH_Follow_I-041_Text>
+  <RHAH_Approach_Label>鼠族远行队</RHAH_Approach_Label>
+  <RHAH_Approach_LetterLabel>鼠族正在接近</RHAH_Approach_LetterLabel>
+  <RHAH_Approach_LetterText>一队鼠族从几格外动身，正走向{1}。人还没到。这次是{0}。\n\n他们每天走大约 3 格。殖民地在岛上时，他们会从对岸过来，海上也走。到了之后才会进入地图。</RHAH_Approach_LetterText>
+  <RHAH_Approach_Inspect>远行队。人还没到。这次是{0}。</RHAH_Approach_Inspect>
+  <RHAH_Approach_Target>目标：{0}</RHAH_Approach_Target>
 </LanguageData>

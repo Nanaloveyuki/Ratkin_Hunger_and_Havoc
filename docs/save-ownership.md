@@ -156,6 +156,20 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | cleared | cleared | false | 否 | |
 | nextCheck | nextCheck | -1 | 否 | 下次检查 tick |
 
+### WorldObject_RHAH_Approach
+
+类型名：`HungerAndHavoc.Incidents.WorldObject_RHAH_Approach`。没有 Pawn。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| displayId | displayId | 空字符串 | 否 | 到达后生成的显示 ID。`PostLoadInit` 把 null 补成空字符串 |
+| points | points | 0 | 否 | 到达后交给 Worker 的点数 |
+| mapId | mapId | 0 | 否 | 目标玩家家园 `uniqueID`。地图已销毁时物体销毁且不生成 |
+| nextTileId | nextTileId | -1 | 否 | 正在走入的下一格。-1 表示这一格已经走完 |
+| costLeft | costLeft | 0 | 否 | 进入下一格还要的 tick |
+| crossing | crossing | false | 否 | 岛上出发时为 true，允许走进海洋格。旧档缺键时按陆地走 |
+
+
 
 ## 可序列化类型
 
@@ -214,7 +228,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | closed | closed | false | 否 | |
 | end | end | 0 | 否 | 0 未结束，1 完成，2 失败，3 到期，4 取消 |
 
-Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记。GameComponent 与 MapComponent 的键在下一节。
+Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_Approach` 已登记。GameComponent 与 MapComponent 的键在下一节。
 ### Generation runtime
 
 | 类型 | 字段 | 存档键 | 卸载 |
@@ -311,6 +325,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_TailBite | JobDef | Remove |
 | RHAH_RefugeeMassacre | QuestScriptDef | Remove |
 | RHAH_RefugeeCamp | WorldObjectDef / SitePartDef / MapGeneratorDef / GenStepDef | Remove。不替换成原版地点 |
+| RHAH_Approach | WorldObjectDef | Remove。不替换成原版商队。卸载后物体消失，未到达的事件不再生成 |
 | RHAH_VisitorSeek | DutyDef | Remove |
 | RHAH_VisitorLeave | DutyDef | Remove |
 | RHAH_VisitorFallback | ThinkTreeDef | Remove |
