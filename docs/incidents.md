@@ -16,56 +16,56 @@
 
 `Source/EventMgr` 管理可复用的事件链，不抽 `I-001`..`I-051`，也不推进 `N-`。目前没有事件注册链。每条事件在设置里有短链和长链，默认短链。开发者页可以改，但现在两种都只生成这一次。长链后续还没接。站点号沿用队列目标：地图是正数 `uniqueID`，商队是负数 `-ID`，0 是世界格。以后有事件注册后，生成成功才记一条开始实例。每 tick 只推进已到期的实例，到期原因是 `Expired`。新链仍在讲述者 1000 tick 检查点按 `CanStart` 抽取。阶段、出现物和主动结束由事件自己调用，管理器不决定玩法。实例写在 `GameComponent_RHAH_Game.eventChains`。
 
-| 显示 ID | defName | 旧 ID | Family | Origin | Category | Target |
-| --- | --- | --- | --- | --- | --- | --- |
-| I-001 | RHAH_LargeRefugeeWave | O-001 | Beggar | Original | Hunger | Map |
-| I-002 | RHAH_AbandonedRatkinChildren | O-002 | Special | Original | Hunger | Map |
-| I-003 | RHAH_ShatteredMother | O-003 | Special | Original | Hunger | Map |
-| I-004 | RHAH_BeggarFamily | O-004 | Beggar | Original | Hunger | Map |
-| I-005 | RHAH_BeggarGroup | O-005 | Beggar | Original | Hunger | Map |
-| I-006 | RHAH_ThiefRatkinGroup | O-006 | Thief | Original | Hunger | Map |
-| I-007 | RHAH_ThiefRatkinChildGroup | O-007 | Thief | Original | Hunger | Map |
-| I-008 | RHAH_WildRatkinWandersIn | O-008 | Wild | Original | Hunger | Map |
-| I-009 | RHAH_WildRatkinChildWandersIn | O-009 | Wild | Original | Hunger | Map |
-| I-010 | RHAH_WildRatkinGroupWandersIn | O-010 | Wild | Original | Hunger | Map |
-| I-011 | RHAH_FamineRefugees | O-011 | Beggar | Original | Hunger | Map |
-| I-012 | RHAH_RatkinTraderCaravan | O-012 | Trade | Original | Hunger | Map |
-| I-013 | RHAH_ChildExchange | O-013 | Special | Original | Hunger | Map |
-| I-014 | RHAH_BeggarSiege | O-014 | Siege | Original | Hunger | Map |
-| I-015 | RHAH_AidSimpleMeal | N-011 | Aid | Sequel | Hunger | Map |
-| I-016 | RHAH_AidFineMeal | N-012 | Aid | Sequel | Hunger | Map |
-| I-017 | RHAH_AidMedicine | N-013 | Aid | Sequel | Hunger | Map |
-| I-018 | RHAH_AidSilver | N-014 | Aid | Sequel | Hunger | Map |
-| I-019 | RHAH_AidBaby | N-015 | Aid | Sequel | Hunger | Map |
-| I-020 | RHAH_IntelTreasureSimpleMeal | N-016 | Intel | Sequel | Hunger | Map |
-| I-021 | RHAH_IntelTreasureHerbal | N-017 | Intel | Sequel | Hunger | Map |
-| I-022 | RHAH_IntelTreasureSilver | N-018 | Intel | Sequel | Hunger | Map |
-| I-023 | RHAH_IntelStructureSimpleMeal | N-019 | Intel | Sequel | Hunger | Map |
-| I-024 | RHAH_IntelStructureHerbal | N-020 | Intel | Sequel | Hunger | Map |
-| I-025 | RHAH_IntelStructureSilver | N-021 | Intel | Sequel | Hunger | Map |
-| I-026 | RHAH_IntelSettlementSimpleMeal | N-022 | Intel | Sequel | Hunger | Map |
-| I-027 | RHAH_IntelSettlementHerbal | N-023 | Intel | Sequel | Hunger | Map |
-| I-028 | RHAH_IntelSettlementSilver | N-024 | Intel | Sequel | Hunger | Map |
-| I-029 | RHAH_LaboringRefugees | N-025 | Beggar | Sequel | Hunger | Map |
-| I-030 | RHAH_StrongSiege | N-026 | Siege | Sequel | Hunger | Map |
-| I-031 | RHAH_Passersby | N-027 | Beggar | Sequel | Hunger | Map |
-| I-032 | RHAH_AirdropMistake | N-028 | Special | Sequel | Hunger | Map |
-| I-033 | RHAH_MisguidedKinship | N-029 | Special | Sequel | Hunger | Map |
-| I-034 | RHAH_GreatFamine | N-030 | Thief | Sequel | Hunger | Map |
-| I-035 | RHAH_CaravanMuggers | N-031 | Thief | Sequel | Hunger | Caravan |
-| I-036 | RHAH_PlagueWanderers | N-032 | Wild | Sequel | Plague | Map |
-| I-037 | RHAH_PlagueAbandonedBabies | N-033 | Special | Sequel | Plague | Map |
-| I-038 | RHAH_PlagueTraderCaravan | N-034 | Trade | Sequel | Plague | Map |
-| I-039 | RHAH_PlaguePassersby | N-035 | Beggar | Sequel | Plague | Map |
-| I-040 | RHAH_PlagueRefugees | N-036 | Beggar | Sequel | Plague | Map |
-| I-041 | RHAH_PlagueOrphan | N-037 | Wild | Sequel | Plague | Map |
-| I-042 | RHAH_PlagueBeggarGroup | N-038 | Beggar | Sequel | Plague | Map |
-| I-043 | RHAH_PlagueThiefGroup | N-039 | Thief | Sequel | Plague | Map |
-| I-044 | RHAH_PlagueLaboringRefugees | N-040 | Beggar | Sequel | Plague | Map |
-| I-045 | RHAH_PlagueStrongSiege | N-041 | Siege | Sequel | Plague | Map |
-| I-046 | RHAH_PlagueAirdropMistake | N-042 | Special | Sequel | Plague | Map |
-| I-047 | RHAH_PlagueMisguidedKinship | N-043 | Special | Sequel | Plague | Map |
-| I-048 | RHAH_PlagueGreatFamine | N-044 | Thief | Sequel | Plague | Map |
-| I-049 | RHAH_PlagueRevenge | N-045 | Special | Sequel | Plague | Map |
-| I-050 | RHAH_PlagueCaravanMuggers | N-046 | Thief | Sequel | Plague | Caravan |
-| I-051 | RHAH_RefugeeMassacre | N-047 | Special | Sequel | Hunger | Map |
+| 显示 ID | defName | 名称 | 旧 ID | Family | Origin | Category | Target | 设计 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| I-001 | RHAH_LargeRefugeeWave | 大批逃难者 | O-001 | Beggar | Original | Hunger | Map | [短](events/I-001.md) |
+| I-002 | RHAH_AbandonedRatkinChildren | 幼年鼠族遗弃 | O-002 | Special | Original | Hunger | Map | [链](events/I-002-01.md) |
+| I-003 | RHAH_ShatteredMother | 耗子分妈 | O-003 | Special | Original | Hunger | Map | [触发](events/I-003.md) |
+| I-004 | RHAH_BeggarFamily | 乞讨的饥荒鼠族母亲 | O-004 | Beggar | Original | Hunger | Map | [触发](events/I-004.md) |
+| I-005 | RHAH_BeggarGroup | 乞讨的鼠族队伍 | O-005 | Beggar | Original | Hunger | Map | [短](events/I-005.md) |
+| I-006 | RHAH_ThiefRatkinGroup | 偷窃的鼠族 | O-006 | Thief | Original | Hunger | Map | [触发](events/I-006.md) |
+| I-007 | RHAH_ThiefRatkinChildGroup | 偷窃的幼年鼠族 | O-007 | Thief | Original | Hunger | Map | [触发](events/I-007.md) |
+| I-008 | RHAH_WildRatkinWandersIn | 游荡的野生鼠族 | O-008 | Wild | Original | Hunger | Map | [短](events/I-008.md) |
+| I-009 | RHAH_WildRatkinChildWandersIn | 游荡的野生幼年鼠族 | O-009 | Wild | Original | Hunger | Map | [短](events/I-009.md) |
+| I-010 | RHAH_WildRatkinGroupWandersIn | 游荡的野生鼠群 | O-010 | Wild | Original | Hunger | Map | [短](events/I-010.md) |
+| I-011 | RHAH_FamineRefugees | 灾荒逃难者 | O-011 | Beggar | Original | Hunger | Map | [短](events/I-011.md) |
+| I-012 | RHAH_RatkinTraderCaravan | 流民商队 | O-012 | Trade | Original | Hunger | Map | [链](events/I-012-01.md) |
+| I-013 | RHAH_ChildExchange | 易子而食 | O-013 | Special | Original | Hunger | Map | [链](events/I-013-01.md) |
+| I-014 | RHAH_BeggarSiege | 乞食围攻 | O-014 | Siege | Original | Hunger | Map | [短](events/I-014.md) |
+| I-015 | RHAH_AidSimpleMeal | 难民接济（简单餐） | N-011 | Aid | Sequel | Hunger | Map | [触发](events/I-015.md) |
+| I-016 | RHAH_AidFineMeal | 难民接济（精致餐） | N-012 | Aid | Sequel | Hunger | Map | [触发](events/I-016.md) |
+| I-017 | RHAH_AidMedicine | 难民接济（药品） | N-013 | Aid | Sequel | Hunger | Map | [触发](events/I-017.md) |
+| I-018 | RHAH_AidSilver | 难民接济（白银） | N-014 | Aid | Sequel | Hunger | Map | [触发](events/I-018.md) |
+| I-019 | RHAH_AidBaby | 难民接济（婴儿） | N-015 | Aid | Sequel | Hunger | Map | [链](events/I-019-01.md) |
+| I-020 | RHAH_IntelTreasureSimpleMeal | 情报（藏货，简单餐） | N-016 | Intel | Sequel | Hunger | Map | [短](events/I-020.md) |
+| I-021 | RHAH_IntelTreasureHerbal | 情报（藏货，草药） | N-017 | Intel | Sequel | Hunger | Map | [短](events/I-021.md) |
+| I-022 | RHAH_IntelTreasureSilver | 情报（藏货，白银） | N-018 | Intel | Sequel | Hunger | Map | [短](events/I-022.md) |
+| I-023 | RHAH_IntelStructureSimpleMeal | 情报（建筑，简单餐） | N-019 | Intel | Sequel | Hunger | Map | [短](events/I-023.md) |
+| I-024 | RHAH_IntelStructureHerbal | 情报（建筑，草药） | N-020 | Intel | Sequel | Hunger | Map | [短](events/I-024.md) |
+| I-025 | RHAH_IntelStructureSilver | 情报（建筑，白银） | N-021 | Intel | Sequel | Hunger | Map | [短](events/I-025.md) |
+| I-026 | RHAH_IntelSettlementSimpleMeal | 情报（据点，简单餐） | N-022 | Intel | Sequel | Hunger | Map | [短](events/I-026.md) |
+| I-027 | RHAH_IntelSettlementHerbal | 情报（据点，草药） | N-023 | Intel | Sequel | Hunger | Map | [短](events/I-027.md) |
+| I-028 | RHAH_IntelSettlementSilver | 情报（据点，白银） | N-024 | Intel | Sequel | Hunger | Map | [短](events/I-028.md) |
+| I-029 | RHAH_LaboringRefugees | 待产流民 | N-025 | Beggar | Sequel | Hunger | Map | [触发](events/I-029.md) |
+| I-030 | RHAH_StrongSiege | 强势围攻 | N-026 | Siege | Sequel | Hunger | Map | [短](events/I-030.md) |
+| I-031 | RHAH_Passersby | 路过的鼠族 | N-027 | Beggar | Sequel | Hunger | Map | [短](events/I-031.md) |
+| I-032 | RHAH_AirdropMistake | 空投失误 | N-028 | Special | Sequel | Hunger | Map | [链](events/I-032-01.md) |
+| I-033 | RHAH_MisguidedKinship | 认错亲人 | N-029 | Special | Sequel | Hunger | Map | [链](events/I-033-01.md) |
+| I-034 | RHAH_GreatFamine | 大灾荒 | N-030 | Thief | Sequel | Hunger | Map | [短](events/I-034.md) |
+| I-035 | RHAH_CaravanMuggers | 商队劫掠 | N-031 | Thief | Sequel | Hunger | Caravan | [短](events/I-035.md) |
+| I-036 | RHAH_PlagueWanderers | 鼠疫游荡者 | N-032 | Wild | Sequel | Plague | Map | [短](events/I-036.md) |
+| I-037 | RHAH_PlagueAbandonedBabies | 鼠疫遗弃幼年鼠族 | N-033 | Special | Sequel | Plague | Map | [链](events/I-037-01.md) |
+| I-038 | RHAH_PlagueTraderCaravan | 鼠疫商队 | N-034 | Trade | Sequel | Plague | Map | [触发](events/I-038.md) |
+| I-039 | RHAH_PlaguePassersby | 鼠疫路过 | N-035 | Beggar | Sequel | Plague | Map | [短](events/I-039.md) |
+| I-040 | RHAH_PlagueRefugees | 鼠疫逃难者 | N-036 | Beggar | Sequel | Plague | Map | [短](events/I-040.md) |
+| I-041 | RHAH_PlagueOrphan | 鼠疫孤儿 | N-037 | Wild | Sequel | Plague | Map | [链](events/I-041-01.md) |
+| I-042 | RHAH_PlagueBeggarGroup | 鼠疫乞讨队伍 | N-038 | Beggar | Sequel | Plague | Map | [短](events/I-042.md) |
+| I-043 | RHAH_PlagueThiefGroup | 鼠疫偷窃队伍 | N-039 | Thief | Sequel | Plague | Map | [短](events/I-043.md) |
+| I-044 | RHAH_PlagueLaboringRefugees | 鼠疫待产流民 | N-040 | Beggar | Sequel | Plague | Map | [触发](events/I-044.md) |
+| I-045 | RHAH_PlagueStrongSiege | 鼠疫强势围攻 | N-041 | Siege | Sequel | Plague | Map | [短](events/I-045.md) |
+| I-046 | RHAH_PlagueAirdropMistake | 鼠疫空投失误 | N-042 | Special | Sequel | Plague | Map | [触发](events/I-046.md) |
+| I-047 | RHAH_PlagueMisguidedKinship | 鼠疫认错亲人 | N-043 | Special | Sequel | Plague | Map | [触发](events/I-047.md) |
+| I-048 | RHAH_PlagueGreatFamine | 鼠疫大灾荒 | N-044 | Thief | Sequel | Plague | Map | [短](events/I-048.md) |
+| I-049 | RHAH_PlagueRevenge | 鼠疫报复 | N-045 | Special | Sequel | Plague | Map | [短](events/I-049.md) |
+| I-050 | RHAH_PlagueCaravanMuggers | 鼠疫商队劫掠 | N-046 | Thief | Sequel | Plague | Caravan | [短](events/I-050.md) |
+| I-051 | RHAH_RefugeeMassacre | 危险的鼠族安居点 | N-047 | Special | Sequel | Hunger | Map | [短](events/I-051.md) |
