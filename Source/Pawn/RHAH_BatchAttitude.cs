@@ -21,7 +21,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             RHAH_Attitude attitude = comp.State.attitude;
-            RHAH_AttitudeShift shift = RHAH_AttitudePolicy.React(attitude, forcedAway);
+            RHAH_AttitudeShift shift = RHAH_AttitudePolicy.React(attitude, !forcedAway);
             if (shift == RHAH_AttitudeShift.None)
             {
                 return false;

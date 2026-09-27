@@ -19,6 +19,11 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return;
             }
 
+            if (!RHAH_EndingRuntime.CountsNow())
+            {
+                return;
+            }
+
             NarrativeState state = Current.Game.GetComponent<NarrativeState>();
             SuiyinBook book = state?.Book;
             if (book == null)

@@ -97,4 +97,4 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 地图事件默认分帧：游戏走动时，排队事件每 64 tick 执行一条。`staggerGeneration` 关闭后连续执行。开发者触发在菜单强制暂停期间不走 tick，暂停窗口关闭后的下一帧立即生成，不受这 64 tick 限制。广播只从 `BroadcastEligible` 且未被单独关闭的事件里抽。
 
 商队伏击先生成未入场的 pawn，再交给原版商队地图。
-商队来客在恶劣环境或封闭房间里不走寻食离场。两项分别看 `traderIgnoresHarshEnvironment` 和 `traderIgnoresEnclosedSpace`，默认都开启。Lead Your Pet 不改这条。
+`I-012` 与 `I-038` 都进访客 Lord，人数用目录表，默认 3。开关默认开启时，恶劣环境和封闭房间不迫使他们离场。关闭后，访客 Lord 会因此离场。他们不建原版交易 Lord，也不发原版商队到达信。Lead Your Pet 不改这条。

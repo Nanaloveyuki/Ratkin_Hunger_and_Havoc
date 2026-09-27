@@ -230,6 +230,17 @@
   <RHAH_Menu_DebugPoints_Tip>Natural fires and debug triggers use this size. It changes how many visitors arrive and how much aid or intel asks for. Range 1 to 10000. The slider is rough. The field is exact.</RHAH_Menu_DebugPoints_Tip>
   <RHAH_Menu_IncidentWeight>Appearance weight</RHAH_Menu_IncidentWeight>
   <RHAH_Menu_IncidentWeight_Tip>100 keeps the catalog weight. Higher is drawn more often. 0 stays out. The slider is rough. The field is exact.</RHAH_Menu_IncidentWeight_Tip>
+  <RHAH_Menu_Attitude>Arrival attitude</RHAH_Menu_Attitude>
+  <RHAH_Menu_Attitude_Tip>The five-step attitude used when this incident spawns. Empty keeps the catalog attitude. Under Suiyin, negative trust steps it down once. Hostile does not step down. Visitors already here stay.</RHAH_Menu_Attitude_Tip>
+  <RHAH_Menu_Attitude_Hostile>Hostile</RHAH_Menu_Attitude_Hostile>
+  <RHAH_Menu_Attitude_LeaningHostile>Leaning hostile</RHAH_Menu_Attitude_LeaningHostile>
+  <RHAH_Menu_Attitude_Neutral>Neutral</RHAH_Menu_Attitude_Neutral>
+  <RHAH_Menu_Attitude_LeaningFriendly>Leaning friendly</RHAH_Menu_Attitude_LeaningFriendly>
+  <RHAH_Menu_Attitude_Friendly>Friendly</RHAH_Menu_Attitude_Friendly>
+  <RHAH_Menu_Chain>Chain</RHAH_Menu_Chain>
+  <RHAH_Menu_Chain_Tip>Reserved for the developer trigger. Short plays this incident once. Long will continue later. It still plays once for now.</RHAH_Menu_Chain_Tip>
+  <RHAH_Menu_Chain_Short>Short</RHAH_Menu_Chain_Short>
+  <RHAH_Menu_Chain_Long>Long</RHAH_Menu_Chain_Long>
   <RHAH_Menu_Trigger>Trigger</RHAH_Menu_Trigger>
   <RHAH_Menu_Queue_Disabled>New content is off.</RHAH_Menu_Queue_Disabled>
   <RHAH_Menu_Queue_NoGame>No game is loaded.</RHAH_Menu_Queue_NoGame>

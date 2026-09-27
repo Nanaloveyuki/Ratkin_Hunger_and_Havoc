@@ -2,6 +2,7 @@ using System;
 using Verse.AI.Group;
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
+using HungerAndHavoc.Identity;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Incidents;
 using RimWorld;
@@ -34,10 +35,30 @@ namespace HungerAndHavoc.Pawn
             }
 
             job.BeginFoodWait(receiver, count);
+            ArmWait(receiver);
             if (lord.CurLordToil is LordToil_RHAH_VisitorSeek)
             {
                 lord.ReceiveMemo("RHAH_WaitFood");
             }
+        }
+
+        static void ArmWait(Verse.Pawn receiver)
+        {
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(receiver);
+            if (comp == null || Find.TickManager == null)
+            {
+                return;
+            }
+
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            bool wait = settings == null || settings.waitWhenNoFood;
+            float days = settings == null ? RHAH_VisitorRules.DefaultNoFoodWaitDays : settings.noFoodWaitDays;
+            comp.SetFoodWait(RHAH_VisitorRules.NextWaitTick(
+                Find.TickManager.TicksGame,
+                -1,
+                false,
+                wait,
+                days));
         }
 
         internal static Verse.Pawn Receiver(List<Verse.Pawn> pawns)

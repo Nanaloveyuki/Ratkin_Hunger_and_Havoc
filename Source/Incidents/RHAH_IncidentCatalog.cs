@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HungerAndHavoc.Api;
 
 namespace HungerAndHavoc.Incidents
 {
@@ -50,6 +51,7 @@ namespace HungerAndHavoc.Incidents
         public RHAH_IncidentTarget Target { get; }
         public bool BroadcastEligible { get; }
         public RHAH_AttitudePool DefaultAttitudePool { get; }
+        public RHAH_Attitude DefaultAttitude { get; }
         public float DebugPoints { get; }
 
         public RHAH_IncidentEntry(
@@ -61,6 +63,7 @@ namespace HungerAndHavoc.Incidents
             RHAH_IncidentTarget target,
             bool broadcastEligible,
             RHAH_AttitudePool defaultAttitudePool,
+            RHAH_Attitude defaultAttitude,
             float debugPoints)
         {
             DisplayId = displayId;
@@ -72,6 +75,7 @@ namespace HungerAndHavoc.Incidents
             Target = target;
             BroadcastEligible = broadcastEligible;
             DefaultAttitudePool = defaultAttitudePool;
+            DefaultAttitude = defaultAttitude;
             DebugPoints = debugPoints;
         }
     }
@@ -188,9 +192,59 @@ namespace HungerAndHavoc.Incidents
                 RHAH_IncidentTarget.Map,
                 broadcastEligible,
                 pool,
+                OriginalAttitude(displayId),
                 debugPoints);
         }
 
+
+        static RHAH_Attitude OriginalAttitude(string displayId)
+        {
+            switch (displayId)
+            {
+                case "I-006":
+                case "I-007":
+                case "I-014":
+                    return RHAH_Attitude.Hostile;
+                case "I-008":
+                case "I-009":
+                case "I-010":
+                case "I-012":
+                    return RHAH_Attitude.Neutral;
+                default:
+                    return RHAH_Attitude.LeaningFriendly;
+            }
+        }
+
+        static RHAH_Attitude SequelAttitude(string displayId)
+        {
+            switch (displayId)
+            {
+                case "I-015":
+                case "I-016":
+                case "I-017":
+                case "I-018":
+                case "I-019":
+                case "I-020":
+                case "I-021":
+                case "I-022":
+                case "I-023":
+                case "I-024":
+                case "I-025":
+                case "I-026":
+                case "I-027":
+                case "I-028":
+                    return RHAH_Attitude.LeaningFriendly;
+                case "I-030":
+                case "I-043":
+                case "I-045":
+                    return RHAH_Attitude.Hostile;
+                case "I-034":
+                case "I-048":
+                    return RHAH_Attitude.LeaningHostile;
+                default:
+                    return RHAH_Attitude.Neutral;
+            }
+        }
         static RHAH_IncidentEntry Sequel(
             string displayId,
             string defName,
@@ -209,6 +263,7 @@ namespace HungerAndHavoc.Incidents
                 target,
                 broadcastEligible: false,
                 pool,
+                SequelAttitude(displayId),
                 debugPoints);
         }
     }

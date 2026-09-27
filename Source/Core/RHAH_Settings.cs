@@ -52,6 +52,8 @@ namespace HungerAndHavoc.Core
         List<string> disabledIncidentDisplayIds = new List<string>();
         Dictionary<string, float> incidentDebugPoints = new Dictionary<string, float>();
         Dictionary<string, float> incidentWeights = new Dictionary<string, float>();
+        Dictionary<string, int> incidentAttitudes = new Dictionary<string, int>();
+        List<string> incidentLongChains = new List<string>();
         List<string> disabledHistoryDisplayIds = new List<string>();
         List<string> disabledTraitDisplayIds = new List<string>();
         Dictionary<string, float> traitWeights = new Dictionary<string, float>();
@@ -175,6 +177,8 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref disabledIncidentDisplayIds, "disabledIncidentDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref incidentDebugPoints, "incidentDebugPoints", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref incidentWeights, "incidentWeights", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref incidentAttitudes, "incidentAttitudes", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref incidentLongChains, "incidentLongChains", LookMode.Value);
             Scribe_Collections.Look(ref disabledHistoryDisplayIds, "disabledHistoryDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref disabledTraitDisplayIds, "disabledTraitDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref traitWeights, "traitWeights", LookMode.Value, LookMode.Value);
@@ -262,6 +266,9 @@ namespace HungerAndHavoc.Core
                 disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();
                 disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
                 incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
+                incidentWeights = incidentWeights ?? new Dictionary<string, float>();
+                incidentAttitudes = incidentAttitudes ?? new Dictionary<string, int>();
+                incidentLongChains = incidentLongChains ?? new List<string>();
                 disabledTraitDisplayIds = disabledTraitDisplayIds ?? new List<string>();
                 traitWeights = traitWeights ?? new Dictionary<string, float>();
                 broadcastCooldownDays = HungerAndHavoc.Incidents.RHAH_BroadcastRules.ClampDays(broadcastCooldownDays);
@@ -636,6 +643,8 @@ namespace HungerAndHavoc.Core
             xenotypeWeights = ClampWeights(xenotypeWeights, RHAH_XenotypeWeightTable.Clamp);
             incidentDebugPoints = ClampWeights(incidentDebugPoints, ClampDebugPoints);
             incidentWeights = ClampWeights(incidentWeights, ClampIncidentWeight);
+            incidentAttitudes = ClampAttitudes(incidentAttitudes);
+            incidentLongChains = Clean(incidentLongChains);
             traitWeights = ClampWeights(traitWeights, ClampTraitWeight);
             enabledXenotypeDefNames = Clean(enabledXenotypeDefNames);
             enabledGeneDefNames = Clean(enabledGeneDefNames);
@@ -814,6 +823,8 @@ namespace HungerAndHavoc.Core
             disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
             incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
             incidentWeights = incidentWeights ?? new Dictionary<string, float>();
+            incidentAttitudes = incidentAttitudes ?? new Dictionary<string, int>();
+            incidentLongChains = incidentLongChains ?? new List<string>();
             disabledHistoryDisplayIds = disabledHistoryDisplayIds ?? new List<string>();
             disabledTraitDisplayIds = disabledTraitDisplayIds ?? new List<string>();
             traitWeights = traitWeights ?? new Dictionary<string, float>();
@@ -888,6 +899,77 @@ namespace HungerAndHavoc.Core
 
             EnsureCollections();
             incidentWeights[displayId] = ClampIncidentWeight(weight);
+        }
+
+        public HungerAndHavoc.Api.RHAH_Attitude IncidentAttitude(string displayId, HungerAndHavoc.Api.RHAH_Attitude catalog)
+        {
+            EnsureCollections();
+            int stored;
+            if (!string.IsNullOrEmpty(displayId) && incidentAttitudes.TryGetValue(displayId, out stored) && stored >= 0 && stored <= 4)
+            {
+                return (HungerAndHavoc.Api.RHAH_Attitude)stored;
+            }
+
+            return catalog;
+        }
+
+        public void SetIncidentAttitude(string displayId, HungerAndHavoc.Api.RHAH_Attitude attitude)
+        {
+            if (string.IsNullOrEmpty(displayId))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            int stored = (int)attitude;
+            incidentAttitudes[displayId] = stored < 0 ? 0 : (stored > 4 ? 4 : stored);
+        }
+
+        public bool IncidentUsesLongChain(string displayId)
+        {
+            EnsureCollections();
+            return !string.IsNullOrEmpty(displayId) && incidentLongChains.Contains(displayId);
+        }
+
+        public void SetIncidentLongChain(string displayId, bool longChain)
+        {
+            if (string.IsNullOrEmpty(displayId))
+            {
+                return;
+            }
+
+            EnsureCollections();
+            bool present = incidentLongChains.Contains(displayId);
+            if (longChain && !present)
+            {
+                incidentLongChains.Add(displayId);
+            }
+            else if (!longChain && present)
+            {
+                incidentLongChains.Remove(displayId);
+            }
+        }
+
+        static Dictionary<string, int> ClampAttitudes(Dictionary<string, int> values)
+        {
+            Dictionary<string, int> cleaned = new Dictionary<string, int>();
+            if (values == null)
+            {
+                return cleaned;
+            }
+
+            foreach (KeyValuePair<string, int> pair in values)
+            {
+                if (string.IsNullOrEmpty(pair.Key))
+                {
+                    continue;
+                }
+
+                int stored = pair.Value;
+                cleaned[pair.Key] = stored < 0 ? 0 : (stored > 4 ? 4 : stored);
+            }
+
+            return cleaned;
         }
         public bool IsHistoryEnabled(string displayId)
         {

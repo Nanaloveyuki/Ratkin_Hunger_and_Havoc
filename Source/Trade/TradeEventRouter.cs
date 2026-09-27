@@ -5,7 +5,6 @@ using HungerAndHavoc.Generation;
 using HungerAndHavoc.Incidents;
 using RimWorld;
 using Verse;
-using Verse.AI.Group;
 
 namespace HungerAndHavoc.Trade
 {
@@ -26,48 +25,28 @@ namespace HungerAndHavoc.Trade
             }
 
             int tick = Find.TickManager.TicksGame;
-            RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
+            RHAH_Attitude attitude = HungerAndHavoc.Incidents.RHAH_IncidentArrival.For(entry);
+            int count = HungerAndHavoc.Incidents.RHAH_IncidentScale.Count(entry.DisplayId, parms == null ? 0f : parms.points, EventCap(), false);
+            RHAH_IncidentContext context = new RHAH_IncidentContext
             {
-                SourceIncidentDisplayId = entry.DisplayId,
+                DisplayId = entry.DisplayId,
                 SpawnBatchId = tick,
                 RelationshipGroupId = tick,
                 Role = RHAH_PawnRole.Trader,
-                AttitudeAtArrival = RHAH_Attitude.Neutral,
+                Attitude = attitude,
                 CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
-                PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
-                Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(RHAH_Attitude.Neutral),
-                SpawnCell = cell
-            });
-
-            if (!result.Succeeded || result.Pawns == null || result.Pawns.Count == 0)
-            {
-                return false;
-            }
-
-            int[] visitors = new int[result.Pawns.Count];
-            for (int i = 0; i < result.Pawns.Count; i++)
-            {
-                visitors[i] = result.Pawns[i] == null ? 0 : result.Pawns[i].thingIDNumber;
-            }
-
-            Current.Game?.GetComponent<Narrative.NarrativeState>()?.NoteIncident(new HungerAndHavoc.Storyteller.Suiyin.SuiyinIncidentFact(
-                entry.DisplayId,
-                map.uniqueID,
-                tick,
-                tick,
-                result.Pawns.Count,
-                entry.Category == RHAH_IncidentCategory.Plague,
-                visitors));
-            HungerAndHavoc.Pawn.Compat.RHAH_LeashBridge.TryLeashTravel(result.Pawns[0].GetLord());
-            EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, map.uniqueID, 0, tick);
-            return true;
+                SpawnCell = cell,
+                PawnCount = count,
+                Points = parms == null ? 0f : parms.points
+            };
+            return HungerAndHavoc.Incidents.RHAH_IncidentFacts.Submit(context);
         }
 
         internal static bool TrySpawnCaravanAmbush(RHAH_IncidentEntry entry, float points, RimWorld.Planet.Caravan selected, bool allowFallback)
         {
             RimWorld.Planet.Caravan caravan = CaravanTargetResolver.Resolve(selected, allowFallback);
-            RHAH_Attitude attitude = IncidentWorker_Sequel.ArrivalAttitude(entry);
+            RHAH_Attitude attitude = HungerAndHavoc.Incidents.RHAH_IncidentArrival.For(entry);
             Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(attitude);
             if (entry == null || caravan == null || faction == null ||
                 !RimWorld.Planet.CaravanIncidentUtility.CanFireIncidentWhichWantsToGenerateMapAt(caravan.Tile))

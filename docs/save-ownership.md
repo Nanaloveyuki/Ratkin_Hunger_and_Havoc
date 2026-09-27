@@ -398,6 +398,8 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | RHAH_Settings.disabledIncidentDisplayIds | 全局 ModSettings，默认空。空名单表示事件可用 |
 | RHAH_Settings.incidentDebugPoints | 全局 ModSettings，默认空字典。缺键用目录调试点。范围 1 到 10000 |
 | RHAH_Settings.incidentWeights | 全局 ModSettings，默认空字典。缺键为 100，表示目录权重。0 不抽，上限 100。空字典不是全部禁用 |
+| RHAH_Settings.incidentAttitudes | 全局 ModSettings，默认空字典。缺键用目录态度。值 0 到 4，依次是敌对、偏敌对、中立、偏友好、友善。越界读档后夹回 |
+| RHAH_Settings.incidentLongChains | 全局 ModSettings，默认空名单。名单里的显示 ID 预留长链，缺席是短链。现在两种都只生成一次 |
 | RHAH_Settings.refugeeCampEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.refugeePredationChancePercent | 全局 ModSettings，默认 10，范围 0 到 100。每个安居点地图独立掷一次 |
 | RHAH_Settings.refugeePredationFightBack | 全局 ModSettings，默认 true。关闭后被追猎的安居点鼠族逃跑 |

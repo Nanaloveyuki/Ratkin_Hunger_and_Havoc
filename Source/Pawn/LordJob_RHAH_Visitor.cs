@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Incidents;
 using HungerAndHavoc.Api;
+using HungerAndHavoc.Identity;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Trade;
 using RimWorld;
@@ -72,12 +73,9 @@ namespace HungerAndHavoc.Pawn
             Transition toFood = new Transition(seek, waitFood, false, true);
             toFood.AddTrigger(new Trigger_Memo("RHAH_WaitFood"));
             graph.AddTransition(toFood, false);
-            Transition foodDone = new Transition(waitFood, seek, false, true);
-            foodDone.AddTrigger(new Trigger_Custom(_ => FoodFilled()));
-            graph.AddTransition(foodDone, false);
-
             Transition toLeave = new Transition(seek, leave, false, true);
             toLeave.AddSource(travel);
+            toLeave.AddSource(waitFood);
             toLeave.AddTrigger(new Trigger_Custom(_ => AllReadyToLeave()));
             toLeave.AddTrigger(new Trigger_Memo("RHAH_Leave"));
             toLeave.AddTrigger(new Trigger_Custom(signal => TraderMustLeave(signal)));
@@ -95,6 +93,10 @@ namespace HungerAndHavoc.Pawn
             })));
             toLeave.AddPostAction(new TransitionAction_EndAllJobs());
             graph.AddTransition(toLeave, false);
+            Transition foodDone = new Transition(waitFood, seek, false, true);
+            foodDone.AddTrigger(new Trigger_Custom(_ => FoodFilled()));
+            foodDone.AddTrigger(new Trigger_Custom(_ => FoodWaitExpired()));
+            graph.AddTransition(foodDone, false);
 
 
             return graph;
@@ -150,6 +152,31 @@ namespace HungerAndHavoc.Pawn
             return foodReceiver != null && foodDef != null && !WaitingForFood(foodReceiver);
         }
 
+        bool FoodWaitExpired()
+        {
+            return FoodWaitExpired(foodReceiver, foodReceiver == null ? null : RHAH_Api.Get(foodReceiver));
+        }
+
+        static bool FoodWaitExpired(Verse.Pawn pawn, IRHAH_Pawn snapshot)
+        {
+            if (pawn == null || snapshot == null || Find.TickManager == null)
+            {
+                return false;
+            }
+
+            return RHAH_VisitorRules.NoFoodWaitExpired(
+                true,
+                snapshot.HasBeenFed,
+                Find.TickManager.TicksGame,
+                FoodWaitDeadline(pawn));
+        }
+
+        static int FoodWaitDeadline(Verse.Pawn pawn)
+        {
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            return comp == null ? -1 : comp.State.foodWaitUntilTick;
+        }
+
         bool AllReadyToLeave()
         {
             if (lord == null || lord.ownedPawns == null)
@@ -173,7 +200,8 @@ namespace HungerAndHavoc.Pawn
                 }
 
                 if (snapshot.Lifecycle == RHAH_Lifecycle.Fed ||
-                    snapshot.Lifecycle == RHAH_Lifecycle.Leaving)
+                    snapshot.Lifecycle == RHAH_Lifecycle.Leaving ||
+                    FoodWaitExpired(pawn, snapshot))
                 {
                     continue;
                 }

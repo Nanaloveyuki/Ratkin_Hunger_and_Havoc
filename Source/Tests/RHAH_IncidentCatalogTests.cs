@@ -47,28 +47,31 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void SequelArrival_FollowsFamilyNotPool()
+        public void CatalogAttitude_KeepsThePreviousDefaults()
         {
-            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-035"));
-            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-050"));
-            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-031"));
-            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-036"));
-            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-038"));
-            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-042"));
-            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-049"));
-            Assert.Equal(RHAH_Attitude.Neutral, Arrival("I-051"));
-            Assert.Equal(RHAH_Attitude.LeaningHostile, Arrival("I-034"));
-            Assert.Equal(RHAH_Attitude.LeaningHostile, Arrival("I-048"));
-            Assert.Equal(RHAH_Attitude.Hostile, Arrival("I-030"));
-            Assert.Equal(RHAH_Attitude.Hostile, Arrival("I-043"));
-            Assert.Equal(RHAH_Attitude.Hostile, Arrival("I-045"));
-            Assert.Equal(RHAH_Attitude.LeaningFriendly, Arrival("I-015"));
-            Assert.Equal(RHAH_Attitude.LeaningFriendly, Arrival("I-028"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-035"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-050"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-031"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-036"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-038"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-042"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-049"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-051"));
+            Assert.Equal(RHAH_Attitude.LeaningHostile, Attitude("I-034"));
+            Assert.Equal(RHAH_Attitude.LeaningHostile, Attitude("I-048"));
+            Assert.Equal(RHAH_Attitude.Hostile, Attitude("I-030"));
+            Assert.Equal(RHAH_Attitude.Hostile, Attitude("I-043"));
+            Assert.Equal(RHAH_Attitude.Hostile, Attitude("I-045"));
+            Assert.Equal(RHAH_Attitude.LeaningFriendly, Attitude("I-015"));
+            Assert.Equal(RHAH_Attitude.LeaningFriendly, Attitude("I-028"));
+            Assert.Equal(RHAH_Attitude.Hostile, Attitude("I-006"));
+            Assert.Equal(RHAH_Attitude.Neutral, Attitude("I-012"));
+            Assert.Equal(RHAH_Attitude.LeaningFriendly, Attitude("I-001"));
         }
 
-        static RHAH_Attitude Arrival(string displayId)
+        static RHAH_Attitude Attitude(string displayId)
         {
-            return IncidentWorker_Sequel.ArrivalAttitude(RHAH_IncidentCatalog.GetByDisplayId(displayId));
+            return RHAH_IncidentCatalog.GetByDisplayId(displayId).DefaultAttitude;
         }
     }
 }

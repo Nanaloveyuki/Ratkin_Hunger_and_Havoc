@@ -9,7 +9,6 @@ namespace HungerAndHavoc.Incidents
     {
         protected abstract string DisplayId { get; }
         protected abstract RHAH_PawnRole Role { get; }
-        protected abstract RHAH_Attitude Attitude { get; }
         protected virtual bool CarriesPlague => false;
         protected virtual int PawnCount => 1;
 
@@ -40,7 +39,7 @@ namespace HungerAndHavoc.Incidents
                 SpawnBatchId = tick,
                 RelationshipGroupId = tick,
                 Role = Role,
-                Attitude = Attitude,
+                Attitude = RHAH_IncidentArrival.For(DisplayId),
                 CarriesPlague = CarriesPlague,
                 Map = map,
                 SpawnCell = cell,
@@ -91,7 +90,6 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-001";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Refugee;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.LeaningFriendly;
         protected override int PawnCount => 3;
     }
 
@@ -99,7 +97,6 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-002";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.BeggarChild;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.LeaningFriendly;
         protected override int PawnCount => 2;
     }
 
@@ -107,14 +104,12 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-003";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Mother;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.LeaningFriendly;
     }
 
     internal sealed class IncidentWorker_BeggarFamily : IncidentWorker_RHAH_OriginalGroup
     {
         protected override string DisplayId => "I-004";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Refugee;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.LeaningFriendly;
         protected override int PawnCount => 3;
     }
 
@@ -122,7 +117,6 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-005";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Refugee;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.LeaningFriendly;
         protected override int PawnCount => 4;
     }
 
@@ -130,7 +124,6 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-006";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Thief;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.Hostile;
         protected override int PawnCount => 3;
     }
 
@@ -138,7 +131,6 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-007";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.ThiefChild;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.Hostile;
         protected override int PawnCount => 2;
     }
 
@@ -146,21 +138,18 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-008";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Wild;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.Neutral;
     }
 
     internal sealed class IncidentWorker_WildRatkinChildWandersIn : IncidentWorker_RHAH_OriginalGroup
     {
         protected override string DisplayId => "I-009";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.WildChild;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.Neutral;
     }
 
     internal sealed class IncidentWorker_WildRatkinGroupWandersIn : IncidentWorker_RHAH_OriginalGroup
     {
         protected override string DisplayId => "I-010";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Wild;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.Neutral;
         protected override int PawnCount => 3;
     }
 
@@ -168,7 +157,6 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-011";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Refugee;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.LeaningFriendly;
         protected override int PawnCount => 4;
     }
 
@@ -176,7 +164,6 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-012";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Trader;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.Neutral;
         protected override int PawnCount => 3;
     }
 
@@ -184,14 +171,12 @@ namespace HungerAndHavoc.Incidents
     {
         protected override string DisplayId => "I-013";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.RatkinYoung;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.LeaningFriendly;
     }
 
     internal sealed class IncidentWorker_BeggarSiege : IncidentWorker_RHAH_OriginalGroup
     {
         protected override string DisplayId => "I-014";
         protected override RHAH_PawnRole Role => RHAH_PawnRole.Siege;
-        protected override RHAH_Attitude Attitude => RHAH_Attitude.Hostile;
         protected override int PawnCount => 5;
     }
 }

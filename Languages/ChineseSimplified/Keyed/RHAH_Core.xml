@@ -230,6 +230,17 @@
   <RHAH_Menu_DebugPoints_Tip>自然触发和调试触发都用这个规模。来客人数和接济、情报的索取量随之变化。范围 1 到 10000。滑条粗调，输入框精确设置。</RHAH_Menu_DebugPoints_Tip>
   <RHAH_Menu_IncidentWeight>出现权重</RHAH_Menu_IncidentWeight>
   <RHAH_Menu_IncidentWeight_Tip>100 为目录权重。更高更容易被抽中，0 不抽。滑条粗调，输入框精确设置。</RHAH_Menu_IncidentWeight_Tip>
+  <RHAH_Menu_Attitude>到达态度</RHAH_Menu_Attitude>
+  <RHAH_Menu_Attitude_Tip>这条事件生成时使用的五档态度。缺省是目录态度。穗音且信任为负时再降一档，敌对不再降。已经在场的来客不变。</RHAH_Menu_Attitude_Tip>
+  <RHAH_Menu_Attitude_Hostile>敌对</RHAH_Menu_Attitude_Hostile>
+  <RHAH_Menu_Attitude_LeaningHostile>偏敌对</RHAH_Menu_Attitude_LeaningHostile>
+  <RHAH_Menu_Attitude_Neutral>中立</RHAH_Menu_Attitude_Neutral>
+  <RHAH_Menu_Attitude_LeaningFriendly>偏友好</RHAH_Menu_Attitude_LeaningFriendly>
+  <RHAH_Menu_Attitude_Friendly>友善</RHAH_Menu_Attitude_Friendly>
+  <RHAH_Menu_Chain>链形</RHAH_Menu_Chain>
+  <RHAH_Menu_Chain_Tip>开发者触发预留。短链只生成这一次。长链以后才会接后续，现在仍只生成这一次。</RHAH_Menu_Chain_Tip>
+  <RHAH_Menu_Chain_Short>短链</RHAH_Menu_Chain_Short>
+  <RHAH_Menu_Chain_Long>长链</RHAH_Menu_Chain_Long>
   <RHAH_Menu_Trigger>触发</RHAH_Menu_Trigger>
   <RHAH_Menu_Queue_Disabled>新内容已关闭。</RHAH_Menu_Queue_Disabled>
   <RHAH_Menu_Queue_NoGame>没有已加载的游戏。</RHAH_Menu_Queue_NoGame>

@@ -201,7 +201,7 @@ namespace HungerAndHavoc.Pawn.Compat
 
             if (settings != null)
             {
-                height += ControlRow * (entry.DisplayId == "I-051" ? 6f : 3f);
+                height += ControlRow * (entry.DisplayId == "I-051" ? 8f : 5f);
             }
 
             Rect inner = RHAH_IrisMenusWidgets.Card(list, anchor, height);
@@ -276,6 +276,10 @@ namespace HungerAndHavoc.Pawn.Compat
                 "RHAH_Menu_IncidentWeight_Tip".Translate());
             weightBuffers[entry.DisplayId] = weightBuffer;
             settings.SetIncidentWeight(entry.DisplayId, weight);
+            y += ControlRow;
+            DrawAttitude(new Rect(inner.x, y, inner.width, 24f), entry, settings);
+            y += ControlRow;
+            DrawChain(new Rect(inner.x, y, inner.width, 24f), entry, settings);
             if (entry.DisplayId != "I-051")
             {
                 return;
@@ -299,6 +303,62 @@ namespace HungerAndHavoc.Pawn.Compat
             y += ControlRow;
             Widgets.CheckboxLabeled(new Rect(inner.x, y, inner.width, 24f), "RHAH_Settings_PredationFollowDifficulty".Translate(), ref settings.outsidePredatorsFollowDifficulty);
             TooltipHandler.TipRegion(new Rect(inner.x, y, inner.width, 24f), "RHAH_Settings_PredationFollowDifficulty_Tooltip".Translate());
+        }
+
+        static void DrawAttitude(Rect row, RHAH_IncidentEntry entry, RHAH_Settings settings)
+        {
+            RHAH_Attitude attitude = settings.IncidentAttitude(entry.DisplayId, entry.DefaultAttitude);
+            string label = "RHAH_Menu_Attitude".Translate() + ": " + AttitudeLabel(attitude);
+            if (Widgets.ButtonText(row, label))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                RHAH_Attitude[] values =
+                {
+                    RHAH_Attitude.Hostile,
+                    RHAH_Attitude.LeaningHostile,
+                    RHAH_Attitude.Neutral,
+                    RHAH_Attitude.LeaningFriendly,
+                    RHAH_Attitude.Friendly
+                };
+                for (int i = 0; i < values.Length; i++)
+                {
+                    RHAH_Attitude next = values[i];
+                    options.Add(new FloatMenuOption(AttitudeLabel(next), () => settings.SetIncidentAttitude(entry.DisplayId, next)));
+                }
+
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
+
+            TooltipHandler.TipRegion(row, "RHAH_Menu_Attitude_Tip".Translate());
+        }
+
+        static void DrawChain(Rect row, RHAH_IncidentEntry entry, RHAH_Settings settings)
+        {
+            bool longChain = settings.IncidentUsesLongChain(entry.DisplayId);
+            string label = "RHAH_Menu_Chain".Translate() + ": " + (longChain ? "RHAH_Menu_Chain_Long".Translate() : "RHAH_Menu_Chain_Short".Translate());
+            if (Widgets.ButtonText(row, label))
+            {
+                settings.SetIncidentLongChain(entry.DisplayId, !longChain);
+            }
+
+            TooltipHandler.TipRegion(row, "RHAH_Menu_Chain_Tip".Translate());
+        }
+
+        static string AttitudeLabel(RHAH_Attitude attitude)
+        {
+            switch (attitude)
+            {
+                case RHAH_Attitude.Hostile:
+                    return "RHAH_Menu_Attitude_Hostile".Translate();
+                case RHAH_Attitude.LeaningHostile:
+                    return "RHAH_Menu_Attitude_LeaningHostile".Translate();
+                case RHAH_Attitude.LeaningFriendly:
+                    return "RHAH_Menu_Attitude_LeaningFriendly".Translate();
+                case RHAH_Attitude.Friendly:
+                    return "RHAH_Menu_Attitude_Friendly".Translate();
+                default:
+                    return "RHAH_Menu_Attitude_Neutral".Translate();
+            }
         }
 
         static string Buffer(Dictionary<string, string> buffers, string id, float value, string format)

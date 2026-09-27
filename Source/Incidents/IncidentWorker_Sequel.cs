@@ -75,7 +75,7 @@ namespace HungerAndHavoc.Incidents
                 SpawnBatchId = tick,
                 RelationshipGroupId = tick,
                 Role = RoleFor(entry),
-                Attitude = ArrivalAttitude(entry),
+                Attitude = RHAH_IncidentArrival.For(entry),
                 CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
                 SpawnCell = cell,
@@ -106,43 +106,6 @@ namespace HungerAndHavoc.Incidents
             }
         }
 
-        internal static RHAH_Attitude ArrivalAttitude(RHAH_IncidentEntry entry)
-        {
-            if (entry == null)
-            {
-                return RHAH_Attitude.Neutral;
-            }
 
-            if (entry.DefaultAttitudePool == RHAH_AttitudePool.Positive)
-            {
-                return RHAH_Attitude.LeaningFriendly;
-            }
-
-            if (entry.Target == RHAH_IncidentTarget.Caravan)
-            {
-                return RHAH_Attitude.Neutral;
-            }
-
-            switch (entry.Family)
-            {
-                case RHAH_IncidentFamily.Siege:
-                case RHAH_IncidentFamily.Thief:
-                    return entry.DisplayId == "I-034" || entry.DisplayId == "I-048"
-                        ? RHAH_Attitude.LeaningHostile
-                        : RHAH_Attitude.Hostile;
-                default:
-                    return RHAH_Attitude.Neutral;
-            }
-        }
-
-        static int CountFor(RHAH_IncidentEntry entry)
-        {
-            if (entry.Family == RHAH_IncidentFamily.Siege || entry.Family == RHAH_IncidentFamily.Thief)
-            {
-                return 3;
-            }
-
-            return entry.Family == RHAH_IncidentFamily.Beggar ? 2 : 1;
-        }
     }
 }
