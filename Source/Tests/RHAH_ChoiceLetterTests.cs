@@ -29,8 +29,10 @@ namespace HungerAndHavoc.Tests
             int send = facts.IndexOf("static void SendLetter");
             Assert.True(send >= 0, "SendLetter missing");
             string body = facts.Substring(send);
-            Assert.Contains("RHAH_DefOf.RHAH_ChoiceVisitors", body);
-            Assert.Contains("RHAH_DefOf.RHAH_ChoiceRequest", body);
+            Assert.Contains("LookTargets targets", body);
+            Assert.Contains("new LookTargets(pawns)", body);
+            Assert.Contains("RHAH_DefOf.RHAH_ChoiceVisitors, targets", body);
+            Assert.Contains("RHAH_DefOf.RHAH_ChoiceRequest, targets", body);
             Assert.DoesNotContain("LetterDefOf.NeutralEvent", body);
             Assert.Contains(
                 "public static LetterDef RHAH_ChoiceRequest",

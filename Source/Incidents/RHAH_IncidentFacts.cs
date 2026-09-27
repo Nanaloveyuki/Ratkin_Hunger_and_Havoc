@@ -158,10 +158,10 @@ namespace HungerAndHavoc.Incidents
                 }
             }
 
-            SendLetter(context, record);
+            SendLetter(context, record, Targets(created));
         }
 
-        static void SendLetter(RHAH_IncidentContext context, RHAH_ChoiceRecord record)
+        static void SendLetter(RHAH_IncidentContext context, RHAH_ChoiceRecord record, LookTargets targets)
         {
             string label = LetterLabel(record);
             string text = LetterText(record);
@@ -169,7 +169,7 @@ namespace HungerAndHavoc.Incidents
             if (record.Kind == RHAH_RequestKind.None)
             {
                 ChoiceLetter_RHAH_Visitors visitors = (ChoiceLetter_RHAH_Visitors)LetterMaker.MakeLetter(
-                    label, text, RHAH_DefOf.RHAH_ChoiceVisitors);
+                    label, text, RHAH_DefOf.RHAH_ChoiceVisitors, targets);
                 visitors.choiceId = record.Id;
                 visitors.choice = record.Choice;
                 letter = visitors;
@@ -177,7 +177,7 @@ namespace HungerAndHavoc.Incidents
             else
             {
                 ChoiceLetter_RHAH_Request request = (ChoiceLetter_RHAH_Request)LetterMaker.MakeLetter(
-                    label, text, RHAH_DefOf.RHAH_ChoiceRequest);
+                    label, text, RHAH_DefOf.RHAH_ChoiceRequest, targets);
                 request.choiceId = record.Id;
                 request.mapId = record.MapId;
                 request.kind = record.Kind;
@@ -188,6 +188,24 @@ namespace HungerAndHavoc.Incidents
             }
 
             Find.LetterStack.ReceiveLetter(letter);
+        }
+
+        static LookTargets Targets(List<RHAH_PawnCreationResult> created)
+        {
+            List<Verse.Pawn> pawns = new List<Verse.Pawn>();
+            for (int i = 0; i < created.Count; i++)
+            {
+                for (int j = 0; j < created[i].Pawns.Count; j++)
+                {
+                    Verse.Pawn pawn = created[i].Pawns[j];
+                    if (pawn != null && !pawn.Destroyed)
+                    {
+                        pawns.Add(pawn);
+                    }
+                }
+            }
+
+            return pawns.Count == 0 ? null : new LookTargets(pawns);
         }
 
         static string LetterLabel(RHAH_ChoiceRecord record)
