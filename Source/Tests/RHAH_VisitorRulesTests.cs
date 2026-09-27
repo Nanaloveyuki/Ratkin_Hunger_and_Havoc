@@ -105,6 +105,16 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void OrderedLeave_LeavesBeforeFedOrFoodDeadline()
+        {
+            Assert.True(RHAH_VisitorRules.OrderedLeaveDue(true, false, false));
+            Assert.False(RHAH_VisitorRules.OrderedLeaveDue(false, false, false));
+            Assert.False(RHAH_VisitorRules.FedLeaveDue(true, false, 100, -1, false));
+            Assert.False(RHAH_VisitorRules.NoFoodWaitExpired(true, false, 100, -1));
+        }
+
+
+        [Fact]
         public void BegTargetSkipsSleepMedicalBedAndYoungChildren()
         {
             Assert.True(RHAH_VisitorRules.CanReceiveBeg(false, false, false, false, false, true, true, 4f, false));

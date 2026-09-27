@@ -24,6 +24,18 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(RHAH_Attitude.Friendly, RHAH_AttitudePolicy.Arrival(RHAH_Attitude.Friendly, true, 0));
         }
 
+        [Fact]
+        public void ManualExpel_LeavesNeutralWithoutTurningHostile()
+        {
+            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.Neutral, false));
+            Assert.Equal(RHAH_AttitudeShift.None, RHAH_AttitudePolicy.React(RHAH_Attitude.Neutral, true));
+            Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(RHAH_Attitude.Hostile, false));
+            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.Friendly, false));
+            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.LeaningHostile, false));
+            Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(RHAH_Attitude.LeaningHostile, true));
+        }
+
+
 
         [Fact]
         public void CurrentAttitude_DrivesFightGate()

@@ -652,6 +652,12 @@ namespace HungerAndHavoc.Pawn
             return leaveEnabled && hasBeenFed && !downed && leaveTick >= 0 && now >= leaveTick;
         }
 
+        internal static bool OrderedLeaveDue(bool ordered, bool fedDue, bool foodWaitExpired)
+        {
+            return ordered && !fedDue && !foodWaitExpired;
+        }
+
+
         internal static int BeginStay(int now, RHAH_StayKind kind, int shelterDays, int hireDays)
         {
             int days = kind == RHAH_StayKind.Hire ? ClampHireDays(hireDays) : ClampShelterDays(shelterDays);

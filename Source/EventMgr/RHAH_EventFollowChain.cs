@@ -119,22 +119,30 @@ namespace HungerAndHavoc.EventMgr
 
         static bool Ready(string displayId, List<Verse.Pawn> batch)
         {
+            float adult = Core.RHAH_Mod.Settings == null ? RHAH_EventFollowRules.AdultAge : Core.RHAH_Mod.Settings.followAdultAge;
+            int pending = 0;
+            int finished = 0;
             for (int i = 0; i < batch.Count; i++)
             {
                 Verse.Pawn pawn = batch[i];
                 CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
-                if (comp == null || pawn.Dead || pawn.ageTracker == null)
+                if (comp == null || pawn.Dead || pawn.ageTracker == null || !RHAH_EventFollowRules.IsYoung(comp.State.role))
                 {
                     continue;
                 }
 
-                if (RHAH_EventFollowRules.IsYoung(comp.State.role) && pawn.ageTracker.AgeBiologicalYearsFloat >= (Core.RHAH_Mod.Settings == null ? RHAH_EventFollowRules.AdultAge : Core.RHAH_Mod.Settings.followAdultAge))
+                if ((displayId == "I-012" && comp.State.lifecycle != RHAH_Lifecycle.Released) ||
+                    pawn.ageTracker.AgeBiologicalYearsFloat < adult)
                 {
-                    return displayId != "I-012" || comp.State.lifecycle == RHAH_Lifecycle.Released;
+                    pending++;
+                }
+                else
+                {
+                    finished++;
                 }
             }
 
-            return false;
+            return RHAH_EventFollowRules.BatchOutcomeDone(pending, finished);
         }
 
         static void Send(string displayId, List<Verse.Pawn> batch)

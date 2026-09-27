@@ -46,10 +46,13 @@ namespace HungerAndHavoc.Pawn
                 snapshot.HasBeenFed,
                 now,
                 FoodWaitDeadline(pawn));
-            if (fedLeave && !exit && !fedDue && !foodWaitExpired)
+            bool ordered = pawn.GetLord()?.CurLordToil is LordToil_RHAH_VisitorLeave;
+            bool orderedLeave = RHAH_VisitorRules.OrderedLeaveDue(ordered, fedDue, foodWaitExpired);
+            if (!exit && !fedDue && !foodWaitExpired && !orderedLeave)
             {
                 return null;
             }
+
 
             if (pawn.Downed)
             {

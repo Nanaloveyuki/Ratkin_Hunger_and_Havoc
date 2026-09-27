@@ -298,7 +298,9 @@ namespace HungerAndHavoc.Pawn
         {
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
-                lord.ownedPawns[i].mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
+                Verse.Pawn pawn = lord.ownedPawns[i];
+                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
+                pawn.mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
             }
         }
     }

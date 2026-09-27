@@ -66,7 +66,7 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 
 访客 AI 在 `Source/Pawn`，命名空间 `HungerAndHavoc.Pawn`。Identity 只管标记和闸门数据，不发 Job。
 
-有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。寻食 duty 在没有进食、乞讨、偷窃、啃咬或等待 Job 时，在等待点附近游荡，不走向地图出口。`ExitMap` 只在生命周期已经是 `Leaving` 时放行；吃饱离开仍问 `LeaveAfterFed`。`fedWanderEnabled` 开启时先闲逛 `fedWanderHours` 小时再走，默认 12，范围 1 到 48。关闭时离开时刻就是吃饱这一刻，下一轮离场直接走向出口。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
+有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。寻食 duty 在没有进食、乞讨、偷窃、啃咬或等待 Job 时，在等待点附近游荡，不走向地图出口。`ExitMap` 只在生命周期已经是 `Leaving` 时放行；吃饱离开仍问 `LeaveAfterFed`。`fedWanderEnabled` 开启时先闲逛 `fedWanderHours` 小时再走，默认 12，范围 1 到 48。关闭时离开时刻就是吃饱这一刻，下一轮离场直接走向出口。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。进入离场 toil 时先标成 `Leaving`，寻食中的驱逐令不必等吃饱或断粮到期。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
 五个隐藏态度派系对玩家的好感固定：敌对 −100，偏敌对、中立、偏友好和友善都是 0。对玩家以外的派系也固定，不进设置。敌对派系对任何非态度派系是敌对、−100。另外四个对非态度派系是中立、0。五个态度派系互相是中立、0。隐藏派系没有好感通道，所以直接改双向关系。对玩家每 tick 校正。对其余派系在来客生成前和批次转入敌对派系前校正，不按小时扫描。
 
 不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 且能自己走到出口的成年照护者带出。`Carry` 默认只放行非幼年角色；幼年角色可以 `Leash`，但不能发出携带 Job。外部若对这种来客直接下 `exitMapOnArrival` 的 `Goto`，`StartJob` 会拒绝，来客留在原地等照护者。能自己走到出口的来客不拦。断粮等待到达 `foodWaitUntilTick` 后，仍未进食的活跃访客离场，不再停在寻食游荡。

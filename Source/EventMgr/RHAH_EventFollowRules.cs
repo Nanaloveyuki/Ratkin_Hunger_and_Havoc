@@ -456,6 +456,11 @@ namespace HungerAndHavoc.EventMgr
                 role == RHAH_PawnRole.RatkinYoung;
         }
 
+        internal static bool BatchOutcomeDone(int pending, int finished)
+        {
+            return pending == 0 && finished > 0;
+        }
+
         internal static int Clamp(int percent)
         {
             if (percent < 0)

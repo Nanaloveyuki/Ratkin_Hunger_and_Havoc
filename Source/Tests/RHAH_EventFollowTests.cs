@@ -21,6 +21,14 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void EventClosesWhenTheLastYoungOutcomeFinishes()
+        {
+            Assert.False(RHAH_EventFollowRules.BatchOutcomeDone(1, 1));
+            Assert.True(RHAH_EventFollowRules.BatchOutcomeDone(0, 2));
+            Assert.False(RHAH_EventFollowRules.BatchOutcomeDone(0, 0));
+        }
+
+        [Fact]
         public void OnlyDocumentedIncidentsOpenALongFollow()
         {
             Assert.True(RHAH_EventFollowRules.OpensLong("I-002", true));

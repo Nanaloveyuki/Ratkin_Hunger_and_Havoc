@@ -2,7 +2,7 @@
 <Defs>
   <PawnKindDef>
     <defName>RHAH_PawnKind_Ratkin</defName>
-    <label>famine ratkin</label>
+    <label>饥荒鼠族</label>
     <race>Ratkin</race>
     <defaultFactionType>RHAH_Faction_Neutral</defaultFactionType>
     <combatPower>30</combatPower>

@@ -24,6 +24,11 @@ namespace HungerAndHavoc.Tests
             Assert.NotNull(kind);
             Assert.Equal("0~0", kind.SelectSingleNode("initialWillRange").InnerText);
             Assert.Equal("0~0", kind.SelectSingleNode("initialResistanceRange").InnerText);
+            Assert.Equal("饥荒鼠族", kind.SelectSingleNode("label").InnerText);
+            XmlDocument injected = Load("Languages/English/DefInjected/PawnKindDef/RHAH_PawnKinds.xml");
+            Assert.Equal(
+                "famine ratkin",
+                injected.SelectSingleNode("//RHAH_PawnKind_Ratkin.label").InnerText);
 
             string facts = File.ReadAllText(Source("Incidents/RHAH_IncidentFacts.cs"));
             int send = facts.IndexOf("static void SendLetter");
