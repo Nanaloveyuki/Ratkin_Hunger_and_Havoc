@@ -34,12 +34,13 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void WindowDaysStayBetweenFiveAndSixty()
+        public void WindowDaysStayBetweenFiveAndOneYear()
         {
             Assert.Equal(5f, RHAH_IncidentSchedule.ClampWindowDays(float.NaN));
             Assert.Equal(5f, RHAH_IncidentSchedule.ClampWindowDays(1f));
             Assert.Equal(30f, RHAH_IncidentSchedule.ClampWindowDays(30f));
-            Assert.Equal(60f, RHAH_IncidentSchedule.ClampWindowDays(90f));
+            Assert.Equal(90f, RHAH_IncidentSchedule.ClampWindowDays(90f));
+            Assert.Equal(360f, RHAH_IncidentSchedule.ClampWindowDays(400f));
         }
 
         [Fact]

@@ -13,6 +13,7 @@ namespace HungerAndHavoc.Incidents
         internal const float MaxDays = 60f;
         internal const float GraceDays = 1f;
         internal const float MinWindowDays = 5f;
+        internal const float MaxWindowDays = 360f;
         internal const int ChecksPerDay = 60;
 
         internal static float OccurrenceChance(float days)
@@ -44,9 +45,9 @@ namespace HungerAndHavoc.Incidents
                 return MinWindowDays;
             }
 
-            if (days > MaxDays)
+            if (days > MaxWindowDays)
             {
-                return MaxDays;
+                return MaxWindowDays;
             }
 
             return days;
@@ -67,6 +68,27 @@ namespace HungerAndHavoc.Incidents
             return days;
         }
 
+        internal static float ClampPaceResult(float days)
+        {
+            if (float.IsNaN(days) || float.IsInfinity(days))
+            {
+                return DefaultDays;
+            }
+
+            if (days < MinDays)
+            {
+                return MinDays;
+            }
+
+            if (days > MaxDays)
+            {
+                return MaxDays;
+            }
+
+            return days;
+        }
+
+
         internal static void QueueDueIncidents(float daysPassed, int trust, RHAH_IncidentSeason season, int checkIntervalTicks)
         {
             if (!RHAH_Runtime.AllowsNewContent || daysPassed <= GraceDays || Current.Game == null)
@@ -86,8 +108,9 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            float positiveDays = ClampDays(settings.positiveIncidentDays);
-            float negativeDays = ClampDays(settings.negativeIncidentDays);
+            int seasonIndex = SeasonIndex(season);
+            float positiveDays = PoolDays(settings.positiveIncidentPace, settings.positiveIncidentDays, daysPassed, trust, seasonIndex);
+            float negativeDays = PoolDays(settings.negativeIncidentPace, settings.negativeIncidentDays, daysPassed, trust, seasonIndex);
             List<IIncidentTarget> targets = Find.Storyteller?.AllIncidentTargets;
             if (targets == null)
             {
@@ -226,6 +249,28 @@ namespace HungerAndHavoc.Incidents
                 default: return RHAH_IncidentSeason.Undefined;
             }
         }
+
+        internal static int SeasonIndex(RHAH_IncidentSeason season)
+        {
+            switch (season)
+            {
+                case RHAH_IncidentSeason.Spring: return 0;
+                case RHAH_IncidentSeason.Summer: return 1;
+                case RHAH_IncidentSeason.Fall: return 2;
+                case RHAH_IncidentSeason.Winter: return 3;
+                default: return 0;
+            }
+        }
+
+        internal static float PoolDays(string formula, float averageDays, float day, int trust, int season)
+        {
+            float baseline = ClampDays(averageDays);
+            return RHAH_IncidentPace.Resolve(
+                formula,
+                baseline,
+                new RHAH_IncidentPaceContext(day, baseline, trust, season));
+        }
+
 
         internal const int UnspecifiedTargetId = 0;
 

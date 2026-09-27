@@ -93,7 +93,6 @@ namespace HungerAndHavoc.Pawn.Compat
         string pendingContentGroup;
         readonly HashSet<string> collapsedContentGroups = new HashSet<string>();
 
-        float frequencyWindowDays = RHAH_IncidentSchedule.DefaultDays;
         string selectedPawnLabel = string.Empty;
 
         internal RHAH_IrisMenusPages(string irisVersion)
@@ -1961,10 +1960,11 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             MenuControls.Anchor(list, "frequency-window");
-            frequencyWindowDays = PoolWindow(
+            settings.frequencyWindowDays = PoolWindow(
                 list,
                 "frequency-window",
-                frequencyWindowDays);
+                settings.frequencyWindowDays);
+            PacePreview(out float today, out int trust, out int season);
 
             MenuControls.Anchor(list, "frequency-positive");
             settings.positiveIncidentDays = PoolDays(
@@ -1972,11 +1972,19 @@ namespace HungerAndHavoc.Pawn.Compat
                 "frequency-positive",
                 "RHAH_Menu_Frequency_Positive".Translate(),
                 settings.positiveIncidentDays);
+            settings.positiveIncidentPace = PaceField(
+                list,
+                "frequency-positive-pace",
+                settings.positiveIncidentPace);
             RHAH_IrisMenusWidgets.OccurrenceCurve(
                 list,
                 "frequency-positive-curve",
+                settings.positiveIncidentPace,
                 settings.positiveIncidentDays,
-                frequencyWindowDays,
+                settings.frequencyWindowDays,
+                today,
+                trust,
+                season,
                 new Color(0.45f, 0.78f, 0.48f));
 
             MenuControls.Anchor(list, "frequency-negative");
@@ -1985,11 +1993,19 @@ namespace HungerAndHavoc.Pawn.Compat
                 "frequency-negative",
                 "RHAH_Menu_Frequency_Negative".Translate(),
                 settings.negativeIncidentDays);
+            settings.negativeIncidentPace = PaceField(
+                list,
+                "frequency-negative-pace",
+                settings.negativeIncidentPace);
             RHAH_IrisMenusWidgets.OccurrenceCurve(
                 list,
                 "frequency-negative-curve",
+                settings.negativeIncidentPace,
                 settings.negativeIncidentDays,
-                frequencyWindowDays,
+                settings.frequencyWindowDays,
+                today,
+                trust,
+                season,
                 new Color(0.86f, 0.42f, 0.36f));
             Factor(list, settings, "weight-wild", "RHAH_Settings_WeightWild", ref settings.weightWild);
             Factor(list, settings, "weight-beggar", "RHAH_Settings_WeightBeggar", ref settings.weightBeggar);
@@ -2030,12 +2046,53 @@ namespace HungerAndHavoc.Pawn.Compat
                 days,
                 ref buffer,
                 RHAH_IncidentSchedule.MinWindowDays,
-                RHAH_IncidentSchedule.MaxDays,
+                RHAH_IncidentSchedule.MaxWindowDays,
                 "0.#",
                 "RHAH_Menu_Frequency_WindowTip".Translate());
             weightBuffers[id] = buffer;
             return RHAH_IncidentSchedule.ClampWindowDays(days);
         }
+
+        static void PacePreview(out float today, out int trust, out int season)
+        {
+            today = 1f;
+            trust = 0;
+            season = 0;
+            if (Current.Game == null)
+            {
+                return;
+            }
+
+            today = Mathf.Max(0f, GenDate.DaysPassedSinceSettleFloat);
+            trust = Current.Game.GetComponent<NarrativeState>()?.Snapshot().Trust ?? 0;
+            season = RHAH_IncidentSchedule.SeasonIndex(RHAH_IncidentSchedule.SeasonOf(Find.AnyPlayerHomeMap));
+        }
+
+        string PaceField(Listing_Standard list, string id, string formula)
+        {
+            string shown = weightBuffers.TryGetValue(id, out string stored) ? stored : formula ?? RHAH_IncidentPace.DefaultFormula;
+            float width = Mathf.Max(1f, list.ColumnWidth);
+            float height = Text.CalcHeight("RHAH_Menu_Frequency_PaceTip".Translate(), width);
+            MenuControls.Anchor(list, id, 30f + height + 8f);
+            Rect row = list.GetRect(30f);
+            Rect label = new Rect(row.x, row.y, row.width * 0.28f, row.height);
+            Widgets.Label(label, "RHAH_Menu_Frequency_Pace".Translate());
+            TooltipHandler.TipRegion(label, "RHAH_Menu_Frequency_PaceTip".Translate());
+            string typed = Widgets.TextField(new Rect(label.xMax + 8f, row.y, row.width - label.width - 8f, row.height), shown);
+            weightBuffers[id] = typed;
+            Widgets.Label(list.GetRect(height), "RHAH_Menu_Frequency_PaceTip".Translate());
+            list.Gap(4f);
+            if (string.IsNullOrWhiteSpace(typed))
+            {
+                return RHAH_IncidentPace.DefaultFormula;
+            }
+
+            string trimmed = typed.Trim();
+            return RHAH_IncidentPace.TryEvaluate(trimmed, new RHAH_IncidentPaceContext(1f, RHAH_IncidentSchedule.DefaultDays, 0, 0), out _)
+                ? trimmed
+                : formula ?? RHAH_IncidentPace.DefaultFormula;
+        }
+
 
         void Factor(Listing_Standard list, RHAH_Settings settings, string id, string key, ref float value)
         {
@@ -2048,8 +2105,10 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             yield return Entry("frequency-window", "RHAH_Menu_Frequency_Window");
             yield return Entry("frequency-positive", "RHAH_Menu_Frequency_Positive");
+            yield return Entry("frequency-positive-pace", "RHAH_Menu_Frequency_Pace");
             yield return Entry("frequency-positive-curve", "RHAH_Menu_Frequency_Curve");
             yield return Entry("frequency-negative", "RHAH_Menu_Frequency_Negative");
+            yield return Entry("frequency-negative-pace", "RHAH_Menu_Frequency_Pace");
             yield return Entry("frequency-negative-curve", "RHAH_Menu_Frequency_Curve");
         }
 

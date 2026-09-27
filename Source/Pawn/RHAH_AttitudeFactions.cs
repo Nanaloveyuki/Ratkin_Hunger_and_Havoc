@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using RimWorld;
 using Verse;
@@ -26,7 +27,13 @@ namespace HungerAndHavoc.Pawn
                 faction = Resolve(attitude);
             }
 
-            return faction != null && !faction.IsPlayer ? faction : null;
+            if (faction != null && !faction.IsPlayer)
+            {
+                LockOutside(Faction.OfPlayer);
+                return faction;
+            }
+
+            return null;
         }
 
         internal static void Ensure(RHAH_Attitude attitude)
@@ -111,6 +118,56 @@ namespace HungerAndHavoc.Pawn
             for (int i = 0; i < attitudes.Length; i++)
             {
                 Pin(player, Resolve(attitudes[i]), RHAH_VisitorRules.LockedGoodwill(attitudes[i]));
+            }
+        }
+
+        internal static void LockOutside(Faction player)
+        {
+            List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
+            for (int i = 0; i < factions.Count; i++)
+            {
+                Faction owner = factions[i];
+                if (!IsAttitudeFaction(owner))
+                {
+                    continue;
+                }
+
+                bool ownerHostile = owner.def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Hostile;
+                for (int j = 0; j < factions.Count; j++)
+                {
+                    Faction other = factions[j];
+                    if (other == null || other == owner || other == player || other.IsPlayer)
+                    {
+                        continue;
+                    }
+
+                    RHAH_VisitorRules.OutsideRelation(ownerHostile, IsAttitudeFaction(other), out FactionRelationKind kind, out int goodwill);
+                    PinPair(owner, other, kind, goodwill);
+                }
+            }
+        }
+
+        static void PinPair(Faction owner, Faction other, FactionRelationKind kind, int goodwill)
+        {
+            FactionRelation forward = owner.RelationWith(other, true);
+            FactionRelation backward = other.RelationWith(owner, true);
+            if (forward != null && backward != null &&
+                forward.kind == kind && backward.kind == kind &&
+                forward.baseGoodwill == goodwill && backward.baseGoodwill == goodwill)
+            {
+                return;
+            }
+
+            owner.SetRelation(new FactionRelation
+            {
+                other = other,
+                kind = kind,
+                baseGoodwill = goodwill
+            });
+            FactionRelation reverse = other.RelationWith(owner, true);
+            if (reverse != null)
+            {
+                reverse.baseGoodwill = goodwill;
             }
         }
 

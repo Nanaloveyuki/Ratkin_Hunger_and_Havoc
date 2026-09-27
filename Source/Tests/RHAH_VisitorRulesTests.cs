@@ -37,6 +37,17 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(-100, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Hostile));
             Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Friendly));
             Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Neutral));
+            Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.LeaningHostile));
+            Assert.Equal(0, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.LeaningFriendly));
+            RHAH_VisitorRules.OutsideRelation(true, false, out RimWorld.FactionRelationKind hostileKind, out int hostileGoodwill);
+            RHAH_VisitorRules.OutsideRelation(false, false, out RimWorld.FactionRelationKind neutralKind, out int neutralGoodwill);
+            RHAH_VisitorRules.OutsideRelation(true, true, out RimWorld.FactionRelationKind siblingKind, out int siblingGoodwill);
+            Assert.Equal(RimWorld.FactionRelationKind.Hostile, hostileKind);
+            Assert.Equal(-100, hostileGoodwill);
+            Assert.Equal(RimWorld.FactionRelationKind.Neutral, neutralKind);
+            Assert.Equal(0, neutralGoodwill);
+            Assert.Equal(RimWorld.FactionRelationKind.Neutral, siblingKind);
+            Assert.Equal(0, siblingGoodwill);
             Assert.Equal(4f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, false, false));
             Assert.Equal(8f, RHAH_VisitorRules.WalkingAgeFloor(8f, false, false));
             Assert.Equal(0.1f, RHAH_VisitorRules.WalkingAgeFloor(0.1f, true, false));

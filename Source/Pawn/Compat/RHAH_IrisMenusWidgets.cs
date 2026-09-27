@@ -104,8 +104,12 @@ namespace HungerAndHavoc.Pawn.Compat
         internal static void OccurrenceCurve(
             Listing_Standard list,
             string anchor,
+            string formula,
             float averageDays,
             float windowDays,
+            float today,
+            int trust,
+            int season,
             Color color)
         {
             const int samples = 48;
@@ -113,16 +117,40 @@ namespace HungerAndHavoc.Pawn.Compat
             Rect graph = new Rect(plot.x, plot.y, plot.width, plot.height);
             Widgets.DrawBoxSolid(graph, new Color(0.08f, 0.08f, 0.08f, 0.55f));
             float span = RHAH_IncidentSchedule.ClampWindowDays(windowDays);
-            float chance = RHAH_IncidentSchedule.DailyOccurrenceChance(averageDays);
-            DrawCurve(graph, color, samples, span, chance);
+            float axis = AxisChance(formula, averageDays, today, trust, season, span, samples);
+            DrawCurve(graph, color, formula, averageDays, today, trust, season, samples, span, axis);
             if (Mouse.IsOver(graph))
             {
-                float day = DayAt(graph, Event.current.mousePosition.x, span);
-                Widgets.DrawLineVertical(CurvePoint(graph, day, 0f, span, chance).x, graph.y, graph.height);
+                float along = DayAt(graph, Event.current.mousePosition.x, span);
+                int dayNumber = Mathf.Clamp(Mathf.CeilToInt(along), 1, Mathf.CeilToInt(span));
+                float chance = ChanceOnDay(formula, averageDays, today + dayNumber - 1f, trust, season);
+                Widgets.DrawLineVertical(CurvePoint(graph, dayNumber, 0f, span, axis).x, graph.y, graph.height);
                 TooltipHandler.TipRegion(graph, () => "RHAH_Menu_Frequency_CurveTip".Translate(
-                    Mathf.Clamp(Mathf.CeilToInt(day), 1, Mathf.CeilToInt(span)).ToString(),
+                    dayNumber.ToString(),
                     chance.ToString("P2")), anchor.GetHashCode());
             }
+        }
+
+        internal static float ChanceOnDay(string formula, float averageDays, float day, int trust, int season)
+        {
+            float mean = RHAH_IncidentSchedule.PoolDays(formula, averageDays, day, trust, season);
+            return RHAH_IncidentSchedule.DailyOccurrenceChance(mean);
+        }
+
+        static float AxisChance(string formula, float averageDays, float today, int trust, int season, float span, int samples)
+        {
+            float axis = 0f;
+            for (int i = 0; i <= samples; i++)
+            {
+                float day = today + span * i / samples;
+                float chance = ChanceOnDay(formula, averageDays, day, trust, season);
+                if (chance > axis)
+                {
+                    axis = chance;
+                }
+            }
+
+            return axis;
         }
 
         internal static float DayAt(Rect graph, float mouseX, float windowDays)
@@ -137,13 +165,24 @@ namespace HungerAndHavoc.Pawn.Compat
             return along * span;
         }
 
-        static void DrawCurve(Rect graph, Color color, int samples, float span, float chance)
+        static void DrawCurve(
+            Rect graph,
+            Color color,
+            string formula,
+            float averageDays,
+            float today,
+            int trust,
+            int season,
+            int samples,
+            float span,
+            float axis)
         {
-            Vector2 last = CurvePoint(graph, 0f, chance, span, chance);
+            Vector2 last = CurvePoint(graph, 0f, ChanceOnDay(formula, averageDays, today, trust, season), span, axis);
             for (int i = 1; i <= samples; i++)
             {
-                float day = span * i / samples;
-                Vector2 next = CurvePoint(graph, day, chance, span, chance);
+                float along = span * i / samples;
+                float chance = ChanceOnDay(formula, averageDays, today + along, trust, season);
+                Vector2 next = CurvePoint(graph, along, chance, span, axis);
                 Widgets.DrawLine(last, next, color, 1.5f);
                 last = next;
             }
@@ -151,11 +190,12 @@ namespace HungerAndHavoc.Pawn.Compat
 
         static Vector2 CurvePoint(Rect graph, float day, float chance, float span, float axisChance)
         {
-            float x = graph.x + graph.width * Mathf.Clamp01(day / span);
+            float x = graph.x + graph.width * Mathf.Clamp01(span <= 0f ? 0f : day / span);
             float scale = axisChance <= 0f ? 1f : axisChance;
             float y = graph.yMax - graph.height * Mathf.Clamp01(chance / scale);
             return new Vector2(x, y);
         }
+
         internal static void LitterCurve(Listing_Standard list, string anchor, int minimum, int peak, int maximum)
         {
             RHAH_FertilityRules.ClampLitter(ref minimum, ref peak, ref maximum);

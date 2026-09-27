@@ -370,8 +370,11 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | nanaloveyuki.ratkin.hungerandhavoc | packageId。清理副本的 meta 里应去掉本包，但不在运行时存档字段中 |
 | RHAH_Settings.enableNewContent | 全局 ModSettings，默认 true |
 | RHAH_Settings.optimizeGeneration | 全局 ModSettings，默认 true。关闭后不套权重异种，事件 Profile 仍生效 |
-| RHAH_Settings.positiveIncidentDays | 全局 ModSettings，默认 15。正池平均天数，0 关闭，上限 60 |
-| RHAH_Settings.negativeIncidentDays | 全局 ModSettings，默认 15。负池平均天数，0 关闭，上限 60 |
+| RHAH_Settings.positiveIncidentDays | 全局 ModSettings，默认 15。正池平均天数，式子里的 averageDays，0 关闭，上限 60 |
+| RHAH_Settings.negativeIncidentDays | 全局 ModSettings，默认 15。负池平均天数，式子里的 averageDays，0 关闭，上限 60 |
+| RHAH_Settings.positiveIncidentPace | 全局 ModSettings，默认 `averageDays`。正池间隔式。空、超长或求值失败时回到默认式。结果仍夹到 0 到 60 |
+| RHAH_Settings.negativeIncidentPace | 全局 ModSettings，默认 `averageDays`。负池间隔式。空、超长或求值失败时回到默认式。结果仍夹到 0 到 60 |
+| RHAH_Settings.frequencyWindowDays | 全局 ModSettings，默认 15。频率图显示天数，范围 5 到 360。不改变抽池 |
 | RHAH_Settings.xenotypeWeights | 全局 ModSettings，默认空字典。缺键用登记建议权重。空字典不是全部禁用 |
 | RHAH_Settings.enabledXenotypeDefNames | 全局 ModSettings，默认空。玩家加入的外部异种 defName |
 | RHAH_Settings.enabledGeneDefNames | 全局 ModSettings，默认空。只允许 `RHAH_` 基因在生成后追加 |

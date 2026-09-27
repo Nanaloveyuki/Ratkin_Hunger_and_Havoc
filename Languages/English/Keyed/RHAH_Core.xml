@@ -315,13 +315,15 @@
   <RHAH_Menu_Experimental_Note>These options change how long visitors take to appear. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>Speed up visitor arrival</RHAH_Settings_OptimizeGeneration>
   <RHAH_Settings_OptimizeGeneration_Tooltip>Visitors appear faster, with less random clothing and status. Without a set xenotype, the gene page weights decide.</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>The line is the chance this pool fires at least once on each of the coming days. Days run across. That day's chance runs up. 0 turns this pool off. Rest the cursor on the line to read the chance.</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Gap>The line is the chance this pool fires at least once on each coming day, using that pool's interval formula. Days run across. That day's chance runs up. Average days is averageDays in the formula. 0 turns this pool off. Rest the cursor on the line to read the chance. The graph uses the current trust and season.</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>Positive incidents, average days</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>Negative incidents, average days</RHAH_Menu_Frequency_Negative>
   <RHAH_Menu_Frequency_Window>Days shown</RHAH_Menu_Frequency_Window>
-  <RHAH_Menu_Frequency_WindowTip>How many coming days the curve shows. From 5 to 60. This only changes the graph, not how often incidents fire.</RHAH_Menu_Frequency_WindowTip>
+  <RHAH_Menu_Frequency_WindowTip>How many coming days the curve shows. From 5 to 360. This only changes the graph, not how often incidents fire.</RHAH_Menu_Frequency_WindowTip>
   <RHAH_Menu_Frequency_Curve>Chance that day</RHAH_Menu_Frequency_Curve>
   <RHAH_Menu_Frequency_CurveTip>Day {0}, chance {1}.</RHAH_Menu_Frequency_CurveTip>
+  <RHAH_Menu_Frequency_Pace>Interval formula</RHAH_Menu_Frequency_Pace>
+  <RHAH_Menu_Frequency_PaceTip>The formula gives that day's average interval, in days. It may use averageDays, day, trust, season, + - * /, parentheses, min, max, abs, and clamp. day is days since settling. season runs from 0 to 3. The result is kept between 0 and 60. A bad formula, a division by zero, or an empty field uses averageDays. 0 turns this pool off.</RHAH_Menu_Frequency_PaceTip>
   <RHAH_Menu_Developer_Note>Debug queues live under Dev events. Version and IrisMenus are under Compatibility and diagnostics.</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>Last listed visitor</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>Beggar</RHAH_Menu_Family_Beggar>

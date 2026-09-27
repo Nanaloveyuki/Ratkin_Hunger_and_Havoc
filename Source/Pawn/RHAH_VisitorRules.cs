@@ -398,6 +398,19 @@ namespace HungerAndHavoc.Pawn
         {
             return attitude == RHAH_Attitude.Hostile ? HostileGoodwill : NeutralGoodwill;
         }
+
+        internal static void OutsideRelation(bool ownerHostile, bool otherAttitudeFaction, out FactionRelationKind kind, out int goodwill)
+        {
+            if (otherAttitudeFaction || !ownerHostile)
+            {
+                kind = FactionRelationKind.Neutral;
+                goodwill = NeutralGoodwill;
+                return;
+            }
+
+            kind = FactionRelationKind.Hostile;
+            goodwill = HostileGoodwill;
+        }
         internal static int ClampBegFailCooldownHours(int hours)
         {
             if (hours < MinBegFailCooldownHours)

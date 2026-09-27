@@ -315,13 +315,15 @@
   <RHAH_Menu_Experimental_Note>这些选项会改变来客出现要花的时间。关闭后，来客仍按各事件自己的装备、经历、健康和基因到来。</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>加快来客出现</RHAH_Settings_OptimizeGeneration>
   <RHAH_Settings_OptimizeGeneration_Tooltip>来客出现得更快，少一些随机衣着和身份。没有指定异种时，按基因页的权重抽取。</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>横线是这一池在接下来每一天至少发生一次的概率。横轴是第几天，纵轴是当天概率。0 关闭该池。鼠标停在线上时，显示这一天的概率。</RHAH_Menu_Frequency_Gap>
+  <RHAH_Menu_Frequency_Gap>横线按这一池的间隔式画出接下来每一天至少发生一次的概率。横轴是第几天，纵轴是当天概率。平均天数是式子里的 averageDays。0 关闭该池。鼠标停在线上时，显示这一天的概率。图按当前信任和季节估算。</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>正面事件平均天数</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>负面事件平均天数</RHAH_Menu_Frequency_Negative>
   <RHAH_Menu_Frequency_Window>显示天数</RHAH_Menu_Frequency_Window>
-  <RHAH_Menu_Frequency_WindowTip>曲线显示接下来多少天。范围 5 到 60。只改图的宽度，不改变事件频率。</RHAH_Menu_Frequency_WindowTip>
+  <RHAH_Menu_Frequency_WindowTip>曲线显示接下来多少天。范围 5 到 360。只改图的宽度，不改变事件频率。</RHAH_Menu_Frequency_WindowTip>
   <RHAH_Menu_Frequency_Curve>当天发生概率</RHAH_Menu_Frequency_Curve>
   <RHAH_Menu_Frequency_CurveTip>第 {0} 天，当天概率 {1}。</RHAH_Menu_Frequency_CurveTip>
+  <RHAH_Menu_Frequency_Pace>间隔式</RHAH_Menu_Frequency_Pace>
+  <RHAH_Menu_Frequency_PaceTip>式子给出这一天的平均间隔，单位是天。可用 averageDays、day、trust、season，以及 + - * /、括号、min、max、abs、clamp。day 是定居后的天数，season 从 0 到 3。结果夹在 0 到 60。写错、除以 0 或留空时用 averageDays。0 关闭该池。</RHAH_Menu_Frequency_PaceTip>
   <RHAH_Menu_Developer_Note>调试排队在开发者事件页。版本和 IrisMenus 在兼容与诊断。</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>最近列出的来客</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>乞食</RHAH_Menu_Family_Beggar>

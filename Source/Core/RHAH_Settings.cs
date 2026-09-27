@@ -11,6 +11,9 @@ namespace HungerAndHavoc.Core
         public bool optimizeGeneration = true;
         public float positiveIncidentDays = 15f;
         public float negativeIncidentDays = 15f;
+        public string positiveIncidentPace = HungerAndHavoc.Incidents.RHAH_IncidentPace.DefaultFormula;
+        public string negativeIncidentPace = HungerAndHavoc.Incidents.RHAH_IncidentPace.DefaultFormula;
+        public float frequencyWindowDays = 15f;
         Dictionary<string, float> xenotypeWeights = new Dictionary<string, float>();
         List<string> enabledXenotypeDefNames = new List<string>();
         List<string> enabledGeneDefNames = new List<string>();
@@ -247,6 +250,9 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref optimizeGeneration, "optimizeGeneration", true);
             Scribe_Values.Look(ref positiveIncidentDays, "positiveIncidentDays", 15f);
             Scribe_Values.Look(ref negativeIncidentDays, "negativeIncidentDays", 15f);
+            Scribe_Values.Look(ref positiveIncidentPace, "positiveIncidentPace", HungerAndHavoc.Incidents.RHAH_IncidentPace.DefaultFormula);
+            Scribe_Values.Look(ref negativeIncidentPace, "negativeIncidentPace", HungerAndHavoc.Incidents.RHAH_IncidentPace.DefaultFormula);
+            Scribe_Values.Look(ref frequencyWindowDays, "frequencyWindowDays", 15f);
             Scribe_Collections.Look(ref xenotypeWeights, "xenotypeWeights", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref enabledXenotypeDefNames, "enabledXenotypeDefNames", LookMode.Value);
             Scribe_Collections.Look(ref enabledGeneDefNames, "enabledGeneDefNames", LookMode.Value);
@@ -498,6 +504,9 @@ namespace HungerAndHavoc.Core
                 Normalize();
                 positiveIncidentDays = HungerAndHavoc.Incidents.RHAH_IncidentSchedule.ClampDays(positiveIncidentDays);
                 negativeIncidentDays = HungerAndHavoc.Incidents.RHAH_IncidentSchedule.ClampDays(negativeIncidentDays);
+                positiveIncidentPace = HungerAndHavoc.Incidents.RHAH_IncidentPace.Normalize(positiveIncidentPace);
+                negativeIncidentPace = HungerAndHavoc.Incidents.RHAH_IncidentPace.Normalize(negativeIncidentPace);
+                frequencyWindowDays = HungerAndHavoc.Incidents.RHAH_IncidentSchedule.ClampWindowDays(frequencyWindowDays);
                 ClampVisitorRules();
                 ClampEndingGoals();
                 ClampTunables();

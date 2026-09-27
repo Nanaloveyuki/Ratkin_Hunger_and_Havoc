@@ -69,17 +69,12 @@ namespace HungerAndHavoc.Pawn
         static void SetHostile(List<Verse.Pawn> members)
         {
             Faction hostile = RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Hostile);
-            Faction player = Faction.OfPlayer;
-            if (hostile != null && player != null && !hostile.HostileTo(player))
+            if (hostile == null)
             {
-                player.TryAffectGoodwillWith(
-                    hostile,
-                    player.GoodwillToMakeHostile(hostile),
-                    false,
-                    false,
-                    null,
-                    null);
+                return;
             }
+
+            RHAH_AttitudeFactions.LockOutside(Faction.OfPlayer);
 
             for (int i = 0; i < members.Count; i++)
             {
@@ -91,7 +86,7 @@ namespace HungerAndHavoc.Pawn
 
                 CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(member);
                 comp?.State.SetAttitude(RHAH_Attitude.Hostile);
-                if (hostile != null && member.Faction != hostile)
+                if (member.Faction != hostile)
                 {
                     member.SetFaction(hostile);
                 }
