@@ -197,6 +197,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.Area_RHAH_Relief | AreaManager `areas` | Remove。卸载后区域节点消失，格子不迁到家区 |
 | HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety | Hediff `Class` / `hediffClass` | Remove，随饱腹 Hediff 删除 |
+| HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox | Thing `Class` / `thingClass` | Remove。随旧箱子删除，不替换成原版建筑 |
 | HungerAndHavoc.Pawn.Comp_RHAH_Clay | ThingComp `Class` | Remove，随观音土物品删除 |
 | HungerAndHavoc.Pawn.CompProperties_RHAH_Clay | Def XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Generation.RHAH_GenerationExtension | ThingDef `modExtensions` XML `Class` | 不单独出现在 `.rws` |
@@ -328,6 +329,10 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_RefugeeMassacre | QuestScriptDef | Remove |
 | RHAH_RefugeeCamp | WorldObjectDef / SitePartDef / MapGeneratorDef / GenStepDef | Remove。不替换成原版地点 |
 | RHAH_Approach | WorldObjectDef | Remove。不替换成原版商队。卸载后物体消失，未到达的事件不再生成 |
+| RHAH_RecordSite | WorldObjectDef / SitePartDef / MapGeneratorDef | Remove。不替换成原版地点 |
+| RHAH_RecordBox | ThingDef | Remove。不替换成原版建筑 |
+| RHAH_MigrationRecord | ThingDef | Remove。不替换成原版物品 |
+| RHAH_RecordLetter | LetterDef | Remove。不替换成原版信 |
 | RHAH_VisitorSeek | DutyDef | Remove |
 | RHAH_VisitorLeave | DutyDef | Remove |
 | RHAH_VisitorFallback | ThinkTreeDef | Remove |

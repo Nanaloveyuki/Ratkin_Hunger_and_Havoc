@@ -4,7 +4,7 @@
     <defName>RHAH_RecordBox</defName>
     <label>旧箱子</label>
     <description>木箱还盖得上。里面是搬运清单、配给数量和一叠受潮的纸，没有粮食。</description>
-    <thingClass>HungerAndHavoc.Narrative.Building_RHAH_RecordBox</thingClass>
+    <thingClass>HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox</thingClass>
     <category>Building</category>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>

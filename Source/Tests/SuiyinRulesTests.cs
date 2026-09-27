@@ -1,4 +1,6 @@
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -261,6 +263,26 @@ namespace HungerAndHavoc.Tests
             book.Trust = 100;
             Assert.Equal(250, book.ChooseRelic(SuiyinN009Action.Take, 10));
             Assert.Equal(0, book.ChooseRelic(SuiyinN009Action.Take, 20));
+        }
+
+        [Fact]
+        public void RecordBoxThingClassResolvesToTheBuilding()
+        {
+            XmlDocument defs = new XmlDocument();
+            defs.Load(Path.Combine(RepoRoot(), "1.6/Defs/ThingDefs/RHAH_RecordBox.xml"));
+            XmlNode box = defs.SelectSingleNode("//ThingDef[defName='RHAH_RecordBox']/thingClass");
+            Assert.NotNull(box);
+            string typeName = box.InnerText.Trim();
+            Assert.Equal("HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox", typeName);
+            Type resolved = typeof(Building_RHAH_RecordBox).Assembly.GetType(typeName, false);
+            Assert.Same(typeof(Building_RHAH_RecordBox), resolved);
+            Assert.True(resolved.IsPublic);
+            Assert.True(typeof(Verse.Building).IsAssignableFrom(resolved));
+        }
+
+        static string RepoRoot([CallerFilePath] string testFile = null)
+        {
+            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testFile), "..", ".."));
         }
 
         [Fact]

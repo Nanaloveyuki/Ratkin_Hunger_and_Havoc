@@ -196,6 +196,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Incidents.RHAH_PredatorRecord` | `predators` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.EventMgr.RHAH_EventChainRecord` | `eventChains` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.Incidents.WorldObject_RHAH_Approach` | WorldObjectDef `worldObjectClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建世界物体；类型名写入 `.rws`。没有 Pawn，不属于 API |
+| `HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox` | ThingDef `thingClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建建筑；类型名写入地图 `.rws`。不属于 API |
 | `HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
 | `HungerAndHavoc.Pawn.CompProperties_RHAH_Clay` | ThingDef XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Pawn.Comp_RHAH_Clay` | `CompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 ThingComp；类型名写入 `.rws` |
