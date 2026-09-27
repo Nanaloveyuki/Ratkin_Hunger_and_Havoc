@@ -70,7 +70,7 @@ Language、存档键、卸载归属这三项，功能开发只要碰到玩家文
 
 目标与旧模组一致：当前存档停用新内容 → 备份原档 → 导出 XML 清理副本 → 退出后再卸本模组，保留鼠族等前置。原档不覆盖。未知本模组引用必须中止，不猜测删除。不碰其它模组数据，不清理全局 `ModSettings`。
 
-导出器尚未实现。现在每次新增会进存档的 Def、可序列化类型或键，都必须先写入 [save-ownership.md](save-ownership.md)，动作只允许 `Remove` 或 `Replace`。没有登记的持久化产物视为漏了卸载保护。
+导出器尚未实现。规划见 [unload-export.md](unload-export.md)。现在每次新增会进存档的 Def、可序列化类型或键，都必须先写入 [save-ownership.md](save-ownership.md)，动作只允许 `Remove` 或 `Replace`。没有登记的持久化产物视为漏了卸载保护。
 
 ## 检查
 

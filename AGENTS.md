@@ -24,6 +24,7 @@
 | Pawn 身份、闸门、生命周期 | `docs/pawn.md` |
 | 外部模组兼容 | `docs/compatibility.md` |
 | 存档键与卸载归属 | `docs/save-ownership.md` |
+| 卸载导出规划，尚未实现 | `docs/unload-export.md` |
 | 修 bug 的范围 | `docs/bug-handling.md` |
 | 路线与当前进度 | `docs/project-goals.md` |
 | 决策记录 | `docs/adr/` |
