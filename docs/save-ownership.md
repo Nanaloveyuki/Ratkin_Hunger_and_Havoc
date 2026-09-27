@@ -186,6 +186,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Generation.RHAH_GenerationExtension | ThingDef `modExtensions` XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.StatPart_RHAH_TemperatureApparel | StatDef `parts` XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Incidents.RHAH_PredatorRecord | 捕食者深存档，嵌在 `predators` | Remove。随地图组件删除，不替换成原版动物 |
+| HungerAndHavoc.EventMgr.RHAH_EventChainRecord | 事件链深存档，嵌在 `eventChains` | Remove。随游戏组件删除，不替换成原版事件 |
 
 ### RHAH_PredatorRecord
 
@@ -196,6 +197,22 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | pawn | pawn | null | 否 | 活跃捕食者引用 |
 | outside | outside | false | 否 | 本地捕食者为 false，外边生成的为 true |
 | nextSearchTick | nextSearchTick | -1 | 否 | 下次允许搜索的 tick。空闲地图不因这个值扫描 |
+
+### RHAH_EventChainRecord
+
+类型名：`HungerAndHavoc.EventMgr.RHAH_EventChainRecord`。嵌在 `eventChains` 里。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| id | id | 0 | 否 | 实例 ID。读档后 `nextEventChainId` 至少比最大 id 大 1 |
+| displayId | displayId | 空字符串 | 否 | 注册键。`PostLoadInit` 把 null 补成空字符串。空键或 id 小于等于 0 的记录丢弃 |
+| siteId | siteId | 0 | 否 | 地图为正数 uniqueID，商队为负数 -ID，0 为世界格 |
+| stage | stage | 0 | 否 | 事件自己定义的阶段 |
+| startedTick | startedTick | 0 | 否 | |
+| deadlineTick | deadlineTick | -1 | 否 | -1 表示没有期限。读档后小于 -1 归 -1 |
+| payload | payload | 空字符串 | 否 | 事件自己的出现物文本。`PostLoadInit` 把 null 补成空字符串 |
+| closed | closed | false | 否 | |
+| end | end | 0 | 否 | 0 未结束，1 完成，2 失败，3 到期，4 取消 |
 
 Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记。GameComponent 与 MapComponent 的键在下一节。
 ### Generation runtime
@@ -233,6 +250,8 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 已登记�
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation pending tick | predationPendingTick | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation next tick | predationNextTick | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | grain hole thing id | holeThingId | Remove |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | event chains | eventChains | Remove。旧档缺列表时为空。null 与空集合都是没有链 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | next event chain id | nextEventChainId | Remove。默认 1。读档后小于等于已有实例 id 时抬到最大 id 加 1 |
 
 生成队列、批次保护和全局调度属于唯一全局运行时组件；本图访客索引和寻食缓存属于唯一地图组件。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
 

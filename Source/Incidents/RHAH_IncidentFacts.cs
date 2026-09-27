@@ -80,6 +80,7 @@ namespace HungerAndHavoc.Incidents
                 loadIds.ToArray()));
             HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Open(context, loadIds);
             OpenChoice(context, created);
+            EventMgr.RHAH_EventChainClock.NoteStarted(context.DisplayId, context.Map.uniqueID, 0, tick);
 
             return true;
         }

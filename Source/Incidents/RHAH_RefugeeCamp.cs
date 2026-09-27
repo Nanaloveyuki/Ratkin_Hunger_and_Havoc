@@ -274,6 +274,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             QuestUtility.SendLetterQuestAvailable(quest);
+            EventMgr.RHAH_EventChainClock.NoteStarted("I-051", map.uniqueID, 0, Find.TickManager == null ? 0 : Find.TickManager.TicksGame);
             return true;
         }
 

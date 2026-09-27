@@ -60,6 +60,7 @@ namespace HungerAndHavoc.Trade
                 entry.Category == RHAH_IncidentCategory.Plague,
                 visitors));
             HungerAndHavoc.Pawn.Compat.RHAH_LeashBridge.TryLeashTravel(result.Pawns[0].GetLord());
+            EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, map.uniqueID, 0, tick);
             return true;
         }
 
@@ -117,6 +118,7 @@ namespace HungerAndHavoc.Trade
                 return false;
             }
 
+            EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, 0, caravan.ID, tick);
             return true;
         }
 

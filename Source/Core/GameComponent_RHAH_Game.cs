@@ -1,4 +1,5 @@
 using System;
+using HungerAndHavoc.EventMgr;
 using HungerAndHavoc.Incidents;
 using System.Collections.Generic;
 using RimWorld;
@@ -25,6 +26,8 @@ namespace HungerAndHavoc.Core
         int nextChoiceId = 1;
         int broadcastCooldownUntilTick = -1;
         int generationCursor;
+        List<RHAH_EventChainRecord> eventChains = new List<RHAH_EventChainRecord>();
+        int nextEventChainId = 1;
 
         public IReadOnlyList<string> ActiveGenerationBatches => activeGenerationBatches;
         public IReadOnlyList<string> PendingIncidentDisplayIds => pendingIncidentDisplayIds;
@@ -37,6 +40,8 @@ namespace HungerAndHavoc.Core
         public IReadOnlyList<RHAH_ChoiceRecord> OpenChoices => openChoices;
         public int BroadcastCooldownUntilTick { get => broadcastCooldownUntilTick; set => broadcastCooldownUntilTick = value; }
         internal int NextChoiceId { get => nextChoiceId; set => nextChoiceId = value; }
+        internal IReadOnlyList<RHAH_EventChainRecord> EventChains => eventChains;
+        internal int NextEventChainId => nextEventChainId;
 
 
         public GameComponent_RHAH_Game(Game game)
@@ -56,6 +61,7 @@ namespace HungerAndHavoc.Core
             HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Tick(Find.TickManager.TicksGame);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_Envoy.Tick(Find.TickManager.TicksGame);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_RecordSite.Tick(Find.TickManager.TicksGame);
+            RHAH_EventChainRuntime.TickDue(eventChains, Find.TickManager.TicksGame);
         }
 
         public override void GameComponentUpdate()
@@ -303,6 +309,8 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref begCooldownTicks, "begCooldownTicks", LookMode.Value);
             Scribe_Collections.Look(ref beggedPawnIds, "beggedPawnIds", LookMode.Value);
             Scribe_Collections.Look(ref beggedColonistIds, "beggedColonistIds", LookMode.Value);
+            Scribe_Collections.Look(ref eventChains, "eventChains", LookMode.Deep);
+            Scribe_Values.Look(ref nextEventChainId, "nextEventChainId", 1);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 activeGenerationBatches = activeGenerationBatches ?? new List<string>();
@@ -336,6 +344,8 @@ namespace HungerAndHavoc.Core
                 Align(begCooldownPawnIds, begCooldownTicks, -1);
                 Align(beggedPawnIds, beggedColonistIds, 0);
                 Pawn.RHAH_Begging.Load(begCooldownPawnIds, begCooldownTicks, beggedPawnIds, beggedColonistIds);
+                eventChains = eventChains ?? new List<RHAH_EventChainRecord>();
+                RHAH_EventChainRuntime.Repair(eventChains, ref nextEventChainId);
                 for (int i = openChoices.Count - 1; i >= 0; i--)
                 {
                     if (openChoices[i] == null)
@@ -417,6 +427,26 @@ namespace HungerAndHavoc.Core
             {
                 right.RemoveAt(right.Count - 1);
             }
+        }
+
+        internal int StartEventChain(string displayId, int siteId, int tick, int deadlineTick, string payload)
+        {
+            return RHAH_EventChainRuntime.Start(eventChains, ref nextEventChainId, displayId, siteId, tick, deadlineTick, payload);
+        }
+
+        internal bool SetEventChainStage(int instanceId, int stage, int deadlineTick, string payload)
+        {
+            return RHAH_EventChainRuntime.SetStage(eventChains, instanceId, stage, deadlineTick, payload);
+        }
+
+        internal bool EndEventChain(int instanceId, int tick, RHAH_EventChainEnd end)
+        {
+            return RHAH_EventChainRuntime.End(eventChains, instanceId, tick, end);
+        }
+
+        internal int CheckEventChains(RHAH_EventChainSite site, int tick)
+        {
+            return RHAH_EventChainRuntime.Check(eventChains, ref nextEventChainId, site, tick);
         }
     }
 

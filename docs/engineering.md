@@ -27,14 +27,14 @@
 | `scripts/` | 检查、构建和部署脚本 |
 | `tmp/` | 临时文件，已 gitignore，不当源码或发布输入 |
 
-已有层是 Core、Identity、Generation、Incidents、Pawn、Narrative、Storyteller、Trade、Data、Tests。`Source/Storyteller/{Name}` 使用 `HungerAndHavoc.Storyteller.{Name}`，一个叙事者一个目录。当前只有穗音。World、Patches、UI 等有第一个类型再建模，不建空目录。不要再建 `Source/Behavior`。IrisMenus 绘制留在 `Source/Pawn/Compat`，和注册一起在缺少 IrisMenus.dll 时排除。不建 `Source/Settings` 或 `Source/UI`：设置数据仍在 `Core`，函数求值留在对应领域。`Source/Data` 使用 `HungerAndHavoc.Data`，只放经历和特质的静态记录与选择，不引用存档或设置。
+已有层是 Core、Identity、Generation、Incidents、Pawn、Narrative、Storyteller、Trade、Data、EventMgr、Tests。`Source/Storyteller/{Name}` 使用 `HungerAndHavoc.Storyteller.{Name}`，一个叙事者一个目录。当前只有穗音。World、Patches、UI 等有第一个类型再建模，不建空目录。不要再建 `Source/Behavior`。IrisMenus 绘制留在 `Source/Pawn/Compat`，和注册一起在缺少 IrisMenus.dll 时排除。不建 `Source/Settings` 或 `Source/UI`：设置数据仍在 `Core`，函数求值留在对应领域。`Source/Data` 使用 `HungerAndHavoc.Data`，只放经历和特质的静态记录与选择，不引用存档或设置。`Source/EventMgr` 使用 `HungerAndHavoc.EventMgr`，只放事件链注册、站点实例和双时钟，具体出现物由各事件实现。
 
 ## 分层与程序集
 
 目标程序集边界：
 
 - `HungerAndHavoc.Api.dll`：稳定公开契约，不引用实现程序集
-- `HungerAndHavoc.dll`：RimWorld 实现，引用 API 程序集，包含 Identity、Core、Incidents、Generation、Pawn、Narrative、Storyteller、Trade 和运行时实现
+- `HungerAndHavoc.dll`：RimWorld 实现，引用 API 程序集，包含 Identity、Core、Incidents、Generation、Pawn、Narrative、Storyteller、Trade、EventMgr 和运行时实现
 - `HungerAndHavocGuard.dll`：独立冲突提示程序集，不作为业务 API
 - 测试程序集：仅测试用途，不作为模组运行时依赖
 
@@ -42,7 +42,7 @@
 
 `HungerAndHavoc.Api.dll` 可以引用 `Assembly-CSharp` 与 `UnityEngine.CoreModule`，`Private=False`。API **不得**引用 `HungerAndHavoc.dll`、Harmony、Guard、其它模组程序集。公开方法可以使用 `Pawn`、`ThingDef` 等基础游戏类型。公开表面 **不得**出现 `CompRHAH_Pawn`、`Hediff_RHAH_Mark`、`RHAH_Race`、Job、Worker、DefOf、实现命名空间类型。
 
-`Source/{Layer}/Foo.cs` 的命名空间必须是 `HungerAndHavoc.{Layer}`。`Source/Core` 使用 `HungerAndHavoc.Core`，`Source/Identity` 使用 `HungerAndHavoc.Identity`，`Source/Generation` 使用 `HungerAndHavoc.Generation`，`Source/Incidents` 使用 `HungerAndHavoc.Incidents`，`Source/Pawn` 使用 `HungerAndHavoc.Pawn`，`Source/Pawn/Compat` 使用 `HungerAndHavoc.Pawn.Compat`，`Source/Narrative` 使用 `HungerAndHavoc.Narrative`，`Source/Storyteller/Suiyin` 使用 `HungerAndHavoc.Storyteller.Suiyin`，`Source/Trade` 使用 `HungerAndHavoc.Trade`，`Source/Tests` 使用 `HungerAndHavoc.Tests`。API 类型使用 `HungerAndHavoc.Api`，并放在 API 项目目录。`RHAH_IrisMenusWidgets` 只画卡片、可拖拽份额条和只读份额柱，不保存设置，不引用领域求值。
+`Source/{Layer}/Foo.cs` 的命名空间必须是 `HungerAndHavoc.{Layer}`。`Source/Core` 使用 `HungerAndHavoc.Core`，`Source/Identity` 使用 `HungerAndHavoc.Identity`，`Source/Generation` 使用 `HungerAndHavoc.Generation`，`Source/Incidents` 使用 `HungerAndHavoc.Incidents`，`Source/Pawn` 使用 `HungerAndHavoc.Pawn`，`Source/Pawn/Compat` 使用 `HungerAndHavoc.Pawn.Compat`，`Source/Narrative` 使用 `HungerAndHavoc.Narrative`，`Source/Storyteller/Suiyin` 使用 `HungerAndHavoc.Storyteller.Suiyin`，`Source/Trade` 使用 `HungerAndHavoc.Trade`，`Source/EventMgr` 使用 `HungerAndHavoc.EventMgr`，`Source/Tests` 使用 `HungerAndHavoc.Tests`。API 类型使用 `HungerAndHavoc.Api`，并放在 API 项目目录。`RHAH_IrisMenusWidgets` 只画卡片、可拖拽份额条和只读份额柱，不保存设置，不引用领域求值。
 
 实现目录中未被 Verse 反射、XML 或 Def 创建要求的类型默认 `internal`。因 Verse 需要跨程序集创建而必须 `public` 的类型，只是反射入口，不因此成为稳定 API。
 
@@ -193,6 +193,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Incidents.RHAH_ChoiceAction` | 选择记录存档字段 | `HungerAndHavoc.dll` | Scribe 需要公开枚举，不属于 API |
 | `HungerAndHavoc.Incidents.RHAH_ChoiceRecord` | `openChoices` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.Incidents.RHAH_PredatorRecord` | `predators` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
+| `HungerAndHavoc.EventMgr.RHAH_EventChainRecord` | `eventChains` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
 | `HungerAndHavoc.Pawn.CompProperties_RHAH_Clay` | ThingDef XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Pawn.Comp_RHAH_Clay` | `CompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 ThingComp；类型名写入 `.rws` |
