@@ -83,6 +83,7 @@ namespace HungerAndHavoc.Tests
             Assert.Contains(ears, request.ForcedEndogenes);
             Assert.DoesNotContain(xenogene, request.ForcedEndogenes);
             Assert.Null(request.ForcedXenogenes);
+            Assert.True(RHAH_Fertility.LitterRequest(Parent(ratkin, ears, xenogene), null).ForceNoBackstory);
             Assert.Same(ratkin, RHAH_Fertility.InheritedXenotype(Parent(ratkin, ears, xenogene), null));
         }
 
@@ -102,7 +103,10 @@ namespace HungerAndHavoc.Tests
             typeof(Pawn_GeneTracker).GetField("xenogenes", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(genes, new List<Gene> { GeneOf(xenogene) });
             pawn.genes = genes;
-            pawn.kindDef = new PawnKindDef();
+            pawn.kindDef = (PawnKindDef)FormatterServices.GetUninitializedObject(typeof(PawnKindDef));
+            ThingDef race = (ThingDef)FormatterServices.GetUninitializedObject(typeof(ThingDef));
+            race.race = new RaceProperties { lifeStageAges = new List<LifeStageAge>() };
+            pawn.kindDef.race = race;
             return pawn;
         }
 

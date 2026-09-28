@@ -38,7 +38,7 @@ namespace HungerAndHavoc.Generation
             {
                 FixedGender = gender,
                 FixedBiologicalAge = age,
-                ForceNoBackstory = explicitBackstory && resolved.Childhood == null && resolved.Adulthood == null
+                ForceNoBackstory = true
             };
             if (SuppressVanillaTraits())
             {

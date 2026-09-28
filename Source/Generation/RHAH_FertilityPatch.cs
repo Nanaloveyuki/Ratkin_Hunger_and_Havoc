@@ -147,6 +147,7 @@ namespace HungerAndHavoc.Generation
                 mother.Faction,
                 PawnGenerationContext.NonPlayer,
                 developmentalStages: DevelopmentalStage.Newborn);
+            request.ForceNoBackstory = true;
             request = AddEndogenes(request, father);
             request = AddEndogenes(request, mother);
             XenotypeDef xenotype = InheritedXenotype(mother, father);
@@ -501,6 +502,8 @@ namespace HungerAndHavoc.Generation
                     continue;
                 }
 
+
+                RHAH_RatkinName.Apply(extraBaby);
                 RHAH_Fertility.KeepGermline(extraBaby, mother, father);
                 if (mother.MapHeld != null)
                 {

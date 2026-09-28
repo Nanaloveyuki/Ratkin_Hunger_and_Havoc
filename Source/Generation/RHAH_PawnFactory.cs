@@ -133,6 +133,8 @@ namespace HungerAndHavoc.Generation
             }
 
             ApplyProfile(pawn, profile);
+
+            RHAH_RatkinName.Apply(pawn);
             if (request.Shatter)
             {
                 RHAH_PawnBody.Shatter(pawn);
