@@ -58,13 +58,12 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void RatkinStayHairlessUntilTheBabyStageEnds()
+        public void YoungRatkinKeepTheSameHairPool()
         {
-            Assert.True(RHAH_RatkinAppearance.KeepsNoHair(0f));
-            Assert.True(RHAH_RatkinAppearance.KeepsNoHair(2.9f));
-            Assert.True(RHAH_RatkinAppearance.KeepsNoHair(3.9f));
-            Assert.False(RHAH_RatkinAppearance.KeepsNoHair(4f));
-            Assert.False(RHAH_RatkinAppearance.KeepsNoHair(float.NaN));
+            Assert.True(RHAH_RatkinAppearance.HairAllowed(true, StyleGender.Any, Gender.None));
+            Assert.True(RHAH_RatkinAppearance.HairAllowed(true, StyleGender.Female, Gender.None));
+            Assert.True(RHAH_RatkinAppearance.HairAllowed(true, StyleGender.Male, Gender.None));
+            Assert.False(RHAH_RatkinAppearance.HairAllowed(false, StyleGender.Any, Gender.None));
         }
 
         [Fact]

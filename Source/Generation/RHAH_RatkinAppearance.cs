@@ -11,16 +11,8 @@ namespace HungerAndHavoc.Generation
     {
         const string RaceDefName = "Ratkin";
         const string HairTag = "RK_Style";
-        // 鼠族婴儿阶段到 4 岁 原版只藏人类 3 岁前的头发
-        internal const float HairlessAge = 4f;
         static void ApplyHair(Verse.Pawn pawn, IList<string> hairTags)
         {
-            if (KeepsNoHair(pawn))
-            {
-                pawn.story.hairDef = HairDefOf.Bald;
-                return;
-            }
-
             List<string> tags = Names(hairTags);
             if (tags.Count == 0)
             {
@@ -89,15 +81,6 @@ namespace HungerAndHavoc.Generation
             return HairAllowed(tagged, hair.styleGender, pawnGender);
         }
 
-        internal static bool KeepsNoHair(float age)
-        {
-            return !float.IsNaN(age) && !float.IsInfinity(age) && age >= 0f && age < HairlessAge;
-        }
-
-        static bool KeepsNoHair(Verse.Pawn pawn)
-        {
-            return pawn?.ageTracker != null && KeepsNoHair(pawn.ageTracker.AgeBiologicalYearsFloat);
-        }
         const string NoStyleTag = "alienNoStyle";
         internal static bool UsesRatkinAppearance(string raceDefName)
         {
@@ -429,23 +412,6 @@ namespace HungerAndHavoc.Generation
         }
     }
 
-    // 原版婴儿头发节点不看鼠族 4 岁阶段 这里只藏未满 4 岁的鼠族头发
-    [HarmonyLib.HarmonyPatch(typeof(PawnRenderNode_Hair), nameof(PawnRenderNode_Hair.GraphicFor))]
-    internal static class RHAH_RatkinHairGraphicPatch
-    {
-        static void Postfix(Verse.Pawn pawn, ref Graphic __result)
-        {
-            if (__result == null || pawn?.story == null || !RHAH_RatkinAppearance.UsesRatkinAppearance(pawn.def?.defName))
-            {
-                return;
-            }
-
-            if (pawn.ageTracker != null && RHAH_RatkinAppearance.KeepsNoHair(pawn.ageTracker.AgeBiologicalYearsFloat))
-            {
-                __result = null;
-            }
-        }
-    }
 
     internal sealed class RHAH_RatkinStyle
     {
