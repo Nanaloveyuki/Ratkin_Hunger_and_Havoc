@@ -230,7 +230,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_FastBirthPatch` 是 `internal`，Postfix `Hediff_Pregnant.TickInterval`。原版进度按种族孕期走，`GestationProgress` 不能从外部写入。补丁只在有速产且设定天数短于该种族孕期时，按天数比补上差额。到 1 后人类进产程，其它种族走原版分娩。没有速产的人走原版。
 `RHAH_RoomLovinPatch` 是 `internal`，Postfix `JobGiver_DoLovin.TryGiveJob`。原版只在冷却结束后自己找人。补丁只在结果为空、携带者有乱起、伴侣在同一张地图且双方能生育时补一个爱爱 Job。已有工作、征召中和睡着时不补。
 `RHAH_RoomBirthPatch` 是 `internal`，Postfix `JobDriver_Lovin.MakeNewToils`。原版爱爱结束按 5% 判定，哺乳把生育乘以 0.05。补丁只给携带乱起的母亲在爱爱结束时再判一次，几率仍是 5% 乘双方怀孕几率，并去掉哺乳这一项。其它来源的不育不改。其它爱爱不改。
-`RHAH_LargeLitterPatch` 是 `internal`，Postfix `PregnancyUtility.ApplyBirthOutcome`。原版人类一次只生一个。补丁只在母亲有多崽时按概率图补足数量。没有多崽的分娩不改。
+`RHAH_LargeLitterPatch` 是 `internal`，Postfix `PregnancyUtility.ApplyBirthOutcome`。原版人类一次只生一个，而且没有父亲时不会把母亲的可遗传异种写到孩子身上。补丁只在母亲有多崽时按概率图补足数量。多出来的幼崽使用父母的内源基因，双方可遗传异种相同、或只有一方有可遗传异种时写入该异种。正式孩子和多出来的幼崽都会再套一次这个异种，基因留在原初基因组。没有多崽、也没有可遗传异种的分娩不改基因。
 `RHAH_RatkinHairGraphicPatch` 是 `internal`，Postfix `PawnRenderNode_Hair.GraphicFor`。原版只在人类婴儿阶段藏头发，鼠族婴儿阶段到 4 岁。补丁只把未满 4 岁的鼠族头发图形清掉，其它种族和满 4 岁的鼠族不改。
 
 ## 检查门禁

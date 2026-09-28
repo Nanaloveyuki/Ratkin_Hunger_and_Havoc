@@ -140,6 +140,122 @@ namespace HungerAndHavoc.Generation
             return RHAH_FertilityRules.RollLitter(minimum, peak, maximum, () => Rand.Value);
         }
 
+        internal static PawnGenerationRequest LitterRequest(VersePawn mother, VersePawn father)
+        {
+            PawnGenerationRequest request = new PawnGenerationRequest(
+                mother.kindDef,
+                mother.Faction,
+                PawnGenerationContext.NonPlayer,
+                developmentalStages: DevelopmentalStage.Newborn);
+            request = AddEndogenes(request, father);
+            request = AddEndogenes(request, mother);
+            XenotypeDef xenotype = InheritedXenotype(mother, father);
+            if (xenotype != null)
+            {
+                request.ForcedXenotype = xenotype;
+            }
+
+            return request;
+        }
+
+        internal static PawnGenerationRequest AddEndogenes(PawnGenerationRequest request, VersePawn parent)
+        {
+            if (parent?.genes == null)
+            {
+                return request;
+            }
+
+            List<Gene> genes = parent.genes.Endogenes;
+            for (int i = 0; i < genes.Count; i++)
+            {
+                GeneDef gene = genes[i]?.def;
+                if (gene != null && gene.endogeneCategory != EndogeneCategory.Melanin && gene.biostatArc <= 0)
+                {
+                    request.AddForcedGene(gene, false);
+                }
+            }
+
+            return request;
+        }
+
+        internal static XenotypeDef InheritedXenotype(VersePawn mother, VersePawn father)
+        {
+            XenotypeDef motherType = HeritableXenotype(mother);
+            XenotypeDef fatherType = HeritableXenotype(father);
+            if (motherType != null && fatherType != null)
+            {
+                return motherType == fatherType ? motherType : null;
+            }
+
+            return motherType ?? fatherType;
+        }
+
+        static XenotypeDef HeritableXenotype(VersePawn pawn)
+        {
+            if (pawn?.genes == null)
+            {
+                return null;
+            }
+
+            XenotypeDef xenotype = pawn.genes.Xenotype;
+            return xenotype != null && xenotype.inheritable ? xenotype : null;
+        }
+
+        internal static void KeepGermline(VersePawn baby, VersePawn mother, VersePawn father)
+        {
+            if (!ModsConfig.BiotechActive || baby?.genes == null)
+            {
+                return;
+            }
+
+            XenotypeDef xenotype = InheritedXenotype(mother, father);
+            if (xenotype == null)
+            {
+                return;
+            }
+
+            List<GeneDef> genes = new List<GeneDef>();
+            CopyGeneDefs(genes, baby.genes.Endogenes);
+            CopyXenotypeGenes(genes, xenotype);
+            baby.genes.SetXenotype(xenotype);
+            for (int i = 0; i < genes.Count; i++)
+            {
+                if (!baby.genes.HasEndogene(genes[i]))
+                {
+                    baby.genes.AddGene(genes[i], false);
+                }
+            }
+        }
+
+        static void CopyGeneDefs(List<GeneDef> genes, List<Gene> source)
+        {
+            for (int i = 0; i < source.Count; i++)
+            {
+                GeneDef gene = source[i]?.def;
+                if (gene != null && !genes.Contains(gene))
+                {
+                    genes.Add(gene);
+                }
+            }
+        }
+
+        static void CopyXenotypeGenes(List<GeneDef> genes, XenotypeDef xenotype)
+        {
+            if (xenotype?.genes == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < xenotype.genes.Count; i++)
+            {
+                GeneDef gene = xenotype.genes[i];
+                if (gene != null && !genes.Contains(gene))
+                {
+                    genes.Add(gene);
+                }
+            }
+        }
+
         internal static float PregnancyChance(VersePawn woman, VersePawn man)
         {
             float chance = PregnancyUtility.PregnancyChanceForPartners(woman, man);
@@ -368,6 +484,7 @@ namespace HungerAndHavoc.Generation
             if (mother != null && baby != null)
             {
                 HungerAndHavoc.EventMgr.RHAH_EventFollowMood.NoteBirth(mother, baby);
+                RHAH_Fertility.KeepGermline(baby, mother, father);
             }
 
             if (mother == null || !RHAH_Fertility.Has(mother, RHAH_FertilityRules.LargeLitter))
@@ -378,16 +495,13 @@ namespace HungerAndHavoc.Generation
             int extra = RHAH_Fertility.LitterCount(mother) - 1;
             for (int i = 0; i < extra; i++)
             {
-                VersePawn extraBaby = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
-                    mother.kindDef,
-                    mother.Faction,
-                    PawnGenerationContext.NonPlayer,
-                    developmentalStages: DevelopmentalStage.Newborn));
+                VersePawn extraBaby = PawnGenerator.GeneratePawn(RHAH_Fertility.LitterRequest(mother, father));
                 if (extraBaby == null)
                 {
                     continue;
                 }
 
+                RHAH_Fertility.KeepGermline(extraBaby, mother, father);
                 if (mother.MapHeld != null)
                 {
                     GenSpawn.Spawn(extraBaby, mother.PositionHeld, mother.MapHeld);
