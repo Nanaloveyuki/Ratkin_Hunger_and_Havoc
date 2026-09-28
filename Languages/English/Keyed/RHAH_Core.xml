@@ -540,7 +540,7 @@
   <RHAH_Settings_BegSlapMood>Slapped: {0}</RHAH_Settings_BegSlapMood>
   <RHAH_Settings_BegSlapMood_Tooltip>Mood after a slap for begging again. -50 to 50, default -10.</RHAH_Settings_BegSlapMood_Tooltip>
   <RHAH_Settings_BegKnock>Slap stun: {0} hours</RHAH_Settings_BegKnock>
-  <RHAH_Settings_BegKnock_Tooltip>Hours a slap knocks the beggar down. 0 to 24, default 3. Zero does not stun.</RHAH_Settings_BegKnock_Tooltip>
+  <RHAH_Settings_BegKnock_Tooltip>Hours a slap stuns the beggar. 0 to 24. Default 0, which is half an hour. Zero still stuns for half an hour.</RHAH_Settings_BegKnock_Tooltip>
   <RHAH_Settings_BegBruise>Slap bruise: {0}</RHAH_Settings_BegBruise>
   <RHAH_Settings_BegBruise_Tooltip>Severity of the first bruise. 0 to 40, default 4.</RHAH_Settings_BegBruise_Tooltip>
   <RHAH_Settings_BegBruiseStep>Bruise step: {0}</RHAH_Settings_BegBruiseStep>

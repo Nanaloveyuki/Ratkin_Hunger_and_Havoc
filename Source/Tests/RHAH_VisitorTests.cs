@@ -195,6 +195,29 @@ namespace HungerAndHavoc.Tests
             Assert.DoesNotContain("MarkFed", File.ReadAllText(PawnPath("JobGiver_RHAH_Visitor.cs")));
         }
 
+        [Fact]
+        public void ManualExpel_AssignsAWalkJob()
+        {
+            string menu = File.ReadAllText(PawnPath("RHAH_VisitorExpelMenu.cs"));
+            Assert.Contains("RHAH_DefOf.RHAH_Expel", menu);
+            Assert.Contains("TryTakeOrderedJob", menu);
+            Assert.DoesNotContain("TryShift(clickedPawn, true)", menu);
+
+            string driver = File.ReadAllText(PawnPath("JobDriver_RHAH_Expel.cs"));
+            int walk = driver.IndexOf("Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch)");
+            int shift = driver.IndexOf("RHAH_BatchAttitude.TryShift(TargetPawn, false)");
+            Assert.True(walk >= 0 && shift > walk, "expel must reach the visitor before sending them off");
+            Assert.Contains("FailOn(() => !RHAH_Api.IsVisitor(TargetPawn))", driver);
+
+            string order = File.ReadAllText(PawnPath("RHAH_BatchAttitude.cs"));
+            int marked = order.IndexOf("MarkLeaving(members)");
+            int memo = order.IndexOf("lord.ReceiveMemo(\"RHAH_Leave\")");
+            int started = order.IndexOf("pawn.jobs?.StartJob(leave, JobCondition.InterruptForced)");
+            Assert.True(marked >= 0 && memo > marked && started > memo, "expulsion must mark Leaving before starting the exit job");
+            Assert.Contains("RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving)", order);
+        }
+
+
 
         static string HostPath([CallerFilePath] string testFile = null)
         {

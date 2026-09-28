@@ -183,6 +183,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_MotherFeed` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
+| `HungerAndHavoc.Pawn.JobDriver_RHAH_Expel` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_DropChild` | 访客调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_MotherFeed` | 访客调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_Scavenge` | 囚犯调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |

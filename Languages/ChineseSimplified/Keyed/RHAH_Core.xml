@@ -540,7 +540,7 @@
   <RHAH_Settings_BegSlapMood>被抽耳光心情：{0}</RHAH_Settings_BegSlapMood>
   <RHAH_Settings_BegSlapMood_Tooltip>重复乞讨被抽耳光时的心情。-50 到 50，默认 -10。</RHAH_Settings_BegSlapMood_Tooltip>
   <RHAH_Settings_BegKnock>耳光击晕：{0} 小时</RHAH_Settings_BegKnock>
-  <RHAH_Settings_BegKnock_Tooltip>抽耳光后倒地的小时数。0 到 24，默认 3。0 不击晕。</RHAH_Settings_BegKnock_Tooltip>
+  <RHAH_Settings_BegKnock_Tooltip>抽耳光后昏迷的小时数。0 到 24，默认 0，也就是半小时。0 仍会昏迷半小时。</RHAH_Settings_BegKnock_Tooltip>
   <RHAH_Settings_BegBruise>耳光瘀伤：{0}</RHAH_Settings_BegBruise>
   <RHAH_Settings_BegBruise_Tooltip>第一下瘀伤的严重度。0 到 40，默认 4。</RHAH_Settings_BegBruise_Tooltip>
   <RHAH_Settings_BegBruiseStep>瘀伤加重：{0}</RHAH_Settings_BegBruiseStep>

@@ -31,4 +31,9 @@
     <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite</driverClass>
     <reportString>咬尾巴</reportString>
   </JobDef>
+  <JobDef>
+    <defName>RHAH_Expel</defName>
+    <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_Expel</driverClass>
+    <reportString>驱逐目标</reportString>
+  </JobDef>
 </Defs>

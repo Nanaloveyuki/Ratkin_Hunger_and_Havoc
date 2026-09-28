@@ -187,6 +187,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.JobDriver_RHAH_MotherFeed | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_Expel | Job `driverClass` | Remove |
 | HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Request | Letter `letterClass` | Remove |
 | HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Visitors | Letter `letterClass` | Remove |
 | HungerAndHavoc.Incidents.ChoiceLetter_RHAH_GrainHole | Letter `letterClass` | Remove |
@@ -326,6 +327,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_MotherFeed | JobDef | Remove |
 | RHAH_Scavenge | JobDef | Remove |
 | RHAH_TailBite | JobDef | Remove |
+| RHAH_Expel | JobDef | Remove |
 | RHAH_RefugeeMassacre | QuestScriptDef | Remove |
 | RHAH_RefugeeCamp | WorldObjectDef / SitePartDef / MapGeneratorDef / GenStepDef | Remove。不替换成原版地点 |
 | RHAH_Approach | WorldObjectDef | Remove。不替换成原版商队。卸载后物体消失，未到达的事件不再生成 |
@@ -551,7 +553,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Settings.begFailMood | 全局 ModSettings，默认 -5。乞讨被拒心情 |
 | RHAH_Settings.begSuccessMood | 全局 ModSettings，默认 3。乞讨成功心情 |
 | RHAH_Settings.begSlapMood | 全局 ModSettings，默认 -10。被抽耳光心情 |
-| RHAH_Settings.begSlapKnockoutHours | 全局 ModSettings，默认 3。耳光击晕小时 |
+| RHAH_Settings.begSlapKnockoutHours | 全局 ModSettings，默认 0。0 表示半小时。读档时仍是旧默认 3 的改成 0，其它已保存值不改 |
 | RHAH_Settings.begBruiseSeverity | 全局 ModSettings，默认 4。第一下瘀伤 |
 | RHAH_Settings.begBruiseStep | 全局 ModSettings，默认 4。瘀伤加重 |
 | RHAH_Settings.begBruiseMax | 全局 ModSettings，默认 16。瘀伤改割伤的上限 |

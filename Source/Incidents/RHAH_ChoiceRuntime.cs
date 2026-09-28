@@ -432,7 +432,7 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            RHAH_BatchAttitude.TryShift(pawns[0], true);
+            RHAH_BatchAttitude.TryShift(pawns[0], false);
         }
         static void NoteEnding(RHAH_ChoiceRecord record)
         {

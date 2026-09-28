@@ -362,8 +362,9 @@ namespace HungerAndHavoc.Pawn
             if (beggar.stances != null && beggar.stances.stunner != null)
             {
                 int hours = RHAH_Mod.Settings == null ? RHAH_VisitorRules.BegSlapKnockoutHours : RHAH_Mod.Settings.begSlapKnockoutHours;
+                int ticks = hours <= 0 ? RHAH_VisitorRules.BegSlapKnockoutTicks : hours * RHAH_VisitorRules.TicksPerHour;
                 beggar.stances.stunner.StunFor(
-                    hours * RHAH_VisitorRules.TicksPerHour,
+                    ticks,
                     colonist,
                     true,
                     true,

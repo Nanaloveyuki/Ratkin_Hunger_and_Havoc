@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
+using HungerAndHavoc.Core;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace HungerAndHavoc.Pawn
 {
@@ -29,7 +31,7 @@ namespace HungerAndHavoc.Pawn
 
             yield return new FloatMenuOption(
                 "RHAH_Menu_Expel".Translate(clickedPawn.LabelShort),
-                () => RHAH_BatchAttitude.TryShift(clickedPawn, true),
+                () => AssignExpel(actor, clickedPawn),
                 MenuOptionPriority.Default,
                 null,
                 clickedPawn);
@@ -59,6 +61,23 @@ namespace HungerAndHavoc.Pawn
                     RHAH_Feeding.TryComplete(clickedPawn));
             }
         }
+        static void AssignExpel(Verse.Pawn actor, Verse.Pawn target)
+        {
+            if (actor == null || actor.Dead || actor.jobs == null || RHAH_DefOf.RHAH_Expel == null)
+            {
+                return;
+            }
+
+            if (!RHAH_Api.IsVisitor(target) || target.Map != actor.Map)
+            {
+                return;
+            }
+
+            Job job = JobMaker.MakeJob(RHAH_DefOf.RHAH_Expel, target);
+            job.playerForced = true;
+            actor.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+        }
+
         static string StayText(bool hire)
         {
             HungerAndHavoc.Core.RHAH_Settings settings = HungerAndHavoc.Core.RHAH_Mod.Settings;

@@ -55,7 +55,9 @@ namespace HungerAndHavoc.Pawn
         internal const int MinBegSlapChancePercent = 0;
         internal const int DefaultBegSlapChancePercent = 50;
         internal const int MaxBegSlapChancePercent = 100;
-        internal const int BegSlapKnockoutHours = 3;
+        internal const int BegSlapKnockoutHours = 0;
+        internal const int BegSlapKnockoutTicks = TicksPerHour / 2;
+        internal const int LegacyBegSlapKnockoutHours = 3;
         internal const int BegSlapMood = -10;
         internal const float MinorBruiseSeverity = 4f;
         internal const float BruiseSeverityStep = 4f;

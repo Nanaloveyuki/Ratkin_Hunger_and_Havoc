@@ -168,7 +168,7 @@ namespace HungerAndHavoc.Core
         public int begFailMood = -5;
         public int begSuccessMood = 3;
         public int begSlapMood = -10;
-        public int begSlapKnockoutHours = 3;
+        public int begSlapKnockoutHours = 0;
         public float begBruiseSeverity = 4f;
         public float begBruiseStep = 4f;
         public float begBruiseMax = 16f;
@@ -407,7 +407,11 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref begFailMood, "begFailMood", -5);
             Scribe_Values.Look(ref begSuccessMood, "begSuccessMood", 3);
             Scribe_Values.Look(ref begSlapMood, "begSlapMood", -10);
-            Scribe_Values.Look(ref begSlapKnockoutHours, "begSlapKnockoutHours", 3);
+            Scribe_Values.Look(ref begSlapKnockoutHours, "begSlapKnockoutHours", 0);
+            if (Scribe.mode == LoadSaveMode.LoadingVars && begSlapKnockoutHours == Pawn.RHAH_VisitorRules.LegacyBegSlapKnockoutHours)
+            {
+                begSlapKnockoutHours = 0;
+            }
             Scribe_Values.Look(ref begBruiseSeverity, "begBruiseSeverity", 4f);
             Scribe_Values.Look(ref begBruiseStep, "begBruiseStep", 4f);
             Scribe_Values.Look(ref begBruiseMax, "begBruiseMax", 16f);

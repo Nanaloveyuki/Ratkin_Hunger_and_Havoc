@@ -27,12 +27,14 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void ManualExpel_LeavesNeutralWithoutTurningHostile()
         {
-            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.Neutral, false));
             Assert.Equal(RHAH_AttitudeShift.None, RHAH_AttitudePolicy.React(RHAH_Attitude.Neutral, true));
+            Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.Neutral, false));
             Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(RHAH_Attitude.Hostile, false));
             Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.Friendly, false));
             Assert.Equal(RHAH_AttitudeShift.Leave, RHAH_AttitudePolicy.React(RHAH_Attitude.LeaningHostile, false));
             Assert.Equal(RHAH_AttitudeShift.Hostile, RHAH_AttitudePolicy.React(RHAH_Attitude.LeaningHostile, true));
+            Assert.Equal(1250, RHAH_VisitorRules.BegSlapKnockoutTicks);
+            Assert.Equal(0, RHAH_VisitorRules.BegSlapKnockoutHours);
         }
 
 

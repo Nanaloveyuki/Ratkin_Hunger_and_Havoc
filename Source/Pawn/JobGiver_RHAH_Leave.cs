@@ -54,7 +54,7 @@ namespace HungerAndHavoc.Pawn
             }
 
 
-            if (pawn.Downed)
+            if (pawn.Downed || (pawn.stances != null && pawn.stances.stunner != null && pawn.stances.stunner.Stunned))
             {
                 return null;
             }

@@ -118,16 +118,16 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
+            MarkLeaving(members);
             if (lord != null)
             {
                 lord.ReceiveMemo("RHAH_Leave");
-                return;
             }
 
             for (int i = 0; i < members.Count; i++)
             {
                 Verse.Pawn pawn = members[i];
-                if (pawn.Downed || pawn.Map == null)
+                if (pawn == null || pawn.Map == null || pawn.Dead)
                 {
                     continue;
                 }
@@ -137,6 +137,21 @@ namespace HungerAndHavoc.Pawn
                 {
                     pawn.jobs?.StartJob(leave, JobCondition.InterruptForced);
                 }
+            }
+        }
+
+
+        static void MarkLeaving(List<Verse.Pawn> members)
+        {
+            for (int i = 0; i < members.Count; i++)
+            {
+                Verse.Pawn pawn = members[i];
+                if (pawn == null || pawn.Dead || !RHAH_Api.IsVisitor(pawn))
+                {
+                    continue;
+                }
+
+                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
             }
         }
 

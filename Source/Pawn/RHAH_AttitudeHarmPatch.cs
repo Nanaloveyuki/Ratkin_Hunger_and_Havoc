@@ -27,7 +27,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            RHAH_BatchAttitude.TryShift(harmed, false);
+            RHAH_BatchAttitude.TryShift(harmed, true);
         }
     }
 }
