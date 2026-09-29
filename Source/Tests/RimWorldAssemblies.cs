@@ -56,7 +56,7 @@ namespace HungerAndHavoc.Tests
             }
 
             yield return "/mnt/e/Apps/Steam/steamapps/common/RimWorld/RimWorldWin64_Data/Managed";
-            yield return @"D:\Appdata\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed";
+            yield return @"E:\Apps\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed";
             yield return AppDomain.CurrentDomain.BaseDirectory;
         }
     }

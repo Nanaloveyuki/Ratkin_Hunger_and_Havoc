@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$RimWorldDir = 'D:\Appdata\Steam\steamapps\common\RimWorld',
+    [string]$RimWorldDir = 'E:\Apps\Steam\steamapps\common\RimWorld',
     [ValidateSet('Debug', 'Release')][string]$Configuration = 'Release',
     [switch]$BuildOnly
 )

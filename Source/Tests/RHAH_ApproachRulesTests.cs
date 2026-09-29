@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Incidents;
+using RimWorld.Planet;
 using Xunit;
 
 namespace HungerAndHavoc.Tests
@@ -59,6 +60,44 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(7, RHAH_ApproachRules.PickHome(new List<int> { 7 }, 4));
             Assert.Equal(9, RHAH_ApproachRules.PickHome(new List<int> { 7, 9 }, 1));
             Assert.Equal(0, RHAH_ApproachRules.PickHome(null, 1));
+        }
+
+        [Fact]
+        public void AdjacentPathYieldsTheColonyOnce()
+        {
+            using (WorldPath path = Path(8, 3))
+            {
+                Assert.True(RHAH_ApproachRules.TryConsumeNext(path, out PlanetTile next));
+                Assert.Equal(8, next.tileId);
+                Assert.Equal(1, path.NodesLeftCount);
+            }
+
+            using (WorldPath longer = Path(8, 5, 3))
+            {
+                Assert.True(RHAH_ApproachRules.TryConsumeNext(longer, out PlanetTile next));
+                Assert.Equal(5, next.tileId);
+                Assert.Equal(2, longer.NodesLeftCount);
+            }
+
+            using (WorldPath arrived = Path(8))
+            {
+                Assert.False(RHAH_ApproachRules.TryConsumeNext(arrived, out _));
+            }
+
+            Assert.False(RHAH_ApproachRules.TryConsumeNext(null, out _));
+            Assert.False(RHAH_ApproachRules.TryConsumeNext(WorldPath.NotFound, out _));
+        }
+
+        static WorldPath Path(params int[] destinationFirst)
+        {
+            WorldPath path = new WorldPath();
+            for (int i = 0; i < destinationFirst.Length; i++)
+            {
+                path.AddNodeAtStart(new PlanetTile(destinationFirst[i]));
+            }
+
+            path.SetupFound(1f, null);
+            return path;
         }
     }
 }

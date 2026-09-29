@@ -5,7 +5,7 @@ date: 2026-09-20
 
 # Ratkin: Hunger and Havoc 重写设计
 
-在空仓库 `Ratkin_Hunger_and_Havoc` 中，把 `/root/repos/Ratkin-Great-Famine-Year-Continued` 作为**玩法规格**重写为独立新模组，而不是 Continued 移植。
+在空仓库 `Ratkin_Hunger_and_Havoc` 中，把 `/root/repos/csharp/Ratkin-Great-Famine-Year-Continued` 作为**玩法规格**重写为独立新模组，而不是 Continued 移植。
 
 旧仓库的问题不带到新仓库：`MouseDisaster` 全局前缀、`N-001` 同时占用剧情和事件、用童年/成年经历判定“是不是灾鼠”、二十多个 `GameComponent`、巨型 `MouseDisasterUtility` 分部类、旧式 csproj 手写 Compile 列表。
 

@@ -137,10 +137,9 @@ namespace HungerAndHavoc.Incidents
             }
 
             WorldPath path = map.Tile.Layer.Pather.FindPath(Tile, map.Tile, null);
-            bool sharedFailure = path == WorldPath.NotFound;
-            if (path == null || sharedFailure || !path.Found || path.NodesLeftCount < 2)
+            if (!RHAH_ApproachRules.TryConsumeNext(path, out PlanetTile next))
             {
-                if (RHAH_ApproachRules.ReleasePath(path == null, sharedFailure))
+                if (RHAH_ApproachRules.ReleasePath(path == null, path == WorldPath.NotFound))
                 {
                     path.ReleaseToPool();
                 }
@@ -148,8 +147,6 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
-            path.ConsumeNextNode();
-            PlanetTile next = path.ConsumeNextNode();
             path.ReleaseToPool();
             if (!next.Valid || !RHAH_ApproachRules.CanWalk(Find.World.Impassable(next), crossing))
             {

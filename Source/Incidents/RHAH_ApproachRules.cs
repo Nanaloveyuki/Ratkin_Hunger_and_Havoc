@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RimWorld.Planet;
 
 namespace HungerAndHavoc.Incidents
 {
@@ -94,6 +95,18 @@ namespace HungerAndHavoc.Incidents
             }
 
             return best;
+        }
+
+        internal static bool TryConsumeNext(WorldPath path, out PlanetTile next)
+        {
+            next = default;
+            if (path == null || path == WorldPath.NotFound || !path.Found || path.NodesLeftCount < 2)
+            {
+                return false;
+            }
+
+            next = path.ConsumeNextNode();
+            return next.Valid;
         }
 
         internal static bool ReleasePath(bool missing, bool sharedFailure)

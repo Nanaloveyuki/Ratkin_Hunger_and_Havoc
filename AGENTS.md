@@ -65,12 +65,12 @@ Windows 路径给资源管理器和 PowerShell。WSL 里用 `/mnt/...`。
 | 原版 DLC Def | `D:\References\Rimworld\Vanilla\DLCs` | `/mnt/d/References/Rimworld/Vanilla/DLCs` |
 | NewRatkinPlus | `D:\References\Rimworld\Mods\NewRatkinPlus` | `/mnt/d/References/Rimworld/Mods/NewRatkinPlus` |
 | NewRatkinPlus 简中 | `D:\References\Rimworld\Mods\NewRatkinPlus_zh` | `/mnt/d/References/Rimworld/Mods/NewRatkinPlus_zh` |
-| 旧鼠灾，只对照玩法 |  | `/root/repos/Ratkin-Great-Famine-Year-Continued` |
-| IrisMenus 源码与公开 API |  | `/root/repos/IrisMenus` |
+| 旧鼠灾，只对照玩法 |  | `/root/repos/csharp/Ratkin-Great-Famine-Year-Continued` |
+| IrisMenus 源码与公开 API |  | `/root/repos/csharp/IrisMenus` |
 
-一键部署用 `scripts/deploy.sh`。它在 WSL 里做结构检查、Release 构建，并把 About、Languages、Guard、1.6、Biotech 同步到本机 `Mods/RatkinHungerAndHavoc`，按 SHA-256 核对。游戏进程 `RimWorldWin64` 存在时拒绝覆盖。游戏目录用 `RIMWORLD_DIR` 或 `RimWorldDir`，缺省是上面的 `/mnt/e/Apps/...`。`scripts/build-and-deploy.ps1` 默认指向另一台机器的 `D:\Appdata\...`，本机 Windows 也没有 Python 和 .NET SDK，不要用它部署。
+一键部署用 `scripts/deploy.sh`。它在 WSL 里做结构检查、Release 构建，并把 About、Languages、Guard、1.6、Biotech 同步到本机 `Mods/RatkinHungerAndHavoc`，按 SHA-256 核对。游戏进程 `RimWorldWin64` 存在时拒绝覆盖。游戏目录用 `RIMWORLD_DIR` 或 `RimWorldDir`，缺省是上面的 `/mnt/e/Apps/...`。`scripts/build-and-deploy.ps1` 用同一台机器的 `E:\Apps\...`。本机 Windows 没有 Python 和 .NET SDK，不要用它部署。
 
-IrisMenus 公开 API 在 `/root/repos/IrisMenus/Source/MenuRegistry.cs` 和 `MenuControls.cs`。接入说明是同仓库的 `guide.md` 与 `guide_agents.md`。它的 About 没有 `modVersion`，用 `supportedVersions` 的 1.6 判断。
+IrisMenus 公开 API 在 `/root/repos/csharp/IrisMenus/Source/MenuRegistry.cs` 和 `MenuControls.cs`。接入说明是同仓库的 `guide.md` 与 `guide_agents.md`。它的 About 没有 `modVersion`，用 `supportedVersions` 的 1.6 判断。
 
 ## 注释
 
