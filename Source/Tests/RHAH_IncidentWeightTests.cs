@@ -164,6 +164,9 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(RHAH_PawnRole.RatkinYoung, RHAH_IncidentRoster.RoleAt("I-033", RHAH_PawnRole.Refugee, 0));
             Assert.Equal(RHAH_PawnRole.BeggarMother, RHAH_IncidentRoster.RoleAt("I-029", RHAH_PawnRole.Beggar, 0));
             Assert.Equal(RHAH_PawnRole.BeggarMother, RHAH_IncidentRoster.RoleAt("I-044", RHAH_PawnRole.Beggar, 1));
+            Assert.Equal(RHAH_PawnRole.Trader, RHAH_IncidentRoster.RoleAt("I-012", RHAH_PawnRole.Trader, 0));
+            Assert.Equal(RHAH_PawnRole.RatkinYoung, RHAH_IncidentRoster.RoleAt("I-012", RHAH_PawnRole.Trader, 1));
+            Assert.Equal(RHAH_PawnRole.RatkinYoung, RHAH_IncidentRoster.RoleAt("I-038", RHAH_PawnRole.Trader, 2));
             Assert.Equal(RHAH_PawnRole.Refugee, RHAH_IncidentRoster.RoleAt("I-001", RHAH_PawnRole.Refugee, 8));
             Assert.True(RHAH_IncidentRoster.StartsLabor("I-029"));
             Assert.True(RHAH_IncidentRoster.StartsLabor("I-044"));

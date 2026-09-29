@@ -183,9 +183,9 @@ namespace HungerAndHavoc.Trade
             return foodCount >= childCount * each;
         }
 
-        internal static bool NpcSellsFood(bool isTradeCaravan, bool foodIsNutrition)
+        internal static bool NpcSellsFood(bool isTradeCaravan, bool foodIsNutrition, string defName)
         {
-            return !(isTradeCaravan && foodIsNutrition);
+            return HungerAndHavoc.Pawn.Compat.RHAH_RatEggCuisine.NpcSells(isTradeCaravan, foodIsNutrition, defName);
         }
 
         internal static string MessageKey(TransitionAction action)

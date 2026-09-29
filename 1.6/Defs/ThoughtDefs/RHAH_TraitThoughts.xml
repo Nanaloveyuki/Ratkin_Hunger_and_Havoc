@@ -451,6 +451,20 @@
     <stackLimit>1</stackLimit>
     <stages><li><label>那支商队没说他们有病</label><description>人走了，病留下了。</description><baseMoodEffect>-4</baseMoodEffect></li></stages>
   </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_AteRatEggMeal</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>1</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>窝不要被做成鼠鼠蛋糕吱</label>
+        <description>那口香香的。窝怕怕。</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
   <ThoughtDef><defName>RHAH_Thought_MotherSorry</defName><thoughtClass>Thought_Memory</thoughtClass><durationDays>15</durationDays><stackLimit>1</stackLimit><stages><li><label>窝对不起窝滴妈妈</label><description>她还在。</description><baseMoodEffect>-3</baseMoodEffect></li></stages></ThoughtDef>
   <ThoughtDef><defName>RHAH_Thought_MotherFine</defName><thoughtClass>Thought_Memory</thoughtClass><durationDays>15</durationDays><stackLimit>1</stackLimit><stages><li><label>饿饿就次次叽!泥看窝滴妈妈还活滴好好滴!</label><description>还活着。</description><baseMoodEffect>24</baseMoodEffect></li></stages></ThoughtDef>
   <ThoughtDef><defName>RHAH_Thought_ChildDeadGlad</defName><thoughtClass>Thought_Memory</thoughtClass><durationDays>15</durationDays><stackLimit>1</stackLimit><stages><li><label>咬我的那只臭鼠蛋终于死了吱</label><description>少了一张咬人的嘴。</description><baseMoodEffect>3</baseMoodEffect></li></stages></ThoughtDef>

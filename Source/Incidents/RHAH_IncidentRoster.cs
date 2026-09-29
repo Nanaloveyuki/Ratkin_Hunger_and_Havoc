@@ -32,6 +32,9 @@ namespace HungerAndHavoc.Incidents
                 case "I-029":
                 case "I-044":
                     return RHAH_PawnRole.BeggarMother;
+                case "I-012":
+                case "I-038":
+                    return index == 0 ? RHAH_PawnRole.Trader : RHAH_PawnRole.RatkinYoung;
                 default:
                     return fallback;
             }

@@ -63,6 +63,7 @@ namespace HungerAndHavoc.Incidents
             }
 
             Pawn.Compat.RHAH_LeashBridge.TryLeashArrivals(arrived);
+            StockCuisine(context, arrived);
             LinkFamily(context.DisplayId, arrived);
             List<int> loadIds = new List<int>(arrived.Count);
             for (int i = 0; i < arrived.Count; i++)
@@ -110,6 +111,43 @@ namespace HungerAndHavoc.Incidents
                 child.State.parentPawnLoadId = arrived[0].thingIDNumber;
                 mother.State.childPawnLoadIds.Add(arrived[i].thingIDNumber);
             }
+        }
+
+        static void StockCuisine(RHAH_IncidentContext context, List<Verse.Pawn> arrived)
+        {
+            if (!Trade.RHAH_CaravanStay.IsTradeCaravan(context.DisplayId, context.Role) || arrived.Count == 0)
+            {
+                return;
+            }
+
+            Verse.Pawn trader = null;
+            Verse.Pawn carrier = null;
+            float youngest = float.MaxValue;
+            for (int i = 0; i < arrived.Count; i++)
+            {
+                Verse.Pawn pawn = arrived[i];
+                IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
+                if (snapshot != null && snapshot.Role == RHAH_PawnRole.Trader && trader == null)
+                {
+                    trader = pawn;
+                }
+
+                float age = pawn.ageTracker == null ? Pawn.Compat.RHAH_RatEggCuisine.AdultAge : pawn.ageTracker.AgeBiologicalYearsFloat;
+                if (age < youngest)
+                {
+                    youngest = age;
+                    carrier = pawn;
+                }
+            }
+
+            if (carrier == trader)
+            {
+                return;
+            }
+
+            Verse.Pawn seller = trader ?? arrived[0];
+            Pawn.Compat.RHAH_RatEggCuisine.Stock(seller, carrier);
+            Pawn.Compat.RHAH_RatEggCuisine.OpenTrade(seller);
         }
 
         static float? GenerationAge(RHAH_PawnRole role)

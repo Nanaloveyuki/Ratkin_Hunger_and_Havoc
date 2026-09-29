@@ -249,4 +249,8 @@
   <RHAH_Thought_BitATail.label>bit a tail</RHAH_Thought_BitATail.label>
   <RHAH_Thought_BitATail.description>I bit off a tail. It filled me up.</RHAH_Thought_BitATail.description>
   <RHAH_Thought_BitATail.stages.0.label>bit a tail</RHAH_Thought_BitATail.stages.0.label>
+  <RHAH_Thought_AteRatEggMeal.label>don't make me into cake</RHAH_Thought_AteRatEggMeal.label>
+  <RHAH_Thought_AteRatEggMeal.description>That smelled good. I am scared.</RHAH_Thought_AteRatEggMeal.description>
+  <RHAH_Thought_AteRatEggMeal.stages.0.label>don't make me into cake</RHAH_Thought_AteRatEggMeal.stages.0.label>
+
 </LanguageData>

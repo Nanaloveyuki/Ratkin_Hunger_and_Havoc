@@ -364,7 +364,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Thought_FellBad, RHAH_Thought_FellGood, RHAH_Thought_WrongKinBad, RHAH_Thought_WrongKinGood, RHAH_Thought_PlagueMotherDeadBad, RHAH_Thought_PlagueMotherDeadGood | ThoughtDef | Remove |
 | RHAH_Thought_PlagueLeft, RHAH_Thought_PlagueLived, RHAH_Thought_OrphanBad, RHAH_Thought_OrphanGood, RHAH_Thought_TraderSilent | ThoughtDef | Remove |
 | RHAH_Thought_CleanBirth, RHAH_Thought_NextBirth, RHAH_Thought_BornSick, RHAH_Thought_DropSick, RHAH_Thought_DropLived, RHAH_Thought_WrongSick, RHAH_Thought_WrongFed | ThoughtDef | Remove |
-| RHAH_Thought_ScavengedFilth, RHAH_Thought_TailBitten, RHAH_Thought_BitATail | ThoughtDef | Remove |
+| RHAH_Thought_ScavengedFilth, RHAH_Thought_TailBitten, RHAH_Thought_BitATail, RHAH_Thought_AteRatEggMeal | ThoughtDef | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed | 无存档字段 | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease | 无存档字段 | Remove |
 

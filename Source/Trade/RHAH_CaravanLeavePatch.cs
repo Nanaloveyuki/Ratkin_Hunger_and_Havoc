@@ -52,7 +52,8 @@ namespace HungerAndHavoc.Trade
             }
 
             Verse.Pawn trader = TradeSession.trader as Verse.Pawn;
-            if (trader != null && RHAH_CaravanStay.IsTradeCaravan(trader))
+            if (trader != null && RHAH_CaravanStay.IsTradeCaravan(trader) &&
+                !RHAH_CaravanStay.NpcSellsFood(true, true, td.defName))
             {
                 __result = false;
             }

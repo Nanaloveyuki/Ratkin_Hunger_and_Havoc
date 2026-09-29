@@ -21,6 +21,8 @@ namespace HungerAndHavoc.Pawn
             __result.AddFinishAction(delegate
             {
                 RHAH_Feeding.TryComplete(ingester);
+                Thing eaten = ingester.jobs?.curJob?.GetTarget(TargetIndex.A).Thing;
+                Compat.RHAH_RatEggCuisine.NoteEaten(ingester, eaten?.def?.defName);
             });
         }
     }

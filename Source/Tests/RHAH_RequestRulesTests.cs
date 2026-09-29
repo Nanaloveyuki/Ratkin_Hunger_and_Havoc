@@ -107,8 +107,9 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_RequestRules.CanSubstituteFood(false, RHAH_ChoiceKind.ChildExchange, 20, 2));
             Assert.False(RHAH_RequestRules.CanSubstituteFood(true, RHAH_ChoiceKind.ChildExchange, 19, 2));
             Assert.False(RHAH_RequestRules.CanSubstituteFood(true, RHAH_ChoiceKind.Aid, 20, 2));
-            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.NpcSellsFood(true, true));
-            Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.NpcSellsFood(true, false));
+            Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.NpcSellsFood(true, true, "MealSimple"));
+            Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.NpcSellsFood(true, true, "Meal_RatEggMeatStewed"));
+            Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.NpcSellsFood(true, false, "MealSimple"));
             Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.ShouldLeave(false, false, false, true, true, true, true));
             Assert.False(HungerAndHavoc.Trade.RHAH_CaravanStay.ShouldLeave(true, true, true, true, true, true, true));
             Assert.True(HungerAndHavoc.Trade.RHAH_CaravanStay.ShouldLeave(true, false, true, true, false, false, false));

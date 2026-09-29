@@ -447,6 +447,8 @@ namespace HungerAndHavoc.Pawn
                     {
                         food.CurLevel += RHAH_Mod.Settings == null ? RHAH_FamilyRules.TailNutrition : RHAH_Mod.Settings.tailNutrition;
                     }
+
+                    Compat.RHAH_RatEggCuisine.TryDropTail(target);
                 }
                 else
                 {
