@@ -2,8 +2,8 @@
 <LanguageData>
   <RHAH_Menu_Ending_Note>结局只在穗音叙事下出现，每档只落一个。关掉的那一条不再新触发，已经记下的不撤掉，也不会改去触发另一条。</RHAH_Menu_Ending_Note>
   <RHAH_Ending_Toggle_Tooltip>关闭后这项不再新触发。已经出现的不撤掉。关掉它不会改触发另一条结局。</RHAH_Ending_Toggle_Tooltip>
-  <RHAH_Ending_Identity>身份询问</RHAH_Ending_Identity>
-  <RHAH_Ending_Identity_Tooltip>只在穗音叙事下出现一次。拒绝不扣信任，也不会再问。</RHAH_Ending_Identity_Tooltip>
+  <RHAH_Ending_Identity>身份告知</RHAH_Ending_Identity>
+  <RHAH_Ending_Identity_Tooltip>只在穗音叙事下出现一次。信任够了就寄来，不另做选择。</RHAH_Ending_Identity_Tooltip>
   <RHAH_Ending_Aid>接济门槛：{0}</RHAH_Ending_Aid>
   <RHAH_Ending_Aid_Tooltip>广义接济达到这个次数后，才检查丰年和希望之城。默认 99。</RHAH_Ending_Aid_Tooltip>
   <RHAH_Ending_Broadcast>广播门槛：{0}</RHAH_Ending_Broadcast>
@@ -28,8 +28,6 @@
   <RHAH_Ending_E05_Text>这封信很短，署名写得很清楚。\n\n「我不再为这里作保。已经发生的事，我会把记录交给受影响的人。」\n\n「有人问我当初为什么相信这里。我得当面回答。」\n\n「留在你们身边的人还要吃饭、治病、睡觉。我不再捎闲话。他们的日子继续。必要的交接和结果记录仍会送来。」\n\n「穗音。」\n\n信里没有新的求援名单。她也没有要求答复。随机来客不会因此停掉。</RHAH_Ending_E05_Text>
   <RHAH_Ending_Public_Label>饥荒鼠族援助纪事</RHAH_Ending_Public_Label>
   <RHAH_Ending_Public_Text>这段时间的援助已经汇成一份名册。有人在路上得到了食物，也有人在这里住了下来。\n\n接济 {0} 次，广播 {1} 次。上次清点时，一处聚落里有 {2} 名成年饥荒鼠族。</RHAH_Ending_Public_Text>
-  <RHAH_Ending_IdentityAsk_Label>你一直没说的事</RHAH_Ending_IdentityAsk_Label>
-  <RHAH_Ending_IdentityAsk_Text>「我知道一些旧仓号，也能联系上管运输的人。\n\n这些事以前没说清楚。现在可以谈。」</RHAH_Ending_IdentityAsk_Text>
   <RHAH_Ending_IdentityFull_Label>她的名字</RHAH_Ending_IdentityFull_Label>
   <RHAH_Ending_IdentityFull_Text>「我是王国的公主。名字就是穗音，没有换过。\n\n外面还有那么多人在讨饭，这件事我知道。我也一直在问那些能把粮食留在仓里的人。\n\n这些钱是我能拿出来的，运输也是。我没有能把每一条路打通的军队。\n\n现在你知道了。别因为这个头衔改口。我还没做成值得你那样叫的事。」</RHAH_Ending_IdentityFull_Text>
   <RHAH_Ending_IdentityPartial_Label>先说到这里</RHAH_Ending_IdentityPartial_Label>

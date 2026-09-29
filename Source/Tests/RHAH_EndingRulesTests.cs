@@ -85,13 +85,13 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void Identity_AsksOnceAndRefusalDoesNotLowerTrust()
+        public void Identity_SendsTheOfferedTierOnce()
         {
             RHAH_EndingGoals goals = RHAH_EndingGoals.Defaults();
             Assert.False(RHAH_EndingRules.IdentityDue(Facts(49, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 0), goals));
             Assert.True(RHAH_EndingRules.IdentityDue(Facts(50, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 0), goals));
-            Assert.Equal(RHAH_IdentityTier.Partial, RHAH_EndingRules.IdentityOffer(50, 50, 75));
-            Assert.Equal(RHAH_IdentityTier.Full, RHAH_EndingRules.IdentityOffer(75, 50, 75));
+            Assert.Equal("RHAH_Ending_IdentityPartial", RHAH_EndingRuntime.IdentityKey(RHAH_EndingRules.IdentityOffer(50, 50, 75)));
+            Assert.Equal("RHAH_Ending_IdentityFull", RHAH_EndingRuntime.IdentityKey(RHAH_EndingRules.IdentityOffer(75, 50, 75)));
             Assert.False(RHAH_EndingRules.IdentityDue(Facts(80, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 2), goals));
             Assert.Equal(50, Facts(50, true, 1, 0, 0, 0, 0, false, 0, false, false, false, false, false, 0).Trust);
         }

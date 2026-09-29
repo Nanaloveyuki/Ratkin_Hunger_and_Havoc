@@ -241,15 +241,22 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             Find.LetterStack.ReceiveLetter(label, body, LetterDefOf.PositiveEvent);
         }
 
+        internal static string IdentityKey(RHAH_IdentityTier tier)
+        {
+            return tier == RHAH_IdentityTier.Full ? "RHAH_Ending_IdentityFull" : "RHAH_Ending_IdentityPartial";
+        }
+
         static void ShowIdentity(RHAH_IdentityTier tier)
         {
-            string key = tier == RHAH_IdentityTier.Full ? "RHAH_Ending_IdentityFull" : "RHAH_Ending_IdentityPartial";
+            string key = IdentityKey(tier);
             Find.LetterStack.ReceiveLetter((key + "_Label").Translate(), (key + "_Text").Translate(), LetterDefOf.NeutralEvent);
         }
 
-        internal static string Preview(RHAH_EndingId id, bool narrator, int aid, int broadcasts, int adults)
+        internal static string Preview(RHAH_EndingId id, bool narrator, int aid, int broadcasts, int adults, int trust, int trustFloor, int hopeTrust)
         {
-            string key = id == RHAH_EndingId.None ? "RHAH_Ending_IdentityAsk" : TextKey(id, narrator);
+            string key = id == RHAH_EndingId.None
+                ? IdentityKey(RHAH_EndingRules.IdentityOffer(trust, trustFloor, hopeTrust))
+                : TextKey(id, narrator);
             if (key == null)
             {
                 return string.Empty;

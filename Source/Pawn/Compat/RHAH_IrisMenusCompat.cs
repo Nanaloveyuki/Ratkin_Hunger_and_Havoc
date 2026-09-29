@@ -1402,14 +1402,18 @@ namespace HungerAndHavoc.Pawn.Compat
         void PreviewButton(Listing_Standard list, string anchor, RHAH_EndingId id)
         {
             MenuControls.Anchor(list, anchor);
-            string key = id == RHAH_EndingId.None ? "RHAH_Ending_IdentityAsk_Label" : RHAH_EndingRuntime.TextKey(id, true) + "_Label";
+            NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
+            int trust = state == null ? 0 : state.Snapshot().Trust;
+            string key = id == RHAH_EndingId.None
+                ? RHAH_EndingRuntime.IdentityKey(RHAH_EndingRules.IdentityOffer(
+                    trust, RHAH_Mod.Settings.endingTrustFloor, RHAH_Mod.Settings.endingHopeTrust)) + "_Label"
+                : RHAH_EndingRuntime.TextKey(id, true) + "_Label";
             if (list.ButtonText(key.Translate()))
             {
-                NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
                 int aid = state == null ? 0 : state.AidCount;
                 int broadcasts = state == null ? 0 : state.BroadcastCount;
                 int adults = state == null ? 0 : state.AdultCount;
-                Messages.Message(RHAH_EndingRuntime.Preview(id, true, aid, broadcasts, adults), MessageTypeDefOf.NeutralEvent, false);
+                Messages.Message(RHAH_EndingRuntime.Preview(id, true, aid, broadcasts, adults, trust, RHAH_Mod.Settings.endingTrustFloor, RHAH_Mod.Settings.endingHopeTrust), MessageTypeDefOf.NeutralEvent, false);
             }
         }
 
