@@ -9,8 +9,19 @@ namespace HungerAndHavoc.Core
         public const string HarmonyId = PackageId;
         public const string DefPrefix = "RHAH_";
 
-        public static bool AllowsNewContent =>
-            RHAH_Mod.Settings == null || RHAH_Mod.Settings.enableNewContent;
+        public static bool AllowsNewContent
+        {
+            get
+            {
+                if (RHAH_Mod.Settings != null && !RHAH_Mod.Settings.enableNewContent)
+                {
+                    return false;
+                }
+
+                GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+                return game == null || !game.NewContentDisabled;
+            }
+        }
 
         internal static bool IsBatchActive(Map map, int batchId)
         {

@@ -26,6 +26,7 @@ namespace HungerAndHavoc.Core
             listing.Begin(inRect);
             listing.CheckboxLabeled("RHAH_Settings_EnableNewContent".Translate(), ref Settings.enableNewContent,
                 "RHAH_Settings_EnableNewContent_Tooltip".Translate());
+            DrawRemoval(listing);
             listing.CheckboxLabeled("RHAH_Settings_OptimizeGeneration".Translate(), ref Settings.optimizeGeneration,
                 "RHAH_Settings_OptimizeGeneration_Tooltip".Translate());
             bool relief = Settings.reliefEnabled;
@@ -127,6 +128,35 @@ namespace HungerAndHavoc.Core
 
             listing.End();
             Settings.Write();
+        }
+        static void DrawRemoval(Listing_Standard listing)
+        {
+            listing.GapLine();
+            GameComponent_RHAH_Game game = Current.ProgramState == ProgramState.Playing
+                ? Current.Game?.GetComponent<GameComponent_RHAH_Game>()
+                : null;
+            if (game == null)
+            {
+                listing.Label("RHAH_RemovalNoGame".Translate());
+                return;
+            }
+
+            listing.Label("RHAH_RemovalSection".Translate());
+            if (game.NewContentDisabled)
+            {
+                listing.Label("RHAH_RemovalDisabled".Translate());
+            }
+            else if (listing.ButtonText("RHAH_RemovalDisable".Translate()))
+            {
+                game.DisableNewContent();
+            }
+
+            if (listing.ButtonText("RHAH_RemovalExport".Translate()))
+            {
+                Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                    "RHAH_RemovalConfirm".Translate(),
+                    () => LongEventHandler.QueueLongEvent(RHAH_SaveExport.Export, "SavingLongEvent", false, null)));
+            }
         }
     }
 }

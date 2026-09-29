@@ -28,6 +28,7 @@ namespace HungerAndHavoc.Core
         int generationCursor;
         List<RHAH_EventChainRecord> eventChains = new List<RHAH_EventChainRecord>();
         int nextEventChainId = 1;
+        bool newContentDisabled;
 
         public IReadOnlyList<string> ActiveGenerationBatches => activeGenerationBatches;
         public IReadOnlyList<string> PendingIncidentDisplayIds => pendingIncidentDisplayIds;
@@ -42,6 +43,7 @@ namespace HungerAndHavoc.Core
         internal int NextChoiceId { get => nextChoiceId; set => nextChoiceId = value; }
         internal IReadOnlyList<RHAH_EventChainRecord> EventChains => eventChains;
         internal int NextEventChainId => nextEventChainId;
+        internal bool NewContentDisabled => newContentDisabled;
 
 
         public GameComponent_RHAH_Game(Game game)
@@ -380,6 +382,7 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref beggedColonistIds, "beggedColonistIds", LookMode.Value);
             Scribe_Collections.Look(ref eventChains, "eventChains", LookMode.Deep);
             Scribe_Values.Look(ref nextEventChainId, "nextEventChainId", 1);
+            Scribe_Values.Look(ref newContentDisabled, "newContentDisabled", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 activeGenerationBatches = activeGenerationBatches ?? new List<string>();
@@ -426,6 +429,10 @@ namespace HungerAndHavoc.Core
                     openChoices[i].PawnLoadIds = openChoices[i].PawnLoadIds ?? new List<int>();
                 }
             }
+        }
+        internal void DisableNewContent()
+        {
+            newContentDisabled = true;
         }
         static void TickStays(int tick)
         {

@@ -208,6 +208,15 @@
   <RHAH_Menu_PawnHistory>角色经历</RHAH_Menu_PawnHistory>
   <RHAH_Menu_Developer>开发者</RHAH_Menu_Developer>
   <RHAH_Menu_Experimental>实验性</RHAH_Menu_Experimental>
+  <RHAH_Menu_Removal>存档与卸载</RHAH_Menu_Removal>
+  <RHAH_RemovalSection>当前存档</RHAH_RemovalSection>
+  <RHAH_RemovalNoGame>先加载一个存档，才能停用这个存档里的新内容，或导出卸载用副本。</RHAH_RemovalNoGame>
+  <RHAH_RemovalDisable>仅对此存档停用新内容</RHAH_RemovalDisable>
+  <RHAH_RemovalDisabled>这个存档不再生成新的饥与祸内容。再保存一次，这个状态才会写进原档。已经在的来客、信件和地点留下。总开关不变。</RHAH_RemovalDisabled>
+  <RHAH_RemovalExport>备份并导出卸载用副本</RHAH_RemovalExport>
+  <RHAH_RemovalConfirm>游戏会暂停。这个存档不再生成新内容。随后保存一份备份和一份清理副本，不覆盖原档。\n\n清理副本会换掉鼠族种类、经历、隐藏派系和叙事者，去掉本模组的特质、基因、健康状态、记忆、物品、区域、信件和进行中的任务。人还在，鼠族也还在。\n\n成功后退出游戏，只卸本模组，留下鼠族、Harmony 和生物科技。重启后加载清理副本。正在玩的这一局不会被清掉。认不出的引用会中止导出。继续？</RHAH_RemovalConfirm>
+  <RHAH_RemovalDone>已导出：{0}\n备份：{1}\n替换 {2}，移除 {3}。\n\n退出游戏，只卸本模组，留下鼠族、Harmony 和生物科技。重启后加载导出的副本。正在玩的这一局没有清理，仍是暂停。先确认副本能加载、运行、保存、再加载，再决定是否删旧档。加载备份必须留着本模组。</RHAH_RemovalDone>
+  <RHAH_RemovalFailed>清理没有完成，不要据此卸载。这个存档的新内容已经停用。\n备份：{0}。保存失败时可能还没有这份备份。\n原因：{1}\n\n完整错误在日志里。原档没有被覆盖。备份不是清理副本。</RHAH_RemovalFailed>
   <RHAH_Menu_Field_Mod>模组</RHAH_Menu_Field_Mod>
   <RHAH_Menu_Field_Version>版本</RHAH_Menu_Field_Version>
 

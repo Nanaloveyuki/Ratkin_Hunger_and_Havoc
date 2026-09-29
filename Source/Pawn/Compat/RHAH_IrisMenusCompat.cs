@@ -119,6 +119,7 @@ namespace HungerAndHavoc.Pawn.Compat
             RegisterPage(owner, "pawn-history", "RHAH_Menu_PawnHistory", DrawPawnHistory, SearchPawnHistory);
             RegisterPage(owner, "developer", "RHAH_Menu_Developer", DrawDeveloper, SearchDeveloper);
             RegisterPage(owner, "experimental", "RHAH_Menu_Experimental", DrawExperimental, SearchExperimental);
+            RegisterPage(owner, "removal", "RHAH_Menu_Removal", DrawRemoval, SearchRemoval);
         }
 
         static void RegisterPage(
@@ -153,6 +154,41 @@ namespace HungerAndHavoc.Pawn.Compat
         IEnumerable<MenuSearchEntry> SearchOverview()
         {
             yield return Entry("enable-new-content", "RHAH_Settings_EnableNewContent", "toggle content");
+        }
+        void DrawRemoval(Listing_Standard list)
+        {
+            Section(list, "RHAH_Menu_Removal");
+            GameComponent_RHAH_Game game = Current.ProgramState == ProgramState.Playing
+                ? Current.Game?.GetComponent<GameComponent_RHAH_Game>()
+                : null;
+            if (game == null)
+            {
+                Empty(list, "RHAH_RemovalNoGame");
+                return;
+            }
+
+            list.Label("RHAH_RemovalSection".Translate());
+            if (game.NewContentDisabled)
+            {
+                list.Label("RHAH_RemovalDisabled".Translate());
+            }
+            else if (list.ButtonText("RHAH_RemovalDisable".Translate()))
+            {
+                game.DisableNewContent();
+            }
+
+            if (list.ButtonText("RHAH_RemovalExport".Translate()))
+            {
+                Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                    "RHAH_RemovalConfirm".Translate(),
+                    () => LongEventHandler.QueueLongEvent(RHAH_SaveExport.Export, "SavingLongEvent", false, null)));
+            }
+        }
+
+        IEnumerable<MenuSearchEntry> SearchRemoval()
+        {
+            yield return Entry("removal-disable", "RHAH_RemovalDisable", "save unload");
+            yield return Entry("removal-export", "RHAH_RemovalExport", "backup clean save");
         }
 
         void DrawEvents(Listing_Standard list)
@@ -2398,7 +2434,7 @@ namespace HungerAndHavoc.Pawn.Compat
         static string ContentFinderVersion()
         {
             ModMetaData meta = ModLister.GetActiveModWithIdentifier(RHAH_Runtime.PackageId, false);
-            return meta == null ? "0.1.0" : VersionOf(meta);
+            return meta == null ? "1.0.0" : VersionOf(meta);
         }
 
         static string VersionOf(ModMetaData meta)

@@ -1,6 +1,6 @@
 # 工程标准
 
-目标规范。当前仓库中的代码可能仍处于标准制定前的草案状态，不构成规范依据。发布前允许为落实本规范进行 breaking change。产品名、显示 ID、Def 前缀见 [naming.md](naming.md)。身份行为见 [pawn.md](pawn.md)。事件目录见 [incidents.md](incidents.md)。存档键和卸载归属见 [save-ownership.md](save-ownership.md)。卸载导出尚未实现，规划见 [unload-export.md](unload-export.md)。修 bug 见 [bug-handling.md](bug-handling.md)。跨版本决策写 [adr/](adr/)。注释规则见仓库根 `Agents.md`。
+目标规范。当前仓库中的代码可能仍处于标准制定前的草案状态，不构成规范依据。发布前允许为落实本规范进行 breaking change。产品名、显示 ID、Def 前缀见 [naming.md](naming.md)。身份行为见 [pawn.md](pawn.md)。事件目录见 [incidents.md](incidents.md)。存档键和卸载归属见 [save-ownership.md](save-ownership.md)。卸载导出见 [unload-export.md](unload-export.md)。修 bug 见 [bug-handling.md](bug-handling.md)。跨版本决策写 [adr/](adr/)。注释规则见仓库根 `Agents.md`。
 
 ## 规范优先级
 

@@ -4,7 +4,7 @@
 
 本页登记当前存档契约，不是旧草案。不把本页当成下一次改键或迁命名空间的理由。本模组不读旧鼠灾档。
 
-卸载动作只有 `Remove` 或 `Replace`。导出器尚未实现，规划见 [unload-export.md](unload-export.md)。没有登记的持久化产物视为漏了卸载保护。本页的动作行不被那份规划改写。
+卸载动作只有 `Remove` 或 `Replace`。导出器见 [unload-export.md](unload-export.md)。没有登记的持久化产物视为漏了卸载保护。本页的动作行是导出器的契约，规划不能改写它。
 
 ## 破坏性重建（1.0.0 前）
 
@@ -270,6 +270,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | grain hole thing id | holeThingId | Remove |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | event chains | eventChains | Remove。旧档缺列表时为空。null 与空集合都是没有链 |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | next event chain id | nextEventChainId | Remove。默认 1。读档后小于等于已有实例 id 时抬到最大 id 加 1 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | new content disabled | newContentDisabled | Remove。仅此存档停用新内容。默认 false。清理时整个组件删除，不迁移到副本。null 与缺键都是 false |
 
 生成队列、批次保护和全局调度属于唯一全局运行时组件；本图访客索引和寻食缓存属于唯一地图组件。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
 
@@ -329,9 +330,13 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_TailBite | JobDef | Remove |
 | RHAH_Expel | JobDef | Remove |
 | RHAH_RefugeeMassacre | QuestScriptDef | Remove |
-| RHAH_RefugeeCamp | WorldObjectDef / SitePartDef / MapGeneratorDef / GenStepDef | Remove。不替换成原版地点 |
+| RHAH_RefugeeCamp | WorldObjectDef | 没有地图、也没有居民：Remove，删整个世界物体。已有地图或居民：Replace。保留世界物体 ID、地图和居民，类名与 Def 改成已加载的原版 `Site`，去掉本模组部件和生成步骤。`Site` 不能接住已生成地图就中止，不删地图 |
+| RHAH_RefugeeCamp | SitePartDef | Remove。同名地点部件单独删除，不把它当成世界物体，也不改成原版部件 |
+| RHAH_RefugeeCamp | MapGeneratorDef / GenStepDef | Remove。不单独出现在已生成地图的 `.rws`。世界物体改成 `Site` 时去掉对本生成器和生成步骤的引用 |
 | RHAH_Approach | WorldObjectDef | Remove。不替换成原版商队。卸载后物体消失，未到达的事件不再生成 |
-| RHAH_RecordSite | WorldObjectDef / SitePartDef / MapGeneratorDef | Remove。不替换成原版地点 |
+| RHAH_RecordSite | WorldObjectDef | Replace。`worldObjectClass` 已是原版 `Site`。没有地图也没有居民：删整个世界物体。已有地图或居民：保留世界物体 ID、地图和居民，Def 改成已加载的原版 `Site`，地图生成器改成 `Site` 自带的生成器。`Site` 不能接住已生成地图就中止 |
+| RHAH_RecordSite | SitePartDef | Remove。同名地点部件单独删除，不把它当成世界物体 |
+| RHAH_RecordSite | MapGeneratorDef | Remove。不单独出现在已生成地图的 `.rws` |
 | RHAH_RecordBox | ThingDef | Remove。不替换成原版建筑 |
 | RHAH_MigrationRecord | ThingDef | Remove。不替换成原版物品 |
 | RHAH_RecordLetter | LetterDef | Remove。不替换成原版信 |
@@ -344,14 +349,10 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Gene_HighFertility | GeneDef | Remove。不替换成原版基因 |
 | RHAH_Gene_RoomFertility | GeneDef | Remove。不替换成原版基因 |
 | RHAH_Gene_FastBirth | GeneDef | Remove。不替换成原版基因 |
-| RHAH_Xenotype_Ratkin | XenotypeDef | Remove。不替换成原版异种 |
+| RHAH_Xenotype_Ratkin | XenotypeDef | Replace。异种引用改成已加载的 `Baseliner`。本模组基因从基因列表删除，其它模组基因留下。`Baseliner` 未加载就中止 |
 | RHAH_XenotypeIcon_Ratkin | XenotypeIconDef | Remove |
-| RHAH_Faction_Hostile | FactionDef | Remove。隐藏空派系，不替换成原版派系 |
-| RHAH_Faction_LeaningHostile | FactionDef | Remove |
-| RHAH_Faction_Neutral | FactionDef | Remove |
-| RHAH_Faction_LeaningFriendly | FactionDef | Remove |
-| RHAH_Faction_Friendly | FactionDef | Remove |
-| RHAH_History_* | BackstoryDef | Remove。不替换成原版背景 |
+| RHAH_Faction_Hostile, RHAH_Faction_LeaningHostile, RHAH_Faction_Neutral, RHAH_Faction_LeaningFriendly, RHAH_Faction_Friendly | FactionDef | Replace。派系 loadID 保留，Def 改成已加载且不属于本模组的原版 `Ancients`。目标缺失就中止。玩家派系和其它模组派系不改 |
+| RHAH_History_* | BackstoryDef | Replace。童年或成年槽换成已加载、不属于本模组、同槽的 Backstory。按 defName 序选第一个，不按技能挑。背景带来的技能变化不保留。没有同槽背景就中止 |
 | RHAH_Trait_* | TraitDef | Remove。不替换成原版特质 |
 | RHAH_Thought_EggKeeperYoung, RHAH_Thought_HungerRage, RHAH_Thought_FoodSnatcher, RHAH_Thought_PlagueDreadSick, RHAH_Thought_PlagueDreadNearby | ThoughtDef | Remove |
 | RHAH_Thought_NightTerrors, RHAH_Thought_GrainGreed, RHAH_Thought_Chillblood, RHAH_Thought_FamineGloom, RHAH_Thought_AilingMother, RHAH_Thought_FamilyThief | ThoughtDef | Remove |
@@ -368,13 +369,13 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed | 无存档字段 | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease | 无存档字段 | Remove |
 
-| RHAH_Suiyin | StorytellerDef | Remove。卸载后叙事者换成原版 Randy，不保留穗音定义 |
+| RHAH_Suiyin | StorytellerDef | Replace。目标写死已加载的原版 `Randy`。未加载就中止，不保留穗音定义 |
 | RHAH_ChoiceRequest | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_ChoiceVisitors | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_QuarantineLetter | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
-| RHAH_PawnKind_Ratkin | PawnKindDef | Remove。不替换成原版 PawnKind。已生成 pawn 的 kindDef 不迁移 |
+| RHAH_PawnKind_Ratkin | PawnKindDef | Replace。保留 pawn 的 thingID。`kindDef` 改成仍会随 NewRatkinPlus 加载、种族同为 `Ratkin`、不属于本模组的 PawnKind。按 defName 序选第一个。没有这种种类就中止，不换成人类 |
 
-尚无 TraderKind、Site。出现 `Replace` 时必须写替代 Def，且替代 Def 不能属于本模组。
+替代 Def 必须已经加载，且不属于本模组。写死的目标是 `Ancients`、`Baseliner`、`Randy`、`Site`。种类和背景的具体 defName 在导出时按上表从已加载 Def 里选，不写进本页。尚无 TraderKind。
 
 ### Hediff_RHAH_ClaySatiety
 

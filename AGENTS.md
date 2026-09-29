@@ -24,7 +24,7 @@
 | Pawn 身份、闸门、生命周期 | `docs/pawn.md` |
 | 外部模组兼容 | `docs/compatibility.md` |
 | 存档键与卸载归属 | `docs/save-ownership.md` |
-| 卸载导出规划，尚未实现 | `docs/unload-export.md` |
+| 卸载导出 | `docs/unload-export.md` |
 | 修 bug 的范围 | `docs/bug-handling.md` |
 | 路线与当前进度 | `docs/project-goals.md` |
 | 决策记录 | `docs/adr/` |
@@ -94,7 +94,7 @@ IrisMenus 公开 API 在 `/root/repos/csharp/IrisMenus/Source/MenuRegistry.cs` �
 
 ## 当前进度
 
-版本 `0.1.0`。M0 到 M3 的目录、生成、访客、调度和 IrisMenus 页面已经落地。访客按五个态度派系活动，伤害和驱逐改整批态度并离场。赈灾区限制取食。携带鼠疫的来客进入检疫，检疫中不能加入、雇佣或转移。`NarrativeState` 保存计数、结局计算，以及 `N-001`..`N-010` 和 `R-01` 的开关、开始和期限。事件会记下事实，但还不会推进剧情。事件频率、基因页、121 条经历和 50 条特质已落地。结局开关还没有。
+版本 `1.0.0`。M0 到 M3 的目录、生成、访客、调度和 IrisMenus 页面已经落地。访客按五个态度派系活动，伤害和驱逐改整批态度并离场。赈灾区限制取食。携带鼠疫的来客进入检疫，检疫中不能加入、雇佣或转移。`NarrativeState` 保存计数、结局计算，以及 `N-001`..`N-010` 和 `R-01` 的开关、开始和期限。事件会记下事实，但还不会推进剧情。事件频率、基因页、121 条经历和 50 条特质已落地。卸载导出已落地：仅此存档停用新内容，并备份后导出 `RHAH-removed-*`。
 
 已落地：
 
