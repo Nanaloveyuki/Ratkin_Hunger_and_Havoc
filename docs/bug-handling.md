@@ -70,11 +70,11 @@ Language、存档键、卸载归属这三项，功能开发只要碰到玩家文
 
 目标与旧模组一致：当前存档停用新内容 → 备份原档 → 导出 XML 清理副本 → 退出后再卸本模组，保留鼠族等前置。原档不覆盖。未知本模组引用必须中止，不猜测删除。不碰其它模组数据，不清理全局 `ModSettings`。
 
-导出器尚未实现。规划见 [unload-export.md](unload-export.md)。现在每次新增会进存档的 Def、可序列化类型或键，都必须先写入 [save-ownership.md](save-ownership.md)，动作只允许 `Remove` 或 `Replace`。没有登记的持久化产物视为漏了卸载保护。
+导出器已落地，流程见 [unload-export.md](unload-export.md)。每次新增会进存档的 Def、可序列化类型或键，都必须先写入 [save-ownership.md](save-ownership.md)，动作只允许 `Remove` 或 `Replace`。没有登记的持久化产物视为漏了卸载保护。
 
 ## 检查
 
-当前先人工对照本页和 [save-ownership.md](save-ownership.md)。`scripts/verify-scaffold.py` 已检查中英 Keyed 键集合对称、占位符数量、Comp 存档键和 Hediff XML 类型名。尚未自动检查：`Translate` 缺键、英文 DefInjected 覆盖、卸载归属表与代码同步。
+`scripts/verify-scaffold.py` 已检查中英 Keyed 键集合对称、占位符数量、源码 `Translate` 字面量、英文 DefInjected、Comp 存档键、Hediff XML 类型名，以及 `Scribe_*.Look` 键是否出现在 [save-ownership.md](save-ownership.md)。动态拼接的翻译键不在字面量扫描里。归属表动作与代码是否一致仍要人工对照。
 
 现有命令：
 
