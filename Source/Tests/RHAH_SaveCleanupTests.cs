@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Xml.Linq;
 using HungerAndHavoc.Core;
 using Xunit;
@@ -57,15 +58,22 @@ namespace HungerAndHavoc.Tests
             Assert.Equal("RimWorld.Planet.Site", (string)mapped.Attribute("Class"));
             Assert.Equal("Site", (string)mapped.Element("def"));
             Assert.Equal("30", (string)mapped.Element("ID"));
-            Assert.Equal("MapParent", (string)mapped.Element("mapParent"));
+            Assert.Equal("WorldObject_30", (string)MapParent(document, "30"));
+            Assert.Equal("Encounter", (string)MapGenerator(document, "30"));
             Assert.Null(mapped.Element("parts"));
             Assert.Null(mapped.Element("residents"));
             Assert.Null(FindBareId(document, "31"));
             XElement record = WorldObject(document, "32");
             Assert.Equal("Site", (string)record.Element("def"));
             Assert.Equal("32", (string)record.Element("ID"));
+            Assert.Equal("WorldObject_32", (string)MapParent(document, "32"));
+            Assert.Equal("Encounter", (string)MapGenerator(document, "32"));
             Assert.Null(record.Element("parts"));
             Assert.Null(FindBareId(document, "33"));
+            Assert.Equal("Base_Player", (string)MapGenerator(document, "90"));
+            Assert.Equal("WorldObject_90", (string)MapParent(document, "90"));
+            Assert.Equal("ForeignThing", (string)document.Descendants("things").Elements()
+                .First(item => (string)item.Element("id") == "77").Element("def"));
         }
 
         [Fact]
@@ -91,6 +99,20 @@ namespace HungerAndHavoc.Tests
                 () => new RHAH_SaveCleanup(Plan()).Clean(document));
 
             Assert.Contains("RHAH_Unknown", error.Message);
+        }
+
+        [Fact]
+        public void UnknownHungerAndHavocTypeAborts()
+        {
+            XDocument document = XDocument.Parse(
+                "<savegame><game><li Class=\"HungerAndHavoc.Future.UnknownRecord\"><id>1</id></li></game></savegame>");
+
+            InvalidOperationException error = Assert.Throws<InvalidOperationException>(
+                () => new RHAH_SaveCleanup(Plan()).Clean(document));
+
+            Assert.Contains("HungerAndHavoc.Future.UnknownRecord", error.Message);
+            Assert.NotNull(document.Descendants().First(item =>
+                (string)item.Attribute("Class") == "HungerAndHavoc.Future.UnknownRecord"));
         }
 
         [Fact]
@@ -142,6 +164,8 @@ namespace HungerAndHavoc.Tests
             plan.CampObjectDefs.Add("RHAH_RefugeeCamp");
             plan.CampObjectDefs.Add("RHAH_RecordSite");
             plan.CampObjectClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp");
+            plan.MapGeneratorReplacements.Add("RHAH_RefugeeCamp", "Encounter");
+            plan.MapGeneratorReplacements.Add("RHAH_RecordSite", "Encounter");
             return plan;
         }
         static XElement Pawn(XDocument document, string id)
@@ -168,6 +192,31 @@ namespace HungerAndHavoc.Tests
             }
 
             throw new InvalidOperationException("missing world object " + id);
+        }
+
+        static XElement MapParent(XDocument document, string worldObjectId)
+        {
+            foreach (XElement parent in document.Descendants("parent"))
+            {
+                if ((string)parent == "WorldObject_" + worldObjectId && parent.Parent?.Name == "mapInfo")
+                {
+                    return parent;
+                }
+            }
+
+            throw new InvalidOperationException("missing map parent " + worldObjectId);
+        }
+
+        static XElement MapGenerator(XDocument document, string worldObjectId)
+        {
+            XElement parent = MapParent(document, worldObjectId);
+            XElement generator = parent.Parent?.Parent?.Element("generatorDef");
+            if (generator == null)
+            {
+                throw new InvalidOperationException("missing generator " + worldObjectId);
+            }
+
+            return generator;
         }
 
         static XElement Only(XContainer container, string name)
@@ -343,7 +392,7 @@ namespace HungerAndHavoc.Tests
   <storytellerDef>RHAH_Suiyin</storytellerDef>
   <worldObjects>
     <worldObject Class=""HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp"">
-      <def>RHAH_RefugeeCamp</def><ID>30</ID><mapParent>MapParent</mapParent>
+      <def>RHAH_RefugeeCamp</def><ID>30</ID>
       <parts><li><def>RHAH_RefugeeCamp</def></li></parts>
       <residents><li>Thing_11</li></residents>
     </worldObject>
@@ -351,11 +400,14 @@ namespace HungerAndHavoc.Tests
       <def>RHAH_RefugeeCamp</def><ID>31</ID>
     </worldObject>
     <worldObject Class=""RimWorld.Planet.Site"">
-      <def>RHAH_RecordSite</def><ID>32</ID><mapParent>MapParent</mapParent>
+      <def>RHAH_RecordSite</def><ID>32</ID>
       <parts><li><def>RHAH_RecordSite</def></li></parts>
     </worldObject>
     <worldObject Class=""RimWorld.Planet.Site"">
       <def>RHAH_RecordSite</def><ID>33</ID>
+    </worldObject>
+    <worldObject Class=""RimWorld.Planet.Settlement"">
+      <def>Settlement</def><ID>90</ID>
     </worldObject>
     <worldObject Class=""HungerAndHavoc.Incidents.WorldObject_RHAH_Approach"">
       <def>RHAH_Approach</def><ID>40</ID>
@@ -363,9 +415,23 @@ namespace HungerAndHavoc.Tests
   </worldObjects>
   <maps>
     <li>
+      <uniqueID>8</uniqueID>
+      <generatorDef>RHAH_RefugeeCamp</generatorDef>
+      <mapInfo><size>(250, 1, 250)</size><parent>WorldObject_30</parent></mapInfo>
       <components><li Class=""HungerAndHavoc.Core.MapComponent_RHAH_Map"" /></components>
       <areas><li Class=""HungerAndHavoc.Pawn.Area_RHAH_Relief""><ID>7</ID></li><li Class=""Verse.Area_Home""><ID>1</ID></li></areas>
       <lords><li><loadID>4</loadID><lordJob Class=""HungerAndHavoc.Pawn.LordJob_RHAH_Visitor"" /></li></lords>
+    </li>
+    <li>
+      <uniqueID>9</uniqueID>
+      <generatorDef>RHAH_RecordSite</generatorDef>
+      <mapInfo><size>(200, 1, 200)</size><parent>WorldObject_32</parent></mapInfo>
+    </li>
+    <li>
+      <uniqueID>10</uniqueID>
+      <generatorDef>Base_Player</generatorDef>
+      <mapInfo><size>(250, 1, 250)</size><parent>WorldObject_90</parent></mapInfo>
+      <things><thing><def>ForeignThing</def><id>77</id></thing></things>
     </li>
   </maps>
   <worldPawns>

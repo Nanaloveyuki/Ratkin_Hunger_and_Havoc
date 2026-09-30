@@ -1,5 +1,8 @@
+using RimWorld;
+using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.EventMgr;
+using Verse;
 using Xunit;
 
 namespace HungerAndHavoc.Tests
@@ -26,6 +29,51 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_EventFollowRules.BatchOutcomeDone(1, 1));
             Assert.True(RHAH_EventFollowRules.BatchOutcomeDone(0, 2));
             Assert.False(RHAH_EventFollowRules.BatchOutcomeDone(0, 0));
+        }
+
+        [Fact]
+        public void SavedIncidentRecordsReachTheFollowHandlerOnce()
+        {
+            RHAH_EventChains.Clear();
+            RHAH_EventChains.Register(new RHAH_EventFollowChain());
+            List<RHAH_EventChainRecord> records = new List<RHAH_EventChainRecord>();
+            int next = 4;
+            string payload = RHAH_EventFollowRules.Payload("I-002", 9, 4);
+            int id = RHAH_EventChainRuntime.Start(records, ref next, "I-002", 4, 10, -1, payload);
+            Assert.True(RHAH_EventChainRuntime.SetStage(records, id, RHAH_EventFollowChain.StageShort, -1, payload));
+
+            Assert.Equal(0, RHAH_EventChainRuntime.TickDue(records, 11));
+            Assert.Equal(RHAH_EventFollowChain.StageDone, records[0].stage);
+            Assert.False(records[0].closed);
+            Assert.Equal("I-002", records[0].displayId);
+
+            Assert.Equal(0, RHAH_EventChainRuntime.TickDue(records, 12));
+            Assert.Equal(RHAH_EventFollowChain.StageDone, records[0].stage);
+            Assert.False(records[0].closed);
+            RHAH_EventChains.Clear();
+        }
+
+        [Fact]
+        public void LoadedLongChainStaysOpenAtStageOneAcrossHours()
+        {
+            RHAH_EventChains.Clear();
+            RHAH_EventChains.Register(new RHAH_EventFollowChain());
+            List<RHAH_EventChainRecord> records = new List<RHAH_EventChainRecord>();
+            int next = 1;
+            string payload = RHAH_EventFollowRules.Payload("I-019", 9, 4);
+            int deadline = RHAH_EventFollowRules.LongDeadline("I-019", 0);
+            int id = RHAH_EventChainRuntime.Start(records, ref next, "I-019", 4, 0, deadline, payload);
+            Assert.True(RHAH_EventChainRuntime.SetStage(records, id, RHAH_EventFollowChain.StageLong, deadline, payload));
+            RHAH_EventChainRuntime.Repair(records, ref next);
+
+            int hour = GenDate.TicksPerHour;
+            Assert.Equal(0, RHAH_EventChainRuntime.TickDue(records, hour - 1));
+            Assert.Equal(0, RHAH_EventChainRuntime.TickDue(records, hour));
+            Assert.Equal(0, RHAH_EventChainRuntime.TickDue(records, hour + hour));
+            Assert.Equal(RHAH_EventFollowChain.StageLong, records[0].stage);
+            Assert.False(records[0].closed);
+            Assert.Equal("I-019", records[0].displayId);
+            RHAH_EventChains.Clear();
         }
 
         [Fact]

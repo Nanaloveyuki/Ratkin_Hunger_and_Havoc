@@ -14,6 +14,7 @@ namespace HungerAndHavoc.Core
         internal readonly HashSet<string> CampObjectDefs = new HashSet<string>(StringComparer.Ordinal);
         internal readonly HashSet<string> CampObjectClasses = new HashSet<string>(StringComparer.Ordinal);
         internal readonly Dictionary<string, string> Replacements = new Dictionary<string, string>(StringComparer.Ordinal);
+        internal readonly Dictionary<string, string> MapGeneratorReplacements = new Dictionary<string, string>(StringComparer.Ordinal);
         internal string PackageId;
     }
 
@@ -45,6 +46,7 @@ namespace HungerAndHavoc.Core
             }
 
             RequireReplacements(game);
+            RequireKnownTypes(game);
             foreach (XElement quest in game.Descendants("quests").Elements()
                 .Where(item => plan.OwnedDefs.Contains((string)item.Element("root") ?? string.Empty)).ToList())
             {
@@ -150,9 +152,14 @@ namespace HungerAndHavoc.Core
                 string text = (item.Value ?? string.Empty).Trim();
                 bool ownedText = !item.Elements().Any() &&
                     (plan.OwnedDefs.Contains(text) || removedReferences.Contains(text) || text.StartsWith("RHAH_", StringComparison.Ordinal));
-                if (IsOwnedClass(item) || ownedText)
+                string typeName = ClassName(item);
+                bool unknownType = typeName != null &&
+                    typeName.StartsWith("HungerAndHavoc.", StringComparison.Ordinal) &&
+                    !plan.OwnedClasses.Contains(typeName);
+                if (IsOwnedClass(item) || ownedText || unknownType)
                 {
-                    unresolved.Add(item.Elements().Any() ? PathOf(item) : PathOf(item) + "=" + text);
+                    unresolved.Add(unknownType ? PathOf(item) + "=" + typeName :
+                        item.Elements().Any() ? PathOf(item) : PathOf(item) + "=" + text);
                 }
             }
 
@@ -161,6 +168,32 @@ namespace HungerAndHavoc.Core
                 throw new InvalidOperationException("Unresolved mod references: " + string.Join(", ", unresolved));
             }
             StripPackage(document.Root.Element("meta"));
+        }
+
+        void RequireKnownTypes(XElement game)
+        {
+            List<string> unknown = new List<string>();
+            foreach (XElement item in game.Descendants())
+            {
+                if (unknown.Count >= 12)
+                {
+                    break;
+                }
+
+                string typeName = ClassName(item);
+                if (typeName == null || !typeName.StartsWith("HungerAndHavoc.", StringComparison.Ordinal) ||
+                    plan.OwnedClasses.Contains(typeName))
+                {
+                    continue;
+                }
+
+                unknown.Add(PathOf(item) + "=" + typeName);
+            }
+
+            if (unknown.Count > 0)
+            {
+                throw new InvalidOperationException("Unknown mod type: " + string.Join(", ", unknown));
+            }
         }
 
         void RequireReplacements(XElement game)
@@ -202,14 +235,22 @@ namespace HungerAndHavoc.Core
 
         static bool HasMapOrResidents(XElement node)
         {
-            if (node == null)
+            if (node == null || node.Element("ID") == null)
             {
                 return false;
             }
 
-            if (node.Element("mapParent") != null || node.Element("map") != null)
+            XElement game = node.Ancestors().FirstOrDefault(item => item.Name == "game");
+            string reference = "WorldObject_" + node.Element("ID").Value;
+            if (game != null && game.Element("maps") != null)
             {
-                return true;
+                foreach (XElement map in game.Element("maps").Elements())
+                {
+                    if ((string)map.Element("mapInfo")?.Element("parent") == reference)
+                    {
+                        return true;
+                    }
+                }
             }
 
             XElement residents = node.Element("residents");
@@ -234,7 +275,46 @@ namespace HungerAndHavoc.Core
             Remove(site.Element("residents"));
             Remove(site.Element("cleared"));
             Remove(site.Element("nextCheck"));
+            RetargetGenerator(site);
             ReplacedDefs++;
+        }
+
+        void RetargetGenerator(XElement site)
+        {
+            XElement game = site.Ancestors().FirstOrDefault(item => item.Name == "game");
+            string reference = "WorldObject_" + (string)site.Element("ID");
+            if (game?.Element("maps") == null || string.IsNullOrEmpty((string)site.Element("ID")))
+            {
+                return;
+            }
+
+            foreach (XElement map in game.Element("maps").Elements())
+            {
+                if ((string)map.Element("mapInfo")?.Element("parent") != reference)
+                {
+                    continue;
+                }
+
+                XElement generator = map.Element("generatorDef");
+                string name = (generator?.Value ?? string.Empty).Trim();
+                if (generator == null || !plan.MapGeneratorReplacements.TryGetValue(name, out string replacement))
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(replacement))
+                {
+                    throw new InvalidOperationException("Missing map generator replacement for " + name + " at " + PathOf(generator));
+                }
+
+                if (generator.Value == replacement)
+                {
+                    continue;
+                }
+
+                generator.Value = replacement;
+                ReplacedDefs++;
+            }
         }
 
         bool IsOwnedScalar(XElement node)

@@ -127,6 +127,23 @@ namespace HungerAndHavoc.Core
             plan.CampObjectDefs.Add("RHAH_RefugeeCamp");
             plan.CampObjectDefs.Add("RHAH_RecordSite");
             plan.CampObjectClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp");
+            WorldObjectDef site = RequireDef<WorldObjectDef>("Site");
+            if (content.AllDefs.Contains(site))
+            {
+                throw new InvalidOperationException("Site belongs to this mod.");
+            }
+
+            MapGeneratorDef siteGenerator = site.mapGenerator ?? RequireDef<MapGeneratorDef>("Encounter");
+            if (siteGenerator.modContentPack == content || content.AllDefs.Contains(siteGenerator))
+            {
+                throw new InvalidOperationException("Site map generator belongs to this mod.");
+            }
+
+            foreach (MapGeneratorDef def in content.AllDefs.OfType<MapGeneratorDef>())
+            {
+                plan.MapGeneratorReplacements.Add(def.defName, siteGenerator.defName);
+            }
+
             plan.Replacements.Add("RHAH_Suiyin", RequireDef<StorytellerDef>("Randy").defName);
             plan.Replacements.Add("RHAH_Xenotype_Ratkin", RequireDef<XenotypeDef>("Baseliner").defName);
             FactionDef ancients = RequireDef<FactionDef>("Ancients");

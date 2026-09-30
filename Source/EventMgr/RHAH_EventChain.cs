@@ -85,6 +85,8 @@ namespace HungerAndHavoc.EventMgr
         bool OnTick(List<RHAH_EventChainRecord> records, RHAH_EventChainContext context);
 
         void OnEnd(RHAH_EventChainContext context, RHAH_EventChainEnd end);
+
+        bool Owns(string displayId);
     }
 
     internal static class RHAH_EventChains
@@ -124,7 +126,7 @@ namespace HungerAndHavoc.EventMgr
 
             for (int i = 0; i < chains.Count; i++)
             {
-                if (chains[i].DisplayId == displayId)
+                if (chains[i].Owns(displayId))
                 {
                     return chains[i];
                 }

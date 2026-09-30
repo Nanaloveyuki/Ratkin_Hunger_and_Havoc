@@ -3,6 +3,7 @@ using HungerAndHavoc.Api;
 using HungerAndHavoc.Caravan;
 using HungerAndHavoc.Generation;
 using HungerAndHavoc.Incidents;
+using Verse.AI.Group;
 using RimWorld;
 using Verse;
 
@@ -96,19 +97,109 @@ namespace HungerAndHavoc.Trade
                 Cleanup(attackers);
                 return false;
             }
+            if (!TryCreateAssaultLord(faction, map, attackers))
+            {
+                Cleanup(attackers);
+                return false;
+            }
 
             EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, 0, caravan.ID, tick, tick + 1);
             return true;
+        }
+
+        internal static bool TryCreateAssaultLord(Faction faction, Map map, List<Verse.Pawn> attackers)
+        {
+            if (faction == null || map == null || attackers == null || attackers.Count == 0)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < attackers.Count; i++)
+            {
+                if (attackers[i] == null || attackers[i].Faction != faction || attackers[i].GetLord() != null)
+                {
+                    return false;
+                }
+            }
+
+            Lord lord = LordMaker.MakeNewLord(
+                faction,
+                new LordJob_AssaultColony(faction, true, false, false, false, true, false, false),
+                map,
+                attackers);
+            if (lord == null || lord.LordJob is not LordJob_AssaultColony || !OwnsAll(lord, attackers))
+            {
+                Disband(lord);
+                return false;
+            }
+
+            return true;
+        }
+
+        static bool OwnsAll(Lord lord, List<Verse.Pawn> attackers)
+        {
+            if (lord == null || lord.ownedPawns.Count != attackers.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < attackers.Count; i++)
+            {
+                if (attackers[i].GetLord() != lord || !lord.ownedPawns.Contains(attackers[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        static void Disband(Lord lord)
+        {
+            if (lord == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                Verse.Pawn pawn = lord.ownedPawns[i];
+                if (pawn != null && pawn.lord == lord)
+                {
+                    pawn.lord = null;
+                    if (pawn.mindState != null)
+                    {
+                        pawn.mindState.duty = null;
+                    }
+                }
+            }
+
+            lord.ownedPawns.Clear();
+
+            if (lord.lordManager != null)
+            {
+                lord.lordManager.lords.Remove(lord);
+                lord.lordManager = null;
+            }
         }
 
         static void Cleanup(List<Verse.Pawn> pawns)
         {
             for (int i = 0; i < pawns.Count; i++)
             {
-                if (pawns[i] != null && !pawns[i].Destroyed)
+                Verse.Pawn pawn = pawns[i];
+                if (pawn == null || pawn.Destroyed)
                 {
-                    pawns[i].Destroy(DestroyMode.Vanish);
+                    continue;
                 }
+
+                Lord lord = pawn.GetLord();
+                if (lord != null)
+                {
+                    lord.Notify_PawnLost(pawn, PawnLostCondition.Vanished, null);
+                }
+
+                pawn.Destroy(DestroyMode.Vanish);
             }
         }
         static int EventCap()

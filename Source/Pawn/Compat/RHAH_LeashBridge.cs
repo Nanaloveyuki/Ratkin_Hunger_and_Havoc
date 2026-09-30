@@ -5,7 +5,6 @@ using HarmonyLib;
 using HungerAndHavoc.Api;
 using RimWorld;
 using Verse;
-using Verse.AI.Group;
 
 namespace HungerAndHavoc.Pawn.Compat
 {
@@ -19,7 +18,6 @@ namespace HungerAndHavoc.Pawn.Compat
         static MethodInfo available;
         static MethodInfo mother;
         static MethodInfo childLeash;
-        static MethodInfo travel;
         static MethodInfo special;
         static MethodInfo copy;
         static MethodInfo endMaster;
@@ -77,15 +75,8 @@ namespace HungerAndHavoc.Pawn.Compat
                     }
                 }
 
-                if (!RHAH_LeashPlan.TryPair(snapshots, gates, parents, players, out List<RHAH_LeashPair> pairs, out bool caravan) &&
-                    !caravan)
+                if (!RHAH_LeashPlan.TryPair(snapshots, gates, parents, players, out List<RHAH_LeashPair> pairs))
                 {
-                    return;
-                }
-
-                if (caravan)
-                {
-                    TryLeashTravel(FirstLord(pawns));
                     return;
                 }
 
@@ -102,37 +93,6 @@ namespace HungerAndHavoc.Pawn.Compat
                         special?.Invoke(null, new object[] { young, pair.SpecialSource });
                     }
                 }
-            });
-        }
-
-        internal static void TryLeashTravel(Lord lord)
-        {
-            if (!Available || lord?.ownedPawns == null)
-            {
-                return;
-            }
-
-            Call(() =>
-            {
-                string displayId = null;
-                for (int i = 0; i < lord.ownedPawns.Count; i++)
-                {
-                    IRHAH_Pawn snapshot = RHAH_Api.Get(lord.ownedPawns[i]);
-                    if (snapshot == null || string.IsNullOrEmpty(snapshot.SourceIncidentDisplayId))
-                    {
-                        continue;
-                    }
-
-                    displayId = snapshot.SourceIncidentDisplayId;
-                    break;
-                }
-
-                if (!RHAH_LeashPlan.IsTravel(displayId))
-                {
-                    return;
-                }
-
-                travel?.Invoke(null, new object[] { lord });
             });
         }
 
@@ -166,11 +126,12 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
-            resolved = true;
             if (ModLister.GetActiveModWithIdentifier(PackageId, false) == null)
             {
                 return;
             }
+
+            resolved = true;
 
             Type api = AccessTools.TypeByName("LeadYourPet.LeadYourPetApi");
             if (api == null)
@@ -182,12 +143,11 @@ namespace HungerAndHavoc.Pawn.Compat
             available = AccessTools.PropertyGetter(api, "Available");
             mother = AccessTools.Method(api, "TryStartMotherLeash", new[] { typeof(Verse.Pawn), typeof(Verse.Pawn) });
             childLeash = AccessTools.Method(api, "TryStartChildLeash", new[] { typeof(Verse.Pawn), typeof(Verse.Pawn) });
-            travel = AccessTools.Method(api, "TryAssignTravelChildren", new[] { typeof(Lord) });
             special = AccessTools.Method(api, "SetSpecialSource", new[] { typeof(Verse.Pawn), typeof(int) });
             copy = AccessTools.Method(api, "TryCopyLinkedPets", new[] { typeof(Verse.Pawn), typeof(List<Verse.Pawn>) });
             endMaster = AccessTools.Method(api, "EndForMaster", new[] { typeof(Verse.Pawn) });
             clear = AccessTools.Method(api, "ClearOwnership", new[] { typeof(Verse.Pawn) });
-            if (available == null || mother == null || childLeash == null || travel == null ||
+            if (available == null || mother == null || childLeash == null ||
                 special == null || copy == null || endMaster == null || clear == null)
             {
                 available = null;
@@ -204,20 +164,6 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             return young != null && adult != null && young != adult &&
                 young.relations?.DirectRelationExists(PawnRelationDefOf.Parent, adult) == true;
-        }
-
-        static Lord FirstLord(IReadOnlyList<Verse.Pawn> pawns)
-        {
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Lord lord = pawns[i]?.GetLord();
-                if (lord != null)
-                {
-                    return lord;
-                }
-            }
-
-            return null;
         }
 
         static void Call(Action action)

@@ -166,6 +166,11 @@ namespace HungerAndHavoc.Tests
 
             public string DisplayId => Display;
 
+            public bool Owns(string displayId)
+            {
+                return displayId == DisplayId;
+            }
+
             public bool CanStart(RHAH_EventChainSite site, int tick)
             {
                 return Accept;

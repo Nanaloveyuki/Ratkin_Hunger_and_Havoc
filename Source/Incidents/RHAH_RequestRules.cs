@@ -258,7 +258,17 @@ namespace HungerAndHavoc.Incidents
             bool alreadySettled,
             bool canDeliver)
         {
-            if (!enabled || alreadySettled || requested == RHAH_ChoiceAction.None)
+            if (alreadySettled || requested == RHAH_ChoiceAction.None)
+            {
+                return RHAH_ChoiceAction.None;
+            }
+
+            if (requested == RHAH_ChoiceAction.Timeout)
+            {
+                return requested;
+            }
+
+            if (!enabled)
             {
                 return RHAH_ChoiceAction.None;
             }

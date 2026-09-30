@@ -94,13 +94,10 @@ namespace HungerAndHavoc.Incidents
             bool enabled = settings == null || settings.AllowsRequest(open == null ? (site == RHAH_IntelSiteKind.None ? RHAH_ChoiceKind.Aid : RHAH_ChoiceKind.Intel) : open.Choice);
             bool foodForChild = open != null && open.Choice == RHAH_ChoiceKind.ChildExchange && kind == RHAH_RequestKind.Baby &&
                 (settings == null || settings.childExchangeFoodSubstitution);
-            bool canDeliver = map != null && (foodForChild
-                ? RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, RHAH_RequestRules.FoodForChildren(open.PawnLoadIds.Count))
-                : RHAH_ChoiceRuntime.TryConsume(map, kind, amount));
-            if (action != RHAH_ChoiceAction.Deliver)
-            {
-                canDeliver = true;
-            }
+            int foodAmount = foodForChild ? RHAH_RequestRules.FoodForChildren(open.PawnLoadIds.Count) : 0;
+            bool canDeliver = action == RHAH_ChoiceAction.Deliver && map != null && (foodForChild
+                ? RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= foodAmount && foodAmount > 0
+                : RHAH_RequestRules.CanDeliver(kind, RHAH_ChoiceRuntime.Stock(map, kind), amount, false));
 
             RHAH_ChoiceAction settled = RHAH_ChoiceRuntime.TrySettle(
                 game,
@@ -116,6 +113,21 @@ namespace HungerAndHavoc.Incidents
             }
 
             RHAH_ChoiceRecord record = FindRecord(game);
+            RHAH_RequestKind consumed = foodForChild ? RHAH_RequestKind.SimpleMeal : kind;
+            int consumedAmount = foodForChild ? foodAmount : amount;
+            if (settled == RHAH_ChoiceAction.Deliver &&
+                RHAH_RequestRules.RemovesStock(settled, consumed) &&
+                !RHAH_ChoiceRuntime.TryConsume(map, consumed, consumedAmount))
+            {
+                if (record != null && record.Settled == RHAH_ChoiceAction.Deliver)
+                {
+                    record.Settled = RHAH_ChoiceAction.None;
+                }
+
+                Messages.Message("RHAH_Choice_Stale".Translate(), MessageTypeDefOf.RejectInput);
+                return;
+            }
+
             if (RHAH_RequestRules.CreatesSite(settled, site))
             {
                 RHAH_ChoiceRuntime.TryCreateSite(map, site);

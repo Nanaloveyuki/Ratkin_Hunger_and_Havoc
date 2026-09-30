@@ -108,7 +108,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             Lord lord = pawn.GetLord();
-            if (lord == null || lord.ownedPawns == null || JobDefOf.CarryDownedPawnToExit == null)
+            if (lord == null || lord.ownedPawns == null || RHAH_DefOf.RHAH_CarryYoung == null)
             {
                 return null;
             }
@@ -137,7 +137,7 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                Job carry = JobMaker.MakeJob(JobDefOf.CarryDownedPawnToExit, child, exit);
+                Job carry = JobMaker.MakeJob(RHAH_DefOf.RHAH_CarryYoung, child, exit);
                 carry.count = 1;
                 return carry;
             }

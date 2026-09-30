@@ -10,9 +10,8 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void MissingSnapshotsDoNotPair()
         {
-            Assert.False(RHAH_LeashPlan.TryPair(null, null, null, null, out List<RHAH_LeashPair> pairs, out bool travel));
+            Assert.False(RHAH_LeashPlan.TryPair(null, null, null, null, out List<RHAH_LeashPair> pairs));
             Assert.Empty(pairs);
-            Assert.False(travel);
         }
 
         [Theory]
@@ -45,8 +44,7 @@ namespace HungerAndHavoc.Tests
             };
             bool[] parents = { false, false, true, false };
 
-            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, parents, null, out List<RHAH_LeashPair> pairs, out bool travel));
-            Assert.False(travel);
+            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, parents, null, out List<RHAH_LeashPair> pairs));
             Assert.Equal(0, pairs[0].AdultIndex);
             Assert.Equal(1, pairs[0].ChildIndex);
             Assert.Equal(RHAH_LeashPlan.BeggarFamilySource, pairs[0].SpecialSource);
@@ -61,7 +59,7 @@ namespace HungerAndHavoc.Tests
                 Snapshot("I-004", RHAH_PawnRole.BeggarChild, 4)
             };
 
-            Assert.False(RHAH_LeashPlan.TryPair(snapshots, null, null, null, out List<RHAH_LeashPair> pairs, out _));
+            Assert.False(RHAH_LeashPlan.TryPair(snapshots, null, null, null, out List<RHAH_LeashPair> pairs));
             Assert.Empty(pairs);
             Assert.Equal(RHAH_LeashKind.None, RHAH_LeashPlan.Kind("I-004", false, true, true, false));
         }
@@ -75,8 +73,7 @@ namespace HungerAndHavoc.Tests
                 Snapshot("I-005", RHAH_PawnRole.BeggarChild, 8)
             };
 
-            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, null, null, out List<RHAH_LeashPair> pairs, out bool travel));
-            Assert.False(travel);
+            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, null, null, out List<RHAH_LeashPair> pairs));
             Assert.Equal(RHAH_LeashKind.Child, RHAH_LeashPlan.Kind("I-005", false, true, true, false));
             Assert.Equal(0, pairs[0].SpecialSource);
         }
@@ -94,7 +91,7 @@ namespace HungerAndHavoc.Tests
             bool[] parents = new bool[16];
             parents[2 * 4 + 1] = true;
 
-            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, parents, null, out List<RHAH_LeashPair> pairs, out _));
+            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, parents, null, out List<RHAH_LeashPair> pairs));
             Assert.Single(pairs);
             Assert.Equal(1, pairs[0].AdultIndex);
             Assert.Equal(2, pairs[0].ChildIndex);
@@ -110,7 +107,7 @@ namespace HungerAndHavoc.Tests
                 Snapshot("I-005", RHAH_PawnRole.BeggarChild, 2)
             };
 
-            Assert.False(RHAH_LeashPlan.TryPair(snapshots, new[] { true, false }, null, null, out List<RHAH_LeashPair> pairs, out _));
+            Assert.False(RHAH_LeashPlan.TryPair(snapshots, new[] { true, false }, null, null, out List<RHAH_LeashPair> pairs));
             Assert.Empty(pairs);
         }
 
@@ -123,30 +120,52 @@ namespace HungerAndHavoc.Tests
                 Snapshot("I-005", RHAH_PawnRole.Beggar, 1)
             };
 
-            Assert.False(RHAH_LeashPlan.TryPair(snapshots, null, null, null, out List<RHAH_LeashPair> pairs, out _));
+            Assert.False(RHAH_LeashPlan.TryPair(snapshots, null, null, null, out List<RHAH_LeashPair> pairs));
             Assert.Empty(pairs);
         }
 
         [Theory]
-        [InlineData("I-012", true)]
-        [InlineData("I-038", true)]
-        [InlineData("I-005", false)]
-        [InlineData("I-013", false)]
-        public void OnlyTraderCaravansUseTravelAssignment(string displayId, bool travel)
+        [InlineData("I-012")]
+        [InlineData("I-038")]
+        public void TraderCaravansPairExistingYoungWithTheTrader(string displayId)
         {
             List<IRHAH_Pawn> snapshots = new List<IRHAH_Pawn>
             {
                 Snapshot(displayId, RHAH_PawnRole.Trader, 1),
+                Snapshot(displayId, RHAH_PawnRole.RatkinYoung, 1),
                 Snapshot(displayId, RHAH_PawnRole.RatkinYoung, 1)
             };
 
-            RHAH_LeashPlan.TryPair(snapshots, null, null, null, out List<RHAH_LeashPair> pairs, out bool assigned);
-            Assert.Equal(travel, assigned);
-            Assert.Equal(travel, RHAH_LeashPlan.IsTravel(displayId));
-            if (travel)
+            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, null, null, out List<RHAH_LeashPair> pairs));
+            Assert.Equal(2, pairs.Count);
+            Assert.Equal(0, pairs[0].AdultIndex);
+            Assert.Equal(1, pairs[0].ChildIndex);
+            Assert.Equal(0, pairs[0].SpecialSource);
+            Assert.Equal(0, pairs[1].AdultIndex);
+            Assert.Equal(2, pairs[1].ChildIndex);
+            Assert.Equal(RHAH_LeashKind.Child, RHAH_LeashPlan.Kind(displayId, false, true, true, false));
+        }
+
+        [Fact]
+        public void TraderCaravanDoesNotPairADeniedOrSeparatedYoung()
+        {
+            List<IRHAH_Pawn> snapshots = new List<IRHAH_Pawn>
             {
-                Assert.Empty(pairs);
-            }
+                Snapshot("I-012", RHAH_PawnRole.Trader, 1),
+                Snapshot("I-012", RHAH_PawnRole.RatkinYoung, 1),
+                Snapshot("I-012", RHAH_PawnRole.RatkinYoung, 9)
+            };
+
+            Assert.False(RHAH_LeashPlan.TryPair(snapshots, new[] { true, false, true }, null, null, out List<RHAH_LeashPair> pairs));
+            Assert.Empty(pairs);
+        }
+
+        [Fact]
+        public void NonTravelGroupsStillDoNotUseTravelAssignment()
+        {
+            Assert.Equal(RHAH_LeashKind.Child, RHAH_LeashPlan.Kind("I-005", false, true, true, false));
+            Assert.Equal(RHAH_LeashKind.Mother, RHAH_LeashPlan.Kind("I-013", true, true, true, false));
+            Assert.Equal(RHAH_LeashKind.None, RHAH_LeashPlan.Kind("I-012", false, false, true, false));
         }
         [Fact]
         public void ChildExchangeParentUsesExchangeSource()
@@ -158,7 +177,7 @@ namespace HungerAndHavoc.Tests
             };
             bool[] parents = { false, false, true, false };
 
-            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, parents, null, out List<RHAH_LeashPair> pairs, out _));
+            Assert.True(RHAH_LeashPlan.TryPair(snapshots, null, parents, null, out List<RHAH_LeashPair> pairs));
             Assert.Equal(RHAH_LeashPlan.ChildExchangeSource, pairs[0].SpecialSource);
             Assert.Equal(RHAH_LeashKind.Mother, RHAH_LeashPlan.Kind("I-013", true, true, true, false));
         }

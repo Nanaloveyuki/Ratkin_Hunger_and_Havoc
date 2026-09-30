@@ -15,6 +15,11 @@ namespace HungerAndHavoc.EventMgr
 
         public string DisplayId => "RHAH_Follow";
 
+        public bool Owns(string displayId)
+        {
+            return displayId == DisplayId || RHAH_EventFollowRules.UsesShortPredator(displayId);
+        }
+
         public bool CanStart(RHAH_EventChainSite site, int tick)
         {
             return false;
@@ -34,9 +39,13 @@ namespace HungerAndHavoc.EventMgr
 
             if (context.Stage == StageShort)
             {
-                RHAH_EventFollowRuntime.TryPredator(mapId, batchId, context.InstanceId);
-                RHAH_EventChainRuntime.SetStage(records, context.InstanceId, StageDone, context.DeadlineTick, context.Payload);
-                return true;
+                RHAH_EventFollowRuntime.TryPredator(mapId, batchId);
+                return RHAH_EventChainRuntime.SetStage(records, context.InstanceId, StageDone, context.DeadlineTick, context.Payload);
+            }
+
+            if (!RHAH_EventFollowRules.LongCheckDue(context.Tick, context.InstanceId))
+            {
+                return false;
             }
 
             RHAH_EventFollowRuntime.TryLong(displayId, batchId, mapId, context);
@@ -50,11 +59,11 @@ namespace HungerAndHavoc.EventMgr
 
     internal static class RHAH_EventFollowRuntime
     {
-        static readonly HashSet<int> predatorRolled = new HashSet<int>();
+        static readonly List<Verse.Pawn> batchBuffer = new List<Verse.Pawn>();
 
-        internal static void TryPredator(int mapId, int batchId, int instanceId)
+        internal static void TryPredator(int mapId, int batchId)
         {
-            if (mapId <= 0 || predatorRolled.Contains(instanceId) || Current.Game == null)
+            if (mapId <= 0 || Current.Game == null)
             {
                 return;
             }
@@ -65,7 +74,6 @@ namespace HungerAndHavoc.EventMgr
                 return;
             }
 
-            predatorRolled.Add(instanceId);
             int chance = Core.RHAH_Mod.Settings == null ? RHAH_EventFollowRules.ShortPredatorPercent : Core.RHAH_Mod.Settings.followPredatorPercent;
             if (!RHAH_EventFollowRules.PredatorSelected(chance, Rand.Value))
             {
@@ -93,28 +101,23 @@ namespace HungerAndHavoc.EventMgr
             component.PredationPendingTick = Find.TickManager.TicksGame + HungerAndHavoc.Incidents.RHAH_PredationRules.ArrivalDelayTicks;
         }
 
-        internal static void TryLong(string displayId, int batchId, int mapId, RHAH_EventChainContext context)
+        internal static bool TryLong(string displayId, int batchId, int mapId, RHAH_EventChainContext context)
         {
             Map map = mapId > 0 ? FindMap(mapId) : null;
             if (map == null)
             {
-                return;
+                return false;
             }
 
             List<Verse.Pawn> batch = Batch(map, batchId);
             if (batch.Count == 0 || !Ready(displayId, batch))
             {
-                return;
+                return false;
             }
 
             Send(displayId, batch);
-            GameComponent_RHAH_Game game = Current.Game.GetComponent<GameComponent_RHAH_Game>();
-            game?.EndEventChain(context.InstanceId, context.Tick, RHAH_EventChainEnd.Completed);
-        }
-
-        internal static void ClearRolls()
-        {
-            predatorRolled.Clear();
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+            return game != null && game.EndEventChain(context.InstanceId, context.Tick, RHAH_EventChainEnd.Completed);
         }
 
         static bool Ready(string displayId, List<Verse.Pawn> batch)
@@ -159,11 +162,11 @@ namespace HungerAndHavoc.EventMgr
 
         static List<Verse.Pawn> Batch(Map map, int batchId)
         {
-            List<Verse.Pawn> result = new List<Verse.Pawn>();
+            batchBuffer.Clear();
             IReadOnlyList<Verse.Pawn> spawned = map.mapPawns?.AllPawnsSpawned;
             if (spawned == null)
             {
-                return result;
+                return batchBuffer;
             }
 
             for (int i = 0; i < spawned.Count; i++)
@@ -171,11 +174,11 @@ namespace HungerAndHavoc.EventMgr
                 CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(spawned[i]);
                 if (comp != null && comp.State.spawnBatchId == batchId)
                 {
-                    result.Add(spawned[i]);
+                    batchBuffer.Add(spawned[i]);
                 }
             }
 
-            return result;
+            return batchBuffer;
         }
 
         static Map FindMap(int mapId)

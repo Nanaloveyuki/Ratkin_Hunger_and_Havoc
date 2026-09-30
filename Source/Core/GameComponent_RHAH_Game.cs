@@ -53,7 +53,7 @@ namespace HungerAndHavoc.Core
         public override void GameComponentTick()
         {
             TickPlague();
-            RHAH_ChoiceRuntime.Tick(this, Find.TickManager.TicksGame, RHAH_Mod.Settings == null || RHAH_Mod.Settings.visitorChoicesEnabled);
+            RHAH_ChoiceRuntime.Tick(this, Find.TickManager.TicksGame);
             TrySpawnPending(Find.TickManager.TicksGame);
             TickStays(Find.TickManager.TicksGame);
             Pawn.RHAH_AttitudeFactions.LockGoodwill();
@@ -146,7 +146,7 @@ namespace HungerAndHavoc.Core
                 return false;
             }
 
-            IncidentParms parms = new IncidentParms { target = queued.Target };
+            IncidentParms parms = new IncidentParms { target = queued.Target, points = points };
             return ExecutePending(index, displayId, entry, points, parms, queued.Target);
         }
 

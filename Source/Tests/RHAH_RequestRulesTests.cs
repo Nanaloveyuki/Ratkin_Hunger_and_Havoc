@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using HungerAndHavoc.Api;
+using HungerAndHavoc.Core;
 using HungerAndHavoc.Incidents;
 using HungerAndHavoc.Pawn;
+using Verse;
 using Xunit;
 
 namespace HungerAndHavoc.Tests
@@ -31,6 +34,48 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(RHAH_ChoiceAction.Deliver, RHAH_RequestRules.Settle(RHAH_ChoiceAction.Deliver, true, false, true));
             Assert.True(RHAH_RequestRules.CreatesSite(RHAH_ChoiceAction.Deliver, RHAH_IntelSiteKind.Treasure));
             Assert.False(RHAH_RequestRules.CreatesSite(RHAH_ChoiceAction.Reject, RHAH_IntelSiteKind.Treasure));
+        }
+
+        [Fact]
+        public void DisabledChoicesStillExpireButDoNotDeliver()
+        {
+            Assert.Equal(RHAH_ChoiceAction.Timeout, RHAH_RequestRules.Settle(RHAH_ChoiceAction.Timeout, false, false, false));
+            Assert.Equal(RHAH_ChoiceAction.None, RHAH_RequestRules.Settle(RHAH_ChoiceAction.Deliver, false, false, true));
+            Assert.Equal(RHAH_ChoiceAction.None, RHAH_RequestRules.Settle(RHAH_ChoiceAction.Reject, false, false, true));
+            Assert.Equal(RHAH_ChoiceAction.None, RHAH_RequestRules.Settle(RHAH_ChoiceAction.Timeout, false, true, false));
+            Assert.False(RHAH_RequestRules.RemovesStock(RHAH_ChoiceAction.Reject, RHAH_RequestKind.SimpleMeal));
+            Assert.False(RHAH_RequestRules.RemovesStock(RHAH_ChoiceAction.Ignore, RHAH_RequestKind.SimpleMeal));
+            Assert.False(RHAH_RequestRules.RemovesStock(RHAH_ChoiceAction.Timeout, RHAH_RequestKind.SimpleMeal));
+            Assert.False(RHAH_RequestRules.RemovesStock(RHAH_ChoiceAction.Deliver, RHAH_RequestKind.Baby));
+            Assert.True(RHAH_RequestRules.RemovesStock(RHAH_ChoiceAction.Deliver, RHAH_RequestKind.SimpleMeal));
+        }
+
+        [Fact]
+        public void DisabledOpenChoicesExpireOnceAndStayClosed()
+        {
+            GameComponent_RHAH_Game game = new GameComponent_RHAH_Game(null);
+            RHAH_ChoiceRecord opened = RHAH_ChoiceRuntime.Open(game, new RHAH_ChoiceRecord
+            {
+                DisplayId = "I-008",
+                Choice = RHAH_ChoiceKind.Visitors,
+                ExpireTick = 10
+            });
+            Assert.NotNull(opened);
+
+            RHAH_ChoiceRuntime.Tick(game, 9);
+            Assert.True(opened.Open);
+
+            RHAH_ChoiceRuntime.Tick(game, 10);
+            Assert.Equal(RHAH_ChoiceAction.Timeout, opened.Settled);
+            Assert.False(opened.Open);
+
+            RHAH_ChoiceRuntime.Tick(game, 11);
+            Assert.Equal(RHAH_ChoiceAction.Timeout, opened.Settled);
+
+            Assert.Equal(
+                RHAH_ChoiceAction.None,
+                RHAH_ChoiceRuntime.TrySettle(game, opened.Id, RHAH_ChoiceAction.Deliver, 12, false, true));
+            Assert.Equal(RHAH_ChoiceAction.Timeout, opened.Settled);
         }
 
         [Fact]

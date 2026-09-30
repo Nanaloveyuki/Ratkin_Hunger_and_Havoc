@@ -206,8 +206,6 @@ namespace HungerAndHavoc.Pawn.Compat
             {
                 DrawIncident(list, entries[i], false, settings);
             }
-
-            settings.Write();
         }
 
         void DrawDevEvents(Listing_Standard list)
@@ -218,10 +216,6 @@ namespace HungerAndHavoc.Pawn.Compat
             for (int i = 0; i < entries.Count; i++)
             {
                 DrawIncident(list, entries[i], true, settings);
-            }
-            if (settings != null)
-            {
-                settings.Write();
             }
         }
 
@@ -1463,7 +1457,6 @@ namespace HungerAndHavoc.Pawn.Compat
             DrawMissingXenotypes(list, settings, xenotypes);
             DrawJoinableXenotypes(list, settings);
             DrawGeneSwitches(list, settings);
-            RHAH_Mod.Settings.Write();
         }
 
         static void DrawJoinableXenotypes(Listing_Standard list, RHAH_Settings settings)

@@ -7,8 +7,7 @@ namespace HungerAndHavoc.Pawn.Compat
     {
         None = 0,
         Mother = 1,
-        Child = 2,
-        Travel = 3
+        Child = 2
     }
 
     internal readonly struct RHAH_LeashPair
@@ -41,24 +40,9 @@ namespace HungerAndHavoc.Pawn.Compat
                 role == RHAH_PawnRole.WildChild;
         }
 
-        internal static bool IsTravel(string displayId)
-        {
-            return displayId == "I-012" || displayId == "I-038";
-        }
-
         internal static RHAH_LeashKind Kind(string displayId, bool parentRelation, bool sameGroup, bool childAllowed, bool playerFaction)
         {
-            if (!childAllowed || playerFaction || string.IsNullOrEmpty(displayId))
-            {
-                return RHAH_LeashKind.None;
-            }
-
-            if (IsTravel(displayId))
-            {
-                return RHAH_LeashKind.Travel;
-            }
-
-            if (!sameGroup)
+            if (!childAllowed || playerFaction || string.IsNullOrEmpty(displayId) || !sameGroup)
             {
                 return RHAH_LeashKind.None;
             }
@@ -73,12 +57,12 @@ namespace HungerAndHavoc.Pawn.Compat
                 return RHAH_LeashKind.Mother;
             }
 
-            if (displayId != "I-004" && displayId != "I-013")
+            if ((displayId == "I-004" || displayId == "I-013") && !parentRelation)
             {
-                return RHAH_LeashKind.Child;
+                return RHAH_LeashKind.None;
             }
 
-            return RHAH_LeashKind.None;
+            return RHAH_LeashKind.Child;
         }
 
         internal static int SpecialSource(string displayId, RHAH_LeashKind kind)
@@ -106,45 +90,29 @@ namespace HungerAndHavoc.Pawn.Compat
             IReadOnlyList<bool> gateAllows,
             IReadOnlyList<bool> parentRelations,
             IReadOnlyList<bool> playerFactions,
-            out List<RHAH_LeashPair> pairs,
-            out bool travel)
+            out List<RHAH_LeashPair> pairs)
         {
             pairs = new List<RHAH_LeashPair>();
-            travel = false;
             if (snapshots == null || snapshots.Count == 0)
             {
                 return false;
             }
 
-            string displayId = null;
-            for (int i = 0; i < snapshots.Count; i++)
-            {
-                IRHAH_Pawn snapshot = snapshots[i];
-                if (snapshot == null || string.IsNullOrEmpty(snapshot.SourceIncidentDisplayId))
-                {
-                    continue;
-                }
+            return PairExisting(snapshots, gateAllows, parentRelations, playerFactions, pairs);
+        }
 
-                displayId = snapshot.SourceIncidentDisplayId;
-                break;
-            }
-
-            if (displayId == null)
-            {
-                return false;
-            }
-
-            if (IsTravel(displayId))
-            {
-                travel = true;
-                return false;
-            }
-
+        static bool PairExisting(
+            IReadOnlyList<IRHAH_Pawn> snapshots,
+            IReadOnlyList<bool> gateAllows,
+            IReadOnlyList<bool> parentRelations,
+            IReadOnlyList<bool> playerFactions,
+            List<RHAH_LeashPair> pairs)
+        {
             bool paired = false;
             for (int child = 0; child < snapshots.Count; child++)
             {
                 IRHAH_Pawn young = snapshots[child];
-                if (young == null || !IsLeashChild(young.Role) || young.SourceIncidentDisplayId != displayId)
+                if (young == null || !IsLeashChild(young.Role) || string.IsNullOrEmpty(young.SourceIncidentDisplayId))
                 {
                     continue;
                 }
@@ -166,7 +134,7 @@ namespace HungerAndHavoc.Pawn.Compat
                     }
 
                     IRHAH_Pawn elder = snapshots[adult];
-                    if (elder == null || IsLeashChild(elder.Role) || elder.SourceIncidentDisplayId != displayId)
+                    if (elder == null || IsLeashChild(elder.Role) || elder.SourceIncidentDisplayId != young.SourceIncidentDisplayId)
                     {
                         continue;
                     }
@@ -201,13 +169,13 @@ namespace HungerAndHavoc.Pawn.Compat
                     continue;
                 }
 
-                RHAH_LeashKind chosen = Kind(displayId, adultIndex == parentIndex, true, true, false);
+                RHAH_LeashKind chosen = Kind(young.SourceIncidentDisplayId, adultIndex == parentIndex, true, true, false);
                 if (chosen != RHAH_LeashKind.Mother && chosen != RHAH_LeashKind.Child)
                 {
                     continue;
                 }
 
-                pairs.Add(new RHAH_LeashPair(adultIndex, child, SpecialSource(displayId, chosen)));
+                pairs.Add(new RHAH_LeashPair(adultIndex, child, SpecialSource(young.SourceIncidentDisplayId, chosen)));
                 paired = true;
             }
 

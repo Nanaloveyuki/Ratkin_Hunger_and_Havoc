@@ -8,7 +8,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
     {
         static int builtTick = -1;
         static readonly Dictionary<int, Verse.Pawn> byId = new Dictionary<int, Verse.Pawn>();
-
         internal static Verse.Pawn Find(int loadId, int tick)
         {
             if (loadId <= 0)

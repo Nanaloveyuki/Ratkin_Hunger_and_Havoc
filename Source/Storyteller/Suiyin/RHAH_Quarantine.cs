@@ -10,6 +10,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
     internal static class RHAH_Quarantine
     {
         internal const string LetterDefName = "RHAH_QuarantineLetter";
+        internal const int WatchInterval = GenDate.TicksPerHour;
 
         internal static void Tick(NarrativeState state, int tick)
         {
@@ -20,6 +21,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             state.PullBook();
+            bool watch = RHAH_NarrativePace.Due(tick, WatchInterval, 0);
             for (int i = 0; i < book.N007.Count; i++)
             {
                 SuiyinN007Case record = book.N007[i];
@@ -34,7 +36,10 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     book.QueueOpened(record.MapId);
                 }
 
-                Watch(record, tick);
+                if (watch)
+                {
+                    Watch(record, tick);
+                }
             }
 
             state.PushBook();
@@ -69,7 +74,14 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         static void Watch(SuiyinN007Case record, int tick)
         {
-            if (record.Visitors == null || record.Outcome == SuiyinN007Outcome.Pending || record.Outcome == SuiyinN007Outcome.Defer)
+            if (record.Visitors == null ||
+                record.Outcome == SuiyinN007Outcome.Pending ||
+                record.Outcome == SuiyinN007Outcome.Defer ||
+                record.Outcome == SuiyinN007Outcome.RecoveredLeft ||
+                record.Outcome == SuiyinN007Outcome.RecoveredStayed ||
+                record.Outcome == SuiyinN007Outcome.AllDead ||
+                record.Outcome == SuiyinN007Outcome.Missing ||
+                record.Outcome == SuiyinN007Outcome.Broken)
             {
                 return;
             }

@@ -127,7 +127,6 @@ namespace HungerAndHavoc.Core
             Generation.RHAH_FertilityRules.ClampLitter(ref Settings.litterMin, ref Settings.litterPeak, ref Settings.litterMax);
 
             listing.End();
-            Settings.Write();
         }
         static void DrawRemoval(Listing_Standard listing)
         {

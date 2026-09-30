@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using HungerAndHavoc.Core;
@@ -450,27 +451,31 @@ namespace HungerAndHavoc.Generation
     [HarmonyPatch(typeof(JobDriver_Lovin), "MakeNewToils")]
     internal static class RHAH_RoomBirthPatch
     {
-        static void Postfix(JobDriver_Lovin __instance, ref IEnumerable<Toil> __result)
+        static void Postfix(JobDriver_Lovin __instance)
         {
-            if (__instance?.pawn == null || __result == null)
+            if (__instance?.pawn == null)
             {
                 return;
             }
 
             VersePawn initiator = __instance.pawn;
-            __result = Finish(__result, initiator);
+            Action<JobCondition> finish = condition => FinishRoomConception(initiator, condition);
+            int slot = __instance.globalFinishActions.FindIndex(existing => existing.Method == finish.Method);
+            if (slot >= 0)
+            {
+                __instance.globalFinishActions[slot] = finish;
+            }
+            else
+            {
+                __instance.AddFinishAction(finish);
+            }
         }
 
-        static IEnumerable<Toil> Finish(IEnumerable<Toil> source, VersePawn initiator)
+        static void FinishRoomConception(VersePawn initiator, JobCondition condition)
         {
-            foreach (Toil toil in source)
+            if (condition == JobCondition.Succeeded)
             {
-                if (toil != null)
-                {
-                    toil.AddFinishAction(() => RHAH_Fertility.TryRoomConception(initiator));
-                }
-
-                yield return toil;
+                RHAH_Fertility.TryRoomConception(initiator);
             }
         }
     }

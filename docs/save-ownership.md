@@ -188,6 +188,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Expel | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_CarryYoung | Job `driverClass`；无新增存档字段 | Remove，连同当前 Job 或排队 Job 清理 |
 | HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Request | Letter `letterClass` | Remove |
 | HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Visitors | Letter `letterClass` | Remove |
 | HungerAndHavoc.Incidents.ChoiceLetter_RHAH_GrainHole | Letter `letterClass` | Remove |
@@ -329,14 +330,16 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Scavenge | JobDef | Remove |
 | RHAH_TailBite | JobDef | Remove |
 | RHAH_Expel | JobDef | Remove |
+| RHAH_CarryYoung | JobDef | Remove，连同当前驱动和相关预约清理 |
 | RHAH_RefugeeMassacre | QuestScriptDef | Remove |
 | RHAH_RefugeeCamp | WorldObjectDef | 没有地图、也没有居民：Remove，删整个世界物体。已有地图或居民：Replace。保留世界物体 ID、地图和居民，类名与 Def 改成已加载的原版 `Site`，去掉本模组部件和生成步骤。`Site` 不能接住已生成地图就中止，不删地图 |
 | RHAH_RefugeeCamp | SitePartDef | Remove。同名地点部件单独删除，不把它当成世界物体，也不改成原版部件 |
-| RHAH_RefugeeCamp | MapGeneratorDef / GenStepDef | Remove。不单独出现在已生成地图的 `.rws`。世界物体改成 `Site` 时去掉对本生成器和生成步骤的引用 |
+| RHAH_RefugeeCamp | MapGeneratorDef | Replace。已生成地图在 `maps/li/generatorDef` 保存；按 `mapInfo/parent` 匹配保留地点，只将自有生成器改为已加载、非本模组的 `Site.mapGenerator`，为空时使用原版 `Encounter`。替代 Def 缺失时中止 |
+| RHAH_RefugeeCamp | GenStepDef | Remove，随地点部件清理，不改其它地图 |
 | RHAH_Approach | WorldObjectDef | Remove。不替换成原版商队。卸载后物体消失，未到达的事件不再生成 |
 | RHAH_RecordSite | WorldObjectDef | Replace。`worldObjectClass` 已是原版 `Site`。没有地图也没有居民：删整个世界物体。已有地图或居民：保留世界物体 ID、地图和居民，Def 改成已加载的原版 `Site`，地图生成器改成 `Site` 自带的生成器。`Site` 不能接住已生成地图就中止 |
 | RHAH_RecordSite | SitePartDef | Remove。同名地点部件单独删除，不把它当成世界物体 |
-| RHAH_RecordSite | MapGeneratorDef | Remove。不单独出现在已生成地图的 `.rws` |
+| RHAH_RecordSite | MapGeneratorDef | Replace。按 `maps/li/mapInfo/parent` 匹配保留地点，将该地图的自有 `generatorDef` 改为已加载、非本模组的 `Site.mapGenerator`，为空时使用原版 `Encounter`。替代 Def 缺失时中止 |
 | RHAH_RecordBox | ThingDef | Remove。不替换成原版建筑 |
 | RHAH_MigrationRecord | ThingDef | Remove。不替换成原版物品 |
 | RHAH_RecordLetter | LetterDef | Remove。不替换成原版信 |

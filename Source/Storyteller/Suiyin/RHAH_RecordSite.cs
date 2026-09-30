@@ -16,6 +16,11 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal const int MaxDistance = 22;
         internal const int SpawnRadius = 15;
 
+        internal static bool ShouldRemove(SuiyinN009Outcome outcome, bool boxDestroyed, bool hasMap, bool anyoneOnMap, bool mapEntered)
+        {
+            return outcome == SuiyinN009Outcome.Empty && !boxDestroyed && !hasMap && !anyoneOnMap && !mapEntered;
+        }
+
         internal static void Tick(int tick)
         {
             if (!RHAH_NarrativePace.Due(tick, RHAH_NarrativePace.Spread, RHAH_NarrativePace.Spread * 5) || Current.Game == null)
@@ -60,9 +65,10 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return;
             }
 
-            record.MapPresent = true;
             Map map = site.Map;
             bool players = map != null && map.mapPawns != null && map.mapPawns.AnyColonistSpawned;
+            bool anyone = map != null && map.mapPawns != null && map.mapPawns.AllPawnsSpawned.Count > 0;
+            record.MapPresent = true;
             record.PlayersInside = players;
             record.EnvoyHere = players && EnvoyHere(book);
             if (!record.MapEntered)
@@ -75,6 +81,11 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             state.Commit(item => item.ExpireRelic(tick));
+            if (ShouldRemove(record.Outcome, record.BoxDestroyed, site.HasMap, anyone, record.MapEntered))
+            {
+                site.Destroy();
+            }
+
             NoteDone(state, book, tick);
         }
 
@@ -341,6 +352,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return null;
         }
 
+
+
         static Thing FindBox(Map map, int id)
         {
             if (map == null || id == 0)
@@ -367,6 +380,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return null;
         }
     }
+
+
 
     public class Building_RHAH_RecordBox : Building
     {

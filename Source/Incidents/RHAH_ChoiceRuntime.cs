@@ -62,12 +62,13 @@ namespace HungerAndHavoc.Incidents
             return settled;
         }
 
-        internal static void Tick(GameComponent_RHAH_Game game, int tick, bool enabled)
+        internal static void Tick(GameComponent_RHAH_Game game, int tick)
         {
             if (game == null)
             {
                 return;
             }
+
 
             List<RHAH_ChoiceRecord> records = Records(game);
             for (int i = 0; i < records.Count; i++)
@@ -78,8 +79,8 @@ namespace HungerAndHavoc.Incidents
                     continue;
                 }
 
-                TrySettle(game, record.Id, RHAH_ChoiceAction.Timeout, tick, enabled, false);
-                if (record.Settled == RHAH_ChoiceAction.Timeout)
+                RHAH_ChoiceAction settled = TrySettle(game, record.Id, RHAH_ChoiceAction.Timeout, tick, true, false);
+                if (settled == RHAH_ChoiceAction.Timeout)
                 {
                     Leave(record);
                 }
@@ -126,7 +127,7 @@ namespace HungerAndHavoc.Incidents
                 return 0;
             }
 
-            return Count(map.listerThings.ThingsOfDef(def));
+            return CountSpawned(map.listerThings.ThingsOfDef(def));
         }
 
         internal static bool TryCreateSite(Map map, RHAH_IntelSiteKind kind)
@@ -518,23 +519,28 @@ namespace HungerAndHavoc.Incidents
 
         static int CountMedicine(Map map)
         {
-            int total = 0;
+            List<Thing> medicines = new List<Thing>();
             List<Thing> things = map.listerThings.AllThings;
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
                 if (thing != null && thing.Spawned && thing.def != null && thing.def.IsMedicine)
                 {
-                    total += thing.stackCount;
+                    medicines.Add(thing);
                 }
             }
 
-            return total;
+            return CountSpawned(medicines);
         }
 
-        static int Count(List<Thing> things)
+        internal static int CountSpawned(List<Thing> things)
         {
             int total = 0;
+            if (things == null)
+            {
+                return total;
+            }
+
             for (int i = 0; i < things.Count; i++)
             {
                 if (things[i] != null && things[i].Spawned)
@@ -548,7 +554,7 @@ namespace HungerAndHavoc.Incidents
 
         static bool Consume(List<Thing> things, int amount)
         {
-            if (Count(things) < amount)
+            if (CountSpawned(things) < amount)
             {
                 return false;
             }

@@ -1,3 +1,4 @@
+using RimWorld;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Incidents;
 
@@ -175,6 +176,18 @@ namespace HungerAndHavoc.EventMgr
         internal static bool RollsPredator(bool longChain, bool alreadyRolled, int chancePercent)
         {
             return !longChain && !alreadyRolled && Clamp(chancePercent) > 0;
+        }
+
+        internal static bool LongCheckDue(int tick, int instanceId)
+        {
+            int hour = GenDate.TicksPerHour;
+            if (tick < 0 || instanceId <= 0 || hour <= 0)
+            {
+                return false;
+            }
+
+            int phase = instanceId % hour;
+            return tick % hour == phase;
         }
 
         internal static bool PredatorSelected(int chancePercent, float roll)

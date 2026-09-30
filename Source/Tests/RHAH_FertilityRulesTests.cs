@@ -87,6 +87,7 @@ namespace HungerAndHavoc.Tests
             Assert.Same(ratkin, RHAH_Fertility.InheritedXenotype(Parent(ratkin, ears, xenogene), null));
         }
 
+
         static GeneDef Gene(string defName)
         {
             return new GeneDef { defName = defName };
