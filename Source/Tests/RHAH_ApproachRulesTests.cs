@@ -86,6 +86,12 @@ namespace HungerAndHavoc.Tests
 
             Assert.False(RHAH_ApproachRules.TryConsumeNext(null, out _));
             Assert.False(RHAH_ApproachRules.TryConsumeNext(WorldPath.NotFound, out _));
+
+            using (WorldPath corrupt = Path(8, 3))
+            {
+                corrupt.NodesReversed.Clear();
+                Assert.False(RHAH_ApproachRules.TryConsumeNext(corrupt, out _));
+            }
         }
 
         static WorldPath Path(params int[] destinationFirst)

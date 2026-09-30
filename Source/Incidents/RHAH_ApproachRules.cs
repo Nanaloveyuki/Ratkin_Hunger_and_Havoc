@@ -100,7 +100,7 @@ namespace HungerAndHavoc.Incidents
         internal static bool TryConsumeNext(WorldPath path, out PlanetTile next)
         {
             next = default;
-            if (path == null || path == WorldPath.NotFound || !path.Found || path.NodesLeftCount < 2)
+            if (path == null || path == WorldPath.NotFound || !path.Found || path.NodesLeftCount < 2 || path.NodeCount < path.NodesLeftCount)
             {
                 return false;
             }
