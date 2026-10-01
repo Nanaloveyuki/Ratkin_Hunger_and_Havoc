@@ -150,6 +150,11 @@ Compatibility with Combat Extended is unknown. The likely clash is the temperatu
       <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077</steamWorkshopUrl>
     </li>
     <li>
+      <packageId>Nanaloveyuki.IrisMenus</packageId>
+      <displayName>Iris Menus</displayName>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3798502474</steamWorkshopUrl>
+    </li>
+    <li>
       <packageId>Ludeon.RimWorld.Biotech</packageId>
       <displayName>Biotech</displayName>
     </li>
