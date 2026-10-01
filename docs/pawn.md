@@ -37,7 +37,7 @@
 - `Fight`：批次转敌对后，本模组安排的反击。默认只放行 `Siege` 或当前态度 `Hostile`。关闸后仍会离场，但不反击
 - `DropOffChild`：母亲离场放下孩子。设置 `familyDropEnabled` 仍可整项关闭
 - `TailBite`：囚犯咬幼年尾巴。默认关闭，设置或单只覆盖打开后才执行
-- `Imprison`：原版俘虏进玩家囚犯名单时调用 `ReleaseToColony(Imprisoned)`。关闸后不捕获
+- `Imprison`：原版俘虏进玩家囚犯名单前调用 `ReleaseToColony(Imprisoned)`。关闸或释放策略拒绝时不捕获、不拆 Lord。选择信的俘虏与奴役也问此闸门，不借用 Hire / JoinColony
 - `Transfer`：原版交易把来客卖出或买进玩家派系。关闸后这笔角色交易不成交。检疫同样拒绝
 - `Leash`：只公开查询和覆盖。牵引适配以后再接，当前没有玩法消费它
 
@@ -78,6 +78,8 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 乞讨不选睡着、躺在医疗床上、倒地、禁止接触，或还不能自己行动的殖民者。无幼童模组时年龄不足 4 岁，有幼童模组时不足 1 岁 47 天。当前目标不合适就换下一个。全部失败后闲逛，`begFailCooldownHours` 小时内不再乞讨，默认 3，范围 3 到 12。冷却和已经乞讨过的殖民者写入游戏存档，读档后仍算第二次。成功要同时掷中几率并且 `begAutoGiveEnabled` 开启。默认关闭。开启后从对方背包拿走一份 `disabledBegFoodDefNames` 允许的正餐，营养高的优先，放进乞讨者背包，放不下就丢在脚下。关掉、背包没有允许的食物，或同一人已经被乞讨过，都不算成功，继续换人。基础成功率 `begSuccessChancePercent` 默认 35，范围 0 到 100，每级社交再加 `begSocialBonusPercent`，默认 3，范围 0 到 20，合计不超过 100。成功给乞讨者 `RHAH_Thought_BeggingSucceeded`，心情 +3，不叠加。失败给乞讨者 `RHAH_Thought_BeggingRejected`，心情 -5，可无限叠加。同一殖民者第二次及以后被乞讨时，按 `begSlapChancePercent` 抽一巴掌，默认 50。抽中则昏迷 3 小时，头部没有瘀伤时加轻度瘀伤，已有则加重，瘀伤已到上限则头部中度流血，并给乞讨者 `RHAH_Thought_BeggingSlapped`，心情 -10，可无限叠加。重复乞讨不再算成功。JobGiver 第一行：非访客返回 null；再问 `RHAH_Api.Allows`。角色规则只在 `RHAH_PawnDefaults` 和闸门覆盖里。吃饱后不再乞讨、偷窃、啃咬或由本模组安排进食。啃树皮和墙只从原版饥饿觅食补上：食物比例低于 5%、当前没有 Job，并且 40 格内有可预订、可走到的树、植物或墙。
 
 `ReleaseToColony` 必须拆 Lord、清 duty、停访客 JobGiver。标记 Hediff 保留。
+
+选择信取消「送进监狱」。俘虏原地转换，只处理本图、本批仍活动的访客；来客须已在不接地图边缘、边界没有可自由通行门的囚室内。即使门外只是走廊，开门也拒绝。奴役原地转换，要求 Ideology，按原版清隐藏原派系并解锁衣物。两者排除玩家派系、已有囚犯或奴隶、精神状态和检疫来客；倒地不单独禁止。混合批次仅转换合格成员，其余原状。至少实际成功一人才结算；全部失败不关闭信，点击时重新检查资格。转换不搬运、不瞬移、不发押送 Job；之后越狱和解放继续走原版。奴役历史事件记录受害者，不伪造执行者的个人戒律记录
 
 其它模组适配只进 `Source/Pawn/Compat/`。基底只暴露闸门、`IRHAH_PawnBehavior` 和 `RHAH_Api` 事件。禁止 Harmony 其它模组私有类型。原版缺口补丁登记在 [engineering.md](engineering.md)。
 

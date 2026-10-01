@@ -49,7 +49,6 @@ namespace HungerAndHavoc.Incidents
         Enslave = 9,
         Capture = 10,
         Attack = 11,
-        Prison = 12,
         Ally = 13
     }
 
@@ -328,7 +327,7 @@ namespace HungerAndHavoc.Incidents
 
         internal static bool Captures(RHAH_ChoiceAction action)
         {
-            return action == RHAH_ChoiceAction.Capture || action == RHAH_ChoiceAction.Prison;
+            return action == RHAH_ChoiceAction.Capture;
         }
 
         internal static bool Attacks(RHAH_ChoiceAction action)
@@ -426,11 +425,6 @@ namespace HungerAndHavoc.Incidents
             return recruitable;
         }
 
-        internal static bool ShowsPrison(string displayId, bool present, bool prisonEnabled, bool hasCells)
-        {
-            return prisonEnabled && hasCells && present && OffersBatchControl(displayId);
-        }
-
         internal static bool ShowsAlly(bool present, bool hasAlly)
         {
             return present && hasAlly;
@@ -518,7 +512,21 @@ namespace HungerAndHavoc.Incidents
             Scribe_Values.Look(ref Choice, "choice", RHAH_ChoiceKind.None);
             Scribe_Values.Look(ref Amount, "amount", 0);
             Scribe_Values.Look(ref ExpireTick, "expireTick", -1);
-            Scribe_Values.Look(ref Settled, "settled", RHAH_ChoiceAction.None);
+            bool legacyPrison = false;
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                string savedAction = null;
+                Scribe_Values.Look(ref savedAction, "settled", "None");
+                legacyPrison = savedAction == "Prison" || savedAction == "12";
+            }
+            if (legacyPrison)
+            {
+                Settled = RHAH_ChoiceAction.Capture;
+            }
+            else
+            {
+                Scribe_Values.Look(ref Settled, "settled", RHAH_ChoiceAction.None);
+            }
             Scribe_Collections.Look(ref PawnLoadIds, "pawnLoadIds", LookMode.Value);
             Scribe_Values.Look(ref AllyFactionId, "allyFactionId", 0);
             Scribe_Collections.Look(ref AllyPawnIds, "allyPawnIds", LookMode.Value);

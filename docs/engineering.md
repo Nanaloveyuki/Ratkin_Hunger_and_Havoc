@@ -221,7 +221,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_CuisineGoodsPatch` 是 `internal`，Postfix `Pawn_TraderTracker.Goods`。原版访客 Lord 只列商人自己未标价的背包。补丁只在商人属于本模组商队、派系不敌对、且 Lord 不是交易 Lord 时，把同 Lord 随行的背包并进货物。交易 Lord、敌对派系和其它商人不改。
 `RHAH_PredationFoodPatch` 是 `internal`，Prefix `JobGiver_GetFood.TryGiveJob`。原版觅食不认识安居点的强制目标。补丁只改 `MapComponent_RHAH_Map` 正在跟踪、且地图父对象是 `WorldObject_RHAH_RefugeeCamp` 的野生捕食者。其它地图走原版。
 `RHAH_PredationFleePatch` 是 `internal`，Prefix `JobGiver_ReactToCloseMeleeThreat.TryGiveJob`。关闭反击后，被本特殊情况追猎的安居点鼠族改为逃跑。默认反击，不能使用暴力的人不变。其它威胁走原版。
-`RHAH_CaptureGatePatch` 是 `internal`，Prefix `Pawn_GuestTracker.CapturedBy`。原版俘虏不看来源闸门。补丁只在捕获方是玩家且目标是本模组来源时问 `Imprison`，拒绝则不捕获，通过则 `ReleaseToColony(Imprisoned)`。其它俘虏走原版。
+`RHAH_CaptureGatePatch` 是 `internal`，Prefix `Pawn_GuestTracker.CapturedBy`。原版俘虏不看来源闸门。补丁只在捕获方是玩家且目标是本模组来源时问 `Imprison`，拒绝则不捕获，通过则返回 `ReleaseToColony(Imprisoned)` 的结果。释放策略拒绝也不捕获、不提前清 Lord。其它俘虏走原版。
 `RHAH_TradePawnGatePatch` 是 `internal`，Prefix `Tradeable_Pawn.ResolveTrade`。原版角色买卖不看来源闸门。补丁只检查这笔要成交的本模组来源，任一 `Transfer` 被拒则整笔不成交，通过则 `ReleaseToColony(ModRequest)`。物品交易和其它角色走原版。
 `RHAH_GnawFoodPatch` 是 `internal`，Postfix `JobGiver_GetFood.TryGiveJob`。原版饥饿觅食找不到食物就结束。补丁只在结果为空、目标是本模组来客、且食物比例低于 5% 时补一个啃植物或墙皮的 Job。找不到目标后写入与赈灾寻食相同的一小时冷却。寻食 duty、工作和工作优先级都不发啃食。
 `RHAH_BirthdayMoodPatch` 是 `internal`，Postfix `Pawn_AgeTracker.BirthdayBiological`。十四岁后续心情只在这次生日结算，不再按小时扫描地图上的全部 pawn。其它年龄和没有来源组件的人不改。

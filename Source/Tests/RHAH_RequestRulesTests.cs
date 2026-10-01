@@ -1,5 +1,8 @@
+using System.IO;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.Serialization;
+using System.Xml;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Incidents;
@@ -34,6 +37,90 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(RHAH_ChoiceAction.Deliver, RHAH_RequestRules.Settle(RHAH_ChoiceAction.Deliver, true, false, true));
             Assert.True(RHAH_RequestRules.CreatesSite(RHAH_ChoiceAction.Deliver, RHAH_IntelSiteKind.Treasure));
             Assert.False(RHAH_RequestRules.CreatesSite(RHAH_ChoiceAction.Reject, RHAH_IntelSiteKind.Treasure));
+        }
+
+        [Theory]
+        [InlineData("Prison", RHAH_ChoiceAction.Capture)]
+        [InlineData("12", RHAH_ChoiceAction.Capture)]
+        [InlineData(null, RHAH_ChoiceAction.None)]
+        [InlineData("None", RHAH_ChoiceAction.None)]
+        [InlineData("Capture", RHAH_ChoiceAction.Capture)]
+        [InlineData("10", RHAH_ChoiceAction.Capture)]
+        [InlineData("Ally", RHAH_ChoiceAction.Ally)]
+        [InlineData("13", RHAH_ChoiceAction.Ally)]
+        [InlineData("37", (RHAH_ChoiceAction)37)]
+        public void SettledActionsLoadAndSaveWithoutReopeningChoices(string savedAction, RHAH_ChoiceAction expected)
+        {
+            ScribeSaver previousSaver = Scribe.saver;
+            ScribeLoader previousLoader = Scribe.loader;
+            LoadSaveMode previousMode = Scribe.mode;
+            bool previousProfiling = DeepProfiler.enabled;
+            FieldInfo prefsField = typeof(Prefs).GetField("data", BindingFlags.NonPublic | BindingFlags.Static);
+            object previousPrefs = prefsField.GetValue(null);
+            string path = Path.GetTempFileName();
+            try
+            {
+                Scribe.saver = new ScribeSaver();
+                Scribe.loader = new ScribeLoader();
+                Scribe.mode = LoadSaveMode.Inactive;
+                DeepProfiler.enabled = false;
+                prefsField.SetValue(null, new PrefsData { devMode = false });
+
+                XmlDocument fixture = new XmlDocument();
+                fixture.LoadXml("<record />");
+                if (savedAction != null)
+                {
+                    XmlElement settled = fixture.CreateElement("settled");
+                    settled.InnerText = savedAction;
+                    fixture.DocumentElement.AppendChild(settled);
+                }
+                fixture.Save(path);
+
+                Scribe.loader.InitLoading(path);
+                RHAH_ChoiceRecord loaded = new RHAH_ChoiceRecord();
+                Scribe.loader.curParent = loaded;
+                loaded.ExposeData();
+                Scribe.loader.initer.RegisterForPostLoadInit(loaded);
+                Scribe.loader.FinalizeLoading();
+                Assert.Equal(expected, loaded.Settled);
+                Assert.Equal(expected == RHAH_ChoiceAction.None, loaded.Open);
+
+                Scribe.saver.InitSaving(path, "record");
+                loaded.ExposeData();
+                Scribe.saver.FinalizeSaving();
+                XmlDocument written = new XmlDocument();
+                written.Load(path);
+                string expectedText = expected == RHAH_ChoiceAction.None ? null : expected.ToString();
+                Assert.Equal(expectedText, written.SelectSingleNode("/record/settled")?.InnerText);
+
+                Scribe.loader.InitLoading(path);
+                RHAH_ChoiceRecord reloaded = new RHAH_ChoiceRecord();
+                Scribe.loader.curParent = reloaded;
+                reloaded.ExposeData();
+                Scribe.loader.initer.RegisterForPostLoadInit(reloaded);
+                Scribe.loader.FinalizeLoading();
+                Assert.Equal(expected, reloaded.Settled);
+                Assert.Equal(expected == RHAH_ChoiceAction.None, reloaded.Open);
+            }
+            finally
+            {
+                Scribe.ForceStop();
+                Scribe.saver = previousSaver;
+                Scribe.loader = previousLoader;
+                Scribe.mode = previousMode;
+                DeepProfiler.enabled = previousProfiling;
+                prefsField.SetValue(null, previousPrefs);
+                File.Delete(path);
+            }
+        }
+
+        [Fact]
+        public void CaptureDoesNotAcceptTheRemovedPrisonActionAtRuntime()
+        {
+            Assert.True(RHAH_RequestRules.Captures(RHAH_ChoiceAction.Capture));
+            Assert.False(RHAH_RequestRules.Captures((RHAH_ChoiceAction)12));
+            Assert.False(RHAH_RequestRules.Captures(RHAH_ChoiceAction.Enslave));
+            Assert.False(RHAH_RequestRules.Captures(RHAH_ChoiceAction.Attack));
         }
 
         [Fact]
@@ -105,9 +192,6 @@ namespace HungerAndHavoc.Tests
             Assert.True(RHAH_RequestRules.ShowsEnslave(true, true));
             Assert.False(RHAH_RequestRules.ShowsCapture(false));
             Assert.True(RHAH_RequestRules.ShowsAttack(true));
-            Assert.False(RHAH_RequestRules.ShowsPrison("I-004", true, true, false));
-            Assert.True(RHAH_RequestRules.ShowsPrison("I-004", true, true, true));
-            Assert.False(RHAH_RequestRules.ShowsPrison("I-003", true, true, true));
             Assert.True(RHAH_RequestRules.ShowsAlly(true, true));
             Assert.False(RHAH_RequestRules.ShowsAlly(true, false));
             Assert.False(RHAH_RequestRules.ShowsAlly(false, true));

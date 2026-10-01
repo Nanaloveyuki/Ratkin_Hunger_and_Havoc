@@ -54,14 +54,15 @@ namespace HungerAndHavoc.Incidents
                     yield return Gated(
                         "RHAH_Choice_Enslave",
                         RHAH_ChoiceAction.Enslave,
-                        ideology && recruitable,
-                        quarantine,
-                        ideology ? "RHAH_Choice_NoRecruit" : "RHAH_Choice_NoIdeology");
+                        ideology && RHAH_VisitorBatch.HasEligible(present, record.MapId, true),
+                        false,
+                        ideology ? "RHAH_Choice_NoCustodyTarget" : "RHAH_Choice_NoIdeology");
                 }
 
                 if (RHAH_RequestRules.ShowsCapture(true))
                 {
-                    yield return Gated("RHAH_Choice_Capture", RHAH_ChoiceAction.Capture, recruitable, quarantine);
+                    yield return Gated("RHAH_Choice_Capture", RHAH_ChoiceAction.Capture,
+                        RHAH_VisitorBatch.HasEligible(present, record.MapId, false), false, "RHAH_Choice_CaptureRequiresPrison");
                 }
 
                 if (RHAH_RequestRules.ShowsAttack(true))
@@ -69,17 +70,6 @@ namespace HungerAndHavoc.Incidents
                     yield return Gated("RHAH_Choice_Attack", RHAH_ChoiceAction.Attack, recruitable, false);
                 }
 
-                Map map = ResolveMap(present);
-                bool cells = map != null && RHAH_VisitorBatch.HasPrisonCell(map);
-                if (RHAH_RequestRules.ShowsPrison(displayId, true, true, true))
-                {
-                    yield return Gated(
-                        "RHAH_Choice_Prison",
-                        RHAH_ChoiceAction.Prison,
-                        present.Count > 0 && cells,
-                        quarantine,
-                        cells ? "RHAH_Choice_NoRecruit" : "RHAH_Choice_NoPrison");
-                }
 
                 if (RHAH_RequestRules.ShowsAlly(present.Count > 0, RHAH_ChoiceRuntime.HasAllyDestination()))
                 {
@@ -173,7 +163,11 @@ namespace HungerAndHavoc.Incidents
                 true);
             if (settled == RHAH_ChoiceAction.None)
             {
-                Messages.Message("RHAH_Choice_Stale".Translate(), MessageTypeDefOf.RejectInput);
+                RHAH_ChoiceRecord current = FindRecord();
+                string key = current != null && current.Open && enabled &&
+                    (RHAH_RequestRules.Captures(action) || RHAH_RequestRules.Enslaves(action))
+                    ? "RHAH_Choice_CustodyFailed" : "RHAH_Choice_Stale";
+                Messages.Message(key.Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
@@ -250,18 +244,6 @@ namespace HungerAndHavoc.Incidents
             return false;
         }
 
-        static Map ResolveMap(List<Verse.Pawn> pawns)
-        {
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                if (pawns[i].Map != null)
-                {
-                    return pawns[i].Map;
-                }
-            }
-
-            return null;
-        }
 
         RHAH_ChoiceRecord FindRecord()
         {

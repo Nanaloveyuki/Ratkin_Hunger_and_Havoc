@@ -58,6 +58,18 @@ namespace HungerAndHavoc.Incidents
                 return RHAH_ChoiceAction.None;
             }
 
+            if (RHAH_RequestRules.Captures(settled) || RHAH_RequestRules.Enslaves(settled))
+            {
+                List<Verse.Pawn> present = Present(record);
+                int converted = RHAH_RequestRules.Captures(settled)
+                    ? RHAH_VisitorBatch.Capture(present, record.MapId)
+                    : RHAH_VisitorBatch.Enslave(present, record.MapId);
+                if (converted == 0)
+                {
+                    return RHAH_ChoiceAction.None;
+                }
+            }
+
             record.Settled = settled;
             return settled;
         }
@@ -191,17 +203,8 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            if (RHAH_RequestRules.Enslaves(record.Settled))
+            if (RHAH_RequestRules.Enslaves(record.Settled) || RHAH_RequestRules.Captures(record.Settled))
             {
-                RHAH_VisitorBatch.Enslave(Pawns(record));
-                HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
-                return;
-            }
-
-            if (RHAH_RequestRules.Captures(record.Settled))
-            {
-                bool move = record.Settled == RHAH_ChoiceAction.Prison;
-                RHAH_VisitorBatch.Capture(Pawns(record), move);
                 HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }
@@ -472,7 +475,7 @@ namespace HungerAndHavoc.Incidents
             List<Verse.Pawn> present = new List<Verse.Pawn>();
             for (int i = 0; i < all.Count; i++)
             {
-                if (all[i].Spawned && RHAH_Api.IsVisitor(all[i]))
+                if (all[i].Spawned && all[i].Map.uniqueID == record.MapId && RHAH_Api.IsVisitor(all[i]))
                 {
                     present.Add(all[i]);
                 }

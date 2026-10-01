@@ -47,8 +47,7 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
 
-            RHAH_Api.ReleaseToColony(pawn, RHAH_ReleaseReason.Imprisoned);
-            return true;
+            return RHAH_Api.ReleaseToColony(pawn, RHAH_ReleaseReason.Imprisoned);
         }
 
         internal static bool AllowsTrade(Tradeable_Pawn trade)

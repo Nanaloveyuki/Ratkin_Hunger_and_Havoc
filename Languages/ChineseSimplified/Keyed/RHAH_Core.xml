@@ -447,14 +447,16 @@
   <RHAH_Choice_Hire>雇佣为长工（{0}，到期离开）</RHAH_Choice_Hire>
   <RHAH_Choice_Feed>投喂（等着交食物）</RHAH_Choice_Feed>
   <RHAH_Choice_Recruit>收为短工（{0}，到期离开）</RHAH_Choice_Recruit>
-  <RHAH_Choice_Enslave>奴役（转变身份为奴隶）</RHAH_Choice_Enslave>
-  <RHAH_Choice_Capture>俘虏（转变身份为囚犯）</RHAH_Choice_Capture>
+  <RHAH_Choice_Enslave>奴役（合格来客原地转为奴隶）</RHAH_Choice_Enslave>
+  <RHAH_Choice_Capture>俘虏（囚室内的合格来客原地转为囚犯）</RHAH_Choice_Capture>
   <RHAH_Choice_Attack>攻击（整批转为敌对）</RHAH_Choice_Attack>
-  <RHAH_Choice_Prison>送进监狱（转变身份为囚犯）</RHAH_Choice_Prison>
   <RHAH_Choice_Ally>发配到{0}</RHAH_Choice_Ally>
   <RHAH_Choice_NoAlly>没有可以接收他们的盟友派系。</RHAH_Choice_NoAlly>
   <RHAH_Choice_AllySent>已把{0}人发配到{1}。他们会离开，不会直接出现在对方据点里。好感只在健康离图时按原版结算。</RHAH_Choice_AllySent>
   <RHAH_Choice_Quarantine>检疫中的来客不能加入、雇佣或转移。</RHAH_Choice_Quarantine>
+  <RHAH_Choice_CaptureRequiresPrison>没有可俘虏的来客。来客须已在不连地图边缘、门不能自由通行的囚室内，且允许囚禁。检疫中或精神失常的来客不能转换。</RHAH_Choice_CaptureRequiresPrison>
+  <RHAH_Choice_NoCustodyTarget>没有允许囚禁的在场来客。检疫中或精神失常的来客不能转换。</RHAH_Choice_NoCustodyTarget>
+  <RHAH_Choice_CustodyFailed>没有来客完成身份转换。这封信仍可处理。</RHAH_Choice_CustodyFailed>
   <RHAH_Choice_FeedHint>他们会等在原地。选中一名殖民者，右键正在等待的来客，把食物交给对方。这不会自动派一个人去送。</RHAH_Choice_FeedHint>
   <RHAH_Choice_FeedHintDismiss>不再提示</RHAH_Choice_FeedHintDismiss>
   <RHAH_Choice_FeedWaiting>来客正在等食物。</RHAH_Choice_FeedWaiting>
