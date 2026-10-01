@@ -244,6 +244,21 @@ namespace HungerAndHavoc.Core
         public int narrativeEnvoyKinds = 5;
         public int narrativeRelicKinds = 8;
 
+        internal void ResetToDefaults()
+        {
+            RHAH_Settings defaults = new RHAH_Settings();
+            // 原地恢复全部配置 保留 Verse 持有的设置实例和 Mod 归属
+            System.Reflection.FieldInfo[] fields = typeof(RHAH_Settings).GetFields(
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.DeclaredOnly);
+            for (int i = 0; i < fields.Length; i++)
+            {
+                fields[i].SetValue(this, fields[i].GetValue(defaults));
+            }
+
+            InvalidateReliefSearch();
+        }
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref enableNewContent, "enableNewContent", true);

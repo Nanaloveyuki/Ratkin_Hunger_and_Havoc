@@ -6,6 +6,7 @@ namespace HungerAndHavoc.Core
     public class RHAH_Mod : Mod
     {
         public static RHAH_Settings Settings;
+        internal static event System.Action SettingsReset;
 
         public RHAH_Mod(ModContentPack content) : base(content)
         {
@@ -24,6 +25,7 @@ namespace HungerAndHavoc.Core
         {
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(inRect);
+            DrawResetSettings(listing);
             listing.CheckboxLabeled("RHAH_Settings_EnableNewContent".Translate(), ref Settings.enableNewContent,
                 "RHAH_Settings_EnableNewContent_Tooltip".Translate());
             DrawRemoval(listing);
@@ -128,6 +130,22 @@ namespace HungerAndHavoc.Core
 
             listing.End();
         }
+        internal static void DrawResetSettings(Listing_Standard listing)
+        {
+            if (listing.ButtonText("RHAH_Settings_Reset".Translate()))
+            {
+                Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                    "RHAH_Settings_ResetConfirm".Translate(),
+                    () =>
+                    {
+                        Settings.ResetToDefaults();
+                        SettingsReset?.Invoke();
+                        Settings.Mod.WriteSettings();
+                    },
+                    destructive: true));
+            }
+        }
+
         static void DrawRemoval(Listing_Standard listing)
         {
             listing.GapLine();

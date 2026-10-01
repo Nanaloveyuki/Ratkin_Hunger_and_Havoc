@@ -52,6 +52,20 @@ namespace HungerAndHavoc.Core
             return true;
         }
 
+        internal static bool SpawnDebugIncidentOnMap(string displayId, Map map)
+        {
+            RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+            if (!CanQueueDebug(entry, settings, game != null, map != null))
+            {
+                return false;
+            }
+
+            float points = settings == null ? entry.DebugPoints : settings.IncidentDebugPoints(displayId, entry.DebugPoints);
+            return game.SpawnDebugOnMap(entry, points, map);
+        }
+
         internal static bool ShouldDrainOnFrame(bool paused, bool forcePause, int pending)
         {
             return paused && !forcePause && pending > 0;

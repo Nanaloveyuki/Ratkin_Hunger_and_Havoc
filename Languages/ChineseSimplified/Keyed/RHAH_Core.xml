@@ -3,6 +3,8 @@
   <RHAH_ModName>鼠族: 饥与祸</RHAH_ModName>
   <RHAH_Settings_EnableNewContent>启用新内容</RHAH_Settings_EnableNewContent>
   <RHAH_Settings_EnableNewContent_Tooltip>关闭后，新的饥与祸事件和来客不再出现。已经在的来客照常乞讨、交易、偷窃或离开。</RHAH_Settings_EnableNewContent_Tooltip>
+  <RHAH_Settings_Reset>重置本模组配置</RHAH_Settings_Reset>
+  <RHAH_Settings_ResetConfirm>将鼠族: 饥与祸的全部配置恢复为默认值？已修改的开关、数值和列表选择都会重置。存档中的剧情进度和来客保持不变。</RHAH_Settings_ResetConfirm>
   <RHAH_Menu_Relief>赈灾区</RHAH_Menu_Relief>
   <RHAH_Menu_Relief_Note>来客先在划出的格子里找能吃到的食物。区外的食物、吃完后的限制和离场由下面的开关决定。</RHAH_Menu_Relief_Note>
   <RHAH_Settings_ReliefEnabled>启用赈灾区</RHAH_Settings_ReliefEnabled>
@@ -251,6 +253,9 @@
   <RHAH_Menu_Chain_Short>短链</RHAH_Menu_Chain_Short>
   <RHAH_Menu_Chain_Long>长链</RHAH_Menu_Chain_Long>
   <RHAH_Menu_Trigger>触发</RHAH_Menu_Trigger>
+  <RHAH_Menu_TriggerInstant>即时刷新</RHAH_Menu_TriggerInstant>
+  <RHAH_Menu_TriggerInstant_Tip>立即生成到当前地图，跳过排队和世界地图行进。远行队伏击直接生成袭击者；安居点直接生成居民。仍遵守新内容和事件开关。</RHAH_Menu_TriggerInstant_Tip>
+  <RHAH_Menu_Instant_Failed>未生成。检查事件开关、地图条件和日志。</RHAH_Menu_Instant_Failed>
   <RHAH_Menu_Queue_Disabled>新内容已关闭。</RHAH_Menu_Queue_Disabled>
   <RHAH_Menu_Queue_NoGame>没有已加载的游戏。</RHAH_Menu_Queue_NoGame>
   <RHAH_Menu_Queue_NoMap>没有可用地图。</RHAH_Menu_Queue_NoMap>
@@ -258,7 +263,7 @@
   <RHAH_Menu_Queue_Fired>已生成。</RHAH_Menu_Queue_Fired>
   <RHAH_Menu_Queue_Queued>已排队。关闭暂停窗口后生成。</RHAH_Menu_Queue_Queued>
   <RHAH_Menu_Queue_Failed>没有排队。</RHAH_Menu_Queue_Failed>
-  <RHAH_Menu_DevEvents_Note>把这条事件排进队列，不走自然抽取。关掉这个窗口后立刻出现，时间暂停也一样。</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_DevEvents_Note>“触发”按正常流程排队，地图来客先在世界地图行进。“即时刷新”立即生成到当前地图，无需关闭窗口或派出远行队。</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>没有当前地图。</RHAH_Menu_Pawns_NoMap>
   <RHAH_Menu_Pawns_None>这张地图上没有饥与祸来客。</RHAH_Menu_Pawns_None>
   <RHAH_Menu_Pawns_Invalid>这个来客已经不在了。</RHAH_Menu_Pawns_Invalid>

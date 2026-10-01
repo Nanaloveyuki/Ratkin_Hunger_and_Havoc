@@ -3,6 +3,8 @@
   <RHAH_ModName>Ratkin: Hunger and Havoc</RHAH_ModName>
   <RHAH_Settings_EnableNewContent>Enable new content</RHAH_Settings_EnableNewContent>
   <RHAH_Settings_EnableNewContent_Tooltip>New Hunger and Havoc incidents and visitors stop appearing. Visitors already here keep begging, trading, stealing, or leaving.</RHAH_Settings_EnableNewContent_Tooltip>
+  <RHAH_Settings_Reset>Reset this mod's settings</RHAH_Settings_Reset>
+  <RHAH_Settings_ResetConfirm>Restore all Ratkin: Hunger and Havoc settings to their defaults? Custom switches, values, and list selections will be reset. Story progress and visitors in your save remain unchanged.</RHAH_Settings_ResetConfirm>
   <RHAH_Menu_Relief>Relief zone</RHAH_Menu_Relief>
   <RHAH_Menu_Relief_Note>Visitors look for food they can reach inside the marked cells. Food outside, the limit after a meal, and leaving are set below.</RHAH_Menu_Relief_Note>
   <RHAH_Settings_ReliefEnabled>Use the relief zone</RHAH_Settings_ReliefEnabled>
@@ -251,6 +253,9 @@
   <RHAH_Menu_Chain_Short>Short</RHAH_Menu_Chain_Short>
   <RHAH_Menu_Chain_Long>Long</RHAH_Menu_Chain_Long>
   <RHAH_Menu_Trigger>Trigger</RHAH_Menu_Trigger>
+  <RHAH_Menu_TriggerInstant>Spawn now</RHAH_Menu_TriggerInstant>
+  <RHAH_Menu_TriggerInstant_Tip>Spawn immediately on the current map, skipping the queue and world travel. Caravan ambushes spawn attackers here; refugee camps spawn residents here. New content and incident switches still apply.</RHAH_Menu_TriggerInstant_Tip>
+  <RHAH_Menu_Instant_Failed>Nothing spawned. Check the incident switch, map conditions, and log.</RHAH_Menu_Instant_Failed>
   <RHAH_Menu_Queue_Disabled>New content is off.</RHAH_Menu_Queue_Disabled>
   <RHAH_Menu_Queue_NoGame>No game is loaded.</RHAH_Menu_Queue_NoGame>
   <RHAH_Menu_Queue_NoMap>No usable map.</RHAH_Menu_Queue_NoMap>
@@ -258,7 +263,7 @@
   <RHAH_Menu_Queue_Fired>Spawned.</RHAH_Menu_Queue_Fired>
   <RHAH_Menu_Queue_Queued>Queued. It spawns when the pausing window closes.</RHAH_Menu_Queue_Queued>
   <RHAH_Menu_Queue_Failed>Nothing queued.</RHAH_Menu_Queue_Failed>
-  <RHAH_Menu_DevEvents_Note>Queues this incident instead of waiting for the natural draw. It appears as soon as this window closes, even if time stays paused.</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_DevEvents_Note>Trigger queues the normal event; map visitors travel across the world first. Spawn now creates them on the current map without closing this window or sending a caravan.</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>No current map.</RHAH_Menu_Pawns_NoMap>
   <RHAH_Menu_Pawns_None>No Hunger and Havoc visitors on this map.</RHAH_Menu_Pawns_None>
   <RHAH_Menu_Pawns_Invalid>That visitor is gone.</RHAH_Menu_Pawns_Invalid>

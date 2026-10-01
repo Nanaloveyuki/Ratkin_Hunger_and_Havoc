@@ -22,6 +22,11 @@ namespace HungerAndHavoc.Incidents
 
             if (entry.Target == RHAH_IncidentTarget.Caravan)
             {
+                if (parms != null && parms.forced && parms.target is Map debugMap)
+                {
+                    return Core.RHAH_MapResolver.Resolve(debugMap) != null && FindAnySpawnCell(debugMap);
+                }
+
                 return Caravan.CaravanTargetResolver.Resolve(parms == null ? null : parms.target as RimWorld.Planet.Caravan, parms == null || parms.target == null) != null;
             }
 
@@ -44,7 +49,9 @@ namespace HungerAndHavoc.Incidents
 
             if (entry.DisplayId == "I-051")
             {
-                return RHAH_RefugeeCampQuest.TryOffer(parms);
+                return parms != null && parms.forced && parms.target is Map debugMap
+                    ? GenStep_RHAH_RefugeeCamp.TrySpawnOnMap(debugMap)
+                    : RHAH_RefugeeCampQuest.TryOffer(parms);
             }
             if (entry.DisplayId == "I-038")
             {
@@ -53,7 +60,10 @@ namespace HungerAndHavoc.Incidents
 
             if (entry.Target == RHAH_IncidentTarget.Caravan)
             {
-                return TradeEventRouter.TrySpawnCaravanAmbush(entry, parms == null ? 0f : parms.points, parms == null ? null : parms.target as RimWorld.Planet.Caravan, parms == null || parms.target == null);
+                return TradeEventRouter.TrySpawnCaravanAmbush(entry, parms == null ? 0f : parms.points,
+                    parms == null ? null : parms.target as RimWorld.Planet.Caravan,
+                    parms == null || parms.target == null,
+                    parms != null && parms.forced ? parms.target as Map : null);
             }
 
             Map map = Core.RHAH_MapResolver.Resolve(parms?.target as Map);
@@ -68,7 +78,7 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
-            int tick = Find.TickManager.TicksGame;
+            int tick = Core.RHAH_Runtime.NextBatchId(map);
             return RHAH_IncidentFacts.Submit(new RHAH_IncidentContext
             {
                 DisplayId = entry.DisplayId,

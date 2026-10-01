@@ -98,6 +98,13 @@ namespace HungerAndHavoc.Pawn.Compat
         internal RHAH_IrisMenusPages(string irisVersion)
         {
             this.irisVersion = irisVersion;
+            RHAH_Mod.SettingsReset += ResetBuffers;
+        }
+
+        void ResetBuffers()
+        {
+            pointBuffers.Clear();
+            weightBuffers.Clear();
         }
 
         internal void Register(Mod owner)
@@ -150,11 +157,15 @@ namespace HungerAndHavoc.Pawn.Compat
                 "RHAH_Settings_EnableNewContent".Translate(),
                 ref settings.enableNewContent,
                 "RHAH_Settings_EnableNewContent_Tooltip".Translate());
+
+            MenuControls.Anchor(list, "reset-settings");
+            RHAH_Mod.DrawResetSettings(list);
         }
 
         IEnumerable<MenuSearchEntry> SearchOverview()
         {
             yield return Entry("enable-new-content", "RHAH_Settings_EnableNewContent", "toggle content");
+            yield return Entry("reset-settings", "RHAH_Settings_Reset", "reset defaults configuration");
         }
         void DrawRemoval(Listing_Standard list)
         {
@@ -226,7 +237,7 @@ namespace HungerAndHavoc.Pawn.Compat
             float height = IncidentMetaHeight + RHAH_IrisMenusWidgets.CardPad * 2f;
             if (debug)
             {
-                height += IncidentButtonHeight;
+                height += IncidentButtonHeight * 2f;
             }
 
             if (settings != null)
@@ -250,16 +261,25 @@ namespace HungerAndHavoc.Pawn.Compat
             float cursor = inner.y + IncidentMetaHeight;
             if (debug)
             {
-                Rect button = new Rect(inner.x, cursor, 160f, 24f);
+                float buttonWidth = Mathf.Min(160f, (inner.width - 8f) * 0.5f);
+                Rect button = new Rect(inner.x, cursor, buttonWidth, 24f);
                 if (Widgets.ButtonText(button, "RHAH_Menu_Trigger".Translate()))
                 {
                     debugResults[entry.DisplayId] = Queue(entry);
                 }
 
+                Rect instant = new Rect(button.xMax + 8f, cursor, buttonWidth, 24f);
+                if (Widgets.ButtonText(instant, "RHAH_Menu_TriggerInstant".Translate()))
+                {
+                    debugResults[entry.DisplayId] = SpawnInstant(entry);
+                }
+                TooltipHandler.TipRegion(instant, "RHAH_Menu_TriggerInstant_Tip".Translate());
+                cursor += IncidentButtonHeight;
+
                 string result;
                 if (debugResults.TryGetValue(entry.DisplayId, out result))
                 {
-                    Widgets.Label(new Rect(button.xMax + 8f, button.y, inner.width - 168f, 24f), result);
+                    Widgets.Label(new Rect(inner.x, cursor, inner.width, 24f), result);
                 }
 
                 cursor += IncidentButtonHeight;
@@ -437,6 +457,29 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             return "RHAH_Menu_Queue_Failed".Translate();
+        }
+
+        static string SpawnInstant(RHAH_IncidentEntry entry)
+        {
+            if (Current.Game == null)
+            {
+                return "RHAH_Menu_Queue_NoGame".Translate();
+            }
+
+            if (!RHAH_Runtime.AllowsNewContent)
+            {
+                return "RHAH_Menu_Queue_Disabled".Translate();
+            }
+
+            Map map = RHAH_MapResolver.Resolve(Find.CurrentMap);
+            if (map == null)
+            {
+                return "RHAH_Menu_Queue_NoMap".Translate();
+            }
+
+            return RHAH_Scheduler.SpawnDebugIncidentOnMap(entry.DisplayId, map)
+                ? "RHAH_Menu_Queue_Fired".Translate()
+                : "RHAH_Menu_Instant_Failed".Translate();
         }
 
         static IEnumerable<MenuSearchEntry> SearchCatalogEvents()

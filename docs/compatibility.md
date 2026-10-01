@@ -15,6 +15,8 @@
 
 设置绘制只改内存。IrisMenus 使用 `RegisterSubItem` 默认的 `owner.WriteSettings`，离开页面或关闭窗口时保存；原版设置窗口由 `Dialog_ModSettings` / `Dialog_Options` 的关闭流程保存。不在 GUI 重绘中调用 `Settings.Write()`。
 
+原版设置页和 IrisMenus 总览页共用带二次确认的配置重置。确认回调原地恢复 `RHAH_Settings` 的默认字段与集合，保留 Verse 的设置实例和 `Mod` 归属；清空 IrisMenus 数字和公式编辑缓冲、失效赈灾寻食缓存，再调用 `owner.WriteSettings` 保存。重置不修改 GameComponent、叙事状态或来客，也不解除仅此存档停用新内容。
+
 每页持有一个滚动视图与标签高度缓存。视口通过 Unity 公开 GUI/屏幕坐标转换进入 listing 内容坐标，保留滚动偏移和 UI 缩放，不访问 IrisMenus 私有状态。复选框高度在宽度、语言或字体变化时重算；数值编辑缓冲仍由页面保存。仅裁剪绘制，不省略候选收集、过滤、分组和锚点遍历，不宣称整页计算为 O(可见行)。
 
 兼容策略统一使用 `RHAH_Api` 的查询、闸门、行为策略、事件和 `TryMarkOrigin`。经历和特质用 `IsOwnedHistory`、`IsOwnedTrait`、`TryGetHistory`、`TryGetTrait`、`CopyHistoryIds`、`CopyTraitIds` 查询显示 ID 与 defName，不扫描 Backstory 或 TraitDef 前缀。兼容适配实现只能放在 `Source/Pawn/Compat`。需要补原版或种族框架缺口时，必须另行登记 Harmony 目标、版本范围和失败策略。

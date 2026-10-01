@@ -23,6 +23,18 @@ namespace HungerAndHavoc.Core
             }
         }
 
+        internal static int NextBatchId(Map map, int offset = 0)
+        {
+            int batch = System.Math.Max(1, Find.TickManager.TicksGame + offset);
+            // 暂停窗口内连续刷新也必须使用不同批次
+            while (IsBatchActive(map, batch))
+            {
+                batch++;
+            }
+
+            return batch;
+        }
+
         internal static bool IsBatchActive(Map map, int batchId)
         {
             GameComponent_RHAH_Game component = Current.Game?.GetComponent<GameComponent_RHAH_Game>();

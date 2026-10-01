@@ -32,7 +32,7 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
-            int tick = Find.TickManager.TicksGame;
+            int tick = Core.RHAH_Runtime.NextBatchId(map);
             return SubmitFacts(new RHAH_IncidentContext
             {
                 DisplayId = DisplayId,

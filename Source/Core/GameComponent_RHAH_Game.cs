@@ -180,6 +180,18 @@ namespace HungerAndHavoc.Core
             return ExecutePending(-1, displayId, entry, points, parms, queued.Target);
         }
 
+        internal bool SpawnDebugOnMap(HungerAndHavoc.Incidents.RHAH_IncidentEntry entry, float points, Map map)
+        {
+            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
+            if (def == null || def.Worker == null || map == null)
+            {
+                return false;
+            }
+
+            IncidentParms parms = new IncidentParms { target = map, points = points, forced = true };
+            return ExecutePending(-1, entry.DisplayId, entry, points, parms, map);
+        }
+
         bool ExecutePending(
             int index,
             string displayId,

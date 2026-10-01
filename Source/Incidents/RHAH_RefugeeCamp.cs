@@ -127,28 +127,55 @@ namespace HungerAndHavoc.Incidents
 
             IntVec3 center = map.Center;
             BuildHuts(map, site.Faction, center);
+            List<Verse.Pawn> spawned = SpawnResidents(site.Faction, map, center);
+            for (int i = 0; i < spawned.Count; i++)
+            {
+                site.AddResident(spawned[i]);
+            }
+
+            RHAH_CampPredation.Roll(map, spawned);
+        }
+
+        internal static bool TrySpawnOnMap(Map map)
+        {
+            Faction faction = RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Neutral);
+            if (map == null || faction == null || !RCellFinder.TryFindRandomPawnEntryCell(
+                out IntVec3 cell, map, CellFinder.EdgeRoadChance_Animal, false, null))
+            {
+                return false;
+            }
+
+            List<Verse.Pawn> spawned = SpawnResidents(faction, map, cell);
+            if (spawned.Count == 0)
+            {
+                return false;
+            }
+
+            EventMgr.RHAH_EventChainClock.NoteStarted("I-051", map.uniqueID, 0,
+                Find.TickManager.TicksGame, RHAH_Api.Get(spawned[0]).SpawnBatchId);
+            return true;
+        }
+
+        static List<Verse.Pawn> SpawnResidents(Faction faction, Map map, IntVec3 center)
+        {
             RHAH_CampPlan plan = RHAH_RefugeeCampRules.Plan(Rand.RangeInclusive(2, 4), Rand.RangeInclusive(8, 16));
             List<Verse.Pawn> spawned = new List<Verse.Pawn>();
-            int tick = Find.TickManager.TicksGame;
+            int tick = RHAH_Runtime.NextBatchId(map);
             for (int i = 0; i < plan.Adults + plan.Children; i++)
             {
-                bool adult = i < plan.Adults;
-                Verse.Pawn pawn = SpawnResident(site, map, center, adult, tick, i);
-                if (pawn == null)
+                Verse.Pawn pawn = SpawnResident(faction, map, center, i < plan.Adults, tick);
+                if (pawn != null)
                 {
-                    continue;
+                    spawned.Add(pawn);
                 }
-
-                site.AddResident(pawn);
-                spawned.Add(pawn);
             }
 
             if (spawned.Count > 0)
             {
-                LordMaker.MakeNewLord(site.Faction, new LordJob_DefendPoint(center), map, spawned);
+                LordMaker.MakeNewLord(faction, new LordJob_DefendPoint(center), map, spawned);
             }
 
-            RHAH_CampPredation.Roll(map, spawned);
+            return spawned;
         }
 
         static void BuildHuts(Map map, Faction faction, IntVec3 center)
@@ -174,7 +201,7 @@ namespace HungerAndHavoc.Incidents
             }
         }
 
-        static Verse.Pawn SpawnResident(WorldObject_RHAH_RefugeeCamp site, Map map, IntVec3 center, bool adult, int tick, int index)
+        static Verse.Pawn SpawnResident(Faction faction, Map map, IntVec3 center, bool adult, int tick)
         {
             RHAH_Settings settings = Core.RHAH_Mod.Settings;
             float min = settings == null ? 0f : settings.minGeneratedAge;
@@ -188,13 +215,13 @@ namespace HungerAndHavoc.Incidents
             RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
             {
                 SourceIncidentDisplayId = "I-051",
-                SpawnBatchId = tick + 1 + index,
+                SpawnBatchId = RHAH_Runtime.NextBatchId(map),
                 RelationshipGroupId = tick,
                 Role = role,
                 AttitudeAtArrival = RHAH_Attitude.Neutral,
                 Map = map,
                 PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
-                Faction = site.Faction,
+                Faction = faction,
                 SpawnCell = CellFinder.RandomClosewalkCellNear(center, map, 8),
                 BiologicalAge = age
             });

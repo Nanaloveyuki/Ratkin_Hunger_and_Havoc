@@ -25,7 +25,7 @@ namespace HungerAndHavoc.Trade
                 return false;
             }
 
-            int tick = Find.TickManager.TicksGame;
+            int tick = Core.RHAH_Runtime.NextBatchId(map);
             RHAH_Attitude attitude = HungerAndHavoc.Incidents.RHAH_IncidentArrival.For(entry);
             int count = HungerAndHavoc.Incidents.RHAH_IncidentScale.Count(entry.DisplayId, parms == null ? 0f : parms.points, EventCap(), false);
             RHAH_IncidentContext context = new RHAH_IncidentContext
@@ -44,26 +44,32 @@ namespace HungerAndHavoc.Trade
             return HungerAndHavoc.Incidents.RHAH_IncidentFacts.Submit(context);
         }
 
-        internal static bool TrySpawnCaravanAmbush(RHAH_IncidentEntry entry, float points, RimWorld.Planet.Caravan selected, bool allowFallback)
+        internal static bool TrySpawnCaravanAmbush(RHAH_IncidentEntry entry, float points, RimWorld.Planet.Caravan selected, bool allowFallback, Map destination = null)
         {
-            RimWorld.Planet.Caravan caravan = CaravanTargetResolver.Resolve(selected, allowFallback);
+            RimWorld.Planet.Caravan caravan = destination == null ? CaravanTargetResolver.Resolve(selected, allowFallback) : null;
             RHAH_Attitude attitude = HungerAndHavoc.Incidents.RHAH_IncidentArrival.For(entry);
             Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(attitude);
-            if (entry == null || caravan == null || faction == null ||
-                !RimWorld.Planet.CaravanIncidentUtility.CanFireIncidentWhichWantsToGenerateMapAt(caravan.Tile))
+            if (entry == null || faction == null || (destination == null && (caravan == null ||
+                !RimWorld.Planet.CaravanIncidentUtility.CanFireIncidentWhichWantsToGenerateMapAt(caravan.Tile))))
+            {
+                return false;
+            }
+
+            IntVec3 cell = IntVec3.Invalid;
+            if (destination != null && !RCellFinder.TryFindRandomPawnEntryCell(out cell, destination, CellFinder.EdgeRoadChance_Animal, false, null))
             {
                 return false;
             }
 
             List<Verse.Pawn> attackers = new List<Verse.Pawn>();
-            int tick = Find.TickManager.TicksGame;
+            int tick = Core.RHAH_Runtime.NextBatchId(destination);
             int count = RHAH_IncidentScale.Count(entry.DisplayId, points, EventCap(), false);
             for (int i = 0; i < count; i++)
             {
                 RHAH_PawnCreationResult result = RHAH_PawnFactory.Create(new RHAH_PawnRequest
                 {
                     SourceIncidentDisplayId = entry.DisplayId,
-                    SpawnBatchId = tick + i + 1,
+                    SpawnBatchId = Core.RHAH_Runtime.NextBatchId(destination, i),
                     RelationshipGroupId = tick,
                     Role = RHAH_PawnRole.Thief,
                     AttitudeAtArrival = attitude,
@@ -79,12 +85,27 @@ namespace HungerAndHavoc.Trade
                 }
 
                 attackers.Add(result.Pawns[0]);
+                Core.RHAH_Runtime.RegisterBatch(destination, RHAH_Api.Get(result.Pawns[0]).SpawnBatchId);
             }
 
-            Map map = null;
+            Map map = destination;
             try
             {
-                map = RimWorld.Planet.CaravanIncidentUtility.SetupCaravanAttackMap(caravan, attackers, true);
+                if (map == null)
+                {
+                    map = RimWorld.Planet.CaravanIncidentUtility.SetupCaravanAttackMap(caravan, attackers, true);
+                }
+                else
+                {
+                    for (int i = 0; i < attackers.Count; i++)
+                    {
+                        GenSpawn.Spawn(attackers[i], cell, map);
+                        if (entry.Category == RHAH_IncidentCategory.Plague && (Core.RHAH_Mod.Settings == null || Core.RHAH_Mod.Settings.plagueEnabled))
+                        {
+                            map.GetComponent<Core.MapComponent_RHAH_Map>()?.Quarantine(attackers[i].thingIDNumber);
+                        }
+                    }
+                }
             }
             catch
             {
@@ -103,7 +124,8 @@ namespace HungerAndHavoc.Trade
                 return false;
             }
 
-            EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, 0, caravan.ID, tick, tick + 1);
+            EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, destination == null ? 0 : map.uniqueID,
+                caravan == null ? 0 : caravan.ID, Find.TickManager.TicksGame, tick + 1);
             return true;
         }
 
