@@ -14,13 +14,149 @@ namespace HungerAndHavoc.Pawn.Compat
         internal const float CardPad = 4f;
         internal const float CardGap = 4f;
 
-        internal static Rect Card(Listing_Standard list, string anchor, float height)
+        static Viewport activeViewport;
+
+        internal sealed class Viewport
+        {
+            readonly MenuScrollView scroll = new MenuScrollView();
+            readonly Action<Listing_Standard> draw;
+            readonly Action<Listing_Standard> drawVisible;
+            readonly Dictionary<string, float> labelHeights = new Dictionary<string, float>();
+            Vector2 screenMin;
+            Vector2 screenMax;
+            internal Rect VisibleRect { get; private set; }
+            float measuredWidth = -1f;
+            object measuredLanguage;
+            GameFont measuredFont;
+
+            internal Viewport(Action<Listing_Standard> draw)
+            {
+                this.draw = draw;
+                drawVisible = DrawVisible;
+            }
+
+            internal void Focus(string id)
+            {
+                scroll.Focus(id);
+            }
+
+            internal void Draw(Rect rect)
+            {
+                screenMin = GUIUtility.GUIToScreenPoint(rect.min);
+                screenMax = GUIUtility.GUIToScreenPoint(rect.max);
+                scroll.Draw(rect, drawVisible);
+            }
+
+            void DrawVisible(Listing_Standard list)
+            {
+                // 在滚动和 listing 分组内转换，保留 UI 缩放与滚动偏移
+                Vector2 min = GUIUtility.ScreenToGUIPoint(screenMin);
+                Vector2 max = GUIUtility.ScreenToGUIPoint(screenMax);
+                VisibleRect = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
+                Viewport previous = activeViewport;
+                activeViewport = this;
+                try
+                {
+                    draw(list);
+                }
+                finally
+                {
+                    activeViewport = previous;
+                }
+            }
+
+            internal float LabelHeight(Listing_Standard list, string label)
+            {
+                if (measuredWidth != list.ColumnWidth ||
+                    !ReferenceEquals(measuredLanguage, LanguageDatabase.activeLanguage) || measuredFont != Text.Font)
+                {
+                    labelHeights.Clear();
+                    measuredWidth = list.ColumnWidth;
+                    measuredLanguage = LanguageDatabase.activeLanguage;
+                    measuredFont = Text.Font;
+                }
+
+                if (!labelHeights.TryGetValue(label, out float height))
+                {
+                    height = Text.CalcHeight(label, list.ColumnWidth);
+                    labelHeights.Add(label, height);
+                }
+
+                return height;
+            }
+        }
+
+        internal static bool IsVisible(Rect rect)
+        {
+            return activeViewport == null || rect.Overlaps(activeViewport.VisibleRect);
+        }
+        internal static void Label(Listing_Standard list, string label)
+        {
+            float height = activeViewport == null ? Text.CalcHeight(label, list.ColumnWidth) : activeViewport.LabelHeight(list, label);
+            Rect row = list.GetRect(height);
+            list.Gap(list.verticalSpacing);
+            if (IsVisible(row))
+            {
+                Widgets.Label(row, label);
+            }
+        }
+
+        internal static void Section(Listing_Standard list, string title)
+        {
+            float height = activeViewport == null ? Text.CalcHeight(title, list.ColumnWidth) : activeViewport.LabelHeight(list, title);
+            if (IsVisible(new Rect(0f, list.CurHeight, list.ColumnWidth, height + list.verticalSpacing + 6f)))
+            {
+                MenuControls.Section(list, title);
+            }
+            else
+            {
+                list.Gap(height + list.verticalSpacing + 6f);
+            }
+        }
+
+
+        internal static bool Checkbox(Listing_Standard list, string label, ref bool value, string tooltip = null)
+        {
+            return Checkbox(list, null, label, ref value, tooltip);
+        }
+
+        internal static bool Checkbox(Listing_Standard list, string anchor, string label, ref bool value, string tooltip = null)
+        {
+            float height = activeViewport == null ? Text.CalcHeight(label, list.ColumnWidth) : activeViewport.LabelHeight(list, label);
+            if (anchor != null)
+            {
+                MenuControls.Anchor(list, anchor, height);
+            }
+            Rect row = list.GetRect(height);
+            list.Gap(list.verticalSpacing);
+            if (!IsVisible(row))
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(tooltip))
+            {
+                Widgets.DrawHighlightIfMouseover(row);
+                TooltipHandler.TipRegion(row, tooltip);
+            }
+
+            Widgets.CheckboxLabeled(row, label, ref value);
+            return true;
+        }
+
+        internal static bool Card(Listing_Standard list, string anchor, float height, out Rect inner)
         {
             MenuControls.Anchor(list, anchor, height + CardGap);
             Rect card = list.GetRect(height);
-            Widgets.DrawBox(card);
             list.Gap(CardGap);
-            return card.ContractedBy(CardPad);
+            inner = card.ContractedBy(CardPad);
+            if (!IsVisible(card))
+            {
+                return false;
+            }
+
+            Widgets.DrawBox(card);
+            return true;
         }
         internal static void Quote(Listing_Standard list, string anchor, string text)
         {
@@ -33,9 +169,12 @@ namespace HungerAndHavoc.Pawn.Compat
             float height = Text.CalcHeight(text, width);
             MenuControls.Anchor(list, anchor, height + CardGap);
             Rect row = list.GetRect(height);
-            Widgets.DrawBoxSolid(new Rect(row.x, row.y, 3f, row.height), new Color(0.62f, 0.58f, 0.42f));
-            Widgets.Label(new Rect(row.x + 10f, row.y, width, height), text);
             list.Gap(CardGap);
+            if (IsVisible(row))
+            {
+                Widgets.DrawBoxSolid(new Rect(row.x, row.y, 3f, row.height), new Color(0.62f, 0.58f, 0.42f));
+                Widgets.Label(new Rect(row.x + 10f, row.y, width, height), text);
+            }
         }
 
 
@@ -51,9 +190,8 @@ namespace HungerAndHavoc.Pawn.Compat
         {
             float height = 30f;
             Rect row = list.GetRect(height);
-            float result = TunedValue(row, label, value, ref buffer, min, max, format, tooltip);
             list.Gap(CardGap);
-            return result;
+            return IsVisible(row) ? TunedValue(row, label, value, ref buffer, min, max, format, tooltip) : value;
         }
 
         internal static float TunedValue(
@@ -66,6 +204,11 @@ namespace HungerAndHavoc.Pawn.Compat
             string format,
             string tooltip)
         {
+            if (!IsVisible(row))
+            {
+                return value;
+            }
+
             Rect labelRect = new Rect(row.x, row.y, row.width * 0.34f, row.height);
             Widgets.Label(labelRect, label);
             if (!string.IsNullOrEmpty(tooltip))
@@ -113,7 +256,10 @@ namespace HungerAndHavoc.Pawn.Compat
             Color color)
         {
             const int samples = 48;
-            Rect plot = Card(list, anchor, 148f);
+            if (!Card(list, anchor, 148f, out Rect plot))
+            {
+                return;
+            }
             Rect graph = new Rect(plot.x, plot.y, plot.width, plot.height);
             Widgets.DrawBoxSolid(graph, new Color(0.08f, 0.08f, 0.08f, 0.55f));
             float span = RHAH_IncidentSchedule.ClampWindowDays(windowDays);
@@ -199,7 +345,10 @@ namespace HungerAndHavoc.Pawn.Compat
         internal static void LitterCurve(Listing_Standard list, string anchor, int minimum, int peak, int maximum)
         {
             RHAH_FertilityRules.ClampLitter(ref minimum, ref peak, ref maximum);
-            Rect plot = Card(list, anchor, 148f);
+            if (!Card(list, anchor, 148f, out Rect plot))
+            {
+                return;
+            }
             Widgets.DrawBoxSolid(plot, new Color(0.08f, 0.08f, 0.08f, 0.55f));
             int span = Mathf.Max(1, maximum - minimum);
             Vector2 last = LitterPoint(plot, minimum, minimum, peak, maximum, span);
