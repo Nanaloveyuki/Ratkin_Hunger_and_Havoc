@@ -1,3 +1,5 @@
+using System;
+using HungerAndHavoc.Pawn.Compat;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -7,38 +9,184 @@ namespace HungerAndHavoc.Generation
 {
     internal static class RHAH_XenotypeResolver
     {
-        internal static XenotypeDef Resolve(RHAH_PawnProfile profile)
+        internal static bool TryResolve(RHAH_PawnProfile profile, PawnKindDef kind, out XenotypeDef xenotype)
         {
-            RHAH_PawnProfile resolved = profile ?? new RHAH_PawnProfile();
-            if (resolved.UseExplicitXenotype)
+            xenotype = null;
+            if (!ModsConfig.BiotechActive)
             {
-                if (resolved.Xenotype != null)
-                {
-                    return resolved.Xenotype;
-                }
-
-                return Load(resolved.XenotypeDefName);
+                return true;
             }
 
-            if (!RHAH_GenerationOptimizer.Enabled || !ModsConfig.BiotechActive)
+            ThingDef race = kind?.race;
+            if (profile != null && profile.UseExplicitXenotype)
+            {
+                xenotype = profile.Xenotype ?? Load(profile.XenotypeDefName);
+                if (xenotype == null)
+                {
+                    return string.IsNullOrEmpty(profile.XenotypeDefName);
+                }
+
+                return RHAH_HarXenotypeBridge.Allows(xenotype, race);
+            }
+
+            if (RHAH_GenerationOptimizer.Enabled)
+            {
+                Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
+                List<XenotypeDef> candidates = LoadedCandidates(settings, race);
+                float total = 0f;
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    total += settings.XenotypeWeight(candidates[i].defName);
+                }
+
+                float cursor = Rand.Value * total;
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    float weight = settings.XenotypeWeight(candidates[i].defName);
+                    if (weight <= 0f)
+                    {
+                        continue;
+                    }
+
+                    xenotype = candidates[i];
+                    cursor -= weight;
+                    if (cursor < 0f)
+                    {
+                        break;
+                    }
+                }
+                if (xenotype != null)
+                {
+                    return true;
+                }
+            }
+
+            XenotypeDef primary = Load(RHAH_GeneCatalog.DefaultXenotypeDefName);
+            if (RHAH_GenerationOptimizer.Enabled && RHAH_HarXenotypeBridge.Allows(primary, race))
+            {
+                xenotype = primary;
+                return true;
+            }
+
+            // 读取上游已打补丁的基础鼠族池 不继承其装备和年龄限制
+            XenotypeSet pool = kind?.xenotypeSet;
+            if (pool == null && race?.defName == "Ratkin")
+            {
+                PawnKindDef colonist = DefDatabase<PawnKindDef>.GetNamedSilentFail("RatkinColonist");
+                if (colonist?.race == race)
+                {
+                    pool = colonist.xenotypeSet;
+                }
+            }
+
+            xenotype = ChooseAllowed(pool, race, Rand.Value, RHAH_HarXenotypeBridge.Allows);
+            if (xenotype == null && RHAH_HarXenotypeBridge.Allows(primary, race))
+            {
+                xenotype = primary;
+            }
+
+            if (xenotype == null)
+            {
+                XenotypeDef fallback = Load(RHAH_GeneCatalog.FallbackXenotypeDefName);
+                if (RHAH_HarXenotypeBridge.Allows(fallback, race))
+                {
+                    xenotype = fallback;
+                }
+            }
+
+            return xenotype != null;
+        }
+
+        internal static XenotypeDef ChooseAllowed(XenotypeSet candidates, ThingDef race,
+            float roll, Func<XenotypeDef, ThingDef, bool> allows)
+        {
+            if (candidates == null)
             {
                 return null;
             }
 
-            string chosen = RHAH_XenotypeWeightTable.Choose(EnabledNames(), EnabledWeights(), Rand.Value * EnabledTotal());
-            XenotypeDef weighted = Load(chosen);
-            if (weighted != null)
+            float total = 0f;
+            for (int i = 0; i < candidates.Count; i++)
             {
-                return weighted;
+                XenotypeChance candidate = candidates[i];
+                if (candidate != null && candidate.chance > 0f && !float.IsInfinity(candidate.chance) &&
+                    allows(candidate.xenotype, race))
+                {
+                    total += candidate.chance;
+                }
             }
 
-            XenotypeDef primary = Load(RHAH_GeneCatalog.DefaultXenotypeDefName);
-            if (primary != null)
+            float cursor = Math.Max(0f, Math.Min(1f, roll)) * total;
+            XenotypeDef last = null;
+            for (int i = 0; i < candidates.Count; i++)
             {
-                return primary;
+                XenotypeChance candidate = candidates[i];
+                if (candidate == null || !(candidate.chance > 0f) || float.IsInfinity(candidate.chance) ||
+                    !allows(candidate.xenotype, race))
+                {
+                    continue;
+                }
+
+                last = candidate.xenotype;
+                cursor -= candidate.chance;
+                if (cursor < 0f)
+                {
+                    return last;
+                }
             }
 
-            return Load(RHAH_GeneCatalog.FallbackXenotypeDefName);
+            return last;
+        }
+
+        internal static bool Installed(VersePawn pawn, ThingDef race, XenotypeDef expected)
+        {
+            if (pawn == null || pawn.def != race)
+            {
+                return false;
+            }
+
+            if (!ModsConfig.BiotechActive)
+            {
+                return true;
+            }
+
+            XenotypeDef actual = pawn.genes?.Xenotype;
+            if (actual == null || (expected != null && actual != expected) ||
+                !RHAH_HarXenotypeBridge.Allows(actual, race))
+            {
+                return false;
+            }
+
+            return HasXenotypeGenes(pawn.genes, actual);
+        }
+
+        internal static bool HasXenotypeGenes(Pawn_GeneTracker tracker, XenotypeDef xenotype)
+        {
+            if (tracker == null || xenotype == null)
+            {
+                return false;
+            }
+
+            List<Gene> genes = xenotype.inheritable ? tracker.Endogenes : tracker.Xenogenes;
+            for (int i = 0; i < xenotype.genes.Count; i++)
+            {
+                bool found = false;
+                for (int j = 0; j < genes.Count; j++)
+                {
+                    if (genes[j].def == xenotype.genes[i])
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         internal static void ApplyEnabledGenes(VersePawn pawn)
@@ -67,7 +215,7 @@ namespace HungerAndHavoc.Generation
             }
         }
 
-        internal static List<XenotypeDef> LoadedCandidates(Core.RHAH_Settings settings)
+        internal static List<XenotypeDef> LoadedCandidates(Core.RHAH_Settings settings, ThingDef race = null)
         {
             List<XenotypeDef> loaded = new List<XenotypeDef>();
             if (!ModsConfig.BiotechActive || settings == null)
@@ -77,6 +225,14 @@ namespace HungerAndHavoc.Generation
 
             AddKnown(loaded, settings);
             AddJoined(loaded, settings);
+            race = race ?? DefDatabase<ThingDef>.GetNamedSilentFail("Ratkin");
+            for (int i = loaded.Count - 1; i >= 0; i--)
+            {
+                if (!RHAH_HarXenotypeBridge.Allows(loaded[i], race))
+                {
+                    loaded.RemoveAt(i);
+                }
+            }
             return loaded;
         }
 
@@ -90,10 +246,12 @@ namespace HungerAndHavoc.Generation
 
             List<XenotypeDef> all = DefDatabase<XenotypeDef>.AllDefsListForReading;
             List<XenotypeDef> loaded = LoadedCandidates(settings);
+            ThingDef race = DefDatabase<ThingDef>.GetNamedSilentFail("Ratkin");
             for (int i = 0; i < all.Count; i++)
             {
                 XenotypeDef xenotype = all[i];
-                if (xenotype == null || IsFallback(xenotype.defName) || Contains(loaded, xenotype.defName))
+                if (xenotype == null || IsFallback(xenotype.defName) || Contains(loaded, xenotype.defName) ||
+                    !RHAH_HarXenotypeBridge.Allows(xenotype, race))
                 {
                     continue;
                 }
@@ -235,45 +393,6 @@ namespace HungerAndHavoc.Generation
             return false;
         }
 
-        static List<string> EnabledNames()
-        {
-            List<string> names = new List<string>();
-            List<XenotypeDef> loaded = LoadedCandidates(Core.RHAH_Mod.Settings);
-            for (int i = 0; i < loaded.Count; i++)
-            {
-                names.Add(loaded[i].defName);
-            }
-
-            return names;
-        }
-
-        static List<float> EnabledWeights()
-        {
-            Core.RHAH_Settings settings = Core.RHAH_Mod.Settings;
-            List<XenotypeDef> loaded = LoadedCandidates(settings);
-            List<float> weights = new List<float>(loaded.Count);
-            for (int i = 0; i < loaded.Count; i++)
-            {
-                weights.Add(settings.XenotypeWeight(loaded[i].defName));
-            }
-
-            return weights;
-        }
-
-        static float EnabledTotal()
-        {
-            List<float> weights = EnabledWeights();
-            float total = 0f;
-            for (int i = 0; i < weights.Count; i++)
-            {
-                if (weights[i] > 0f)
-                {
-                    total += weights[i];
-                }
-            }
-
-            return total;
-        }
 
         static XenotypeDef Load(string defName)
         {

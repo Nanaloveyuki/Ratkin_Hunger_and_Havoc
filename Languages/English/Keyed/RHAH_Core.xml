@@ -281,9 +281,9 @@
   <RHAH_Menu_Ending_Gap>Ending switches are not available here yet.</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>Gene settings are not available here yet.</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>Biotech is required. With it, you can set the xenotypes of visitors here.</RHAH_Menu_Genes_NoBiotech>
-  <RHAH_Menu_Genes_Note>The percent is the current chance. Drag a bar or type a weight from 0 to 100. Zero stays out. At all zeroes, visitors use the base ratkin xenotype, or the famine ratkin xenotype if that one is missing.</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_Note>The percent is the chance with faster generation enabled. Weights range from 0 to 100; zero stays out of the draw. Only permitted ratkin xenotypes are listed. At all zeroes, visitors use the permitted base ratkin xenotype, otherwise the native ratkin mix. If that pool is empty, they try the permitted famine ratkin xenotype. With faster generation off, they use the native pool directly. No available xenotype stops visitor generation.</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>Reset weights</RHAH_Menu_Genes_Reset>
-  <RHAH_Menu_Genes_Fallback>The enabled weights add up to 0. Visitors use the base ratkin xenotype. If that xenotype is missing, they use the famine ratkin xenotype.</RHAH_Menu_Genes_Fallback>
+  <RHAH_Menu_Genes_Fallback>The enabled weights add up to 0. Visitors use the permitted base ratkin xenotype or the native ratkin mix, then try the permitted famine ratkin xenotype. If none is available, visitors are not generated.</RHAH_Menu_Genes_Fallback>
   <RHAH_Menu_Genes_WeightTip>Suggested weight {1}. Chance is this weight divided by the sum of enabled weights.</RHAH_Menu_Genes_WeightTip>
   <RHAH_Menu_Genes_Missing>This xenotype is not loaded: {0}</RHAH_Menu_Genes_Missing>
   <RHAH_Menu_Genes_Switches>Mod genes</RHAH_Menu_Genes_Switches>

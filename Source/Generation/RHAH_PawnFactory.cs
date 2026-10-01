@@ -126,11 +126,28 @@ namespace HungerAndHavoc.Generation
         static VersePawn Generate(RHAH_PawnRequest request)
         {
             RHAH_PawnProfile profile = request.Profile ?? new RHAH_PawnProfile();
-            VersePawn pawn = PawnGenerator.GeneratePawn(RHAH_GenerationOptimizer.BuildRequest(request, profile));
+            if (!RHAH_XenotypeResolver.TryResolve(profile, request.PawnKind, out XenotypeDef xenotype))
+            {
+                Log.Error("[RHAH] No permitted xenotype for " + request.PawnKind.defName +
+                    "; generation stopped for " + request.SourceIncidentDisplayId);
+                return null;
+            }
+
+            VersePawn pawn = PawnGenerator.GeneratePawn(RHAH_GenerationOptimizer.BuildRequest(request, profile, xenotype));
             if (pawn == null)
             {
                 return null;
             }
+            if (!RHAH_XenotypeResolver.Installed(pawn, request.PawnKind.race, xenotype))
+            {
+                Log.Error("[RHAH] Generated pawn has an incorrect race or incomplete xenotype: expected " +
+                    request.PawnKind.race.defName + "/" + (xenotype?.defName ?? "natural") + ", actual " +
+                    pawn.def?.defName + "/" + pawn.genes?.Xenotype?.defName +
+                    "; discarding pawn for " + request.SourceIncidentDisplayId);
+                pawn.Destroy(DestroyMode.Vanish);
+                return null;
+            }
+
 
             ApplyProfile(pawn, profile);
 

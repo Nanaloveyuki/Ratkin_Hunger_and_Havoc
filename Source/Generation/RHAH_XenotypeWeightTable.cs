@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace HungerAndHavoc.Generation
@@ -38,79 +37,6 @@ namespace HungerAndHavoc.Generation
             }
 
             return Clamp(stored);
-        }
-
-        internal static string Choose(IReadOnlyList<string> defNames, IReadOnlyList<float> weights, float roll)
-        {
-            if (defNames == null || weights == null || defNames.Count == 0 || weights.Count != defNames.Count)
-            {
-                return null;
-            }
-
-            float total = 0f;
-            for (int i = 0; i < weights.Count; i++)
-            {
-                float weight = Clamp(weights[i]);
-                if (!string.IsNullOrEmpty(defNames[i]) && weight > 0f)
-                {
-                    total += weight;
-                }
-            }
-
-            if (total <= 0f)
-            {
-                return null;
-            }
-
-            float cursor = roll;
-            if (cursor < 0f)
-            {
-                cursor = 0f;
-            }
-
-            if (cursor >= total)
-            {
-                cursor = total - float.Epsilon;
-            }
-
-            string last = null;
-            for (int i = 0; i < defNames.Count; i++)
-            {
-                float weight = Clamp(weights[i]);
-                if (string.IsNullOrEmpty(defNames[i]) || weight <= 0f)
-                {
-                    continue;
-                }
-
-                last = defNames[i];
-                cursor -= weight;
-                if (cursor < 0f)
-                {
-                    return defNames[i];
-                }
-            }
-
-            return last;
-        }
-
-        internal static string Resolve(bool explicitChoice, string explicitDefName, bool optimizationEnabled, string weightedDefName, string defaultDefName)
-        {
-            if (explicitChoice)
-            {
-                return string.IsNullOrEmpty(explicitDefName) ? null : explicitDefName;
-            }
-
-            if (!optimizationEnabled)
-            {
-                return null;
-            }
-
-            if (!string.IsNullOrEmpty(weightedDefName))
-            {
-                return weightedDefName;
-            }
-
-            return string.IsNullOrEmpty(defaultDefName) ? null : defaultDefName;
         }
     }
 }

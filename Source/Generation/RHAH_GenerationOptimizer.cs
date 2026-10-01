@@ -5,16 +5,13 @@ namespace HungerAndHavoc.Generation
 {
     internal static class RHAH_GenerationOptimizer
     {
-        internal const string DefaultXenotypeDefName = RHAH_GeneCatalog.DefaultXenotypeDefName;
-
         internal static bool Enabled =>
             Core.RHAH_Mod.Settings != null &&
             Core.RHAH_Mod.Settings.optimizeGeneration;
 
-        internal static PawnGenerationRequest BuildRequest(RHAH_PawnRequest request, RHAH_PawnProfile profile)
+        internal static PawnGenerationRequest BuildRequest(RHAH_PawnRequest request, RHAH_PawnProfile profile, XenotypeDef xenotype)
         {
             RHAH_PawnProfile resolved = profile ?? new RHAH_PawnProfile();
-            XenotypeDef xenotype = ResolveXenotype(resolved);
             bool explicitBackstory = resolved.UseExplicitBackstory;
             bool explicitApparel = resolved.UseExplicitApparel;
             float? age = WalkingAge(request);
@@ -99,10 +96,5 @@ namespace HungerAndHavoc.Generation
             return resolved.HasValue ? (Gender)resolved.Value : (Gender?)null;
         }
 
-
-        internal static XenotypeDef ResolveXenotype(RHAH_PawnProfile profile)
-        {
-            return RHAH_XenotypeResolver.Resolve(profile);
-        }
     }
 }

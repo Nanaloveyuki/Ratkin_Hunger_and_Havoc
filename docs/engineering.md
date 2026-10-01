@@ -207,6 +207,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease` | ThoughtDef `workerClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThoughtWorker |
 | `HungerAndHavoc.Pawn.Compat.RHAH_IrisMenusCompat` 所在文件对 `IrisMenus` 的编译引用 | IrisMenus 1.6 公开 `MenuRegistry.RegisterSubItemListing` | `HungerAndHavoc.dll` 引用，`Private=False`，不随包发布 | 可选依赖。`ModLister` 未启用或 `modVersion` 不是 `1.6` 时不注册页面。类型保持 `internal`，不进入 API 程序集。`RHAH_IrisMenusWidgets.cs` 使用同一条编译排除 |
 | `HungerAndHavoc.Pawn.Compat.RHAH_LeashBridge` 对 `LeadYourPet.LeadYourPetApi` 的运行时查找 | 门面留在 `LeadYourPet.dll`，没有独立 API DLL | `HungerAndHavoc.dll`，类型 `internal` | 可选依赖。不编译引用对方程序集。只在 `nanaloveyuki.leadyourpet.continued` 已启用时按公开方法名调用。类型或签名缺失记一条日志后跳过，不反射 `LeadYourPetGameComponent` |
+| `HungerAndHavoc.Pawn.Compat.RHAH_HarXenotypeBridge` 对 `AlienRace.RaceRestrictionSettings.CanUseXenotype` 的运行时查找 | NewRatkinPlus 必需框架提供异种许可，强制请求也必须尊重白名单 | `HungerAndHavoc.dll`，类型 `internal` | HAR 1.6 公开静态签名 `(XenotypeDef, ThingDef) -> bool`，缓存委托，不编译引用或复制许可规则，不新增 Harmony。类型/签名缺失或异常记一条错误，停止生成，不回退绕过限制 |
 
 原版 Harmony 例外不进上表。`RHAH_IncidentSchedulePatch` 是 `internal`，Postfix `Storyteller.StorytellerTick`。原版讲述者没有本模组事件池，`baseChance` 保持 0。补丁只在 1000 tick 检查点入队，不改类别权重，不替换袭击。
 

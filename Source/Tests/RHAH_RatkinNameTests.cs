@@ -41,7 +41,7 @@ namespace HungerAndHavoc.Tests
             kind.race = race;
             PawnGenerationRequest request = RHAH_GenerationOptimizer.BuildRequest(
                 new RHAH_PawnRequest { PawnKind = kind, BiologicalAge = 20f },
-                new RHAH_PawnProfile { UseExplicitBackstory = true, Childhood = new BackstoryDef(), UseExplicitXenotype = true, Xenotype = new XenotypeDef() });
+                new RHAH_PawnProfile { UseExplicitBackstory = true, Childhood = new BackstoryDef() }, null);
             Assert.True(request.ForceNoBackstory);
         }
 
