@@ -67,6 +67,10 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 访客 AI 在 `Source/Pawn`，命名空间 `HungerAndHavoc.Pawn`。Identity 只管标记和闸门数据，不发 Job。
 
 有 Lord 的访客走自有 `LordJob_RHAH_Visitor` + `DutyDef`。图只有赶路、寻食和离场。寻食 duty 在没有进食、乞讨、偷窃、啃咬或等待 Job 时，在等待点附近游荡，不走向地图出口。`ExitMap` 只在生命周期已经是 `Leaving` 时放行；吃饱离开仍问 `LeaveAfterFed`。`fedWanderEnabled` 开启时先闲逛 `fedWanderHours` 小时再走，默认 12，范围 1 到 48。关闭时离开时刻就是吃饱这一刻，下一轮离场直接走向出口。空派系不切原版防守或袭击。批次伤害和驱逐发 `RHAH_Leave`。进入离场 toil 时先标成 `Leaving`，寻食中的驱逐令不必等吃饱或断粮到期。倒地或昏迷时不造离图 Job，离场状态保留，醒来后再走。殖民者右键「驱逐」给选中的人派 `RHAH_Expel`，走到接触距离后才发这道离开令。无 Lord 回退用独立 `ThinkTreeDef`，`insertTag=Humanlike_PostDuty`，条件是 `RHAH_Api.IsVisitor`，不 xpath 改 `Humanlike.xml`，不按 `PawnKind` 分支。
+
+同一事件先完成整批生成与家庭绑定，再建立一个访客 Lord。倒地不会移除照护成员；批次态度切换期间也保留成员和 duty。部分转移只命令实际合格成员，未选成员不因同 Lord 被捎带离场。母亲放下孩子后将孩子移出该 Lord，不能立即由另一成人携出；没有照护者且不能走时留在原地。携出先让抱持孩子独立离图，再让成人离图，混合派系不登记为绑架。
+
+无 Lord 回退和批次反应只接无 Lord 或 `LordJob_RHAH_Visitor` 的活跃来客，不接管原版袭击、偷窃或绑架 Lord。`I-035`、`I-050` 入場前强制敌对态度与玩家双向敌对；已有调试地图刷新攻击目标缓存，使用原版 `LordJob_AssaultColony`，允许偷窃、绑架且不超时撤退。
 五个隐藏态度派系对玩家的好感固定：敌对 −100，偏敌对、中立、偏友好和友善都是 0。对玩家以外的派系也固定，不进设置。敌对派系对任何非态度派系是敌对、−100。另外四个对非态度派系是中立、0。五个态度派系互相是中立、0。隐藏派系没有好感通道，所以直接改双向关系。对玩家每 tick 校正。对其余派系在来客生成前和批次转入敌对派系前校正，不按小时扫描。
 
 不能自己走到出口的幼年访客由同 Lord 里允许 `Carry` 且能自己走到出口的成年照护者带出。`Carry` 默认只放行非幼年角色；幼年角色可以 `Leash`，但不能发出携带 Job。外部若对这种来客直接下 `exitMapOnArrival` 的 `Goto`，`StartJob` 会拒绝，来客留在原地等照护者。能自己走到出口的来客不拦。断粮等待到达 `foodWaitUntilTick` 后，仍未进食的活跃访客离场，不再停在寻食游荡。
@@ -80,6 +84,8 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 `ReleaseToColony` 必须拆 Lord、清 duty、停访客 JobGiver。标记 Hediff 保留。
 
 选择信的拘捕原地转为囚犯并施加原版麻醉 12 小时，不要求囚室。只处理本图、本批仍活动且允许 Imprison 的访客。麻醉复用已有原版实例或添加新实例，将严重度重置为 1、消失时限设为 30000 tick、每日衰减设为 -0.2；不添加重复组件，存读沿用原版字段。奴役原地转换，要求 Ideology，按原版清隐藏原派系并解锁衣物；转换成功后反抗意志 will 强制为 0。两者排除玩家派系、已有囚犯或奴隶、精神状态和检疫来客；倒地不单独禁止。混合批次仅转换合格成员，其余原状。至少实际成功一人才结算；全部失败保留信和窗口，点击时重新检查资格。转换不搬运、不瞬移、不发押送 Job；之后越狱和解放继续走原版。奴役历史事件记录受害者，不伪造执行者的个人戒律记录。招募和加入检查 JoinColony，雇佣检查 Hire，攻击只检查在场；关闭雇佣和加入闸门不等于检疫，也不阻止攻击。检疫加入限制尊重 plagueQuarantineBlocksJoin 开关。
+
+攻击使用独立入口，先将实际在场成员当前态度置为 Hostile，再问 Fight；显式攻击不受 `batchTurnsHostile` 阻止，离场仍服从 `batchLeavesTogether`。真实玩家伤害、主动驱逐与选择拒绝分开记录；只有实际伤害写 hurt，只有新增离场的主动驱逐计驱逐与信任。加入或留驻实际成功至少一人才结算，释放策略拒绝不能仍改玩家派系。盟友选项保持一个，目的地取合格盟友中最小 loadID；只登记允许 Transfer 与 ExitMap 的本图本批成员及实际人数，实际离图后才入盟友并按原版救治条件计好感。
 
 其它模组适配只进 `Source/Pawn/Compat/`。基底只暴露闸门、`IRHAH_PawnBehavior` 和 `RHAH_Api` 事件。禁止 Harmony 其它模组私有类型。原版缺口补丁登记在 [engineering.md](engineering.md)。
 

@@ -47,8 +47,8 @@ namespace HungerAndHavoc.Trade
         internal static bool TrySpawnCaravanAmbush(RHAH_IncidentEntry entry, float points, RimWorld.Planet.Caravan selected, bool allowFallback, Map destination = null)
         {
             RimWorld.Planet.Caravan caravan = destination == null ? CaravanTargetResolver.Resolve(selected, allowFallback) : null;
-            RHAH_Attitude attitude = HungerAndHavoc.Incidents.RHAH_IncidentArrival.For(entry);
-            Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(attitude);
+            RHAH_Attitude attitude = RHAH_Attitude.Hostile;
+            Faction faction = RequireAmbushFaction();
             if (entry == null || faction == null || (destination == null && (caravan == null ||
                 !RimWorld.Planet.CaravanIncidentUtility.CanFireIncidentWhichWantsToGenerateMapAt(caravan.Tile))))
             {
@@ -118,6 +118,12 @@ namespace HungerAndHavoc.Trade
                 Cleanup(attackers);
                 return false;
             }
+            if (destination != null)
+            {
+                // 直接锁关系不会通知原版缓存 现有地图需重新收录玩家目标
+                map.attackTargetsCache.Notify_FactionHostilityChanged(faction, Faction.OfPlayer);
+            }
+
             if (!TryCreateAssaultLord(faction, map, attackers))
             {
                 Cleanup(attackers);
@@ -127,6 +133,24 @@ namespace HungerAndHavoc.Trade
             EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, destination == null ? 0 : map.uniqueID,
                 caravan == null ? 0 : caravan.ID, Find.TickManager.TicksGame, tick + 1);
             return true;
+        }
+
+        internal static Faction RequireAmbushFaction()
+        {
+            Faction player = Faction.OfPlayer;
+            if (player == null)
+            {
+                return null;
+            }
+
+            Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(RHAH_Attitude.Hostile);
+            if (faction == null)
+            {
+                return null;
+            }
+
+            HungerAndHavoc.Pawn.RHAH_AttitudeFactions.LockGoodwill();
+            return faction.HostileTo(player) && player.HostileTo(faction) ? faction : null;
         }
 
         internal static bool TryCreateAssaultLord(Faction faction, Map map, List<Verse.Pawn> attackers)
