@@ -51,25 +51,25 @@
   <RHAH_Incident_PlagueRevenge_Label>Plague revenge</RHAH_Incident_PlagueRevenge_Label>
   <RHAH_Incident_PlagueCaravanMuggers_Label>Plague caravan muggers</RHAH_Incident_PlagueCaravanMuggers_Label>
   <RHAH_Incident_RefugeeMassacre_Label>Dangerous ratkin settlement</RHAH_Incident_RefugeeMassacre_Label>
-  <RHAH_Follow_I-002>the mother who came back</RHAH_Follow_I-002>
-  <RHAH_Follow_I-002_Text>The mother who left the young is still alive. She waits at the edge and claims one of them.</RHAH_Follow_I-002_Text>
-  <RHAH_Follow_I-012>one that should not have been in the goods</RHAH_Follow_I-012>
-  <RHAH_Follow_I-012_Text>The bought young one can speak now. It carries something that does not match the caravan.</RHAH_Follow_I-012_Text>
-  <RHAH_Follow_I-013>the one who was traded away</RHAH_Follow_I-013>
-  <RHAH_Follow_I-013_Text>An adult ratkin waits at the edge and says they are the child who was traded away.</RHAH_Follow_I-013_Text>
-  <RHAH_Follow_I-019>the one who was asked for</RHAH_Follow_I-019>
-  <RHAH_Follow_I-019_Text>The child who was handed over has walked back. It recognizes the place first.</RHAH_Follow_I-019_Text>
-  <RHAH_Follow_I-032>someone to claim the drop</RHAH_Follow_I-032>
-  <RHAH_Follow_I-032_Text>An adult ratkin waits at the edge with half a cloth that matches the old drop.</RHAH_Follow_I-032_Text>
-  <RHAH_Follow_I-033>still following after the wrong name</RHAH_Follow_I-033>
-  <RHAH_Follow_I-033_Text>The young one who shouted the wrong name is still following the person who feeds it.</RHAH_Follow_I-033_Text>
-  <RHAH_Follow_I-037>the sick mother who left</RHAH_Follow_I-037>
-  <RHAH_Follow_I-037_Text>The mother who left the young has come back to the edge. She looks for them first.</RHAH_Follow_I-037_Text>
-  <RHAH_Follow_I-041>the one nobody wanted</RHAH_Follow_I-041>
-  <RHAH_Follow_I-041_Text>The child who recovered has started telling a story. The details do not match.</RHAH_Follow_I-041_Text>
-  <RHAH_Approach_Label>ratkin approach</RHAH_Approach_Label>
-  <RHAH_Approach_LetterLabel>ratkin approaching</RHAH_Approach_LetterLabel>
-  <RHAH_Approach_LetterText>A group of ratkin has started walking toward {1} from a few tiles away. They are not here yet. This one is {0}.\n\nThey cover about 3 tiles a day. If the colony is on an island, they start from the far shore and cross the water. They enter the map only after they arrive.</RHAH_Approach_LetterText>
-  <RHAH_Approach_Inspect>An approach. Nobody has arrived. This one is {0}.</RHAH_Approach_Inspect>
+  <RHAH_Follow_I-002>The mother who left them</RHAH_Follow_I-002>
+  <RHAH_Follow_I-002_Text>The young ratkin left near the colony are still here. We do not know whether their mother is still alive. If she returned, would she recognize her children?</RHAH_Follow_I-002_Text>
+  <RHAH_Follow_I-012>A child among the goods</RHAH_Follow_I-012>
+  <RHAH_Follow_I-012_Text>The children bought from that caravan are still here. One trade was followed by meals, one after another.</RHAH_Follow_I-012_Text>
+  <RHAH_Follow_I-013>The one traded away</RHAH_Follow_I-013>
+  <RHAH_Follow_I-013_Text>The ratkin brought here to be traded is still here. If a child really had been traded away, where would they be now?</RHAH_Follow_I-013_Text>
+  <RHAH_Follow_I-019>The child they asked for</RHAH_Follow_I-019>
+  <RHAH_Follow_I-019_Text>The ratkin who once came asking for a baby is still here. If a child really had been handed over, how would the new caretakers have treated them? We do not know.</RHAH_Follow_I-019_Text>
+  <RHAH_Follow_I-032>After the airdrop</RHAH_Follow_I-032>
+  <RHAH_Follow_I-032_Text>The ratkin who arrived here are still here. Perhaps someone still has their pictures and names, and is still looking for them.</RHAH_Follow_I-032_Text>
+  <RHAH_Follow_I-033>Begging</RHAH_Follow_I-033>
+  <RHAH_Follow_I-033_Text>The ratkin who called someone Mommy is still here. It seems the child was simply making use of a kind heart to get a meal.</RHAH_Follow_I-033_Text>
+  <RHAH_Follow_I-037>The mother who left sick</RHAH_Follow_I-037>
+  <RHAH_Follow_I-037_Text>What became of the mother who left her young here? If she is still alive, she probably wants to know how they are doing.</RHAH_Follow_I-037_Text>
+  <RHAH_Follow_I-041>The orphan who stayed</RHAH_Follow_I-041>
+  <RHAH_Follow_I-041_Text>The ratkin orphan who arrived here is still here. Life has to go on, even without a mother beside them.</RHAH_Follow_I-041_Text>
+  <RHAH_Approach_Label>Ratkin travelers</RHAH_Approach_Label>
+  <RHAH_Approach_LetterLabel>Ratkin approaching</RHAH_Approach_LetterLabel>
+  <RHAH_Approach_LetterText>A group of ratkin is making its way toward {1}, still some distance from the colony. The approaching group is: {0}.\n\nThey usually cover about 3 tiles a day, depending on terrain and roads. If separated by sea, they cross from the far shore. They will enter the map after arriving.</RHAH_Approach_LetterText>
+  <RHAH_Approach_Inspect>Ratkin on their way: {0}.</RHAH_Approach_Inspect>
   <RHAH_Approach_Target>Destination: {0}</RHAH_Approach_Target>
 </LanguageData>

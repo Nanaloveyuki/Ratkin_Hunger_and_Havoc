@@ -209,7 +209,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             ChoiceLetter_RHAH_Revisit letter = (ChoiceLetter_RHAH_Revisit)LetterMaker.MakeLetter(def);
             letter.caseId = record.Id;
             letter.Label = "RHAH_Suiyin_N004Revisit_Label".Translate();
-            letter.Text = "RHAH_Suiyin_N004Revisit_Text".Translate();
+            SuiyinConfig config = Current.Game.GetComponent<NarrativeState>().Book.Config;
+            letter.Text = "RHAH_Suiyin_N004Revisit_Text".Translate(config.RescueCost, config.RevisitYears, config.RescueReward);
             letter.lookTargets = new LookTargets(pawn);
             Find.LetterStack.ReceiveLetter(letter);
         }

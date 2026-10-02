@@ -219,7 +219,9 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             letter.mapId = map.uniqueID;
             letter.pawnId = pawn.thingIDNumber;
             letter.Label = "RHAH_Suiyin_N008Arrive_Label".Translate();
-            letter.Text = "RHAH_Suiyin_N008Arrive_Text".Translate(pawn.LabelShort);
+            SuiyinConfig config = Current.Game.GetComponent<NarrativeState>().Book.Config;
+            letter.Text = "RHAH_Suiyin_N008Arrive_Text".Translate(pawn.LabelShort,
+                Core.RHAH_Mod.Settings == null ? MealCost : Core.RHAH_Mod.Settings.envoyMealCost, config.EnvoyWaitDays);
             letter.lookTargets = new LookTargets(pawn);
             Find.LetterStack.ReceiveLetter(letter);
         }

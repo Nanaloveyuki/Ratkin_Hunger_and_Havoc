@@ -268,13 +268,13 @@
     <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
     <stages>
             <li>
-        <label>child still hungry</label>
-        <description>My child is still hungry.</description>
+        <label>孩子在饿</label>
+        <description>身边的孩子还在挨饿。</description>
         <baseMoodEffect>-6</baseMoodEffect>
       </li>
             <li>
-        <label>child down</label>
-        <description>My child is sick or down.</description>
+        <label>孩子病了</label>
+        <description>身边的孩子病了或倒下了。</description>
         <baseMoodEffect>-10</baseMoodEffect>
       </li>
     </stages>

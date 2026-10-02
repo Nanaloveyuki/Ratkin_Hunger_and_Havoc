@@ -217,7 +217,11 @@ namespace HungerAndHavoc.Incidents
             letter.followUp = follow;
             string key = follow ? "RHAH_Suiyin_N006BaitGone" : "RHAH_Suiyin_N006Entry";
             letter.Label = (key + "_Label").Translate();
-            letter.Text = (key + "_Text").Translate();
+            letter.Text = follow
+                ? (key + "_Text").Translate()
+                : (key + "_Text").Translate(RHAH_Mod.Settings == null ? WoodCost : RHAH_Mod.Settings.holeWoodCost,
+                    RHAH_Mod.Settings == null ? CleanPortions : RHAH_Mod.Settings.holeCleanPortions,
+                    Current.Game.GetComponent<NarrativeState>().Book.Config.HoleIgnoreDays);
             Find.LetterStack.ReceiveLetter(letter);
         }
 

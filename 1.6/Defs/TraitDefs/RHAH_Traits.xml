@@ -11,8 +11,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>hardy</label>
-        <description>{PAWN_nameDef} can take hardship, and will keep at unpleasant work.</description>
+        <label>吃苦耐劳</label>
+        <description>{PAWN_nameDef}吃得了苦，在这个边缘世界生活，没有什么苦是吃不了的。</description>
         <statOffsets>
         <WorkSpeedGlobal>0.15</WorkSpeedGlobal>
         </statOffsets>
@@ -27,8 +27,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>agrarian</label>
-        <description>{PAWN_nameDef} knows field work well.</description>
+        <label>擅长耕作</label>
+        <description>{PAWN_nameDef}对田里的活很熟，种地收割都很在行。</description>
         <statOffsets>
         <PlantWorkSpeed>0.2</PlantWorkSpeed>
         </statOffsets>
@@ -43,8 +43,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>foraging</label>
-        <description>{PAWN_nameDef} is used to picking through edges and waste ground for anything edible.</description>
+        <label>拾荒后遗症</label>
+        <description>{PAWN_nameDef}曾经靠在边角和废地里翻找还能吃的东西过活，如今已成了下意识的习惯。</description>
         <statOffsets>
         <ForagedNutritionPerDay>0.45</ForagedNutritionPerDay>
         <HuntingStealth>0.08</HuntingStealth>
@@ -60,8 +60,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>husbandry</label>
-        <description>{PAWN_nameDef} is good with animals. Even frightened livestock will come close to {PAWN_objective}.</description>
+        <label>擅长放牧</label>
+        <description>{PAWN_nameDef}因为一些经历掌握了放牧的技巧，照看和驯服牲口都很在行。</description>
         <statFactors>
         <TameAnimalChance>1.25</TameAnimalChance>
         <TrainAnimalChance>1.2</TrainAnimalChance>
@@ -80,8 +80,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>sturdy</label>
-        <description>{PAWN_nameDef} can take a lot of weight without minding the load.</description>
+        <label>善用巧力的搬运工</label>
+        <description>{PAWN_nameDef}知道怎么拿东西更方便，也更省力。或许有人请教过这一本领，{PAWN_nameDef}只会说这是天生的，教不了别人。</description>
         <statOffsets>
         <CarryingCapacity>12</CarryingCapacity>
         <MoveSpeed>0.08</MoveSpeed>
@@ -97,8 +97,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>palate</label>
-        <description>{PAWN_nameDef} can tell which grain can still be cooked.</description>
+        <label>鼻子灵敏</label>
+        <description>{PAWN_nameDef}闻得出哪一把快要发霉的粮还能下锅。</description>
         <statOffsets>
         <CookSpeed>0.18</CookSpeed>
         </statOffsets>
@@ -113,8 +113,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>handy</label>
-        <description>{PAWN_nameDef} is handy with roofs and wooden frames.</description>
+        <label>擅长建造</label>
+        <description>{PAWN_nameDef}修屋顶、补木架这类活很在行。</description>
         <statOffsets>
         <ConstructionSpeed>0.2</ConstructionSpeed>
         </statOffsets>
@@ -129,8 +129,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>mender</label>
-        <description>{PAWN_nameDef} is good at stitching rags and old felt into something usable.</description>
+        <label>巧手</label>
+        <description>{PAWN_nameDef}擅长把破布和旧毡缝成还能用的东西。</description>
         <statOffsets>
         <GeneralLaborSpeed>0.16</GeneralLaborSpeed>
         </statOffsets>
@@ -145,8 +145,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>herbal</label>
-        <description>{PAWN_nameDef} knows which herbs still bring a fever down, and can be trusted with a bandage.</description>
+        <label>识药</label>
+        <description>{PAWN_nameDef}认得哪些草能退热，包扎也还算靠得住，或许是靠着过往的经验。</description>
         <statOffsets>
         <MedicalTendSpeed>0.16</MedicalTendSpeed>
         </statOffsets>
@@ -165,8 +165,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>nocturnal</label>
-        <description>{PAWN_nameDef} prefers to move at night, and doesn't stumble much in the dark.</description>
+        <label>惯于夜行</label>
+        <description>{PAWN_nameDef}夜里走路习惯放轻脚步，白天却总嫌光线刺眼。</description>
         <statOffsets>
         <MoveSpeed>0.12</MoveSpeed>
         <HuntingStealth>0.12</HuntingStealth>
@@ -182,8 +182,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>pathwise</label>
-        <description>{PAWN_nameDef} remembers old trail markers and tracks buried in snow.</description>
+        <label>强方向感</label>
+        <description>{PAWN_nameDef}即使过了许久，也能记得旧路标和被雪盖住的脚印，在探路和寻找方向上很在行。</description>
         <statOffsets>
         <HuntingStealth>0.1</HuntingStealth>
         <MoveSpeed>0.08</MoveSpeed>
@@ -199,8 +199,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>bearer</label>
-        <description>{PAWN_nameDef} will carry grain and water all the way to the next camp, and rarely puts the load down.</description>
+        <label>缺食后遗症</label>
+        <description>{PAWN_nameDef}总想把粮和饮水一直背到下一处有吃的营地，路上舍不得卸下来，生怕中途又得求助于他人。</description>
         <statOffsets>
         <CarryingCapacity>18</CarryingCapacity>
         <MoveSpeed>-0.04</MoveSpeed>
@@ -219,8 +219,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>vigilant</label>
-        <description>{PAWN_nameDef} doesn't panic easily. When the camp is in chaos, {PAWN_pronoun} can still keep a clear head.</description>
+        <label>沉稳</label>
+        <description>{PAWN_nameDef}遇见突发事件时不容易慌张，{PAWN_pronoun}还能把精神绷住，尽管也会被人叫作绷绷炸弹。</description>
         <statOffsets>
         <MentalBreakThreshold>-0.06</MentalBreakThreshold>
         </statOffsets>
@@ -235,8 +235,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>eloquent</label>
-        <description>{PAWN_nameDef} has a way with words. Even hard news comes out in a way people will listen to.</description>
+        <label>善于言辞</label>
+        <description>{PAWN_nameDef}会说话，再难听的事也能让人听得进去。</description>
         <statOffsets>
         <NegotiationAbility>0.16</NegotiationAbility>
         <SocialImpact>0.1</SocialImpact>
@@ -252,8 +252,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>shrewd</label>
-        <description>{PAWN_nameDef} can tell what a sack of old goods is still worth, and is sharp in a trade.</description>
+        <label>精明</label>
+        <description>{PAWN_nameDef}看得出一袋旧货还能换多少口粮，谈价钱很精明。</description>
         <statOffsets>
         <NegotiationAbility>0.18</NegotiationAbility>
         </statOffsets>
@@ -268,8 +268,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>peaceable</label>
-        <description>{PAWN_nameDef} steps in before a crowd starts grabbing, and can keep a situation from falling apart.</description>
+        <label>和事佬</label>
+        <description>{PAWN_nameDef}喜欢在抢夺开始前出面劝开争执的人，帮着维护团结，但也偶尔会被骂两面派和和事佬。</description>
         <statOffsets>
         <SocialImpact>0.14</SocialImpact>
         </statOffsets>
@@ -284,8 +284,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>careful</label>
-        <description>{PAWN_nameDef} has a steady hand with wounds, and smell or crying rarely stops {PAWN_objective}.</description>
+        <label>细心</label>
+        <description>{PAWN_nameDef}包扎时手很稳，外界的动静也很少让{PAWN_objective}分心。</description>
         <statOffsets>
         <MedicalTendSpeed>0.2</MedicalTendSpeed>
         </statOffsets>
@@ -300,8 +300,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>broody</label>
-        <description>{PAWN_nameDef} puts the young first. If a child nearby goes hungry or falls ill, {PAWN_pronoun} takes it hard.</description>
+        <label>喜爱幼儿</label>
+        <description>{PAWN_nameDef}总喜欢把幼崽护在身边，不管是不是自己的。身边的幼小同伴挨饿、病倒或倒下时，{PAWN_pronoun}会很难受。</description>
         <statOffsets>
         <SocialImpact>0.1</SocialImpact>
         </statOffsets>
@@ -319,8 +319,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>abstemious</label>
-        <description>{PAWN_nameDef} is used to splitting one meal into two, and can keep going on an empty stomach.</description>
+        <label>耐饿</label>
+        <description>{PAWN_nameDef}习惯把一顿饭拆成两顿，胃空着也能继续走，传奇耐饿王也不过如此吧。</description>
         <hungerRateFactor>0.85</hungerRateFactor>
       </li>
     </degreeDatas>
@@ -333,8 +333,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>thick-furred</label>
-        <description>{PAWN_nameDef} handles the cold well.</description>
+        <label>耐寒</label>
+        <description>{PAWN_nameDef}比较耐寒。</description>
         <statOffsets>
         <ComfyTemperatureMin>-10</ComfyTemperatureMin>
         </statOffsets>
@@ -349,8 +349,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>deft</label>
-        <description>{PAWN_nameDef} has a sure hand with fine work like mending sacks and threading needles.</description>
+        <label>灵巧</label>
+        <description>{PAWN_nameDef}做补袋、穿针这类细活很顺手。</description>
         <statOffsets>
         <GeneralLaborSpeed>0.12</GeneralLaborSpeed>
         </statOffsets>
@@ -365,8 +365,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>alert</label>
-        <description>{PAWN_nameDef} notices movement early and checks the path before stepping.</description>
+        <label>机敏</label>
+        <description>{PAWN_nameDef}对事情之间的关联很敏感，常能从两件看似毫不相干的事里看出令人瞠目结舌的联系。</description>
         <statOffsets>
         <HuntingStealth>0.18</HuntingStealth>
         </statOffsets>
@@ -382,8 +382,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>decisive</label>
-        <description>{PAWN_nameDef} lines people up before moving. Who walks first and who watches the young is for {PAWN_pronoun} to decide.</description>
+        <label>果断</label>
+        <description>{PAWN_nameDef}做重大决策时喜欢评估利弊后直接拍板，很少犹豫。{PAWN_nameDef}认为犹豫是对时间的不尊重。</description>
         <statOffsets>
         <SocialImpact>0.08</SocialImpact>
         <MoveSpeed>0.1</MoveSpeed>
@@ -399,8 +399,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>culinary</label>
-        <description>{PAWN_nameDef} can turn a little grain into a hot meal that can still be shared.</description>
+        <label>分粮者</label>
+        <description>{PAWN_nameDef}得益于天赋，做起分给大家的热食很利索，再少的粮也愿意分一分。</description>
         <statOffsets>
         <CookSpeed>0.22</CookSpeed>
         </statOffsets>
@@ -418,8 +418,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>hunter</label>
-        <description>{PAWN_nameDef} likes to pin prey up close, and moves quietly on the approach.</description>
+        <label>擅长狩猎</label>
+        <description>{PAWN_nameDef}掌握了一门随时可能用得到的技能，靠近猎物时脚步很轻，近身捕猎也颇有一手。</description>
         <statOffsets>
         <MeleeHitChance>4</MeleeHitChance>
         <HuntingStealth>0.1</HuntingStealth>
@@ -439,8 +439,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>ravenous</label>
-        <description>{PAWN_nameDef} sees food and the eyes go red. The emptier the stomach, the harder it is to keep still.</description>
+        <label>饥饿焦虑症</label>
+        <description>{PAWN_nameDef}一看见食物就容易红眼。肚子越空，越难按住想吃的心。</description>
         <socialFightChanceFactor>1.8</socialFightChanceFactor>
       </li>
     </degreeDatas>
@@ -457,8 +457,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>snatching</label>
-        <description>{PAWN_nameDef} can hardly watch food pass by. When hungry, the paws go to the sack first.</description>
+        <label>严重饥饿焦虑症</label>
+        <description>{PAWN_nameDef}看不得食物从眼前过去。“食物全部吃进肚子里才最安全。”{PAWN_nameDef}如是说。</description>
         <socialFightChanceFactor>2</socialFightChanceFactor>
       </li>
     </degreeDatas>
@@ -475,8 +475,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>plague-shy</label>
-        <description>{PAWN_nameDef} is especially afraid of plague. Being sick, or seeing someone nearby fall ill, makes {PAWN_pronoun} uneasy.</description>
+        <label>害怕生病</label>
+        <description>{PAWN_nameDef}特别怕疫病。自己生病，或身边同伴病倒时，{PAWN_pronoun}会明显不安。</description>
       </li>
     </degreeDatas>
   </TraitDef>
@@ -491,8 +491,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>jumpy</label>
-        <description>{PAWN_nameDef} sleeps lightly and wakes at small sounds. Tiredness only makes the panic worse.</description>
+        <label>易惊</label>
+        <description>{PAWN_nameDef}睡觉难解乏，一点动静就容易紧张。越累越慌。</description>
         <statOffsets>
         <RestRateMultiplier>-0.15</RestRateMultiplier>
         <RestFallRateFactor>0.12</RestFallRateFactor>
@@ -511,8 +511,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>slothful</label>
-        <description>{PAWN_nameDef} is a little lazy, and will rest if there's a chance to rest.</description>
+        <label>怠惰</label>
+        <description>{PAWN_nameDef}有点懒，能歇着就先歇着，今日复明日，明日继续躺。</description>
         <statOffsets>
         <WorkSpeedGlobal>-0.15</WorkSpeedGlobal>
         </statOffsets>
@@ -530,8 +530,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>gluttonous</label>
-        <description>{PAWN_nameDef} can't stop eating while food is in reach, and hunger hits hard.</description>
+        <label>饥饿后遗症</label>
+        <description>{PAWN_nameDef}面前有粮就惦记着多吃几口，胃口大，饿得也快。</description>
         <statOffsets>
         <EatingSpeed>0.2</EatingSpeed>
         </statOffsets>
@@ -550,8 +550,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>distrustful</label>
-        <description>{PAWN_nameDef} has a hard time trusting anyone. Even kindness often looks like a trap to {PAWN_objective}.</description>
+        <label>多疑</label>
+        <description>{PAWN_nameDef}很难再相信别人。好意也常被{PAWN_objective}看成圈套。</description>
         <statOffsets>
         <SocialImpact>-0.15</SocialImpact>
         <NegotiationAbility>-0.1</NegotiationAbility>
@@ -571,8 +571,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>frail</label>
-        <description>{PAWN_nameDef} is frail, and doesn't take knocks well.</description>
+        <label>体弱</label>
+        <description>{PAWN_nameDef}身子很弱，经不起磕碰。</description>
         <statOffsets>
         <IncomingDamageFactor>0.1</IncomingDamageFactor>
         </statOffsets>
@@ -591,8 +591,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>queasy</label>
-        <description>{PAWN_nameDef} has a weak gut, and gets hungry again soon after a meal.</description>
+        <label>胃虚</label>
+        <description>{PAWN_nameDef}胃不好，刚吃过不久就又饿了。</description>
         <hungerRateFactor>1.2</hungerRateFactor>
       </li>
     </degreeDatas>
@@ -605,8 +605,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>chilly</label>
-        <description>{PAWN_nameDef} hates the cold. When the wind picks up, {PAWN_pronoun} suffers for it.</description>
+        <label>怕冷</label>
+        <description>{PAWN_nameDef}很怕冷。寒风一来，{PAWN_pronoun}就容易难受。</description>
         <statOffsets>
         <ComfyTemperatureMin>8</ComfyTemperatureMin>
         </statOffsets>
@@ -624,8 +624,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>gloomy</label>
-        <description>{PAWN_nameDef} has a hard time believing anything good is coming, and cracks more easily under pressure.</description>
+        <label>悲观</label>
+        <description>{PAWN_nameDef}很难相信接下来会有好事，压力一大就容易撑不住。</description>
         <statOffsets>
         <MentalBreakThreshold>0.1</MentalBreakThreshold>
         </statOffsets>
@@ -641,8 +641,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>tearful</label>
-        <description>{PAWN_nameDef} is still small, and cries easily when hungry or cold.</description>
+        <label>爱哭</label>
+        <description>{PAWN_nameDef}从小就爱哭，饿了、冷了更容易掉眼泪。</description>
         <statOffsets>
         <SocialImpact>-0.1</SocialImpact>
         <RestFallRateFactor>0.1</RestFallRateFactor>
@@ -663,8 +663,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>biting</label>
-        <description>{PAWN_nameDef} hasn't learned to hide hunger. Near food, or when grabbed, biting follows.</description>
+        <label>护食</label>
+        <description>{PAWN_nameDef}还没学会分享。有人靠近食物时，就容易发火，甚至想咬人。</description>
         <statOffsets>
         <SocialImpact>-0.08</SocialImpact>
         </statOffsets>
@@ -683,8 +683,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>proud</label>
-        <description>{PAWN_nameDef} treats charity as a humiliation, and won't bow to give thanks after taking what's offered.</description>
+        <label>傲骨</label>
+        <description>{PAWN_nameDef}把别人的施舍看成羞辱，接过东西也不肯低头道谢。</description>
       </li>
     </degreeDatas>
   </TraitDef>
@@ -700,8 +700,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>vindictive</label>
-        <description>{PAWN_nameDef} remembers who shut a gate and who took what was needed. The next meeting starts with the old grudge.</description>
+        <label>记仇</label>
+        <description>谁骂过{PAWN_nameDef}、谁抢过{PAWN_nameDef}的东西，{PAWN_nameDef}都还记着。再碰面，旧账会先翻出来。</description>
         <statOffsets>
         <MentalBreakThreshold>0.05</MentalBreakThreshold>
         </statOffsets>
@@ -720,8 +720,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>hardened</label>
-        <description>{PAWN_nameDef} survived plague once. Illness is easier to endure now, but tiredness comes more quickly.</description>
+        <label>疫病后遗症</label>
+        <description>{PAWN_nameDef}从疫病里活下来过，再遇上病也有些底气，只是人容易疲倦。</description>
         <statOffsets>
         <ImmunityGainSpeed>0.2</ImmunityGainSpeed>
         <RestFallRateFactor>0.08</RestFallRateFactor>
@@ -738,8 +738,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>guileful</label>
-        <description>{PAWN_nameDef} doesn't show what is really wanted, and moves quietly when closing in.</description>
+        <label>面瘫脸</label>
+        <description>{PAWN_nameDef}不爱把真实想法写在脸上。</description>
         <statOffsets>
         <HuntingStealth>0.15</HuntingStealth>
         <SocialImpact>-0.08</SocialImpact>
@@ -755,8 +755,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>digger</label>
-        <description>{PAWN_nameDef} is good with a shovel, especially digging ways out and trenches.</description>
+        <label>爱挖东西</label>
+        <description>{PAWN_nameDef}挖出路和壕沟很在行，闲着无聊时连沙发都想挠两下。</description>
         <statOffsets>
         <MiningSpeed>0.2</MiningSpeed>
         <ConstructionSpeed>0.08</ConstructionSpeed>
@@ -775,8 +775,8 @@
     </conflictingTraits>
     <degreeDatas>
       <li>
-        <label>fierce</label>
-        <description>{PAWN_nameDef} doesn't mind a close fight. The fists are ready before the sentence is finished.</description>
+        <label>好斗</label>
+        <description>{PAWN_nameDef}不怕打架。决斗的话还没说完，拳头就已经准备好了。</description>
         <statOffsets>
         <MeleeHitChance>3</MeleeHitChance>
         </statOffsets>
@@ -793,8 +793,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>maternal</label>
-        <description>{PAWN_nameDef} puts the children first. If a child is hungry or sick, {PAWN_pronoun} unravels.</description>
+        <label>圣母心</label>
+        <description>{PAWN_nameDef}总想把孩子放在最安全的地方。身边的幼小同伴挨饿、病倒或倒下时，{PAWN_pronoun}会感到不安和悲伤，尽管经常会被别人骂圣母。</description>
         <statOffsets>
         <MedicalTendSpeed>0.1</MedicalTendSpeed>
         </statOffsets>
@@ -809,8 +809,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>clannish</label>
-        <description>{PAWN_nameDef} puts kin above rules. If the young of the den go hungry or fall ill, {PAWN_pronoun} can't sit still.</description>
+        <label>护犊子</label>
+        <description>{PAWN_nameDef}把自己人看得比规矩重。身边的幼小同伴挨饿、病倒或倒下时，{PAWN_pronoun}会坐不住。</description>
       </li>
     </degreeDatas>
   </TraitDef>
@@ -823,8 +823,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>aloof</label>
-        <description>{PAWN_nameDef} is hard to get close to, and keeps people apart with a firm hand and few words.</description>
+        <label>冷面</label>
+        <description>{PAWN_nameDef}不容易让人亲近。</description>
         <statOffsets>
         <SocialImpact>-0.12</SocialImpact>
         </statOffsets>
@@ -840,8 +840,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>gullible</label>
-        <description>{PAWN_nameDef} will take a strange door for home, and takes it hard when that guess is wrong.</description>
+        <label>路痴</label>
+        <description>{PAWN_nameDef}容易把陌生的门认成家，认错了也容易失落。</description>
         <statOffsets>
         <SocialImpact>0.08</SocialImpact>
         <MentalBreakThreshold>0.06</MentalBreakThreshold>
@@ -858,8 +858,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>gregarious</label>
-        <description>{PAWN_nameDef} is more at ease in a crowd, and talks poorly when left alone.</description>
+        <label>喜欢聚众</label>
+        <description>{PAWN_nameDef}在人堆里更自在。单独待着时反而觉得没意思。</description>
         <statOffsets>
         <MoveSpeed>0.1</MoveSpeed>
         <SocialImpact>-0.06</SocialImpact>
@@ -876,8 +876,8 @@
     </exclusionTags>
     <degreeDatas>
       <li>
-        <label>feral</label>
-        <description>{PAWN_nameDef} looks first for cover, then for anything edible. Waste ground feels safer to {PAWN_objective} than a storehouse.</description>
+        <label>野性</label>
+        <description>{PAWN_nameDef}习惯先找藏身处，再找能入口的东西。荒地边角比仓库更让{PAWN_objective}安心。</description>
         <statOffsets>
         <ForagedNutritionPerDay>0.35</ForagedNutritionPerDay>
         <HuntingStealth>0.1</HuntingStealth>

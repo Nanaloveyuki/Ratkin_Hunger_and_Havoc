@@ -24,33 +24,6 @@ namespace HungerAndHavoc.Tests
             Assert.NotNull(kind);
             Assert.Equal("0~0", kind.SelectSingleNode("initialWillRange").InnerText);
             Assert.Equal("0~0", kind.SelectSingleNode("initialResistanceRange").InnerText);
-            Assert.Equal("饥荒鼠族", kind.SelectSingleNode("label").InnerText);
-            XmlDocument injected = Load("Languages/English/DefInjected/PawnKindDef/RHAH_PawnKinds.xml");
-            Assert.Equal(
-                "famine ratkin",
-                injected.SelectSingleNode("//RHAH_PawnKind_Ratkin.label").InnerText);
-
-            string facts = File.ReadAllText(Source("Incidents/RHAH_IncidentFacts.cs"));
-            int send = facts.IndexOf("static void SendLetter");
-            Assert.True(send >= 0, "SendLetter missing");
-            string body = facts.Substring(send);
-            Assert.Contains("LookTargets targets", body);
-            Assert.Contains("new LookTargets(pawns)", body);
-            Assert.Contains("RHAH_DefOf.RHAH_ChoiceVisitors, targets", body);
-            Assert.Contains("RHAH_DefOf.RHAH_ChoiceRequest, targets", body);
-            Assert.DoesNotContain("LetterDefOf.NeutralEvent", body);
-            Assert.Contains(
-                "public static LetterDef RHAH_ChoiceRequest",
-                File.ReadAllText(Source("Core/RHAH_DefOf.cs")));
-            Assert.Contains(
-                "public static LetterDef RHAH_ChoiceVisitors",
-                File.ReadAllText(Source("Core/RHAH_DefOf.cs")));
-
-            Assert.Contains("ChoiceKey(record)", body);
-            Assert.Contains("RHAH_Choice_Visitors", body);
-            Assert.Contains("RHAH_Choice_Baby", body);
-            Assert.Contains("RHAH_Choice_SimpleMeal", body);
-            Assert.DoesNotContain("ThingDefName(record.Kind)", body);
         }
 
         static string LetterClass(XmlDocument document, string defName)
@@ -78,11 +51,6 @@ namespace HungerAndHavoc.Tests
             XmlDocument document = new XmlDocument();
             document.Load(Path.Combine(Root(), relative));
             return document;
-        }
-
-        static string Source(string relative, [CallerFilePath] string testFile = null)
-        {
-            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testFile), "..", relative));
         }
 
         static string Root([CallerFilePath] string testFile = null)

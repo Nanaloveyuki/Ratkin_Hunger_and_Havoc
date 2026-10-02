@@ -100,13 +100,20 @@ namespace HungerAndHavoc.Incidents
 
             slate.Set("site", site);
             slate.Set("sponsorName", sponsor.Name);
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            slate.Set("campMinAdults", settings == null ? RHAH_RefugeeCampRules.MinAdults : settings.campMinAdults);
+            slate.Set("campMaxAdults", settings == null ? RHAH_RefugeeCampRules.MaxAdults : settings.campMaxAdults);
+            slate.Set("campMinChildren", settings == null ? RHAH_RefugeeCampRules.MinChildren : settings.campMinChildren);
+            slate.Set("campMaxChildren", settings == null ? RHAH_RefugeeCampRules.MaxChildren : settings.campMaxChildren);
             quest.AddInvolvedFaction(sponsor);
             quest.SpawnWorldObject(site);
             string cleared = QuestGenUtility.HardcodedSignalWithQuestID("site.ResidentsCleared");
             int goodwill = Core.RHAH_Mod.Settings == null ? RHAH_RefugeeCampRules.Goodwill : Core.RHAH_Mod.Settings.campGoodwill;
+            slate.Set("campGoodwill", goodwill);
             quest.End(QuestEndOutcome.Success, goodwill, sponsor, cleared, QuestPart.SignalListenMode.OngoingOnly, true, false);
             quest.End(QuestEndOutcome.Fail, 0, null, QuestGenUtility.HardcodedSignalWithQuestID("site.Destroyed"), QuestPart.SignalListenMode.OngoingOnly, true, false);
             int days = Core.RHAH_Mod.Settings == null ? RHAH_RefugeeCampRules.Days : Core.RHAH_Mod.Settings.campDays;
+            slate.Set("campDays", days);
             int ticks = days * GenDate.TicksPerDay;
             quest.WorldObjectTimeout(site, ticks);
             quest.Delay(ticks, () => quest.End(QuestEndOutcome.Fail, 0, null, null, QuestPart.SignalListenMode.OngoingOnly, true, false));

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import re
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,11 +86,6 @@ INJECTED_FIELD = re.compile(r"<([A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)+)>")
 COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 
 TEXT_FIELDS = ("label", "description", "reportString", "jobString", "fixedName")
-BACKSTORY_FIELDS = {
-    "title": "title",
-    "titleShort": "titleShort",
-    "description": "baseDescription",
-}
 LIST_FIELDS = ("label", "customEffectDescriptions")
 DEF_ROOTS = ("1.6/Defs", "Biotech/Defs")
 SKIP_DIRS = {".git", "tmp", "docs", "bin", "obj"}
@@ -337,41 +333,42 @@ def injected_paths():
 
 
 
-def list_item_paths(body, field):
+def list_item_paths(container, field):
     paths = []
-    index = 0
-    for item in re.findall(r"<li\b[^>]*>(.*?)</li>", body, flags=re.DOTALL):
-        if ("<%s>" % field in item) or (field == "customEffectDescriptions" and CJK.search(item)):
-            paths.append("%s.%s" % (field, index))
-            index += 1
+    for index, item in enumerate(container):
+        if item.tag != "li":
+            continue
+        if field == "customEffectDescriptions":
+            if CJK.search(item.text or ""):
+                paths.append("%s.%s" % (field, index))
+        else:
+            text = item.findtext(field, default="")
+            if CJK.search(text):
+                paths.append("%s.%s" % (field, index))
     return paths
 
 
 def player_text_paths(kind, body):
+    definition = ET.fromstring("<%s>%s</%s>" % (kind, body, kind))
     paths = []
-    if kind == "BackstoryDef":
-        for source, injected in BACKSTORY_FIELDS.items():
-            match = re.search(r"<%s>(.*?)</%s>" % (source, source), body, flags=re.DOTALL)
-            if match and CJK.search(match.group(1)):
-                paths.append(injected)
-        return paths
-
-    for field in TEXT_FIELDS:
-        match = re.search(r"<%s>(.*?)</%s>" % (field, field), body, flags=re.DOTALL)
-        if match and CJK.search(match.group(1)):
+    fields = ("title", "titleShort", "description", "baseDesc") if kind == "BackstoryDef" else TEXT_FIELDS
+    for field in fields:
+        if CJK.search(definition.findtext(field, default="")):
             paths.append(field)
-    stages = re.search(r"<stages>(.*?)</stages>", body, flags=re.DOTALL)
-    if stages:
-        for path in list_item_paths(stages.group(1), "label"):
-            paths.append("stages." + path.replace("label.", "", 1) + ".label")
+    for name in ("stages", "degreeDatas"):
+        container = definition.find(name)
+        if container is None:
+            continue
+        for field in (("label", "description") if name == "degreeDatas" else ("label",)):
+            for path in list_item_paths(container, field):
+                _, index = path.split(".")
+                paths.append("%s.%s.%s" % (name, index, field))
     for field in LIST_FIELDS:
         if field == "label":
             continue
-        container = re.search(
-            r"<%s>(.*?)</%s>" % (field, field), body, flags=re.DOTALL
-        )
-        if container:
-            paths.extend(list_item_paths(container.group(1), field))
+        container = definition.find(field)
+        if container is not None:
+            paths.extend(list_item_paths(container, field))
     return paths
 
 

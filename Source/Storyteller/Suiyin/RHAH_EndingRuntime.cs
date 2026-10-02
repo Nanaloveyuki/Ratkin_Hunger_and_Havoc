@@ -122,7 +122,30 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     continue;
                 }
 
-                Find.LetterStack.ReceiveLetter((key + "_Label").Translate(), (key + "_Text").Translate(notice.Arg), LetterDefOf.NeutralEvent);
+                Find.LetterStack.ReceiveLetter((key + "_Label").Translate(), NoticeText(notice, book.Config), LetterDefOf.NeutralEvent);
+            }
+        }
+
+        internal static TaggedString NoticeText(SuiyinNotice notice, SuiyinConfig config)
+        {
+            string key = SuiyinBook.LetterKey(notice.Letter, notice.Arg) + "_Text";
+            switch (notice.Letter)
+            {
+                case SuiyinLetter.N004Banished:
+                    return key.Translate(config.RevisitYears);
+                case SuiyinLetter.N004RescuePaid:
+                    return key.Translate(notice.Arg, config.RevisitYears, config.RescueReward);
+                case SuiyinLetter.N008Arrive:
+                case SuiyinLetter.N008Trade:
+                    Verse.Pawn pawn = RHAH_PawnIndex.Find(notice.Arg, Find.TickManager == null ? 0 : Find.TickManager.TicksGame);
+                    string name = pawn == null ? "RHAH_Choice_Visitors_Label".Translate().ToString() : pawn.LabelShort;
+                    return notice.Letter == SuiyinLetter.N008Trade
+                        ? key.Translate(name)
+                        : key.Translate(name, RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : RHAH_Mod.Settings.envoyMealCost, config.EnvoyWaitDays);
+                case SuiyinLetter.N009Arrive:
+                    return key.Translate(config.RelicDays);
+                default:
+                    return key.Translate(notice.Arg);
             }
         }
         static void DropReward(NarrativeState state)

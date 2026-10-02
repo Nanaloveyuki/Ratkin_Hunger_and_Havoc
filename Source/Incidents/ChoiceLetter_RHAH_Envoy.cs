@@ -26,10 +26,10 @@ namespace HungerAndHavoc.Incidents
 
                 Map map = ResolveMap();
                 bool meals = map != null && RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost);
-                DiaOption trade = new DiaOption("RHAH_Envoy_Trade".Translate());
+                DiaOption trade = new DiaOption("RHAH_Envoy_Trade".Translate(Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost));
                 if (!meals)
                 {
-                    trade.Disable("RHAH_Envoy_NoMeals".Translate());
+                    trade.Disable("RHAH_Envoy_NoMeals".Translate(Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost));
                 }
                 else
                 {
@@ -40,7 +40,10 @@ namespace HungerAndHavoc.Incidents
                 yield return trade;
                 yield return Act("RHAH_Envoy_Proof", () => Proof());
                 yield return Act("RHAH_Envoy_Refuse", () => Refuse());
-                yield return Act("RHAH_Envoy_Drive", () => Drive());
+                DiaOption drive = new DiaOption("RHAH_Envoy_Drive".Translate(Core.RHAH_Mod.Settings == null ? -2 : Core.RHAH_Mod.Settings.trustEnvoyFail));
+                drive.action = Drive;
+                drive.resolveTree = true;
+                yield return drive;
                 if (lookTargets.IsValid())
                 {
                     yield return Option_JumpToLocationAndPostpone;
@@ -69,7 +72,7 @@ namespace HungerAndHavoc.Incidents
 
             if (RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) < (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost))
             {
-                Messages.Message("RHAH_Envoy_NoMeals".Translate(), MessageTypeDefOf.RejectInput);
+                Messages.Message("RHAH_Envoy_NoMeals".Translate(Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost), MessageTypeDefOf.RejectInput);
                 return;
             }
 

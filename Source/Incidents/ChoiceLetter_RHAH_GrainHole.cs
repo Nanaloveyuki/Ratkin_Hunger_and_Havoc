@@ -67,7 +67,7 @@ namespace HungerAndHavoc.Incidents
 
             if (RHAH_GrainHole.CountWood(map) < (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost))
             {
-                Messages.Message("RHAH_Hole_NoWood".Translate(), MessageTypeDefOf.RejectInput);
+                Messages.Message("RHAH_Hole_NoWood".Translate(RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : RHAH_Mod.Settings.holeWoodCost), MessageTypeDefOf.RejectInput);
                 return;
             }
 
@@ -81,7 +81,7 @@ namespace HungerAndHavoc.Incidents
 
             if (!RHAH_GrainHole.SpendWood(map, (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost)))
             {
-                Messages.Message("RHAH_Hole_NoWood".Translate(), MessageTypeDefOf.RejectInput);
+                Messages.Message("RHAH_Hole_NoWood".Translate(RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : RHAH_Mod.Settings.holeWoodCost), MessageTypeDefOf.RejectInput);
             }
 
             RHAH_GrainHole.RemoveHole(map, map.GetComponent<MapComponent_RHAH_Map>());
@@ -201,7 +201,12 @@ namespace HungerAndHavoc.Incidents
 
         DiaOption Act(string key, System.Action action)
         {
-            DiaOption option = new DiaOption(key.Translate());
+            TaggedString label = key == "RHAH_Hole_Seal"
+                ? key.Translate(RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : RHAH_Mod.Settings.holeWoodCost)
+                : key == "RHAH_Hole_Clean"
+                    ? key.Translate(RHAH_Mod.Settings == null ? RHAH_GrainHole.CleanPortions : RHAH_Mod.Settings.holeCleanPortions)
+                    : key.Translate();
+            DiaOption option = new DiaOption(label);
             option.resolveTree = false;
             option.action = () =>
             {

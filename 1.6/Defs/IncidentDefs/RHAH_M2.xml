@@ -48,7 +48,7 @@
     </questNameRules>
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription->[sponsorName]说附近有一处鼠族木屋营地，可能威胁他们的定居点。他们要你在 15 天内杀掉那里的全部居民，完成后给 12 点好感。\n\n营地里有 2 到 4 名成年鼠族，以及 8 到 16 名不满 8 岁的幼年鼠族。没有炮台，也没有电力。只击倒或俘虏，不算完成。</li>
+        <li>questDescription->[sponsorName]说附近有一处鼠族临时营地，可能威胁他们的定居点。他们要你在 [campDays] 天内杀掉那里的全部灾民，以防止他们所说的“鼠灾狂潮”。完成后，双方好感变化 [campGoodwill] 点。\n\n营地预计有 [campMinAdults] 到 [campMaxAdults] 名成年鼠族，以及 [campMinChildren] 到 [campMaxChildren] 名鼠蛋。没有炮台，也没有电力，但大人可能带着武器，附近也可能出现捕食者。只击倒或俘虏，不算完成。</li>
       </rulesStrings>
     </questDescriptionRules>
   </QuestScriptDef>

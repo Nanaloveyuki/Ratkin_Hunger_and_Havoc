@@ -81,7 +81,7 @@ namespace HungerAndHavoc.Incidents
                 context.CarriesPlague,
                 loadIds.ToArray()));
             HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Open(context, loadIds);
-            OpenChoice(context, created);
+            OpenChoice(context, created, arrived);
             EventMgr.RHAH_EventChainClock.NoteStarted(context.DisplayId, context.Map.uniqueID, 0, tick, context.SpawnBatchId);
 
             return true;
@@ -174,7 +174,7 @@ namespace HungerAndHavoc.Incidents
                 }
             }
         }
-        static void OpenChoice(RHAH_IncidentContext context, List<RHAH_PawnCreationResult> created)
+        static void OpenChoice(RHAH_IncidentContext context, List<RHAH_PawnCreationResult> created, List<Verse.Pawn> arrived)
         {
             RHAH_RequestSpec spec = RHAH_RequestRules.SpecFor(context.DisplayId);
             RHAH_ChoiceKind choice = spec.Choice;
@@ -224,13 +224,13 @@ namespace HungerAndHavoc.Incidents
                 }
             }
 
-            SendLetter(context, record, Targets(created));
+            SendLetter(context, record, Targets(created), arrived);
         }
 
-        static void SendLetter(RHAH_IncidentContext context, RHAH_ChoiceRecord record, LookTargets targets)
+        static void SendLetter(RHAH_IncidentContext context, RHAH_ChoiceRecord record, LookTargets targets, List<Verse.Pawn> arrived)
         {
             string label = LetterLabel(record);
-            string text = LetterText(record);
+            string text = LetterText(record, arrived);
             ChoiceLetter letter;
             if (record.Kind == RHAH_RequestKind.None)
             {
@@ -279,25 +279,144 @@ namespace HungerAndHavoc.Incidents
             return (ChoiceKey(record) + "_Label").Translate();
         }
 
-        static string LetterText(RHAH_ChoiceRecord record)
+        static string LetterText(RHAH_ChoiceRecord record, List<Verse.Pawn> arrived)
         {
-            string key = ChoiceKey(record) + "_Text";
+            string choiceKey = ChoiceKey(record);
+            string key = choiceKey + "_Text";
             string incident = IncidentLabel(record.DisplayId);
-            if (record.Kind == RHAH_RequestKind.Baby)
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            int count = record.PawnLoadIds.Count;
+            bool family = record.DisplayId == "I-003" || record.DisplayId == "I-004";
+            bool hasYoungText = choiceKey == "RHAH_Choice_Abandoned" || choiceKey == "RHAH_Choice_ChildExchange" ||
+                choiceKey == "RHAH_Choice_BeggarFamily" || choiceKey == "RHAH_Choice_Kinship" ||
+                choiceKey == "RHAH_Choice_Airdrop" || choiceKey == "RHAH_Choice_YoungThieves" || choiceKey == "RHAH_Choice_WildYoung";
+            bool young = !hasYoungText || YoungArrivals(arrived, family ? 1 : 0);
+            if (!young)
             {
-                return key.Translate(incident);
+                switch (choiceKey)
+                {
+                    case "RHAH_Choice_Abandoned": key = "RHAH_Choice_AbandonedGrown_Text"; break;
+                    case "RHAH_Choice_ChildExchange": key = "RHAH_Choice_ChildExchangeGrown_Text"; break;
+                    case "RHAH_Choice_BeggarFamily": key = "RHAH_Choice_BeggarFamilyGrown_Text"; break;
+                    case "RHAH_Choice_Kinship": key = "RHAH_Choice_KinshipGrown_Text"; break;
+                    case "RHAH_Choice_Airdrop": key = "RHAH_Choice_AirdropGrown_Text"; break;
+                    case "RHAH_Choice_YoungThieves": key = "RHAH_Choice_Thieves_Text"; break;
+                    case "RHAH_Choice_WildYoung": key = "RHAH_Choice_Wild_Text"; break;
+                }
+            }
+            if (choiceKey == "RHAH_Choice_Abandoned" && count == 1)
+            {
+                key = young ? "RHAH_Choice_AbandonedSingle_Text" : "RHAH_Choice_AbandonedSingleGrown_Text";
             }
 
+            if (choiceKey == "RHAH_Choice_Kinship" && arrived != null && arrived.Count > 0 &&
+                arrived[0].ageTracker != null && arrived[0].ageTracker.AgeBiologicalYearsFloat < 1f)
+            {
+                key = "RHAH_Choice_KinshipInfant_Text";
+            }
+            if ((choiceKey == "RHAH_Choice_Wild" || (choiceKey == "RHAH_Choice_WildYoung" && !young)) && count == 1)
+            {
+                key = "RHAH_Choice_WildSingle_Text";
+            }
+
+            string text;
+            if (record.Kind == RHAH_RequestKind.None || record.Kind == RHAH_RequestKind.Baby)
+            {
+                text = key.Translate(incident, family ? count - 1 : count);
+            }
+            else
+            {
+                text = key.Translate(incident, record.Amount, GoodsLabel(record));
+            }
+
+            if (record.Choice == RHAH_ChoiceKind.ChildExchange)
+            {
+                int each = RHAH_RequestRules.FoodForChildren(1);
+                if (settings != null && !settings.childExchangeFoodSubstitution)
+                {
+                    text += "\n\n" + "RHAH_Choice_ChildExchangeNoFoodHint".Translate();
+                }
+                else if (each <= 0)
+                {
+                    text += "\n\n" + "RHAH_Choice_ChildExchangeZeroFoodHint".Translate();
+                }
+                else
+                {
+                    text += "\n\n" + "RHAH_Choice_ChildExchangeFoodHint".Translate(each, RHAH_RequestRules.FoodForChildren(count));
+                }
+            }
+
+            int days = settings == null ? RHAH_RequestRules.RequestDays : settings.requestDays;
             if (record.Kind == RHAH_RequestKind.None)
             {
-                return key.Translate(incident);
+                text += "\n\n" + "RHAH_Choice_VisitorHint".Translate(days);
+            }
+            else if (record.Choice == RHAH_ChoiceKind.Intel)
+            {
+                text += "\n\n" + "RHAH_Choice_IntelHint".Translate(days);
+            }
+            else
+            {
+                text += "\n\n" + "RHAH_Choice_RequestHint".Translate(days);
             }
 
-            return key.Translate(incident, record.Amount, GoodsLabel(record));
+            RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(record.DisplayId);
+            if (entry != null && entry.Category == RHAH_IncidentCategory.Plague)
+            {
+                string plagueKey = settings == null || settings.plagueEnabled
+                    ? "RHAH_Choice_PlagueHint" : "RHAH_Choice_PlagueDisabledHint";
+                text += "\n\n" + plagueKey.Translate();
+            }
+
+            return text;
+        }
+
+        static bool YoungArrivals(List<Verse.Pawn> arrived, int start)
+        {
+            if (arrived == null || arrived.Count <= start)
+            {
+                return false;
+            }
+
+            for (int i = start; i < arrived.Count; i++)
+            {
+                if (arrived[i].ageTracker == null || arrived[i].ageTracker.AgeBiologicalYearsFloat >= 14f)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         static string ChoiceKey(RHAH_ChoiceRecord record)
         {
+            switch (record.DisplayId)
+            {
+                case "I-003": return "RHAH_Choice_ShatteredMother";
+                case "I-004": return "RHAH_Choice_BeggarFamily";
+                case "I-005":
+                case "I-042": return "RHAH_Choice_BeggarGroup";
+                case "I-006": return "RHAH_Choice_Thieves";
+                case "I-007":
+                case "I-043": return "RHAH_Choice_YoungThieves";
+                case "I-008":
+                case "I-010":
+                case "I-036": return "RHAH_Choice_Wild";
+                case "I-009": return "RHAH_Choice_WildYoung";
+                case "I-013": return "RHAH_Choice_ChildExchange";
+                case "I-014":
+                case "I-030":
+                case "I-045": return "RHAH_Choice_Siege";
+                case "I-029":
+                case "I-044": return "RHAH_Choice_LaboringRefugees";
+                case "I-031":
+                case "I-039": return "RHAH_Choice_Passersby";
+                case "I-037": return "RHAH_Choice_PlagueAbandoned";
+                case "I-040": return "RHAH_Choice_Refugees";
+                case "I-041": return "RHAH_Choice_Orphan";
+            }
+
             if (record.Kind == RHAH_RequestKind.Baby)
             {
                 return "RHAH_Choice_Baby";

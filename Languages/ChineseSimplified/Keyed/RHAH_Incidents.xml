@@ -51,25 +51,25 @@
   <RHAH_Incident_PlagueRevenge_Label>鼠疫报复</RHAH_Incident_PlagueRevenge_Label>
   <RHAH_Incident_PlagueCaravanMuggers_Label>鼠疫商队劫掠</RHAH_Incident_PlagueCaravanMuggers_Label>
   <RHAH_Incident_RefugeeMassacre_Label>危险的鼠族安居点</RHAH_Incident_RefugeeMassacre_Label>
-  <RHAH_Follow_I-002>回来的那只鼠妈</RHAH_Follow_I-002>
-  <RHAH_Follow_I-002_Text>当年放下鼠蛋的那只还活着。她停在边上，认其中一只。</RHAH_Follow_I-002_Text>
-  <RHAH_Follow_I-012>不该在这批货里的一只</RHAH_Follow_I-012>
-  <RHAH_Follow_I-012_Text>买下的那只已经能说话。身上有一块对不上商队的旧东西。</RHAH_Follow_I-012_Text>
+  <RHAH_Follow_I-002>当年放下鼠蛋的鼠妈</RHAH_Follow_I-002>
+  <RHAH_Follow_I-002_Text>当年被放在据点附近的孩子，如今还在这里。那只鼠妈是否还活着，我们无从得知。要是她回来，还能认出自己的孩子吗？</RHAH_Follow_I-002_Text>
+  <RHAH_Follow_I-012>不该在这批货里的孩子</RHAH_Follow_I-012>
+  <RHAH_Follow_I-012_Text>当年从商队买下的孩子，如今还在这里。一笔交易之后，是一顿顿的饭。</RHAH_Follow_I-012_Text>
   <RHAH_Follow_I-013>换出去的那一只</RHAH_Follow_I-013>
-  <RHAH_Follow_I-013_Text>一个成年鼠族停在边上，说自己就是被换走的那一只。</RHAH_Follow_I-013_Text>
+  <RHAH_Follow_I-013_Text>当年被送来交换的那只鼠族，如今还在这里。要是真的换出去一只孩子，如今会在哪里？</RHAH_Follow_I-013_Text>
   <RHAH_Follow_I-019>被要走的那个</RHAH_Follow_I-019>
-  <RHAH_Follow_I-019_Text>当年被要走的孩子自己走回来了。它先认地方。</RHAH_Follow_I-019_Text>
-  <RHAH_Follow_I-032>来认空投的人</RHAH_Follow_I-032>
-  <RHAH_Follow_I-032_Text>一个成年鼠族拿着半块对得上的布，停在边上。</RHAH_Follow_I-032_Text>
-  <RHAH_Follow_I-033>喊错之后还跟着</RHAH_Follow_I-033>
-  <RHAH_Follow_I-033_Text>被喊过的那只还跟着给饭的人。它不是来认亲。</RHAH_Follow_I-033_Text>
+  <RHAH_Follow_I-019_Text>当年来索要婴儿的那只鼠族，如今还在这里。要是真的交出了孩子，接手的人会怎样照顾？我们无从得知。</RHAH_Follow_I-019_Text>
+  <RHAH_Follow_I-032>空投之后</RHAH_Follow_I-032>
+  <RHAH_Follow_I-032_Text>当年来到这里的鼠族，如今还在这里。不知道有没有谁留着他们的画像和名字，还在寻找他们。</RHAH_Follow_I-032_Text>
+  <RHAH_Follow_I-033>要饭</RHAH_Follow_I-033>
+  <RHAH_Follow_I-033_Text>当年喊妈妈的那只鼠族，如今还在这里。看来只是单纯利用善心要饭来了。</RHAH_Follow_I-033_Text>
   <RHAH_Follow_I-037>病着离开的鼠妈</RHAH_Follow_I-037>
-  <RHAH_Follow_I-037_Text>当天留下鼠蛋的那只回到边上。她先看孩子还在不在。</RHAH_Follow_I-037_Text>
-  <RHAH_Follow_I-041>不受待见的那一只</RHAH_Follow_I-041>
-  <RHAH_Follow_I-041_Text>病好留下的那只开始说自己的来历。细处对不上。</RHAH_Follow_I-041_Text>
+  <RHAH_Follow_I-037_Text>当天留下鼠蛋的那只鼠妈，如今会怎样了？她若还活着，大概也想看看孩子们如今的情况。</RHAH_Follow_I-037_Text>
+  <RHAH_Follow_I-041>留下来的孤儿</RHAH_Follow_I-041>
+  <RHAH_Follow_I-041_Text>当年来到这里的鼠族孤儿，如今还在这里。没有母亲陪着，日子还是得过下去。</RHAH_Follow_I-041_Text>
   <RHAH_Approach_Label>鼠族远行队</RHAH_Approach_Label>
   <RHAH_Approach_LetterLabel>鼠族正在接近</RHAH_Approach_LetterLabel>
-  <RHAH_Approach_LetterText>一队鼠族从几格外动身，正走向{1}。人还没到。这次是{0}。\n\n他们每天走大约 3 格。殖民地在岛上时，他们会从对岸过来，海上也走。到了之后才会进入地图。</RHAH_Approach_LetterText>
-  <RHAH_Approach_Inspect>远行队。人还没到。这次是{0}。</RHAH_Approach_Inspect>
+  <RHAH_Approach_LetterText>一队鼠族正在向{1}赶来，离据点还有一段路。这次到来的将是：{0}。\n\n他们通常每天走约 3 格，地形和道路会影响速度；隔着海时会从对岸渡过来。抵达后才会进入地图。</RHAH_Approach_LetterText>
+  <RHAH_Approach_Inspect>正在赶来的鼠族：{0}。</RHAH_Approach_Inspect>
   <RHAH_Approach_Target>目标：{0}</RHAH_Approach_Target>
 </LanguageData>
