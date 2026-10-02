@@ -15,7 +15,6 @@ namespace HungerAndHavoc.Generation
                 return;
             }
 
-            pawn.apparel.DestroyAll();
             int stage = Stage(pawn);
             List<ThingDef> pool = Pool(pawn, stage);
             if (pool.Count == 0)
@@ -77,7 +76,6 @@ namespace HungerAndHavoc.Generation
         static bool Candidate(ThingDef def)
         {
             ModContentPack pack = def.modContentPack;
-            RHAH_GenerationExtension extension = def.GetModExtension<RHAH_GenerationExtension>();
             Core.RHAH_Settings settings = RHAH_Mod.Settings;
             return RHAH_ApparelPolicy.AllowsApparel(
                 def.defName,
@@ -86,7 +84,6 @@ namespace HungerAndHavoc.Generation
                 def.apparel != null && def.apparel.countsAsClothingForNudity,
                 pack == null ? null : pack.PackageId,
                 pack != null && (pack.IsOfficialMod || pack.IsCoreMod),
-                extension != null && extension.allowRefugeeApparel,
                 (int)def.techLevel,
                 settings == null || settings.IsRefugeeApparelEnabled(def.defName));
         }
@@ -119,6 +116,11 @@ namespace HungerAndHavoc.Generation
         }
         static bool TryWear(Verse.Pawn pawn, ThingDef def)
         {
+            if (!pawn.apparel.CanWearWithoutDroppingAnything(def))
+            {
+                return false;
+            }
+
             List<string> stuffs = new List<string>();
             foreach (ThingDef stuff in GenStuff.AllowedStuffsFor(def, TechLevel.Undefined, false))
             {
@@ -136,7 +138,7 @@ namespace HungerAndHavoc.Generation
             }
 
             Apparel apparel = ThingMaker.MakeThing(def, stuffDef) as Apparel;
-            if (apparel == null || !apparel.PawnCanWear(pawn, true) || !pawn.apparel.CanWearWithoutDroppingAnything(def))
+            if (apparel == null || !apparel.PawnCanWear(pawn, true))
             {
                 if (apparel != null)
                 {

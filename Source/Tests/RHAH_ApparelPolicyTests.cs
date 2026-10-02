@@ -6,23 +6,44 @@ namespace HungerAndHavoc.Tests
 {
     public class RHAH_ApparelPolicyTests
     {
+        const int Neolithic = 2;
         const int Medieval = 3;
         const int Industrial = 4;
+        const string RatkinPack = "Solaris.RatkinRaceMod";
 
         [Fact]
-        public void RefugeeClothesStayInsideRatkinAndVanillaMedievalCloth()
+        public void DefaultPoolKeepsOnlyVanillaTribalAndListedRatkinClothes()
         {
-            Assert.True(Allows("RK_ApronSkirt", "Solaris.RatkinRaceMod", false, Medieval, false));
-            Assert.True(Allows("Apparel_TribalA", "Ludeon.RimWorld", true, 2, false));
-            Assert.True(Allows("Apparel_BasicShirt", "Ludeon.RimWorld.Ideology", true, Medieval, false));
-            Assert.True(Allows("Apparel_KidTribal", "Some.OtherMod", false, Medieval, false));
-            Assert.True(Allows("Foreign_Sack", "Some.OtherMod", false, Medieval, true));
+            Assert.True(Allows("Apparel_TribalA", "Ludeon.RimWorld", true, Neolithic));
+            Assert.True(Allows("RK_ApronSkirt", RatkinPack, false, Medieval));
+            Assert.True(Allows("RK_Cardigan", RatkinPack, false, Medieval));
+            Assert.False(Allows("Apparel_BasicShirt", "Ludeon.RimWorld", true, Medieval));
+            Assert.False(Allows("Apparel_ShieldBelt", "Ludeon.RimWorld", true, Medieval));
+            Assert.False(Allows("RK_NewDress", RatkinPack, false, Medieval));
+            Assert.False(Allows("RK_ApronSkirt", "Some.OtherMod", false, Medieval));
+            Assert.False(Allows("RK_ApronSkirt", RatkinPack, false, Industrial));
+            Assert.False(Allows("OA_RK_Windbreaker_A", "Some.OtherMod", false, Medieval));
+            Assert.False(Allows("Foreign_Sack", "Some.OtherMod", false, Medieval));
+            Assert.False(Allows(null, "Ludeon.RimWorld", true, Neolithic));
+        }
 
-            Assert.False(Allows("Apparel_PowerArmor", "Ludeon.RimWorld", true, Industrial, false));
-            Assert.False(Allows("RK_Plate", "Solaris.RatkinRaceMod", false, Industrial, false));
-            Assert.False(Allows("Foreign_Dress", "Some.OtherMod", false, Medieval, false));
-            Assert.False(Allows("Apparel_ShieldBelt", "Ludeon.RimWorld", true, Industrial, false, false));
-            Assert.False(Allows(null, "Ludeon.RimWorld", true, 2, false));
+        [Fact]
+        public void YoungClothesNeedAPredefinedNameAndOfficialSource()
+        {
+            Assert.True(Allows("Apparel_BabyOnesie", "ludeon.rimworld", true, Medieval));
+            Assert.True(Allows("Apparel_KidTribal", "Ludeon.RimWorld.Biotech", true, Neolithic));
+            Assert.True(Allows("Apparel_WarmerHat", "Ludeon.RimWorld.Biotech", true, Medieval));
+            Assert.True(Allows("Apparel_SunHat", "Ludeon.RimWorld.Biotech", true, Medieval));
+            Assert.False(Allows("Apparel_BabyOnesie", "Some.OtherMod", false, Medieval));
+            Assert.False(Allows("Apparel_KidTribal", "Some.OtherMod", true, Medieval));
+            Assert.False(Allows("Apparel_TribalA", "Ludeon.RimWorld", false, Neolithic));
+        }
+
+        [Fact]
+        public void DisabledClothingAndNonclothingStayOutOfThePool()
+        {
+            Assert.False(Allows("Apparel_TribalA", "Ludeon.RimWorld", true, Neolithic, true, false));
+            Assert.False(Allows("Apparel_TribalA", "Ludeon.RimWorld", true, Neolithic, false));
         }
 
         [Fact]
@@ -61,16 +82,9 @@ namespace HungerAndHavoc.Tests
             Assert.Null(RHAH_ApparelPolicy.PreferredStuff(new List<string> { "Steel" }, 0f));
         }
 
-        [Fact]
-        public void DisabledClothingStaysOutOfThePool()
+        static bool Allows(string defName, string packageId, bool official, int techLevel, bool clothing = true, bool enabled = true)
         {
-            Assert.False(Allows("Apparel_TribalA", "Ludeon.RimWorld", true, 2, false, true, false));
-            Assert.True(Allows("Apparel_TribalA", "Ludeon.RimWorld", true, 2, false));
-        }
-
-        static bool Allows(string defName, string packageId, bool official, int techLevel, bool optIn, bool clothing = true, bool enabled = true)
-        {
-            return RHAH_ApparelPolicy.AllowsApparel(defName, true, true, clothing, packageId, official, optIn, techLevel, enabled);
+            return RHAH_ApparelPolicy.AllowsApparel(defName, true, true, clothing, packageId, official, techLevel, enabled);
         }
     }
 }

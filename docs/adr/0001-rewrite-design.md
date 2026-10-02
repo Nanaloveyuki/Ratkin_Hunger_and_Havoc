@@ -237,7 +237,7 @@ parentPawnLoadId / childPawnLoadIds
 3. `TryMarkOrigin`（身份从此成立）
 4. 抽 `H-*` 经历（失败则保底 `RHAH_Newborn` / `RHAH_Refugee`）
 5. 最多 1 条自有 `T-*` 特质
-6. 重配平民衣装（官方 + `RHAH_GenerationExtension.allowRefugeeApparel`）
+6. 非显式衣列表先清空生成器衣物，先穿温度衣，再叠穿兼容且不脱掉已有衣物的普通衣。普通衣固定为官方来源的成人 `Apparel_TribalA`、四件幼年衣 `Apparel_BabyOnesie` / `Apparel_WarmerHat` / `Apparel_SunHat` / `Apparel_KidTribal`、以及 NewRatkinPlus 1.6 原始 55 项名称且来源为 `solaris.ratkinracemod` 的衣物；全部还须可制材、遮裸体、≤ 中世纪且已启用，实际按年龄和身体部位筛选。不读 HAR 当前可穿池，不存 `ratkinApparel` 或补丁时快照，不允许第三方 opt-in 扩池，不因已有温度衣而跳过普通衣整池
 7. 饥饿、伤病、鼠疫
 8. 分帧生成队列
 

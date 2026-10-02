@@ -123,6 +123,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 优先使用 Prefix/Postfix；使用 Transpiler 必须说明无法采用更小补丁的原因
 - 补丁不得把私有实现升级为对外契约
 
+默认普通衣准入是固定名称与来源的交集：NewRatkinPlus 1.6 原始 55 项 defName 白名单且来源为 `solaris.ratkinracemod`；官方 Core/DLC 来源的成人 `Apparel_TribalA` 和四件幼年衣 `Apparel_BabyOnesie`、`Apparel_WarmerHat`、`Apparel_SunHat`、`Apparel_KidTribal`。候选仍须可制材、遮裸体、科技等级不高于中世纪且未被设置禁用；实际穿戴还检查年龄和身体部位。不得读取 HAR 当前可穿池、抓取补丁时快照或允许第三方 opt-in 扩池。非显式、非不穿衣请求先清空生成器衣物，再选择温度衣，最后只叠穿兼容且不需要脱掉任何已有衣物的普通衣；温度衣存在不能成为跳过全部普通衣的理由。显式衣列表保持调用方原有行为。
+
 ## 构建、测试与发布
 
 - 每个游戏版本使用独立目录、Def、程序集和发布配置，不把版本内容放在仓库根目录
@@ -150,7 +152,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Identity.CompRHAH_Pawn` | `HediffCompProperties.compClass` | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建 HediffComp；类型名写入 `.rws` |
 | `HungerAndHavoc.Identity.CompProperties_RHAH_Pawn` | Def XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |
 | `HungerAndHavoc.Identity.RHAH_RaceExtension` | ThingDef `modExtensions` XML `Class` | `HungerAndHavoc.dll` | Verse 按 DefModExtension XML `Class` 创建 |
-| `HungerAndHavoc.Generation.RHAH_GenerationExtension` | ThingDef `modExtensions` XML `Class` | `HungerAndHavoc.dll` | 外部衣物 Def 用 `allowRefugeeApparel` 进入平民衣装池。Verse 按 XML `Class` 创建，不能 internal |
+| `HungerAndHavoc.Generation.RHAH_GenerationExtension` | ThingDef `modExtensions` XML `Class` | `HungerAndHavoc.dll` | 保留已公开的 XML 类型与旧字段 `allowRefugeeApparel`，避免既有外部 Def 无法解析；该标志不再影响默认衣物准入。不提供 `ratkinApparel` 字段或动态清单，不属于稳定 API |
 | `HungerAndHavoc.Core.RHAH_Mod` | Verse 扫描 `Mod` 子类 | `HungerAndHavoc.dll` | 模组入口必须可被 Verse 发现并构造 |
 | `HungerAndHavoc.Core.RHAH_Settings` | `Mod.GetSettings<T>()` | `HungerAndHavoc.dll` | Verse 按类型参数创建 `ModSettings` |
 | `HungerAndHavoc.Core.RHAH_DefOf` | `[DefOf]` 静态字段 | `HungerAndHavoc.dll` | `DefOfHelper` 反射绑定公开静态 Def 字段 |

@@ -205,7 +205,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox | Thing `Class` / `thingClass` | Remove。随旧箱子删除，不替换成原版建筑 |
 | HungerAndHavoc.Pawn.Comp_RHAH_Clay | ThingComp `Class` | Remove，随观音土物品删除 |
 | HungerAndHavoc.Pawn.CompProperties_RHAH_Clay | Def XML `Class` | 不单独出现在 `.rws` |
-| HungerAndHavoc.Generation.RHAH_GenerationExtension | ThingDef `modExtensions` XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Generation.RHAH_GenerationExtension | ThingDef `modExtensions` XML `Class` | 不单独出现在 `.rws`。保留旧 XML 字段 `allowRefugeeApparel` 以便解析既有外部 Def，但不再参与默认准入；没有 `ratkinApparel` 字段或快照存储 |
 | HungerAndHavoc.Pawn.StatPart_RHAH_TemperatureApparel | StatDef `parts` XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Incidents.RHAH_PredatorRecord | 捕食者深存档，嵌在 `predators` | Remove。随地图组件删除，不替换成原版动物 |
 | HungerAndHavoc.EventMgr.RHAH_EventChainRecord | 事件链深存档，嵌在 `eventChains` | Remove。随游戏组件删除，不替换成原版事件 |
@@ -459,9 +459,9 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Settings.allowImmobileBabies | 全局 ModSettings，默认 false。打开后无幼童模组也可以生成 4 岁以下。幼童模组启用时不抬龄 |
 | RHAH_Settings.genderMode | 全局 ModSettings，默认 0。0 随机，1 按比例，2 女性，3 男性 |
 | RHAH_Settings.femaleSharePercent | 全局 ModSettings，默认 50，范围 0 到 100。只在按比例时使用 |
-| RHAH_Settings.apparelMode | 全局 ModSettings，默认 0。0 和 1 都重配平民衣装，2 重配后再补温度衣，3 不穿衣 |
+| RHAH_Settings.apparelMode | 全局 ModSettings，默认 0。0、1、2 都清空生成器衣物，先穿温度衣再叠穿兼容普通衣；3 不穿衣。显式衣列表不重配 |
 | RHAH_Settings.apparelListMode | 全局 ModSettings，默认 0。0 按来源，1 按名称，2 按类别。只影响菜单 |
-| RHAH_Settings.disabledRefugeeApparelDefNames | 全局 ModSettings，默认空。空名单表示平民衣装都可生成。新加入的衣服默认可生成 |
+| RHAH_Settings.disabledRefugeeApparelDefNames | 全局 ModSettings，默认空。空名单表示固定准入池内衣物可生成：NewRatkinPlus 原始 55 项且来源匹配、官方部落装与四件幼年衣，再按制材、遮裸体、科技等级和年龄筛选；第三方衣物不自动加入 |
 | RHAH_Settings.maxOwnedTraits | 全局 ModSettings，默认 1，范围 0 到 3。0 不抽本模组特质 |
 | RHAH_Settings.allowVanillaTraits | 全局 ModSettings，默认 true。关闭后新来客不获得随年龄出现的原版特质 |
 | RHAH_Settings.traitAgeFilter | 全局 ModSettings，默认 true。关闭后幼年特质和成年特质不再按年龄分开 |

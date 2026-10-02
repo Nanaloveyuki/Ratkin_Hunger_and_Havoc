@@ -7,6 +7,7 @@ namespace HungerAndHavoc.Generation
 {
     public class RHAH_GenerationExtension : DefModExtension
     {
+        // 保留旧 XML 字段 不参与默认衣物准入
         public bool allowRefugeeApparel;
     }
 
@@ -21,8 +22,9 @@ namespace HungerAndHavoc.Generation
         internal const float LeatherWeight = 0.35f;
         internal const int MaxPieces = 4;
 
-        const string RatkinPackageId = "solaris.ratkinracemod";
         const string CorePackageId = "ludeon.rimworld";
+        const string RatkinPackageId = "solaris.ratkinracemod";
+        const string TribalDefName = "Apparel_TribalA";
         const string ClothDefName = "Cloth";
         const string LeatherDefName = "Humanleather";
 
@@ -48,23 +50,26 @@ namespace HungerAndHavoc.Generation
             "Apparel_KidTribal"
         };
 
-        internal static bool AllowsSource(string packageId, bool official)
+        // NewRatkinPlus 1.6 原始指定清单 不读取第三方扩充后的 HAR 可穿池
+        static readonly HashSet<string> RatkinNames = new HashSet<string>(System.StringComparer.Ordinal)
         {
-            if (string.IsNullOrEmpty(packageId))
-            {
-                return false;
-            }
+            "RK_Apparel_Banner", "RK_Apparel_SpaceArmor", "RK_Apparel_SpaceArmorHelmet",
+            "RK_Apparel_Vacsuit", "RK_Apparel_VacsuitChildren", "RK_Apparel_VacsuitHelmet",
+            "RK_ApronSkirt", "RK_ApronSkirtChildren", "RK_Backpack", "RK_BattleSuit",
+            "RK_BulletProofHelmet", "RK_Cardigan", "RK_Apparel_ChildrenCardigan",
+            "RK_ChefHat", "RK_ChefSuit", "RK_Coif", "RK_CrossBack", "RK_ExplorerHat",
+            "RK_ExplorerWear", "RK_FlatColorCoat", "RK_FrillOnepiece", "RK_GaurdenUniform",
+            "RK_HairCorsage", "RK_HeadBand", "RK_HeavyShield", "RK_Mask", "RK_MaskB",
+            "RK_Muffler", "RK_OrderUniform", "RK_OutdoorBackpack", "RK_Plate",
+            "RK_PlateHelmA", "RK_PlateHelmB", "RK_PlateHelmC", "RK_ResearchGlasses",
+            "RK_ResearchGown", "RK_RibbonHairBand", "RK_RoyalCrown", "RK_RoyalRobe",
+            "RK_Sack", "RK_SantaHat", "RK_SantaRobe", "RK_SantaSack", "RK_SistersDerss",
+            "RK_SistersVeil", "RK_StrawHat", "RK_SummerDress", "RK_Apparel_ChildrenSummerDress",
+            "RK_TowerShield", "RK_WhiteCoat", "RK_WinterRobe", "RK_Apparel_ChildrenWinterRobe",
+            "RK_WoodenShield", "RK_WoolenHat", "RK_WorkerWear"
+        };
 
-            string id = packageId.ToLowerInvariant();
-            if (id == RatkinPackageId)
-            {
-                return true;
-            }
-
-            return official && (id == CorePackageId || id.StartsWith(CorePackageId + "."));
-        }
-
-        internal static bool AllowsApparel(string defName, bool isApparel, bool madeFromStuff, bool countsAsClothing, string packageId, bool official, bool allowRefugeeApparel, int techLevel, bool enabled)
+        internal static bool AllowsApparel(string defName, bool isApparel, bool madeFromStuff, bool countsAsClothing, string packageId, bool official, int techLevel, bool enabled)
         {
             if (!enabled)
             {
@@ -76,17 +81,33 @@ namespace HungerAndHavoc.Generation
                 return false;
             }
 
-            if (allowRefugeeApparel)
+            if (techLevel > (int)TechLevel.Medieval)
             {
-                return true;
+                return false;
             }
 
             if (IsYoung(defName))
             {
+                return IsOfficialSource(packageId, official);
+            }
+
+            if (string.Equals(packageId, RatkinPackageId, System.StringComparison.OrdinalIgnoreCase) && RatkinNames.Contains(defName))
+            {
                 return true;
             }
 
-            return AllowsSource(packageId, official) && techLevel <= (int)TechLevel.Medieval;
+            return defName == TribalDefName && IsOfficialSource(packageId, official);
+        }
+
+        static bool IsOfficialSource(string packageId, bool official)
+        {
+            if (string.IsNullOrEmpty(packageId))
+            {
+                return false;
+            }
+
+            return official && (string.Equals(packageId, CorePackageId, System.StringComparison.OrdinalIgnoreCase) ||
+                packageId.StartsWith(CorePackageId + ".", System.StringComparison.OrdinalIgnoreCase));
         }
         internal static bool IsYoung(string defName)
         {

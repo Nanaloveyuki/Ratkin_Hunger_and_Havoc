@@ -163,13 +163,14 @@ namespace HungerAndHavoc.Generation
             }
 
             RHAH_RatkinAppearance.Apply(pawn, profile.UseExplicitApparel);
+            RHAH_ContentApplier.Apply(pawn, request, !profile.UseExplicitBackstory);
             if (!profile.UseExplicitApparel && !RHAH_VisitorRules.ClearsApparel(ApparelMode(), false))
             {
                 float outdoor = request.Map?.mapTemperature == null ? 21f : request.Map.mapTemperature.OutdoorTemp;
+                pawn.apparel?.DestroyAll();
                 RHAH_TemperatureApparel.Apply(pawn, outdoor);
                 RHAH_ApparelAssigner.Apply(pawn);
             }
-            RHAH_ContentApplier.Apply(pawn, request, !profile.UseExplicitBackstory);
 
             RHAH_XenotypeResolver.ApplyEnabledGenes(pawn);
             return pawn;
