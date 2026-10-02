@@ -8,6 +8,8 @@ namespace HungerAndHavoc.Pawn
 {
     internal static class RHAH_VisitorBatch
     {
+        internal const int AnestheticDurationTicks = 12 * GenDate.TicksPerHour;
+
         internal static bool HasEligible(List<Verse.Pawn> pawns, int mapId, bool enslave)
         {
             for (int i = 0; i < pawns.Count; i++)
@@ -33,36 +35,7 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
 
-            return enslave ? ModsConfig.IdeologyActive : IsSecurePrison(pawn.GetRoom());
-        }
-
-        internal static bool IsSecurePrison(Room room)
-        {
-            if (room == null || !room.IsPrisonCell || room.TouchesMapEdge)
-            {
-                return false;
-            }
-
-            List<Region> regions = room.Regions;
-            if (regions.Count == 0)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < regions.Count; i++)
-            {
-                Region region = regions[i];
-                for (int j = 0; j < region.links.Count; j++)
-                {
-                    Region neighbor = region.links[j].GetOtherRegion(region);
-                    if (neighbor != null && neighbor.valid && neighbor.door != null && neighbor.door.FreePassage)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
+            return !enslave || ModsConfig.IdeologyActive;
         }
 
         internal static int Enslave(List<Verse.Pawn> pawns, int mapId)
@@ -89,6 +62,8 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
+                // 反抗意志清零 与囚犯抵抗值无关
+                pawn.guest.will = 0f;
                 pawn.apparel?.UnlockAll();
                 // 选择信没有实际执行者 不伪造殖民者的个人戒律记录
                 Find.HistoryEventsManager.RecordEvent(new HistoryEvent(
@@ -117,13 +92,31 @@ namespace HungerAndHavoc.Pawn
                 }
 
                 pawn.guest.CapturedBy(Faction.OfPlayer);
-                if (pawn.IsPrisonerOfColony)
+                if (!pawn.IsPrisonerOfColony)
                 {
-                    converted++;
+                    continue;
                 }
+
+                ApplyAnesthetic(pawn);
+                converted++;
             }
 
             return converted;
+        }
+
+        static void ApplyAnesthetic(Verse.Pawn pawn)
+        {
+            Hediff anesthetic = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Anesthetic);
+            if (anesthetic == null)
+            {
+                anesthetic = HediffMaker.MakeHediff(HediffDefOf.Anesthetic, pawn);
+                pawn.health.AddHediff(anesthetic);
+            }
+
+            anesthetic.Severity = 1f;
+            anesthetic.TryGetComp<HediffComp_Disappears>().SetDuration(AnestheticDurationTicks);
+            // 半天只衰减到 0.9 保持原版昏迷阶段且存读保留衰减值
+            anesthetic.TryGetComp<HediffComp_SeverityPerDay>().severityPerDay = -0.2f;
         }
     }
 }

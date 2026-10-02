@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
+using HungerAndHavoc.Identity;
 using HungerAndHavoc.Pawn;
 using RimWorld;
 using Verse;
@@ -26,22 +27,21 @@ namespace HungerAndHavoc.Incidents
                 }
 
                 List<Verse.Pawn> present = RHAH_ChoiceRuntime.Present(record);
-                bool recruitable = HasRecruitable(present);
                 bool quarantine = Quarantined(present);
                 string displayId = record.DisplayId;
                 if (RHAH_RequestRules.ShowsRecruit(displayId, true))
                 {
-                    yield return Gated("RHAH_Choice_Recruit", RHAH_ChoiceAction.Recruit, recruitable, quarantine, durationDays: StayDays(false));
+                    yield return Gated("RHAH_Choice_Recruit", RHAH_ChoiceAction.Recruit, HasAllowed(present, RHAH_BehaviorGate.JoinColony), quarantine, durationDays: StayDays(false));
                 }
 
                 if (RHAH_RequestRules.ShowsJoin(displayId, true) || choice == RHAH_ChoiceKind.Abandoned || choice == RHAH_ChoiceKind.Kinship)
                 {
-                    yield return Gated("RHAH_Choice_Join", RHAH_ChoiceAction.Join, present.Count > 0, quarantine);
+                    yield return Gated("RHAH_Choice_Join", RHAH_ChoiceAction.Join, HasAllowed(present, RHAH_BehaviorGate.JoinColony), quarantine);
                 }
 
                 if (RHAH_RequestRules.ShowsHire(displayId, true))
                 {
-                    yield return Gated("RHAH_Choice_Hire", RHAH_ChoiceAction.Hire, recruitable, quarantine, durationDays: StayDays(true));
+                    yield return Gated("RHAH_Choice_Hire", RHAH_ChoiceAction.Hire, HasAllowed(present, RHAH_BehaviorGate.Hire), quarantine, durationDays: StayDays(true));
                 }
                 if (RHAH_RequestRules.ShowsFoodGive(choice))
                 {
@@ -54,7 +54,7 @@ namespace HungerAndHavoc.Incidents
                     yield return Gated(
                         "RHAH_Choice_Enslave",
                         RHAH_ChoiceAction.Enslave,
-                        ideology && RHAH_VisitorBatch.HasEligible(present, record.MapId, true),
+                        ideology,
                         false,
                         ideology ? "RHAH_Choice_NoCustodyTarget" : "RHAH_Choice_NoIdeology");
                 }
@@ -62,12 +62,12 @@ namespace HungerAndHavoc.Incidents
                 if (RHAH_RequestRules.ShowsCapture(true))
                 {
                     yield return Gated("RHAH_Choice_Capture", RHAH_ChoiceAction.Capture,
-                        RHAH_VisitorBatch.HasEligible(present, record.MapId, false), false, "RHAH_Choice_CaptureRequiresPrison");
+                        true, false, "RHAH_Choice_NoCustodyTarget");
                 }
 
                 if (RHAH_RequestRules.ShowsAttack(true))
                 {
-                    yield return Gated("RHAH_Choice_Attack", RHAH_ChoiceAction.Attack, recruitable, false);
+                    yield return Gated("RHAH_Choice_Attack", RHAH_ChoiceAction.Attack, present.Count > 0, false, "RHAH_Choice_NoPresent");
                 }
 
 
@@ -111,8 +111,7 @@ namespace HungerAndHavoc.Incidents
                 return option;
             }
 
-            option.action = () => Settle(RHAH_ChoiceAction.Ally);
-            option.resolveTree = true;
+            Bind(option, RHAH_ChoiceAction.Ally);
             return option;
         }
 
@@ -132,10 +131,22 @@ namespace HungerAndHavoc.Incidents
                 return option;
             }
 
-            option.action = () => Settle(action);
-            option.resolveTree = true;
+            Bind(option, action);
             return option;
         }
+
+        void Bind(DiaOption option, RHAH_ChoiceAction action)
+        {
+            option.resolveTree = false;
+            option.action = () =>
+            {
+                if (Settle(action))
+                {
+                    option.dialog?.Close();
+                }
+            };
+        }
+
         static int StayDays(bool hire)
         {
             RHAH_Settings settings = RHAH_Mod.Settings;
@@ -149,11 +160,18 @@ namespace HungerAndHavoc.Incidents
             return Gated(key, action, true, false);
         }
 
-        void Settle(RHAH_ChoiceAction action)
+        bool Settle(RHAH_ChoiceAction action)
         {
             GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
             RHAH_Settings settings = RHAH_Mod.Settings;
             bool enabled = settings == null || settings.visitorChoicesEnabled;
+            string unavailable = UnavailableReason(action);
+            if (unavailable != null)
+            {
+                Messages.Message(unavailable.Translate(), MessageTypeDefOf.RejectInput);
+                return false;
+            }
+
             RHAH_ChoiceAction settled = RHAH_ChoiceRuntime.TrySettle(
                 game,
                 choiceId,
@@ -168,7 +186,7 @@ namespace HungerAndHavoc.Incidents
                     (RHAH_RequestRules.Captures(action) || RHAH_RequestRules.Enslaves(action))
                     ? "RHAH_Choice_CustodyFailed" : "RHAH_Choice_Stale";
                 Messages.Message(key.Translate(), MessageTypeDefOf.RejectInput);
-                return;
+                return false;
             }
 
             RHAH_ChoiceRecord record = FindRecord();
@@ -187,6 +205,53 @@ namespace HungerAndHavoc.Incidents
             }
 
             Find.LetterStack.RemoveLetter(this);
+            return true;
+        }
+
+        string UnavailableReason(RHAH_ChoiceAction action)
+        {
+            RHAH_ChoiceRecord record = FindRecord();
+            if (record == null || !record.Open)
+            {
+                return "RHAH_Choice_Stale";
+            }
+
+            List<Verse.Pawn> present = RHAH_ChoiceRuntime.Present(record);
+            if (RHAH_RequestRules.Captures(action) || RHAH_RequestRules.Enslaves(action))
+            {
+                bool enslave = RHAH_RequestRules.Enslaves(action);
+                if (enslave && !ModsConfig.IdeologyActive)
+                {
+                    return "RHAH_Choice_NoIdeology";
+                }
+
+                return RHAH_VisitorBatch.HasEligible(present, record.MapId, enslave)
+                    ? null : "RHAH_Choice_NoCustodyTarget";
+            }
+
+            if (action == RHAH_ChoiceAction.Join || action == RHAH_ChoiceAction.Hire ||
+                action == RHAH_ChoiceAction.Recruit || action == RHAH_ChoiceAction.Ally)
+            {
+                if (Quarantined(present))
+                {
+                    return "RHAH_Choice_Quarantine";
+                }
+
+                RHAH_BehaviorGate gate = action == RHAH_ChoiceAction.Join || action == RHAH_ChoiceAction.Recruit
+                    ? RHAH_BehaviorGate.JoinColony
+                    : action == RHAH_ChoiceAction.Ally ? RHAH_BehaviorGate.Transfer : RHAH_BehaviorGate.Hire;
+                if (!HasAllowed(present, gate))
+                {
+                    return "RHAH_Choice_NoRecruit";
+                }
+
+                if (action == RHAH_ChoiceAction.Ally && !RHAH_ChoiceRuntime.HasAllyDestination())
+                {
+                    return "RHAH_Choice_NoAlly";
+                }
+            }
+
+            return action == RHAH_ChoiceAction.Attack && present.Count == 0 ? "RHAH_Choice_NoPresent" : null;
         }
 
         static void ShowFoodHint(RHAH_Settings settings)
@@ -215,12 +280,11 @@ namespace HungerAndHavoc.Incidents
             Find.WindowStack.Add(new Dialog_NodeTree(node, true, false, "RHAH_Choice_Feed".Translate()));
         }
 
-        static bool HasRecruitable(List<Verse.Pawn> pawns)
+        static bool HasAllowed(List<Verse.Pawn> pawns, RHAH_BehaviorGate gate)
         {
             for (int i = 0; i < pawns.Count; i++)
             {
-                if (RHAH_Api.Allows(pawns[i], RHAH_BehaviorGate.Hire) ||
-                    RHAH_Api.Allows(pawns[i], RHAH_BehaviorGate.JoinColony))
+                if (RHAH_Api.Allows(pawns[i], gate))
                 {
                     return true;
                 }
@@ -231,11 +295,14 @@ namespace HungerAndHavoc.Incidents
 
         static bool Quarantined(List<Verse.Pawn> pawns)
         {
+            if (RHAH_Mod.Settings != null && !RHAH_Mod.Settings.plagueQuarantineBlocksJoin)
+            {
+                return false;
+            }
+
             for (int i = 0; i < pawns.Count; i++)
             {
-                if (RHAH_Api.IsVisitor(pawns[i]) &&
-                    !RHAH_Api.Allows(pawns[i], RHAH_BehaviorGate.JoinColony) &&
-                    !RHAH_Api.Allows(pawns[i], RHAH_BehaviorGate.Hire))
+                if (RHAH_PlagueRuntime.IsQuarantined(pawns[i]))
                 {
                     return true;
                 }

@@ -70,9 +70,20 @@ namespace HungerAndHavoc.Incidents
         DiaOption Act(string key, System.Action action)
         {
             DiaOption option = new DiaOption(key.Translate());
-            option.resolveTree = true;
-            option.action = action;
+            option.resolveTree = false;
+            option.action = () => Wrapped(option, action);
             return option;
+        }
+
+        // 仅当信件真的离开信栈才关闭它自己的窗口
+        void Wrapped(DiaOption option, System.Action action)
+        {
+            bool open = Find.LetterStack != null && Find.LetterStack.LettersListForReading.Contains(this);
+            action();
+            if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
+            {
+                option.dialog?.Close();
+            }
         }
 
         SuiyinN007Case FindRecord()

@@ -114,6 +114,7 @@
   <RHAH_Envoy_Refuse>拒绝</RHAH_Envoy_Refuse>
   <RHAH_Envoy_Drive>赶走（信任变化 {0}）</RHAH_Envoy_Drive>
   <RHAH_Envoy_NoMeals>简单餐不足 {0} 份。</RHAH_Envoy_NoMeals>
+  <RHAH_Envoy_Stale>这件事已经不能再处理了。</RHAH_Envoy_Stale>
   <RHAH_Suiyin_N009Arrive_Label>旧存放点</RHAH_Suiyin_N009Arrive_Label>
   <RHAH_Suiyin_N009Arrive_Text>这里没有预想中的粮食。箱子里是搬运清单、配给数量和一叠受潮的纸。\n\n最上面一页有个数被改了两遍。最后一次没有签名。\n\n地点保留 {0} 天。</RHAH_Suiyin_N009Arrive_Text>
   <RHAH_Suiyin_N009Take_Label>记录带走了</RHAH_Suiyin_N009Take_Label>
@@ -172,4 +173,5 @@
   <RHAH_Revisit_Pay>付 {0} 白银</RHAH_Revisit_Pay>
   <RHAH_Revisit_Kill>杀掉</RHAH_Revisit_Kill>
   <RHAH_Revisit_NoSilver>商队白银不足 {0}。</RHAH_Revisit_NoSilver>
+  <RHAH_Revisit_Stale>这件事已经不能再处理了。</RHAH_Revisit_Stale>
 </LanguageData>

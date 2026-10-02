@@ -33,16 +33,16 @@ namespace HungerAndHavoc.Incidents
                 }
                 else
                 {
-                    trade.action = () => Trade();
-                    trade.resolveTree = true;
+                    trade.action = () => Wrapped(trade, Trade);
+                    trade.resolveTree = false;
                 }
 
                 yield return trade;
-                yield return Act("RHAH_Envoy_Proof", () => Proof());
-                yield return Act("RHAH_Envoy_Refuse", () => Refuse());
+                yield return Act("RHAH_Envoy_Proof", Proof);
+                yield return Act("RHAH_Envoy_Refuse", Refuse);
                 DiaOption drive = new DiaOption("RHAH_Envoy_Drive".Translate(Core.RHAH_Mod.Settings == null ? -2 : Core.RHAH_Mod.Settings.trustEnvoyFail));
-                drive.action = Drive;
-                drive.resolveTree = true;
+                drive.action = () => Wrapped(drive, Drive);
+                drive.resolveTree = false;
                 yield return drive;
                 if (lookTargets.IsValid())
                 {
@@ -158,12 +158,31 @@ namespace HungerAndHavoc.Incidents
             return Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
         }
 
-        static DiaOption Act(string key, System.Action action)
+
+        DiaOption Act(string key, System.Action action)
         {
             DiaOption option = new DiaOption(key.Translate());
-            option.action = action;
-            option.resolveTree = true;
+            option.resolveTree = false;
+            option.action = () => Wrapped(option, action);
             return option;
+        }
+
+        // 仅当信件真的离开信栈才关闭它自己的窗口
+        void Wrapped(DiaOption option, System.Action action)
+        {
+            bool open = Find.LetterStack != null && Find.LetterStack.LettersListForReading.Contains(this);
+            SuiyinN008Case record = FindRecord();
+            if (State() == null || record == null || !RHAH_Envoy.OpenCase(record.Outcome))
+            {
+                Messages.Message("RHAH_Envoy_Stale".Translate(), MessageTypeDefOf.RejectInput);
+                return;
+            }
+
+            action();
+            if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
+            {
+                option.dialog?.Close();
+            }
         }
 
         SuiyinN008Case FindRecord()

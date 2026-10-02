@@ -114,6 +114,7 @@
   <RHAH_Envoy_Refuse>Refuse</RHAH_Envoy_Refuse>
   <RHAH_Envoy_Drive>Drive off (trust change: {0})</RHAH_Envoy_Drive>
   <RHAH_Envoy_NoMeals>Not enough simple meals. The exchange requires {0}.</RHAH_Envoy_NoMeals>
+  <RHAH_Envoy_Stale>This matter can no longer be handled.</RHAH_Envoy_Stale>
   <RHAH_Suiyin_N009Arrive_Label>An old store</RHAH_Suiyin_N009Arrive_Label>
   <RHAH_Suiyin_N009Arrive_Text>The grain you expected is not here. The box holds hauling lists, ration counts, and a stack of damp paper.\n\nA number on the top sheet was changed twice. The last correction is unsigned.\n\nThe site remains available for {0} days.</RHAH_Suiyin_N009Arrive_Text>
   <RHAH_Suiyin_N009Take_Label>Records taken</RHAH_Suiyin_N009Take_Label>
@@ -172,4 +173,5 @@
   <RHAH_Revisit_Pay>Pay {0} silver</RHAH_Revisit_Pay>
   <RHAH_Revisit_Kill>Kill them</RHAH_Revisit_Kill>
   <RHAH_Revisit_NoSilver>The caravan has less than {0} silver.</RHAH_Revisit_NoSilver>
+  <RHAH_Revisit_Stale>This matter can no longer be handled.</RHAH_Revisit_Stale>
 </LanguageData>

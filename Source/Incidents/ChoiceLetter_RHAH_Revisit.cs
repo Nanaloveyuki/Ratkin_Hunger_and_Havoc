@@ -32,8 +32,8 @@ namespace HungerAndHavoc.Incidents
                 }
                 else
                 {
-                    pay.action = () => Pay();
-                    pay.resolveTree = true;
+                    pay.action = () => Wrapped(pay, Pay);
+                    pay.resolveTree = false;
                 }
 
                 yield return pay;
@@ -55,13 +55,22 @@ namespace HungerAndHavoc.Incidents
 
         void Leave()
         {
-            Choose(SuiyinN004Revisit.Ignore);
+            if (!Choose(SuiyinN004Revisit.Ignore))
+            {
+                Messages.Message("RHAH_Revisit_Stale".Translate(), MessageTypeDefOf.RejectInput);
+            }
         }
 
         void Pay()
         {
             SuiyinN004Case record = FindRecord();
-            if (record == null || !RHAH_Revisit.CanPay(record))
+            if (record == null || record.Revisit != SuiyinN004Revisit.None)
+            {
+                Messages.Message("RHAH_Revisit_Stale".Translate(), MessageTypeDefOf.RejectInput);
+                return;
+            }
+
+            if (!RHAH_Revisit.CanPay(record))
             {
                 Messages.Message("RHAH_Revisit_NoSilver".Translate(RHAH_Revisit.CostFor(record)), MessageTypeDefOf.RejectInput);
                 return;
@@ -69,6 +78,7 @@ namespace HungerAndHavoc.Incidents
 
             if (!Choose(SuiyinN004Revisit.Rescue))
             {
+                Messages.Message("RHAH_Revisit_Stale".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
@@ -80,6 +90,7 @@ namespace HungerAndHavoc.Incidents
             SuiyinN004Case record = FindRecord();
             if (!Choose(SuiyinN004Revisit.Kill) || record == null)
             {
+                Messages.Message("RHAH_Revisit_Stale".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
@@ -113,12 +124,23 @@ namespace HungerAndHavoc.Incidents
             return Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
         }
 
-        static DiaOption Act(string key, System.Action action)
+        DiaOption Act(string key, System.Action action)
         {
             DiaOption option = new DiaOption(key.Translate());
-            option.action = action;
-            option.resolveTree = true;
+            option.resolveTree = false;
+            option.action = () => Wrapped(option, action);
             return option;
+        }
+
+        // 仅当信件真的离开信栈才关闭它自己的窗口
+        void Wrapped(DiaOption option, System.Action action)
+        {
+            bool open = Find.LetterStack != null && Find.LetterStack.LettersListForReading.Contains(this);
+            action();
+            if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
+            {
+                option.dialog?.Close();
+            }
         }
 
         SuiyinN004Case FindRecord()

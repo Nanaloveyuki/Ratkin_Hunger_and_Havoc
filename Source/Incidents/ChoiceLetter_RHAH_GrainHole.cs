@@ -214,7 +214,7 @@ namespace HungerAndHavoc.Incidents
                 action();
                 if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
                 {
-                    Find.WindowStack.TryRemove(typeof(Dialog_NodeTree), true);
+                    option.dialog?.Close();
                 }
             };
             return option;

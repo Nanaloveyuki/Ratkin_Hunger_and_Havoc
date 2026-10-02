@@ -493,15 +493,17 @@
   <RHAH_Choice_Hire>Hire long-term ({0}, then they leave)</RHAH_Choice_Hire>
   <RHAH_Choice_Feed>Feed (they wait for food)</RHAH_Choice_Feed>
   <RHAH_Choice_Recruit>Take in short-term ({0}, then they leave)</RHAH_Choice_Recruit>
-  <RHAH_Choice_Enslave>Enslave (eligible visitors become slaves where they stand)</RHAH_Choice_Enslave>
-  <RHAH_Choice_Capture>Capture (eligible visitors inside prison cells become prisoners where they stand)</RHAH_Choice_Capture>
+  <RHAH_Choice_Enslave>Enslave (eligible visitors become slaves where they stand, their will to resist reset to zero)</RHAH_Choice_Enslave>
+  <RHAH_Choice_Capture>Capture (eligible visitors become prisoners where they stand and are anesthetized for 12 hours)</RHAH_Choice_Capture>
   <RHAH_Choice_Attack>Attack (the group turns hostile)</RHAH_Choice_Attack>
   <RHAH_Choice_Ally>Send to {0}</RHAH_Choice_Ally>
   <RHAH_Choice_NoAlly>No allied faction can take them.</RHAH_Choice_NoAlly>
   <RHAH_Choice_AllySent>Sent {0} to {1}. They leave. They do not appear at that settlement. Goodwill is only the vanilla amount for leaving healthy.</RHAH_Choice_AllySent>
   <RHAH_Choice_Quarantine>Visitors in quarantine cannot join, be hired, or be transferred.</RHAH_Choice_Quarantine>
-  <RHAH_Choice_CaptureRequiresPrison>No eligible visitors to capture. They must already be inside a prison cell that does not touch the map edge, with no freely passable doors, and permit imprisonment. Visitors in quarantine or a mental state cannot be converted.</RHAH_Choice_CaptureRequiresPrison>
-  <RHAH_Choice_NoCustodyTarget>No visitors here permit imprisonment. Visitors in quarantine or a mental state cannot be converted.</RHAH_Choice_NoCustodyTarget>
+  <RHAH_Choice_NoCustodyTarget>No visitors can be converted. Visitors in quarantine, in a mental state, no longer present, or who do not permit imprisonment cannot be converted.</RHAH_Choice_NoCustodyTarget>
+  <RHAH_Choice_NoPresent>No visitors were present when the action was taken.</RHAH_Choice_NoPresent>
+  <RHAH_Choice_NoRecruit>No visitor permits being taken in, hired, or joining the colony.</RHAH_Choice_NoRecruit>
+  <RHAH_Choice_NoIdeology>Enslaving requires the Ideology DLC.</RHAH_Choice_NoIdeology>
   <RHAH_Choice_CustodyFailed>No visitors changed status. You can still respond to this letter.</RHAH_Choice_CustodyFailed>
   <RHAH_Choice_FeedHint>They will wait where they are. Select a colonist, then right-click a waiting visitor to hand over food. Nobody is sent to deliver it.</RHAH_Choice_FeedHint>
   <RHAH_Choice_FeedHintDismiss>Do not show this again</RHAH_Choice_FeedHintDismiss>

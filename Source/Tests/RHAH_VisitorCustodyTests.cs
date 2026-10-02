@@ -146,37 +146,18 @@ namespace HungerAndHavoc.Tests
         }
 
         [Theory]
-        [InlineData(true, false, true, true)]
-        [InlineData(false, false, true, false)]
-        [InlineData(true, true, true, false)]
-        [InlineData(true, false, false, false)]
-        public void OnlyEnclosedPrisonRoomsWithRegionsAreSecure(
-            bool prison, bool edge, bool hasRegion, bool expected)
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        [InlineData(false, false)]
+        public void CaptureNeedsNoPrisonCell(bool prison, bool edge)
         {
-            Room room = NewRoom(prison, edge, hasRegion ? 1 : 0);
-            Assert.Equal(expected, RHAH_VisitorBatch.IsSecurePrison(room));
-            Assert.False(RHAH_VisitorBatch.IsSecurePrison(null));
-        }
+            Verse.Pawn pawn = Visitor(map);
+            Room room = pawn.GetRoom();
+            Field(typeof(Room), "isPrisonCell").SetValue(room, prison);
+            Field(typeof(District), "numRegionsTouchingMapEdge").SetValue(room.Districts[0], edge ? 1 : 0);
 
-        [Fact]
-        public void FreePassageDoorOnAnyRoomRegionRejectsEvenAnEnclosedCorridorExit()
-        {
-            Room prison = NewRoom(true, false, 2);
-            Room corridor = NewRoom(false, false, 1);
-            Building_Door door = Uninitialized<Building_Door>();
-            Region doorway = NewRegion(3);
-            doorway.type = RegionType.Portal;
-            doorway.door = door;
-            Link(prison.Regions[1], doorway);
-            Link(doorway, corridor.Regions[0]);
-            Assert.False(corridor.TouchesMapEdge);
-            Assert.False(door.FreePassage);
-            Assert.True(RHAH_VisitorBatch.IsSecurePrison(prison));
-
-            Field(typeof(Building_Door), "openInt").SetValue(door, true);
-            Field(typeof(Building_Door), "holdOpenInt").SetValue(door, true);
-            Assert.True(door.FreePassage);
-            Assert.False(RHAH_VisitorBatch.IsSecurePrison(prison));
+            Assert.True(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
+            Assert.True(RHAH_VisitorBatch.HasEligible(new List<Verse.Pawn> { pawn }, map.uniqueID, false));
         }
 
         [Fact]
@@ -227,13 +208,14 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void CaptureOutsidePrisonDoesNotMoveVisitorOrCloseChoice()
+        public void CaptureIsBlockedByImprisonDenialNotByRoomStatus()
         {
             Verse.Pawn pawn = Visitor(map);
             Room room = pawn.GetRoom();
-            Assert.True(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
             Field(typeof(Room), "isPrisonCell").SetValue(room, false);
+            Assert.True(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
             IntVec3 position = pawn.Position;
+            RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.Imprison, false);
             RHAH_ChoiceRecord record = Open(pawn);
 
             Assert.Equal(0, RHAH_VisitorBatch.Capture(new List<Verse.Pawn> { pawn }, map.uniqueID));
@@ -439,13 +421,6 @@ namespace HungerAndHavoc.Tests
             region.valid = true;
             region.links = new List<RegionLink>();
             return region;
-        }
-
-        static void Link(Region first, Region second)
-        {
-            RegionLink link = new RegionLink { RegionA = first, RegionB = second };
-            first.links.Add(link);
-            second.links.Add(link);
         }
 
         static Faction NewFaction(bool isPlayer)

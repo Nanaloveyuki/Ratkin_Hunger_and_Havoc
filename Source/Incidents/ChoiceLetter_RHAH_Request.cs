@@ -41,8 +41,8 @@ namespace HungerAndHavoc.Incidents
                     if (food)
                     {
                         enough = true;
-                        deliver.action = () => Settle(RHAH_ChoiceAction.Deliver);
-                        deliver.resolveTree = true;
+                        deliver.action = () => Wrapped(deliver, RHAH_ChoiceAction.Deliver);
+                        deliver.resolveTree = false;
                     }
                     else
                     {
@@ -56,16 +56,16 @@ namespace HungerAndHavoc.Incidents
                 }
                 else
                 {
-                    deliver.action = () => Settle(RHAH_ChoiceAction.Deliver);
-                    deliver.resolveTree = true;
+                    deliver.action = () => Wrapped(deliver, RHAH_ChoiceAction.Deliver);
+                    deliver.resolveTree = false;
                 }
 
                 DiaOption reject = new DiaOption("RHAH_Choice_Reject".Translate());
-                reject.action = () => Settle(RHAH_ChoiceAction.Reject);
-                reject.resolveTree = true;
+                reject.action = () => Wrapped(reject, RHAH_ChoiceAction.Reject);
+                reject.resolveTree = false;
                 DiaOption ignore = new DiaOption("RHAH_Choice_Ignore".Translate());
-                ignore.action = () => Settle(RHAH_ChoiceAction.Ignore);
-                ignore.resolveTree = true;
+                ignore.action = () => Wrapped(ignore, RHAH_ChoiceAction.Ignore);
+                ignore.resolveTree = false;
 
                 yield return deliver;
                 yield return reject;
@@ -83,6 +83,17 @@ namespace HungerAndHavoc.Incidents
             Scribe_Values.Look(ref site, "site", RHAH_IntelSiteKind.None);
             Scribe_Values.Look(ref amount, "amount", 0);
             Scribe_Values.Look(ref expireTick, "expireTick", -1);
+        }
+
+        // 仅当信件真的离开信栈才关闭它自己的窗口
+        void Wrapped(DiaOption option, RHAH_ChoiceAction action)
+        {
+            bool open = Find.LetterStack != null && Find.LetterStack.LettersListForReading.Contains(this);
+            Settle(action);
+            if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
+            {
+                option.dialog?.Close();
+            }
         }
 
         void Settle(RHAH_ChoiceAction action)
@@ -108,7 +119,11 @@ namespace HungerAndHavoc.Incidents
                 canDeliver);
             if (settled == RHAH_ChoiceAction.None)
             {
-                Messages.Message("RHAH_Choice_Stale".Translate(), MessageTypeDefOf.RejectInput);
+                TaggedString reason = action == RHAH_ChoiceAction.Deliver && open != null && open.Open && enabled && map != null && !canDeliver
+                    ? kind == RHAH_RequestKind.Baby ? "RHAH_Choice_NoBaby".Translate()
+                        : "RHAH_Choice_Short".Translate(amount)
+                    : "RHAH_Choice_Stale".Translate();
+                Messages.Message(reason, MessageTypeDefOf.RejectInput);
                 return;
             }
 
@@ -124,7 +139,7 @@ namespace HungerAndHavoc.Incidents
                     record.Settled = RHAH_ChoiceAction.None;
                 }
 
-                Messages.Message("RHAH_Choice_Stale".Translate(), MessageTypeDefOf.RejectInput);
+                Messages.Message("RHAH_Choice_Short".Translate(consumedAmount), MessageTypeDefOf.RejectInput);
                 return;
             }
 
@@ -139,7 +154,10 @@ namespace HungerAndHavoc.Incidents
                 Messages.Message("RHAH_Choice_Delivered".Translate(), MessageTypeDefOf.PositiveEvent);
             }
 
-            Find.LetterStack.RemoveLetter(this);
+            if (Find.LetterStack != null)
+            {
+                Find.LetterStack.RemoveLetter(this);
+            }
         }
 
         bool StillOpen()
