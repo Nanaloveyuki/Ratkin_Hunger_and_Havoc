@@ -48,7 +48,7 @@ namespace HungerAndHavoc.Trade
         {
             RimWorld.Planet.Caravan caravan = destination == null ? CaravanTargetResolver.Resolve(selected, allowFallback) : null;
             RHAH_Attitude attitude = HungerAndHavoc.Incidents.RHAH_IncidentArrival.For(entry);
-            Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Resolve(attitude);
+            Faction faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(attitude);
             if (entry == null || faction == null || (destination == null && (caravan == null ||
                 !RimWorld.Planet.CaravanIncidentUtility.CanFireIncidentWhichWantsToGenerateMapAt(caravan.Tile))))
             {

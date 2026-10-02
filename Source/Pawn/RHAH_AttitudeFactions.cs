@@ -178,19 +178,10 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            FactionRelation relation = player.RelationWith(faction, true);
-            if (relation == null)
-            {
-                player.TryMakeInitialRelationsWith(faction);
-                relation = player.RelationWith(faction, true);
-            }
-
-            if (relation == null || relation.baseGoodwill == goodwill)
-            {
-                return;
-            }
-
-            player.TryAffectGoodwillWith(faction, goodwill - relation.baseGoodwill, false, false, null, null);
+            // 隐藏派系不走原版好感变动 直接固定双向关系
+            PinPair(player, faction,
+                goodwill < 0 ? FactionRelationKind.Hostile : FactionRelationKind.Neutral,
+                goodwill);
         }
     }
 }

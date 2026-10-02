@@ -67,7 +67,7 @@ Steam 评论区可能会看晚一些。
 
 ## 兼容性
 
-- 中途加入：大概率可行，至少作者没遇到问题
+- 中途加入：支持。加载完成时会补齐缺失的五个态度派系并固定对玩家的好感，已有派系保留，不重复创建
 - 中途移出：需要先在本模组设置里处理存档，把 RHAH 字段移除
 
 和 Combat Extended 的兼容性未知。可能冲突的地方是自适应衣物，大概率不会。
@@ -134,7 +134,7 @@ The author is in the last year of high school, so fixes will not be frequent.
 
 ## Compatibility
 
-- Adding mid-save: probably fine. The author has not hit a problem.
+- Adding mid-save: supported. Once loading finishes, missing attitude factions are created and their goodwill toward the player is fixed. Existing factions are kept, without duplicates.
 - Removing mid-save: use this mod's settings first, and strip the RHAH fields from the save.
 
 Compatibility with Combat Extended is unknown. The likely clash is the temperature-adaptive clothes. It probably will not clash.</description>

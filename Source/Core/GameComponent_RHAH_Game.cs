@@ -50,6 +50,11 @@ namespace HungerAndHavoc.Core
         {
         }
 
+        public override void FinalizeInit()
+        {
+            Pawn.RHAH_AttitudeFactions.LockGoodwill();
+        }
+
         public override void GameComponentTick()
         {
             TickPlague();

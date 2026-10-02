@@ -145,7 +145,7 @@ namespace HungerAndHavoc.Incidents
 
         internal static bool TrySpawnOnMap(Map map)
         {
-            Faction faction = RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Neutral);
+            Faction faction = RHAH_AttitudeFactions.Require(RHAH_Attitude.Neutral);
             if (map == null || faction == null || !RCellFinder.TryFindRandomPawnEntryCell(
                 out IntVec3 cell, map, CellFinder.EdgeRoadChance_Animal, false, null))
             {
@@ -288,7 +288,7 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
-            Faction residents = RHAH_AttitudeFactions.Resolve(RHAH_Attitude.Neutral);
+            Faction residents = RHAH_AttitudeFactions.Require(RHAH_Attitude.Neutral);
             if (residents == null)
             {
                 return false;
