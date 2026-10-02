@@ -170,8 +170,9 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | points | points | 0 | 否 | 到达后交给 Worker 的点数 |
 | mapId | mapId | 0 | 否 | 目标玩家家园 `uniqueID`。地图已销毁时物体销毁且不生成 |
 | nextTileId | nextTileId | -1 | 否 | 正在走入的下一格。-1 表示这一格已经走完 |
-| costLeft | costLeft | 0 | 否 | 进入下一格还要的 tick |
+| costLeft | costLeft | 0 | 否 | 进入下一格或到达后等待重试还要的 tick；暂时失败等待一游戏小时，读档不重置 |
 | crossing | crossing | false | 否 | 岛上出发时为 true，允许走进海洋格。旧档缺键时按陆地走 |
+| arrivalPending | arrivalPending | false | 否 | 已进入到达事务，等待时不再寻路；旧档缺键继续原行走，到达后设为 true |
 
 
 

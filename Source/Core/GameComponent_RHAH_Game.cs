@@ -150,34 +150,73 @@ namespace HungerAndHavoc.Core
             return ExecutePending(index, displayId, entry, points, parms, queued.Target);
         }
 
-        internal bool SpawnArrived(string displayId, float points, int mapId)
+        internal RHAH_ArrivalResult SpawnArrived(string displayId, float points, int mapId)
         {
-            if (string.IsNullOrEmpty(displayId) || Current.Game == null)
+            if (Current.Game == null)
             {
-                return false;
+                return RHAH_ArrivalResult.Waiting;
             }
 
             HungerAndHavoc.Incidents.RHAH_IncidentEntry entry =
                 HungerAndHavoc.Incidents.RHAH_IncidentCatalog.GetByDisplayId(displayId);
-            RHAH_QueuedTarget queued = entry == null
-                ? default
-                : RHAH_QueuedTarget.Resolve(entry.Target, mapId);
-            if (entry == null || entry.Target != HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map || queued.Terminal || queued.Unavailable)
+            if (entry == null || entry.Target != HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map ||
+                NewContentDisabled)
             {
-                Log.Warning("[RHAH] Arrived approach dropped " + displayId + ". map=" + mapId);
-                return false;
+                Log.Warning("[RHAH] Arrived approach cancelled " + displayId + ". map=" + mapId);
+                return RHAH_ArrivalResult.Terminal;
             }
 
-            IncidentParms parms = new IncidentParms { target = queued.Target };
-            parms.points = points;
+            Map map = null;
+            List<Map> maps = Find.Maps;
+            for (int i = 0; maps != null && i < maps.Count; i++)
+            {
+                if (maps[i] != null && maps[i].uniqueID == mapId)
+                {
+                    map = maps[i];
+                    break;
+                }
+            }
+
+            if (map == null)
+            {
+                Log.Warning("[RHAH] Arrived approach cancelled " + displayId + ". Saved map is gone. map=" + mapId);
+                return RHAH_ArrivalResult.Terminal;
+            }
+
+            if (map.mapPawns == null || map.Parent == null || map.Parent.Destroyed || !RHAH_Runtime.AllowsNewContent)
+            {
+                return RHAH_ArrivalResult.Waiting;
+            }
+
             IncidentDef arrivedDef = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
             if (arrivedDef == null || arrivedDef.Worker == null)
             {
-                Log.Warning("[RHAH] Arrived approach dropped " + displayId + ". Worker is missing.");
-                return false;
+                Log.Warning("[RHAH] Arrived approach cancelled " + displayId + ". Worker is missing.");
+                return RHAH_ArrivalResult.Terminal;
             }
 
-            return ExecutePending(-1, displayId, entry, points, parms, queued.Target);
+            IncidentParms parms = new IncidentParms { target = map, points = points };
+            try
+            {
+                if (arrivedDef.requireColonistsPresent && map.mapPawns.FreeColonistsSpawnedCount == 0)
+                {
+                    return RHAH_ArrivalResult.Waiting;
+                }
+
+                if (!arrivedDef.Worker.TryExecute(parms))
+                {
+                    return RHAH_ArrivalResult.Waiting;
+                }
+            }
+            catch (Exception exception)
+            {
+                // 异常可能已产生部分角色 不能自动重跑整批
+                Log.Error("[RHAH] Arrived approach failed " + displayId + ". map=" + mapId + "\n" + exception);
+                return RHAH_ArrivalResult.Terminal;
+            }
+
+            Log.Message("[RHAH] Spawned arrived " + displayId + ". points=" + points.ToString("0.##") + " map=" + mapId);
+            return RHAH_ArrivalResult.Spawned;
         }
 
         internal bool SpawnDebugOnMap(HungerAndHavoc.Incidents.RHAH_IncidentEntry entry, float points, Map map)

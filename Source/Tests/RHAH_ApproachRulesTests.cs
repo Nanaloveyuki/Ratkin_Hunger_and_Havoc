@@ -1,3 +1,7 @@
+using System;
+using System.Reflection;
+using System.Runtime.Serialization;
+using Verse;
 using System.Collections.Generic;
 using HungerAndHavoc.Incidents;
 using RimWorld.Planet;
@@ -91,6 +95,40 @@ namespace HungerAndHavoc.Tests
             {
                 corrupt.NodesReversed.Clear();
                 Assert.False(RHAH_ApproachRules.TryConsumeNext(corrupt, out _));
+            }
+        }
+
+        [Fact]
+        public void ArrivalWithoutRuntimeKeepsItsEventForLater()
+        {
+            Game previous = Current.Game;
+            try
+            {
+                Current.Game = (Game)FormatterServices.GetUninitializedObject(typeof(Game));
+                Current.Game.components = new List<GameComponent>();
+                typeof(Game).GetField("maps", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .SetValue(Current.Game, new List<Map>());
+                ArrivalProbe approach = (ArrivalProbe)FormatterServices.GetUninitializedObject(typeof(ArrivalProbe));
+                approach.Configure("I-001", 300f, 41, false);
+                MethodInfo arrive = typeof(WorldObject_RHAH_Approach).GetMethod("Arrive", BindingFlags.Instance | BindingFlags.NonPublic);
+                arrive.Invoke(approach, null);
+                Assert.False(approach.RemovalRequested);
+                Assert.True((bool)typeof(WorldObject_RHAH_Approach).GetField("arrivalPending", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(approach));
+                Assert.Equal(2500, (int)typeof(WorldObject_RHAH_Approach).GetField("costLeft", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(approach));
+            }
+            finally
+            {
+                Current.Game = previous;
+            }
+        }
+
+        sealed class ArrivalProbe : WorldObject_RHAH_Approach
+        {
+            internal bool RemovalRequested;
+
+            public override void Destroy()
+            {
+                RemovalRequested = true;
             }
         }
 

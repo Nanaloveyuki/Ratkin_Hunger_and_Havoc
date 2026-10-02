@@ -15,6 +15,7 @@ namespace HungerAndHavoc.Incidents
         int nextTileId = -1;
         int costLeft;
         bool crossing;
+        bool arrivalPending;
         bool arriving;
 
         public override string Label => "RHAH_Approach_Label".Translate();
@@ -55,6 +56,7 @@ namespace HungerAndHavoc.Incidents
             Scribe_Values.Look(ref nextTileId, "nextTileId", -1);
             Scribe_Values.Look(ref costLeft, "costLeft", 0);
             Scribe_Values.Look(ref crossing, "crossing", false);
+            Scribe_Values.Look(ref arrivalPending, "arrivalPending", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit && displayId == null)
             {
                 displayId = "";
@@ -102,6 +104,12 @@ namespace HungerAndHavoc.Incidents
                     {
                         return;
                     }
+                }
+
+                if (arrivalPending)
+                {
+                    Arrive();
+                    return;
                 }
 
                 if (nextTileId >= 0)
@@ -173,12 +181,26 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
+            arrivalPending = true;
             arriving = true;
-            Map map = Home();
-            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
-            int target = map == null ? 0 : map.uniqueID;
-            game?.SpawnArrived(displayId, points, target);
-            Destroy();
+            try
+            {
+                GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+                RHAH_ArrivalResult result = game == null
+                    ? RHAH_ArrivalResult.Waiting
+                    : game.SpawnArrived(displayId, points, mapId);
+                if (result == RHAH_ArrivalResult.Waiting)
+                {
+                    costLeft = GenDate.TicksPerHour;
+                    return;
+                }
+
+                Destroy();
+            }
+            finally
+            {
+                arriving = false;
+            }
         }
 
         Map Home()
