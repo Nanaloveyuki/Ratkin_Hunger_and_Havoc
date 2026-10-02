@@ -286,7 +286,7 @@
   <RHAH_Menu_Ending_Gap>这里还不能开关结局。</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>这里还不能调整基因。</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>需要生物科技。启用后可以在这里调整来客的异种。</RHAH_Menu_Genes_NoBiotech>
-  <RHAH_Menu_Genes_Note>百分比是开启加快生成时的抽中几率。权重范围 0 到 100，0 不参与抽取。只列出鼠族允许的异种。全部为 0 时优先使用允许的初鼠种，否则按鼠族本底异种比例生成；本底池为空时尝试允许的饥荒鼠族。关闭加快生成后直接使用本底池。没有可用异种时停止生成来客。</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_Note>百分比是开启加快生成时的抽中几率。权重范围 0 到 100，0 不参与抽取。只列出鼠族允许的异种。初鼠种默认相对权重 100，与其它异种并存，抽中几率按各自权重归一。全部为 0 时优先使用允许的初鼠种，否则按鼠族本底异种比例生成；本底池为空时尝试允许的饥荒鼠族。关闭加快生成后直接使用本底池。没有可用异种时停止生成来客。</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>恢复默认权重</RHAH_Menu_Genes_Reset>
   <RHAH_Menu_Genes_Fallback>当前权重合计为 0。使用允许的初鼠种，或鼠族本底异种；仍无可用项时尝试允许的饥荒鼠族。都不可用时停止生成来客。</RHAH_Menu_Genes_Fallback>
   <RHAH_Menu_Genes_WeightTip>建议权重 {1}。抽中几率等于这个权重除以所有启用权重之和。</RHAH_Menu_Genes_WeightTip>
