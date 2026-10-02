@@ -42,6 +42,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return;
             }
 
+            HungerAndHavoc.Incidents.RHAH_GrainHole.ExpireMissingMaps(state, tick);
+
             bool narrator = Find.Storyteller?.def?.defName == NarratorDefName;
             if (state.AdultCheckDue(tick))
             {

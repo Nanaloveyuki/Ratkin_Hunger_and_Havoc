@@ -59,49 +59,101 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return record == null ? 0 : Cost();
         }
 
-        internal static bool CanPay(SuiyinN004Case record)
+        internal static bool TryMeeting(SuiyinN004Case record, int pawnId, PlanetTile tile, int mapId, int targetCaravanId, out Verse.Pawn pawn, out RimWorld.Planet.Caravan caravan)
         {
-            return record != null && CountSilver(MeetingCaravan(record)) >= Cost();
-        }
-
-        internal static void Spend(SuiyinN004Case record)
-        {
-            RimWorld.Planet.Caravan caravan = MeetingCaravan(record);
-            int left = Cost();
-            if (caravan == null || left <= 0 || ThingDefOf.Silver == null)
+            pawn = null;
+            caravan = null;
+            if (record == null || !tile.Valid || !IsTarget(record, pawnId))
             {
-                return;
+                return false;
             }
 
-            List<Thing> taken = CaravanInventoryUtility.TakeThings(caravan, thing =>
+            Verse.Pawn target = FindPawn(pawnId);
+            RimWorld.Planet.Caravan meeting = MeetingCaravan(record);
+            RimWorld.Planet.Caravan targetCaravan = target == null ? null : target.GetCaravan();
+            if (!Alive(target) || meeting == null || meeting.Tile != tile || target.Tile != tile
+                || (target.MapHeld == null ? 0 : target.MapHeld.uniqueID) != mapId
+                || (targetCaravan == null ? 0 : targetCaravan.ID) != targetCaravanId)
             {
-                if (thing == null || thing.def != ThingDefOf.Silver || left <= 0)
+                return false;
+            }
+
+            pawn = target;
+            caravan = meeting;
+            return true;
+        }
+
+        internal static bool CanPay(RimWorld.Planet.Caravan caravan)
+        {
+            return caravan != null && CountSilver(caravan) >= Cost();
+        }
+
+        internal static bool Spend(RimWorld.Planet.Caravan caravan)
+        {
+            int cost = Cost();
+            if (caravan == null || CountSilver(caravan) < cost)
+            {
+                return false;
+            }
+
+            if (cost <= 0)
+            {
+                return true;
+            }
+
+            int left = cost;
+            List<KeyValuePair<ThingOwner, Thing>> taken = new List<KeyValuePair<ThingOwner, Thing>>();
+            List<Verse.Pawn> pawns = caravan.PawnsListForReading;
+            for (int i = 0; i < pawns.Count && left > 0; i++)
+            {
+                ThingOwner inventory = pawns[i].inventory.innerContainer;
+                for (int j = inventory.Count - 1; j >= 0 && left > 0; j--)
                 {
-                    return 0;
+                    Thing silver = inventory[j];
+                    if (silver == null || silver.Destroyed || silver.def != ThingDefOf.Silver)
+                    {
+                        continue;
+                    }
+
+                    int amount = silver.stackCount < left ? silver.stackCount : left;
+                    Thing payment = inventory.Take(silver, amount);
+                    if (payment == null || payment.Destroyed)
+                    {
+                        continue;
+                    }
+
+                    taken.Add(new KeyValuePair<ThingOwner, Thing>(inventory, payment));
+                    left -= payment.stackCount;
+                }
+            }
+
+            if (left != 0)
+            {
+                for (int i = 0; i < taken.Count; i++)
+                {
+                    taken[i].Key.TryAdd(taken[i].Value);
                 }
 
-                int have = thing.stackCount < left ? thing.stackCount : left;
-                left -= have;
-                return have;
-            });
+                return false;
+            }
+
             for (int i = 0; i < taken.Count; i++)
             {
-                if (taken[i] != null && !taken[i].Destroyed)
-                {
-                    taken[i].Destroy();
-                }
+                taken[i].Value.Destroy();
             }
+
+            return true;
         }
 
-        internal static void Kill(SuiyinN004Case record)
+        internal static bool Kill(Verse.Pawn pawn)
         {
-            Verse.Pawn pawn = Survivor(record);
-            if (pawn == null || pawn.Dead || pawn.Destroyed)
+            if (!Alive(pawn))
             {
-                return;
+                return false;
             }
 
             pawn.Kill(null);
+            return pawn.Dead;
         }
 
         internal static SuiyinN004Case FindCase(int caseId)
@@ -169,7 +221,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             Verse.Pawn pawn = Survivor(record);
-            if (pawn == null)
+            if (pawn == null || !pawn.Tile.Valid)
             {
                 return;
             }
@@ -177,7 +229,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             for (int i = 0; i < caravans.Count; i++)
             {
                 RimWorld.Planet.Caravan caravan = caravans[i];
-                if (caravan == null || caravan.Tile != pawn.Tile)
+                if (caravan == null || caravan.Destroyed || !caravan.Spawned || caravan.Tile != pawn.Tile)
                 {
                     continue;
                 }
@@ -208,6 +260,10 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
             ChoiceLetter_RHAH_Revisit letter = (ChoiceLetter_RHAH_Revisit)LetterMaker.MakeLetter(def);
             letter.caseId = record.Id;
+            letter.pawnId = pawn.thingIDNumber;
+            letter.meetingTile = pawn.Tile;
+            letter.meetingMapId = pawn.MapHeld == null ? 0 : pawn.MapHeld.uniqueID;
+            letter.targetCaravanId = pawn.GetCaravan() == null ? 0 : pawn.GetCaravan().ID;
             letter.Label = "RHAH_Suiyin_N004Revisit_Label".Translate();
             SuiyinConfig config = Current.Game.GetComponent<NarrativeState>().Book.Config;
             letter.Text = "RHAH_Suiyin_N004Revisit_Text".Translate(config.RescueCost, config.RevisitYears, config.RescueReward);
@@ -240,6 +296,32 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return null;
         }
 
+        static bool IsTarget(SuiyinN004Case record, int pawnId)
+        {
+            if (pawnId <= 0)
+            {
+                return false;
+            }
+
+            if (record.MotherId == pawnId)
+            {
+                return true;
+            }
+
+            if (record.Children != null)
+            {
+                for (int i = 0; i < record.Children.Count; i++)
+                {
+                    if (record.Children[i] != null && record.Children[i].LoadId == pawnId)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         static bool Alive(Verse.Pawn pawn)
         {
             return pawn != null && !pawn.Dead && !pawn.Destroyed;
@@ -256,7 +338,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             for (int i = 0; i < caravans.Count; i++)
             {
                 RimWorld.Planet.Caravan caravan = caravans[i];
-                if (caravan != null && caravan.ID == record.MeetingCaravanId && caravan.IsPlayerControlled)
+                if (caravan != null && caravan.ID == record.MeetingCaravanId && caravan.IsPlayerControlled
+                    && !caravan.Destroyed && caravan.Spawned && caravan.PawnsListForReading.Count > 0)
                 {
                     return caravan;
                 }
@@ -297,7 +380,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             List<Thing> items = CaravanInventoryUtility.AllInventoryItems(caravan);
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i] != null && items[i].def == ThingDefOf.Silver)
+                if (items[i] != null && !items[i].Destroyed && items[i].def == ThingDefOf.Silver
+                    && items[i].holdingOwner != null)
                 {
                     count += items[i].stackCount;
                 }

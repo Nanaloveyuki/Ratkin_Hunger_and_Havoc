@@ -58,6 +58,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | droppedChildLoadIds | droppedChildLoadIds | 空集合 | 是 | 已放下的孩子 Load ID。`PostLoadInit` 补空列表 |
 
 计算属性不入档：`IsReleased`、`IsActiveVisitor`、`RoleLabelKey`。
+叙事临时留驻保存于 `extraData`：`rhah:envoyHold`、`rhah:quarantineHold`，缺键表示不持有。值为两字符，依次记录 `LeaveAfterFed` 与 `ExitMap` 原覆盖：`u` 无覆盖、`t` true、`f` false。重叠持有复制首持有者原值，删除自身键后仅最后一个持有者恢复仍为 false 的覆盖；不覆写外部后来设置的 true。卸载随 `CompRHAH_Pawn` Remove。旧使者持有迁移见 `SuiyinN008Case.holdMigrated`；旧检疫未设留驻覆盖，不迁移。
+
 
 ### LordJob_RHAH_Visitor
 
@@ -120,6 +122,10 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | 字段 | 存档键 | 默认值 | 集合 | 说明 |
 | --- | --- | --- | --- | --- |
 | caseId | caseId | 0 | 否 | 对应 `SuiyinN004Case.id` |
+| pawnId | pawnId | 0 | 否 | 发信时固定的真实相遇者，点击不顺延替换母亲或孩子 |
+| meetingTile | meetingTile | PlanetTile.Invalid | 否 | 原相遇 Tile，含 layer；旧信无法可靠还原，显示失效并允许关闭，不扣费或扣信任 |
+| meetingMapId | meetingMapId | 0 | 否 | 原目标 MapHeld 的 uniqueID，0 表示不在地图 |
+| targetCaravanId | targetCaravanId | 0 | 否 | 原目标持有商队 ID，0 表示无商队 |
 
 ### ChoiceLetter_RHAH_Quarantine
 
@@ -128,6 +134,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | 字段 | 存档键 | 默认值 | 集合 | 说明 |
 | --- | --- | --- | --- | --- |
 | mapId | mapId | 0 | 否 | 待选检疫所在地图 |
+| startedTick | startedTick | -1 | 否 | 精确绑定病例起始 tick。旧信在 PostLoadInit 仅迁移同图且 startedTick 不晚于原信 arrivalTick 的唯一候选（含旧终态）；无唯一候选为 -2，允许关闭失效信，不操作新病例 |
+
 ### RHAH_ChoiceRecord
 
 类型名：`HungerAndHavoc.Incidents.RHAH_ChoiceRecord`。嵌在 `openChoices` 里。
@@ -321,7 +329,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN005Case | id, mapId, startedTick, outcome, careClosed, children | 嵌在 exchangeCases | Remove |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN006Case | mapId, thefts, startedTick, ignoreUntil, baitUntil, hole, foodPresent, wood, baitStock, outcome, losses, nextLossTick | 嵌在 holeCases | Remove |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN007Case | mapId, startedTick, outcome, choiceOpen, returnDueTick, returnPawnId, returnDone, visitors | 嵌在 quarantineCases | Remove。`choiceOpen` 默认 false，true 表示还没把选择信放进队列 |
-| HungerAndHavoc.Storyteller.Suiyin.SuiyinN008Case | mapId, pawnId, startedTick, deadline, checkUntil, presence, missingSince, outcome, mealsReady, proofAvailable | 嵌在 envoyCases | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinN008Case | mapId, pawnId, startedTick, deadline, checkUntil, presence, missingSince, outcome, mealsReady, proofAvailable, holdMigrated | 嵌在 envoyCases | Remove。`holdMigrated` 默认 false；新到达为 true。旧记录首次找到 N-008 来源且两闸门仍为 false 的使者时，以 `rhah:envoyHold=uu` 接管旧留驻；缺少历史覆盖信息时只能假定两项 false 来自旧使者持有，迁移仅做一次 |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN009Case | startedTick, deadline, mapPresent, playersInside, envoyHere, boxDestroyed, outcome, siteId, boxId, mapEntered | relicCase | Remove |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinJournalCase | id, mapId, batchId, startedTick, delivered, driven, failed, empty, closed, counted, people | 嵌在 journalCases | Remove |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinNotice | letter, arg, privateNotice | 嵌在 pendingNotices | Remove |

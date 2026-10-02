@@ -61,7 +61,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         N009Destroy,
         N009Empty,
         Journal,
-        Aside
+        Aside,
+        N007Missing
     }
 
     internal enum SuiyinAside
@@ -426,6 +427,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal SuiyinN008Outcome Outcome;
         internal bool MealsReady;
         internal bool ProofAvailable;
+        internal bool HoldMigrated;
 
         public void ExposeData()
         {
@@ -439,6 +441,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             Scribe_Values.Look(ref Outcome, "outcome", SuiyinN008Outcome.Pending);
             Scribe_Values.Look(ref MealsReady, "mealsReady", false);
             Scribe_Values.Look(ref ProofAvailable, "proofAvailable", false);
+            Scribe_Values.Look(ref HoldMigrated, "holdMigrated", false);
         }
     }
 
@@ -1062,19 +1065,21 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal bool ChooseHole(SuiyinN006Case record, SuiyinN006Action action, int tick)
         {
             PullConfig();
-            if (record == null || record.Outcome != SuiyinN006Outcome.Pending || !record.Hole)
+            if (record == null || record.Outcome != SuiyinN006Outcome.Pending ||
+                (action != SuiyinN006Action.Ignore && (!record.Hole || (record.IgnoreUntil >= 0 && tick >= record.IgnoreUntil))))
             {
                 return false;
             }
 
             if (action == SuiyinN006Action.Seal)
             {
-                if (record.Wood < 20)
+                int cost = Core.RHAH_Mod.Settings == null ? 20 : Core.RHAH_Mod.Settings.holeWoodCost;
+                if (record.Wood < cost)
                 {
                     return false;
                 }
 
-                record.Wood -= Core.RHAH_Mod.Settings == null ? 20 : Core.RHAH_Mod.Settings.holeWoodCost;
+                record.Wood -= cost;
                 record.Outcome = SuiyinN006Outcome.Sealed;
                 record.Hole = false;
                 Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 1 : Core.RHAH_Mod.Settings.trustHoleOpen));
@@ -1114,6 +1119,19 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             return false;
+        }
+
+        internal bool LoseHole(SuiyinN006Case record)
+        {
+            if (record == null || (record.Outcome != SuiyinN006Outcome.Pending && record.Outcome != SuiyinN006Outcome.BaitSet))
+            {
+                return false;
+            }
+
+            record.Outcome = SuiyinN006Outcome.Gone;
+            record.Hole = false;
+            Queue(SuiyinLetter.N006Gone, record.MapId, false);
+            return true;
         }
 
         internal bool FinishBait(SuiyinN006Case record, int tick, bool trace)
@@ -1186,7 +1204,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal bool CloseQuarantine(SuiyinN007Case record, SuiyinN007Outcome outcome, int tick, int returnPawnId)
         {
             PullConfig();
-            if (record == null || record.Outcome == SuiyinN007Outcome.AllDead || record.Outcome == SuiyinN007Outcome.RecoveredLeft || record.Outcome == SuiyinN007Outcome.RecoveredStayed || record.Outcome == SuiyinN007Outcome.Missing)
+            if (record == null || record.Outcome == SuiyinN007Outcome.AllDead || record.Outcome == SuiyinN007Outcome.RecoveredLeft || record.Outcome == SuiyinN007Outcome.RecoveredStayed || record.Outcome == SuiyinN007Outcome.Missing || record.Outcome == SuiyinN007Outcome.Broken)
             {
                 return false;
             }
@@ -1205,6 +1223,11 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 Queue(SuiyinLetter.N007Recovered, record.MapId, false);
                 TryEnvoy(tick);
             }
+            else if (outcome == SuiyinN007Outcome.RecoveredStayed)
+            {
+                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 1 : Core.RHAH_Mod.Settings.trustQuarantineStay));
+                Queue(SuiyinLetter.N007Stayed, record.MapId, false);
+            }
             else if (outcome == SuiyinN007Outcome.Broken)
             {
                 Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? -2 : Core.RHAH_Mod.Settings.trustQuarantineFail));
@@ -1216,7 +1239,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
             else if (outcome == SuiyinN007Outcome.Missing)
             {
-                Queue(SuiyinLetter.N007Release, record.MapId, false);
+                Queue(SuiyinLetter.N007Missing, record.MapId, false);
             }
 
             TryAsides(tick);
@@ -1259,6 +1282,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 PawnId = pawnId,
                 StartedTick = tick,
                 Deadline = tick + Days(Config.EnvoyWaitDays),
+                HoldMigrated = true,
                 Outcome = SuiyinN008Outcome.Waiting
             });
             Queue(SuiyinLetter.N008Arrive, pawnId, false);
@@ -1268,7 +1292,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal bool ChooseEnvoy(SuiyinN008Case record, SuiyinN008Action action, int tick)
         {
             PullConfig();
-            if (record == null || record.Presence == SuiyinPresence.Dead)
+            int deadline = record != null && record.Outcome == SuiyinN008Outcome.Checking && record.CheckUntil >= 0 ? record.CheckUntil : record?.Deadline ?? -1;
+            if (record == null || record.Presence != SuiyinPresence.Here || (deadline >= 0 && tick >= deadline))
             {
                 return false;
             }
@@ -1358,7 +1383,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 }
             }
 
-            if ((record.Outcome == SuiyinN008Outcome.Waiting || record.Outcome == SuiyinN008Outcome.Checking) && record.Deadline >= 0 && tick >= record.Deadline)
+            int deadline = record.Outcome == SuiyinN008Outcome.Checking && record.CheckUntil >= 0 ? record.CheckUntil : record.Deadline;
+            if ((record.Outcome == SuiyinN008Outcome.Waiting || record.Outcome == SuiyinN008Outcome.Checking) && deadline >= 0 && tick >= deadline)
             {
                 record.Outcome = SuiyinN008Outcome.TimedOut;
                 Queue(SuiyinLetter.N008Timeout, record.PawnId, false);

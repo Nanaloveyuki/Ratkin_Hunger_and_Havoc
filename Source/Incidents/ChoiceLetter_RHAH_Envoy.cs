@@ -23,6 +23,13 @@ namespace HungerAndHavoc.Incidents
                     yield return Option_Close;
                     yield break;
                 }
+                if (!RHAH_Envoy.Refresh(State(), record, Now()))
+                {
+                    yield return Option_Close;
+                    yield return Option_Postpone;
+                    yield break;
+                }
+
 
                 Map map = ResolveMap();
                 bool meals = map != null && RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost);
@@ -38,7 +45,10 @@ namespace HungerAndHavoc.Incidents
                 }
 
                 yield return trade;
-                yield return Act("RHAH_Envoy_Proof", Proof);
+                if (record.Outcome == SuiyinN008Outcome.Waiting)
+                {
+                    yield return Act("RHAH_Envoy_Proof", Proof);
+                }
                 yield return Act("RHAH_Envoy_Refuse", Refuse);
                 DiaOption drive = new DiaOption("RHAH_Envoy_Drive".Translate(Core.RHAH_Mod.Settings == null ? -2 : Core.RHAH_Mod.Settings.trustEnvoyFail));
                 drive.action = () => Wrapped(drive, Drive);
@@ -65,52 +75,57 @@ namespace HungerAndHavoc.Incidents
             Map map = ResolveMap();
             NarrativeState state = State();
             SuiyinN008Case record = FindRecord();
-            if (map == null || state == null || record == null || !RHAH_Envoy.OpenCase(record.Outcome))
+            if (map == null || !RHAH_Envoy.Refresh(state, record, Now()))
+            {
+                Stale();
+                return;
+            }
+
+            int cost = Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost;
+            if (RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) < cost)
+            {
+                Messages.Message("RHAH_Envoy_NoMeals".Translate(cost), MessageTypeDefOf.RejectInput);
+                return;
+            }
+
+            bool needsSite = state.Book.N009 != null || state.Book.RelicClue;
+            if (needsSite && !RHAH_ChoiceRuntime.TryCreateSite(map, RHAH_IntelSiteKind.Treasure, () => CompleteTrade(state, record, map, cost)))
+            {
+                Messages.Message("RHAH_Choice_SiteUnavailable".Translate(), MessageTypeDefOf.RejectInput);
+                return;
+            }
+
+            if (!needsSite && !CompleteTrade(state, record, map, cost))
             {
                 return;
             }
 
-            if (RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) < (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost))
+            RHAH_Envoy.Complete(record);
+        }
+
+        static bool CompleteTrade(NarrativeState state, SuiyinN008Case record, Map map, int cost)
+        {
+            if (!RHAH_Envoy.Refresh(state, record, Now()))
             {
-                Messages.Message("RHAH_Envoy_NoMeals".Translate(Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost), MessageTypeDefOf.RejectInput);
-                return;
+                Stale();
+                return false;
             }
 
-            if (state.Book.N009 == null && !state.Book.RelicClue)
+            if (!RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, cost))
             {
-                record.MealsReady = true;
-                if (!state.Commit(book => book.ChooseEnvoy(record, SuiyinN008Action.Trade, Now())))
-                {
-                    record.MealsReady = false;
-                    return;
-                }
-
-                RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost));
-                Find.LetterStack.RemoveLetter(this);
-                return;
-            }
-
-            if (!RHAH_ChoiceRuntime.TryCreateSite(map, RHAH_IntelSiteKind.Treasure))
-            {
-                return;
+                Messages.Message("RHAH_Envoy_NoMeals".Translate(cost), MessageTypeDefOf.RejectInput);
+                return false;
             }
 
             record.MealsReady = true;
-            if (!state.Commit(book => book.ChooseEnvoy(record, SuiyinN008Action.Trade, Now())))
-            {
-                record.MealsReady = false;
-                return;
-            }
-
-            RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, (Core.RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : Core.RHAH_Mod.Settings.envoyMealCost));
-            Find.LetterStack.RemoveLetter(this);
+            return state.Commit(book => book.ChooseEnvoy(record, SuiyinN008Action.Trade, Now()));
         }
 
         void Proof()
         {
             NarrativeState state = State();
             SuiyinN008Case record = FindRecord();
-            if (state == null || record == null || record.Outcome != SuiyinN008Outcome.Waiting)
+            if (!RHAH_Envoy.Refresh(state, record, Now()) || record.Outcome != SuiyinN008Outcome.Waiting)
             {
                 return;
             }
@@ -122,7 +137,10 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            Find.LetterStack.RemoveLetter(this);
+            if (record.Outcome != SuiyinN008Outcome.Checking)
+            {
+                RHAH_Envoy.Complete(record);
+            }
         }
 
         void Refuse()
@@ -139,7 +157,7 @@ namespace HungerAndHavoc.Incidents
         {
             NarrativeState state = State();
             SuiyinN008Case record = FindRecord();
-            if (state == null || record == null || !RHAH_Envoy.OpenCase(record.Outcome))
+            if (!RHAH_Envoy.Refresh(state, record, Now()))
             {
                 return;
             }
@@ -149,7 +167,7 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            Find.LetterStack.RemoveLetter(this);
+            RHAH_Envoy.Complete(record);
         }
 
 
@@ -158,6 +176,11 @@ namespace HungerAndHavoc.Incidents
             return Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
         }
 
+
+        static void Stale()
+        {
+            Messages.Message("RHAH_Envoy_Stale".Translate(), MessageTypeDefOf.RejectInput);
+        }
 
         DiaOption Act(string key, System.Action action)
         {
@@ -172,14 +195,19 @@ namespace HungerAndHavoc.Incidents
         {
             bool open = Find.LetterStack != null && Find.LetterStack.LettersListForReading.Contains(this);
             SuiyinN008Case record = FindRecord();
-            if (State() == null || record == null || !RHAH_Envoy.OpenCase(record.Outcome))
+            if (!open || !RHAH_Envoy.Refresh(State(), record, Now()))
             {
                 Messages.Message("RHAH_Envoy_Stale".Translate(), MessageTypeDefOf.RejectInput);
+                if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
+                {
+                    option.dialog?.Close();
+                }
                 return;
             }
 
+            SuiyinN008Outcome before = record.Outcome;
             action();
-            if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
+            if (open && (record.Outcome != before || Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
             {
                 option.dialog?.Close();
             }
@@ -202,7 +230,7 @@ namespace HungerAndHavoc.Incidents
                 }
             }
 
-            return book.N008.Count == 0 ? null : book.N008[0];
+            return null;
         }
 
         static NarrativeState State()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using HungerAndHavoc.Narrative;
 using HungerAndHavoc.Storyteller.Suiyin;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace HungerAndHavoc.Incidents
@@ -9,6 +10,10 @@ namespace HungerAndHavoc.Incidents
     public class ChoiceLetter_RHAH_Revisit : ChoiceLetter
     {
         public int caseId;
+        internal int pawnId;
+        internal PlanetTile meetingTile = PlanetTile.Invalid;
+        internal int meetingMapId;
+        internal int targetCaravanId;
 
         public override bool CanDismissWithRightClick => false;
 
@@ -23,10 +28,20 @@ namespace HungerAndHavoc.Incidents
                     yield break;
                 }
 
+                if (!RHAH_Revisit.TryMeeting(record, pawnId, meetingTile, meetingMapId, targetCaravanId, out Verse.Pawn pawn, out RimWorld.Planet.Caravan caravan)
+                    || lookTargets == null || lookTargets.PrimaryTarget.Thing != pawn)
+                {
+                    DiaOption stale = new DiaOption("RHAH_Revisit_Stale".Translate());
+                    stale.Disable("RHAH_Revisit_Stale".Translate());
+                    yield return stale;
+                    yield return Option_Close;
+                    yield break;
+                }
+
                 int cost = RHAH_Revisit.CostFor(record);
                 yield return Act("RHAH_Revisit_Leave", Leave);
                 DiaOption pay = new DiaOption("RHAH_Revisit_Pay".Translate(cost));
-                if (!RHAH_Revisit.CanPay(record))
+                if (!RHAH_Revisit.CanPay(caravan))
                 {
                     pay.Disable("RHAH_Revisit_NoSilver".Translate(cost));
                 }
@@ -51,72 +66,61 @@ namespace HungerAndHavoc.Incidents
         {
             base.ExposeData();
             Scribe_Values.Look(ref caseId, "caseId", 0);
+            Scribe_Values.Look(ref pawnId, "pawnId", 0);
+            Scribe_Values.Look(ref meetingTile, "meetingTile", PlanetTile.Invalid);
+            Scribe_Values.Look(ref meetingMapId, "meetingMapId", 0);
+            Scribe_Values.Look(ref targetCaravanId, "targetCaravanId", 0);
         }
 
         void Leave()
         {
-            if (!Choose(SuiyinN004Revisit.Ignore))
-            {
-                Messages.Message("RHAH_Revisit_Stale".Translate(), MessageTypeDefOf.RejectInput);
-            }
+            Choose(SuiyinN004Revisit.Ignore);
         }
 
         void Pay()
         {
+            Choose(SuiyinN004Revisit.Rescue);
+        }
+
+        void Kill()
+        {
+            Choose(SuiyinN004Revisit.Kill);
+        }
+
+        void Choose(SuiyinN004Revisit choice)
+        {
+            NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
             SuiyinN004Case record = FindRecord();
-            if (record == null || record.Revisit != SuiyinN004Revisit.None)
+            if (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)
+                || state == null || record == null || record.Outcome != SuiyinN004Outcome.Banished
+                || record.Revisit != SuiyinN004Revisit.None || !record.RevisitSeen
+                || (choice == SuiyinN004Revisit.Rescue && record.RescuePaid)
+                || !RHAH_Revisit.TryMeeting(record, pawnId, meetingTile, meetingMapId, targetCaravanId, out Verse.Pawn pawn, out RimWorld.Planet.Caravan caravan)
+                || lookTargets == null || lookTargets.PrimaryTarget.Thing != pawn)
             {
                 Messages.Message("RHAH_Revisit_Stale".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            if (!RHAH_Revisit.CanPay(record))
+            if (choice == SuiyinN004Revisit.Rescue && !RHAH_Revisit.Spend(caravan))
             {
                 Messages.Message("RHAH_Revisit_NoSilver".Translate(RHAH_Revisit.CostFor(record)), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            if (!Choose(SuiyinN004Revisit.Rescue))
+            if (choice == SuiyinN004Revisit.Kill && !RHAH_Revisit.Kill(pawn))
             {
                 Messages.Message("RHAH_Revisit_Stale".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            RHAH_Revisit.Spend(record);
-        }
-
-        void Kill()
-        {
-            SuiyinN004Case record = FindRecord();
-            if (!Choose(SuiyinN004Revisit.Kill) || record == null)
+            if (!state.Commit(book => book.ChooseRevisit(record, choice, Now(), true)))
             {
                 Messages.Message("RHAH_Revisit_Stale".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            RHAH_Revisit.Kill(record);
-        }
-
-        bool Choose(SuiyinN004Revisit choice)
-        {
-            NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
-            SuiyinN004Case record = FindRecord();
-            if (state == null || record == null || record.Revisit != SuiyinN004Revisit.None)
-            {
-                return false;
-            }
-
-            if (!state.Commit(book => book.ChooseRevisit(record, choice, Now(), choice != SuiyinN004Revisit.Rescue || RHAH_Revisit.CanPay(record))))
-            {
-                return false;
-            }
-
-            if (Find.LetterStack != null)
-            {
-                Find.LetterStack.RemoveLetter(this);
-            }
-
-            return true;
+            Find.LetterStack.RemoveLetter(this);
         }
 
         static int Now()

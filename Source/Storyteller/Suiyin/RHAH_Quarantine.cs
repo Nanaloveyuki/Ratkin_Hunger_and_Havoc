@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HungerAndHavoc.Api;
 using HungerAndHavoc.Identity;
 using HungerAndHavoc.Incidents;
 using RimWorld;
@@ -36,9 +37,9 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     book.QueueOpened(record.MapId);
                 }
 
-                if (watch)
+                if (watch && record.Outcome != SuiyinN007Outcome.Defer)
                 {
-                    Watch(record, tick);
+                    Refresh(state, record, tick);
                 }
             }
 
@@ -47,9 +48,43 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal static bool OpenLetter(int mapId)
         {
-            if (Find.LetterStack == null || LetterOpen(mapId))
+            SuiyinBook book = Current.Game?.GetComponent<NarrativeState>()?.Book;
+            SuiyinN007Case record = null;
+            if (book?.N007 != null)
             {
-                return Find.LetterStack != null && LetterOpen(mapId);
+                for (int i = 0; i < book.N007.Count; i++)
+                {
+                    SuiyinN007Case candidate = book.N007[i];
+                    if (candidate != null && candidate.MapId == mapId && candidate.Outcome == SuiyinN007Outcome.Pending)
+                    {
+                        if (record != null)
+                        {
+                            return false;
+                        }
+
+                        record = candidate;
+                    }
+                }
+            }
+
+            if (record == null)
+            {
+                return true;
+            }
+
+            if (Find.LetterStack == null)
+            {
+                return false;
+            }
+
+            List<Letter> letters = Find.LetterStack.LettersListForReading;
+            for (int i = 0; i < letters.Count; i++)
+            {
+                ChoiceLetter_RHAH_Quarantine existing = letters[i] as ChoiceLetter_RHAH_Quarantine;
+                if (existing != null && existing.mapId == mapId && existing.startedTick == record.StartedTick)
+                {
+                    return true;
+                }
             }
 
             LetterDef def = DefDatabase<LetterDef>.GetNamedSilentFail(LetterDefName);
@@ -60,6 +95,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
             ChoiceLetter_RHAH_Quarantine letter = (ChoiceLetter_RHAH_Quarantine)LetterMaker.MakeLetter(def);
             letter.mapId = mapId;
+            letter.startedTick = record.StartedTick;
             letter.Label = "RHAH_Suiyin_N007Choice_Label".Translate();
             letter.Text = "RHAH_Suiyin_N007Choice_Text".Translate();
             Map map = MapOf(mapId);
@@ -72,27 +108,50 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return true;
         }
 
-        static void Watch(SuiyinN007Case record, int tick)
+        internal static bool Choose(NarrativeState state, SuiyinN007Case record, SuiyinN007Action action, int tick)
         {
-            if (record.Visitors == null ||
-                record.Outcome == SuiyinN007Outcome.Pending ||
-                record.Outcome == SuiyinN007Outcome.Defer ||
-                record.Outcome == SuiyinN007Outcome.RecoveredLeft ||
-                record.Outcome == SuiyinN007Outcome.RecoveredStayed ||
-                record.Outcome == SuiyinN007Outcome.AllDead ||
-                record.Outcome == SuiyinN007Outcome.Missing ||
-                record.Outcome == SuiyinN007Outcome.Broken)
+            if (state == null || record == null || record.Outcome != SuiyinN007Outcome.Pending || !Refresh(state, record, tick))
             {
-                return;
+                return false;
             }
 
+            if (!state.Commit(book => book.ChooseQuarantine(record, action)))
+            {
+                return false;
+            }
+
+            ApplyVisitors(record, tick);
+            return true;
+        }
+
+        internal static bool Refresh(NarrativeState state, SuiyinN007Case record, int tick)
+        {
+            if (state == null || record == null || record.Outcome == SuiyinN007Outcome.Defer)
+            {
+                return false;
+            }
+
+            if (Closed(record.Outcome))
+            {
+                ReturnGates(record, tick);
+                RemoveLetters(record);
+                return false;
+            }
+            HungerAndHavoc.Core.RHAH_Mod.Settings?.CopyNarrative(state.Book.Config);
+
+
             int here = 0;
+            int eligible = 0;
             int sickLeft = 0;
-            int recovered = 0;
+            int recoveredLeft = 0;
+            int recoveredStayed = 0;
             int dead = 0;
             int unknown = 0;
+            int missing = 0;
+            int total = 0;
             int returnId = 0;
-            for (int i = 0; i < record.Visitors.Count; i++)
+            bool mapExists = MapOf(record.MapId) != null;
+            for (int i = 0; record.Visitors != null && i < record.Visitors.Count; i++)
             {
                 SuiyinMember member = record.Visitors[i];
                 if (member == null || member.LoadId <= 0)
@@ -100,14 +159,36 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     continue;
                 }
 
+                total++;
                 Verse.Pawn pawn = RHAH_PawnIndex.Find(member.LoadId, tick);
-                if (pawn == null || pawn.Destroyed)
+                if (pawn == null || (pawn.Destroyed && !pawn.Dead))
                 {
-                    member.Presence = SuiyinPresence.Unknown;
-                    unknown++;
+                    if (member.Presence == SuiyinPresence.Dead)
+                    {
+                        dead++;
+                        continue;
+                    }
+
+                    if (member.MissingSince < 0)
+                    {
+                        member.MissingSince = tick;
+                    }
+
+                    if (tick - member.MissingSince >= state.Book.Config.MissingDays * 60000)
+                    {
+                        member.Presence = SuiyinPresence.Missing;
+                        missing++;
+                    }
+                    else
+                    {
+                        member.Presence = SuiyinPresence.Unknown;
+                        unknown++;
+                    }
+
                     continue;
                 }
 
+                member.MissingSince = -1;
                 if (pawn.Dead)
                 {
                     member.Presence = SuiyinPresence.Dead;
@@ -117,73 +198,140 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 }
 
                 bool plague = RHAH_Plague.HasActive(pawn);
-                bool onMap = pawn.Spawned && pawn.Map != null && pawn.Map.uniqueID == record.MapId;
+                bool onMap = mapExists && pawn.MapHeld != null && pawn.MapHeld.uniqueID == record.MapId;
                 member.Care = plague ? SuiyinCare.Plague : SuiyinCare.Free;
-                if (!onMap)
+                member.Presence = onMap ? SuiyinPresence.Here : SuiyinPresence.Left;
+                if (onMap)
                 {
-                    member.Presence = SuiyinPresence.Left;
-                    if (plague)
+                    if (!plague && pawn.Faction == Faction.OfPlayer && !pawn.IsPrisoner && !pawn.IsSlaveOfColony)
                     {
-                        sickLeft++;
-                    }
-                    else if (returnId == 0)
-                    {
-                        recovered++;
-                        returnId = member.LoadId;
+                        recoveredStayed++;
                     }
                     else
                     {
-                        recovered++;
+                        here++;
                     }
 
+                    if (Eligible(pawn, record.MapId))
+                    {
+                        eligible++;
+                    }
+                }
+                else if (plague)
+                {
+                    sickLeft++;
+                }
+                else
+                {
+                    recoveredLeft++;
+                    if (returnId == 0)
+                    {
+                        returnId = member.LoadId;
+                    }
+                }
+            }
+
+            SuiyinN007Outcome? ending = null;
+            if (total == 0)
+            {
+                ending = SuiyinN007Outcome.Missing;
+            }
+            else if (dead == total)
+            {
+                ending = SuiyinN007Outcome.AllDead;
+            }
+            else if (here == 0 && unknown == 0)
+            {
+                if (record.Outcome == SuiyinN007Outcome.Quarantine && sickLeft > 0)
+                {
+                    ending = SuiyinN007Outcome.Broken;
+                }
+                else if (missing > 0 || sickLeft > 0)
+                {
+                    ending = SuiyinN007Outcome.Missing;
+                }
+                else if (recoveredStayed > 0)
+                {
+                    ending = SuiyinN007Outcome.RecoveredStayed;
+                }
+                else if (recoveredLeft > 0)
+                {
+                    ending = SuiyinN007Outcome.RecoveredLeft;
+                }
+            }
+
+            if (ending.HasValue)
+            {
+                state.Commit(book => book.CloseQuarantine(record, ending.Value, tick, returnId));
+                ReturnGates(record, tick);
+                RemoveLetters(record);
+                return false;
+            }
+
+            ApplyVisitors(record, tick);
+            return mapExists && eligible > 0;
+        }
+
+        static bool Eligible(Verse.Pawn pawn, int mapId)
+        {
+            return pawn != null && !pawn.Dead && !pawn.Destroyed && pawn.Spawned && pawn.Map?.uniqueID == mapId &&
+                RHAH_Api.IsVisitor(pawn) && pawn.Faction != Faction.OfPlayer && !pawn.IsPrisoner && !pawn.IsSlaveOfColony;
+        }
+
+        static void ApplyVisitors(SuiyinN007Case record, int tick)
+        {
+            for (int i = 0; record.Visitors != null && i < record.Visitors.Count; i++)
+            {
+                SuiyinMember member = record.Visitors[i];
+                Verse.Pawn pawn = member == null ? null : RHAH_PawnIndex.Find(member.LoadId, tick);
+                if (!Eligible(pawn, record.MapId))
+                {
+                    RHAH_NarrativePace.ReturnVisitorGates(pawn, RHAH_NarrativePace.QuarantineHoldKey);
                     continue;
                 }
 
-                member.Presence = SuiyinPresence.Here;
-                here++;
-            }
-
-            if (record.Visitors.Count == 0 || here + unknown > 0)
-            {
-                return;
-            }
-
-            if (sickLeft > 0 && record.Outcome == SuiyinN007Outcome.Quarantine)
-            {
-                record.ReturnPawnId = 0;
-                Current.Game?.GetComponent<NarrativeState>()?.Commit(item => item.CloseQuarantine(record, SuiyinN007Outcome.Broken, tick, 0));
-                return;
-            }
-
-            if (recovered > 0 && dead + recovered == record.Visitors.Count)
-            {
-                Current.Game?.GetComponent<NarrativeState>()?.Commit(item => item.CloseQuarantine(record, SuiyinN007Outcome.RecoveredLeft, tick, returnId));
+                if (record.Outcome == SuiyinN007Outcome.Quarantine)
+                {
+                    RHAH_Envoy.Hold(pawn, RHAH_NarrativePace.QuarantineHoldKey);
+                }
+                else if (record.Outcome == SuiyinN007Outcome.Release)
+                {
+                    RHAH_Envoy.Release(pawn, RHAH_NarrativePace.QuarantineHoldKey);
+                }
             }
         }
 
-        static bool LetterOpen(int mapId)
+        static void ReturnGates(SuiyinN007Case record, int tick)
         {
-            List<Letter> letters = Find.LetterStack.LettersListForReading;
-            for (int i = 0; i < letters.Count; i++)
+            for (int i = 0; record.Visitors != null && i < record.Visitors.Count; i++)
+            {
+                SuiyinMember member = record.Visitors[i];
+                RHAH_NarrativePace.ReturnVisitorGates(member == null ? null : RHAH_PawnIndex.Find(member.LoadId, tick), RHAH_NarrativePace.QuarantineHoldKey);
+            }
+        }
+
+        static bool Closed(SuiyinN007Outcome outcome)
+        {
+            return outcome == SuiyinN007Outcome.RecoveredLeft || outcome == SuiyinN007Outcome.RecoveredStayed ||
+                outcome == SuiyinN007Outcome.AllDead || outcome == SuiyinN007Outcome.Missing || outcome == SuiyinN007Outcome.Broken;
+        }
+
+        static void RemoveLetters(SuiyinN007Case record)
+        {
+            List<Letter> letters = Find.LetterStack?.LettersListForReading;
+            for (int i = letters == null ? -1 : letters.Count - 1; i >= 0; i--)
             {
                 ChoiceLetter_RHAH_Quarantine letter = letters[i] as ChoiceLetter_RHAH_Quarantine;
-                if (letter != null && letter.mapId == mapId)
+                if (letter != null && letter.mapId == record.MapId && letter.startedTick == record.StartedTick)
                 {
-                    return true;
+                    Find.LetterStack.RemoveLetter(letter);
                 }
             }
-
-            return false;
         }
 
         static Map MapOf(int mapId)
         {
-            if (Find.Maps == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < Find.Maps.Count; i++)
+            for (int i = 0; Find.Maps != null && i < Find.Maps.Count; i++)
             {
                 if (Find.Maps[i] != null && Find.Maps[i].uniqueID == mapId)
                 {

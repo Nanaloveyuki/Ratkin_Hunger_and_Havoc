@@ -26,62 +26,45 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void PendingChoiceNoticesImmediatelyWithoutChangingVisitors()
+        public void PendingVisitorsBecomeMissingOnlyAfterTheGracePeriod()
         {
             NarrativeState state = new NarrativeState(null);
             SuiyinN007Case record = Open(state, SuiyinN007Outcome.Pending, true);
             record.Visitors.Add(Member(41));
-
-            RHAH_Quarantine.Tick(state, 1);
-            RHAH_Quarantine.Tick(state, 2);
-
-            Assert.False(record.ChoiceOpen);
-            Assert.Equal(SuiyinPresence.Here, record.Visitors[0].Presence);
-            Assert.Equal(SuiyinN007Outcome.Pending, record.Outcome);
-        }
-
-        [Fact]
-        public void ActiveWatchObservesOnlyOnTheHour()
-        {
-            NarrativeState state = new NarrativeState(null);
-            SuiyinN007Case record = Open(state, SuiyinN007Outcome.Quarantine, false);
-            record.Visitors.Add(Member(41));
-
-            RHAH_Quarantine.Tick(state, GenDate.TicksPerHour - 1);
-            Assert.Equal(SuiyinPresence.Here, record.Visitors[0].Presence);
-            Assert.Equal(SuiyinN007Outcome.Quarantine, record.Outcome);
-
-            RHAH_Quarantine.Tick(state, GenDate.TicksPerHour);
+            Assert.False(RHAH_Quarantine.Refresh(state, record, 10));
             Assert.Equal(SuiyinPresence.Unknown, record.Visitors[0].Presence);
-            Assert.Equal(SuiyinN007Outcome.Quarantine, record.Outcome);
-
-            record.Visitors[0].Presence = SuiyinPresence.Here;
-            RHAH_Quarantine.Tick(state, GenDate.TicksPerHour + 1);
-            Assert.Equal(SuiyinPresence.Here, record.Visitors[0].Presence);
+            Assert.Equal(SuiyinN007Outcome.Pending, record.Outcome);
+            int end = 10 + state.Book.Config.MissingDays * 60000;
+            Assert.False(RHAH_Quarantine.Refresh(state, record, end - 1));
+            Assert.Equal(SuiyinN007Outcome.Pending, record.Outcome);
+            Assert.False(RHAH_Quarantine.Refresh(state, record, end));
+            Assert.Equal(SuiyinPresence.Missing, record.Visitors[0].Presence);
+            Assert.Equal(SuiyinN007Outcome.Missing, record.Outcome);
         }
 
-        [Fact]
-        public void TerminalAndDeferredRecordsDoNotObserve()
+        [Theory]
+        [InlineData((int)SuiyinN007Outcome.Quarantine)]
+        [InlineData((int)SuiyinN007Outcome.Release)]
+        public void ChosenQuarantineClosesWhenEveryConfirmedMemberDied(int value)
         {
             NarrativeState state = new NarrativeState(null);
-            SuiyinN007Case recovered = Open(state, SuiyinN007Outcome.RecoveredLeft, false);
-            recovered.Visitors.Add(Member(41));
-            SuiyinN007Case broken = Open(state, SuiyinN007Outcome.Broken, false);
-            broken.Visitors.Add(Member(42));
-            SuiyinN007Case dead = Open(state, SuiyinN007Outcome.AllDead, false);
-            dead.Visitors.Add(Member(43));
+            SuiyinN007Case record = Open(state, (SuiyinN007Outcome)value, false);
+            record.Visitors.Add(new SuiyinMember { LoadId = 51, Presence = SuiyinPresence.Dead });
+            record.Visitors.Add(new SuiyinMember { LoadId = 52, Presence = SuiyinPresence.Dead });
+            Assert.False(RHAH_Quarantine.Refresh(state, record, 100));
+            Assert.Equal(SuiyinN007Outcome.AllDead, record.Outcome);
+        }
+
+
+
+        [Fact]
+        public void DeferredRecordsDoNotStartASecondAutomaticSettlement()
+        {
+            NarrativeState state = new NarrativeState(null);
             SuiyinN007Case deferred = Open(state, SuiyinN007Outcome.Defer, false);
             deferred.Visitors.Add(Member(44));
-
             RHAH_Quarantine.Tick(state, GenDate.TicksPerHour);
-
-            Assert.Equal(SuiyinPresence.Here, recovered.Visitors[0].Presence);
-            Assert.Equal(SuiyinPresence.Here, broken.Visitors[0].Presence);
-            Assert.Equal(SuiyinPresence.Here, dead.Visitors[0].Presence);
             Assert.Equal(SuiyinPresence.Here, deferred.Visitors[0].Presence);
-            Assert.Equal(SuiyinN007Outcome.RecoveredLeft, recovered.Outcome);
-            Assert.Equal(SuiyinN007Outcome.Broken, broken.Outcome);
-            Assert.Equal(SuiyinN007Outcome.AllDead, dead.Outcome);
             Assert.Equal(SuiyinN007Outcome.Defer, deferred.Outcome);
         }
 

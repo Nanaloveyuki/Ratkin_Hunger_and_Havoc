@@ -171,7 +171,7 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void BanishedRescuePaysOnceAfterFourYears()
+        public void BanishedRescueCanBeAnsweredAfterMeetingDeadlineAndPaysOnce()
         {
             SuiyinBook book = new SuiyinBook();
             book.OpenEntrust(1, 1, 0, new[] { 2 });
@@ -179,9 +179,10 @@ namespace HungerAndHavoc.Tests
             record.Children[0].Presence = SuiyinPresence.Left;
             Assert.Equal(SuiyinN004Outcome.Banished, book.ResolveEntrust(record, 100, SuiyinPresence.Left));
             record.RevisitSeen = true;
-            Assert.False(book.ChooseRevisit(record, SuiyinN004Revisit.Rescue, 200, false));
-            Assert.True(book.ChooseRevisit(record, SuiyinN004Revisit.Rescue, 200, true));
-            Assert.False(book.ChooseRevisit(record, SuiyinN004Revisit.Kill, 300, true));
+            int answerTick = record.RevisitDeadline + 1;
+            Assert.False(book.ChooseRevisit(record, SuiyinN004Revisit.Rescue, answerTick, false));
+            Assert.True(book.ChooseRevisit(record, SuiyinN004Revisit.Rescue, answerTick, true));
+            Assert.False(book.ChooseRevisit(record, SuiyinN004Revisit.Kill, answerTick + 100, true));
             Assert.Equal(0, book.ClaimRescue(record, record.RescueDueTick - 1));
             Assert.Equal(2500, book.ClaimRescue(record, record.RescueDueTick));
             Assert.Equal(0, book.ClaimRescue(record, record.RescueDueTick + 10));
@@ -213,24 +214,56 @@ namespace HungerAndHavoc.Tests
             Assert.NotEqual(SuiyinN005Outcome.Dead, missing.N005[0].Outcome);
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(10)]
+        [InlineData(20)]
+        public void SecondTheftOpensOneHoleAndSealUsesConfiguredCost(int cost)
+        {
+            HungerAndHavoc.Core.RHAH_Settings previous = HungerAndHavoc.Core.RHAH_Mod.Settings;
+            HungerAndHavoc.Core.RHAH_Mod.Settings = new HungerAndHavoc.Core.RHAH_Settings { holeWoodCost = cost };
+            try
+            {
+                SuiyinBook book = new SuiyinBook();
+                Assert.False(book.NoteTheft(3, 0));
+                Assert.True(book.NoteTheft(3, 10));
+                Assert.False(book.NoteTheft(3, 20));
+                SuiyinN006Case hole = book.N006[0];
+                Assert.False(book.PlaceHole(hole));
+                hole.FoodPresent = true;
+                Assert.True(book.PlaceHole(hole));
+                if (cost > 0)
+                {
+                    hole.Wood = cost - 1;
+                    Assert.False(book.ChooseHole(hole, SuiyinN006Action.Seal, 30));
+                }
+                hole.Wood = cost;
+                Assert.True(book.ChooseHole(hole, SuiyinN006Action.Seal, 30));
+                Assert.Equal(0, hole.Wood);
+                Assert.False(hole.Hole);
+                Assert.False(book.ChooseHole(hole, SuiyinN006Action.Clean, 40));
+            }
+            finally
+            {
+                HungerAndHavoc.Core.RHAH_Mod.Settings = previous;
+            }
+        }
+
         [Fact]
-        public void SecondTheftOpensOneHoleAndSealNeedsWood()
+        public void HoleExpiresWithoutAnEntityAndDestroyedBaitDoesNotStayOpen()
         {
             SuiyinBook book = new SuiyinBook();
-            Assert.False(book.NoteTheft(3, 0));
-            Assert.True(book.NoteTheft(3, 10));
-            Assert.False(book.NoteTheft(3, 20));
-            SuiyinN006Case hole = book.N006[0];
-            Assert.False(book.PlaceHole(hole));
-            hole.FoodPresent = true;
-            Assert.True(book.PlaceHole(hole));
-            Assert.False(book.ChooseHole(hole, SuiyinN006Action.Seal, 30));
-            hole.Wood = 20;
-            Assert.True(book.ChooseHole(hole, SuiyinN006Action.Seal, 30));
-            Assert.Equal(0, hole.Wood);
-            Assert.False(hole.Hole);
-            Assert.False(book.ChooseHole(hole, SuiyinN006Action.Clean, 40));
+            SuiyinN006Case hole = new SuiyinN006Case { Outcome = SuiyinN006Outcome.Pending, Hole = false, IgnoreUntil = 100 };
+            Assert.False(book.ChooseHole(hole, SuiyinN006Action.Ignore, 99));
+            Assert.True(book.ChooseHole(hole, SuiyinN006Action.Ignore, 100));
+            Assert.Equal(SuiyinN006Outcome.Gone, hole.Outcome);
+            SuiyinN006Case bait = new SuiyinN006Case { Outcome = SuiyinN006Outcome.BaitSet, Hole = true, BaitUntil = 200 };
+            Assert.True(book.LoseHole(bait));
+            Assert.Equal(SuiyinN006Outcome.Gone, bait.Outcome);
+            Assert.False(bait.Hole);
+            Assert.False(book.FinishBait(bait, 200, true));
         }
+
 
         [Fact]
         public void QuarantineReturnUsesTheSamePawnOnce()
@@ -448,21 +481,31 @@ namespace HungerAndHavoc.Tests
             envoy.MealsReady = false;
             Assert.False(book.ChooseEnvoy(envoy, SuiyinN008Action.Trade, 30));
             envoy.MealsReady = true;
-            Assert.True(book.ChooseEnvoy(envoy, SuiyinN008Action.Trade, 40));
+            envoy.Deadline = 30;
+            Assert.True(book.ChooseEnvoy(envoy, SuiyinN008Action.Trade, envoy.CheckUntil - 1));
             Assert.Equal(SuiyinN008Outcome.Traded, envoy.Outcome);
             Assert.True(book.RelicClue);
         }
 
         [Fact]
-        public void EnvoyLeavesAfterRefusalTimeoutAndAFailedCheck()
+        public void EnvoyCheckDeadlineAndPresenceRejectUnfulfillableChoices()
         {
-            Assert.Equal(RHAH_EnvoyHold.Stay, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Waiting));
-            Assert.Equal(RHAH_EnvoyHold.Stay, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Checking));
-            Assert.Equal(RHAH_EnvoyHold.Leave, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Refused));
-            Assert.Equal(RHAH_EnvoyHold.Leave, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Driven));
-            Assert.Equal(RHAH_EnvoyHold.Leave, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.NoProof));
-            Assert.Equal(RHAH_EnvoyHold.Leave, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.TimedOut));
-            Assert.Equal(RHAH_EnvoyHold.None, RHAH_NarrativePace.HoldFor(SuiyinN008Outcome.Traded));
+            SuiyinBook book = new SuiyinBook();
+            SuiyinN008Case envoy = new SuiyinN008Case
+            {
+                Outcome = SuiyinN008Outcome.Checking,
+                CheckUntil = 100,
+                Deadline = 50,
+                MealsReady = true,
+                Presence = SuiyinPresence.Here
+            };
+            Assert.False(book.ChooseEnvoy(envoy, SuiyinN008Action.Proof, 60));
+            envoy.Presence = SuiyinPresence.Left;
+            Assert.False(book.ChooseEnvoy(envoy, SuiyinN008Action.Trade, 60));
+            envoy.Presence = SuiyinPresence.Here;
+            Assert.False(book.ChooseEnvoy(envoy, SuiyinN008Action.Trade, 100));
+            Assert.True(book.FinishEnvoy(envoy, 100));
+            Assert.Equal(SuiyinN008Outcome.TimedOut, envoy.Outcome);
         }
 
         [Fact]

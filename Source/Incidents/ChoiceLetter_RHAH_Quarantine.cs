@@ -9,6 +9,7 @@ namespace HungerAndHavoc.Incidents
     public class ChoiceLetter_RHAH_Quarantine : ChoiceLetter
     {
         public int mapId;
+        public int startedTick = -1;
 
         public override bool CanDismissWithRightClick => false;
 
@@ -22,6 +23,15 @@ namespace HungerAndHavoc.Incidents
                     yield return Option_Close;
                     yield break;
                 }
+                NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
+                int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+                if (!RHAH_Quarantine.Refresh(state, record, tick))
+                {
+                    yield return Option_Close;
+                    yield return Option_Postpone;
+                    yield break;
+                }
+
 
                 yield return Act("RHAH_Quarantine_Hold", () => Choose(SuiyinN007Action.Quarantine));
                 yield return Act("RHAH_Quarantine_Release", () => Choose(SuiyinN007Action.Release));
@@ -39,27 +49,24 @@ namespace HungerAndHavoc.Incidents
         {
             base.ExposeData();
             Scribe_Values.Look(ref mapId, "mapId", 0);
+            Scribe_Values.Look(ref startedTick, "startedTick", -1);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && startedTick == -1)
+            {
+                MigrateBinding();
+            }
         }
 
         void Choose(SuiyinN007Action action)
         {
             NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
-            SuiyinBook book = state?.Book;
             SuiyinN007Case record = FindRecord();
-            if (state == null || book == null || record == null || record.Outcome != SuiyinN007Outcome.Pending)
+            int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            if (!RHAH_Quarantine.Choose(state, record, action, tick))
             {
                 Messages.Message("RHAH_Quarantine_Stale".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            state.PullBook();
-            bool chosen = book.ChooseQuarantine(record, action);
-            state.PushBook();
-            if (!chosen)
-            {
-                Messages.Message("RHAH_Quarantine_Stale".Translate(), MessageTypeDefOf.RejectInput);
-                return;
-            }
 
             if (Find.LetterStack != null)
             {
@@ -79,6 +86,11 @@ namespace HungerAndHavoc.Incidents
         void Wrapped(DiaOption option, System.Action action)
         {
             bool open = Find.LetterStack != null && Find.LetterStack.LettersListForReading.Contains(this);
+            if (!open)
+            {
+                Messages.Message("RHAH_Quarantine_Stale".Translate(), MessageTypeDefOf.RejectInput);
+                return;
+            }
             action();
             if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
             {
@@ -97,13 +109,37 @@ namespace HungerAndHavoc.Incidents
             for (int i = 0; i < book.N007.Count; i++)
             {
                 SuiyinN007Case record = book.N007[i];
-                if (record != null && record.MapId == mapId && record.Outcome == SuiyinN007Outcome.Pending)
+                if (record != null && record.MapId == mapId && record.StartedTick == startedTick)
                 {
                     return record;
                 }
             }
 
             return null;
+        }
+
+        void MigrateBinding()
+        {
+            SuiyinBook book = Current.Game?.GetComponent<NarrativeState>()?.Book;
+            SuiyinN007Case candidate = null;
+            for (int i = 0; book?.N007 != null && i < book.N007.Count; i++)
+            {
+                SuiyinN007Case record = book.N007[i];
+                if (record == null || record.MapId != mapId || record.StartedTick > arrivalTick)
+                {
+                    continue;
+                }
+
+                if (candidate != null)
+                {
+                    startedTick = -2;
+                    return;
+                }
+
+                candidate = record;
+            }
+
+            startedTick = candidate == null ? -2 : candidate.StartedTick;
         }
     }
 }

@@ -28,6 +28,8 @@
 
 包装器在 action 前后各查一次 `Find.LetterStack.LettersListForReading.Contains(this)`，只有“这封信原本在栈内、执行后不在”时才关闭它自己的窗口：每个选项把自己的 `DiaOption` 传进包装器，关闭时调用 `option.dialog?.Close()`，指向当前这封选择信的所属对话窗。失败或同时打开着其它信件/窗口都不会被误关。RimWorld 里信只会经 `LetterStack.RemoveLetter` 与 `LetterStackUpdate`（`CanShowInLetterStack` 为 false，含超时）离开信栈，两种情形都被这个“前后对比”覆盖。
 
+后续行为修复见 [choice-behavior-and-ambush.md](choice-behavior-and-ambush.md)：使者 Proof 成功从 Waiting 转 Checking 时保留信，但关闭已经展开的旧选项窗口；重开后不再提供 Proof。失败仍不按类型关闭其它窗口。
+
 ## 临时 smoke 方案
 
 1. 触发求援信，交付前清空库存，点击提示 `RHAH_Choice_Short` 且窗口、信仍保留。

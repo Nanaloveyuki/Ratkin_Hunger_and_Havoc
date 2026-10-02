@@ -24,9 +24,21 @@ namespace HungerAndHavoc.Incidents
                     yield return Option_Close;
                     yield break;
                 }
+                if (!RHAH_GrainHole.Refresh(ResolveMap(), record, Now()))
+                {
+                    yield return Option_Close;
+                    yield break;
+                }
+
 
                 if (followUp)
                 {
+                    if (record.BaitUntil < 0 || Now() < record.BaitUntil)
+                    {
+                        yield return Option_Postpone;
+                        yield break;
+                    }
+
                     yield return Act("RHAH_Hole_Trace", Trace);
                     yield return Act("RHAH_Hole_Stop", Stop);
                 }
@@ -59,19 +71,20 @@ namespace HungerAndHavoc.Incidents
             Map map = ResolveMap();
             NarrativeState state = State();
             SuiyinN006Case record = FindRecord();
-            if (map == null || state == null || record == null || record.Outcome != SuiyinN006Outcome.Pending)
+            if (state == null || !RHAH_GrainHole.Refresh(map, record, Now()) || record.Outcome != SuiyinN006Outcome.Pending)
             {
                 Stale();
                 return;
             }
 
-            if (RHAH_GrainHole.CountWood(map) < (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost))
+            int cost = Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost;
+            if (!RHAH_GrainHole.SpendWood(map, cost))
             {
                 Messages.Message("RHAH_Hole_NoWood".Translate(RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : RHAH_Mod.Settings.holeWoodCost), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            record.Wood = (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost);
+            record.Wood = cost;
             if (!state.Commit(book => book.ChooseHole(record, SuiyinN006Action.Seal, Now())))
             {
                 record.Wood = 0;
@@ -79,10 +92,6 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            if (!RHAH_GrainHole.SpendWood(map, (Core.RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : Core.RHAH_Mod.Settings.holeWoodCost)))
-            {
-                Messages.Message("RHAH_Hole_NoWood".Translate(RHAH_Mod.Settings == null ? RHAH_GrainHole.WoodCost : RHAH_Mod.Settings.holeWoodCost), MessageTypeDefOf.RejectInput);
-            }
 
             RHAH_GrainHole.RemoveHole(map, map.GetComponent<MapComponent_RHAH_Map>());
             Close();
@@ -94,7 +103,7 @@ namespace HungerAndHavoc.Incidents
             NarrativeState state = State();
             SuiyinN006Case record = FindRecord();
             Thing hole = Hole(map);
-            if (map == null || state == null || record == null || hole == null || record.Outcome != SuiyinN006Outcome.Pending)
+            if (state == null || !RHAH_GrainHole.Refresh(map, record, Now()) || hole == null || record.Outcome != SuiyinN006Outcome.Pending || record.BaitUntil >= 0)
             {
                 Stale();
                 return;
@@ -123,7 +132,7 @@ namespace HungerAndHavoc.Incidents
             NarrativeState state = State();
             SuiyinN006Case record = FindRecord();
             Thing hole = Hole(map);
-            if (map == null || state == null || record == null || record.Outcome != SuiyinN006Outcome.Pending)
+            if (state == null || !RHAH_GrainHole.Refresh(map, record, Now()) || record.Outcome != SuiyinN006Outcome.Pending)
             {
                 Stale();
                 return;
@@ -164,14 +173,22 @@ namespace HungerAndHavoc.Incidents
             Map map = ResolveMap();
             NarrativeState state = State();
             SuiyinN006Case record = FindRecord();
-            if (map == null || state == null || record == null || record.Outcome != SuiyinN006Outcome.BaitSet)
+            if (state == null || !RHAH_GrainHole.Refresh(map, record, Now()) || record.Outcome != SuiyinN006Outcome.BaitSet || record.BaitUntil < 0 || Now() < record.BaitUntil)
             {
                 Stale();
                 return;
             }
 
-            bool followed = trace && RHAH_ChoiceRuntime.TryCreateSite(map, RHAH_IntelSiteKind.Treasure);
-            if (!state.Commit(book => book.FinishBait(record, Now(), followed)))
+            if (trace)
+            {
+                if (!RHAH_ChoiceRuntime.TryCreateSite(map, RHAH_IntelSiteKind.Treasure,
+                    () => state.Commit(book => book.FinishBait(record, Now(), true))))
+                {
+                    Messages.Message("RHAH_Choice_SiteUnavailable".Translate(), MessageTypeDefOf.RejectInput);
+                    return;
+                }
+            }
+            else if (!state.Commit(book => book.FinishBait(record, Now(), false)))
             {
                 Stale();
                 return;
@@ -211,6 +228,15 @@ namespace HungerAndHavoc.Incidents
             option.action = () =>
             {
                 bool open = Find.LetterStack != null && Find.LetterStack.LettersListForReading.Contains(this);
+                if (!open || !RHAH_GrainHole.Refresh(ResolveMap(), FindRecord(), Now()) || !Open(FindRecord()))
+                {
+                    Stale();
+                    if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
+                    {
+                        option.dialog?.Close();
+                    }
+                    return;
+                }
                 action();
                 if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
                 {

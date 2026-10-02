@@ -120,49 +120,137 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             for (int i = 0; i < book.N008.Count; i++)
             {
                 SuiyinN008Case record = book.N008[i];
-                if (record == null || Closed(record.Outcome))
+                if (record == null)
                 {
                     continue;
                 }
 
+                Refresh(state, record, tick);
                 Verse.Pawn pawn = FindPawn(record.PawnId);
-                record.Presence = PresenceOf(pawn, record.MapId);
-                if (record.Presence != SuiyinPresence.Unknown)
+                if (OpenCase(record.Outcome))
                 {
-                    record.MissingSince = -1;
+                    Hold(pawn);
+                    if (record.Presence == SuiyinPresence.Here && !LetterOpen(record))
+                    {
+                        OpenLetter(pawn.Map, pawn);
+                    }
                 }
-
-                RHAH_EnvoyHold hold = RHAH_NarrativePace.HoldFor(record.Outcome);
-                ApplyHold(pawn, hold);
-                state.Commit(item => item.FinishEnvoy(record, tick));
-                if (hold == RHAH_EnvoyHold.Stay && RHAH_NarrativePace.HoldFor(record.Outcome) == RHAH_EnvoyHold.Leave)
+                else
                 {
-                    Release(pawn);
+                    Complete(record);
                 }
             }
         }
 
-        static void ApplyHold(Verse.Pawn pawn, RHAH_EnvoyHold hold)
+        internal static bool Refresh(NarrativeState state, SuiyinN008Case record, int tick)
         {
-            if (hold == RHAH_EnvoyHold.Stay)
+            if (state == null || record == null || !OpenCase(record.Outcome))
             {
-                Hold(pawn);
+                return false;
             }
-            else if (hold == RHAH_EnvoyHold.Leave)
+
+            MigrateHold(record, FindPawn(record.PawnId));
+            record.Presence = PresenceOf(FindPawn(record.PawnId), record.MapId);
+            if (record.Presence != SuiyinPresence.Unknown)
+            {
+                record.MissingSince = -1;
+            }
+            Core.RHAH_Mod.Settings?.CopyNarrative(state.Book.Config);
+
+
+            state.Commit(item => item.FinishEnvoy(record, tick));
+            if (!OpenCase(record.Outcome))
+            {
+                Complete(record);
+                return false;
+            }
+
+            return record.Presence == SuiyinPresence.Here;
+        }
+
+        internal static void Complete(SuiyinN008Case record)
+        {
+            Verse.Pawn pawn = FindPawn(record.PawnId);
+            MigrateHold(record, pawn);
+            if (RHAH_NarrativePace.HoldFor(record.Outcome) == RHAH_EnvoyHold.Leave)
             {
                 Release(pawn);
             }
+            else
+            {
+                RHAH_NarrativePace.ReturnVisitorGates(pawn, RHAH_NarrativePace.EnvoyHoldKey);
+            }
+
+            RemoveLetters(record);
         }
 
-        internal static void Hold(Verse.Pawn pawn)
+        static bool LetterOpen(SuiyinN008Case record)
         {
-            if (pawn == null || pawn.Dead || pawn.Destroyed || pawn.Faction == Faction.OfPlayer)
+            List<Letter> letters = Find.LetterStack?.LettersListForReading;
+            if (letters == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < letters.Count; i++)
+            {
+                ChoiceLetter_RHAH_Envoy letter = letters[i] as ChoiceLetter_RHAH_Envoy;
+                if (letter != null && letter.mapId == record.MapId && letter.pawnId == record.PawnId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        static void RemoveLetters(SuiyinN008Case record)
+        {
+            List<Letter> letters = Find.LetterStack?.LettersListForReading;
+            if (letters == null)
             {
                 return;
             }
 
-            RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.LeaveAfterFed, false);
-            RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.ExitMap, false);
+            for (int i = letters.Count - 1; i >= 0; i--)
+            {
+                ChoiceLetter_RHAH_Envoy letter = letters[i] as ChoiceLetter_RHAH_Envoy;
+                if (letter != null && letter.mapId == record.MapId && letter.pawnId == record.PawnId)
+                {
+                    Find.LetterStack.RemoveLetter(letter);
+                }
+            }
+        }
+
+
+        static void MigrateHold(SuiyinN008Case record, Verse.Pawn pawn)
+        {
+            if (record.HoldMigrated || pawn == null)
+            {
+                return;
+            }
+
+            record.HoldMigrated = true;
+            HungerAndHavoc.Identity.CompRHAH_Pawn comp = HungerAndHavoc.Identity.CompRHAH_Pawn.TryGet(pawn);
+            if (comp != null && comp.State.sourceIncidentDisplayId == "N-008" &&
+                !comp.State.TryGetExtra(RHAH_NarrativePace.EnvoyHoldKey, out string previous) &&
+                comp.State.GetGateOverride(RHAH_BehaviorGate.LeaveAfterFed) == false &&
+                comp.State.GetGateOverride(RHAH_BehaviorGate.ExitMap) == false)
+            {
+                RHAH_Api.SetExtra(pawn, RHAH_NarrativePace.EnvoyHoldKey, "uu");
+            }
+        }
+
+        internal static void Hold(Verse.Pawn pawn, string key = RHAH_NarrativePace.EnvoyHoldKey)
+        {
+            if (pawn == null || pawn.Dead || pawn.Destroyed || !RHAH_Api.IsVisitor(pawn) || pawn.Faction == Faction.OfPlayer)
+            {
+                return;
+            }
+
+
+            bool held = RHAH_Api.TryGetExtra(pawn, key, out string previous);
+            RHAH_NarrativePace.HoldVisitor(pawn, key);
             Lord lord = pawn.GetLord();
             if (lord?.CurLordToil is LordToil_RHAH_VisitorLeave && lord.Graph != null && lord.Graph.lordToils != null && lord.Graph.lordToils.Count > 1)
             {
@@ -170,7 +258,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
-            if (snapshot != null && snapshot.Lifecycle == RHAH_Lifecycle.Leaving)
+            if (!held && snapshot != null && snapshot.Lifecycle == RHAH_Lifecycle.Leaving)
             {
                 pawn.jobs?.StopAll();
                 if (pawn.mindState != null)
@@ -180,26 +268,19 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
         }
 
-        internal static void Release(Verse.Pawn pawn)
+        internal static void Release(Verse.Pawn pawn, string key = RHAH_NarrativePace.EnvoyHoldKey)
         {
-            if (pawn == null || pawn.Dead || pawn.Destroyed || pawn.Faction == Faction.OfPlayer)
+            bool held = RHAH_Api.TryGetExtra(pawn, key, out string previous);
+            RHAH_NarrativePace.ReturnVisitorGates(pawn, key);
+            string otherKey = key == RHAH_NarrativePace.EnvoyHoldKey ? RHAH_NarrativePace.QuarantineHoldKey : RHAH_NarrativePace.EnvoyHoldKey;
+            if (pawn == null || pawn.Dead || pawn.Destroyed || !RHAH_Api.IsVisitor(pawn) || pawn.Faction == Faction.OfPlayer ||
+                RHAH_Api.TryGetExtra(pawn, otherKey, out string other) ||
+                (!held && RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving))
             {
                 return;
             }
 
-            RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.LeaveAfterFed, null);
-            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
-            Lord lord = pawn.GetLord();
-            if (lord?.LordJob is LordJob_RHAH_Visitor)
-            {
-                lord.ReceiveMemo("RHAH_Leave");
-            }
-
-            Job leave = JobGiver_RHAH_Leave.TryCreate(pawn);
-            if (leave != null)
-            {
-                pawn.jobs?.StartJob(leave, JobCondition.InterruptForced);
-            }
+            RHAH_BatchAttitude.OrderVisitorLeave(new List<Verse.Pawn> { pawn });
         }
 
         static void OpenLetter(Map map, Verse.Pawn pawn)
@@ -228,7 +309,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal static SuiyinPresence PresenceOf(Verse.Pawn pawn, int mapId)
         {
-            if (pawn == null || pawn.Destroyed)
+            if (pawn == null || (pawn.Destroyed && !pawn.Dead))
             {
                 return SuiyinPresence.Unknown;
             }
@@ -238,7 +319,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return SuiyinPresence.Dead;
             }
 
-            if (pawn.Faction == Faction.OfPlayer || pawn.IsPrisoner || pawn.IsSlaveOfColony)
+            if (!RHAH_Api.IsVisitor(pawn) || pawn.Faction == Faction.OfPlayer || pawn.IsPrisoner || pawn.IsSlaveOfColony)
             {
                 return SuiyinPresence.Left;
             }
@@ -256,13 +337,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return outcome == SuiyinN008Outcome.Waiting || outcome == SuiyinN008Outcome.Checking;
         }
 
-        static bool Closed(SuiyinN008Outcome outcome)
-        {
-            return outcome == SuiyinN008Outcome.Dead ||
-                   outcome == SuiyinN008Outcome.Left ||
-                   outcome == SuiyinN008Outcome.Missing ||
-                   outcome == SuiyinN008Outcome.TimedOut;
-        }
 
         internal static Verse.Pawn FindPawn(int pawnId)
         {

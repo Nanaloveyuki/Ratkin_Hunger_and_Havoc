@@ -99,22 +99,33 @@ namespace HungerAndHavoc.Incidents
                 return 0;
             }
 
-            return map.resourceCounter == null ? 0 : map.resourceCounter.GetCount(ThingDefOf.WoodLog);
+            int count = 0;
+            List<Thing> logs = map.listerThings.ThingsOfDef(ThingDefOf.WoodLog);
+            for (int i = 0; i < logs.Count; i++)
+            {
+                Thing log = logs[i];
+                if (log != null && log.Spawned && !log.Destroyed && log.stackCount > 0)
+                {
+                    count += log.stackCount;
+                }
+            }
+
+            return count;
         }
 
         internal static bool SpendWood(Map map, int amount)
         {
-            if (map == null || amount <= 0 || CountWood(map) < amount)
+            if (map == null || amount < 0 || CountWood(map) < amount)
             {
                 return false;
             }
 
             List<Thing> logs = map.listerThings.ThingsOfDef(ThingDefOf.WoodLog);
             int left = amount;
-            for (int i = 0; i < logs.Count && left > 0; i++)
+            for (int i = logs.Count - 1; i >= 0 && left > 0; i--)
             {
                 Thing log = logs[i];
-                if (log == null || log.stackCount <= 0)
+                if (log == null || !log.Spawned || log.Destroyed || log.stackCount <= 0)
                 {
                     continue;
                 }
@@ -143,6 +154,14 @@ namespace HungerAndHavoc.Incidents
 
         static void TryPlace(Map map, MapComponent_RHAH_Map component, SuiyinBook book, SuiyinN006Case record, int tick)
         {
+            if (record.IgnoreUntil >= 0 && tick >= record.IgnoreUntil)
+            {
+                Current.Game?.GetComponent<NarrativeState>()?.Commit(item => item.ChooseHole(record, SuiyinN006Action.Ignore, tick));
+                RemoveHole(map, component);
+                RemoveLetters(record.MapId);
+                return;
+            }
+
             Thing food = FirstFood(map);
             if (food == null || component == null)
             {
@@ -172,19 +191,15 @@ namespace HungerAndHavoc.Incidents
 
         static void TickOpen(Map map, MapComponent_RHAH_Map component, SuiyinBook book, SuiyinN006Case record, int tick)
         {
-            Thing hole = FindHole(map, component);
-            if (hole == null)
+            if (!Refresh(map, record, tick))
             {
-                if (component != null && component.HoleThingId > 0 && record.Outcome == SuiyinN006Outcome.Pending && tick >= record.IgnoreUntil)
-                {
-                    Current.Game?.GetComponent<NarrativeState>()?.Commit(item => item.ChooseHole(record, SuiyinN006Action.Ignore, tick));
-                }
-
                 return;
             }
 
+            Thing hole = FindHole(map, component);
             if (record.Outcome == SuiyinN006Outcome.BaitSet && record.BaitUntil >= 0 && tick >= record.BaitUntil && !FollowOpen(map))
             {
+                RemoveLetters(record.MapId);
                 OpenLetter(map, record, true);
             }
 
@@ -194,9 +209,77 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            TakeFood(map, hole.Position, 1, LossRange);
+            TakeFood(map, hole.Position, 1, Core.RHAH_Mod.Settings == null ? LossRange : Core.RHAH_Mod.Settings.holeLossRange);
             record.Losses++;
             record.NextLossTick += DayTicks;
+        }
+
+        internal static bool Refresh(Map map, SuiyinN006Case record, int tick)
+        {
+            NarrativeState state = Current.Game?.GetComponent<NarrativeState>();
+            if (state == null || record == null || (record.Outcome != SuiyinN006Outcome.Pending && record.Outcome != SuiyinN006Outcome.BaitSet))
+            {
+                return false;
+            }
+
+            MapComponent_RHAH_Map component = map?.GetComponent<MapComponent_RHAH_Map>();
+            if (record.Outcome == SuiyinN006Outcome.Pending && record.IgnoreUntil >= 0 && tick >= record.IgnoreUntil)
+            {
+                state.Commit(book => book.ChooseHole(record, SuiyinN006Action.Ignore, tick));
+            }
+            else if (map == null || (record.Hole && FindHole(map, component) == null))
+            {
+                state.Commit(book => book.LoseHole(record));
+            }
+            else
+            {
+                return record.Hole;
+            }
+
+            RemoveHole(map, component);
+            RemoveLetters(record.MapId);
+            return false;
+        }
+
+        internal static void ExpireMissingMaps(NarrativeState state, int tick)
+        {
+            for (int i = 0; state?.Book?.N006 != null && i < state.Book.N006.Count; i++)
+            {
+                SuiyinN006Case record = state.Book.N006[i];
+                if (record == null || (record.Outcome != SuiyinN006Outcome.Pending && record.Outcome != SuiyinN006Outcome.BaitSet))
+                {
+                    continue;
+                }
+
+                bool found = false;
+                for (int m = 0; Find.Maps != null && m < Find.Maps.Count; m++)
+                {
+                    if (Find.Maps[m]?.uniqueID == record.MapId)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    state.Commit(book => book.LoseHole(record));
+                    RemoveLetters(record.MapId);
+                }
+            }
+        }
+
+        internal static void RemoveLetters(int mapId)
+        {
+            List<Letter> letters = Find.LetterStack?.LettersListForReading;
+            for (int i = letters == null ? -1 : letters.Count - 1; i >= 0; i--)
+            {
+                ChoiceLetter_RHAH_GrainHole letter = letters[i] as ChoiceLetter_RHAH_GrainHole;
+                if (letter != null && letter.mapId == mapId)
+                {
+                    Find.LetterStack.RemoveLetter(letter);
+                }
+            }
         }
 
         static void OpenLetter(Map map, SuiyinN006Case record, bool follow)
