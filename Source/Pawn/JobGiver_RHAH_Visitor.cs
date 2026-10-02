@@ -9,12 +9,18 @@ namespace HungerAndHavoc.Pawn
     {
         protected override Job TryGiveJob(Verse.Pawn pawn)
         {
-            if (!RHAH_Api.IsVisitor(pawn) || !RHAH_VisitorRules.AllowsModBehavior(RHAH_VisitorStay.Kind(pawn)))
+            if (!RHAH_BatchAttitude.CanOrderLeave(pawn))
             {
                 return null;
             }
 
             MarkSeekingFood(pawn);
+
+            Job departure = JobGiver_RHAH_Leave.TryCreate(pawn);
+            if (departure != null || RHAH_Api.Get(pawn).Lifecycle == RHAH_Lifecycle.Leaving)
+            {
+                return departure;
+            }
 
             Job feedChild = JobGiver_RHAH_MotherFeed.TryCreate(pawn);
             if (feedChild != null)
@@ -60,24 +66,6 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.DropOffChild))
-            {
-                Job drop = JobGiver_RHAH_DropChild.TryCreate(pawn);
-                if (drop != null)
-                {
-                    return drop;
-                }
-            }
-
-            if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.LeaveAfterFed) ||
-                RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap))
-            {
-                Job leave = JobGiver_RHAH_Leave.TryCreate(pawn);
-                if (leave != null)
-                {
-                    return leave;
-                }
-            }
 
             return null;
         }

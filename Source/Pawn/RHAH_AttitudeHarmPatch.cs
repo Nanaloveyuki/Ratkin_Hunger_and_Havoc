@@ -5,18 +5,18 @@ using Verse;
 namespace HungerAndHavoc.Pawn
 {
     // 原版伤害不会按批次改态度 这里只接玩家外部暴力
-    [HarmonyPatch(typeof(Thing), nameof(Thing.PreApplyDamage))]
+    [HarmonyPatch(typeof(Thing), nameof(Thing.TakeDamage))]
     internal static class RHAH_AttitudeHarmPatch
     {
-        static void Postfix(Thing __instance, ref DamageInfo dinfo, ref bool absorbed)
+        static void Postfix(Thing __instance, DamageInfo dinfo, DamageWorker.DamageResult __result)
         {
-            if (absorbed || dinfo.Def == null || !dinfo.Def.ExternalViolenceFor(__instance))
+            if (__result == null || __result.totalDamageDealt <= 0f || dinfo.Def == null ||
+                !dinfo.Def.harmsHealth || !dinfo.Def.ExternalViolenceFor(__instance))
             {
                 return;
             }
 
-            Verse.Pawn instigator = dinfo.Instigator as Verse.Pawn;
-            if (instigator?.Faction != Faction.OfPlayer)
+            if (dinfo.Instigator?.Faction != Faction.OfPlayer)
             {
                 return;
             }
@@ -27,7 +27,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            RHAH_BatchAttitude.TryShift(harmed, true);
+            RHAH_BatchAttitude.TryShift(harmed, RHAH_BatchReaction.Harm);
         }
     }
 }

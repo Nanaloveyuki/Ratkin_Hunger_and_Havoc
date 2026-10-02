@@ -54,7 +54,7 @@ namespace HungerAndHavoc.Incidents
                     yield return Gated(
                         "RHAH_Choice_Enslave",
                         RHAH_ChoiceAction.Enslave,
-                        ideology,
+                        ideology && RHAH_VisitorBatch.HasEligible(present, record.MapId, true),
                         false,
                         ideology ? "RHAH_Choice_NoCustodyTarget" : "RHAH_Choice_NoIdeology");
                 }
@@ -62,7 +62,7 @@ namespace HungerAndHavoc.Incidents
                 if (RHAH_RequestRules.ShowsCapture(true))
                 {
                     yield return Gated("RHAH_Choice_Capture", RHAH_ChoiceAction.Capture,
-                        true, false, "RHAH_Choice_NoCustodyTarget");
+                        RHAH_VisitorBatch.HasEligible(present, record.MapId, false), false, "RHAH_Choice_NoCustodyTarget");
                 }
 
                 if (RHAH_RequestRules.ShowsAttack(true))
@@ -73,7 +73,7 @@ namespace HungerAndHavoc.Incidents
 
                 if (RHAH_RequestRules.ShowsAlly(present.Count > 0, RHAH_ChoiceRuntime.HasAllyDestination()))
                 {
-                    yield return AllyOption(quarantine);
+                    yield return AllyOption(present, quarantine);
                 }
                 yield return Action("RHAH_Choice_Reject", RHAH_ChoiceAction.Reject);
                 yield return Action("RHAH_Choice_Ignore", RHAH_ChoiceAction.Ignore);
@@ -93,7 +93,7 @@ namespace HungerAndHavoc.Incidents
             Scribe_Values.Look(ref choice, "choice", RHAH_ChoiceKind.Visitors);
         }
 
-        DiaOption AllyOption(bool quarantine)
+        DiaOption AllyOption(List<Verse.Pawn> present, bool quarantine)
         {
             RimWorld.Faction faction = RHAH_ChoiceRuntime.AllyDestination();
             string name = faction == null ? string.Empty : faction.Name;
@@ -108,6 +108,12 @@ namespace HungerAndHavoc.Incidents
             if (faction == null)
             {
                 option.Disable("RHAH_Choice_NoAlly".Translate());
+                return option;
+            }
+
+            if (!HasAllowed(present, RHAH_BehaviorGate.Transfer))
+            {
+                option.Disable("RHAH_Choice_NoTransfer".Translate());
                 return option;
             }
 
@@ -198,8 +204,8 @@ namespace HungerAndHavoc.Incidents
             }
             else if (settled == RHAH_ChoiceAction.Ally)
             {
-                RimWorld.Faction faction = RHAH_ChoiceRuntime.AllyDestination();
-                int count = record == null ? 0 : RHAH_ChoiceRuntime.Pawns(record).Count;
+                RimWorld.Faction faction = record == null ? null : RHAH_ChoiceRuntime.FindFaction(record.AllyFactionId);
+                int count = record == null ? 0 : record.AllyPawnIds.Count;
                 string name = faction == null ? string.Empty : faction.Name;
                 Messages.Message("RHAH_Choice_AllySent".Translate(count, name), MessageTypeDefOf.NeutralEvent);
             }
@@ -211,7 +217,7 @@ namespace HungerAndHavoc.Incidents
         string UnavailableReason(RHAH_ChoiceAction action)
         {
             RHAH_ChoiceRecord record = FindRecord();
-            if (record == null || !record.Open)
+            if (record == null || !record.Open || Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this))
             {
                 return "RHAH_Choice_Stale";
             }
@@ -242,7 +248,7 @@ namespace HungerAndHavoc.Incidents
                     : action == RHAH_ChoiceAction.Ally ? RHAH_BehaviorGate.Transfer : RHAH_BehaviorGate.Hire;
                 if (!HasAllowed(present, gate))
                 {
-                    return "RHAH_Choice_NoRecruit";
+                    return action == RHAH_ChoiceAction.Ally ? "RHAH_Choice_NoTransfer" : "RHAH_Choice_NoRecruit";
                 }
 
                 if (action == RHAH_ChoiceAction.Ally && !RHAH_ChoiceRuntime.HasAllyDestination())
@@ -284,7 +290,7 @@ namespace HungerAndHavoc.Incidents
         {
             for (int i = 0; i < pawns.Count; i++)
             {
-                if (RHAH_Api.Allows(pawns[i], gate))
+                if (RHAH_Api.Allows(pawns[i], gate) && (gate != RHAH_BehaviorGate.Transfer || RHAH_Api.Allows(pawns[i], RHAH_BehaviorGate.ExitMap)))
                 {
                     return true;
                 }

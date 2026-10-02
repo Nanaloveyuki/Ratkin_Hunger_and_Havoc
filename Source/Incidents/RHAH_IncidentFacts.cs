@@ -49,7 +49,6 @@ namespace HungerAndHavoc.Incidents
                 created.Add(result);
             }
 
-            RHAH_Runtime.RegisterBatch(context.Map, context.SpawnBatchId);
             List<Verse.Pawn> arrived = new List<Verse.Pawn>();
             for (int i = 0; i < created.Count; i++)
             {
@@ -65,6 +64,12 @@ namespace HungerAndHavoc.Incidents
             Pawn.Compat.RHAH_LeashBridge.TryLeashArrivals(arrived);
             StockCuisine(context, arrived);
             LinkFamily(context.DisplayId, arrived);
+            if (Pawn.RHAH_VisitorGroup.TryStart(arrived, context.Map, context.SpawnCell, context.Role) == null)
+            {
+                Rollback(created);
+                return false;
+            }
+            RHAH_Runtime.RegisterBatch(context.Map, context.SpawnBatchId);
             List<int> loadIds = new List<int>(arrived.Count);
             for (int i = 0; i < arrived.Count; i++)
             {

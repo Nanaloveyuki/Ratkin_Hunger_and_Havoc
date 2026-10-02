@@ -498,11 +498,12 @@
   <RHAH_Choice_Attack>攻击（整批转为敌对）</RHAH_Choice_Attack>
   <RHAH_Choice_Ally>发配到{0}</RHAH_Choice_Ally>
   <RHAH_Choice_NoAlly>没有可以接收他们的盟友派系。</RHAH_Choice_NoAlly>
-  <RHAH_Choice_AllySent>已把{0}人发配到{1}。他们会离开，不会直接出现在对方据点里。好感只在健康离图时按原版结算。</RHAH_Choice_AllySent>
+  <RHAH_Choice_AllySent>已安排{0}人前往{1}。他们实际离图后才转入盟友派系，不会直接出现在对方据点里。好感按原版救治与离图条件结算。</RHAH_Choice_AllySent>
   <RHAH_Choice_Quarantine>检疫中的来客不能加入、雇佣或转移。</RHAH_Choice_Quarantine>
   <RHAH_Choice_NoCustodyTarget>没有可转换的来客。检疫中、精神失常、已不再是在场来客，或不允许囚禁的来客不能转换。</RHAH_Choice_NoCustodyTarget>
   <RHAH_Choice_NoPresent>操作时没有在场的来客可转换。</RHAH_Choice_NoPresent>
   <RHAH_Choice_NoRecruit>没有来客允许收留、雇佣或加入殖民地。</RHAH_Choice_NoRecruit>
+  <RHAH_Choice_NoTransfer>没有来客同时允许转移和离图。</RHAH_Choice_NoTransfer>
   <RHAH_Choice_NoIdeology>奴役需要开启文化 DLC。</RHAH_Choice_NoIdeology>
   <RHAH_Choice_CustodyFailed>没有来客完成身份转换。这封信仍可处理。</RHAH_Choice_CustodyFailed>
   <RHAH_Choice_FeedHint>他们会等在原地。选中一名殖民者，右键正在等待的来客，把食物交给对方。这不会自动派一个人去送。</RHAH_Choice_FeedHint>
@@ -512,8 +513,9 @@
   <RHAH_Choice_NoFood>没有可交给{1}的食物</RHAH_Choice_NoFood>
   <RHAH_Choice_Short>库存不足，需要 {0}。</RHAH_Choice_Short>
   <RHAH_Choice_NoBaby>这次无法交付孩子；易子而食还需要开启食物替代、每个孩子餐数大于 0，并备齐所需简单餐。</RHAH_Choice_NoBaby>
-  <RHAH_Choice_Stale>这封信已经结算过。</RHAH_Choice_Stale>
+  <RHAH_Choice_Stale>这封信当前已无法作此选择。</RHAH_Choice_Stale>
   <RHAH_Choice_Delivered>物资已经交出。</RHAH_Choice_Delivered>
+  <RHAH_Choice_SiteUnavailable>未能建立情报地点，物资尚未交出。这封信仍可处理。</RHAH_Choice_SiteUnavailable>
   <RHAH_Choice_Fed>来客吃过了。</RHAH_Choice_Fed>
   <RHAH_Intel_Label>情报地点</RHAH_Intel_Label>
   <RHAH_Intel_Text>交换完成。附近出现了一个地点。</RHAH_Intel_Text>

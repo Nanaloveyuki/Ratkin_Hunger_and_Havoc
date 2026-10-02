@@ -18,7 +18,7 @@ namespace HungerAndHavoc.Pawn
 
         public override IEnumerable<FloatMenuOption> GetOptionsFor(Verse.Pawn clickedPawn, FloatMenuContext context)
         {
-            if (!RHAH_Api.IsVisitor(clickedPawn))
+            if (!RHAH_BatchAttitude.CanOrderLeave(clickedPawn))
             {
                 yield break;
             }
@@ -68,7 +68,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            if (!RHAH_Api.IsVisitor(target) || target.Map != actor.Map)
+            if (!RHAH_BatchAttitude.CanOrderLeave(target) || target.Map != actor.Map)
             {
                 return;
             }

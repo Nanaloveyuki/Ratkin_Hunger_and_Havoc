@@ -23,7 +23,7 @@ namespace HungerAndHavoc.Pawn
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             Verse.Pawn takee = Takee;
-            return takee != null && pawn.Reserve(takee, job, 1, -1, null, errorOnFailed);
+            return takee != null && (takee.CarriedBy == pawn || pawn.Reserve(takee, job, 1, -1, null, errorOnFailed));
         }
 
         public override string GetReport()
@@ -42,10 +42,19 @@ namespace HungerAndHavoc.Pawn
             CaptureLord();
             this.FailOnDestroyedOrNull(TargetIndex.A);
             this.FailOn(CarryReleased);
-            Toil approach = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch)
-                .FailOnSomeonePhysicallyInteracting(TargetIndex.A);
-            yield return approach;
-            yield return Toils_Haul.StartCarryThing(TargetIndex.A, false, false, false, true, false);
+            this.FailOn(() => !RHAH_BatchAttitude.CanOrderLeave(pawn) ||
+                pawn.GetLord() != startedLord || !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Carry) ||
+                !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap) ||
+                !RHAH_BatchAttitude.CanOrderLeave(Takee) ||
+                RHAH_Api.Get(Takee).Lifecycle != RHAH_Lifecycle.Leaving ||
+                !RHAH_Api.Allows(Takee, RHAH_BehaviorGate.ExitMap));
+            if (Takee?.CarriedBy != pawn)
+            {
+                Toil approach = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch)
+                    .FailOnSomeonePhysicallyInteracting(TargetIndex.A);
+                yield return approach;
+                yield return Toils_Haul.StartCarryThing(TargetIndex.A, false, false, false, true, false);
+            }
             Toil walk = Toils_Goto.GotoCell(TargetIndex.B, PathEndMode.OnCell);
             walk.AddFailCondition(CarryReleased);
             walk.tickIntervalAction = (delta) => LeaveIfExit(pawn);
@@ -108,7 +117,8 @@ namespace HungerAndHavoc.Pawn
 
         static void LeaveIfExit(Verse.Pawn carrier)
         {
-            if (carrier.Map == null)
+            if (carrier.Map == null || !RHAH_Api.Allows(carrier, RHAH_BehaviorGate.ExitMap) ||
+                !RHAH_Api.Allows(carrier.carryTracker?.CarriedThing as Verse.Pawn, RHAH_BehaviorGate.ExitMap))
             {
                 return;
             }
@@ -118,7 +128,11 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            carrier.ExitMap(true, CellRect.WholeMap(carrier.Map).GetClosestEdge(carrier.Position));
+            Rot4 direction = CellRect.WholeMap(carrier.Map).GetClosestEdge(carrier.Position);
+            Verse.Pawn child = carrier.carryTracker.CarriedThing as Verse.Pawn;
+            carrier.carryTracker.innerContainer.Remove(child);
+            child.ExitMap(false, direction);
+            carrier.ExitMap(true, direction);
         }
 
         static Lord ChildLord(Verse.Pawn child)

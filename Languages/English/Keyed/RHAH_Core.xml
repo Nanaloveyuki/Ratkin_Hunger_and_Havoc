@@ -498,11 +498,12 @@
   <RHAH_Choice_Attack>Attack (the group turns hostile)</RHAH_Choice_Attack>
   <RHAH_Choice_Ally>Send to {0}</RHAH_Choice_Ally>
   <RHAH_Choice_NoAlly>No allied faction can take them.</RHAH_Choice_NoAlly>
-  <RHAH_Choice_AllySent>Sent {0} to {1}. They leave. They do not appear at that settlement. Goodwill is only the vanilla amount for leaving healthy.</RHAH_Choice_AllySent>
+  <RHAH_Choice_AllySent>{0} visitors have been told to travel to {1}. They join that faction only after leaving the map and do not appear at its settlement. Goodwill follows the vanilla treatment and departure rules.</RHAH_Choice_AllySent>
   <RHAH_Choice_Quarantine>Visitors in quarantine cannot join, be hired, or be transferred.</RHAH_Choice_Quarantine>
   <RHAH_Choice_NoCustodyTarget>No visitors can be converted. Visitors in quarantine, in a mental state, no longer present, or who do not permit imprisonment cannot be converted.</RHAH_Choice_NoCustodyTarget>
   <RHAH_Choice_NoPresent>No visitors were present when the action was taken.</RHAH_Choice_NoPresent>
   <RHAH_Choice_NoRecruit>No visitor permits being taken in, hired, or joining the colony.</RHAH_Choice_NoRecruit>
+  <RHAH_Choice_NoTransfer>No visitor permits both transfer and departure.</RHAH_Choice_NoTransfer>
   <RHAH_Choice_NoIdeology>Enslaving requires the Ideology DLC.</RHAH_Choice_NoIdeology>
   <RHAH_Choice_CustodyFailed>No visitors changed status. You can still respond to this letter.</RHAH_Choice_CustodyFailed>
   <RHAH_Choice_FeedHint>They will wait where they are. Select a colonist, then right-click a waiting visitor to hand over food. Nobody is sent to deliver it.</RHAH_Choice_FeedHint>
@@ -512,8 +513,9 @@
   <RHAH_Choice_NoFood>No food to give {1}</RHAH_Choice_NoFood>
   <RHAH_Choice_Short>Not enough in storage. They need {0}.</RHAH_Choice_Short>
   <RHAH_Choice_NoBaby>A child cannot be handed over in this choice. Child exchange also requires food substitution, a meals-per-child cost above 0, and enough simple meals.</RHAH_Choice_NoBaby>
-  <RHAH_Choice_Stale>This letter has already been settled.</RHAH_Choice_Stale>
+  <RHAH_Choice_Stale>This choice is no longer available for this letter.</RHAH_Choice_Stale>
   <RHAH_Choice_Delivered>The goods have been handed over.</RHAH_Choice_Delivered>
+  <RHAH_Choice_SiteUnavailable>The intel site could not be created. No goods have been handed over. You can still respond to this letter.</RHAH_Choice_SiteUnavailable>
   <RHAH_Choice_Fed>The visitors have eaten.</RHAH_Choice_Fed>
   <RHAH_Intel_Label>Intel site</RHAH_Intel_Label>
   <RHAH_Intel_Text>The trade is done. A site has appeared nearby.</RHAH_Intel_Text>

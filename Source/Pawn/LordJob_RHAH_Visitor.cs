@@ -21,6 +21,14 @@ namespace HungerAndHavoc.Pawn
         ThingDef foodDef;
         int foodCount;
 
+        internal bool PreserveForAttitudeChange { get; set; }
+
+        public override bool ShouldRemovePawn(Verse.Pawn pawn, PawnLostCondition reason)
+        {
+            return reason != PawnLostCondition.Incapped &&
+                !(reason == PawnLostCondition.ChangedFaction && PreserveForAttitudeChange);
+        }
+
         public LordJob_RHAH_Visitor()
         {
         }
@@ -53,7 +61,7 @@ namespace HungerAndHavoc.Pawn
         public override StateGraph CreateGraph()
         {
             StateGraph graph = new StateGraph();
-            LordToil_Travel travel = new LordToil_Travel(waitSpot);
+            LordToil_Travel travel = new LordToil_RHAH_VisitorTravel(waitSpot);
             graph.AddToil(travel);
             graph.StartingToil = travel;
 
@@ -194,29 +202,37 @@ namespace HungerAndHavoc.Pawn
             {
                 Verse.Pawn pawn = lord.ownedPawns[i];
                 IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
-                if (snapshot == null)
+                if (snapshot == null || !RHAH_BatchAttitude.CanOrderLeave(pawn))
                 {
                     return false;
                 }
 
-                if (snapshot.Lifecycle == RHAH_Lifecycle.Fed ||
-                    snapshot.Lifecycle == RHAH_Lifecycle.Leaving ||
-                    FoodWaitExpired(pawn, snapshot))
+                if (ReadyToLeave(pawn, snapshot))
                 {
                     continue;
                 }
 
-                if (!Compat.RHAH_ChildMovement.CanWalkOut(pawn) &&
-                    (pawn.CarriedBy != null || HasCarrier(pawn)))
-                {
-                    continue;
-                }
 
                 return false;
             }
 
             return true;
         }
+        internal static bool ReadyToLeave(Verse.Pawn pawn, IRHAH_Pawn snapshot)
+        {
+            if (snapshot.Lifecycle == RHAH_Lifecycle.Leaving)
+            {
+                return true;
+            }
+
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            int now = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            return (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.LeaveAfterFed) &&
+                RHAH_VisitorRules.FedLeaveDue(settings == null || settings.leaveAfterFed,
+                    snapshot.HasBeenFed, now, snapshot.LeaveAfterGameTick, pawn.Downed)) ||
+                FoodWaitExpired(pawn, snapshot);
+        }
+
         bool TraderMustLeave(TriggerSignal signal)
         {
             if (signal.type != TriggerSignalType.Tick || lord?.ownedPawns == null)
@@ -250,24 +266,25 @@ namespace HungerAndHavoc.Pawn
             return false;
         }
 
-        bool HasCarrier(Verse.Pawn child)
+    }
+
+    internal sealed class LordToil_RHAH_VisitorTravel : LordToil_Travel
+    {
+        internal LordToil_RHAH_VisitorTravel(IntVec3 destination) : base(destination)
         {
+        }
+
+        public override void UpdateAllDuties()
+        {
+            base.UpdateAllDuties();
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
-                Verse.Pawn adult = lord.ownedPawns[i];
-                if (adult == null || adult == child || adult.Downed || adult.CarriedBy != null)
+                Verse.Pawn pawn = lord.ownedPawns[i];
+                if (RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving)
                 {
-                    continue;
-                }
-
-                if (RHAH_Api.Allows(adult, RHAH_BehaviorGate.Carry) &&
-                    Compat.RHAH_ChildMovement.CanWalkOut(adult))
-                {
-                    return true;
+                    pawn.mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
                 }
             }
-
-            return false;
         }
     }
 
@@ -284,10 +301,10 @@ namespace HungerAndHavoc.Pawn
         {
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
-                lord.ownedPawns[i].mindState.duty = new PawnDuty(
-                    RHAH_DefOf.RHAH_VisitorSeek,
-                    waitSpot,
-                    10f);
+                Verse.Pawn pawn = lord.ownedPawns[i];
+                pawn.mindState.duty = RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving
+                    ? new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave)
+                    : new PawnDuty(RHAH_DefOf.RHAH_VisitorSeek, waitSpot, 10f);
             }
         }
     }
@@ -299,6 +316,10 @@ namespace HungerAndHavoc.Pawn
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
                 Verse.Pawn pawn = lord.ownedPawns[i];
+                if (!RHAH_BatchAttitude.CanOrderLeave(pawn))
+                {
+                    continue;
+                }
                 RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
                 pawn.mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
             }
@@ -322,7 +343,10 @@ namespace HungerAndHavoc.Pawn
         {
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
-                lord.ownedPawns[i].mindState.duty = new PawnDuty(DutyDefOf.WanderClose_NoNeeds, lord.ownedPawns[i].Position, 3f);
+                Verse.Pawn pawn = lord.ownedPawns[i];
+                pawn.mindState.duty = RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving
+                    ? new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave)
+                    : new PawnDuty(DutyDefOf.WanderClose_NoNeeds, pawn.Position, 3f);
             }
         }
 

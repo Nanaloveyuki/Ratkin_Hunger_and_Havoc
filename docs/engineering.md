@@ -213,7 +213,9 @@ API 程序集的公开类型采用白名单，当前目标包括：
 
 原版 Harmony 例外不进上表。`RHAH_IncidentSchedulePatch` 是 `internal`，Postfix `Storyteller.StorytellerTick`。原版讲述者没有本模组事件池，`baseChance` 保持 0。补丁只在 1000 tick 检查点入队，不改类别权重，不替换袭击。
 
-`RHAH_AttitudeHarmPatch` 是 `internal`，Postfix `Thing.PreApplyDamage`。原版伤害只改单只 pawn 的好感，不会按生成批次改态度。补丁只接收玩家派系实施者的外部暴力，调用批次离场或敌对关系，不创建袭击 Lord。目标缺失时不注册。
+`RHAH_AttitudeHarmPatch` 是 `internal`，Postfix `Thing.TakeDamage`。原版伤害只改单只 pawn 的好感，不会按生成批次改态度。补丁只接收玩家派系实施者的外部暴力，且实际 `DamageResult.totalDamageDealt > 0` 才记录伤害并触发批次反应；护甲吸收不算伤害。拒绝和驱逐不写伤害标记；非访客 Lord 不被接管，不创建袭击 Lord。目标缺失时不注册。
+
+`RHAH_ExitTrustPatch` 是 `internal`，Prefix/Postfix `Pawn.ExitMap`。原版在离图过程中通知原派系并清救治次数；Prefix 保存原救治次数，Postfix 仅对已实际离图、非囚奴的 Leaving 来客完成盟友入籍，再以原版 `Notify_MemberExitedMap` 条件结算目标盟友好感。点击选择时不提前换派系，避免拆照护 Lord 或把抱持孩子判为绑架；未受救治的健康离图不虚构好感。
 
 `RHAH_ClayEatThingPatch` 与 `RHAH_ClayEatDefPatch` 是 `internal`，Postfix `FoodUtility.WillEat` 的 Thing 和 ThingDef 重载。观音土十五天吃满三块后原版仍把它当食物。补丁只在目标是 `RHAH_GuanyinTu` 且饱腹窗口未过时返回 false，不改其它食物。
 `RHAH_TraitColor` 是 `internal`，Postfix `Trait.LabelCap`。原版特质名没有本模组颜色。补丁只给 `RHAH_Trait_` 前缀上色，已有颜色标签时不改。

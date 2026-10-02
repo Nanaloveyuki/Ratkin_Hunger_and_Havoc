@@ -24,10 +24,10 @@ namespace HungerAndHavoc.Pawn
         protected override IEnumerable<Toil> MakeNewToils()
         {
             this.FailOnDespawnedOrNull(TargetIndex.A);
-            this.FailOn(() => !RHAH_Api.IsVisitor(TargetPawn));
+            this.FailOn(() => !RHAH_BatchAttitude.CanOrderLeave(TargetPawn));
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
             Toil expel = ToilMaker.MakeToil("ExpelVisitor");
-            expel.initAction = () => RHAH_BatchAttitude.TryShift(TargetPawn, false);
+            expel.initAction = () => RHAH_BatchAttitude.TryShift(TargetPawn, RHAH_BatchReaction.Expel);
             expel.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return expel;
         }

@@ -20,7 +20,8 @@ namespace HungerAndHavoc.Pawn
         {
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
             RHAH_Settings settings = RHAH_Mod.Settings;
-            if (comp == null || pawn.Map == null || settings == null || !RHAH_Api.IsVisitor(pawn))
+            if (comp == null || pawn.Map == null || settings == null || !RHAH_BatchAttitude.CanOrderLeave(pawn) ||
+                pawn.Downed || (pawn.stances?.stunner?.Stunned ?? false) || RHAH_DefOf.RHAH_DropChild == null)
             {
                 return null;
             }
@@ -53,7 +54,6 @@ namespace HungerAndHavoc.Pawn
                 Verse.Pawn child = FindLinked(pawn, lord, childId);
                 if (!RHAH_FamilyRules.StillCarried(child != null, child != null && child.CarriedBy == pawn))
                 {
-                    RHAH_FamilyRules.MarkDropped(comp.State.droppedChildLoadIds, childId);
                     continue;
                 }
 
@@ -77,7 +77,8 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            return pawn.carryTracker?.CarriedThing as Verse.Pawn;
+            Verse.Pawn carried = pawn.carryTracker?.CarriedThing as Verse.Pawn;
+            return carried != null && carried.thingIDNumber == loadId ? carried : null;
         }
     }
 
@@ -90,7 +91,6 @@ namespace HungerAndHavoc.Pawn
 
         protected override System.Collections.Generic.IEnumerable<Toil> MakeNewToils()
         {
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
             Toil drop = ToilMaker.MakeToil("DropChild");
             drop.initAction = () =>
             {
@@ -100,7 +100,8 @@ namespace HungerAndHavoc.Pawn
                     return;
                 }
 
-                if (!pawn.carryTracker.TryDropCarriedThing(pawn.Position, ThingPlaceMode.Near, out Thing _))
+                if (!pawn.carryTracker.TryDropCarriedThing(pawn.Position, ThingPlaceMode.Near, out Thing dropped) ||
+                    dropped != child || child.CarriedBy != null || !child.Spawned)
                 {
                     return;
                 }
@@ -110,6 +111,7 @@ namespace HungerAndHavoc.Pawn
                 {
                     RHAH_FamilyRules.MarkDropped(comp.State.droppedChildLoadIds, child.thingIDNumber);
                 }
+                child.GetLord()?.RemovePawn(child);
             };
             drop.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return drop;

@@ -81,9 +81,9 @@ namespace HungerAndHavoc.Generation
                 request.Map?.GetComponent<MapComponent_RHAH_Map>()?.Quarantine(pawn.thingIDNumber);
             }
 
-            RHAH_VisitorGroup.TryStart(created, request.Map, request.SpawnCell, request.Role);
             if (registerBatch)
             {
+                RHAH_VisitorGroup.TryStart(created, request.Map, request.SpawnCell, request.Role);
                 RHAH_Runtime.RegisterBatch(request.Map, request.SpawnBatchId);
             }
             return RHAH_PawnCreationResult.Success(created);

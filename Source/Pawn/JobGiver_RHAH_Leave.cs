@@ -19,49 +19,28 @@ namespace HungerAndHavoc.Pawn
         // 供无 Lord 的总 JobGiver 调度
         internal static Job TryCreate(Verse.Pawn pawn)
         {
-            if (!RHAH_Api.IsVisitor(pawn))
+            if (!RHAH_BatchAttitude.CanOrderLeave(pawn))
             {
                 return null;
             }
 
-            // 离场走 ExitMap 或饱食后离开闸门
-            bool exit = RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap);
-            bool fedLeave = RHAH_Api.Allows(pawn, RHAH_BehaviorGate.LeaveAfterFed);
-            if (!exit && !fedLeave)
-            {
-                return null;
-            }
-
-            RHAH_Settings settings = RHAH_Mod.Settings;
             IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
-            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            bool fedDue = snapshot != null && RHAH_VisitorRules.FedLeaveDue(
-                settings == null || settings.leaveAfterFed,
-                snapshot.HasBeenFed,
-                now,
-                snapshot.LeaveAfterGameTick,
-                pawn.Downed);
-            bool foodWaitExpired = snapshot != null && RHAH_VisitorRules.NoFoodWaitExpired(
-                true,
-                snapshot.HasBeenFed,
-                now,
-                FoodWaitDeadline(pawn));
-            bool ordered = pawn.GetLord()?.CurLordToil is LordToil_RHAH_VisitorLeave;
-            bool orderedLeave = RHAH_VisitorRules.OrderedLeaveDue(ordered, fedDue, foodWaitExpired);
-            if (!exit && !fedDue && !foodWaitExpired && !orderedLeave)
+            if (!LordJob_RHAH_Visitor.ReadyToLeave(pawn, snapshot))
             {
                 return null;
             }
 
-
-            if (pawn.Downed || (pawn.stances != null && pawn.stances.stunner != null && pawn.stances.stunner.Stunned))
+            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
+            if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap) || pawn.Downed ||
+                (pawn.stances?.stunner?.Stunned ?? false) || pawn.Map == null || JobDefOf.Goto == null)
             {
                 return null;
             }
 
-            if (pawn.Map == null || JobDefOf.Goto == null)
+            Job drop = JobGiver_RHAH_DropChild.TryCreate(pawn);
+            if (drop != null)
             {
-                return null;
+                return drop;
             }
 
             if (RHAH_ChildMovement.CanWalkOut(pawn))
@@ -83,7 +62,22 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
+            if (HasUnreadyCarriedChild(pawn))
+            {
+                return null;
+            }
+            Verse.Pawn carried = pawn.carryTracker?.CarriedThing as Verse.Pawn;
+            if (carried != null)
+            {
+                if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Carry) || RHAH_DefOf.RHAH_CarryYoung == null)
+                {
+                    return null;
+                }
+                Job carry = JobMaker.MakeJob(RHAH_DefOf.RHAH_CarryYoung, carried, spot);
+                carry.count = 1;
+                RHAH_LeashBridge.ClearDeparture(pawn);
+                return carry;
+            }
             RHAH_LeashBridge.ClearDeparture(pawn);
             Job job = JobMaker.MakeJob(JobDefOf.Goto, spot);
             job.exitMapOnArrival = true;
@@ -91,17 +85,16 @@ namespace HungerAndHavoc.Pawn
             return job;
         }
 
-        static int FoodWaitDeadline(Verse.Pawn pawn)
-        {
-            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
-            return comp == null ? -1 : comp.State.foodWaitUntilTick;
-        }
 
         static Job CarryDependent(Verse.Pawn pawn)
         {
-            if (pawn.Downed ||
-                pawn.CarriedBy != null ||
-                !RHAH_ChildMovement.CanWalkOut(pawn) ||
+            if (pawn.Downed || pawn.carryTracker?.CarriedThing != null ||
+                pawn.CarriedBy != null)
+            {
+                return null;
+            }
+
+            if (!RHAH_ChildMovement.CanWalkOut(pawn) ||
                 !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Carry))
             {
                 return null;
@@ -121,7 +114,20 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                if (RHAH_ChildMovement.CanWalkOut(child) || !RHAH_Api.IsVisitor(child))
+                if (RHAH_ChildMovement.CanWalkOut(child) || !RHAH_BatchAttitude.CanOrderLeave(child) ||
+                    WasDropped(lord, child))
+                {
+                    continue;
+                }
+
+                IRHAH_Pawn childState = RHAH_Api.Get(child);
+                if (!LordJob_RHAH_Visitor.ReadyToLeave(child, childState))
+                {
+                    continue;
+                }
+
+                RHAH_Api.SetLifecycle(child, RHAH_Lifecycle.Leaving);
+                if (!RHAH_Api.Allows(child, RHAH_BehaviorGate.ExitMap))
                 {
                     continue;
                 }
@@ -143,6 +149,32 @@ namespace HungerAndHavoc.Pawn
             }
 
             return null;
+        }
+
+        static bool HasUnreadyCarriedChild(Verse.Pawn pawn)
+        {
+            Verse.Pawn child = pawn.carryTracker?.CarriedThing as Verse.Pawn;
+            return child != null && (!RHAH_BatchAttitude.CanOrderLeave(child) ||
+                RHAH_Api.Get(child).Lifecycle != RHAH_Lifecycle.Leaving ||
+                !RHAH_Api.Allows(child, RHAH_BehaviorGate.ExitMap));
+        }
+
+        internal static bool WasDropped(Lord lord, Verse.Pawn child)
+        {
+            if (lord?.ownedPawns == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(lord.ownedPawns[i]);
+                if (comp != null && comp.State.droppedChildLoadIds.Contains(child.thingIDNumber))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

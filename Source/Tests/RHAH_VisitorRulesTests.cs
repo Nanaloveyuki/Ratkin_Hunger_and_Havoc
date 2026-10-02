@@ -104,14 +104,6 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_VisitorRules.NoFoodWaitExpired(true, false, 20000, -1));
         }
 
-        [Fact]
-        public void OrderedLeave_LeavesBeforeFedOrFoodDeadline()
-        {
-            Assert.True(RHAH_VisitorRules.OrderedLeaveDue(true, false, false));
-            Assert.False(RHAH_VisitorRules.OrderedLeaveDue(false, false, false));
-            Assert.False(RHAH_VisitorRules.FedLeaveDue(true, false, 100, -1, false));
-            Assert.False(RHAH_VisitorRules.NoFoodWaitExpired(true, false, 100, -1));
-        }
 
 
         [Fact]

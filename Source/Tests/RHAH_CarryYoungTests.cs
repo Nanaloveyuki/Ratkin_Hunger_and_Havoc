@@ -38,6 +38,28 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void IncapacitationKeepsVisitorCaregiversAndChildrenInTheirLord()
+        {
+            LordJob_RHAH_Visitor visitor = new LordJob_RHAH_Visitor();
+            Assert.False(visitor.ShouldRemovePawn(Pawn(true), PawnLostCondition.Incapped));
+            Assert.True(visitor.ShouldRemovePawn(Pawn(false), PawnLostCondition.Killed));
+            Assert.True(visitor.ShouldRemovePawn(Pawn(false), PawnLostCondition.MadePrisoner));
+        }
+
+        [Fact]
+        public void AttitudeFactionChangePreservesCareOnlyDuringTheBatchTransition()
+        {
+            LordJob_RHAH_Visitor visitor = new LordJob_RHAH_Visitor();
+            Verse.Pawn pawn = Pawn(false);
+            Assert.True(visitor.ShouldRemovePawn(pawn, PawnLostCondition.ChangedFaction));
+            visitor.PreserveForAttitudeChange = true;
+            Assert.False(visitor.ShouldRemovePawn(pawn, PawnLostCondition.ChangedFaction));
+            Assert.True(visitor.ShouldRemovePawn(pawn, PawnLostCondition.MadePrisoner));
+            visitor.PreserveForAttitudeChange = false;
+            Assert.True(visitor.ShouldRemovePawn(pawn, PawnLostCondition.ChangedFaction));
+        }
+
+        [Fact]
         public void CarriedPawnKeepsTheLordUsedByTheStop()
         {
             Verse.Pawn child = Pawn(false);

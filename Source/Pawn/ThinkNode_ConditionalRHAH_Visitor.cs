@@ -7,7 +7,7 @@ namespace HungerAndHavoc.Pawn
     {
         protected override bool Satisfied(Verse.Pawn pawn)
         {
-            return RHAH_Api.IsVisitor(pawn);
+            return RHAH_BatchAttitude.CanOrderLeave(pawn);
         }
     }
 }

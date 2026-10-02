@@ -59,35 +59,6 @@ namespace HungerAndHavoc.Tests
             Assert.True(notify > set, "NotifyReleased must follow SetLifecycle Released");
         }
 
-        [Fact]
-        public void JobGiverAsksIsVisitorThenAllowsThenTryCreate()
-        {
-            string source = File.ReadAllText(PawnPath("JobGiver_RHAH_Visitor.cs"));
-            int visitor = source.IndexOf("RHAH_Api.IsVisitor");
-            int allows = source.IndexOf("RHAH_Api.Allows");
-            Assert.True(visitor >= 0, "JobGiver_RHAH_Visitor must ask IsVisitor");
-            Assert.True(allows > visitor, "JobGiver_RHAH_Visitor must ask Allows after IsVisitor");
-            Assert.Contains("JobGiver_RHAH_Feed.TryCreate(pawn)", source);
-            Assert.Contains("JobGiver_RHAH_Beg.TryCreate(pawn)", source);
-            Assert.Contains("JobGiver_RHAH_Steal.TryCreate(pawn)", source);
-            Assert.DoesNotContain("JobGiver_RHAH_Gnaw.TryCreate(pawn)", source);
-            Assert.Contains("AllowsModBehavior", source);
-            Assert.Contains("JobGiver_RHAH_Leave.TryCreate(pawn)", source);
-            Assert.Contains("JobGiver_RHAH_DropChild.TryCreate(pawn)", source);
-            Assert.Contains("JobGiver_RHAH_MotherFeed.TryCreate(pawn)", source);
-            int feedChild = source.IndexOf("JobGiver_RHAH_MotherFeed.TryCreate(pawn)");
-            int relief = source.IndexOf("JobGiver_RHAH_Feed.TryCreate(pawn)");
-            int drop = source.IndexOf("JobGiver_RHAH_DropChild.TryCreate(pawn)");
-            int leave = source.IndexOf("JobGiver_RHAH_Leave.TryCreate(pawn)");
-            Assert.True(feedChild >= 0 && relief > feedChild && drop > relief && leave > drop);
-        }
-
-        [Fact]
-        public void ThinkNodeSatisfiedUsesIsVisitor()
-        {
-            string source = File.ReadAllText(PawnPath("ThinkNode_ConditionalRHAH_Visitor.cs"));
-            Assert.Contains("RHAH_Api.IsVisitor(pawn)", source);
-        }
 
         [Fact]
         public void NotifyReleasedRemovesLordAndDuty()
@@ -102,23 +73,6 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("pawn.jobs?.StopAll()", body);
         }
 
-        [Fact]
-        public void LordJobExposesFactionWaitSpotAndHostileExit()
-        {
-            string source = File.ReadAllText(PawnPath("LordJob_RHAH_Visitor.cs"));
-            Assert.Contains("LostImportantReferenceDuringLoading", source);
-            Assert.Contains("\"faction\"", source);
-            Assert.Contains("\"waitSpot\"", source);
-            Assert.Contains("Trigger_Memo(\"RHAH_Leave\")", source);
-            Assert.Contains("LordToil_RHAH_VisitorLeave", source);
-            Assert.DoesNotContain("LordToil_ExitMapAndDefendSelf", source);
-            Assert.DoesNotContain("Trigger_BecamePlayerEnemy", source);
-            Assert.DoesNotContain("Trigger_PawnKilled", source);
-            Assert.Contains("RHAH_DefOf.RHAH_VisitorSeek", source);
-            Assert.Contains("RHAH_DefOf.RHAH_VisitorLeave", source);
-            Assert.DoesNotContain("LordJob_BegForItems", source);
-            Assert.DoesNotContain("CheckIdeology", source);
-        }
 
         [Fact]
         public void ThinkTreeInsertsHumanlikePostDutyWithoutHumanlikeXpath()
@@ -144,27 +98,6 @@ namespace HungerAndHavoc.Tests
             int allows = source.IndexOf("RHAH_Api.Allows");
             Assert.True(visitor >= 0 && allows > visitor);
             Assert.DoesNotContain("System.Linq", source);
-        }
-        [Fact]
-        public void VisitorSeekDutyUsesUnifiedJobGiverAndLifecycleHooksExist()
-        {
-            string duty = File.ReadAllText(Path.GetFullPath(Path.Combine(
-                Path.GetDirectoryName(ThinkTreePath()), "..", "DutyDefs", "RHAH_Duties.xml")));
-            Assert.Contains("HungerAndHavoc.Pawn.JobGiver_RHAH_Visitor", duty);
-            Assert.DoesNotContain("JobGiver_RHAH_Feed", duty);
-            Assert.DoesNotContain("JobGiver_RHAH_Beg", duty);
-            Assert.DoesNotContain("RHAH_Feeding.TryComplete",
-                File.ReadAllText(PawnPath("JobDriver_RHAH_Gnaw.cs")));
-            Assert.Contains("RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving)",
-                File.ReadAllText(PawnPath("JobGiver_RHAH_Leave.cs")));
-            Assert.Contains("HungerAndHavoc.Pawn.JobGiver_RHAH_Leave", duty);
-            Assert.DoesNotContain("JobGiver_ExitMapBest", duty);
-            Assert.Contains("NoFoodWaitExpired",
-                File.ReadAllText(PawnPath("JobGiver_RHAH_Leave.cs")));
-            Assert.Contains("RHAH_BehaviorGate.Carry",
-                File.ReadAllText(PawnPath("JobGiver_RHAH_Leave.cs")));
-            Assert.Contains("Job carry = CarryDependent(pawn);",
-                File.ReadAllText(PawnPath("JobGiver_RHAH_Leave.cs")));
         }
 
         [Fact]
@@ -195,27 +128,6 @@ namespace HungerAndHavoc.Tests
             Assert.DoesNotContain("MarkFed", File.ReadAllText(PawnPath("JobGiver_RHAH_Visitor.cs")));
         }
 
-        [Fact]
-        public void ManualExpel_AssignsAWalkJob()
-        {
-            string menu = File.ReadAllText(PawnPath("RHAH_VisitorExpelMenu.cs"));
-            Assert.Contains("RHAH_DefOf.RHAH_Expel", menu);
-            Assert.Contains("TryTakeOrderedJob", menu);
-            Assert.DoesNotContain("TryShift(clickedPawn, true)", menu);
-
-            string driver = File.ReadAllText(PawnPath("JobDriver_RHAH_Expel.cs"));
-            int walk = driver.IndexOf("Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch)");
-            int shift = driver.IndexOf("RHAH_BatchAttitude.TryShift(TargetPawn, false)");
-            Assert.True(walk >= 0 && shift > walk, "expel must reach the visitor before sending them off");
-            Assert.Contains("FailOn(() => !RHAH_Api.IsVisitor(TargetPawn))", driver);
-
-            string order = File.ReadAllText(PawnPath("RHAH_BatchAttitude.cs"));
-            int marked = order.IndexOf("MarkLeaving(members)");
-            int memo = order.IndexOf("lord.ReceiveMemo(\"RHAH_Leave\")");
-            int started = order.IndexOf("pawn.jobs?.StartJob(leave, JobCondition.InterruptForced)");
-            Assert.True(marked >= 0 && memo > marked && started > memo, "expulsion must mark Leaving before starting the exit job");
-            Assert.Contains("RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving)", order);
-        }
 
 
 

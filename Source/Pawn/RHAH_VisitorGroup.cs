@@ -104,7 +104,7 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                if (!pawn.Spawned || pawn.Map != map)
+                if (pawn.MapHeld != map || (!pawn.Spawned && pawn.CarriedBy == null))
                 {
                     continue;
                 }

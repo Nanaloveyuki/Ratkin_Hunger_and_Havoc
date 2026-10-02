@@ -110,13 +110,11 @@ namespace HungerAndHavoc.Incidents
                 ? RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= foodAmount && foodAmount > 0
                 : RHAH_RequestRules.CanDeliver(kind, RHAH_ChoiceRuntime.Stock(map, kind), amount, false));
 
-            RHAH_ChoiceAction settled = RHAH_ChoiceRuntime.TrySettle(
-                game,
-                choiceId,
-                action,
-                Find.TickManager.TicksGame,
-                enabled,
-                canDeliver);
+            int tick = Find.TickManager.TicksGame;
+            RHAH_ChoiceAction requested = open != null && open.Open && open.ExpireTick >= 0 && tick >= open.ExpireTick
+                ? RHAH_ChoiceAction.Timeout : action;
+            RHAH_ChoiceAction settled = open == null || Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)
+                ? RHAH_ChoiceAction.None : RHAH_RequestRules.Settle(requested, enabled, !open.Open, canDeliver);
             if (settled == RHAH_ChoiceAction.None)
             {
                 TaggedString reason = action == RHAH_ChoiceAction.Deliver && open != null && open.Open && enabled && map != null && !canDeliver
@@ -127,27 +125,21 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
-            RHAH_ChoiceRecord record = FindRecord(game);
             RHAH_RequestKind consumed = foodForChild ? RHAH_RequestKind.SimpleMeal : kind;
             int consumedAmount = foodForChild ? foodAmount : amount;
-            if (settled == RHAH_ChoiceAction.Deliver &&
-                RHAH_RequestRules.RemovesStock(settled, consumed) &&
-                !RHAH_ChoiceRuntime.TryConsume(map, consumed, consumedAmount))
+            bool removesStock = RHAH_RequestRules.RemovesStock(settled, consumed);
+            bool createsSite = RHAH_RequestRules.CreatesSite(settled, site);
+            bool completed = createsSite
+                ? RHAH_ChoiceRuntime.TryCreateSite(map, site, () => !removesStock || RHAH_ChoiceRuntime.TryConsume(map, consumed, consumedAmount))
+                : !removesStock || RHAH_ChoiceRuntime.TryConsume(map, consumed, consumedAmount);
+            if (!completed)
             {
-                if (record != null && record.Settled == RHAH_ChoiceAction.Deliver)
-                {
-                    record.Settled = RHAH_ChoiceAction.None;
-                }
-
-                Messages.Message("RHAH_Choice_Short".Translate(consumedAmount), MessageTypeDefOf.RejectInput);
+                Messages.Message(createsSite ? "RHAH_Choice_SiteUnavailable".Translate() : "RHAH_Choice_Short".Translate(consumedAmount), MessageTypeDefOf.RejectInput);
                 return;
             }
 
-            if (RHAH_RequestRules.CreatesSite(settled, site))
-            {
-                RHAH_ChoiceRuntime.TryCreateSite(map, site);
-            }
-
+            RHAH_ChoiceRuntime.TrySettle(game, choiceId, settled, tick, enabled, canDeliver);
+            RHAH_ChoiceRecord record = FindRecord(game);
             RHAH_ChoiceRuntime.Apply(record);
             if (settled == RHAH_ChoiceAction.Deliver)
             {
