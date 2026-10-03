@@ -90,6 +90,14 @@ namespace HungerAndHavoc.Pawn
             SetHostile(members);
             if (RHAH_Mod.Settings == null || RHAH_Mod.Settings.batchLeavesTogether)
             {
+                // 显式攻击不驱逐允许反击的成员
+                for (int i = members.Count - 1; i >= 0; i--)
+                {
+                    if (RHAH_Api.Allows(members[i], RHAH_BehaviorGate.Fight))
+                    {
+                        members.RemoveAt(i);
+                    }
+                }
                 OrderLeave(members);
             }
             return true;
@@ -98,6 +106,12 @@ namespace HungerAndHavoc.Pawn
         static void SetHostile(List<Verse.Pawn> members)
         {
             Faction hostile = RHAH_AttitudeFactions.Require(RHAH_Attitude.Hostile);
+            RHAH_AttitudeFactions.LockGoodwill();
+            // 直接固定关系不会更新原版已收录的目标
+            for (int i = 0; i < Find.Maps.Count; i++)
+            {
+                Find.Maps[i].attackTargetsCache.Notify_FactionHostilityChanged(hostile, Faction.OfPlayer);
+            }
             RHAH_AttitudeFactions.LockOutside(Faction.OfPlayer);
             for (int i = 0; i < members.Count; i++)
             {
