@@ -47,7 +47,8 @@ namespace HungerAndHavoc.Generation
             float maximum = pawn.GetStatValue(StatDefOf.ComfyTemperatureMax, true);
             string selected = Select(temperature, minimum, maximum, settings);
             ThingDef def = string.IsNullOrEmpty(selected) ? null : DefDatabase<ThingDef>.GetNamedSilentFail(selected);
-            if (def == null || !ApparelUtility.HasPartsToWear(pawn, def) || !pawn.apparel.CanWearWithoutDroppingAnything(def))
+            if (def == null || !def.apparel.PawnCanWear(pawn, true) ||
+                !ApparelUtility.HasPartsToWear(pawn, def) || !pawn.apparel.CanWearWithoutDroppingAnything(def))
             {
                 return;
             }

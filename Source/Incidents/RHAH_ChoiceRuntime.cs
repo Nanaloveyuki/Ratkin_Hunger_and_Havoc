@@ -280,7 +280,7 @@ namespace HungerAndHavoc.Incidents
 
         static bool AcceptsAlly(Faction faction)
         {
-            if (faction == null || faction.def == null)
+            if (faction == null || faction.def == null || faction.IsPlayer)
             {
                 return false;
             }
