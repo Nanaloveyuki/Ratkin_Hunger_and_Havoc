@@ -243,6 +243,7 @@
   <RHAH_Thought_ScavengedFilth.label>licked the floor</RHAH_Thought_ScavengedFilth.label>
   <RHAH_Thought_ScavengedFilth.description>I licked something off the floor. It stayed down.</RHAH_Thought_ScavengedFilth.description>
   <RHAH_Thought_ScavengedFilth.stages.0.label>licked the floor</RHAH_Thought_ScavengedFilth.stages.0.label>
+  <RHAH_Thought_ScavengedFilth.stages.0.description>I licked something off the floor. It stayed down.</RHAH_Thought_ScavengedFilth.stages.0.description>
   <RHAH_Thought_TailBitten.label>tail bitten off</RHAH_Thought_TailBitten.label>
   <RHAH_Thought_TailBitten.description>My tail is gone. It was bitten off while I slept.</RHAH_Thought_TailBitten.description>
   <RHAH_Thought_TailBitten.stages.0.label>tail bitten off</RHAH_Thought_TailBitten.stages.0.label>

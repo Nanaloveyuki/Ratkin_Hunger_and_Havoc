@@ -513,8 +513,8 @@
     <stackLimit>3</stackLimit>
     <stages>
       <li>
-        <label>licked the floor</label>
-        <description>I licked something off the floor. It stayed down.</description>
+        <label>舔了地上的东西</label>
+        <description>我舔了地上的一点东西。至少没吐出来。</description>
         <baseMoodEffect>-3</baseMoodEffect>
       </li>
     </stages>
