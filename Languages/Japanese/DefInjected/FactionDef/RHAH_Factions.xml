@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Faction_Hostile.label>敵対的な飢饉ラットキン</RHAH_Faction_Hostile.label>
+  <RHAH_Faction_Hostile.fixedName>敵対的な飢饉ラットキン</RHAH_Faction_Hostile.fixedName>
+  <RHAH_Faction_Hostile.description>荒廃したラットキンの集落から逃れてきた人々です。道具もなく、食糧の蓄えもわずかで、手の届く物は持ち去ってしまいます。\n\nコロニーに敵意を抱いています。危害を加えても、報復の襲撃は起こりません。</RHAH_Faction_Hostile.description>
+  <RHAH_Faction_Hostile.pawnSingular>ラットキン</RHAH_Faction_Hostile.pawnSingular>
+  <RHAH_Faction_Hostile.pawnsPlural>ラットキン</RHAH_Faction_Hostile.pawnsPlural>
+  <RHAH_Faction_LeaningHostile.label>警戒する飢饉ラットキン</RHAH_Faction_LeaningHostile.label>
+  <RHAH_Faction_LeaningHostile.fixedName>警戒する飢饉ラットキン</RHAH_Faction_LeaningHostile.fixedName>
+  <RHAH_Faction_LeaningHostile.description>荒廃したラットキンの集落から逃れてきた人々です。距離を置いてコロニーの様子をうかがっています。\n\nまだ敵対していませんが、入植者が一人でも傷つけると、一団全員が敵対的になります。それでも襲撃はしません。</RHAH_Faction_LeaningHostile.description>
+  <RHAH_Faction_LeaningHostile.pawnSingular>ラットキン</RHAH_Faction_LeaningHostile.pawnSingular>
+  <RHAH_Faction_LeaningHostile.pawnsPlural>ラットキン</RHAH_Faction_LeaningHostile.pawnsPlural>
+  <RHAH_Faction_Neutral.label>飢饉ラットキン</RHAH_Faction_Neutral.label>
+  <RHAH_Faction_Neutral.fixedName>飢饉ラットキン</RHAH_Faction_Neutral.fixedName>
+  <RHAH_Faction_Neutral.description>荒廃したラットキンの集落から逃れてきた人々です。物乞いをする者も、盗みを働く者も、ただ通り過ぎるだけの者もいます。\n\n入植者が一人を傷つけても、中立のままです。一団を追い払うと敵対的になりますが、襲撃はしません。</RHAH_Faction_Neutral.description>
+  <RHAH_Faction_Neutral.pawnSingular>ラットキン</RHAH_Faction_Neutral.pawnSingular>
+  <RHAH_Faction_Neutral.pawnsPlural>ラットキン</RHAH_Faction_Neutral.pawnsPlural>
+  <RHAH_Faction_LeaningFriendly.label>近寄ってくる飢饉ラットキン</RHAH_Faction_LeaningFriendly.label>
+  <RHAH_Faction_LeaningFriendly.fixedName>近寄ってくる飢饉ラットキン</RHAH_Faction_LeaningFriendly.fixedName>
+  <RHAH_Faction_LeaningFriendly.description>荒廃したラットキンの集落から逃れてきた人々です。戸口まで来て食べ物を求めます。\n\n入植者が一人でも傷つけると、一団全員が立ち去ります。敵対も襲撃もしません。</RHAH_Faction_LeaningFriendly.description>
+  <RHAH_Faction_LeaningFriendly.pawnSingular>ラットキン</RHAH_Faction_LeaningFriendly.pawnSingular>
+  <RHAH_Faction_LeaningFriendly.pawnsPlural>ラットキン</RHAH_Faction_LeaningFriendly.pawnsPlural>
+  <RHAH_Faction_Friendly.label>友好的な飢饉ラットキン</RHAH_Faction_Friendly.label>
+  <RHAH_Faction_Friendly.fixedName>友好的な飢饉ラットキン</RHAH_Faction_Friendly.fixedName>
+  <RHAH_Faction_Friendly.description>荒廃したラットキンの集落から逃れてきた人々です。救援エリアを指定すると、その中からだけ食べ物を取ります。\n\n入植者が一人でも傷つけると、一団全員が立ち去ります。友好的なままで、襲撃はしません。</RHAH_Faction_Friendly.description>
+  <RHAH_Faction_Friendly.pawnSingular>ラットキン</RHAH_Faction_Friendly.pawnSingular>
+  <RHAH_Faction_Friendly.pawnsPlural>ラットキン</RHAH_Faction_Friendly.pawnsPlural>
+</LanguageData>

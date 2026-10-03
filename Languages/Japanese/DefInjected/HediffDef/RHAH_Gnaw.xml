@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_GnawedBark.label>樹皮をかじった</RHAH_GnawedBark.label>
+  <RHAH_GnawedBark.description>粗い樹皮で口の中と消化管が傷ついています。痛みがありますが、しばらくすると自然に治ります。</RHAH_GnawedBark.description>
+  <RHAH_GnawedWall.label>壁材をかじった</RHAH_GnawedWall.label>
+  <RHAH_GnawedWall.description>壁の粉や破片で一時的に空腹が収まりましたが、口の中も傷ついています。空腹の進みが遅くなる一方、痛みは強くなります。しばらくすると自然に治ります。</RHAH_GnawedWall.description>
+  <RHAH_OvergnawedWall.label>壁材の食べすぎ</RHAH_OvergnawedWall.label>
+  <RHAH_OvergnawedWall.description>壁の粉を大量に食べたため、意識が低下し、胃にはほとんど食べ物が入りません。強い痛みがあります。</RHAH_OvergnawedWall.description>
+</LanguageData>

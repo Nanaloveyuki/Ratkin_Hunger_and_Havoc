@@ -249,6 +249,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 存档键格式、默认值、迁移登记和集合初始化规则，并与 [save-ownership.md](save-ownership.md) 一致
 - Def、Keyed、事件目录、XML workerClass、hediffClass 和 CompProperties 类型名
 - 中英 Keyed 键集合对称、`Translate` 引用存在、英文 DefInjected 覆盖 Def 正文
+- 日语 Keyed / DefInjected 与英文键集合对称，Guard 日语提示齐全；逐键核对中文源占位符及次数，无中文翻译时按英文核对
 - 可持久化 Def 与类型已登记卸载动作（Remove / Replace）
 - 禁止旧前缀、旧产品名和含义不清的 Egg 身份名
 - `IRHAH_Pawn`、`RegisterRatkinMatcher` 和稳定 API 事件签名
@@ -256,3 +257,5 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 修 bug 时的范围、Language、存档和卸载门禁见 [bug-handling.md](bug-handling.md)
 
 这些检查属于 CI 阻断级门禁。`scripts/verify-scaffold.py` 检查中英 Keyed 对称、源码里的 `Translate` 字面量、中文 Def 正文的英文 DefInjected、`Scribe_*.Look` 键是否出现在卸载归属表、Hediff XML 类型名和旧前缀。动态拼接的翻译键不在字面量扫描里，事件标签另按目录 defName 检查。
+
+日语门禁另检查 XML 根、空译文、同文件重复键和跨文件冲突。跨文件相同键值沿用现有事件标签结构。日语译文在 `Languages/Japanese/` 和 `Guard/Languages/Japanese/`，不更改 Def 正文、标识符或存档契约。

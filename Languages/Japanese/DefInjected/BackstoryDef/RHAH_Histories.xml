@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_History_A001_FleeingTenantFarmer.title>飢えと災い 逃れてきた小作人</RHAH_History_A001_FleeingTenantFarmer.title>
+  <RHAH_History_A001_FleeingTenantFarmer.titleShort>飢えと災い 小作人</RHAH_History_A001_FleeingTenantFarmer.titleShort>
+  <RHAH_History_A001_FleeingTenantFarmer.description>[PAWN_nameDef]の一家はラットキンの貴族から借りた畑を耕していた。地代を納めると、残った穀物では腹を半分満たすのがやっとだった。戦火が畑まで及ぶと、小作人名簿にも守ってはもらえず、土地も失った。[PAWN_pronoun]は難民とともに、代々耕してきた土地を離れた。</RHAH_History_A001_FleeingTenantFarmer.description>
+  <RHAH_History_A002_DroughtFieldWatcher.title>飢えと災い 干ばつの畑を守る農民</RHAH_History_A002_DroughtFieldWatcher.title>
+  <RHAH_History_A002_DroughtFieldWatcher.titleShort>飢えと災い 農民</RHAH_History_A002_DroughtFieldWatcher.titleShort>
+  <RHAH_History_A002_DroughtFieldWatcher.description>[PAWN_nameDef]は故郷に残った最後の数畝の畑を守っていたが、何年待っても雨は降らず、芽吹いたばかりの種は日に焼かれて枯れた。地主は相変わらず穀物と種の納入を催促した。とうとう[PAWN_pronoun]は、ほかの小作人と空の袋を提げて去った。畑にはもう、守るものがなかった。</RHAH_History_A002_DroughtFieldWatcher.description>
+  <RHAH_History_A003_ScavengerOfFallowFields.title>飢えと災い 荒れ畑の落ち穂拾い</RHAH_History_A003_ScavengerOfFallowFields.title>
+  <RHAH_History_A003_ScavengerOfFallowFields.titleShort>飢えと災い 落ち穂拾い</RHAH_History_A003_ScavengerOfFallowFields.titleShort>
+  <RHAH_History_A003_ScavengerOfFallowFields.description>穀物の徴収人が来る前から、[PAWN_nameDef]の家にはもう食べ物がなく、手入れしていた畑も雑草に覆われていた。夜に荒れ畑で落ち穂を拾えば、ネズミの群れや穀物の巡視隊に追われる。故郷を離れるとき、[PAWN_pronoun]の手元に残っていたのは、拾い集めたわずかな種だけだった。</RHAH_History_A003_ScavengerOfFallowFields.description>
+  <RHAH_History_A004_FamineHerdTender.title>飢えと災い 凶作の年の牧場働き</RHAH_History_A004_FamineHerdTender.title>
+  <RHAH_History_A004_FamineHerdTender.titleShort>飢えと災い 牧場働き</RHAH_History_A004_FamineHerdTender.titleShort>
+  <RHAH_History_A004_FamineHerdTender.description>[PAWN_nameDef]は牧場で家畜の世話をしていた。凶作の年、牧場主はまず何頭かを売り、残りの大半を軍の食糧として差し出した。囲いが空になると、[PAWN_pronoun]は生き残ったわずかな家畜を連れ、難民とともに草地を探しに出た。</RHAH_History_A004_FamineHerdTender.description>
+  <RHAH_History_A005_DroughtWellWaterCarrier.title>飢えと災い 干ばつの村の水運び</RHAH_History_A005_DroughtWellWaterCarrier.title>
+  <RHAH_History_A005_DroughtWellWaterCarrier.titleShort>飢えと災い 水運び</RHAH_History_A005_DroughtWellWaterCarrier.titleShort>
+  <RHAH_History_A005_DroughtWellWaterCarrier.description>[PAWN_nameDef]は村の井戸から水を運び、その報酬に穀物を受け取っていた。夏の終わりには井戸の底に泥が見え、水汲みに行く道のりは日に日に長くなった。やがて村同士で水源の奪い合いが始まった。[PAWN_pronoun]は空の桶を背負い、水汲みの一団とともに古い井戸を後にした。</RHAH_History_A005_DroughtWellWaterCarrier.description>
+  <RHAH_History_A006_GranaryBookkeeper.title>飢えと災い 穀物倉庫の帳簿係</RHAH_History_A006_GranaryBookkeeper.title>
+  <RHAH_History_A006_GranaryBookkeeper.titleShort>飢えと災い 帳簿係</RHAH_History_A006_GranaryBookkeeper.titleShort>
+  <RHAH_History_A006_GranaryBookkeeper.description>穀物倉庫の帳簿をつけていた[PAWN_nameDef]は、棚卸しで、帳簿上の袋の数が実際よりはるかに多いことに気づいた。管理人はその不足を[PAWN_objective]のせいにするつもりだった。責任を問われる前に、[PAWN_pronoun]は書き留めた名簿を持って倉庫から逃げ出した。</RHAH_History_A006_GranaryBookkeeper.description>
+  <RHAH_History_A007_MoldyGrainSifter.title>飢えと災い かびた穀物の選別工</RHAH_History_A007_MoldyGrainSifter.title>
+  <RHAH_History_A007_MoldyGrainSifter.titleShort>飢えと災い 選別工</RHAH_History_A007_MoldyGrainSifter.titleShort>
+  <RHAH_History_A007_MoldyGrainSifter.description>[PAWN_nameDef]は穀物の加工場で選別をしていた。捨てるはずのかびた穀物も、凶作の年には配給に混ぜられた。子供にその穀物が渡されるのを見て、[PAWN_pronoun]はもう隠蔽に加担しないと決めた。仕事も住まいも失い、町から逃げる人々とともに去るほかなかった。</RHAH_History_A007_MoldyGrainSifter.description>
+  <RHAH_History_A008_OrphanedMillhand.title>飢えと災い 置き去りにされた製粉工</RHAH_History_A008_OrphanedMillhand.title>
+  <RHAH_History_A008_OrphanedMillhand.titleShort>飢えと災い 製粉工</RHAH_History_A008_OrphanedMillhand.titleShort>
+  <RHAH_History_A008_OrphanedMillhand.description>[PAWN_nameDef]の働く製粉所では、主人が穀物の借金を抱え、ある夜逃げ出した。残されたのは壊れかけの石臼と、未払いの給金だった。雇い主が戻ってくる気配もなく、[PAWN_pronoun]はまだ使える道具を取り外して、別の野営地へ仕事を探しに行った。</RHAH_History_A008_OrphanedMillhand.description>
+  <RHAH_History_A009_GranaryCarpenter.title>飢えと災い 穀物倉庫の大工</RHAH_History_A009_GranaryCarpenter.title>
+  <RHAH_History_A009_GranaryCarpenter.titleShort>飢えと災い 大工</RHAH_History_A009_GranaryCarpenter.titleShort>
+  <RHAH_History_A009_GranaryCarpenter.description>[PAWN_nameDef]は村の穀物倉庫を修理していた。壁はすでにネズミに食い荒らされていたが、地主は木材を自宅の屋根用に取っておいた。豪雨で倉庫が倒壊した夜、手伝いの者たちは作業小屋まで失った。[PAWN_pronoun]も彼らとともに村を離れた。</RHAH_History_A009_GranaryCarpenter.description>
+  <RHAH_History_A010_RagStitcher.title>飢えと災い 古着の仕立て屋</RHAH_History_A010_RagStitcher.title>
+  <RHAH_History_A010_RagStitcher.titleShort>飢えと災い 仕立て屋</RHAH_History_A010_RagStitcher.titleShort>
+  <RHAH_History_A010_RagStitcher.description>織物工房が止まり、布も徴発されると、[PAWN_nameDef]は古着をほどいて繕い、穀物と引き換えにした。貧しい人々には新しい布がなく、古着をほどいては縫い直すしかなかった。火事で残った布と住まいまで焼けると、[PAWN_pronoun]は針と糸をしまい、難民について去った。</RHAH_History_A010_RagStitcher.description>
+  <RHAH_History_A011_DiseasedHideTanner.title>飢えと災い 凶作の年の皮なめし工</RHAH_History_A011_DiseasedHideTanner.title>
+  <RHAH_History_A011_DiseasedHideTanner.titleShort>飢えと災い 皮なめし工</RHAH_History_A011_DiseasedHideTanner.titleShort>
+  <RHAH_History_A011_DiseasedHideTanner.description>[PAWN_nameDef]は狩猟場で皮をなめしていたが、貴族が山を閉鎖すると、安定した仕入れ先を失った。寒い冬には、病死した家畜の皮まで穀物と交換しなければならなかった。その仕事も最後には途絶え、[PAWN_pronoun]はキャラバンとともに去った。</RHAH_History_A011_DiseasedHideTanner.description>
+  <RHAH_History_A012_HerbSorter.title>飢えと災い 薬草師を継いだ助手</RHAH_History_A012_HerbSorter.title>
+  <RHAH_History_A012_HerbSorter.titleShort>飢えと災い 薬草師</RHAH_History_A012_HerbSorter.titleShort>
+  <RHAH_History_A012_HerbSorter.description>[PAWN_nameDef]は、もとは薬草採りの手伝いにすぎなかった。ペストが流行し始めると村の薬草師は病死し、ところどころ頁の欠けた薬草の記録だけが残った。家族の熱を下げるため、[PAWN_pronoun]は薬籠も隔離小屋の仕事も引き継いだ。だが病人の小屋が閉じられると、一緒に村から追い出された。</RHAH_History_A012_HerbSorter.description>
+  <RHAH_History_A013_KilnWatcher.title>飢えと災い 火を失った窯職人</RHAH_History_A013_KilnWatcher.title>
+  <RHAH_History_A013_KilnWatcher.titleShort>飢えと災い 窯職人</RHAH_History_A013_KilnWatcher.titleShort>
+  <RHAH_History_A013_KilnWatcher.description>[PAWN_nameDef]は冬の間ずっと地主のレンガ窯を守ったが、十分な燃料も寝泊まりする場所も得られなかった。窯の火が消えると、[PAWN_pronoun]は煙で傷めた両手を抱えて去り、各地の避難所で家の修理仕事を探した。</RHAH_History_A013_KilnWatcher.description>
+  <RHAH_History_A014_NightFamineEscapee.title>飢えと災い 夜逃げした飢えた民</RHAH_History_A014_NightFamineEscapee.title>
+  <RHAH_History_A014_NightFamineEscapee.titleShort>飢えと災い 飢えた民</RHAH_History_A014_NightFamineEscapee.titleShort>
+  <RHAH_History_A014_NightFamineEscapee.description>故郷では何年も不作が続き、最後の一袋を老人と子供に分けると、[PAWN_nameDef]にも食べるものはなくなった。村人が戸口を塞ぎ、穀物を奪い始めた夜、[PAWN_pronoun]は古い水袋を背負い、闇に紛れて去った。</RHAH_History_A014_NightFamineEscapee.description>
+  <RHAH_History_A015_RiverbankBridgeBuilder.title>飢えと災い 橋を架けた船大工</RHAH_History_A015_RiverbankBridgeBuilder.title>
+  <RHAH_History_A015_RiverbankBridgeBuilder.titleShort>飢えと災い 船大工</RHAH_History_A015_RiverbankBridgeBuilder.titleShort>
+  <RHAH_History_A015_RiverbankBridgeBuilder.description>[PAWN_nameDef]は川辺で船を修理していた。洪水で木橋が流され、避難する人々が河原に足止めされると、[PAWN_pronoun]は急ごしらえの危うい橋を架け、家族を渡らせた。水が引いた頃には、故郷はすでに無人だった。</RHAH_History_A015_RiverbankBridgeBuilder.description>
+  <RHAH_History_A016_RuinedVillageSearcher.title>飢えと災い 廃村の物拾い</RHAH_History_A016_RuinedVillageSearcher.title>
+  <RHAH_History_A016_RuinedVillageSearcher.titleShort>飢えと災い 物拾い</RHAH_History_A016_RuinedVillageSearcher.titleShort>
+  <RHAH_History_A016_RuinedVillageSearcher.description>[PAWN_nameDef]は略奪された村に何度も戻り、鍋や布、まだ播ける種を探した。やがて巡視隊が古い道を封鎖し、そのわずかな品さえ手に入らなくなった。そこでようやく、[PAWN_pronoun]はほかの難民とともに去った。</RHAH_History_A016_RuinedVillageSearcher.description>
+  <RHAH_History_A017_SnowpathGuide.title>飢えと災い 雪道の案内人</RHAH_History_A017_SnowpathGuide.title>
+  <RHAH_History_A017_SnowpathGuide.titleShort>飢えと災い 案内人</RHAH_History_A017_SnowpathGuide.titleShort>
+  <RHAH_History_A017_SnowpathGuide.description>[PAWN_nameDef]はキャラバンの道案内をしていたが、例年より早い雪で山道が閉ざされ、一団の難民が雪原に取り残された。家へ帰る道さえ見つからず、[PAWN_pronoun]は足跡と風向きを頼りに、彼らを荒野の向こうへ導いた。</RHAH_History_A017_SnowpathGuide.description>
+  <RHAH_History_A018_DustwayPorter.title>飢えと災い 干ばつの道の荷運び</RHAH_History_A018_DustwayPorter.title>
+  <RHAH_History_A018_DustwayPorter.titleShort>飢えと災い 荷運び</RHAH_History_A018_DustwayPorter.titleShort>
+  <RHAH_History_A018_DustwayPorter.description>[PAWN_nameDef]はキャラバンの荷運びだった。乾いた土地を渡る途中、水袋が奪われ、荷駄獣も次々と倒れた。差し止められた給金を取り戻そうと、[PAWN_pronoun]は荷駄獣を率いる仕事も引き受けた。キャラバンが解散すると、残った獣を引いて歩き続けるほかなかった。</RHAH_History_A018_DustwayPorter.description>
+  <RHAH_History_A019_CampNightWatch.title>飢えと災い 野営地の夜番</RHAH_History_A019_CampNightWatch.title>
+  <RHAH_History_A019_CampNightWatch.titleShort>飢えと災い 夜番</RHAH_History_A019_CampNightWatch.titleShort>
+  <RHAH_History_A019_CampNightWatch.description>[PAWN_nameDef]が身を寄せていた野営地では、何晩も続けて穀物が盗まれ、護衛まで武器を持って逃げ出した。混乱の中、[PAWN_pronoun]が夜番と伝令を引き受けた。野営地が移り、新しい一団に加わってからも、夜の物音に気を配り続けた。</RHAH_History_A019_CampNightWatch.description>
+  <RHAH_History_A020_LostAtTheCheckpoint.title>飢えと災い 関所で家族とはぐれた者</RHAH_History_A020_LostAtTheCheckpoint.title>
+  <RHAH_History_A020_LostAtTheCheckpoint.titleShort>飢えと災い 家族探し</RHAH_History_A020_LostAtTheCheckpoint.titleShort>
+  <RHAH_History_A020_LostAtTheCheckpoint.description>[PAWN_nameDef]は家族を連れ、穀物税を取り立てる関所を通った。証明書のない難民は、いつ拘束されてもおかしくなかった。一度迂回に失敗し、家族はそれきり離れ離れになった。[PAWN_pronoun]は巡視の時刻を覚えたが、その先の道は独りで歩くしかなかった。</RHAH_History_A020_LostAtTheCheckpoint.description>
+  <RHAH_History_A021_OldMapmaker.title>飢えと災い 宿駅の地図描き</RHAH_History_A021_OldMapmaker.title>
+  <RHAH_History_A021_OldMapmaker.titleShort>飢えと災い 地図描き</RHAH_History_A021_OldMapmaker.titleShort>
+  <RHAH_History_A021_OldMapmaker.description>[PAWN_nameDef]は宿駅の道案内図を描いていたが、倉庫の火事で古い地図は残らず焼けた。難民が頼れるのは壊れた道標だけになり、[PAWN_pronoun]は覚えている道を布切れに描いて、皆に案内人として選ばれた。故郷を離れた後には、もう帰る道もなかった。</RHAH_History_A021_OldMapmaker.description>
+  <RHAH_History_A022_KinSeekingExile.title>飢えと災い 家族を探す流民</RHAH_History_A022_KinSeekingExile.title>
+  <RHAH_History_A022_KinSeekingExile.titleShort>飢えと災い 家族探し</RHAH_History_A022_KinSeekingExile.titleShort>
+  <RHAH_History_A022_KinSeekingExile.description>難民が強制的に振り分けられた際、[PAWN_nameDef]は家族と引き離され、仮の名簿も雨で駄目になった。[PAWN_pronoun]は道中の焚き火をたどり、家族の名を尋ねて回った。どうしても見つからず、移動する野営地を次々と渡り歩いて探し続けた。</RHAH_History_A022_KinSeekingExile.description>
+  <RHAH_History_A023_RefugeeConvoyGuide.title>飢えと災い 難民の一行のまとめ役</RHAH_History_A023_RefugeeConvoyGuide.title>
+  <RHAH_History_A023_RefugeeConvoyGuide.titleShort>飢えと災い まとめ役</RHAH_History_A023_RefugeeConvoyGuide.titleShort>
+  <RHAH_History_A023_RefugeeConvoyGuide.description>[PAWN_nameDef]は、もともと一行を率いる者ではなかった。穀物を奪い合う争いで以前のまとめ役が死に、次の水場の情報も途絶えると、皆は[PAWN_objective]に道順と食糧の分配を任せた。その後一行がばらばらになっても、[PAWN_pronoun]はついてくる者を連れて歩き続けた。</RHAH_History_A023_RefugeeConvoyGuide.description>
+  <RHAH_History_A024_ShackRepairer.title>飢えと災い 廃屋の修理屋</RHAH_History_A024_ShackRepairer.title>
+  <RHAH_History_A024_ShackRepairer.titleShort>飢えと災い 修理屋</RHAH_History_A024_ShackRepairer.titleShort>
+  <RHAH_History_A024_ShackRepairer.description>[PAWN_nameDef]の家はネズミに壁を食い破られ、豪雨で梁も崩れたが、使える木材は穀物倉庫の修理に徴発されていた。[PAWN_pronoun]は廃屋を直して穀物を得ていた。それでも食べ物が手に入らなくなると、難民とともに次の住まいを探しに出た。</RHAH_History_A024_ShackRepairer.description>
+  <RHAH_History_A025_DisasterBurier.title>飢えと災い 災害の死者を埋める人</RHAH_History_A025_DisasterBurier.title>
+  <RHAH_History_A025_DisasterBurier.titleShort>飢えと災い 埋葬人</RHAH_History_A025_DisasterBurier.titleShort>
+  <RHAH_History_A025_DisasterBurier.description>[PAWN_nameDef]は災害の被害が最もひどい村道で遺体を片づけ、埋めていた。病死者や身元を引き受ける者のない遺体が多すぎて、ほかには誰も近づこうとしなかった。ところが集落は、[PAWN_pronoun]が疫病に触れたという理由で[PAWN_objective]を追放した。移動する一行に加わっても、この汚れ仕事は誰かがやらねばならなかった。</RHAH_History_A025_DisasterBurier.description>
+  <RHAH_History_A026_GrainPetitionSpeaker.title>飢えと災い 配給を求める交渉人</RHAH_History_A026_GrainPetitionSpeaker.title>
+  <RHAH_History_A026_GrainPetitionSpeaker.titleShort>飢えと災い 交渉人</RHAH_History_A026_GrainPetitionSpeaker.titleShort>
+  <RHAH_History_A026_GrainPetitionSpeaker.description>[PAWN_nameDef]は村の代表として、穀物倉庫に本来受け取れるはずの配給を求めた。だが交渉のたびに、新たな通行料を取られた。村が支払いを断ると、食糧は打ち切られた。[PAWN_pronoun]は名簿と空の椀を持ち、見知らぬ集落で一軒ずつ食べ物を乞うようになった。</RHAH_History_A026_GrainPetitionSpeaker.description>
+  <RHAH_History_A027_ReliefGoodsBroker.title>飢えと災い 凶作の年の仲買人</RHAH_History_A027_ReliefGoodsBroker.title>
+  <RHAH_History_A027_ReliefGoodsBroker.titleShort>飢えと災い 仲買人</RHAH_History_A027_ReliefGoodsBroker.titleShort>
+  <RHAH_History_A027_ReliefGoodsBroker.description>[PAWN_nameDef]は市場で物々交換を仲介していた。穀物の値が跳ね上がると、一夜にして品物の相場は定まらなくなった。家族の薬と種を手に入れるため、[PAWN_pronoun]はさまざまな難民の一行について奔走し、最後には自分の店先も失った。</RHAH_History_A027_ReliefGoodsBroker.description>
+  <RHAH_History_A028_EscapedLedgerCopyist.title>飢えと災い 流亡の書記</RHAH_History_A028_EscapedLedgerCopyist.title>
+  <RHAH_History_A028_EscapedLedgerCopyist.titleShort>飢えと災い 書記</RHAH_History_A028_EscapedLedgerCopyist.titleShort>
+  <RHAH_History_A028_EscapedLedgerCopyist.description>[PAWN_nameDef]は戸籍と穀物台帳を書き写していたが、帳簿を保管する建物が焼けた際には数頁しか持ち出せなかった。避難の道中、[PAWN_pronoun]は証明書のない人々の名前と穀物の借金を記録し続けた。だが、どの集落でも怪しいよそ者としか見られなかった。</RHAH_History_A028_EscapedLedgerCopyist.description>
+  <RHAH_History_A029_ReliefCook.title>飢えと災い 急ごしらえの料理人</RHAH_History_A029_ReliefCook.title>
+  <RHAH_History_A029_ReliefCook.titleShort>飢えと災い 料理人</RHAH_History_A029_ReliefCook.titleShort>
+  <RHAH_History_A029_ReliefCook.description>[PAWN_nameDef]は共同炊事場の雑用係だった。ペストで料理人が死ぬと、誰も残った穀物を配ろうとしなかった。子供にまず一口でも食べさせようと、[PAWN_pronoun]がかまどを引き継いだ。炊事場が閉じると、難民とともに去った。</RHAH_History_A029_ReliefCook.description>
+  <RHAH_History_A030_InfirmaryCaretaker.title>飢えと災い 救護小屋の世話係</RHAH_History_A030_InfirmaryCaretaker.title>
+  <RHAH_History_A030_InfirmaryCaretaker.titleShort>飢えと災い 世話係</RHAH_History_A030_InfirmaryCaretaker.titleShort>
+  <RHAH_History_A030_InfirmaryCaretaker.description>[PAWN_nameDef]が世話をしたことのある病人は、もともと家族だけだった。ところが穀物倉庫での争いで、野営地に負傷者があふれた。医者も薬も足りず、[PAWN_pronoun]は傷の洗浄や手当てを覚えるしかなかった。野営地が解散させられると、まだ十分に身についていない医術を頼りに旅に出た。</RHAH_History_A030_InfirmaryCaretaker.description>
+  <RHAH_History_A031_RatEggCaretaker.title>飢えと災い 子ラットキンの世話係</RHAH_History_A031_RatEggCaretaker.title>
+  <RHAH_History_A031_RatEggCaretaker.titleShort>飢えと災い 世話係</RHAH_History_A031_RatEggCaretaker.titleShort>
+  <RHAH_History_A031_RatEggCaretaker.description>[PAWN_nameDef]は避難の一行で交代しながら子供を抱いていたが、やがて自分の家族も道端で病に倒れた。一行が病人と子供を置き去りにすると、[PAWN_pronoun]はまだ歩ける子ラットキンを連れて去った。それからは、大人が戻ると言っても、[PAWN_pronoun]は簡単に信じられなくなった。</RHAH_History_A031_RatEggCaretaker.description>
+  <RHAH_History_A032_NightStoryteller.title>飢えと災い 野営地の語り部</RHAH_History_A032_NightStoryteller.title>
+  <RHAH_History_A032_NightStoryteller.titleShort>飢えと災い 語り部</RHAH_History_A032_NightStoryteller.titleShort>
+  <RHAH_History_A032_NightStoryteller.description>[PAWN_nameDef]は古い物語を知る糸紡ぎだった。野営地の子供たちは、空腹と警報に悩まされ、一晩中眠れなかった。野営地を移る暗い道で、[PAWN_pronoun]は物語を聞かせて子供たちの足取りを落ち着かせ、そのまま難民の一行に残った。</RHAH_History_A032_NightStoryteller.description>
+  <RHAH_History_A033_SealedVillageMessenger.title>飢えと災い 封鎖された村の伝令</RHAH_History_A033_SealedVillageMessenger.title>
+  <RHAH_History_A033_SealedVillageMessenger.titleShort>飢えと災い 伝令</RHAH_History_A033_SealedVillageMessenger.titleShort>
+  <RHAH_History_A033_SealedVillageMessenger.description>[PAWN_nameDef]は家族を養うため、穀物を報酬に手紙を運んでいた。いくつもの村が封鎖されると、徒歩の伝令だけが消息を伝える手段になった。巡視隊が帰り道を塞いだ日、[PAWN_pronoun]は家に帰れなくなり、ほかの野営地の手紙を運び続けることになった。</RHAH_History_A033_SealedVillageMessenger.description>
+  <RHAH_History_A034_MarketSackPorter.title>飢えと災い 市場の荷運び</RHAH_History_A034_MarketSackPorter.title>
+  <RHAH_History_A034_MarketSackPorter.titleShort>飢えと災い 荷運び</RHAH_History_A034_MarketSackPorter.titleShort>
+  <RHAH_History_A034_MarketSackPorter.description>[PAWN_nameDef]は市場の荷運びで暮らしていたが、市場が閉じると雇い主も給金も消えた。略奪を避けるため、[PAWN_pronoun]は穀物袋を仮の野営地に移した。だが荷主まで夜に逃げてしまい、残された難民とともに移動するしかなかった。</RHAH_History_A034_MarketSackPorter.description>
+  <RHAH_History_A035_UsedGoodsAppraiser.title>飢えと災い 古道具の鑑定人</RHAH_History_A035_UsedGoodsAppraiser.title>
+  <RHAH_History_A035_UsedGoodsAppraiser.titleShort>飢えと災い 鑑定人</RHAH_History_A035_UsedGoodsAppraiser.titleShort>
+  <RHAH_History_A035_UsedGoodsAppraiser.description>[PAWN_nameDef]は古い鍋や道具を鑑定し、家族の食糧を得ていた。災害に見舞われると、人々は穀物しか受け取らなくなった。何度か食糧と引き換えた後、残りの家財も強盗に奪われ、[PAWN_pronoun]は手ぶらで去った。もう値をつけるものもなかった。</RHAH_History_A035_UsedGoodsAppraiser.description>
+  <RHAH_History_A036_RationMediator.title>飢えと災い 食糧争いの仲裁人</RHAH_History_A036_RationMediator.title>
+  <RHAH_History_A036_RationMediator.titleShort>飢えと災い 仲裁人</RHAH_History_A036_RationMediator.titleShort>
+  <RHAH_History_A036_RationMediator.description>[PAWN_nameDef]は村で用水の配分や水路の争いを収めていた。そのため二つの難民の一行が穀物を取り合うと、仲裁役に担ぎ出された。だが穀物倉庫の前の争いは、結局手に負えなくなった。[PAWN_pronoun]は話を聞こうとするわずかな人々とともに去り、別の行き先を探した。</RHAH_History_A036_RationMediator.description>
+  <RHAH_History_A037_RationTicketKeeper.title>飢えと災い 配給券の管理係</RHAH_History_A037_RationTicketKeeper.title>
+  <RHAH_History_A037_RationTicketKeeper.titleShort>飢えと災い 券管理係</RHAH_History_A037_RationTicketKeeper.titleShort>
+  <RHAH_History_A037_RationTicketKeeper.description>[PAWN_nameDef]は配給券を管理していたが、券に記された一週間分の食糧は配給担当者に差し止められた。[PAWN_pronoun]は帳簿の書き換えを断り、事務所を追い出された。去るときに手元にあったのは、もう食糧に引き換えられない小さな券の束だけだった。</RHAH_History_A037_RationTicketKeeper.description>
+  <RHAH_History_A038_GranaryRefuser.title>飢えと災い 命令を拒んだ倉庫番</RHAH_History_A038_GranaryRefuser.title>
+  <RHAH_History_A038_GranaryRefuser.titleShort>飢えと災い 倉庫番</RHAH_History_A038_GranaryRefuser.titleShort>
+  <RHAH_History_A038_GranaryRefuser.description>[PAWN_nameDef]は穀物倉庫の番人として雇われ、外から穀物を盗みに来る者を防ぐ仕事だと思っていた。ところが倉庫の主人は、ひそかに備蓄を運び出し、飢えた人々を中に閉じ込めた。[PAWN_pronoun]は見張りを続けることを拒み、最後には見捨てられた護衛たちとともに難民になった。</RHAH_History_A038_GranaryRefuser.description>
+  <RHAH_History_A039_HomeboundDeserter.title>飢えと災い 故郷へ戻った脱走兵</RHAH_History_A039_HomeboundDeserter.title>
+  <RHAH_History_A039_HomeboundDeserter.titleShort>飢えと災い 脱走兵</RHAH_History_A039_HomeboundDeserter.titleShort>
+  <RHAH_History_A039_HomeboundDeserter.description>[PAWN_nameDef]は食糧不足の部隊に徴集されたが、将校は最後の穀物袋を独り占めしていた。撤退の際、[PAWN_pronoun]は武器を捨て、家族を探しに戻った。部隊からは脱走兵とされたうえ、故郷の村もすでに無人だった。</RHAH_History_A039_HomeboundDeserter.description>
+  <RHAH_History_A040_CampTrapSetter.title>飢えと災い 野営地の罠師</RHAH_History_A040_CampTrapSetter.title>
+  <RHAH_History_A040_CampTrapSetter.titleShort>飢えと災い 罠師</RHAH_History_A040_CampTrapSetter.titleShort>
+  <RHAH_History_A040_CampTrapSetter.description>毎晩、野獣や穀物を盗む者が襲い、古い柵では防ぎきれなかった。[PAWN_nameDef]は野営地の外に罠を仕掛けた。野営地が焼かれた後も、[PAWN_pronoun]は狩りで覚えた罠の技を使い、避難の道中で身を守った。</RHAH_History_A040_CampTrapSetter.description>
+  <RHAH_History_A041_GrainThiefOutcast.title>飢えと災い 追放された穀物泥棒</RHAH_History_A041_GrainThiefOutcast.title>
+  <RHAH_History_A041_GrainThiefOutcast.titleShort>飢えと災い 穀物泥棒</RHAH_History_A041_GrainThiefOutcast.titleShort>
+  <RHAH_History_A041_GrainThiefOutcast.description>[PAWN_nameDef]は飢えで正気を失ったラットキンたちと穀物を奪いに行った。倉庫に入ると、分け前をめぐってすぐに仲間割れが始まった。[PAWN_pronoun]は逃げ出したものの、ほかの集落ではどこも[PAWN_objective]を穀物泥棒とみなし、荒れ地に隠れて暮らすほかなかった。</RHAH_History_A041_GrainThiefOutcast.description>
+  <RHAH_History_A042_ScarredHunter.title>飢えと災い 傷を負った狩人</RHAH_History_A042_ScarredHunter.title>
+  <RHAH_History_A042_ScarredHunter.titleShort>飢えと災い 狩人</RHAH_History_A042_ScarredHunter.titleShort>
+  <RHAH_History_A042_ScarredHunter.description>[PAWN_nameDef]は狩猟で生計を立てていたが、干ばつで獲物は姿を消し、貴族は山林を閉鎖した。傷ついた獣を追っていた[PAWN_pronoun]はネズミの群れに遭遇し、傷跡を負い、住まいも失った。その後、流民とともに新しい狩猟場を探しに行った。</RHAH_History_A042_ScarredHunter.description>
+  <RHAH_History_A043_GranaryRatcatcher.title>飢えと災い 穀物倉庫のネズミ駆除人</RHAH_History_A043_GranaryRatcatcher.title>
+  <RHAH_History_A043_GranaryRatcatcher.titleShort>飢えと災い 駆除人</RHAH_History_A043_GranaryRatcatcher.titleShort>
+  <RHAH_History_A043_GranaryRatcatcher.description>[PAWN_nameDef]は穀物倉庫のネズミ穴を潰していた。ネズミが激増すると、倉庫の主人はすべての損害を働き手のせいにした。備蓄を食い荒らされた夜、[PAWN_pronoun]は村から追い出され、次の野営地で同じ駆除の仕事を続けるしかなかった。</RHAH_History_A043_GranaryRatcatcher.description>
+  <RHAH_History_A044_QuarantinePorter.title>飢えと災い 病人小屋の荷運び</RHAH_History_A044_QuarantinePorter.title>
+  <RHAH_History_A044_QuarantinePorter.titleShort>飢えと災い 荷運び</RHAH_History_A044_QuarantinePorter.titleShort>
+  <RHAH_History_A044_QuarantinePorter.description>[PAWN_nameDef]の家族はペストの隔離小屋に閉じ込められ、[PAWN_pronoun]は村の入り口で薬と飲み水を運んでいた。病人の区画が焼き払われると、家族も集落も失った。[PAWN_pronoun]は去った後も、あの病人小屋を忘れられなかった。</RHAH_History_A044_QuarantinePorter.description>
+  <RHAH_History_A045_QuarantineWatcher.title>飢えと災い 隔離小屋の番人</RHAH_History_A045_QuarantineWatcher.title>
+  <RHAH_History_A045_QuarantineWatcher.titleShort>飢えと災い 番人</RHAH_History_A045_QuarantineWatcher.titleShort>
+  <RHAH_History_A045_QuarantineWatcher.description>[PAWN_nameDef]は村の入り口の隔離小屋を見張り、熱のある人と健康な人を分けようとしていた。薬も穀物も尽きると、村人は責任を番人に押しつけた。[PAWN_pronoun]は村を離れるほかなく、病人を受け入れてくれる場所を探し続けた。</RHAH_History_A045_QuarantineWatcher.description>
+  <RHAH_History_A046_PostPlagueCaretaker.title>飢えと災い 病み上がりの世話係</RHAH_History_A046_PostPlagueCaretaker.title>
+  <RHAH_History_A046_PostPlagueCaretaker.titleShort>飢えと災い 世話係</RHAH_History_A046_PostPlagueCaretaker.titleShort>
+  <RHAH_History_A046_PostPlagueCaretaker.description>[PAWN_nameDef]はペストによる封鎖を生き延びたが、回復した者にも食糧は渡されず、帰宅も許されなかった。以前の住まいが焼かれて更地になると、[PAWN_pronoun]はまだ治りきっていない仲間を連れ、休める小屋を探しに出た。</RHAH_History_A046_PostPlagueCaretaker.description>
+  <RHAH_History_A047_DisguisedGrainThief.title>飢えと災い 難民に紛れた逃亡者</RHAH_History_A047_DisguisedGrainThief.title>
+  <RHAH_History_A047_DisguisedGrainThief.titleShort>飢えと災い 逃亡者</RHAH_History_A047_DisguisedGrainThief.titleShort>
+  <RHAH_History_A047_DisguisedGrainThief.description>家族が何日も食べられず、[PAWN_nameDef]は夜に穀物倉庫へ忍び込んで盗んだ。発覚すると、仲間は通行の許可を得るために[PAWN_objective]を引き渡した。その後の逃亡の道中、[PAWN_pronoun]は普通の難民を装い、いくつもの関所を通り抜ける術を覚えた。</RHAH_History_A047_DisguisedGrainThief.description>
+  <RHAH_History_A048_SiegeTunnelDigger.title>飢えと災い 包囲下の穴掘り</RHAH_History_A048_SiegeTunnelDigger.title>
+  <RHAH_History_A048_SiegeTunnelDigger.titleShort>飢えと災い 穴掘り</RHAH_History_A048_SiegeTunnelDigger.titleShort>
+  <RHAH_History_A048_SiegeTunnelDigger.description>穀物を奪う一団に野営地を囲まれ、援軍も来ないまま、[PAWN_nameDef]は仲間と壁の下に狭い穴を掘り、人々を逃がした。振り返ると野営地はすでに燃え、家族の残した品もすべて焼けていた。</RHAH_History_A048_SiegeTunnelDigger.description>
+  <RHAH_History_A049_GranaryBreaker.title>飢えと災い 倉庫を破った大工</RHAH_History_A049_GranaryBreaker.title>
+  <RHAH_History_A049_GranaryBreaker.titleShort>飢えと災い 大工</RHAH_History_A049_GranaryBreaker.titleShort>
+  <RHAH_History_A049_GranaryBreaker.description>[PAWN_nameDef]は扉の修理で生計を立てていた。飢饉になっても穀物倉庫は施錠されたままで、飢えた人に分けるくらいなら、かびさせたほうがいいという有様だった。中から助けを求める声が聞こえ、[PAWN_pronoun]は大扉を破って開けた。だが後で追われる身となり、故郷を離れるしかなかった。</RHAH_History_A049_GranaryBreaker.description>
+  <RHAH_History_Y001_RuinsLitter.title>飢えと災い 火事で母とはぐれた子</RHAH_History_Y001_RuinsLitter.title>
+  <RHAH_History_Y001_RuinsLitter.titleShort>飢えと災い 迷子</RHAH_History_Y001_RuinsLitter.titleShort>
+  <RHAH_History_Y001_RuinsLitter.description>放火で火の手が上がったとき、[PAWN_nameDef]は母親とはぐれ、崩れた家に隠れるしかなかった。砕けた穀物で数日をしのいだが、救援隊はすでに去っていた。[PAWN_pronoun]は後から通りかかった難民について、ようやくそこを離れた。</RHAH_History_Y001_RuinsLitter.description>
+  <RHAH_History_Y002_LostFieldLitter.title>飢えと災い 農場を失った子供</RHAH_History_Y002_LostFieldLitter.title>
+  <RHAH_History_Y002_LostFieldLitter.titleShort>飢えと災い 農場の子</RHAH_History_Y002_LostFieldLitter.titleShort>
+  <RHAH_History_Y002_LostFieldLitter.description>[PAWN_nameDef]は小さな農場で育った。農場主は土地を売り、大人の働き手を連れて去った。残された子供たちは、作物まで徴発された。[PAWN_pronoun]は流民について、食べ物を探しに行くしかなかった。</RHAH_History_Y002_LostFieldLitter.description>
+  <RHAH_History_Y003_CreviceMessenger.title>飢えと災い 洞窟の小さな伝令</RHAH_History_Y003_CreviceMessenger.title>
+  <RHAH_History_Y003_CreviceMessenger.titleShort>飢えと災い 小さな伝令</RHAH_History_Y003_CreviceMessenger.titleShort>
+  <RHAH_History_Y003_CreviceMessenger.description>[PAWN_nameDef]は洞窟の集落に住んでいたが、大人たちは食糧をめぐっていくつかの一団に分かれた。子供の体なら隙間をくぐれるため、[PAWN_pronoun]が彼らの間の伝令になった。やがて煙とネズミの群れで洞窟に住めなくなると、最後の一団について地上へ出た。</RHAH_History_Y003_CreviceMessenger.description>
+  <RHAH_History_Y004_GrainMillApprentice.title>飢えと災い 穀物加工場の小さな助手</RHAH_History_Y004_GrainMillApprentice.title>
+  <RHAH_History_Y004_GrainMillApprentice.titleShort>飢えと災い 小さな助手</RHAH_History_Y004_GrainMillApprentice.titleShort>
+  <RHAH_History_Y004_GrainMillApprentice.description>[PAWN_nameDef]は母親と穀物加工場のそばで暮らしていた。家で一番あてにできる食べ物は、砕けた穀物だった。加工場が徴用されると、配給にはかびた穀物まで混ざるようになった。母親も子供も、一緒に追い出された。</RHAH_History_Y004_GrainMillApprentice.description>
+  <RHAH_History_Y005_RatEggGuardApprentice.title>飢えと災い 子ラットキンを世話する子</RHAH_History_Y005_RatEggGuardApprentice.title>
+  <RHAH_History_Y005_RatEggGuardApprentice.titleShort>飢えと災い 小さな世話係</RHAH_History_Y005_RatEggGuardApprentice.titleShort>
+  <RHAH_History_Y005_RatEggGuardApprentice.description>一行の大人が次々と病に倒れ、[PAWN_nameDef]は自分より幼い子ラットキンを世話するしかなかった。夜に移動した際、子供たちは[PAWN_objective]について歩いたが、皆で家族とはぐれてしまった。それからは、食べ物を分けてくれる人について行くほかなかった。</RHAH_History_Y005_RatEggGuardApprentice.description>
+  <RHAH_History_Y006_LandmarkRememberingOrphan.title>飢えと災い 家族とはぐれた道案内の子</RHAH_History_Y006_LandmarkRememberingOrphan.title>
+  <RHAH_History_Y006_LandmarkRememberingOrphan.titleShort>飢えと災い 道案内の子</RHAH_History_Y006_LandmarkRememberingOrphan.titleShort>
+  <RHAH_History_Y006_LandmarkRememberingOrphan.description>移動の途中、[PAWN_nameDef]は家族とはぐれた。覚えていたのは枯れ木、ひびの入った橋、いくつかの危険な交差路だけだった。[PAWN_pronoun]はその目印を頼りに追っ手を避け、別の難民の一行に迎え入れられた。だが、もとの家はずっと見つからなかった。</RHAH_History_Y006_LandmarkRememberingOrphan.description>
+  <RHAH_History_Y007_LivestockApprentice.title>飢えと災い 故郷を離れた牧童</RHAH_History_Y007_LivestockApprentice.title>
+  <RHAH_History_Y007_LivestockApprentice.titleShort>飢えと災い 牧童</RHAH_History_Y007_LivestockApprentice.titleShort>
+  <RHAH_History_Y007_LivestockApprentice.description>[PAWN_nameDef]は幼い頃から、家に残った家畜を追う役目を担っていた。農場はまず水が途絶え、それから家畜の大半も徴発された。囲いが放棄された日、[PAWN_pronoun]は生き残った数頭を追って難民の一行に合流した。農場には二度と戻らなかった。</RHAH_History_Y007_LivestockApprentice.description>
+  <RHAH_History_Y008_OrphanedMillApprentice.title>飢えと災い 製粉所に捨てられた子</RHAH_History_Y008_OrphanedMillApprentice.title>
+  <RHAH_History_Y008_OrphanedMillApprentice.titleShort>飢えと災い 捨て子</RHAH_History_Y008_OrphanedMillApprentice.titleShort>
+  <RHAH_History_Y008_OrphanedMillApprentice.description>穀物の借金を抱えた製粉所から大人は皆去り、[PAWN_nameDef]だけが自分では回せない石臼のそばに残された。[PAWN_pronoun]はそこで製粉所のごく簡単な仕事を覚えた。製粉所が取り壊されると、そのわずかな腕を持って去った。</RHAH_History_Y008_OrphanedMillApprentice.description>
+  <RHAH_History_Y009_CampfireListener.title>飢えと災い 焚き火で物語を聞く子</RHAH_History_Y009_CampfireListener.title>
+  <RHAH_History_Y009_CampfireListener.titleShort>飢えと災い 野営地の子</RHAH_History_Y009_CampfireListener.titleShort>
+  <RHAH_History_Y009_CampfireListener.description>[PAWN_nameDef]は難民の一行の中で生まれ、豊作の年を知らなかった。夜は大人が話す昔の収穫を聞いて、ようやく眠れた。食糧が尽きて一行が解散すると、[PAWN_objective]は焚き火のそばに残された。別の流民が通りかかってから、[PAWN_pronoun]はついて行った。</RHAH_History_Y009_CampfireListener.description>
+  <RHAH_History_Y010_QuarantineShedChild.title>飢えと災い 隔離小屋の子供</RHAH_History_Y010_QuarantineShedChild.title>
+  <RHAH_History_Y010_QuarantineShedChild.titleShort>飢えと災い 隔離された子</RHAH_History_Y010_QuarantineShedChild.titleShort>
+  <RHAH_History_Y010_QuarantineShedChild.description>[PAWN_nameDef]は家族と隔離小屋に送られた。最初は扉越しに食事や水を届ける人がいた。ペストがひどくなると、外には誰も来なくなり、家族も次々と去るか死んでいった。小屋が解体されるとき、[PAWN_pronoun]は生き残った者とともに逃げ出した。</RHAH_History_Y010_QuarantineShedChild.description>
+  <RHAH_History_Y011_RuinedHouseOrphan.title>飢えと災い 廃屋で家族を待った子</RHAH_History_Y011_RuinedHouseOrphan.title>
+  <RHAH_History_Y011_RuinedHouseOrphan.titleShort>飢えと災い 迷子</RHAH_History_Y011_RuinedHouseOrphan.titleShort>
+  <RHAH_History_Y011_RuinedHouseOrphan.description>夜襲で[PAWN_nameDef]は家族とはぐれた。[PAWN_pronoun]は廃屋に隠れ、根や雨水で生き延びた。捜しに来た人々は二度と戻らず、その後は独りで避難キャンプを転々とし、身を寄せる場所を探した。</RHAH_History_Y011_RuinedHouseOrphan.description>
+  <RHAH_History_Y012_NightWatchApprentice.title>飢えと災い 夜番の小さな助手</RHAH_History_Y012_NightWatchApprentice.title>
+  <RHAH_History_Y012_NightWatchApprentice.titleShort>飢えと災い 小さな夜番</RHAH_History_Y012_NightWatchApprentice.titleShort>
+  <RHAH_History_Y012_NightWatchApprentice.description>避難キャンプは何度も不意打ちを受け、大人が交代で夜番をしても穀物泥棒を防げなかった。眠れない[PAWN_nameDef]は、巡視の道順を覚えた。ある襲撃で[PAWN_pronoun]は家族とはぐれ、それからも人々の焚き火を見張り続けた。</RHAH_History_Y012_NightWatchApprentice.description>
+  <RHAH_History_A050_ElderSisterProtector.title>飢えと災い 幼い弟妹を守る姉</RHAH_History_A050_ElderSisterProtector.title>
+  <RHAH_History_A050_ElderSisterProtector.titleShort>飢えと災い 姉</RHAH_History_A050_ElderSisterProtector.titleShort>
+  <RHAH_History_A050_ElderSisterProtector.description>両親が避難の道中で死に、小さな集落の弟や妹たちを世話できる姉は[PAWN_nameDef]だけになった。一行は負担を減らそうと、[PAWN_objective]と子供たちを道端に残していった。[PAWN_pronoun]は独りで弟妹を連れ、子ラットキンを受け入れてくれる場所を探すしかなかった。</RHAH_History_A050_ElderSisterProtector.description>
+  <RHAH_History_A051_IllMotherLeavingA.title>飢えと災い 子を託す病気の母親</RHAH_History_A051_IllMotherLeavingA.title>
+  <RHAH_History_A051_IllMotherLeavingA.titleShort>飢えと災い 病母</RHAH_History_A051_IllMotherLeavingA.titleShort>
+  <RHAH_History_A051_IllMotherLeavingA.description>[PAWN_nameDef]はペストが手に負えなくなった村から子供を連れて逃げ、砕けた穀物と薬草でしのいでいた。病状は悪くなるばかりで、[PAWN_pronoun]は次の野営地までたどり着けないと悟った。それでも子供を見知らぬ集落の入り口まで送り届け、その後で倒れた。</RHAH_History_A051_IllMotherLeavingA.description>
+  <RHAH_History_A052_BeggingRatkinMother.title>飢えと災い 食を乞うラットキンの母親</RHAH_History_A052_BeggingRatkinMother.title>
+  <RHAH_History_A052_BeggingRatkinMother.titleShort>飢えと災い 母親</RHAH_History_A052_BeggingRatkinMother.titleShort>
+  <RHAH_History_A052_BeggingRatkinMother.description>[PAWN_nameDef]は洗濯と家畜の世話で子供を養っていたが、災害の後、雇い主は穀物も給金も取り上げた。[PAWN_pronoun]は道端の見知らぬ人に子供を渡したくなかった。何度も他人の戸を叩き、一口の食べ物を乞うようになった。</RHAH_History_A052_BeggingRatkinMother.description>
+  <RHAH_History_A053_GrainThiefForFamily.title>飢えと災い 家族のための穀物泥棒</RHAH_History_A053_GrainThiefForFamily.title>
+  <RHAH_History_A053_GrainThiefForFamily.titleShort>飢えと災い 穀物泥棒</RHAH_History_A053_GrainThiefForFamily.titleShort>
+  <RHAH_History_A053_GrainThiefForFamily.description>[PAWN_nameDef]は家に残った最後の穀物袋を守っていたが、それでも子供たちは空腹で倒れた。食糧を求めても応じてもらえず、[PAWN_pronoun]は夜に倉庫へ忍び込んだ。発覚して遠くへ逃げることもできず、最後には家族の残した空の椀だけを持って去った。</RHAH_History_A053_GrainThiefForFamily.description>
+  <RHAH_History_A054_WastelandSurvivor.title>飢えと災い 荒れ地を生き抜く人</RHAH_History_A054_WastelandSurvivor.title>
+  <RHAH_History_A054_WastelandSurvivor.titleShort>飢えと災い 生存者</RHAH_History_A054_WastelandSurvivor.titleShort>
+  <RHAH_History_A054_WastelandSurvivor.description>穀物を奪う者たちが夜に襲い、[PAWN_nameDef]のいた集落は四散した。目覚めたとき、そばにはぼろ服しかなく、目の前には見知らぬ荒れた道があった。家族を見つけられず、[PAWN_pronoun]は獣の足跡と遠くの炊煙をたどり、生きた人を探した。</RHAH_History_A054_WastelandSurvivor.description>
+  <RHAH_History_A055_RefugeeCampSteward.title>飢えと災い 避難キャンプの世話役</RHAH_History_A055_RefugeeCampSteward.title>
+  <RHAH_History_A055_RefugeeCampSteward.titleShort>飢えと災い 世話役</RHAH_History_A055_RefugeeCampSteward.titleShort>
+  <RHAH_History_A055_RefugeeCampSteward.description>[PAWN_nameDef]は避難キャンプで寝床と飲み水を割り当てていた。だが人は増える一方で、食糧も薪も、皆の辛抱も足りなくなった。キャンプが解散すると、[PAWN_pronoun]にも帰る家はなく、最後の一団とともに新しい集落を探しに出た。</RHAH_History_A055_RefugeeCampSteward.description>
+  <RHAH_History_A056_CageWatcher.title>飢えと災い 囚人の檻の番人</RHAH_History_A056_CageWatcher.title>
+  <RHAH_History_A056_CageWatcher.titleShort>飢えと災い 番人</RHAH_History_A056_CageWatcher.titleShort>
+  <RHAH_History_A056_CageWatcher.description>[PAWN_nameDef]はキャラバンで荷物と囚人の檻を見張っていた。交易路が断たれると、檻の中の子供が食糧を得るための取引材料になった。まとめ役が真っ先に一行を見捨てて逃げたため、[PAWN_pronoun]は生き残った囚人を連れ、値段の交渉に応じる相手を探した。</RHAH_History_A056_CageWatcher.description>
+  <RHAH_History_A057_RatEggMerchant.title>飢えと災い 子ラットキンの売人</RHAH_History_A057_RatEggMerchant.title>
+  <RHAH_History_A057_RatEggMerchant.titleShort>飢えと災い 売人</RHAH_History_A057_RatEggMerchant.titleShort>
+  <RHAH_History_A057_RatEggMerchant.description>[PAWN_nameDef]はかつて、食糧を持つ人に子供を売れば、少なくとも冬は越せると信じていた。だが取引の双方とも、約束したものを用意できなかった。[PAWN_pronoun]は黙ったまま列をなす子ラットキンを連れて歩き続けるしかなく、次第にその顔を見るのも怖くなった。</RHAH_History_A057_RatEggMerchant.description>
+  <RHAH_History_A058_OutwallBeggar.title>飢えと災い 城壁の外の物乞い</RHAH_History_A058_OutwallBeggar.title>
+  <RHAH_History_A058_OutwallBeggar.titleShort>飢えと災い 物乞い</RHAH_History_A058_OutwallBeggar.titleShort>
+  <RHAH_History_A058_OutwallBeggar.description>[PAWN_nameDef]はほかの難民と、打ち捨てられた城壁の外に小屋を建てた。町に入らなければ争いを避けられると思ったのだ。だが城門が閉まると、小屋の外には退路も食糧もなかった。[PAWN_pronoun]は次の集落の周りで、繰り返し施しを求めるしかなかった。</RHAH_History_A058_OutwallBeggar.description>
+  <RHAH_History_A059_ReliefKitchenCook.title>飢えと災い 炊き出しの料理人</RHAH_History_A059_ReliefKitchenCook.title>
+  <RHAH_History_A059_ReliefKitchenCook.titleShort>飢えと災い 料理人</RHAH_History_A059_ReliefKitchenCook.titleShort>
+  <RHAH_History_A059_ReliefKitchenCook.description>[PAWN_nameDef]は避難の一行があちこちで集めた穀物を、一つの鍋で煮ていた。やがて鍋まで薪と交換してしまった。救援の人々が来たとき、[PAWN_pronoun]に差し出せるのは作り方と、かびた穀物をより分けてきた経験だけだった。せめてこの一食は、皆に食べさせたかった。</RHAH_History_A059_ReliefKitchenCook.description>
+  <RHAH_History_A060_RefugeeMedic.title>飢えと災い 避難の一行の薬師</RHAH_History_A060_RefugeeMedic.title>
+  <RHAH_History_A060_RefugeeMedic.titleShort>飢えと災い 薬師</RHAH_History_A060_RefugeeMedic.titleShort>
+  <RHAH_History_A060_RefugeeMedic.description>[PAWN_nameDef]は小さな診療所で薬草を運んでいた。診療所が閉じると、薬は避難の一行の中で最も奪い合いを招く品になった。[PAWN_pronoun]は最後の数回分を服に隠し、熱のある仲間を連れてコロニーの外れに助けを求めた。</RHAH_History_A060_RefugeeMedic.description>
+  <RHAH_History_A061_SilverTrader.title>飢えと災い シルバーを携えた商人</RHAH_History_A061_SilverTrader.title>
+  <RHAH_History_A061_SilverTrader.titleShort>飢えと災い 商人</RHAH_History_A061_SilverTrader.titleShort>
+  <RHAH_History_A061_SilverTrader.description>[PAWN_nameDef]は家の道具、家畜、家の権利証をシルバーに換えた。金があれば安全な道を買えると思ったのだ。だが関所の料金は上がり続け、キャラバンも道を変えた。シルバーはもう一行程分しか残らず、[PAWN_pronoun]は取引に応じる集落を探した。</RHAH_History_A061_SilverTrader.description>
+  <RHAH_History_A062_FragmentMapInformant.title>飢えと災い 破れた地図の売り手</RHAH_History_A062_FragmentMapInformant.title>
+  <RHAH_History_A062_FragmentMapInformant.titleShort>飢えと災い 地図売り</RHAH_History_A062_FragmentMapInformant.titleShort>
+  <RHAH_History_A062_FragmentMapInformant.description>[PAWN_nameDef]は道端で死んだ情報屋から、半分だけの宝の地図を手に入れた。だが場所の記載は不完全だった。旅を続ける穀物や薬、シルバーに換えるため、[PAWN_pronoun]はその破れた地図をコロニーに持ち込んだ。</RHAH_History_A062_FragmentMapInformant.description>
+  <RHAH_History_A063_RuinInformant.title>飢えと災い 廃墟の情報屋</RHAH_History_A063_RuinInformant.title>
+  <RHAH_History_A063_RuinInformant.titleShort>飢えと災い 情報屋</RHAH_History_A063_RuinInformant.titleShort>
+  <RHAH_History_A063_RuinInformant.description>[PAWN_nameDef]はネズミと豪雨に荒らされた建物に隠れ、まだ使える扉や井戸、地下室を覚えていた。同行者たちは地図をめぐって仲間割れした。[PAWN_pronoun]は不完全な位置情報を持って逃げ、一度の安全な通行と引き換えにしようとした。</RHAH_History_A063_RuinInformant.description>
+  <RHAH_History_A064_SmallSettlementClerk.title>飢えと災い 逃げ出した集落の書記</RHAH_History_A064_SmallSettlementClerk.title>
+  <RHAH_History_A064_SmallSettlementClerk.titleShort>飢えと災い 書記</RHAH_History_A064_SmallSettlementClerk.titleShort>
+  <RHAH_History_A064_SmallSettlementClerk.description>[PAWN_nameDef]は小さな集落で記録をつけていた。そこにはまだ秩序があったが、穀物倉庫の帳簿が書き換えられると事情は変わった。住民が穀物をめぐって分裂すると、[PAWN_pronoun]は逃げ出した。別の小さな居住地の位置を持ち出し、携帯できる物資に換えようとした。</RHAH_History_A064_SmallSettlementClerk.description>
+  <RHAH_History_A065_PregnantRefugee.title>飢えと災い 出産を控えた流民</RHAH_History_A065_PregnantRefugee.title>
+  <RHAH_History_A065_PregnantRefugee.titleShort>飢えと災い 流民</RHAH_History_A065_PregnantRefugee.titleShort>
+  <RHAH_History_A065_PregnantRefugee.description>[PAWN_nameDef]は子を身ごもり、一行とともに雨をしのぐ場所を探していた。だが野営地が受け入れるのは、すぐ働ける者だけだった。疫病や穀物を奪い合う争いで一行は散り散りになった。出産の近い[PAWN_pronoun]は、見知らぬコロニーで身を寄せられる片隅を求めるしかなかった。</RHAH_History_A065_PregnantRefugee.description>
+  <RHAH_History_A066_MisdeliveredCargoCarrier.title>飢えと災い 誤配送の荷運び</RHAH_History_A066_MisdeliveredCargoCarrier.title>
+  <RHAH_History_A066_MisdeliveredCargoCarrier.titleShort>飢えと災い 荷運び</RHAH_History_A066_MisdeliveredCargoCarrier.titleShort>
+  <RHAH_History_A066_MisdeliveredCargoCarrier.description>[PAWN_nameDef]は輸送隊で送り状を確認し、補給品を運んでいた。あるとき座標を間違え、一回分の物資をすべて無人の荒野に投下してしまった。発送者は先に逃げた。[PAWN_pronoun]は誤投下先を追い、まだ見つかった数点の品を持って、本来のコロニーに助けを求めた。</RHAH_History_A066_MisdeliveredCargoCarrier.description>
+  <RHAH_History_A067_MisidentifiedKin.title>飢えと災い 親族を見間違えた人</RHAH_History_A067_MisidentifiedKin.title>
+  <RHAH_History_A067_MisidentifiedKin.titleShort>飢えと災い 家族探し</RHAH_History_A067_MisidentifiedKin.titleShort>
+  <RHAH_History_A067_MisidentifiedKin.description>[PAWN_nameDef]は夜の避難で家族とはぐれた。その後、似た子供の話を聞き、見知らぬ子を親族だと思い込んだ。間違いがわかった頃には、もとの一行は遠くへ去っていた。[PAWN_pronoun]はその子を引き取ることも、家に帰ることもできなかった。</RHAH_History_A067_MisidentifiedKin.description>
+  <RHAH_History_A068_FamineFarmer.title>飢えと災い 凶作の年の農民</RHAH_History_A068_FamineFarmer.title>
+  <RHAH_History_A068_FamineFarmer.titleShort>飢えと災い 農民</RHAH_History_A068_FamineFarmer.titleShort>
+  <RHAH_History_A068_FamineFarmer.description>[PAWN_nameDef]はこの季節を越せば雨が降ると考え、古い畑を守っていたが、最後には種さえ残せなかった。穀物の徴収は繰り返され、家族も次々とペストで死んだ。[PAWN_pronoun]は最後の食べ物を分け、村を離れた。</RHAH_History_A068_FamineFarmer.description>
+  <RHAH_History_A069_AmbushedEscort.title>飢えと災い 襲われたキャラバンの護衛</RHAH_History_A069_AmbushedEscort.title>
+  <RHAH_History_A069_AmbushedEscort.titleShort>飢えと災い 護衛</RHAH_History_A069_AmbushedEscort.titleShort>
+  <RHAH_History_A069_AmbushedEscort.description>[PAWN_nameDef]はキャラバンで医薬品と食糧を護送していたが、途中で追い詰められた流民の一団に道を塞がれた。キャラバンは荷物と負傷者を捨て、命からがら逃げた。[PAWN_pronoun]は中身を奪い尽くされた荷車から這い出し、それ以来あのキャラバンの旗を信用しなくなった。</RHAH_History_A069_AmbushedEscort.description>
+  <RHAH_History_A070_PlaguezoneExile.title>飢えと災い 疫病地帯を逃れた人</RHAH_History_A070_PlaguezoneExile.title>
+  <RHAH_History_A070_PlaguezoneExile.titleShort>飢えと災い 流亡者</RHAH_History_A070_PlaguezoneExile.titleShort>
+  <RHAH_History_A070_PlaguezoneExile.description>[PAWN_nameDef]の住む野営地は疫病地帯に指定され、安全な道も清潔な食べ物も利用できなくなった。倒れる者も、置き去りにされる者もいた。[PAWN_pronoun]はまだ歩ける仲間を連れ、集落を避けて進み、ようやく見知らぬコロニーの近くまでたどり着いた。</RHAH_History_A070_PlaguezoneExile.description>
+  <RHAH_History_A071_QuarantineGatekeeper.title>飢えと災い 検疫所の門番</RHAH_History_A071_QuarantineGatekeeper.title>
+  <RHAH_History_A071_QuarantineGatekeeper.titleShort>飢えと災い 門番</RHAH_History_A071_QuarantineGatekeeper.titleShort>
+  <RHAH_History_A071_QuarantineGatekeeper.description>[PAWN_nameDef]は村の入り口の検疫小屋を守り、誰を中へ入れ、誰に薬を渡し、誰を外に残すか、毎日決めなければならなかった。薬も穀物も尽きると、病人だけでなく番人まで追い出された。[PAWN_pronoun]は生き残った者を連れ、別の受け入れ先を探すしかなかった。</RHAH_History_A071_QuarantineGatekeeper.description>
+  <RHAH_History_A072_PlagueCampTunnelDigger.title>飢えと災い 疫病野営地の穴掘り</RHAH_History_A072_PlagueCampTunnelDigger.title>
+  <RHAH_History_A072_PlagueCampTunnelDigger.titleShort>飢えと災い 穴掘り</RHAH_History_A072_PlagueCampTunnelDigger.titleShort>
+  <RHAH_History_A072_PlagueCampTunnelDigger.description>[PAWN_nameDef]は疫病地帯の野営地に閉じ込められた。飢えた者と感染者が同時に迫り、外では怖くて門を開けられず、中には食糧もなかった。[PAWN_pronoun]は壁の根元に一人だけ通れる穴を掘り、逃げ出した。残された人々が生き延びたかどうかは、今もわからない。</RHAH_History_A072_PlagueCampTunnelDigger.description>
+  <RHAH_History_A073_EscapedPlagueMessenger.title>飢えと災い 疫病地帯を逃れた伝令</RHAH_History_A073_EscapedPlagueMessenger.title>
+  <RHAH_History_A073_EscapedPlagueMessenger.titleShort>飢えと災い 伝令</RHAH_History_A073_EscapedPlagueMessenger.titleShort>
+  <RHAH_History_A073_EscapedPlagueMessenger.description>[PAWN_nameDef]は感染したラットキンの一団で伝言を運んでいた。彼らは自分たちを苦しめた相手に復讐すると言っていたが、その名前さえ確かめられなかった。一団が復讐のことしか考えなくなると、[PAWN_pronoun]は宛先のない手紙を持って逃げた。</RHAH_History_A073_EscapedPlagueMessenger.description>
+  <RHAH_History_A074_EvacuationGuide.title>飢えと災い 野営地撤退の案内人</RHAH_History_A074_EvacuationGuide.title>
+  <RHAH_History_A074_EvacuationGuide.titleShort>飢えと災い 案内人</RHAH_History_A074_EvacuationGuide.titleShort>
+  <RHAH_History_A074_EvacuationGuide.description>[PAWN_nameDef]は仮の避難キャンプで木造小屋を直し、飲み水を配っていた。ところが近隣の勢力に、数日以内に立ち退くよう命じられた。襲撃が来る前に、[PAWN_pronoun]は歩ける人々を連れて裏門から撤退した。振り返ると、自分が建てた小屋はどれも燃え始めていた。</RHAH_History_A074_EvacuationGuide.description>
+  <RHAH_History_Y013_CrowdBornChild.title>飢えと災い 人混みではぐれた子</RHAH_History_Y013_CrowdBornChild.title>
+  <RHAH_History_Y013_CrowdBornChild.titleShort>飢えと災い 迷子</RHAH_History_Y013_CrowdBornChild.titleShort>
+  <RHAH_History_Y013_CrowdBornChild.description>[PAWN_nameDef]は大人に抱かれ、大きな難民の一行の中にいた。足が止まるたび、誰かが列から押し出された。穀物の奪い合いで混乱が起きた後、[PAWN_pronoun]が覚えていたのは家族の声だけだった。最後には別の一行に連れて行かれた。</RHAH_History_Y013_CrowdBornChild.description>
+  <RHAH_History_Y014_AbandonedHouseRatEgg.title>飢えと災い 空き家に残された子</RHAH_History_Y014_AbandonedHouseRatEgg.title>
+  <RHAH_History_Y014_AbandonedHouseRatEgg.titleShort>飢えと災い 捨て子</RHAH_History_Y014_AbandonedHouseRatEgg.titleShort>
+  <RHAH_History_Y014_AbandonedHouseRatEgg.description>[PAWN_nameDef]は空き家の扉の陰に残された。そばにあったのは、硬くなった食べ物ひとかけだけだった。大人はすぐ戻ると言ったが、外の足音は減るばかりだった。通りがかりの難民が[PAWN_objective]を見つけ、ようやくその家を離れられた。</RHAH_History_Y014_AbandonedHouseRatEgg.description>
+  <RHAH_History_Y015_DoorstepRatEgg.title>飢えと災い 門前に託された子ラットキン</RHAH_History_Y015_DoorstepRatEgg.title>
+  <RHAH_History_Y015_DoorstepRatEgg.titleShort>飢えと災い 託された子</RHAH_History_Y015_DoorstepRatEgg.titleShort>
+  <RHAH_History_Y015_DoorstepRatEgg.description>[PAWN_nameDef]は熱を出し、母親に抱かれて見知らぬ集落の入り口へ来た。母親が何度も額に触れたことだけを覚えていた。母親はそれ以上歩く力もなく、[PAWN_objective]を門の内へ押しやり、自分は外に残った。これが[PAWN_pronoun]の最も古い記憶だった。</RHAH_History_Y015_DoorstepRatEgg.description>
+  <RHAH_History_Y016_RationingApprentice.title>飢えと災い 食糧配りの小さな助手</RHAH_History_Y016_RationingApprentice.title>
+  <RHAH_History_Y016_RationingApprentice.titleShort>飢えと災い 小さな助手</RHAH_History_Y016_RationingApprentice.titleShort>
+  <RHAH_History_Y016_RationingApprentice.description>物乞いの一行では大人が減り続け、[PAWN_nameDef]は誰がすでに一匙分を受け取ったか覚える役を任された。全員に分けるだけの食べ物がないとき、[PAWN_pronoun]は最後の一人分をもっと幼い子ラットキンに残した。だが自分は一行から追い出された。</RHAH_History_Y016_RationingApprentice.description>
+  <RHAH_History_Y017_GrainBarrelHiddenChild.title>飢えと災い 穀物樽に隠れた子</RHAH_History_Y017_GrainBarrelHiddenChild.title>
+  <RHAH_History_Y017_GrainBarrelHiddenChild.titleShort>飢えと災い 樽の中の子</RHAH_History_Y017_GrainBarrelHiddenChild.titleShort>
+  <RHAH_History_Y017_GrainBarrelHiddenChild.description>家族は穀物を盗むため、[PAWN_nameDef]を連れて倉庫に入った。計画が失敗すると、大人はそれぞれ逃げ出し、誰も[PAWN_objective]を捜しに戻らなかった。[PAWN_pronoun]は夜明けまで空の穀物樽に隠れた。その後、誰かと同行する際は、必ず先に逃げ道を探すようになった。</RHAH_History_Y017_GrainBarrelHiddenChild.description>
+  <RHAH_History_Y018_WastelandBurrowLitter.title>飢えと災い 洞窟に残された子</RHAH_History_Y018_WastelandBurrowLitter.title>
+  <RHAH_History_Y018_WastelandBurrowLitter.titleShort>飢えと災い 捨て子</RHAH_History_Y018_WastelandBurrowLitter.titleShort>
+  <RHAH_History_Y018_WastelandBurrowLitter.description>[PAWN_nameDef]は幼い頃、荒れ地の洞窟でラットキンたちと暮らしていた。豪雨で入り口が水に浸かると、大人は歩ける者を連れて先に去った。[PAWN_pronoun]は藪や廃墟に数日隠れ、泣き声を聞いた通りがかりの一行にようやく見つけてもらった。</RHAH_History_Y018_WastelandBurrowLitter.description>
+  <RHAH_History_Y019_ChildByTheCage.title>飢えと災い 囚人の檻のそばの子</RHAH_History_Y019_ChildByTheCage.title>
+  <RHAH_History_Y019_ChildByTheCage.titleShort>飢えと災い 檻のそばの子</RHAH_History_Y019_ChildByTheCage.titleShort>
+  <RHAH_History_Y019_ChildByTheCage.description>[PAWN_nameDef]はキャラバンの荷車のそばで育ち、医薬品、穀物袋、子ラットキンがそれぞれ檻に閉じ込められるのを見ていた。交易路が断たれると、まとめ役は荷物も子供も置いて去った。[PAWN_pronoun]は番人について、新しい取引先を探すしかなかった。</RHAH_History_Y019_ChildByTheCage.description>
+  <RHAH_History_Y020_HiddenTradeChild.title>飢えと災い 荷車の下の子ラットキン</RHAH_History_Y020_HiddenTradeChild.title>
+  <RHAH_History_Y020_HiddenTradeChild.titleShort>飢えと災い 荷車の下の子</RHAH_History_Y020_HiddenTradeChild.titleShort>
+  <RHAH_History_Y020_HiddenTradeChild.description>[PAWN_nameDef]は大人が穀物の値段や、誰が子供を連れていけるかを繰り返し話すのを聞いていた。自分も取引される品だとは知らなかった。取引が不成立になると、[PAWN_pronoun]は荷車の下に隠され、商人やほかの子ラットキンとともに野営地を離れた。</RHAH_History_Y020_HiddenTradeChild.description>
+  <RHAH_History_Y021_SiegeCampWaterRunner.title>飢えと災い 包囲下で水を運ぶ子</RHAH_History_Y021_SiegeCampWaterRunner.title>
+  <RHAH_History_Y021_SiegeCampWaterRunner.titleShort>飢えと災い 水運びの子</RHAH_History_Y021_SiegeCampWaterRunner.titleShort>
+  <RHAH_History_Y021_SiegeCampWaterRunner.description>[PAWN_nameDef]は包囲された野営地にいた。水を汲むには、壁際の狭い隙間を通るしかなかった。体が小さいため、門番やもっと幼い子供に半椀ずつ水を届ける役を任された。壁が突破されると、[PAWN_pronoun]は逃げ出せた人々とともに去った。</RHAH_History_Y021_SiegeCampWaterRunner.description>
+  <RHAH_History_Y022_ReliefLedgerChild.title>飢えと災い 救援野営地の小さな帳簿係</RHAH_History_Y022_ReliefLedgerChild.title>
+  <RHAH_History_Y022_ReliefLedgerChild.titleShort>飢えと災い 小さな帳簿係</RHAH_History_Y022_ReliefLedgerChild.titleShort>
+  <RHAH_History_Y022_ReliefLedgerChild.description>[PAWN_nameDef]は救援の野営地で届く物資を一回ずつ記録し、食事にはありつけても薬を待ち続けた人々を覚えていた。救援の一行が去るとき、[PAWN_pronoun]は残りの穀物袋の数と人名を木片に書き写した。その不完全な名簿を持ち、移動を続けた。</RHAH_History_Y022_ReliefLedgerChild.description>
+  <RHAH_History_Y023_MapLostChild.title>飢えと災い 地図をたどった迷子</RHAH_History_Y023_MapLostChild.title>
+  <RHAH_History_Y023_MapLostChild.titleShort>飢えと災い 迷子</RHAH_History_Y023_MapLostChild.titleShort>
+  <RHAH_History_Y023_MapLostChild.description>[PAWN_nameDef]は情報屋について、地図に記された宝の場所や廃墟、小さな居住地を通った。どの丸印も、眠れる場所だと思っていた。ある取引が失敗すると、情報屋は独りで逃げた。[PAWN_pronoun]の手元には、曖昧な道標がいくつか残っただけだった。</RHAH_History_Y023_MapLostChild.description>
+  <RHAH_History_Y024_BirthConvoyChild.title>飢えと災い 母親とはぐれた子</RHAH_History_Y024_BirthConvoyChild.title>
+  <RHAH_History_Y024_BirthConvoyChild.titleShort>飢えと災い 迷子</RHAH_History_Y024_BirthConvoyChild.titleShort>
+  <RHAH_History_Y024_BirthConvoyChild.description>[PAWN_nameDef]は出産間近の母親と一行の最後尾にいた。止まるたび、まず風を避ける場所を探した。疫病と食糧不足のため、大人は母親と子供を別々の一団に振り分けた。[PAWN_pronoun]は最後には母親の空の袋を抱え、コロニーの外れにたどり着いた。</RHAH_History_Y024_BirthConvoyChild.description>
+  <RHAH_History_Y025_MisdeliveredChild.title>飢えと災い 誤配送された子</RHAH_History_Y025_MisdeliveredChild.title>
+  <RHAH_History_Y025_MisdeliveredChild.titleShort>飢えと災い 誤配送の子</RHAH_History_Y025_MisdeliveredChild.titleShort>
+  <RHAH_History_Y025_MisdeliveredChild.description>[PAWN_nameDef]は補給品とともに約束の野営地へ行くはずだったが、目覚めると誤投下先の輸送箱のそばにいた。運搬人は座標の間違いに気づき、先に去っていた。[PAWN_pronoun]は見知らぬ物資の山で待ち続け、やがて難民が[PAWN_objective]を連れていった。</RHAH_History_Y025_MisdeliveredChild.description>
+  <RHAH_History_Y026_MisnamedChild.title>飢えと災い 違う名で呼ばれた子</RHAH_History_Y026_MisnamedChild.title>
+  <RHAH_History_Y026_MisnamedChild.titleShort>飢えと災い 別名の子</RHAH_History_Y026_MisnamedChild.titleShort>
+  <RHAH_History_Y026_MisnamedChild.description>避難の際、誰かが[PAWN_nameDef]を別の子供の名で呼んだ。置いていかれるのが怖くて、[PAWN_pronoun]は訂正しなかった。本当の家族は来ず、間違えた人も口論の後で去ってしまった。[PAWN_pronoun]だけが、知らない名を名乗って一行を探し続けた。</RHAH_History_Y026_MisnamedChild.description>
+  <RHAH_History_Y027_FamineCampChild.title>飢えと災い 収穫を知らない野営地の子</RHAH_History_Y027_FamineCampChild.title>
+  <RHAH_History_Y027_FamineCampChild.titleShort>飢えと災い 野営地の子</RHAH_History_Y027_FamineCampChild.titleShort>
+  <RHAH_History_Y027_FamineCampChild.description>[PAWN_nameDef]が初めて見た畑は、穀物を徴収された後の空き地だった。大人はいつも次の季節を待てと言ったが、来るのはかびた種と病人だけだった。食糧を分ける際に家族は散り散りになり、[PAWN_pronoun]は避難の一行とともに去った。本当の収穫を見ることは、とうとうなかった。</RHAH_History_Y027_FamineCampChild.description>
+  <RHAH_History_Y028_PlaguezoneChild.title>飢えと災い 疫病地帯を逃れた子</RHAH_History_Y028_PlaguezoneChild.title>
+  <RHAH_History_Y028_PlaguezoneChild.titleShort>飢えと災い 疫病地帯の子</RHAH_History_Y028_PlaguezoneChild.titleShort>
+  <RHAH_History_Y028_PlaguezoneChild.description>[PAWN_nameDef]は家族とともに疫病地帯から追い出され、どの集落でも門の外で検査を待たなければならなかった。食事を届ける人は減り続け、家族も次々と歩けなくなった。[PAWN_pronoun]は空の薬袋と書きかけの名前を持ち、次の隔離小屋を探し続けた。</RHAH_History_Y028_PlaguezoneChild.description>
+  <RHAH_History_Y029_WoodenShelterOrphan.title>飢えと災い 木造小屋で家族とはぐれた子</RHAH_History_Y029_WoodenShelterOrphan.title>
+  <RHAH_History_Y029_WoodenShelterOrphan.titleShort>飢えと災い 迷子</RHAH_History_Y029_WoodenShelterOrphan.titleShort>
+  <RHAH_History_Y029_WoodenShelterOrphan.description>[PAWN_nameDef]は避難キャンプの木造小屋で育ち、どの扉から風が入り、どの井戸にまだ水があるかを知っていた。キャンプが立ち退きを命じられると、大人は子供をいくつもの一団に分けた。夜に[PAWN_pronoun]は家族とはぐれ、印を刻んだ板を一枚だけ持ち出した。</RHAH_History_Y029_WoodenShelterOrphan.description>
+  <RHAH_History_Y030_DroughtFieldApprentice.title>飢えと災い 干ばつの畑の小さな助手</RHAH_History_Y030_DroughtFieldApprentice.title>
+  <RHAH_History_Y030_DroughtFieldApprentice.titleShort>飢えと災い 小さな農場助手</RHAH_History_Y030_DroughtFieldApprentice.titleShort>
+  <RHAH_History_Y030_DroughtFieldApprentice.description>[PAWN_nameDef]の家の畑は二季続けて不作となり、大人は最後の水をすべて種に回した。子供は毎日畦のそばで見張り、風に飛ばされた穂を拾い戻した。干上がった畑は結局放棄され、[PAWN_pronoun]は流民とともに去った。</RHAH_History_Y030_DroughtFieldApprentice.description>
+  <RHAH_History_Y031_SeedSortingApprentice.title>飢えと災い 種選びの見習い</RHAH_History_Y031_SeedSortingApprentice.title>
+  <RHAH_History_Y031_SeedSortingApprentice.titleShort>飢えと災い 見習い</RHAH_History_Y031_SeedSortingApprentice.titleShort>
+  <RHAH_History_Y031_SeedSortingApprentice.description>[PAWN_nameDef]の家族は穀物加工場のために種を集めていた。倉庫が湿気にやられると、良い種とかびた種が混ざってしまった。[PAWN_pronoun]は大人と一袋ずつより分け、種の見分け方を覚えた。加工場が閉じたとき、残ったのはその腕だけだった。</RHAH_History_Y031_SeedSortingApprentice.description>
+  <RHAH_History_Y032_FenceHerdingChild.title>飢えと災い 無人の農場の牧童</RHAH_History_Y032_FenceHerdingChild.title>
+  <RHAH_History_Y032_FenceHerdingChild.titleShort>飢えと災い 牧童</RHAH_History_Y032_FenceHerdingChild.titleShort>
+  <RHAH_History_Y032_FenceHerdingChild.description>農場が働き手を解雇したとき、[PAWN_nameDef]は徴発を免れた数頭の家畜とともに囲いの中に残された。水まで途絶えると、[PAWN_pronoun]は家畜を追い、難民の一行に追いついた。その後、あの農場に戻る者はいなかった。</RHAH_History_Y032_FenceHerdingChild.description>
+  <RHAH_History_Y033_DryWellWaterChild.title>飢えと災い 井戸に降りて水を汲む子</RHAH_History_Y033_DryWellWaterChild.title>
+  <RHAH_History_Y033_DryWellWaterChild.titleShort>飢えと災い 水汲みの子</RHAH_History_Y033_DryWellWaterChild.titleShort>
+  <RHAH_History_Y033_DryWellWaterChild.description>夏の終わりに村の井戸が枯れ、大人は桶一杯の水をめぐって戸を閉ざし、にらみ合った。[PAWN_nameDef]は体が小さく、遠くの枯れかけた井戸にも潜って水を汲めた。村が放棄されると、[PAWN_pronoun]は水汲みの一団について去った。</RHAH_History_Y033_DryWellWaterChild.description>
+  <RHAH_History_Y034_GrainSackRecorder.title>飢えと災い 穀物袋の印を覚えた子</RHAH_History_Y034_GrainSackRecorder.title>
+  <RHAH_History_Y034_GrainSackRecorder.titleShort>飢えと災い 袋を覚える子</RHAH_History_Y034_GrainSackRecorder.titleShort>
+  <RHAH_History_Y034_GrainSackRecorder.description>[PAWN_nameDef]は家族の仕事が終わるのを穀物倉庫の戸口でよく待っていた。そのうちに、どの種類の穀物袋の印もわかるようになった。倉庫の主人は備蓄を運び出し、扉を施錠した。[PAWN_pronoun]は印を覚えたまま去ったが、もとの穀物倉庫には二度とたどり着けなかった。</RHAH_History_Y034_GrainSackRecorder.description>
+  <RHAH_History_Y035_MillhandHelperChild.title>飢えと災い もみ殻掃除の小さな助手</RHAH_History_Y035_MillhandHelperChild.title>
+  <RHAH_History_Y035_MillhandHelperChild.titleShort>飢えと災い 小さな助手</RHAH_History_Y035_MillhandHelperChild.titleShort>
+  <RHAH_History_Y035_MillhandHelperChild.description>[PAWN_nameDef]は穀物加工場で、大人に代わってもみ殻を片づけていた。残った砕けた穀物で腹を満たすこともできた。加工場が徴用されると、腐った穀物まで無理に配給に混ぜられた。[PAWN_pronoun]は配られる前に家族とともに去った。</RHAH_History_Y035_MillhandHelperChild.description>
+  <RHAH_History_Y036_WheelRepairApprentice.title>飢えと災い 車輪修理の見習い</RHAH_History_Y036_WheelRepairApprentice.title>
+  <RHAH_History_Y036_WheelRepairApprentice.titleShort>飢えと災い 見習い</RHAH_History_Y036_WheelRepairApprentice.titleShort>
+  <RHAH_History_Y036_WheelRepairApprentice.description>[PAWN_nameDef]は大工とともに、難民の荷車の車輪を修理していた。ぬかるみでは車輪のスポークが次々と折れた。洪水で一行は散り散りになり、家族はいつまでも来なかった。[PAWN_pronoun]は次に来た、まだ動ける荷車について去るしかなかった。</RHAH_History_Y036_WheelRepairApprentice.description>
+  <RHAH_History_Y037_NeedleworkApprentice.title>飢えと災い 針仕事の見習い</RHAH_History_Y037_NeedleworkApprentice.title>
+  <RHAH_History_Y037_NeedleworkApprentice.titleShort>飢えと災い 見習い</RHAH_History_Y037_NeedleworkApprentice.titleShort>
+  <RHAH_History_Y037_NeedleworkApprentice.description>家の織物工房が止まると、大人は古着を布切れにほどき、[PAWN_nameDef]も一緒に針に糸を通し、繕い物をした。最後の布まで火事で焼けた。流民とともに去る頃には、[PAWN_pronoun]はその縫い方をすっかり覚えていた。</RHAH_History_Y037_NeedleworkApprentice.description>
+  <RHAH_History_Y038_HuntingGroundHelper.title>飢えと災い 狩猟場の小さな助手</RHAH_History_Y038_HuntingGroundHelper.title>
+  <RHAH_History_Y038_HuntingGroundHelper.titleShort>飢えと災い 狩りの助手</RHAH_History_Y038_HuntingGroundHelper.titleShort>
+  <RHAH_History_Y038_HuntingGroundHelper.description>[PAWN_nameDef]は家族と閉鎖された狩猟場の端へ行き、傷ついた獣を探して肉を得ていた。ある狩りでネズミの群れに遭遇し、狩人たちは二度と戻らなかった。[PAWN_pronoun]は残った毛皮を持ち、避難の一行に加わった。</RHAH_History_Y038_HuntingGroundHelper.description>
+  <RHAH_History_Y039_HerbBasketApprentice.title>飢えと災い 薬籠を運ぶ見習い</RHAH_History_Y039_HerbBasketApprentice.title>
+  <RHAH_History_Y039_HerbBasketApprentice.titleShort>飢えと災い 見習い</RHAH_History_Y039_HerbBasketApprentice.titleShort>
+  <RHAH_History_Y039_HerbBasketApprentice.description>薬草師が病に倒れると、[PAWN_nameDef]は薬草の籠を背負い、隔離小屋と民家の間を使い走りした。薬草師は死に、小屋の扉も封鎖された。[PAWN_pronoun]は生き残った者とともに去ったが、どの草が一時的に熱を下げるかは覚えていた。</RHAH_History_Y039_HerbBasketApprentice.description>
+  <RHAH_History_Y040_KilnsideChildWorker.title>飢えと災い レンガ窯の児童労働者</RHAH_History_Y040_KilnsideChildWorker.title>
+  <RHAH_History_Y040_KilnsideChildWorker.titleShort>飢えと災い 児童労働者</RHAH_History_Y040_KilnsideChildWorker.titleShort>
+  <RHAH_History_Y040_KilnsideChildWorker.description>[PAWN_nameDef]は家族とレンガ窯に働きに入り、炉のそばで燃えかすを拾い、割れたレンガを運んだ。窯の主人は給金を払わず、住まいまで閉めてしまった。炉の火が消えると、[PAWN_pronoun]は窯の働き手とともに新しい避難所を探すしかなかった。</RHAH_History_Y040_KilnsideChildWorker.description>
+  <RHAH_History_Y041_CampfireOrphan.title>飢えと災い 焚き火で家族を探す子</RHAH_History_Y041_CampfireOrphan.title>
+  <RHAH_History_Y041_CampfireOrphan.titleShort>飢えと災い 家族を探す子</RHAH_History_Y041_CampfireOrphan.titleShort>
+  <RHAH_History_Y041_CampfireOrphan.description>食糧配給の人混みで、[PAWN_nameDef]は家族とはぐれた。[PAWN_pronoun]は家族が囲んでいた焚き火だけを覚えていて、何日も夜の火をたどって探した。どうしても見つからず、最後には食糧を分けてくれる人について行くしかなかった。</RHAH_History_Y041_CampfireOrphan.description>
+  <RHAH_History_Y042_RiverRaftApprentice.title>飢えと災い 筏を組んだ子</RHAH_History_Y042_RiverRaftApprentice.title>
+  <RHAH_History_Y042_RiverRaftApprentice.titleShort>飢えと災い 筏作りの子</RHAH_History_Y042_RiverRaftApprentice.titleShort>
+  <RHAH_History_Y042_RiverRaftApprentice.description>豪雨の後、[PAWN_nameDef]は河原に残され、数人の子供と流木や古い扉の板を使って筏を組んだ。その筏は[PAWN_objective]を見知らぬ岸へ運んだ。もとの村は、とっくに洪水と飢饉で失われていた。</RHAH_History_Y042_RiverRaftApprentice.description>
+  <RHAH_History_Y043_RaidedVillageChild.title>飢えと災い 廃村に取り残された子</RHAH_History_Y043_RaidedVillageChild.title>
+  <RHAH_History_Y043_RaidedVillageChild.titleShort>飢えと災い 取り残された子</RHAH_History_Y043_RaidedVillageChild.titleShort>
+  <RHAH_History_Y043_RaidedVillageChild.description>[PAWN_nameDef]は鍋や布、古い毛布を取り戻そうと、家族と略奪された村に戻った。村道には空き家とネズミの群れしかなく、家族はまた去ったが、今度は[PAWN_objective]を置き忘れていった。[PAWN_pronoun]は次に捜しに来た一団とともに、ようやく逃げ出した。</RHAH_History_Y043_RaidedVillageChild.description>
+  <RHAH_History_Y044_SnowprintApprentice.title>飢えと災い 雪の中で道を探す子</RHAH_History_Y044_SnowprintApprentice.title>
+  <RHAH_History_Y044_SnowprintApprentice.titleShort>飢えと災い 道探しの子</RHAH_History_Y044_SnowprintApprentice.titleShort>
+  <RHAH_History_Y044_SnowprintApprentice.description>大雪で山道が閉ざされ、[PAWN_nameDef]は雪の足跡を頼りに次の焚き火を探した。雪崩でもとの道まで埋まり、やがてキャラバンが[PAWN_objective]を見つけた。その一行について歩き、[PAWN_pronoun]は風向きや足跡の読み方を覚え始めた。</RHAH_History_Y044_SnowprintApprentice.description>
+  <RHAH_History_Y045_PackAnimalApprentice.title>飢えと災い キャラバンの小さな荷駄係</RHAH_History_Y045_PackAnimalApprentice.title>
+  <RHAH_History_Y045_PackAnimalApprentice.titleShort>飢えと災い 小さな荷駄係</RHAH_History_Y045_PackAnimalApprentice.titleShort>
+  <RHAH_History_Y045_PackAnimalApprentice.description>キャラバンの水袋が奪われると、[PAWN_nameDef]は最後の数頭の荷駄獣を日陰へ連れていく役を任された。一行は解散したが、子供を迎えに来る人はいなかった。[PAWN_pronoun]は荷駄獣を連れ、別の難民の一行と乾いた土地を渡るしかなかった。</RHAH_History_Y045_PackAnimalApprentice.description>
+  <RHAH_History_Y046_NightWatchChild.title>飢えと災い 眠れない夜番の子</RHAH_History_Y046_NightWatchChild.title>
+  <RHAH_History_Y046_NightWatchChild.titleShort>飢えと災い 夜番の子</RHAH_History_Y046_NightWatchChild.titleShort>
+  <RHAH_History_Y046_NightWatchChild.description>避難キャンプでは毎晩穀物が盗まれ、大人が交代で夜番をしても襲撃を防げなかった。眠れない[PAWN_nameDef]は、さまざまな足音をすっかり覚えた。キャンプが移った後も、[PAWN_pronoun]は夜の足音に耳を澄ませた。</RHAH_History_Y046_NightWatchChild.description>
+  <RHAH_History_Y047_CheckpointEvasionApprentice.title>飢えと災い 関所を避ける子</RHAH_History_Y047_CheckpointEvasionApprentice.title>
+  <RHAH_History_Y047_CheckpointEvasionApprentice.titleShort>飢えと災い 関所を避ける子</RHAH_History_Y047_CheckpointEvasionApprentice.titleShort>
+  <RHAH_History_Y047_CheckpointEvasionApprentice.description>[PAWN_nameDef]は家族と荷車の下に隠れ、穀物税を徴収する関所を避けるうちに、巡視の時刻を覚えた。ある検査で家族は拘束された。[PAWN_pronoun]は別の一行に紛れて逃げたが、いつまで待っても家族は来なかった。</RHAH_History_Y047_CheckpointEvasionApprentice.description>
+  <RHAH_History_Newborn.title>飢えと災い 凶作の年に生まれた子</RHAH_History_Newborn.title>
+  <RHAH_History_Newborn.titleShort>飢えと災い 凶作生まれ</RHAH_History_Newborn.titleShort>
+  <RHAH_History_Newborn.description>[PAWN_nameDef]が生まれたとき、ラットキンの集落はすでに飢饉に見舞われていた。仕事を手伝える年齢になる前から、もう旅に出なければならなかった。</RHAH_History_Newborn.description>
+  <RHAH_History_Refugee.title>飢えと災い 飢饉を逃れた難民</RHAH_History_Refugee.title>
+  <RHAH_History_Refugee.titleShort>飢えと災い 難民</RHAH_History_Refugee.titleShort>
+  <RHAH_History_Refugee.description>倉庫が空になると、[PAWN_nameDef]はラットキンの集落を離れた。よそへ行っても、次の食事のために仕事を探す必要があった。</RHAH_History_Refugee.description>
+</LanguageData>

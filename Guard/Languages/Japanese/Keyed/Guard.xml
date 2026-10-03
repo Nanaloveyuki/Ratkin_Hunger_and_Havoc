@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Guard_DuplicateTitle>Ratkin: Hunger and Havoc の本体は読み込まれませんでした</RHAH_Guard_DuplicateTitle>
+  <RHAH_Guard_DuplicateBody>旧Mod「鼠灾-大荒年」も有効になっています。今回は Hunger and Havoc の内容を読み込んでいません。旧Modも無効にはしていません。\n\nどちらか一方だけを有効にして、RimWorldを再起動してください。再起動するまでは、セーブの読み込みも保存もしないでください。Hunger and Havoc は旧Modのセーブデータを引き継げません。</RHAH_Guard_DuplicateBody>
+</LanguageData>

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from collections import Counter
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -141,8 +142,8 @@ def check_about():
         errors.append("About.xml Chinese name")
     if "lezhizhong.mouse.disaster.famine" not in about:
         errors.append("About.xml incompatibleWith original")
-    if "<modVersion>1.0.0</modVersion>" not in about:
-        errors.append("About.xml modVersion must be 1.0.0")
+    if "<modVersion>1.0.3</modVersion>" not in about:
+        errors.append("About.xml modVersion must be 1.0.3")
     if (ROOT / "1.6/Assemblies/0Harmony.dll").exists():
         errors.append("do not ship 1.6/Assemblies/0Harmony.dll; Harmony is a mod dependency")
 
@@ -208,6 +209,52 @@ def compare_keyed(zh_dir, en_dir, label):
                 "%s placeholder count mismatch %s zh=%s en=%s"
                 % (label, key, zh_count, en_count)
             )
+
+
+def language_entries(rel_dir):
+    folder = ROOT / rel_dir
+    entries = {}
+    if not folder.is_dir():
+        errors.append("missing " + rel_dir)
+        return entries
+    for path in sorted(folder.rglob("*.xml")):
+        rel = path.relative_to(folder)
+        try:
+            data = ET.parse(path).getroot()
+        except ET.ParseError as ex:
+            errors.append("invalid language XML %s: %s" % (path.relative_to(ROOT), ex))
+            continue
+        if data.tag != "LanguageData":
+            errors.append("invalid language root " + str(path.relative_to(ROOT)))
+            continue
+        group = str(rel.parent) if rel.parts[0] == "DefInjected" else "Keyed"
+        file_keys = set()
+        for entry in data:
+            key = (group, entry.tag)
+            value = entry.text or ""
+            if key in file_keys or (key in entries and entries[key] != value):
+                errors.append("conflicting or duplicate language key %s in %s" % (entry.tag, rel_dir))
+            file_keys.add(key)
+            if not value.strip() or value.strip() == "TODO":
+                errors.append("empty language entry %s in %s" % (entry.tag, rel_dir))
+            entries[key] = value
+    return entries
+
+
+def check_japanese_languages():
+    tokens = re.compile(r"\{[^{}]+\}|\[[A-Za-z_][A-Za-z0-9_]*\]")
+    for base in ("Languages", "Guard/Languages"):
+        english = language_entries(base + "/English")
+        chinese = language_entries(base + "/ChineseSimplified")
+        japanese = language_entries(base + "/Japanese")
+        for group, key in sorted(set(english) - set(japanese)):
+            errors.append("Japanese missing %s/%s (%s)" % (group, key, base))
+        for group, key in sorted(set(japanese) - set(english)):
+            errors.append("Japanese unknown %s/%s (%s)" % (group, key, base))
+        for key in sorted(set(english) & set(japanese)):
+            source = chinese.get(key, english[key])
+            if Counter(tokens.findall(source)) != Counter(tokens.findall(japanese[key])):
+                errors.append("Japanese placeholder mismatch %s (%s)" % (key[1], base))
 
 
 def check_translate_literals():
@@ -451,6 +498,7 @@ def main():
     check_comp_contract()
     check_identity_defs()
     check_def_injected()
+    check_japanese_languages()
     check_save_keys()
     check_forbidden_names()
     check_required_files()
@@ -460,7 +508,7 @@ def main():
         for item in errors:
             print(" -", item)
         return 1
-    print("OK M0 scaffold: API assembly, Identity Comp, I-001..I-051, keyed symmetry")
+    print("OK M0 scaffold: API assembly, Identity Comp, I-001..I-051, keyed symmetry, Japanese coverage/tokens/XML")
     return 0
 
 

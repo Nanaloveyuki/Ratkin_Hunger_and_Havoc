@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_ClaySatiety.label>観音土による満腹</RHAH_ClaySatiety.label>
+  <RHAH_ClaySatiety.description>観音土が胃の中で固まり、一時的に空腹を感じなくなっています。固まりが残っている間は、さらに食べることはできません。15日間で最大3個までで、その後は少しずつ崩れていきます。</RHAH_ClaySatiety.description>
+  <RHAH_ClaySatiety.stages.0.label>胃の中の固まり</RHAH_ClaySatiety.stages.0.label>
+</LanguageData>
