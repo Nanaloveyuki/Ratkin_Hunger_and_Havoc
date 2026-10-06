@@ -406,6 +406,12 @@
   <RHAH_Settings_PrisonerScavenge_Tooltip>A hungry prisoner no longer licks one layer of filth off the ground.</RHAH_Settings_PrisonerScavenge_Tooltip>
   <RHAH_Settings_TailBite>Allow tail bites</RHAH_Settings_TailBite>
   <RHAH_Settings_TailBite_Tooltip>A hungry prisoner bites off the tail of a nearby sleeping prisoner under 3 who still has one. Off by default.</RHAH_Settings_TailBite_Tooltip>
+  <RHAH_Settings_FamineDoors>Famine visitors may open doors</RHAH_Settings_FamineDoors>
+  <RHAH_Settings_FamineDoors_Tooltip>Off by default. On, famine visitors may open colonist doors. They still leave doors shut while an enemy is on the map.</RHAH_Settings_FamineDoors_Tooltip>
+  <RHAH_Settings_PlagueSafe>Plague safe mode</RHAH_Settings_PlagueSafe>
+  <RHAH_Settings_PlagueSafe_Tooltip>Off by default. On, the plague stops short of killing. The sick cannot move, but the plague itself does not kill them.</RHAH_Settings_PlagueSafe_Tooltip>
+  <RHAH_Settings_GreenLetters>Green famine letters</RHAH_Settings_GreenLetters>
+  <RHAH_Settings_GreenLetters_Tooltip>On by default. Off, famine incident letters use the ordinary blue.</RHAH_Settings_GreenLetters_Tooltip>
   <RHAH_Settings_Broadcast>Allow aid broadcasts</RHAH_Settings_Broadcast>
   <RHAH_Settings_Broadcast_Tooltip>The comms console stops listing a broadcast. A cooldown already running does not end early.</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_Stagger>Visitors arrive in batches</RHAH_Settings_Stagger>

@@ -401,9 +401,15 @@ namespace HungerAndHavoc.Pawn
             return attitude == RHAH_Attitude.Hostile ? HostileGoodwill : NeutralGoodwill;
         }
 
-        internal static void OutsideRelation(bool ownerHostile, bool otherAttitudeFaction, out FactionRelationKind kind, out int goodwill)
+        internal static void OutsideRelation(
+            bool ownerHostile,
+            bool ownerFriendly,
+            bool otherAttitudeFaction,
+            bool playerHostileToOther,
+            out FactionRelationKind kind,
+            out int goodwill)
         {
-            if (otherAttitudeFaction || !ownerHostile)
+            if (otherAttitudeFaction || ownerFriendly || (!ownerHostile && !playerHostileToOther))
             {
                 kind = FactionRelationKind.Neutral;
                 goodwill = NeutralGoodwill;

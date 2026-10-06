@@ -406,6 +406,12 @@
   <RHAH_Settings_PrisonerScavenge_Tooltip>关闭后，饥饿的囚犯不再舔掉地上的一层污物。</RHAH_Settings_PrisonerScavenge_Tooltip>
   <RHAH_Settings_TailBite>允许咬尾巴</RHAH_Settings_TailBite>
   <RHAH_Settings_TailBite_Tooltip>开启后，饥饿的囚犯会咬掉近处睡着、不满 3 岁且仍有鼠尾的囚犯的尾巴。默认关闭。</RHAH_Settings_TailBite_Tooltip>
+  <RHAH_Settings_FamineDoors>允许饥民开门</RHAH_Settings_FamineDoors>
+  <RHAH_Settings_FamineDoors_Tooltip>默认关闭。开启后，饥民可以打开殖民者的门。地图上有敌人时仍然不开。</RHAH_Settings_FamineDoors_Tooltip>
+  <RHAH_Settings_PlagueSafe>鼠疫安全模式</RHAH_Settings_PlagueSafe>
+  <RHAH_Settings_PlagueSafe_Tooltip>默认关闭。开启后，鼠疫停在致死之前，病人无法行动，但不会死于鼠疫。</RHAH_Settings_PlagueSafe_Tooltip>
+  <RHAH_Settings_GreenLetters>鼠饥事件使用绿色信件</RHAH_Settings_GreenLetters>
+  <RHAH_Settings_GreenLetters_Tooltip>默认开启。关闭后，鼠饥事件信恢复原版蓝色。</RHAH_Settings_GreenLetters_Tooltip>
   <RHAH_Settings_Broadcast>允许广播求援</RHAH_Settings_Broadcast>
   <RHAH_Settings_Broadcast_Tooltip>关闭后，通讯台不再列出广播。冷却中的广播不会提前结束。</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_Stagger>分批到来</RHAH_Settings_Stagger>

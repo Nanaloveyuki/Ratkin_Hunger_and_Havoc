@@ -159,7 +159,7 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                float distance = thing.PositionHeld.DistanceToSquared(pawn.Position);
+                float distance = (thing.PositionHeld - pawn.Position).LengthHorizontal;
                 bool inRelief = RHAH_ReliefArea.Contains(pawn.Map, thing.PositionHeld);
                 float score = RHAH_VisitorRules.Score(-distance, FoodFit(thing), inRelief, bonus);
                 Insert(picked, scores, ref count, keep, thing, score);

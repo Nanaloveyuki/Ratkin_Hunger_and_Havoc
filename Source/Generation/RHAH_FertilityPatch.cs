@@ -180,6 +180,18 @@ namespace HungerAndHavoc.Generation
             return request;
         }
 
+        // 关系模组改的是生成概率 Child 由 Parent 推导
+        internal static void LinkParent(VersePawn child, VersePawn parent)
+        {
+            if (child?.relations == null || parent == null || child == parent ||
+                PawnRelationDefOf.Parent == null || child.relations.DirectRelationExists(PawnRelationDefOf.Parent, parent))
+            {
+                return;
+            }
+
+            child.relations.AddDirectRelation(PawnRelationDefOf.Parent, parent);
+        }
+
         internal static XenotypeDef InheritedXenotype(VersePawn mother, VersePawn father)
         {
             XenotypeDef motherType = HeritableXenotype(mother);
@@ -515,10 +527,10 @@ namespace HungerAndHavoc.Generation
                     GenSpawn.Spawn(extraBaby, mother.PositionHeld, mother.MapHeld);
                 }
 
-                extraBaby.relations.AddDirectRelation(PawnRelationDefOf.Parent, mother);
+                RHAH_Fertility.LinkParent(extraBaby, mother);
                 if (father != null)
                 {
-                    extraBaby.relations.AddDirectRelation(PawnRelationDefOf.Parent, father);
+                    RHAH_Fertility.LinkParent(extraBaby, father);
                 }
             }
         }

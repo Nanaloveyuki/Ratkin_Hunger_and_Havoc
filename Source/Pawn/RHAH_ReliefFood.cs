@@ -261,6 +261,13 @@ namespace HungerAndHavoc.Pawn
 
         static RHAH_FoodReject RejectDispenser(Verse.Pawn pawn, Thing food)
         {
+            // 无尽膏机不耗料斗 没通电时原版 CanDispenseNow 仍失败
+            CompPowerTrader power = food.TryGetComp<CompPowerTrader>();
+            if (power != null && !power.PowerOn)
+            {
+                return RHAH_FoodReject.EmptyDispenser;
+            }
+
             Building_NutrientPasteDispenser dispenser = food as Building_NutrientPasteDispenser;
             if (dispenser != null && !dispenser.HasEnoughFeedstockInHoppers())
             {

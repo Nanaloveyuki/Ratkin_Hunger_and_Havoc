@@ -170,10 +170,17 @@ namespace HungerAndHavoc.Generation
             List<Gene> genes = xenotype.inheritable ? tracker.Endogenes : tracker.Xenogenes;
             for (int i = 0; i < xenotype.genes.Count; i++)
             {
+                GeneDef expected = xenotype.genes[i];
+                // 发色胡须只留一个 原版不会把名单里其余的装上
+                if (expected == null || expected.RandomChosen)
+                {
+                    continue;
+                }
+
                 bool found = false;
                 for (int j = 0; j < genes.Count; j++)
                 {
-                    if (genes[j].def == xenotype.genes[i])
+                    if (genes[j].def == expected)
                     {
                         found = true;
                         break;

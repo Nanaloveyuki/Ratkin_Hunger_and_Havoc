@@ -276,14 +276,14 @@ namespace HungerAndHavoc.Pawn
 
         public override void UpdateAllDuties()
         {
-            base.UpdateAllDuties();
+            // TravelOrLeave 到不了点就出图 入场点在边缘时会立刻离开
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
                 Verse.Pawn pawn = lord.ownedPawns[i];
-                if (RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving)
-                {
-                    pawn.mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
-                }
+                PawnDuty duty = RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving
+                    ? new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave)
+                    : new PawnDuty(RimWorld.DutyDefOf.TravelOrWait, Data.dest, -1f);
+                pawn.mindState.duty = duty;
             }
         }
     }

@@ -81,6 +81,17 @@
           </li>
         </capMods>
       </li>
+      <li>
+        <minSeverity>0.99</minSeverity>
+        <label>无法行动</label>
+        <lifeThreatening>false</lifeThreatening>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <setMax>0.1</setMax>
+          </li>
+        </capMods>
+      </li>
     </stages>
   </HediffDef>
 </Defs>

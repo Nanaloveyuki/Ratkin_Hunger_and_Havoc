@@ -133,6 +133,7 @@ namespace HungerAndHavoc.Pawn
                 }
 
                 bool ownerHostile = owner.def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Hostile;
+                bool ownerFriendly = owner.def == HungerAndHavoc.Core.RHAH_DefOf.RHAH_Faction_Friendly;
                 for (int j = 0; j < factions.Count; j++)
                 {
                     Faction other = factions[j];
@@ -141,7 +142,14 @@ namespace HungerAndHavoc.Pawn
                         continue;
                     }
 
-                    RHAH_VisitorRules.OutsideRelation(ownerHostile, IsAttitudeFaction(other), out FactionRelationKind kind, out int goodwill);
+                    bool playerHostile = player != null && player.HostileTo(other);
+                    RHAH_VisitorRules.OutsideRelation(
+                        ownerHostile,
+                        ownerFriendly,
+                        IsAttitudeFaction(other),
+                        playerHostile,
+                        out FactionRelationKind kind,
+                        out int goodwill);
                     PinPair(owner, other, kind, goodwill);
                 }
             }

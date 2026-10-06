@@ -833,6 +833,8 @@ namespace HungerAndHavoc.Pawn.Compat
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_MotherFeed".Translate(), ref settings.motherFeedEnabled, "RHAH_Settings_MotherFeed_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_PrisonerScavenge".Translate(), ref settings.prisonerScavengeEnabled, "RHAH_Settings_PrisonerScavenge_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_TailBite".Translate(), ref settings.tailBiteEnabled, "RHAH_Settings_TailBite_Tooltip".Translate());
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_FamineDoors".Translate(), ref settings.famineVisitorsOpenDoors, "RHAH_Settings_FamineDoors_Tooltip".Translate());
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_GreenLetters".Translate(), ref settings.greenIncidentLetters, "RHAH_Settings_GreenLetters_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_Broadcast".Translate(), ref settings.broadcastEnabled, "RHAH_Settings_Broadcast_Tooltip".Translate());
             string cooldown = Buffer(weightBuffers, "broadcast-days", settings.broadcastCooldownDays, "0");
             settings.broadcastCooldownDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_BroadcastCooldown".Translate(settings.broadcastCooldownDays), settings.broadcastCooldownDays, ref cooldown, 0f, 10f, "0", "RHAH_Settings_BroadcastCooldown_Tooltip".Translate());
@@ -860,6 +862,7 @@ namespace HungerAndHavoc.Pawn.Compat
             }
 
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_Plague".Translate(), ref settings.plagueEnabled, "RHAH_Settings_Plague_Tooltip".Translate());
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_PlagueSafe".Translate(), ref settings.plagueSafeMode, "RHAH_Settings_PlagueSafe_Tooltip".Translate());
             settings.plagueSeverityMax = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "plague-severity", "RHAH_Settings_PlagueSeverity".Translate(settings.plagueSeverityMax.ToString("0.00")), settings.plagueSeverityMax, 0.01f, 1f, "0.00", "RHAH_Settings_PlagueSeverity_Tooltip".Translate());
             string per = Buffer(weightBuffers, "plague-per", settings.plagueSpreadChancePerCarrier * 100f, "0.0");
             float perPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PlaguePerCarrier".Translate((settings.plagueSpreadChancePerCarrier * 100f).ToString("0.0")), settings.plagueSpreadChancePerCarrier * 100f, ref per, 0f, 100f, "0.0", "RHAH_Settings_PlaguePerCarrier_Tooltip".Translate());

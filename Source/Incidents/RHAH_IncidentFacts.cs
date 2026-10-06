@@ -240,7 +240,7 @@ namespace HungerAndHavoc.Incidents
             if (record.Kind == RHAH_RequestKind.None)
             {
                 ChoiceLetter_RHAH_Visitors visitors = (ChoiceLetter_RHAH_Visitors)LetterMaker.MakeLetter(
-                    label, text, RHAH_DefOf.RHAH_ChoiceVisitors, targets);
+                    label, text, IncidentLetter(RHAH_DefOf.RHAH_ChoiceVisitors, RHAH_DefOf.RHAH_ChoiceVisitorsGreen), targets);
                 visitors.choiceId = record.Id;
                 visitors.choice = record.Choice;
                 letter = visitors;
@@ -248,7 +248,7 @@ namespace HungerAndHavoc.Incidents
             else
             {
                 ChoiceLetter_RHAH_Request request = (ChoiceLetter_RHAH_Request)LetterMaker.MakeLetter(
-                    label, text, RHAH_DefOf.RHAH_ChoiceRequest, targets);
+                    label, text, IncidentLetter(RHAH_DefOf.RHAH_ChoiceRequest, RHAH_DefOf.RHAH_ChoiceRequestGreen), targets);
                 request.choiceId = record.Id;
                 request.mapId = record.MapId;
                 request.kind = record.Kind;
@@ -259,6 +259,12 @@ namespace HungerAndHavoc.Incidents
             }
 
             Find.LetterStack.ReceiveLetter(letter);
+        }
+
+        static LetterDef IncidentLetter(LetterDef ordinary, LetterDef green)
+        {
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            return settings != null && settings.greenIncidentLetters && green != null ? green : ordinary;
         }
 
         static LookTargets Targets(List<RHAH_PawnCreationResult> created)

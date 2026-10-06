@@ -386,6 +386,9 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Suiyin | StorytellerDef | Replace。目标写死已加载的原版 `Randy`。未加载就中止，不保留穗音定义 |
 | RHAH_ChoiceRequest | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_ChoiceVisitors | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
+| RHAH_ChoiceRequestGreen | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
+| RHAH_ChoiceVisitorsGreen | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
+| RHAH_GreenIncident | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_QuarantineLetter | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_PawnKind_Ratkin | PawnKindDef | Replace。保留 pawn 的 thingID。`kindDef` 改成仍会随 NewRatkinPlus 加载、种族同为 `Ratkin`、不属于本模组的 PawnKind。按 defName 序选第一个。没有这种种类就中止，不换成人类 |
 
@@ -443,6 +446,9 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Settings.motherFeedEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.prisonerScavengeEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.tailBiteEnabled | 全局 ModSettings，默认 false |
+| RHAH_Settings.famineVisitorsOpenDoors | 全局 ModSettings，默认 false。开启后饥民可以开门，地图上有敌人时仍不开 |
+| RHAH_Settings.plagueSafeMode | 全局 ModSettings，默认 false。开启后鼠疫停在致死严重度以下 |
+| RHAH_Settings.greenIncidentLetters | 全局 ModSettings，默认 true。关闭后鼠饥事件信用原版颜色 |
 | RHAH_Settings.broadcastEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.broadcastCooldownDays | 全局 ModSettings，默认 3，范围 0 到 10 |
 | RHAH_Settings.staggerGeneration | 全局 ModSettings，默认 true |
