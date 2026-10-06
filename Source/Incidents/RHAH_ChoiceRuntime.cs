@@ -419,6 +419,10 @@ namespace HungerAndHavoc.Incidents
             {
                 if (RHAH_Api.Allows(pawns[i], RHAH_BehaviorGate.JoinColony) && RHAH_Api.ReleaseToColony(pawns[i], reason))
                 {
+                    HungerAndHavoc.Pawn.RHAH_VisitorRules.ApplyPlayerIdeo(
+                        pawns[i],
+                        Core.RHAH_Mod.Settings == null ? 100 : Core.RHAH_Mod.Settings.playerIdeoPercent,
+                        Rand.Value);
                     pawns[i].SetFaction(Faction.OfPlayer);
                     released = true;
                 }

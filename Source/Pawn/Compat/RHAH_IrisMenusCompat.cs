@@ -1732,6 +1732,10 @@ namespace HungerAndHavoc.Pawn.Compat
                 weightBuffers["female-share"] = share;
             }
 
+            string ideo = Buffer(weightBuffers, "player-ideo", settings.playerIdeoPercent, "0");
+            settings.playerIdeoPercent = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PlayerIdeo".Translate(settings.playerIdeoPercent), settings.playerIdeoPercent, ref ideo, 0f, 100f, "0", "RHAH_Settings_PlayerIdeo_Tooltip".Translate());
+            weightBuffers["player-ideo"] = ideo;
+
             DrawModeSelect(list, "apparel-mode", "RHAH_Settings_Apparel", settings.apparelMode, 4, mode => settings.apparelMode = mode);
             DrawApparelIntensity(list, settings);
             DrawApparelList(list, settings);

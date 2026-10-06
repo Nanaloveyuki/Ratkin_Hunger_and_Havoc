@@ -473,6 +473,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Settings.allowImmobileBabies | 全局 ModSettings，默认 false。打开后无幼童模组也可以生成 4 岁以下。幼童模组启用时不抬龄 |
 | RHAH_Settings.genderMode | 全局 ModSettings，默认 0。0 随机，1 按比例，2 女性，3 男性 |
 | RHAH_Settings.femaleSharePercent | 全局 ModSettings，默认 50，范围 0 到 100。只在按比例时使用 |
+| RHAH_Settings.playerIdeoPercent | 全局 ModSettings，默认 100，范围 0 到 100。新来客和后来入籍的人按这个比例改成玩家主要文化。0 保留到达时的文化。奴隶和囚犯不计入主要文化。没有 Ideology 时不使用 |
 | RHAH_Settings.apparelMode | 全局 ModSettings，默认 0。0、1、2 都清空生成器衣物，先穿温度衣再叠穿兼容普通衣；3 不穿衣。显式衣列表不重配 |
 | RHAH_Settings.apparelListMode | 全局 ModSettings，默认 0。0 按来源，1 按名称，2 按类别。只影响菜单 |
 | RHAH_Settings.disabledRefugeeApparelDefNames | 全局 ModSettings，默认空。空名单表示固定准入池内衣物可生成：NewRatkinPlus 原始 55 项且来源匹配、官方部落装与四件幼年衣，再按制材、遮裸体、科技等级和年龄筛选；第三方衣物不自动加入 |

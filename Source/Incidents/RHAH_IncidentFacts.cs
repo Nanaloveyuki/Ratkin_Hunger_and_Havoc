@@ -33,9 +33,9 @@ namespace HungerAndHavoc.Incidents
                     Map = context.Map,
                     PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
                     Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(context.Attitude),
-                    SpawnCell = context.SpawnCell,
+                    SpawnCell = context.DropPod ? IntVec3.Invalid : context.SpawnCell,
                     Gender = RHAH_IncidentRoster.GenderAt(context.DisplayId, i),
-                    BiologicalAge = GenerationAge(role),
+                    BiologicalAge = GenerationAge(role, context.DisplayId),
                     StartLabor = RHAH_IncidentRoster.StartsLabor(context.DisplayId),
                     Shatter = RHAH_IncidentRoster.Shatters(context.DisplayId, i)
                 }, registerBatch: false);
@@ -69,6 +69,11 @@ namespace HungerAndHavoc.Incidents
                 Rollback(created);
                 return false;
             }
+            if (context.DropPod)
+            {
+                Pawn.RHAH_VisitorRules.DropPods(arrived, context.Map, context.SpawnCell, arrived[0].Faction);
+            }
+
             RHAH_Runtime.RegisterBatch(context.Map, context.SpawnBatchId);
             List<int> loadIds = new List<int>(arrived.Count);
             for (int i = 0; i < arrived.Count; i++)
@@ -155,8 +160,13 @@ namespace HungerAndHavoc.Incidents
             Pawn.Compat.RHAH_RatEggCuisine.OpenTrade(seller);
         }
 
-        static float? GenerationAge(RHAH_PawnRole role)
+        static float? GenerationAge(RHAH_PawnRole role, string displayId)
         {
+            if (displayId == "I-032" || displayId == "I-046")
+            {
+                return HungerAndHavoc.Pawn.RHAH_VisitorRules.AirdropAge(Rand.Value);
+            }
+
             RHAH_Settings settings = RHAH_Mod.Settings;
             float min = settings == null ? 0f : settings.minGeneratedAge;
             float max = settings == null ? 50f : settings.maxGeneratedAge;

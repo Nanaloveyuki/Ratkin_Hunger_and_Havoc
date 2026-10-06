@@ -72,8 +72,18 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
+            bool airdrop = entry.DisplayId == "I-032" || entry.DisplayId == "I-046";
             IntVec3 cell;
-            if (!RCellFinder.TryFindRandomPawnEntryCell(out cell, map, CellFinder.EdgeRoadChance_Animal, false, null))
+            if (airdrop)
+            {
+                cell = DropCellFinder.TradeDropSpot(map);
+            }
+            else if (!RCellFinder.TryFindRandomPawnEntryCell(out cell, map, CellFinder.EdgeRoadChance_Animal, false, null))
+            {
+                return false;
+            }
+
+            if (!cell.IsValid)
             {
                 return false;
             }
@@ -89,6 +99,7 @@ namespace HungerAndHavoc.Incidents
                 CarriesPlague = entry.Category == RHAH_IncidentCategory.Plague,
                 Map = map,
                 SpawnCell = cell,
+                DropPod = airdrop,
                 PawnCount = RHAH_IncidentScale.Count(entry.DisplayId, parms == null ? 0f : parms.points, EventCap(), false),
                 Points = parms == null ? 0f : parms.points
             });

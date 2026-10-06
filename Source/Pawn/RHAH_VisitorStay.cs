@@ -32,6 +32,10 @@ namespace HungerAndHavoc.Pawn
             comp.SetStay((int)kind, deadline, deadline - now);
             if (pawn.Faction != Faction.OfPlayer)
             {
+                RHAH_VisitorRules.ApplyPlayerIdeo(
+                    pawn,
+                    settings == null ? 100 : settings.playerIdeoPercent,
+                    Rand.Value);
                 pawn.SetFaction(Faction.OfPlayer);
             }
 

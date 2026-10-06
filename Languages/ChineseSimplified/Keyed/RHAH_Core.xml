@@ -42,6 +42,8 @@
   <RHAH_Settings_Gender_3>全部男性</RHAH_Settings_Gender_3>
   <RHAH_Settings_FemaleShare>女性比例：{0}%</RHAH_Settings_FemaleShare>
   <RHAH_Settings_FemaleShare_Tooltip>只在按比例时生效。0 全是男性，100 全是女性。事件已经指定性别的人不变。</RHAH_Settings_FemaleShare_Tooltip>
+  <RHAH_Settings_PlayerIdeo>玩家文化：{0}%</RHAH_Settings_PlayerIdeo>
+  <RHAH_Settings_PlayerIdeo_Tooltip>新来客和后来入籍的人里，这么多比例改成殖民地的主要文化。100 全改，0 保留生成时的文化。奴隶和囚犯不计入主要文化。没有文化扩展时不使用。</RHAH_Settings_PlayerIdeo_Tooltip>
   <RHAH_Settings_Apparel>衣物</RHAH_Settings_Apparel>
   <RHAH_Settings_Apparel_0>平民衣装</RHAH_Settings_Apparel_0>
   <RHAH_Settings_Apparel_1>平民衣装</RHAH_Settings_Apparel_1>

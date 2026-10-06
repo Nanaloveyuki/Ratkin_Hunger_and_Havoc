@@ -340,6 +340,8 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(14, SuiyinBook.JournalFor("I-015"));
             Assert.Equal(5, SuiyinBook.JournalFor("I-006"));
             Assert.True(book.OpenJournal(14, 1, 9, 0, new[] { 41 }, true));
+            Assert.Equal(1, Count(book, SuiyinLetter.Journal));
+            Assert.True(book.Pending[0].Private);
             Assert.False(book.OpenJournal(14, 1, 9, 1, new[] { 41 }, true));
             SuiyinJournalCase record = book.Journals[0];
             Assert.False(book.CloseJournal(record, 1000));

@@ -1521,7 +1521,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             if (!JournalNoted.Contains(journal))
             {
                 JournalNoted.Add(journal);
-                Queue(SuiyinLetter.Journal, journal, false);
+                Queue(SuiyinLetter.Journal, journal, true);
             }
 
             return true;

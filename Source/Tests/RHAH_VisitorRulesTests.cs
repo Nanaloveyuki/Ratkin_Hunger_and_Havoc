@@ -32,6 +32,19 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void AirdropAgeIsMostlyUnderThreeAndPlayerIdeoFollowsTheShare()
+        {
+            Assert.True(RHAH_VisitorRules.AirdropAge(0f) < 3f);
+            Assert.True(RHAH_VisitorRules.AirdropAge(0.79f) < 3f);
+            Assert.True(RHAH_VisitorRules.AirdropAge(0.8f) >= 3f);
+            Assert.True(RHAH_VisitorRules.AirdropAge(1f) <= 6.9f);
+            Assert.True(RHAH_VisitorRules.UsesPlayerIdeo(100, 0.99f));
+            Assert.False(RHAH_VisitorRules.UsesPlayerIdeo(0, 0f));
+            Assert.True(RHAH_VisitorRules.UsesPlayerIdeo(40, 0.39f));
+            Assert.False(RHAH_VisitorRules.UsesPlayerIdeo(40, 0.4f));
+        }
+
+        [Fact]
         public void GoodwillStaysHostileOrNeutralAndYoungNeedThreeWithoutToddlers()
         {
             Assert.Equal(-100, RHAH_VisitorRules.LockedGoodwill(RHAH_Attitude.Hostile));

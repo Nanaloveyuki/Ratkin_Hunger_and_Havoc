@@ -42,6 +42,8 @@
   <RHAH_Settings_Gender_3>全員男性</RHAH_Settings_Gender_3>
   <RHAH_Settings_FemaleShare>女性の割合：{0}%</RHAH_Settings_FemaleShare>
   <RHAH_Settings_FemaleShare_Tooltip>「割合で指定」の場合のみ有効です。0なら全員男性、100なら全員女性になります。イベントで性別が指定されている人物は変わりません。</RHAH_Settings_FemaleShare_Tooltip>
+  <RHAH_Settings_PlayerIdeo>プレイヤーの文化：{0}%</RHAH_Settings_PlayerIdeo>
+  <RHAH_Settings_PlayerIdeo_Tooltip>新しい訪問者と、後から入植する人のうち、この割合をコロニーの主要な文化に変えます。100なら全員、0なら到着時の文化のままです。奴隷と囚人は主要な文化の人数に入りません。Ideologyがない場合は使いません。</RHAH_Settings_PlayerIdeo_Tooltip>
   <RHAH_Settings_Apparel>服装</RHAH_Settings_Apparel>
   <RHAH_Settings_Apparel_0>普段着</RHAH_Settings_Apparel_0>
   <RHAH_Settings_Apparel_1>普段着</RHAH_Settings_Apparel_1>

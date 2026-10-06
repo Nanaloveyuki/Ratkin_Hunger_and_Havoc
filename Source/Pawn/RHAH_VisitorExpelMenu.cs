@@ -40,6 +40,10 @@ namespace HungerAndHavoc.Pawn
                 yield return new FloatMenuOption("RHAH_Choice_Join".Translate(), () =>
                 {
                     RHAH_Api.ReleaseToColony(clickedPawn, RHAH_ReleaseReason.JoinedPlayerFaction);
+                    RHAH_VisitorRules.ApplyPlayerIdeo(
+                        clickedPawn,
+                        RHAH_Mod.Settings == null ? 100 : RHAH_Mod.Settings.playerIdeoPercent,
+                        Rand.Value);
                     clickedPawn.SetFaction(Faction.OfPlayer);
                 });
             }

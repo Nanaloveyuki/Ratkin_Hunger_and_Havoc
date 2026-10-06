@@ -14,6 +14,7 @@ namespace HungerAndHavoc.Incidents
         public bool CarriesPlague { get; set; }
         public Map Map { get; set; }
         public IntVec3 SpawnCell { get; set; }
+        public bool DropPod { get; set; }
         public int PawnCount { get; set; }
         public float Points { get; set; }
         public RHAH_PawnProfile Profile { get; set; }

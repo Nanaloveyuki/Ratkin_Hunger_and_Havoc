@@ -7,6 +7,17 @@ namespace HungerAndHavoc.Pawn
 {
     internal static class RHAH_AttitudeFactions
     {
+        static readonly RHAH_Attitude[] Attitudes =
+        {
+            RHAH_Attitude.Hostile,
+            RHAH_Attitude.LeaningHostile,
+            RHAH_Attitude.Neutral,
+            RHAH_Attitude.LeaningFriendly,
+            RHAH_Attitude.Friendly
+        };
+
+        static readonly Faction[] Resolved = new Faction[5];
+
         internal static Faction Resolve(RHAH_Attitude attitude)
         {
             FactionDef def = DefFor(attitude);
@@ -100,24 +111,32 @@ namespace HungerAndHavoc.Pawn
 
         internal static void LockGoodwill()
         {
-            EnsureAll();
-            Faction player = Faction.OfPlayer;
-            if (player == null || Find.FactionManager == null)
+            if (Find.FactionManager == null)
             {
                 return;
             }
 
-            RHAH_Attitude[] attitudes =
+            for (int i = 0; i < Attitudes.Length; i++)
             {
-                RHAH_Attitude.Hostile,
-                RHAH_Attitude.LeaningHostile,
-                RHAH_Attitude.Neutral,
-                RHAH_Attitude.LeaningFriendly,
-                RHAH_Attitude.Friendly
-            };
-            for (int i = 0; i < attitudes.Length; i++)
+                Faction faction = Resolve(Attitudes[i]);
+                if (faction == null || faction.IsPlayer)
+                {
+                    Ensure(Attitudes[i]);
+                    faction = Resolve(Attitudes[i]);
+                }
+
+                Resolved[i] = faction;
+            }
+
+            Faction player = Faction.OfPlayer;
+            if (player == null)
             {
-                Pin(player, Resolve(attitudes[i]), RHAH_VisitorRules.LockedGoodwill(attitudes[i]));
+                return;
+            }
+
+            for (int i = 0; i < Attitudes.Length; i++)
+            {
+                Pin(player, Resolved[i], RHAH_VisitorRules.LockedGoodwill(Attitudes[i]));
             }
         }
 
@@ -142,7 +161,7 @@ namespace HungerAndHavoc.Pawn
                         continue;
                     }
 
-                    bool playerHostile = player != null && player.HostileTo(other);
+                    bool playerHostile = player != null && Hostile(player, other);
                     RHAH_VisitorRules.OutsideRelation(
                         ownerHostile,
                         ownerFriendly,
@@ -157,8 +176,8 @@ namespace HungerAndHavoc.Pawn
 
         static void PinPair(Faction owner, Faction other, FactionRelationKind kind, int goodwill)
         {
-            FactionRelation forward = owner.RelationWith(other, true);
-            FactionRelation backward = other.RelationWith(owner, true);
+            FactionRelation forward = FindRelation(owner, other);
+            FactionRelation backward = FindRelation(other, owner);
             if (forward != null && backward != null &&
                 forward.kind == kind && backward.kind == kind &&
                 forward.baseGoodwill == goodwill && backward.baseGoodwill == goodwill)
@@ -166,17 +185,43 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
-            owner.SetRelation(new FactionRelation
+            if (forward == null || backward == null)
             {
-                other = other,
-                kind = kind,
-                baseGoodwill = goodwill
-            });
-            FactionRelation reverse = other.RelationWith(owner, true);
-            if (reverse != null)
-            {
-                reverse.baseGoodwill = goodwill;
+                owner.SetRelation(new FactionRelation
+                {
+                    other = other,
+                    kind = kind,
+                    baseGoodwill = goodwill
+                });
+                FactionRelation reverse = FindRelation(other, owner);
+                if (reverse != null)
+                {
+                    reverse.baseGoodwill = goodwill;
+                }
+
+                return;
             }
+
+            forward.kind = kind;
+            forward.baseGoodwill = goodwill;
+            backward.kind = kind;
+            backward.baseGoodwill = goodwill;
+        }
+
+        static bool Hostile(Faction owner, Faction other)
+        {
+            FactionRelation relation = FindRelation(owner, other);
+            return relation != null && relation.kind == FactionRelationKind.Hostile;
+        }
+
+        static FactionRelation FindRelation(Faction owner, Faction other)
+        {
+            if (owner == null || other == null || owner == other)
+            {
+                return null;
+            }
+
+            return owner.RelationWith(other, true);
         }
 
         static void Pin(Faction player, Faction faction, int goodwill)

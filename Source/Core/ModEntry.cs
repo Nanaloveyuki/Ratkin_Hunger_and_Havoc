@@ -108,6 +108,8 @@ namespace HungerAndHavoc.Core
             Settings.begFailCooldownHours = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.begFailCooldownHours, Pawn.RHAH_VisitorRules.MinBegFailCooldownHours, Pawn.RHAH_VisitorRules.MaxBegFailCooldownHours));
             listing.Label("RHAH_Settings_BegSlapChance".Translate(Settings.begSlapChancePercent));
             Settings.begSlapChancePercent = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.begSlapChancePercent, Pawn.RHAH_VisitorRules.MinBegSlapChancePercent, Pawn.RHAH_VisitorRules.MaxBegSlapChancePercent));
+            listing.Label("RHAH_Settings_PlayerIdeo".Translate(Settings.playerIdeoPercent));
+            Settings.playerIdeoPercent = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.playerIdeoPercent, 0f, 100f));
             listing.CheckboxLabeled("RHAH_Settings_Broadcast".Translate(), ref Settings.broadcastEnabled,
                 "RHAH_Settings_Broadcast_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_Stagger".Translate(), ref Settings.staggerGeneration,

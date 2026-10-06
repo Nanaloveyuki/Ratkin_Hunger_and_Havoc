@@ -44,16 +44,29 @@ namespace HungerAndHavoc.EventMgr
 
     internal sealed class RHAH_EventChainContext
     {
-        internal string DisplayId { get; }
-        internal int InstanceId { get; }
-        internal int SiteId { get; }
-        internal int Tick { get; }
-        internal int Stage { get; }
-        internal int StartedTick { get; }
-        internal int DeadlineTick { get; }
-        internal string Payload { get; }
+        internal string DisplayId { get; private set; }
+        internal int InstanceId { get; private set; }
+        internal int SiteId { get; private set; }
+        internal int Tick { get; private set; }
+        internal int Stage { get; private set; }
+        internal int StartedTick { get; private set; }
+        internal int DeadlineTick { get; private set; }
+        internal string Payload { get; private set; }
 
         internal RHAH_EventChainContext(
+            string displayId,
+            int instanceId,
+            int siteId,
+            int tick,
+            int stage,
+            int startedTick,
+            int deadlineTick,
+            string payload)
+        {
+            Fill(displayId, instanceId, siteId, tick, stage, startedTick, deadlineTick, payload);
+        }
+
+        internal void Fill(
             string displayId,
             int instanceId,
             int siteId,
@@ -92,6 +105,19 @@ namespace HungerAndHavoc.EventMgr
     internal static class RHAH_EventChains
     {
         static readonly List<IRHAH_EventChain> chains = new List<IRHAH_EventChain>();
+        static readonly Dictionary<string, IRHAH_EventChain> byDisplayId = new Dictionary<string, IRHAH_EventChain>();
+        static readonly string[] IncidentIds = BuildIncidentIds();
+
+        static string[] BuildIncidentIds()
+        {
+            string[] ids = new string[51];
+            for (int id = 1; id <= ids.Length; id++)
+            {
+                ids[id - 1] = "I-" + id.ToString("000");
+            }
+
+            return ids;
+        }
 
         internal static void Register(IRHAH_EventChain chain)
         {
@@ -105,16 +131,19 @@ namespace HungerAndHavoc.EventMgr
                 if (chains[i].DisplayId == chain.DisplayId)
                 {
                     chains[i] = chain;
+                    Rebuild();
                     return;
                 }
             }
 
             chains.Add(chain);
+            Rebuild();
         }
 
         internal static void Clear()
         {
             chains.Clear();
+            byDisplayId.Clear();
         }
 
         internal static IRHAH_EventChain Find(string displayId)
@@ -124,15 +153,30 @@ namespace HungerAndHavoc.EventMgr
                 return null;
             }
 
+            byDisplayId.TryGetValue(displayId, out IRHAH_EventChain chain);
+            return chain;
+        }
+
+        static void Rebuild()
+        {
+            byDisplayId.Clear();
             for (int i = 0; i < chains.Count; i++)
             {
-                if (chains[i].Owns(displayId))
+                IRHAH_EventChain chain = chains[i];
+                if (chain == null || string.IsNullOrEmpty(chain.DisplayId))
                 {
-                    return chains[i];
+                    continue;
+                }
+
+                byDisplayId[chain.DisplayId] = chain;
+                if (chain.Owns("I-001") && chain.Owns("I-051"))
+                {
+                    for (int id = 0; id < IncidentIds.Length; id++)
+                    {
+                        byDisplayId[IncidentIds[id]] = chain;
+                    }
                 }
             }
-
-            return null;
         }
 
         internal static int Count => chains.Count;

@@ -35,6 +35,7 @@ namespace HungerAndHavoc.Generation
             }
 
             List<VersePawn> created = new List<VersePawn> { pawn };
+            ApplyPlayerIdeo(pawn);
             RHAH_PawnSeed seed = new RHAH_PawnSeed(
                 request.SourceIncidentDisplayId,
                 request.SpawnBatchId,
@@ -89,6 +90,11 @@ namespace HungerAndHavoc.Generation
             return RHAH_PawnCreationResult.Success(created);
         }
 
+        static void ApplyPlayerIdeo(VersePawn pawn)
+        {
+            int percent = Core.RHAH_Mod.Settings == null ? 100 : Core.RHAH_Mod.Settings.playerIdeoPercent;
+            RHAH_VisitorRules.ApplyPlayerIdeo(pawn, percent, Rand.Value);
+        }
 
         static RHAH_PawnCreationResult Validate(RHAH_PawnRequest request)
         {

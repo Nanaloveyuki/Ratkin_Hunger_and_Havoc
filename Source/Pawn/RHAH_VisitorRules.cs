@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using System;
 using HungerAndHavoc.Api;
 using RimWorld;
@@ -155,6 +157,41 @@ namespace HungerAndHavoc.Pawn
             }
         }
 
+        internal static float AirdropAge(float roll)
+        {
+            float safeRoll = roll < 0f || float.IsNaN(roll) ? 0f : roll > 1f ? 1f : roll;
+            if (safeRoll < 0.8f)
+            {
+                return RatEggMinAge + (RatEggMaxAge - RatEggMinAge) * (safeRoll / 0.8f);
+            }
+
+            return ChildMinAge + (ChildMaxAge - ChildMinAge) * ((safeRoll - 0.8f) / 0.2f);
+        }
+
+        internal static void DropPods(List<Verse.Pawn> pawns, Map map, IntVec3 center, Faction faction)
+        {
+            if (pawns == null || pawns.Count == 0 || map == null || !center.IsValid)
+            {
+                return;
+            }
+
+            List<Verse.Thing> payload = new List<Verse.Thing>(pawns.Count);
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (pawns[i] != null && !pawns[i].Spawned && !pawns[i].Destroyed)
+                {
+                    payload.Add(pawns[i]);
+                }
+            }
+
+            if (payload.Count == 0)
+            {
+                return;
+            }
+
+            DropPodUtility.DropThingsNear(center, map, payload, 110, false, false, true, false, true, faction);
+        }
+
         internal static float? GenerationAge(
             RHAH_PawnRole role,
             float? fixedAge,
@@ -205,6 +242,28 @@ namespace HungerAndHavoc.Pawn
             }
 
             return count > MaxOwnedTraits ? MaxOwnedTraits : count;
+        }
+
+        internal static bool UsesPlayerIdeo(int percent, float roll)
+        {
+            int share = ClampPercent(percent, 0, 100);
+            float safeRoll = roll < 0f || float.IsNaN(roll) ? 0f : roll > 1f ? 1f : roll;
+            return safeRoll * 100f < share;
+        }
+
+        internal static void ApplyPlayerIdeo(Verse.Pawn pawn, int percent, float roll)
+        {
+            if (pawn?.ideo == null || !ModsConfig.IdeologyActive || Faction.OfPlayer?.ideos?.PrimaryIdeo == null)
+            {
+                return;
+            }
+
+            if (!UsesPlayerIdeo(percent, roll))
+            {
+                return;
+            }
+
+            pawn.ideo.SetIdeo(Faction.OfPlayer.ideos.PrimaryIdeo);
         }
 
         internal static int ClampFemaleShare(int percent)

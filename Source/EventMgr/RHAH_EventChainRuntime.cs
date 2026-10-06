@@ -126,6 +126,7 @@ namespace HungerAndHavoc.EventMgr
             }
 
             int closed = 0;
+            RHAH_EventChainContext context = tickContext;
             for (int i = 0; i < records.Count; i++)
             {
                 RHAH_EventChainRecord record = records[i];
@@ -137,7 +138,8 @@ namespace HungerAndHavoc.EventMgr
                 IRHAH_EventChain chain = RHAH_EventChains.Find(record.displayId);
                 if (chain != null)
                 {
-                    chain.OnTick(records, Context(record, tick));
+                    Fill(context, record, tick);
+                    chain.OnTick(records, context);
                 }
 
                 if (record.deadlineTick >= 0 && tick >= record.deadlineTick)
@@ -262,6 +264,21 @@ namespace HungerAndHavoc.EventMgr
             }
 
             return null;
+        }
+
+        static readonly RHAH_EventChainContext tickContext = new RHAH_EventChainContext(null, 0, 0, 0, 0, 0, 0, null);
+
+        static void Fill(RHAH_EventChainContext context, RHAH_EventChainRecord record, int tick)
+        {
+            context.Fill(
+                record.displayId,
+                record.id,
+                record.siteId,
+                tick,
+                record.stage,
+                record.startedTick,
+                record.deadlineTick,
+                record.payload);
         }
 
         static RHAH_EventChainContext Context(RHAH_EventChainRecord record, int tick)

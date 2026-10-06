@@ -70,6 +70,7 @@ namespace HungerAndHavoc.Core
         public bool allowImmobileBabies;
         public int genderMode;
         public int femaleSharePercent = 50;
+        public int playerIdeoPercent = 100;
         public int apparelMode;
         public int apparelListMode;
         List<string> disabledRefugeeApparelDefNames = new List<string>();
@@ -327,6 +328,7 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref allowImmobileBabies, "allowImmobileBabies", false);
             Scribe_Values.Look(ref genderMode, "genderMode", 0);
             Scribe_Values.Look(ref femaleSharePercent, "femaleSharePercent", 50);
+            Scribe_Values.Look(ref playerIdeoPercent, "playerIdeoPercent", 100);
             Scribe_Values.Look(ref apparelMode, "apparelMode", 0);
             Scribe_Values.Look(ref apparelListMode, "apparelListMode", 0);
             Scribe_Collections.Look(ref disabledRefugeeApparelDefNames, "disabledRefugeeApparelDefNames", LookMode.Value);
@@ -928,6 +930,7 @@ namespace HungerAndHavoc.Core
             }
             genderMode = Pawn.RHAH_VisitorRules.ClampBodyMode(genderMode, 4);
             femaleSharePercent = Pawn.RHAH_VisitorRules.ClampFemaleShare(femaleSharePercent);
+            playerIdeoPercent = Pawn.RHAH_VisitorRules.ClampPercent(playerIdeoPercent, 0, 100);
             apparelMode = Pawn.RHAH_VisitorRules.ClampBodyMode(apparelMode, 4);
             maxOwnedTraits = Pawn.RHAH_VisitorRules.ClampOwnedTraits(maxOwnedTraits);
             contentListMode = Pawn.RHAH_VisitorRules.ClampBodyMode(contentListMode, 3);

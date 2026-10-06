@@ -42,6 +42,8 @@
   <RHAH_Settings_Gender_3>All male</RHAH_Settings_Gender_3>
   <RHAH_Settings_FemaleShare>Female share: {0}%</RHAH_Settings_FemaleShare>
   <RHAH_Settings_FemaleShare_Tooltip>Used only by share. 0 is all male. 100 is all female. Someone whose gender the event already set keeps it.</RHAH_Settings_FemaleShare_Tooltip>
+  <RHAH_Settings_PlayerIdeo>Player ideoligion: {0}%</RHAH_Settings_PlayerIdeo>
+  <RHAH_Settings_PlayerIdeo_Tooltip>This share of new arrivals, and of people who later join, takes the colony's primary ideoligion. 100 converts all of them. 0 keeps the ideoligion they arrived with. Slaves and prisoners do not count toward the primary ideoligion. Unused without Ideology.</RHAH_Settings_PlayerIdeo_Tooltip>
   <RHAH_Settings_Apparel>Clothing</RHAH_Settings_Apparel>
   <RHAH_Settings_Apparel_0>Plain clothes</RHAH_Settings_Apparel_0>
   <RHAH_Settings_Apparel_1>Plain clothes</RHAH_Settings_Apparel_1>
