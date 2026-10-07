@@ -100,7 +100,7 @@ namespace HungerAndHavoc.Pawn
 
         Verse.Pawn NextColonist(Verse.Pawn skipped)
         {
-            if (pawn.Map == null)
+            if (pawn.Map == null || RHAH_Begging.PrefersGnaw(pawn))
             {
                 return null;
             }

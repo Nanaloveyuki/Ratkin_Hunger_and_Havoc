@@ -37,6 +37,15 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
+            if (RHAH_Begging.PrefersGnaw(pawn))
+            {
+                Job gnaw = JobGiver_RHAH_Gnaw.TryCreate(pawn, true);
+                if (gnaw != null)
+                {
+                    return gnaw;
+                }
+            }
+
             if (RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Beg))
             {
                 Job beg = JobGiver_RHAH_Beg.TryCreate(pawn);

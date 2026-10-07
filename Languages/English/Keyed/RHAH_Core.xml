@@ -129,6 +129,8 @@
   <RHAH_Settings_BatchHostile_Tooltip>Harming or driving off one visitor no longer turns the rest of that group hostile.</RHAH_Settings_BatchHostile_Tooltip>
   <RHAH_Settings_BatchLeave>The whole group leaves together</RHAH_Settings_BatchLeave>
   <RHAH_Settings_BatchLeave_Tooltip>Harm or expulsion affects only that visitor. The rest of the group stays.</RHAH_Settings_BatchLeave_Tooltip>
+  <RHAH_Settings_ShortStayLockApparel>Lock current clothes for short stays</RHAH_Settings_ShortStayLockApparel>
+  <RHAH_Settings_ShortStayLockApparel_Tooltip>On by default. Starting a short stay locks the clothes worn then. When the stay ends, or the visitor becomes a prisoner, slave, or colonist, only those locks are removed. Off, a newly started short stay does not lock clothes. A stay already underway is left as it is.</RHAH_Settings_ShortStayLockApparel_Tooltip>
   <RHAH_Settings_BroadcastCooldown>Broadcast cooldown: {0} days</RHAH_Settings_BroadcastCooldown>
   <RHAH_Settings_BroadcastCooldown_Tooltip>Days before another broadcast. 0 to 10, default 3.</RHAH_Settings_BroadcastCooldown_Tooltip>
   <RHAH_Settings_RefugeeCamp>Allow refugee camps</RHAH_Settings_RefugeeCamp>
@@ -618,13 +620,13 @@
   <RHAH_Settings_BegBruiseMax>Bruise cap: {0}</RHAH_Settings_BegBruiseMax>
   <RHAH_Settings_BegBruiseMax_Tooltip>A bruise at this severity becomes a cut. It cannot sit below the first hit. Up to 40, default 16.</RHAH_Settings_BegBruiseMax_Tooltip>
   <RHAH_Settings_GnawBark>Bark nutrition: {0}</RHAH_Settings_GnawBark>
-  <RHAH_Settings_GnawBark_Tooltip>Nutrition from one bite of a plant. 0 to 2, default 0.20.</RHAH_Settings_GnawBark_Tooltip>
+  <RHAH_Settings_GnawBark_Tooltip>Nutrition from one bite of a plant. 0 to 2, default 0.25.</RHAH_Settings_GnawBark_Tooltip>
   <RHAH_Settings_GnawBarkDamage>Bark damage: {0}</RHAH_Settings_GnawBarkDamage>
-  <RHAH_Settings_GnawBarkDamage_Tooltip>Damage from one bite of a plant. 0 to 50, default 2.</RHAH_Settings_GnawBarkDamage_Tooltip>
+  <RHAH_Settings_GnawBarkDamage_Tooltip>Fixed hit points removed by one bite of a plant. Material, building, and damage multipliers do not change the bite. 0 to 50, default 12.</RHAH_Settings_GnawBarkDamage_Tooltip>
   <RHAH_Settings_GnawWall>Wall nutrition: {0}</RHAH_Settings_GnawWall>
-  <RHAH_Settings_GnawWall_Tooltip>Nutrition from one bite of a wall. 0 to 2, default 0.50.</RHAH_Settings_GnawWall_Tooltip>
+  <RHAH_Settings_GnawWall_Tooltip>Nutrition from one bite of a wall. 0 to 2, default 0.20.</RHAH_Settings_GnawWall_Tooltip>
   <RHAH_Settings_GnawWallDamage>Wall damage: {0}</RHAH_Settings_GnawWallDamage>
-  <RHAH_Settings_GnawWallDamage_Tooltip>Damage from one bite of a wall. 0 to 50, default 5.</RHAH_Settings_GnawWallDamage_Tooltip>
+  <RHAH_Settings_GnawWallDamage_Tooltip>Fixed hit points removed by one bite of a wall. Material, building, and damage multipliers do not change the bite. 0 to 50, default 10.</RHAH_Settings_GnawWallDamage_Tooltip>
   <RHAH_Settings_ClayBites>Clay bites: {0}</RHAH_Settings_ClayBites>
   <RHAH_Settings_ClayBites_Tooltip>Bites of clay allowed in one window. 0 to 12, default 3. Zero allows none.</RHAH_Settings_ClayBites_Tooltip>
   <RHAH_Settings_ClayDays>Clay window: {0} days</RHAH_Settings_ClayDays>

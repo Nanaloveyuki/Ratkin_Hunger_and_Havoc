@@ -16,6 +16,18 @@ namespace HungerAndHavoc.Identity
         internal int stayKind;
         internal int stayRemainingTicks;
         internal int foodWaitUntilTick = -1;
+        internal int begSlapCount;
+        internal int gnawSearchUntilTick = -1;
+
+        internal bool PrefersGnaw => begSlapCount >= 2;
+
+        internal void NoteBegSlap()
+        {
+            if (begSlapCount < 2)
+            {
+                begSlapCount++;
+            }
+        }
         internal bool carriesPlague;
         internal RHAH_Attitude attitudeAtArrival = RHAH_Attitude.Neutral;
         internal RHAH_Attitude attitude = RHAH_Attitude.Neutral;

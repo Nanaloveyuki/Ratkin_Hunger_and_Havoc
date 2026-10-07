@@ -104,6 +104,11 @@ namespace HungerAndHavoc.Identity
                 return;
             }
 
+            if (lifecycle == RHAH_Lifecycle.Released || lifecycle == RHAH_Lifecycle.Dead)
+            {
+                global::HungerAndHavoc.Pawn.RHAH_VisitorStay.UnlockShortStayApparel(pawn, comp);
+            }
+
             RHAH_Api.RaiseLifecycleChanged(pawn, comp.ToSnapshot(), lifecycle);
         }
 

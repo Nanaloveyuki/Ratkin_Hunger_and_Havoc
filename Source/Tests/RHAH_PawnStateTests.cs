@@ -81,6 +81,20 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void BegSlapsCapAtTwoAndGnawSearchStartsWithoutCooldown()
+        {
+            RHAH_PawnState state = new RHAH_PawnState();
+
+            Assert.Equal(-1, state.gnawSearchUntilTick);
+            state.NoteBegSlap();
+            state.NoteBegSlap();
+            state.NoteBegSlap();
+
+            Assert.Equal(2, state.begSlapCount);
+            Assert.True(state.PrefersGnaw);
+        }
+
+        [Fact]
         public void ApplySeed_OverwritesIdentityAndCopiesCollections()
         {
             RHAH_PawnState state = new RHAH_PawnState();

@@ -129,6 +129,8 @@
   <RHAH_Settings_BatchHostile_Tooltip>关闭后，伤害或驱逐一个人不会让同批其他人敌对。</RHAH_Settings_BatchHostile_Tooltip>
   <RHAH_Settings_BatchLeave>整批一起离开</RHAH_Settings_BatchLeave>
   <RHAH_Settings_BatchLeave_Tooltip>关闭后，伤害或驱逐只影响那一个人。同批其他人留下。</RHAH_Settings_BatchLeave_Tooltip>
+  <RHAH_Settings_ShortStayLockApparel>短工锁定当前衣物</RHAH_Settings_ShortStayLockApparel>
+  <RHAH_Settings_ShortStayLockApparel_Tooltip>默认开启。开始短工时锁定当时穿的衣物。短工结束，或转为囚犯、奴隶、殖民者时，只解开这次锁定的衣物。关掉后，新开始的短工不再锁定。已经在做短工的人保持原样。</RHAH_Settings_ShortStayLockApparel_Tooltip>
   <RHAH_Settings_BroadcastCooldown>广播冷却：{0} 天</RHAH_Settings_BroadcastCooldown>
   <RHAH_Settings_BroadcastCooldown_Tooltip>一次广播之后，要等这么多天才能再广播。0 到 10 天，默认 3 天。</RHAH_Settings_BroadcastCooldown_Tooltip>
   <RHAH_Settings_RefugeeCamp>允许建立难民营</RHAH_Settings_RefugeeCamp>
@@ -618,13 +620,13 @@
   <RHAH_Settings_BegBruiseMax>瘀伤上限：{0}</RHAH_Settings_BegBruiseMax>
   <RHAH_Settings_BegBruiseMax_Tooltip>瘀伤到这个严重度后改成割伤。不能低于第一下，上限 40，默认 16。</RHAH_Settings_BegBruiseMax_Tooltip>
   <RHAH_Settings_GnawBark>啃树皮营养：{0}</RHAH_Settings_GnawBark>
-  <RHAH_Settings_GnawBark_Tooltip>啃一次植物补的营养。0 到 2，默认 0.20。</RHAH_Settings_GnawBark_Tooltip>
+  <RHAH_Settings_GnawBark_Tooltip>啃一次植物补的营养。0 到 2，默认 0.25。</RHAH_Settings_GnawBark_Tooltip>
   <RHAH_Settings_GnawBarkDamage>啃树皮伤害：{0}</RHAH_Settings_GnawBarkDamage>
-  <RHAH_Settings_GnawBarkDamage_Tooltip>啃一次植物造成的伤害。0 到 50，默认 2。</RHAH_Settings_GnawBarkDamage_Tooltip>
+  <RHAH_Settings_GnawBarkDamage_Tooltip>啃一次植物扣除的固定耐久。材料、建筑和伤害倍率都不改变这一下。0 到 50，默认 12。</RHAH_Settings_GnawBarkDamage_Tooltip>
   <RHAH_Settings_GnawWall>啃墙皮营养：{0}</RHAH_Settings_GnawWall>
-  <RHAH_Settings_GnawWall_Tooltip>啃一次墙补的营养。0 到 2，默认 0.50。</RHAH_Settings_GnawWall_Tooltip>
+  <RHAH_Settings_GnawWall_Tooltip>啃一次墙补的营养。0 到 2，默认 0.20。</RHAH_Settings_GnawWall_Tooltip>
   <RHAH_Settings_GnawWallDamage>啃墙皮伤害：{0}</RHAH_Settings_GnawWallDamage>
-  <RHAH_Settings_GnawWallDamage_Tooltip>啃一次墙造成的伤害。0 到 50，默认 5。</RHAH_Settings_GnawWallDamage_Tooltip>
+  <RHAH_Settings_GnawWallDamage_Tooltip>啃一次墙扣除的固定耐久。材料、建筑和伤害倍率都不改变这一下。0 到 50，默认 10。</RHAH_Settings_GnawWallDamage_Tooltip>
   <RHAH_Settings_ClayBites>观音土口数：{0}</RHAH_Settings_ClayBites>
   <RHAH_Settings_ClayBites_Tooltip>一段时间内最多吃这么多口。0 到 12，默认 3。0 一口都不能吃。</RHAH_Settings_ClayBites_Tooltip>
   <RHAH_Settings_ClayDays>观音土窗口：{0} 天</RHAH_Settings_ClayDays>

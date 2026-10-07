@@ -122,9 +122,6 @@ namespace HungerAndHavoc.Tests
             string feed = ReadPawn("JobGiver_RHAH_Feed.cs");
             Assert.Contains("const int PathChecks = 3", feed);
             Assert.Contains("Reject(pawn, thing, insideZone, false, false)", feed);
-            string gnaw = ReadPawn("JobGiver_RHAH_Gnaw.cs");
-            Assert.Contains("FoodSearchReady", gnaw);
-            Assert.DoesNotContain("treeOnly", gnaw);
         }
 
         static void AssertVisitorThenAllows(string fileName, string gate)

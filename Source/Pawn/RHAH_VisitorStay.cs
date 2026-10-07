@@ -30,6 +30,17 @@ namespace HungerAndHavoc.Pawn
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             int deadline = RHAH_VisitorRules.BeginStay(now, kind, shelter, hire);
             comp.SetStay((int)kind, deadline, deadline - now);
+            if (kind == RHAH_StayKind.Shelter || kind == RHAH_StayKind.Recruit)
+            {
+                if (settings == null || settings.shortStayLockApparel)
+                {
+                    LockShortStayApparel(pawn, comp);
+                }
+            }
+            else
+            {
+                UnlockShortStayApparel(pawn, comp);
+            }
             if (pawn.Faction != Faction.OfPlayer)
             {
                 RHAH_VisitorRules.ApplyPlayerIdeo(
@@ -75,6 +86,7 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
 
+            UnlockShortStayApparel(pawn, comp);
             comp.SetStay((int)RHAH_StayKind.None, -1, 0);
             if (pawn.Faction == Faction.OfPlayer)
             {
@@ -84,6 +96,47 @@ namespace HungerAndHavoc.Pawn
             RHAH_VisitorGroup.NotifyReleased(pawn);
             RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
             return true;
+        }
+
+        internal static void LockShortStayApparel(Verse.Pawn pawn, CompRHAH_Pawn comp)
+        {
+            if (pawn.apparel == null)
+            {
+                return;
+            }
+
+            var worn = pawn.apparel.WornApparel;
+            for (int i = 0; i < worn.Count; i++)
+            {
+                Apparel apparel = worn[i];
+                if (!pawn.apparel.IsLocked(apparel))
+                {
+                    if (comp.shortStayLockedApparel == null)
+                    {
+                        comp.shortStayLockedApparel = new System.Collections.Generic.List<Apparel>();
+                    }
+                    comp.shortStayLockedApparel.Add(apparel);
+                }
+            }
+            pawn.apparel.LockAll();
+        }
+
+        internal static void UnlockShortStayApparel(Verse.Pawn pawn, CompRHAH_Pawn comp)
+        {
+            if (comp.shortStayLockedApparel == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < comp.shortStayLockedApparel.Count; i++)
+            {
+                Apparel apparel = comp.shortStayLockedApparel[i];
+                if (apparel != null)
+                {
+                    pawn.apparel?.Unlock(apparel);
+                }
+            }
+            comp.shortStayLockedApparel = null;
         }
 
         internal static int Kind(Verse.Pawn pawn)

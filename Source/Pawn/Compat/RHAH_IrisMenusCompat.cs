@@ -682,6 +682,7 @@ namespace HungerAndHavoc.Pawn.Compat
             string shelter = Buffer(weightBuffers, "shelter-days", settings.shelterDays, "0");
             settings.shelterDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_ShelterDays".Translate(RHAH_VisitorRules.StayLabel(settings.shelterDays)), settings.shelterDays, ref shelter, RHAH_VisitorRules.MinShelterDays, RHAH_VisitorRules.MaxShelterDays, "0", "RHAH_Settings_ShelterDays_Tooltip".Translate());
             weightBuffers["shelter-days"] = shelter;
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_ShortStayLockApparel".Translate(), ref settings.shortStayLockApparel, "RHAH_Settings_ShortStayLockApparel_Tooltip".Translate());
             string hire = Buffer(weightBuffers, "hire-days", settings.hireDays, "0");
             settings.hireDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_HireDays".Translate(RHAH_VisitorRules.StayLabel(settings.hireDays)), settings.hireDays, ref hire, RHAH_VisitorRules.MinHireDays, RHAH_VisitorRules.MaxHireDays, "0", "RHAH_Settings_HireDays_Tooltip".Translate());
             weightBuffers["hire-days"] = hire;

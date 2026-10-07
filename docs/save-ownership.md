@@ -56,6 +56,9 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | gateOverrides | gateOverrides | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同 |
 | extraData | extraData | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同；`SetExtra(key, null)` 删除键 |
 | droppedChildLoadIds | droppedChildLoadIds | 空集合 | 是 | 已放下的孩子 Load ID。`PostLoadInit` 补空列表 |
+| begSlapCount | begSlapCount | 0 | 否 | 实际抽中的巴掌次数。旧档缺键按 0。成功获赠或吃完真实食物后回到 0 |
+| shortStayLockedApparel | shortStayLockedApparel | 空集合 | 是 | 本模组在这次短工开始时锁定的衣物引用。`PostLoadInit` 补空列表；null 与空集合语义相同。只在短工结束或永久身份转换时解开这些引用，不调用 `UnlockAll`。归属 Remove |
+| gnawSearchUntilTick | gnawSearchUntilTick | -1 | 否 | 啃食搜索失败后的冷却截止 tick。-1 表示没有冷却。旧档缺键按 -1 |
 
 计算属性不入档：`IsReleased`、`IsActiveVisitor`、`RoleLabelKey`。
 叙事临时留驻保存于 `extraData`：`rhah:envoyHold`、`rhah:quarantineHold`，缺键表示不持有。值为两字符，依次记录 `LeaveAfterFed` 与 `ExitMap` 原覆盖：`u` 无覆盖、`t` true、`f` false。重叠持有复制首持有者原值，删除自身键后仅最后一个持有者恢复仍为 false 的覆盖；不覆写外部后来设置的 true。卸载随 `CompRHAH_Pawn` Remove。旧使者持有迁移见 `SuiyinN008Case.holdMigrated`；旧检疫未设留驻覆盖，不迁移。
@@ -490,6 +493,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Settings.noFoodWaitDays | 全局 ModSettings，默认 0.5，范围 0 到 5 |
 | RHAH_Settings.shelterDays | 全局 ModSettings，默认 5，范围 5 到 240。短工，1 年按 60 天 |
 | RHAH_Settings.hireDays | 全局 ModSettings，默认 240，范围 5 到 2400。长工，1 年按 60 天 |
+| RHAH_Settings.shortStayLockApparel | 全局 ModSettings，默认 true。只在短工开始时锁定当时穿的衣物。短工结束或永久身份转换只解开本模组这次加上的锁，不调用 `UnlockAll`。关闭后新开始的短工不锁，已经开始的短工不追溯 |
 | RHAH_Settings.coldClothesEnabled | 全局 ModSettings，默认 true。气温超出舒适范围时给新来客一件温度衣 |
 | RHAH_Settings.temperatureApparelInsulation | 全局 ModSettings。温度衣 defName 到隔热，范围 0 到 100，缺省用 Def 默认值 |
 | RHAH_Settings.disabledTemperatureApparelDefNames | 全局 ModSettings。关闭的温度衣 defName，默认空 |
@@ -580,10 +584,10 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_Settings.begBruiseSeverity | 全局 ModSettings，默认 4。第一下瘀伤 |
 | RHAH_Settings.begBruiseStep | 全局 ModSettings，默认 4。瘀伤加重 |
 | RHAH_Settings.begBruiseMax | 全局 ModSettings，默认 16。瘀伤改割伤的上限 |
-| RHAH_Settings.barkNutrition | 全局 ModSettings，默认 0.2。啃树皮营养 |
-| RHAH_Settings.barkDamage | 全局 ModSettings，默认 2。啃树皮伤害 |
-| RHAH_Settings.wallNutrition | 全局 ModSettings，默认 0.5。啃墙营养 |
-| RHAH_Settings.wallDamage | 全局 ModSettings，默认 5。啃墙伤害 |
+| RHAH_Settings.barkNutrition | 全局 ModSettings，默认 0.25。啃树皮营养。已保存的自定义值保留，缺键才用新默认 |
+| RHAH_Settings.barkDamage | 全局 ModSettings，默认 12。啃树皮一次扣除的固定耐久，不受材料、建筑或伤害倍率影响。已保存的自定义值保留，缺键才用新默认 |
+| RHAH_Settings.wallNutrition | 全局 ModSettings，默认 0.20。啃墙营养。已保存的自定义值保留，缺键才用新默认 |
+| RHAH_Settings.wallDamage | 全局 ModSettings，默认 10。啃墙一次扣除的固定耐久，不受材料、建筑或伤害倍率影响。已保存的自定义值保留，缺键才用新默认 |
 | RHAH_Settings.clayMaxBites | 全局 ModSettings，默认 3。观音土窗口口数 |
 | RHAH_Settings.clayWindowDays | 全局 ModSettings，默认 15。观音土窗口天数 |
 | RHAH_Settings.claySeverityPerBite | 全局 ModSettings，默认 0.33。每口饱腹 |

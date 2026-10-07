@@ -24,8 +24,10 @@ namespace HungerAndHavoc.Tests
             "parentPawnLoadId",
             "childPawnLoadIds",
             "droppedChildLoadIds",
-            "gateOverrides",
-            "extraData"
+            "extraData",
+            "begSlapCount",
+            "gnawSearchUntilTick",
+            "shortStayLockedApparel"
         };
 
         [Fact]
@@ -44,6 +46,16 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("spawnBatchId", source);
             Assert.Contains("0", DefaultLook(source, "spawnBatchId"));
             Assert.Contains("-1", DefaultLook(source, "leaveAfterGameTick"));
+        }
+
+        [Fact]
+        public void NewGnawAndShortStayKeysKeepRequiredDefaults()
+        {
+            string source = File.ReadAllText(CompPath());
+            Assert.Contains("Scribe_Values.Look(ref state.begSlapCount, \"begSlapCount\", 0)", source);
+            Assert.Contains("Scribe_Values.Look(ref state.gnawSearchUntilTick, \"gnawSearchUntilTick\", -1)", source);
+            Assert.Contains("Scribe_Collections.Look(ref shortStayLockedApparel, \"shortStayLockedApparel\", LookMode.Reference)", source);
+            Assert.Contains("shortStayLockedApparel = new System.Collections.Generic.List<RimWorld.Apparel>()", source);
         }
 
         static string DefaultLook(string source, string key)

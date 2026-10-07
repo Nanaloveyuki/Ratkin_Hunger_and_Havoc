@@ -9,6 +9,16 @@ namespace HungerAndHavoc.Tests
     public class RHAH_SaveCleanupTests
     {
         [Fact]
+        public void ExportRemovesShortStayLocksButKeepsForeignLocks()
+        {
+            XDocument document = XDocument.Parse("<savegame><game><pawn><apparel><lockedApparel><li>Thing_1</li><li>Thing_2</li></lockedApparel></apparel><healthTracker><hediffSet><hediffs><li><def>RHAH_HungerMark</def><shortStayLockedApparel><li>Thing_2</li></shortStayLockedApparel></li></hediffs></hediffSet></healthTracker></pawn></game></savegame>");
+
+            new RHAH_SaveCleanup(Plan()).Clean(document);
+
+            Assert.Equal("Thing_1", document.Descendants("lockedApparel").Single().Elements("li").Single().Value);
+            Assert.Empty(document.Descendants("shortStayLockedApparel"));
+        }
+        [Fact]
         public void RemovesOwnedNodesAndKeepsForeignIdentity()
         {
             RHAH_SaveCleanup cleanup = new RHAH_SaveCleanup(Plan());

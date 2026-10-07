@@ -57,18 +57,23 @@ namespace HungerAndHavoc.Core
 
         public override void GameComponentTick()
         {
+            int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
             TickPlague();
-            RHAH_ChoiceRuntime.Tick(this, Find.TickManager.TicksGame);
-            TrySpawnPending(Find.TickManager.TicksGame);
-            TickStays(Find.TickManager.TicksGame);
-            Pawn.RHAH_AttitudeFactions.LockGoodwill();
-            HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.Tick(Find.TickManager.TicksGame);
-            HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.Tick(Find.TickManager.TicksGame);
-            HungerAndHavoc.Storyteller.Suiyin.RHAH_Quarantine.Tick(Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>(), Find.TickManager.TicksGame);
-            HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Tick(Find.TickManager.TicksGame);
-            HungerAndHavoc.Storyteller.Suiyin.RHAH_Envoy.Tick(Find.TickManager.TicksGame);
-            HungerAndHavoc.Storyteller.Suiyin.RHAH_RecordSite.Tick(Find.TickManager.TicksGame);
-            RHAH_EventChainRuntime.TickDue(eventChains, Find.TickManager.TicksGame);
+            RHAH_ChoiceRuntime.Tick(this, tick);
+            TrySpawnPending(tick);
+            TickStays(tick);
+            if (tick % GenDate.TicksPerHour == 0)
+            {
+                Pawn.RHAH_AttitudeFactions.LockGoodwill();
+            }
+
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.Tick(tick);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.Tick(tick);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_Quarantine.Tick(Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>(), tick);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Tick(tick);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_Envoy.Tick(tick);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_RecordSite.Tick(tick);
+            RHAH_EventChainRuntime.TickDue(eventChains, tick);
         }
 
         public override void GameComponentUpdate()

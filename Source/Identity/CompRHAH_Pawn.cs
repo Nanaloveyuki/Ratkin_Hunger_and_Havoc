@@ -38,6 +38,8 @@ namespace HungerAndHavoc.Identity
             state.SetStay(kind, deadline, remaining);
         }
 
+        internal System.Collections.Generic.List<RimWorld.Apparel> shortStayLockedApparel;
+
         internal void ClearFedTimer()
         {
             state.ClearFedTimer();
@@ -72,6 +74,9 @@ namespace HungerAndHavoc.Identity
             Scribe_Values.Look(ref state.role, "role", RHAH_PawnRole.Unspecified);
             Scribe_Values.Look(ref state.lifecycle, "lifecycle", RHAH_Lifecycle.Arriving);
             Scribe_Values.Look(ref state.hasBeenFed, "hasBeenFed", false);
+            Scribe_Values.Look(ref state.begSlapCount, "begSlapCount", 0);
+            Scribe_Values.Look(ref state.gnawSearchUntilTick, "gnawSearchUntilTick", -1);
+            Scribe_Collections.Look(ref shortStayLockedApparel, "shortStayLockedApparel", LookMode.Reference);
             Scribe_Values.Look(ref state.leaveAfterGameTick, "leaveAfterGameTick", -1);
             Scribe_Values.Look(ref state.stayKind, "stayKind", 0);
             Scribe_Values.Look(ref state.stayRemainingTicks, "stayRemainingTicks", 0);
@@ -91,6 +96,10 @@ namespace HungerAndHavoc.Identity
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 state.EnsureCollections();
+                if (shortStayLockedApparel == null)
+                {
+                    shortStayLockedApparel = new System.Collections.Generic.List<RimWorld.Apparel>();
+                }
             }
         }
     }

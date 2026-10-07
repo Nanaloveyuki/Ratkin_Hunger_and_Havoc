@@ -47,6 +47,22 @@ namespace HungerAndHavoc.Core
 
             RequireReplacements(game);
             RequireKnownTypes(game);
+            // 先撤销短工加的原版锁 再移除身份 Hediff
+            foreach (XElement ownedLocks in game.Descendants("shortStayLockedApparel").ToList())
+            {
+                XElement pawn = ownedLocks.Ancestors().FirstOrDefault(item => item.Element("apparel") != null);
+                XElement locked = pawn?.Element("apparel")?.Element("lockedApparel");
+                if (locked == null)
+                {
+                    continue;
+                }
+
+                HashSet<string> references = new HashSet<string>(ownedLocks.Elements("li").Select(item => item.Value));
+                foreach (XElement reference in locked.Elements("li").Where(item => references.Contains(item.Value)).ToList())
+                {
+                    reference.Remove();
+                }
+            }
             foreach (XElement quest in game.Descendants("quests").Elements()
                 .Where(item => plan.OwnedDefs.Contains((string)item.Element("root") ?? string.Empty)).ToList())
             {

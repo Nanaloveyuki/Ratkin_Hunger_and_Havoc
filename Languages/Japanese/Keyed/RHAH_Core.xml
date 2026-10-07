@@ -129,6 +129,8 @@
   <RHAH_Settings_BatchHostile_Tooltip>オフにすると、1人を傷つけたり追い払ったりしても、同じ集団の他の訪問者は敵対しません。</RHAH_Settings_BatchHostile_Tooltip>
   <RHAH_Settings_BatchLeave>同じ集団全員で立ち去る</RHAH_Settings_BatchLeave>
   <RHAH_Settings_BatchLeave_Tooltip>オフにすると、傷害や追放の影響を受けるのはその1人だけです。同じ集団の他の訪問者は残ります。</RHAH_Settings_BatchLeave_Tooltip>
+  <RHAH_Settings_ShortStayLockApparel>短期滞在中は現在の衣服を固定</RHAH_Settings_ShortStayLockApparel>
+  <RHAH_Settings_ShortStayLockApparel_Tooltip>初期値はオンです。短期滞在の開始時に、その時着ている衣服を固定します。滞在が終わる時、または囚人・奴隷・入植者になる時は、その時に固定した衣服だけを外します。オフにすると、新しく始まる短期滞在では衣服を固定しません。すでに滞在中の人はそのままです。</RHAH_Settings_ShortStayLockApparel_Tooltip>
   <RHAH_Settings_BroadcastCooldown>放送のクールダウン：{0}日</RHAH_Settings_BroadcastCooldown>
   <RHAH_Settings_BroadcastCooldown_Tooltip>放送後、次の放送まで待つ日数です。範囲は0～10日、初期値は3日。</RHAH_Settings_BroadcastCooldown_Tooltip>
   <RHAH_Settings_RefugeeCamp>避難キャンプの設営を許可</RHAH_Settings_RefugeeCamp>
@@ -616,13 +618,13 @@
   <RHAH_Settings_BegBruiseMax>打撲の上限：{0}</RHAH_Settings_BegBruiseMax>
   <RHAH_Settings_BegBruiseMax_Tooltip>打撲がこの重症度に達すると、切り傷に変わります。初回の重症度以上、上限40、初期値は16。</RHAH_Settings_BegBruiseMax_Tooltip>
   <RHAH_Settings_GnawBark>樹皮をかじった時の栄養：{0}</RHAH_Settings_GnawBark>
-  <RHAH_Settings_GnawBark_Tooltip>植物を1回かじるごとに補う栄養です。範囲は0～2、初期値は0.20。</RHAH_Settings_GnawBark_Tooltip>
+  <RHAH_Settings_GnawBark_Tooltip>植物を1回かじるごとに補う栄養です。範囲は0～2、初期値は0.25。</RHAH_Settings_GnawBark_Tooltip>
   <RHAH_Settings_GnawBarkDamage>樹皮をかじった時のダメージ：{0}</RHAH_Settings_GnawBarkDamage>
-  <RHAH_Settings_GnawBarkDamage_Tooltip>植物を1回かじるごとに与えるダメージです。範囲は0～50、初期値は2。</RHAH_Settings_GnawBarkDamage_Tooltip>
+  <RHAH_Settings_GnawBarkDamage_Tooltip>植物を1回かじるごとに差し引く固定耐久です。素材、建築、ダメージ倍率はこの1回を変えません。範囲は0～50、初期値は12。</RHAH_Settings_GnawBarkDamage_Tooltip>
   <RHAH_Settings_GnawWall>壁をかじった時の栄養：{0}</RHAH_Settings_GnawWall>
-  <RHAH_Settings_GnawWall_Tooltip>壁を1回かじるごとに補う栄養です。範囲は0～2、初期値は0.50。</RHAH_Settings_GnawWall_Tooltip>
+  <RHAH_Settings_GnawWall_Tooltip>壁を1回かじるごとに補う栄養です。範囲は0～2、初期値は0.20。</RHAH_Settings_GnawWall_Tooltip>
   <RHAH_Settings_GnawWallDamage>壁をかじった時のダメージ：{0}</RHAH_Settings_GnawWallDamage>
-  <RHAH_Settings_GnawWallDamage_Tooltip>壁を1回かじるごとに与えるダメージです。範囲は0～50、初期値は5。</RHAH_Settings_GnawWallDamage_Tooltip>
+  <RHAH_Settings_GnawWallDamage_Tooltip>壁を1回かじるごとに差し引く固定耐久です。素材、建築、ダメージ倍率はこの1回を変えません。範囲は0～50、初期値は10。</RHAH_Settings_GnawWallDamage_Tooltip>
   <RHAH_Settings_ClayBites>観音土を食べられる口数：{0}</RHAH_Settings_ClayBites>
   <RHAH_Settings_ClayBites_Tooltip>一定期間に食べられる口数の上限です。範囲は0～12、初期値は3。0では一口も食べられません。</RHAH_Settings_ClayBites_Tooltip>
   <RHAH_Settings_ClayDays>観音土の集計期間：{0}日</RHAH_Settings_ClayDays>

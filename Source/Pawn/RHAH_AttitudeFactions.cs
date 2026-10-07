@@ -17,16 +17,38 @@ namespace HungerAndHavoc.Pawn
         };
 
         static readonly Faction[] Resolved = new Faction[5];
+        static FactionManager resolvedManager;
 
         internal static Faction Resolve(RHAH_Attitude attitude)
         {
             FactionDef def = DefFor(attitude);
-            if (def == null || Find.FactionManager == null)
+            FactionManager manager = Find.FactionManager;
+            if (def == null || manager == null)
             {
                 return null;
             }
 
-            return Find.FactionManager.FirstFactionOfDef(def);
+            if (resolvedManager != manager)
+            {
+                resolvedManager = manager;
+                for (int i = 0; i < Resolved.Length; i++)
+                {
+                    Resolved[i] = null;
+                }
+            }
+
+            int index = (int)attitude;
+            if (index < 0 || index >= Resolved.Length)
+            {
+                return manager.FirstFactionOfDef(def);
+            }
+
+            if (Resolved[index] == null)
+            {
+                Resolved[index] = manager.FirstFactionOfDef(def);
+            }
+
+            return Resolved[index];
         }
 
         internal static Faction Require(RHAH_Attitude attitude)
@@ -36,16 +58,15 @@ namespace HungerAndHavoc.Pawn
             {
                 Ensure(attitude);
                 faction = Resolve(attitude);
+                if (faction != null && !faction.IsPlayer)
+                {
+                    LockOutside(Faction.OfPlayer);
+                }
             }
 
-            if (faction != null && !faction.IsPlayer)
-            {
-                LockOutside(Faction.OfPlayer);
-                return faction;
-            }
-
-            return null;
+            return faction != null && !faction.IsPlayer ? faction : null;
         }
+
 
         internal static void Ensure(RHAH_Attitude attitude)
         {
@@ -61,6 +82,11 @@ namespace HungerAndHavoc.Pawn
             }
 
             FactionGenerator.CreateFactionAndAddToManager(def);
+            int index = (int)attitude;
+            if (index >= 0 && index < Resolved.Length)
+            {
+                Resolved[index] = null;
+            }
         }
 
         internal static void EnsureAll()

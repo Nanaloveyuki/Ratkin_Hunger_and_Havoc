@@ -27,10 +27,7 @@ namespace HungerAndHavoc.Pawn
                 Thing target = job.GetTarget(TargetIndex.A).Thing;
                 bool wall = target != null && target.def.plant == null;
                 GnawBite bite = RHAH_GnawHealth.ForTarget(wall);
-                if (target != null)
-                {
-                    target.TakeDamage(new DamageInfo(DamageDefOf.Blunt, bite.Damage, instigator: pawn));
-                }
+                RHAH_GnawHealth.DamageTarget(target, bite.Damage, pawn);
 
                 Need_Food food = pawn.needs != null ? pawn.needs.food : null;
                 if (food != null)

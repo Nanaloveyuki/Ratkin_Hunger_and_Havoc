@@ -118,8 +118,18 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_Stagger_Tooltip".Translate());
             listing.Label("RHAH_Settings_ShelterDays".Translate(Pawn.RHAH_VisitorRules.StayLabel(Settings.shelterDays)));
             Settings.shelterDays = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.shelterDays, Pawn.RHAH_VisitorRules.MinShelterDays, Pawn.RHAH_VisitorRules.MaxShelterDays));
+            listing.CheckboxLabeled("RHAH_Settings_ShortStayLockApparel".Translate(), ref Settings.shortStayLockApparel,
+                "RHAH_Settings_ShortStayLockApparel_Tooltip".Translate());
             listing.Label("RHAH_Settings_HireDays".Translate(Pawn.RHAH_VisitorRules.StayLabel(Settings.hireDays)));
             Settings.hireDays = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.hireDays, Pawn.RHAH_VisitorRules.MinHireDays, Pawn.RHAH_VisitorRules.MaxHireDays));
+            listing.Label("RHAH_Settings_GnawBark".Translate(Settings.barkNutrition.ToString("0.00")));
+            Settings.barkNutrition = listing.Slider(Settings.barkNutrition, 0f, 2f);
+            listing.Label("RHAH_Settings_GnawBarkDamage".Translate(Settings.barkDamage.ToString("0")));
+            Settings.barkDamage = listing.Slider(Settings.barkDamage, 0f, 50f);
+            listing.Label("RHAH_Settings_GnawWall".Translate(Settings.wallNutrition.ToString("0.00")));
+            Settings.wallNutrition = listing.Slider(Settings.wallNutrition, 0f, 2f);
+            listing.Label("RHAH_Settings_GnawWallDamage".Translate(Settings.wallDamage.ToString("0")));
+            Settings.wallDamage = listing.Slider(Settings.wallDamage, 0f, 50f);
             listing.CheckboxLabeled("RHAH_Settings_PawnHistories".Translate(), ref Settings.pawnHistoriesEnabled,
                 "RHAH_Settings_PawnHistories_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_PawnTraits".Translate(), ref Settings.pawnTraitsEnabled,

@@ -11,6 +11,20 @@ namespace HungerAndHavoc.Pawn
         static readonly Dictionary<int, int> NextBegTickByPawnId = new Dictionary<int, int>();
         static readonly Dictionary<int, HashSet<int>> BeggedColonists = new Dictionary<int, HashSet<int>>();
 
+        internal static bool PrefersGnaw(Verse.Pawn pawn)
+        {
+            return Identity.CompRHAH_Pawn.TryGet(pawn)?.State.PrefersGnaw == true;
+        }
+
+        internal static void NoteFoodReceived(Verse.Pawn pawn)
+        {
+            Identity.CompRHAH_Pawn comp = Identity.CompRHAH_Pawn.TryGet(pawn);
+            if (comp != null)
+            {
+                comp.State.begSlapCount = 0;
+            }
+        }
+
         internal static void Reset()
         {
             NextBegTickByPawnId.Clear();
@@ -315,6 +329,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
+            NoteFoodReceived(beggar);
             ThoughtDef succeeded = DefDatabase<ThoughtDef>.GetNamedSilentFail("RHAH_Thought_BeggingSucceeded");
             if (succeeded != null && beggar.needs != null && beggar.needs.mood != null && beggar.needs.mood.thoughts != null)
             {
@@ -359,6 +374,12 @@ namespace HungerAndHavoc.Pawn
             }
 
             ApplyHeadWound(beggar, head);
+            Identity.CompRHAH_Pawn comp = Identity.CompRHAH_Pawn.TryGet(beggar);
+            if (comp != null)
+            {
+                comp.State.NoteBegSlap();
+                comp.State.gnawSearchUntilTick = -1;
+            }
             if (beggar.stances != null && beggar.stances.stunner != null)
             {
                 int hours = RHAH_Mod.Settings == null ? RHAH_VisitorRules.BegSlapKnockoutHours : RHAH_Mod.Settings.begSlapKnockoutHours;

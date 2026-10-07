@@ -18,9 +18,18 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
+            float before = -1f;
+            __result.AddPreInitAction(delegate
+            {
+                before = ingester.needs?.food?.CurLevel ?? -1f;
+            });
             __result.AddFinishAction(delegate
             {
                 RHAH_Feeding.TryComplete(ingester);
+                if (before >= 0f && ingester.needs?.food?.CurLevel > before)
+                {
+                    RHAH_Begging.NoteFoodReceived(ingester);
+                }
                 Thing eaten = ingester.jobs?.curJob?.GetTarget(TargetIndex.A).Thing;
                 Compat.RHAH_RatEggCuisine.NoteEaten(ingester, eaten?.def?.defName);
             });

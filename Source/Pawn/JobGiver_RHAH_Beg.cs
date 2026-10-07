@@ -32,6 +32,11 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
+            if (RHAH_Begging.PrefersGnaw(pawn))
+            {
+                return null;
+            }
+
             if (pawn.Map == null || pawn.Downed)
             {
                 return null;

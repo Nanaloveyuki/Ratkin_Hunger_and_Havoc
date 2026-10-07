@@ -1,34 +1,70 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Pawn;
+using HungerAndHavoc.Identity;
+using RimWorld;
+using Verse;
 using Xunit;
 
 namespace HungerAndHavoc.Tests
 {
     public class RHAH_GnawHealthTests
     {
-        [Fact]
-        public void BarkBite_AddsPainWindowAndToxin()
+        [Theory]
+        [InlineData(100, 10, 90)]
+        [InlineData(100000, 10, 99990)]
+        [InlineData(100000, 12, 99988)]
+        [InlineData(100000, 0, 100000)]
+        [InlineData(5, 12, 0)]
+        public void BiteRemovesFixedHitPointsRegardlessOfDurability(int hitPoints, int bite, int expected)
         {
-            GnawBite bite = RHAH_GnawHealth.ForTarget(false);
+            Assert.Equal(expected, RHAH_GnawHealth.FixedHitPointsAfterBite(hitPoints, bite));
+        }
 
-            Assert.False(bite.Wall);
-            Assert.Equal(0.2f, bite.Nutrition);
-            Assert.Equal(2f, bite.Damage);
-            Assert.Equal(0.2f, bite.Severity);
-            Assert.Equal(0.08f, bite.Toxic);
-            Assert.Equal(90000, RHAH_GnawHealth.DurationTicks);
+        [Theory]
+        [InlineData(4, 8, true)]
+        [InlineData(8, 4, false)]
+        [InlineData(4, 4, true)]
+        public void GnawChoosesNearestTarget(int treeDistance, int wallDistance, bool chooseTree)
+        {
+            Thing tree = new Thing { Position = new IntVec3(treeDistance, 0, 0) };
+            Thing wall = new Thing { Position = new IntVec3(wallDistance, 0, 0) };
+            Assert.Same(chooseTree ? tree : wall, RHAH_GnawHealth.NearestTarget(IntVec3.Zero, tree, wall));
+            Assert.Same(tree, RHAH_GnawHealth.NearestTarget(IntVec3.Zero, tree, null));
+            Assert.Same(wall, RHAH_GnawHealth.NearestTarget(IntVec3.Zero, null, wall));
         }
 
         [Fact]
-        public void WallBite_UsesHigherNutritionWithoutToxin()
+        public void TwoSlapsSwitchToSelfFeedingAndStopCounting()
         {
-            GnawBite bite = RHAH_GnawHealth.ForTarget(true);
+            RHAH_PawnState state = new RHAH_PawnState();
+            state.NoteBegSlap();
+            Assert.False(state.PrefersGnaw);
+            state.NoteBegSlap();
+            Assert.True(state.PrefersGnaw);
+            state.NoteBegSlap();
+            Assert.Equal(2, state.begSlapCount);
+        }
 
-            Assert.True(bite.Wall);
-            Assert.Equal(0.5f, bite.Nutrition);
-            Assert.Equal(5f, bite.Damage);
-            Assert.Equal(0.2f, bite.Severity);
-            Assert.Equal(0f, bite.Toxic);
+        [Fact]
+        public void ShortStayOnlyUnlocksApparelItLocked()
+        {
+            Verse.Pawn pawn = new Verse.Pawn();
+            pawn.apparel = new Pawn_ApparelTracker(pawn);
+            Apparel foreignLocked = new Apparel();
+            Apparel newlyLocked = new Apparel();
+            pawn.apparel.WornApparel.Add(foreignLocked);
+            pawn.apparel.WornApparel.Add(newlyLocked);
+            pawn.apparel.Lock(foreignLocked);
+            CompRHAH_Pawn comp = new CompRHAH_Pawn();
+
+            RHAH_VisitorStay.LockShortStayApparel(pawn, comp);
+            Assert.True(pawn.apparel.IsLocked(newlyLocked));
+            RHAH_VisitorStay.LockShortStayApparel(pawn, comp);
+            RHAH_VisitorStay.UnlockShortStayApparel(pawn, comp);
+
+            Assert.True(pawn.apparel.IsLocked(foreignLocked));
+            Assert.False(pawn.apparel.IsLocked(newlyLocked));
+            Assert.Null(comp.shortStayLockedApparel);
         }
 
         [Fact]

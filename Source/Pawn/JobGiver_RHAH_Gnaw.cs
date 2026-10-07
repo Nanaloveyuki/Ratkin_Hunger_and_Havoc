@@ -1,6 +1,7 @@
 using System;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
+using HungerAndHavoc.Identity;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -18,7 +19,7 @@ namespace HungerAndHavoc.Pawn
             return null;
         }
 
-        // 只由饥饿觅食调度 不从寻食 duty 主动发
+        // 饥饿觅食失败或两次巴掌后的自救才发啃食
         internal static Job TryCreate(Verse.Pawn pawn, bool needFood)
         {
             if (!RHAH_Api.IsVisitor(pawn))
@@ -46,7 +47,19 @@ namespace HungerAndHavoc.Pawn
             bool downed = pawn != null && pawn.Downed;
             Need_Food food = pawn.needs != null ? pawn.needs.food : null;
             float level = food == null ? 1f : food.CurLevelPercentage;
-            if (!RHAH_VisitorRules.AllowsGnaw(true, true, true, needFood, level, StarvationLevel, busy, downed))
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            if (comp == null)
+            {
+                return null;
+            }
+            Job current = pawn.jobs?.curJob;
+            if (comp.State.PrefersGnaw && current != null && !current.playerForced &&
+                (current.def == JobDefOf.Wait || current.def == JobDefOf.GotoWander))
+            {
+                busy = false;
+            }
+            float threshold = comp != null && comp.State.PrefersGnaw ? 0.3f : StarvationLevel;
+            if (!RHAH_VisitorRules.AllowsGnaw(true, true, true, needFood, level, threshold, busy, downed))
             {
                 return null;
             }
@@ -56,9 +69,9 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            MapComponent_RHAH_Map mapState = pawn.Map.GetComponent<MapComponent_RHAH_Map>();
+            RHAH_PawnState state = comp.State;
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (mapState != null && !mapState.FoodSearchReady(pawn.thingIDNumber, now))
+            if (now < state.gnawSearchUntilTick)
             {
                 return null;
             }
@@ -66,10 +79,7 @@ namespace HungerAndHavoc.Pawn
             Thing target = FindGnawTarget(pawn);
             if (target == null)
             {
-                if (mapState != null)
-                {
-                    mapState.SetFoodSearchTick(pawn.thingIDNumber, now + RHAH_ReliefFood.RetryBaseTicks);
-                }
+                state.gnawSearchUntilTick = now + RHAH_ReliefFood.RetryBaseTicks;
 
                 return null;
             }
@@ -80,7 +90,7 @@ namespace HungerAndHavoc.Pawn
         static Thing FindGnawTarget(Verse.Pawn pawn)
         {
             TraverseParms traverse = TraverseParms.For(pawn);
-            Thing found = GenClosest.ClosestThingReachable(
+            Thing tree = GenClosest.ClosestThingReachable(
                 pawn.Position,
                 pawn.Map,
                 ThingRequest.ForGroup(ThingRequestGroup.Plant),
@@ -88,12 +98,7 @@ namespace HungerAndHavoc.Pawn
                 traverse,
                 SearchRadius,
                 thing => IsPlant(thing, pawn));
-            if (found != null)
-            {
-                return found;
-            }
-
-            return GenClosest.ClosestThingReachable(
+            Thing wall = GenClosest.ClosestThingReachable(
                 pawn.Position,
                 pawn.Map,
                 ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial),
@@ -101,11 +106,13 @@ namespace HungerAndHavoc.Pawn
                 traverse,
                 SearchRadius,
                 thing => IsWallLike(thing, pawn));
+            return RHAH_GnawHealth.NearestTarget(pawn.Position, tree, wall);
         }
 
         static bool IsPlant(Thing thing, Verse.Pawn pawn)
         {
-            if (thing == null || thing.def.plant == null || thing.def.plant.IsTree)
+            if (thing == null || thing.Destroyed || thing.IsForbidden(pawn) ||
+                !thing.def.useHitPoints || thing.def.plant == null || !thing.def.plant.IsTree)
             {
                 return false;
             }
@@ -115,7 +122,8 @@ namespace HungerAndHavoc.Pawn
 
         static bool IsWallLike(Thing thing, Verse.Pawn pawn)
         {
-            if (thing == null || thing.def.category != ThingCategory.Building)
+            if (thing == null || thing.Destroyed || thing.IsForbidden(pawn) ||
+                !thing.def.useHitPoints || thing.def.category != ThingCategory.Building)
             {
                 return false;
             }
