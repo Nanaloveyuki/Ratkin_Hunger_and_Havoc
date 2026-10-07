@@ -125,7 +125,8 @@ namespace HungerAndHavoc.Incidents
                     continue;
                 }
 
-                bool mapHome = target is Map map && map.IsPlayerHome;
+                bool mapHome = target is Map map && map.IsPlayerHome &&
+                    RHAH_ApproachRules.AllowsHome(RHAH_Approach.SpaceHome(map), RHAH_Approach.SpaceApproachEnabled());
                 bool playerCaravan = target is RimWorld.Planet.Caravan;
                 if (!mapHome && !playerCaravan)
                 {

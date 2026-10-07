@@ -97,9 +97,14 @@ namespace HungerAndHavoc.Incidents
             return best;
         }
 
-        internal static bool AllowsHome(bool spaceLayer, bool spaceEnabled)
+        internal static bool IsSpaceHome(bool spaceLayer, string biomeDefName)
         {
-            return !spaceLayer || spaceEnabled;
+            return spaceLayer || biomeDefName == "OuterSpaceBiome";
+        }
+
+        internal static bool AllowsHome(bool spaceHome, bool spaceEnabled)
+        {
+            return !spaceHome || spaceEnabled;
         }
 
         internal static bool BlocksLaunch(bool spaceLayer)

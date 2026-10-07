@@ -145,7 +145,7 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
-            if (!RHAH_ApproachRules.AllowsHome(SpaceLayer(), SpaceApproachEnabled()))
+            if (!RHAH_ApproachRules.AllowsHome(RHAH_Approach.SpaceHome(map), SpaceApproachEnabled()))
             {
                 return false;
             }

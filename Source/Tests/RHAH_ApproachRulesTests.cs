@@ -61,6 +61,10 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void SpaceHomesStayOutUnlessAllowed()
         {
+            Assert.True(RHAH_ApproachRules.IsSpaceHome(true, "TemperateForest"));
+            Assert.True(RHAH_ApproachRules.IsSpaceHome(false, "OuterSpaceBiome"));
+            Assert.False(RHAH_ApproachRules.IsSpaceHome(false, "TemperateForest"));
+            Assert.False(RHAH_ApproachRules.IsSpaceHome(false, null));
             Assert.False(RHAH_ApproachRules.AllowsHome(true, false));
             Assert.True(RHAH_ApproachRules.AllowsHome(true, true));
             Assert.True(RHAH_ApproachRules.AllowsHome(false, false));

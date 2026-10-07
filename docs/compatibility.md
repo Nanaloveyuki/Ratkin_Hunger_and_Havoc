@@ -13,6 +13,7 @@
 | 鼠鼠退化 | 无专用加载顺序 | 可选 | 不提供新人形种族或异种。手术目标仍回到 `Ratkin` | 不扫描其动物种族，不把肉鼠、松鼠蛋、仓鼠蛋加入异种表 | 退化后的动物不进入饥与祸基因抽取 |
 | 鼠蛋佳肴拓展 `DtrndG.RatEggRecipe` | 无专用加载顺序 | 可选 | 1.6。只按 defName 查原料 `RatEgg_Meat`、`RatEgg_Ear`、`RatEgg_Tail`、`RatEgg_Brain`、`RatEgg_Viscera`、`RatEgg_SilkSkin`、`RatEgg_RoundHead`，以及 `Meal_RatEgg` 前缀的菜。`I-012` 与 `I-038` 把货放进最年幼随行的背包。交易 Lord 下未满 14 岁的随行标成驮夫，菜可以卖，其它营养食物仍不卖。咬掉天然尾后地上放 1 个 `RatEgg_Tail`。本模组来源、未满 14 岁的人吃到 `Meal_RatEgg` 时记 `RHAH_Thought_AteRatEggMeal` | Def 缺失、是尸体、没有市价或商人种类拒绝时跳过该件，不报错。不引用 `RatEggRecipe.dll`，不扫全库标签 | 未安装时商队不出现这些 defName，咬尾不掉东西，吃普通饭不记这条心情 |
 | Toddlers `cyanobot.toddlers` | 可选公开 Def 补丁，不新增 Harmony | 可选 | 1.6。若 `Toddlers.DefListDef` 的 `WearableByBaby/whitelist` 存在，幂等追加本模组 12 件温度衣，保留原名单；避免 `BabyTribalwear` 将温度衣误作普通儿童衣而移除 Baby 许可。生成前按最终 `ApparelProperties.PawnCanWear(pawn, true)` 检查年龄与 HAR 限制，不强制恢复许可 | 无目标 Def 时不执行名单补丁；`NoBabyApparel` 等设置或种族限制拒绝穿戴时，不创建温度衣，不强穿、不报拒穿警告 | 原版 XML 补丁回归及已安装 Toddlers.dll 真实服装设置逻辑的针对性隔离烟测通过；未验证 Unity 研究窗口刷新、完整 Pawn 生成与衣物渲染 |
+| Save Our Ship 2 `kentington.saveourship2` | 无专用加载顺序 | 可选 | 1.6。轨道船 `ShipOrbiting` 的生物群系是 `OuterSpaceBiome`，仍是玩家家园，但不在奥德赛空间层。调度、远行队和地图事件链把它和奥德赛空间层一起视为太空家园，默认不生成；`spaceApproachEnabled` 打开后才允许。只比较生物群系 defName | 未安装时该生物群系不存在，地面家园不受影响。不引用 `ShipsHaveInsides.dll` 或 `SaveOurShip2` 类型，不改 SOS2 穿梭机起飞 | 规则测试覆盖 `OuterSpaceBiome`。未启动 SOS2 |
 
 设置绘制只改内存。IrisMenus 使用 `RegisterSubItem` 默认的 `owner.WriteSettings`，离开页面或关闭窗口时保存；原版设置窗口由 `Dialog_ModSettings` / `Dialog_Options` 的关闭流程保存。不在 GUI 重绘中调用 `Settings.Write()`。
 

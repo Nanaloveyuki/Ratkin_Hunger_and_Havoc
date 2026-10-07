@@ -7,6 +7,11 @@ namespace HungerAndHavoc.Incidents
 {
     internal static class RHAH_Approach
     {
+        internal static bool SpaceHome(Map map)
+        {
+            return map != null && RHAH_ApproachRules.IsSpaceHome(SpaceLayer(map.Tile), map.Biome?.defName);
+        }
+
         internal static bool SpaceLayer(PlanetTile tile)
         {
             return tile.Valid && tile.Layer != null && tile.Layer.Def != null && tile.Layer.Def.isSpace;
@@ -70,7 +75,7 @@ namespace HungerAndHavoc.Incidents
                 for (int i = 0; i < Find.Maps.Count; i++)
                 {
                     Map map = Find.Maps[i];
-                    if (map != null && map.IsPlayerHome && RHAH_ApproachRules.AllowsHome(SpaceLayer(map.Tile), SpaceApproachEnabled()))
+                    if (map != null && map.IsPlayerHome && RHAH_ApproachRules.AllowsHome(SpaceHome(map), SpaceApproachEnabled()))
                     {
                         homes.Add(map.uniqueID);
                     }

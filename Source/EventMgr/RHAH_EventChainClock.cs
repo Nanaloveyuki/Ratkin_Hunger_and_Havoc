@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Core;
+using HungerAndHavoc.Incidents;
 using RimWorld;
 using Verse;
 
@@ -60,7 +61,8 @@ namespace HungerAndHavoc.EventMgr
                 for (int i = 0; i < maps.Count; i++)
                 {
                     Map map = maps[i];
-                    if (map != null && map.IsPlayerHome)
+                    if (map != null && map.IsPlayerHome &&
+                        RHAH_ApproachRules.AllowsHome(RHAH_Approach.SpaceHome(map), RHAH_Approach.SpaceApproachEnabled()))
                     {
                         game.CheckEventChains(new RHAH_EventChainSite(map.uniqueID, 0, map.Tile.tileId), tick);
                     }
