@@ -801,6 +801,26 @@ namespace HungerAndHavoc.Pawn
             return deadline > now ? deadline - now : 0;
         }
 
+        // 选中时读已有期限 倒地用保存的剩余时间 旧档缺剩余时间时从期限回算
+        internal static string StayCountdown(int stayKind, int now, int deadline, bool downed, int savedRemaining)
+        {
+            if (!IsColonyStay(stayKind) || deadline < 0)
+            {
+                return null;
+            }
+
+            int remaining = RemainingStay(now, deadline, downed, savedRemaining);
+            if (remaining <= 0)
+            {
+                return null;
+            }
+
+            string period = remaining.ToStringTicksToPeriod(true, false, true, true, false);
+            return downed
+                ? ((string)"RHAH_Stay_InspectPaused").Translate(period).ToString()
+                : ((string)"RHAH_Stay_Inspect").Translate(period).ToString();
+        }
+
         // 招募、短工、长工期间不发本模组行为
         internal static bool IsColonyStay(int stayKind)
         {

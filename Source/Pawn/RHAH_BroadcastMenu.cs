@@ -3,6 +3,7 @@ using HungerAndHavoc.Core;
 using HungerAndHavoc.Incidents;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace HungerAndHavoc.Pawn
 {
@@ -16,7 +17,9 @@ namespace HungerAndHavoc.Pawn
         {
             Building_CommsConsole console = clickedThing as Building_CommsConsole;
             RHAH_Settings settings = RHAH_Mod.Settings;
-            if (console == null || settings == null || !settings.broadcastEnabled)
+            if (console == null || settings == null || !settings.broadcastEnabled || !RHAH_Runtime.AllowsNewContent ||
+                !console.Spawned || !console.Map.IsPlayerHome ||
+                !RHAH_ApproachRules.AllowsHome(RHAH_Approach.SpaceHome(console.Map), RHAH_Approach.SpaceApproachEnabled()))
             {
                 return null;
             }
@@ -25,6 +28,24 @@ namespace HungerAndHavoc.Pawn
             if (actor == null || actor.Faction != Faction.OfPlayer || actor.Dead)
             {
                 return null;
+            }
+
+            if (!actor.CanReach(console, PathEndMode.InteractionCell, Danger.Some))
+            {
+                return new FloatMenuOption("CannotUseNoPath".Translate(), null);
+            }
+            if (!console.CanUseCommsNow)
+            {
+                return new FloatMenuOption("CannotUseNoPower".Translate(), null);
+            }
+            if (!actor.health.capacities.CapableOf(PawnCapacityDefOf.Talking))
+            {
+                return new FloatMenuOption("CannotUseReason".Translate(
+                    "IncapableOfCapacity".Translate(PawnCapacityDefOf.Talking.label, actor.Named("PAWN"))), null);
+            }
+            if (!actor.CanReserve(console))
+            {
+                return new FloatMenuOption("RHAH_Broadcast_Unavailable".Translate(), null);
             }
 
             GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
@@ -40,23 +61,42 @@ namespace HungerAndHavoc.Pawn
                 return new FloatMenuOption("RHAH_Broadcast_Empty".Translate(), null);
             }
 
-            return new FloatMenuOption("RHAH_Broadcast_Label".Translate(), () => Queue(game, candidates, tick, settings.broadcastCooldownDays, console.Map));
+            return FloatMenuUtility.DecoratePrioritizedTask(
+                new FloatMenuOption("RHAH_Broadcast_Label".Translate(), () =>
+                    actor.jobs.TryTakeOrderedJob(JobMaker.MakeJob(RHAH_DefOf.RHAH_BroadcastHope, console), JobTag.Misc)),
+                actor, console);
         }
 
-        static void Queue(GameComponent_RHAH_Game game, List<string> candidates, int tick, int days, Map map)
+        internal static bool Complete(Building_CommsConsole console)
         {
-            string displayId = RHAH_BroadcastRules.Pick(candidates, tick % candidates.Count);
-            int targetId = map == null ? RHAH_IncidentSchedule.UnspecifiedTargetId : RHAH_IncidentSchedule.TargetId(false, map.uniqueID);
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+            if (!RHAH_Runtime.AllowsNewContent || settings == null || !settings.broadcastEnabled ||
+                game == null || console == null || !console.Spawned || !console.CanUseCommsNow || !console.Map.IsPlayerHome ||
+                !RHAH_ApproachRules.AllowsHome(RHAH_Approach.SpaceHome(console.Map), RHAH_Approach.SpaceApproachEnabled()))
+            {
+                return false;
+            }
+            int tick = Find.TickManager.TicksGame;
+            if (!RHAH_BroadcastRules.Ready(tick, game.BroadcastCooldownUntilTick))
+            {
+                return false;
+            }
+            List<string> candidates = RHAH_BroadcastRules.Candidates(RHAH_IncidentCatalog.All, Disabled(settings));
+            string displayId = RHAH_BroadcastRules.Pick(candidates, candidates.Count == 0 ? 0 : Rand.Range(0, candidates.Count));
+            int targetId = RHAH_IncidentSchedule.TargetId(false, console.Map.uniqueID);
             if (displayId != null && game.QueueIncident(displayId, GameComponent_RHAH_Game.PointsFor(displayId), targetId))
             {
-                game.BroadcastCooldownUntilTick = RHAH_BroadcastRules.NextCooldown(tick, days);
+                game.BroadcastCooldownUntilTick = RHAH_BroadcastRules.NextCooldown(tick, settings.broadcastCooldownDays);
                 if (HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.CountsNow())
                 {
                     Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>()?.NoteBroadcast(tick);
                 }
 
-                Messages.Message("RHAH_Broadcast_Queued".Translate(displayId), MessageTypeDefOf.NeutralEvent);
+                Messages.Message("RHAH_Broadcast_Queued".Translate(), console, MessageTypeDefOf.NeutralEvent);
+                return true;
             }
+            return false;
         }
 
         static HashSet<string> Disabled(RHAH_Settings settings)

@@ -43,4 +43,9 @@
     <casualInterruptible>false</casualInterruptible>
     <checkOverrideOnDamage>Never</checkOverrideOnDamage>
   </JobDef>
+ <JobDef>
+ <defName>RHAH_BroadcastHope</defName>
+ <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_BroadcastHope</driverClass>
+ <reportString>广播希望</reportString>
+ </JobDef>
 </Defs>

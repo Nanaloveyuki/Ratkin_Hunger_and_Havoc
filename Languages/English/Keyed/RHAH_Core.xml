@@ -76,6 +76,8 @@
   <RHAH_Stay_YearsDays>{0} years, {1} days</RHAH_Stay_YearsDays>
   <RHAH_Stay_Day>1 day</RHAH_Stay_Day>
   <RHAH_Stay_Days>{0} days</RHAH_Stay_Days>
+  <RHAH_Stay_Inspect>Leaves in {0}</RHAH_Stay_Inspect>
+  <RHAH_Stay_InspectPaused>Downed, departure timer paused ({0} left)</RHAH_Stay_InspectPaused>
   <RHAH_Settings_ColdClothes>Give new visitors a temperature wrap</RHAH_Settings_ColdClothes>
   <RHAH_Settings_ColdClothes_Tooltip>When the map is outside what a new visitor can bear, they get the lightest wrap that covers the gap. If none does, they get the thickest. Someone already wearing one keeps it. With this off, no extra clothing is given.</RHAH_Settings_ColdClothes_Tooltip>
   <RHAH_Settings_TempMin>Minimum incident temperature: {0}°C</RHAH_Settings_TempMin>
@@ -418,8 +420,8 @@
   <RHAH_Settings_PlagueSafe_Tooltip>Off by default. On, the plague stops short of killing. The sick cannot move, but the plague itself does not kill them.</RHAH_Settings_PlagueSafe_Tooltip>
   <RHAH_Settings_GreenLetters>Green famine letters</RHAH_Settings_GreenLetters>
   <RHAH_Settings_GreenLetters_Tooltip>On by default. Off, famine incident letters use the ordinary blue.</RHAH_Settings_GreenLetters_Tooltip>
-  <RHAH_Settings_Broadcast>Allow aid broadcasts</RHAH_Settings_Broadcast>
-  <RHAH_Settings_Broadcast_Tooltip>The comms console stops listing a broadcast. A cooldown already running does not end early.</RHAH_Settings_Broadcast_Tooltip>
+  <RHAH_Settings_Broadcast>Allow hope broadcasts</RHAH_Settings_Broadcast>
+  <RHAH_Settings_Broadcast_Tooltip>Colonists can broadcast from a comms console to call famine ratkin here. Turning this off stops new broadcasts. Groups already on the road keep coming.</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_Stagger>Visitors arrive in batches</RHAH_Settings_Stagger>
   <RHAH_Settings_Stagger_Tooltip>Queued incidents spawn one batch at a time. Off, queued incidents spawn as soon as they can.</RHAH_Settings_Stagger_Tooltip>
   <RHAH_Settings_PredationChance>Ratkin refugees hunted: {0}%</RHAH_Settings_PredationChance>
@@ -519,7 +521,10 @@
   <RHAH_Choice_CustodyFailed>No visitors changed status. You can still respond to this letter.</RHAH_Choice_CustodyFailed>
   <RHAH_Choice_FeedHint>They will wait where they are. Select a colonist, then right-click a waiting visitor to hand over food. Nobody is sent to deliver it.</RHAH_Choice_FeedHint>
   <RHAH_Choice_FeedHintDismiss>Do not show this again</RHAH_Choice_FeedHintDismiss>
-  <RHAH_Choice_FeedWaiting>The visitors are waiting for food.</RHAH_Choice_FeedWaiting>
+  <RHAH_Choice_FeedWaiting>Visitors waiting for food: {0}.</RHAH_Choice_FeedWaiting>
+  <RHAH_Choice_FeedBlocked>{0} cannot take food right now.</RHAH_Choice_FeedBlocked>
+  <RHAH_Choice_FeedNoVisitor>{0} is not a visitor you can feed.</RHAH_Choice_FeedNoVisitor>
+  <RHAH_Choice_FeedNotHungry>{0} does not need food right now.</RHAH_Choice_FeedNotHungry>
   <RHAH_Choice_GiveFood>Give {0} to {1}</RHAH_Choice_GiveFood>
   <RHAH_Choice_NoFood>No food to give {1}</RHAH_Choice_NoFood>
   <RHAH_Choice_Short>Not enough in storage. They need {0}.</RHAH_Choice_Short>
@@ -530,10 +535,11 @@
   <RHAH_Choice_Fed>The visitors have eaten.</RHAH_Choice_Fed>
   <RHAH_Intel_Label>Intel site</RHAH_Intel_Label>
   <RHAH_Intel_Text>The trade is done. A site has appeared nearby.</RHAH_Intel_Text>
-  <RHAH_Broadcast_Label>Broadcast for aid</RHAH_Broadcast_Label>
+  <RHAH_Broadcast_Label>Broadcast hope</RHAH_Broadcast_Label>
   <RHAH_Broadcast_Cooldown>The broadcast is still cooling down</RHAH_Broadcast_Cooldown>
   <RHAH_Broadcast_Empty>No incident can be broadcast</RHAH_Broadcast_Empty>
-  <RHAH_Broadcast_Queued>Queued {0}</RHAH_Broadcast_Queued>
+  <RHAH_Broadcast_Queued>The broadcast has been sent. Waiting for ratkin to respond.</RHAH_Broadcast_Queued>
+  <RHAH_Broadcast_Unavailable>Cannot broadcast hope now</RHAH_Broadcast_Unavailable>
   <RHAH_Settings_EndingFloor>Good year trust: {0}</RHAH_Settings_EndingFloor>
   <RHAH_Settings_EndingFloor_Tooltip>Trust required for the good year. 0 to 100, default 50. Hope City cannot sit below this.</RHAH_Settings_EndingFloor_Tooltip>
   <RHAH_Settings_EndingHope>Hope City trust: {0}</RHAH_Settings_EndingHope>

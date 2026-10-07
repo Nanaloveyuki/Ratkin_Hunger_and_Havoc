@@ -187,7 +187,38 @@ namespace HungerAndHavoc.Incidents
             if (settled == RHAH_ChoiceAction.Feed)
             {
                 ShowFoodHint(settings);
-                Messages.Message("RHAH_Choice_FeedWaiting".Translate(), MessageTypeDefOf.NeutralEvent);
+                List<Verse.Pawn> present = record == null ? null : RHAH_ChoiceRuntime.Present(record);
+                int waiting = present == null ? 0 : RHAH_FoodHandoff.Begin(present);
+                if (waiting > 0)
+                {
+                    Messages.Message("RHAH_Choice_FeedWaiting".Translate(waiting), MessageTypeDefOf.NeutralEvent);
+                }
+                else
+                {
+                    string key = "RHAH_Choice_FeedNoVisitor";
+                    string name = "-";
+                    if (present != null)
+                    {
+                        for (int i = 0; i < present.Count; i++)
+                        {
+                            Verse.Pawn pawn = present[i];
+                            if (pawn == null)
+                            {
+                                continue;
+                            }
+
+                            string refusal = RHAH_FoodHandoff.Refusal(pawn);
+                            if (refusal != null)
+                            {
+                                key = refusal;
+                                name = pawn.LabelShort;
+                                break;
+                            }
+                        }
+                    }
+
+                    Messages.Message(key.Translate(name), MessageTypeDefOf.RejectInput);
+                }
             }
             else if (settled == RHAH_ChoiceAction.Ally)
             {

@@ -65,6 +65,7 @@ Language、存档键、卸载归属这三项，功能开发只要碰到玩家文
 - 新字段的 `Scribe_*.Look` 默认值必须等于字段默认值；集合在 `PostLoadInit` 补空，并写明 null 与空集合的语义
 - 存档键、`hediffClass`、`workerClass`、XML `Class=` 都是契约，不等于 C# 字段名
 - 改了键、默认值、类型名或可序列化类型，必须同步 [save-ownership.md](save-ownership.md)
+- 1.0.3 起的已发布存档不再使用历史破坏性重建例外。键或类型变更必须在读取前或加载阶段自动迁移，明确新旧共存优先级，验证读旧、存新、重读与不覆盖原档
 
 ## 卸载保护
 

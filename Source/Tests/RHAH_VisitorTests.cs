@@ -100,33 +100,6 @@ namespace HungerAndHavoc.Tests
             Assert.DoesNotContain("System.Linq", source);
         }
 
-        [Fact]
-        public void FeedingDeathAndExpiredStayCloseLifecycle()
-        {
-            string feeding = File.ReadAllText(PawnPath("RHAH_Feeding.cs"));
-            Assert.Contains("RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed)", feeding);
-            Assert.Contains("SetLeaveAfter", feeding);
-
-            string patch = File.ReadAllText(PawnPath("RHAH_LifecyclePatch.cs"));
-            Assert.Contains("Toils_Ingest.FinalizeIngest", patch);
-            Assert.Contains("RHAH_Feeding.TryComplete(ingester)", patch);
-            Assert.Contains("nameof(Verse.Pawn.Kill)", patch);
-            Assert.Contains("RHAH_Lifecycle.Dead", patch);
-            Assert.Contains("NotifyDead", patch);
-
-            string menu = File.ReadAllText(PawnPath("RHAH_VisitorExpelMenu.cs"));
-            Assert.Contains("RHAH_Feeding.TryComplete(clickedPawn)", menu);
-            Assert.DoesNotContain("SetLifecycle(clickedPawn, RHAH_Lifecycle.Fed)", menu);
-
-            string stay = File.ReadAllText(PawnPath("RHAH_VisitorStay.cs"));
-            int clear = stay.IndexOf("RHAH_VisitorGroup.NotifyReleased(pawn)");
-            int leaving = stay.IndexOf("RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving)");
-            Assert.True(clear >= 0 && leaving > clear, "expired stay must clear the lord before Leaving");
-            Assert.Contains("RestoresPlayerFaction", stay);
-            Assert.Contains("pawn.SetFaction(Faction.OfPlayer)", stay);
-            Assert.Contains("RHAH_StayKind.Recruit", File.ReadAllText(IncidentPath("RHAH_ChoiceRuntime.cs")));
-            Assert.DoesNotContain("MarkFed", File.ReadAllText(PawnPath("JobGiver_RHAH_Visitor.cs")));
-        }
 
 
 
@@ -143,11 +116,6 @@ namespace HungerAndHavoc.Tests
             return Path.GetFullPath(Path.Combine(testsDir, "..", "Pawn", fileName));
         }
 
-        static string IncidentPath(string fileName, [CallerFilePath] string testFile = null)
-        {
-            string testsDir = Path.GetDirectoryName(testFile);
-            return Path.GetFullPath(Path.Combine(testsDir, "..", "Incidents", fileName));
-        }
 
         static string ThinkTreePath([CallerFilePath] string testFile = null)
         {

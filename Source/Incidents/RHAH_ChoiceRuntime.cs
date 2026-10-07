@@ -230,7 +230,6 @@ namespace HungerAndHavoc.Incidents
 
             if (RHAH_RequestRules.WaitsForFood(record.Settled))
             {
-                RHAH_FoodHandoff.Begin(Present(record));
                 HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.OnChoice(record);
                 return;
             }

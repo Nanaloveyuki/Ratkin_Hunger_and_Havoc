@@ -28,6 +28,11 @@ M0 工程对齐对实验性存档格式做 **破坏性重建**，不读旧键、
 
 Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集合；null 与空集合加载后语义相同，都是空集合。`SetExtra(key, null)` 删除键。
 
+## 已发布版本自动迁移
+
+1.0.3（简称 1.3）到 1.0.4（简称 1.4）：`LordJob_RHAH_Visitor.ExposeData` 在 `LoadingVars` 读取字段前，仅预处理当前 Lord 的 XML。旧单人 `foodReceiver` 引用转为 `foodReceivers/li`；旧键为空、`null` 或 `IsNull="True"` 时转为空列表。新键已存在时以新键为准，包括显式空列表；不合并旧引用。转换幂等，之后由原版 Scribe 解析 Pawn 引用，保存只写新键。不修改磁盘原档、不改 `foodDef`、`foodCount` 或 Pawn 的 `foodWaitUntilTick`，不受当前存档停用新内容影响，不增加 tick 扫描。旧键只作加载迁移输入，不再作运行时字段；卸载随整个访客 Lord Remove。
+
+
 ## 游戏存档键
 
 `RHAH_Settings` 是全局 `ModSettings`，不写入 `.rws`，见下方非存档表。
@@ -73,7 +78,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | faction | faction | null | 否 | 访客 Lord 使用的态度派系引用 |
 | waitSpot | waitSpot | IntVec3.Invalid | 否 | 寻食集合点 |
 | familyRole | familyRole | Unspecified | 否 | `RHAH_PawnRole` |
-| foodReceiver | foodReceiver | null | 否 | 等待玩家亲手交食物的来客 |
+| foodReceivers | foodReceivers | 空集合 | 是 | 等待玩家亲手交食物的来客引用列表。PostLoadInit 补空列表；1.0.4 在字段读取前自动迁移 1.0.3 的 foodReceiver，已有新键时优先保留新键，每人份数由 foodCount 保存 |
 | foodDef | foodDef | null | 否 | 第一次交货后锁定的食物 |
 | foodCount | foodCount | 0 | 否 | 需要的份数。0 表示没有在等 |
 
@@ -202,6 +207,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Expel | Job `driverClass` | Remove |
+| HungerAndHavoc.Pawn.JobDriver_RHAH_BroadcastHope | Job `driverClass`；无新增存档字段 | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_CarryYoung | Job `driverClass`；无新增存档字段 | Remove，连同当前 Job 或排队 Job 清理 |
 | HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Request | Letter `letterClass` | Remove |
 | HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Visitors | Letter `letterClass` | Remove |
@@ -360,6 +366,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_VisitorSeek | DutyDef | Remove |
 | RHAH_VisitorLeave | DutyDef | Remove |
 | RHAH_VisitorFallback | ThinkTreeDef | Remove |
+| RHAH_BroadcastHope | JobDef | Remove，清除当前和排队广播 Job，保留原版通讯台 |
 | RHAH_Gene_ThinRations | GeneDef | Remove。不替换成原版基因 |
 | RHAH_Gene_LargeLitter | GeneDef | Remove。不替换成原版基因 |
 | RHAH_Gene_EarlyFertility | GeneDef | Remove。不替换成原版基因 |

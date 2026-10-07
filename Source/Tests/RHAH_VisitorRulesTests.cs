@@ -233,6 +233,19 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void RemainingStayUsesDeadlineUntilDownedAndFallsBackForOldSaves()
+        {
+            Assert.Equal(5000, RHAH_VisitorRules.RemainingStay(1000, 6000, false, 9000));
+            Assert.Equal(4000, RHAH_VisitorRules.RemainingStay(2000, 6000, false, 9000));
+            Assert.Equal(9000, RHAH_VisitorRules.RemainingStay(8000, 6000, true, 9000));
+            Assert.Equal(5000, RHAH_VisitorRules.RemainingStay(1000, 6000, true, 0));
+            Assert.Equal(0, RHAH_VisitorRules.RemainingStay(6000, 6000, false, 9000));
+            Assert.Equal(0, RHAH_VisitorRules.RemainingStay(1000, -1, false, 9000));
+            Assert.Null(RHAH_VisitorRules.StayCountdown((int)RHAH_StayKind.None, 1000, 6000, false, 9000));
+            Assert.Null(RHAH_VisitorRules.StayCountdown((int)RHAH_StayKind.Hire, 6000, 6000, false, 9000));
+        }
+
+        [Fact]
         public void AttitudeFactionsUseRealFieldsAndDoNotDropRaidLoot()
         {
             string xml = File.ReadAllText(FactionPath());

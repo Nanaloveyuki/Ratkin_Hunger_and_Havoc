@@ -47,5 +47,22 @@ namespace HungerAndHavoc.Identity
                 return translated;
             }
         }
+
+        public override string GetInspectString()
+        {
+            CompRHAH_Pawn comp = Hunger;
+            if (comp == null)
+            {
+                return null;
+            }
+
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            return Pawn.RHAH_VisitorRules.StayCountdown(
+                comp.State.stayKind,
+                now,
+                comp.State.leaveAfterGameTick,
+                pawn != null && pawn.Downed,
+                comp.State.stayRemainingTicks);
+        }
     }
 }

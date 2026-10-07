@@ -13,6 +13,7 @@
 5. 当前实现、旧脚手架和历史代码
 
 文档描述目标架构。M0 的程序集、命名空间和 API 边界已经按本页落地。以后的实现继续服从本页，不得为了匹配更旧的草案降低标准。
+当前发布版本为 1.0.3（简称 1.3），下一版本为 1.0.4（简称 1.4）。下文的发布前破坏性重建仅指历史实验格式；已发布存档的键或类型变更必须提供自动迁移，并登记触发条件、优先级和存回格式，不再套用“1.0.0 前”的例外。
 
 ## 仓库分类
 
@@ -186,6 +187,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_TailBite` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_Expel` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
+| `HungerAndHavoc.Pawn.JobDriver_RHAH_BroadcastHope` | JobDef `RHAH_BroadcastHope.driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建通讯台广播驱动，不属于稳定 API |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_CarryYoung` | JobDef `RHAH_CarryYoung.driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建携出幼年来客的驱动，不属于稳定 API |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_DropChild` | 访客调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
 | `HungerAndHavoc.Pawn.JobGiver_RHAH_MotherFeed` | 访客调度直接调用 | `HungerAndHavoc.dll` | 与其它 JobGiver 一样必须 public |
@@ -221,6 +223,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_TraitColor` 是 `internal`，Postfix `Trait.LabelCap`。原版特质名没有本模组颜色。补丁只给 `RHAH_Trait_` 前缀上色，已有颜色标签时不改。
 `RHAH_CaravanLeavePatch` 是 `internal`，Prefix `Transition.CheckSignal`。原版交易 Lord 会因危险温度、异常天气、危险状况或到不了地图边缘离图。补丁只拦本模组商队：环境离图看 `traderIgnoresHarshEnvironment`，封闭空间看 `traderIgnoresEnclosedSpace`。其它 Lord 不改。
 `RHAH_ApproachLaunchPatch` 是 `internal`，Postfix `WorldTargeter.CurrentTargetUnderMouse`。起飞选点先命中动态绘制的世界物体。补丁只在目标是太空层上的 `RHAH_Approach` 时改成同格合法目标，没有则改成空格。地面远行队和其它物体不改。
+`RHAH_GiveToPawnCountPatch` 是 `internal`，Prefix `GiveItemsToPawnUtility.ItemCountLeftToCollect`。原版用整个 Lord 的搬运量扣当前接收者的剩余量，同批第二人会被第一人的搬运扣成零。补丁只接 `LordJob_RHAH_Visitor` 的等待名单成员，改为扣送往本人的搬运量；其它 Lord 和未登记成员走原版。
 `RHAH_CaravanFoodSalePatch` 是 `internal`，Postfix `TraderKindDef.WillTrade`。原版商人种类会卖营养食物。补丁只在当前交易对象是本模组商队时，把非 `Meal_RatEgg` 的营养食物改成不卖。鼠蛋菜和其它商人不改。
 `RHAH_CuisineCarrierPatch` 是 `internal`，Postfix `TraderCaravanUtility.GetTraderCaravanRole`。原版交易 Lord 只把驮运动物的背包当货物，不卖人类随行的背包。补丁只在 Lord 是交易 Lord、角色属于本模组商队、且未满 14 岁时改成驮夫。商人本人、已是驮夫和其它 Lord 不改。
 `RHAH_CuisineGoodsPatch` 是 `internal`，Postfix `Pawn_TraderTracker.Goods`。原版访客 Lord 只列商人自己未标价的背包。补丁只在商人属于本模组商队、派系不敌对、且 Lord 不是交易 Lord 时，把同 Lord 随行的背包并进货物。交易 Lord、敌对派系和其它商人不改。

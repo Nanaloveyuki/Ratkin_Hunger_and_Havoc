@@ -17,7 +17,7 @@ namespace HungerAndHavoc.Pawn
         Faction faction;
         IntVec3 waitSpot = IntVec3.Invalid;
         RHAH_PawnRole familyRole;
-        Verse.Pawn foodReceiver;
+        List<Verse.Pawn> foodReceivers;
         ThingDef foodDef;
         int foodCount;
 
@@ -79,6 +79,7 @@ namespace HungerAndHavoc.Pawn
             arrived.AddTrigger(new Trigger_Memo("TravelArrived"));
             graph.AddTransition(arrived, false);
             Transition toFood = new Transition(seek, waitFood, false, true);
+            toFood.AddSource(travel);
             toFood.AddTrigger(new Trigger_Memo("RHAH_WaitFood"));
             graph.AddTransition(toFood, false);
             Transition toLeave = new Transition(seek, leave, false, true);
@@ -112,24 +113,72 @@ namespace HungerAndHavoc.Pawn
 
         public override void ExposeData()
         {
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                MigrateFoodReceiver(Scribe.loader.curXmlParent);
+            }
             Scribe_References.Look(ref faction, "faction");
             Scribe_Values.Look(ref waitSpot, "waitSpot", IntVec3.Invalid);
             Scribe_Values.Look(ref familyRole, "familyRole", RHAH_PawnRole.Unspecified);
-            Scribe_References.Look(ref foodReceiver, "foodReceiver");
+            Scribe_Collections.Look(ref foodReceivers, "foodReceivers", LookMode.Reference);
             Scribe_Defs.Look(ref foodDef, "foodDef");
             Scribe_Values.Look(ref foodCount, "foodCount", 0);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && foodReceivers == null)
+            {
+                foodReceivers = new List<Verse.Pawn>();
+            }
         }
 
-        internal void BeginFoodWait(Verse.Pawn receiver, int count)
+        // 只预处理当前 Lord 的旧键 引用仍交给原版解析
+        static void MigrateFoodReceiver(System.Xml.XmlNode node)
         {
-            foodReceiver = receiver;
+            System.Xml.XmlElement legacy = node?["foodReceiver"];
+            if (legacy == null)
+            {
+                return;
+            }
+
+            if (node["foodReceivers"] == null)
+            {
+                System.Xml.XmlElement receivers = node.OwnerDocument.CreateElement("foodReceivers");
+                string reference = legacy.InnerText.Trim();
+                if (legacy.GetAttribute("IsNull") != "True" && reference.Length > 0 && reference != "null")
+                {
+                    System.Xml.XmlElement item = node.OwnerDocument.CreateElement("li");
+                    item.InnerText = reference;
+                    receivers.AppendChild(item);
+                }
+                node.InsertBefore(receivers, legacy);
+            }
+            node.RemoveChild(legacy);
+        }
+
+        internal bool BeginFoodWait(Verse.Pawn receiver, int count)
+        {
+            if (receiver == null || count <= 0)
+            {
+                return false;
+            }
+
+            if (foodReceivers == null)
+            {
+                foodReceivers = new List<Verse.Pawn>();
+            }
+
+            bool added = !foodReceivers.Contains(receiver);
+            if (added)
+            {
+                foodReceivers.Add(receiver);
+            }
+
             foodCount = count;
+            return added;
         }
 
         internal bool WaitingForFood(Verse.Pawn pawn)
         {
             return RHAH_RequestRules.FoodWaiting(
-                foodReceiver == pawn,
+                ListedForFood(pawn),
                 pawn != null && !pawn.Dead,
                 pawn != null && pawn.Spawned,
                 foodDef == null ? 0 : RHAH_FoodHandoff.Received(pawn, foodDef),
@@ -147,6 +196,25 @@ namespace HungerAndHavoc.Pawn
             return foodCount - received;
         }
 
+        internal int FoodLeftToCollect(Verse.Pawn pawn)
+        {
+            int needed = FoodStillNeeded(pawn);
+            if (needed <= 0)
+            {
+                return 0;
+            }
+
+            return needed - RHAH_FoodHandoff.BeingHauledTo(pawn);
+        }
+
+        internal ThingDef RequestedFood
+        {
+            get
+            {
+                return foodDef;
+            }
+        }
+
         internal void NoteFood(ThingDef def)
         {
             if (foodDef == null)
@@ -155,14 +223,46 @@ namespace HungerAndHavoc.Pawn
             }
         }
 
-        bool FoodFilled()
+        internal bool FoodFilled()
         {
-            return foodReceiver != null && foodDef != null && !WaitingForFood(foodReceiver);
+            if (foodReceivers == null || foodReceivers.Count == 0 || foodDef == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < foodReceivers.Count; i++)
+            {
+                if (WaitingForFood(foodReceivers[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        internal bool ListedForFood(Verse.Pawn pawn)
+        {
+            return pawn != null && foodReceivers != null && foodReceivers.Contains(pawn);
         }
 
         bool FoodWaitExpired()
         {
-            return FoodWaitExpired(foodReceiver, foodReceiver == null ? null : RHAH_Api.Get(foodReceiver));
+            if (foodReceivers == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < foodReceivers.Count; i++)
+            {
+                Verse.Pawn receiver = foodReceivers[i];
+                if (FoodWaitExpired(receiver, receiver == null ? null : RHAH_Api.Get(receiver)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         static bool FoodWaitExpired(Verse.Pawn pawn, IRHAH_Pawn snapshot)
@@ -335,9 +435,9 @@ namespace HungerAndHavoc.Pawn
             this.job = job;
         }
 
-        public int CountRemaining => job == null || job.lord == null ? 0 : job.FoodStillNeeded(Receiver());
+        public int CountRemaining => job == null ? 0 : job.FoodLeftToCollect(Receiver());
 
-        public bool HasAllRequestedItems => CountRemaining <= 0;
+        public bool HasAllRequestedItems => job != null && job.FoodFilled();
 
         public override void UpdateAllDuties()
         {
@@ -352,37 +452,7 @@ namespace HungerAndHavoc.Pawn
 
         public override IEnumerable<FloatMenuOption> ExtraFloatMenuOptions(Verse.Pawn requester, Verse.Pawn current)
         {
-            if (!job.WaitingForFood(requester) || current == null || current.Faction != Faction.OfPlayer)
-            {
-                yield break;
-            }
-
-            List<Thing> foods = new List<Thing>();
-            RHAH_FoodHandoff.CollectFood(current, foods);
-            int left = job.FoodStillNeeded(requester);
-            if (foods.Count == 0)
-            {
-                yield return new FloatMenuOption("RHAH_Choice_NoFood".Translate(left, requester.LabelShort), null);
-                yield break;
-            }
-
-            for (int i = 0; i < foods.Count; i++)
-            {
-                Thing food = foods[i];
-                yield return GiveOption(food, current, requester, left);
-            }
-        }
-
-        FloatMenuOption GiveOption(Thing food, Verse.Pawn current, Verse.Pawn requester, int left)
-        {
-            return new FloatMenuOption("RHAH_Choice_GiveFood".Translate(left + " " + food.def.label, requester.LabelShort), () =>
-            {
-                job.NoteFood(food.def);
-                Job give = JobMaker.MakeJob(JobDefOf.GiveToPawn, food, requester);
-                give.haulMode = HaulMode.ToContainer;
-                give.count = left;
-                current.jobs.TryTakeOrderedJob(give, JobTag.Misc);
-            });
+            yield break;
         }
 
         Verse.Pawn Receiver()

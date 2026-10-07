@@ -142,8 +142,8 @@ def check_about():
         errors.append("About.xml Chinese name")
     if "lezhizhong.mouse.disaster.famine" not in about:
         errors.append("About.xml incompatibleWith original")
-    if "<modVersion>1.0.3</modVersion>" not in about:
-        errors.append("About.xml modVersion must be 1.0.3")
+    if "<modVersion>1.0.4</modVersion>" not in about:
+        errors.append("About.xml modVersion must be 1.0.4")
     if (ROOT / "1.6/Assemblies/0Harmony.dll").exists():
         errors.append("do not ship 1.6/Assemblies/0Harmony.dll; Harmony is a mod dependency")
 

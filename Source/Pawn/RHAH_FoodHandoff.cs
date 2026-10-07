@@ -13,33 +13,80 @@ namespace HungerAndHavoc.Pawn
 {
     internal static class RHAH_FoodHandoff
     {
-        internal static void Begin(List<Verse.Pawn> pawns)
+        internal static int Begin(List<Verse.Pawn> pawns)
         {
             if (pawns == null || pawns.Count == 0)
             {
-                return;
+                return 0;
             }
 
-            Verse.Pawn receiver = Receiver(pawns);
-            if (receiver == null)
+            int each = RHAH_RequestRules.FoodRequestCount(1);
+            int started = 0;
+            for (int i = 0; i < pawns.Count; i++)
             {
-                return;
+                if (Refusal(pawns[i]) == null && Start(pawns[i], each))
+                {
+                    started++;
+                }
+            }
+
+            return started;
+        }
+
+        internal static bool Start(Verse.Pawn receiver, int count)
+        {
+            if (receiver == null || count <= 0)
+            {
+                return false;
             }
 
             Lord lord = receiver.GetLord();
             LordJob_RHAH_Visitor job = lord == null ? null : lord.LordJob as LordJob_RHAH_Visitor;
-            int count = RHAH_RequestRules.FoodRequestCount(pawns.Count);
-            if (job == null || count <= 0)
+            if (job == null)
             {
-                return;
+                return false;
             }
 
-            job.BeginFoodWait(receiver, count);
-            ArmWait(receiver);
-            if (lord.CurLordToil is LordToil_RHAH_VisitorSeek)
+            if (job.BeginFoodWait(receiver, count))
+            {
+                ArmWait(receiver);
+            }
+
+            if (CanEnterFoodWait(lord.CurLordToil))
             {
                 lord.ReceiveMemo("RHAH_WaitFood");
             }
+
+            return true;
+        }
+
+        internal static bool CanEnterFoodWait(LordToil toil)
+        {
+            return toil is LordToil_RHAH_VisitorSeek || toil is LordToil_RHAH_VisitorTravel;
+        }
+
+
+        internal static string Refusal(Verse.Pawn pawn)
+        {
+            Lord lord = pawn == null ? null : pawn.GetLord();
+            if (!RHAH_Api.IsVisitor(pawn) || pawn.Dead || !pawn.Spawned || pawn.Downed ||
+                !(lord != null && lord.LordJob is LordJob_RHAH_Visitor))
+            {
+                return "RHAH_Choice_FeedNoVisitor";
+            }
+
+            if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.FeedFromRelief))
+            {
+                return "RHAH_Choice_FeedBlocked";
+            }
+
+            IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
+            if (snapshot != null && snapshot.HasBeenFed)
+            {
+                return "RHAH_Choice_FeedNotHungry";
+            }
+
+            return null;
         }
 
         static void ArmWait(Verse.Pawn receiver)
@@ -59,26 +106,6 @@ namespace HungerAndHavoc.Pawn
                 false,
                 wait,
                 days));
-        }
-
-        internal static Verse.Pawn Receiver(List<Verse.Pawn> pawns)
-        {
-            Verse.Pawn best = null;
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Verse.Pawn pawn = pawns[i];
-                if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
-                {
-                    continue;
-                }
-
-                if (best == null || pawn.ageTracker.AgeBiologicalYears > best.ageTracker.AgeBiologicalYears)
-                {
-                    best = pawn;
-                }
-            }
-
-            return best;
         }
 
         internal static Thing FindFood(Verse.Pawn giver)
@@ -144,6 +171,45 @@ namespace HungerAndHavoc.Pawn
             }
 
             return count;
+        }
+
+        internal static int BeingHauledTo(Verse.Pawn receiver)
+        {
+            if (receiver == null || receiver.Map == null || receiver.Map.mapPawns == null)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            IReadOnlyList<Verse.Pawn> spawned = receiver.Map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < spawned.Count; i++)
+            {
+                Verse.Pawn hauler = spawned[i];
+                JobDriver_GiveToPawn driver = hauler == null || hauler.jobs == null
+                    ? null
+                    : hauler.jobs.curDriver as JobDriver_GiveToPawn;
+                if (driver != null && driver.job.GetTarget(TargetIndex.B).Pawn == receiver)
+                {
+                    count += driver.CountBeingHauled;
+                }
+            }
+
+            return count;
+        }
+
+        internal static bool TryCountLeft(Verse.Pawn receiver, out int left)
+        {
+            left = 0;
+            LordJob_RHAH_Visitor job = receiver == null || receiver.GetLord() == null
+                ? null
+                : receiver.GetLord().LordJob as LordJob_RHAH_Visitor;
+            if (job == null || !job.ListedForFood(receiver))
+            {
+                return false;
+            }
+
+            left = job.FoodLeftToCollect(receiver);
+            return true;
         }
 
         static bool Accepts(Verse.Pawn giver, Thing thing)
