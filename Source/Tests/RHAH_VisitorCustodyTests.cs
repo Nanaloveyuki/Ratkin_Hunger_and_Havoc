@@ -117,20 +117,55 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void QuarantineAndMentalStateOverrideOtherwiseValidCustodyEligibility()
+        public void QuarantineDoesNotOverrideOtherwiseValidCustodyEligibility()
+        {
+            Verse.Pawn pawn = Visitor(map);
+            Hediff plague = Plague(pawn, 0.4f);
+            MapComponent_RHAH_Map component = new MapComponent_RHAH_Map(map);
+            map.components.Add(component);
+            component.Quarantine(pawn.thingIDNumber);
+
+            Assert.True(component.IsQuarantined(pawn.thingIDNumber));
+            Assert.True(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
+            Assert.True(RHAH_VisitorBatch.HasEligible(new List<Verse.Pawn> { pawn }, map.uniqueID, false));
+            Assert.Same(plague, pawn.health.hediffSet.GetFirstHediffOfDef(plague.def));
+            Assert.Equal(0.4f, plague.Severity);
+        }
+
+        [Theory]
+        [InlineData(RHAH_BehaviorGate.JoinColony)]
+        [InlineData(RHAH_BehaviorGate.Hire)]
+        [InlineData(RHAH_BehaviorGate.Transfer)]
+        public void PlagueWatchDoesNotOverrideDispositionGates(RHAH_BehaviorGate gate)
+        {
+            Verse.Pawn pawn = Visitor(map);
+            Hediff plague = Plague(pawn, 0.4f);
+            MapComponent_RHAH_Map component = new MapComponent_RHAH_Map(map);
+            map.components.Add(component);
+            component.Quarantine(pawn.thingIDNumber);
+
+            Assert.True(RHAH_Api.Allows(pawn, gate));
+            RHAH_Api.SetGate(pawn, gate, false);
+            Assert.False(RHAH_Api.Allows(pawn, gate));
+            RHAH_Api.SetGate(pawn, gate, true);
+            Assert.True(RHAH_Api.Allows(pawn, gate));
+            Assert.Contains(pawn.thingIDNumber, component.PlagueQuarantineLoadIds);
+            Assert.Same(plague, pawn.health.hediffSet.GetFirstHediffOfDef(plague.def));
+            Assert.Equal(0.4f, plague.Severity);
+        }
+
+        [Fact]
+        public void MentalStateOverridesOtherwiseValidCustodyEligibility()
         {
             Verse.Pawn pawn = Visitor(map);
             Assert.True(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
-            MapComponent_RHAH_Map component = new MapComponent_RHAH_Map(map);
-            map.components.Add(component);
-            component.PlagueQuarantineLoadIds.Add(pawn.thingIDNumber);
-            Assert.False(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
-            component.PlagueQuarantineLoadIds.Clear();
 
             Field(typeof(MentalStateHandler), "curStateInt").SetValue(
                 pawn.mindState.mentalStateHandler, Uninitialized<MentalState_Berserk>());
             Assert.False(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
+            Assert.False(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, true));
         }
+
 
         [Fact]
         public void DownedVisitorRemainsEligibleButExistingCustodyNeverDoes()
@@ -374,6 +409,17 @@ namespace HungerAndHavoc.Tests
             // 记录查找走原版世界角色集合 不触发地图容器的 Unity 主线程检查
             ((HashSet<Verse.Pawn>)Field(typeof(WorldPawns), "pawnsAlive").GetValue(Find.WorldPawns)).Add(pawn);
             return pawn;
+        }
+        static Hediff Plague(Verse.Pawn pawn, float severity)
+        {
+            HediffDef def = Uninitialized<HediffDef>();
+            def.defName = "RHAH_Plague";
+            Hediff hediff = Uninitialized<Hediff>();
+            hediff.def = def;
+            hediff.pawn = pawn;
+            Field(typeof(Hediff), "severityInt").SetValue(hediff, severity);
+            pawn.health.hediffSet.hediffs.Add(hediff);
+            return hediff;
         }
 
         Map NewMap(int id)

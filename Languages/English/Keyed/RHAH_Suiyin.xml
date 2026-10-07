@@ -72,7 +72,7 @@
   <RHAH_Quarantine_Defer>Leave it for later</RHAH_Quarantine_Defer>
   <RHAH_Quarantine_Stale>This group can no longer take that choice.</RHAH_Quarantine_Stale>
   <RHAH_Suiyin_N007Choice_Label>Visitors with plague</RHAH_Suiyin_N007Choice_Label>
-  <RHAH_Suiyin_N007Choice_Text>Some of the visitors have ratkin plague. Some are still on their feet; others already need care.\n\nYou can keep them under observation, let them go, or postpone the decision. The plague needs treatment, and those you release still need the strength to leave. Restrictions on joining, hiring, and trading depend on your quarantine settings.</RHAH_Suiyin_N007Choice_Text>
+  <RHAH_Suiyin_N007Choice_Text>Some of the visitors have ratkin plague. Some are still on their feet; others already need care.\n\nYou can keep them under observation, let them go, or postpone the decision. The plague needs treatment, and those you release still need the strength to leave. Further decisions follow the available options and the visitors' current condition.</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>The sick stay</RHAH_Suiyin_N007Quarantine_Label>
   <RHAH_Suiyin_N007Quarantine_Text>The sick stay for now. They still need care. A sentence telling them not to leave is not care.</RHAH_Suiyin_N007Quarantine_Text>
   <RHAH_Suiyin_N007Release_Label>On the road again</RHAH_Suiyin_N007Release_Label>

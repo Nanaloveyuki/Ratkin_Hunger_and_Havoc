@@ -407,7 +407,7 @@ namespace HungerAndHavoc.Incidents
 
         internal static bool ShowsJoin(string displayId, bool present)
         {
-            return present && OffersBatchControl(displayId);
+            return present && (OffersBatchControl(displayId) || displayId == "I-032" || displayId == "I-046");
         }
 
         internal static bool ShowsEnslave(bool ideologyActive, bool recruitable)

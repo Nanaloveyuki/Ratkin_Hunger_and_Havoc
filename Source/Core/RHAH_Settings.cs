@@ -110,7 +110,6 @@ namespace HungerAndHavoc.Core
         public int plagueSpreadDayInterval = 3;
         public int plagueSpreadHour = 6;
         public float plagueBloodPumpingSkipPercent = 120f;
-        public bool plagueQuarantineBlocksJoin = true;
         public bool plagueReturnEnabled = true;
         public int plagueReturnDelayDays = 15;
         public int plagueReturnStayDays = 1;
@@ -368,7 +367,6 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref plagueSpreadDayInterval, "plagueSpreadDayInterval", 3);
             Scribe_Values.Look(ref plagueSpreadHour, "plagueSpreadHour", 6);
             Scribe_Values.Look(ref plagueBloodPumpingSkipPercent, "plagueBloodPumpingSkipPercent", 120f);
-            Scribe_Values.Look(ref plagueQuarantineBlocksJoin, "plagueQuarantineBlocksJoin", true);
             Scribe_Values.Look(ref plagueReturnEnabled, "plagueReturnEnabled", true);
             Scribe_Values.Look(ref plagueReturnDelayDays, "plagueReturnDelayDays", 15);
             Scribe_Values.Look(ref plagueReturnStayDays, "plagueReturnStayDays", 1);

@@ -145,8 +145,6 @@
   <RHAH_Settings_PlagueHour_Tooltip>每天的这个钟点检查传播。0 到 23，默认 6 点。</RHAH_Settings_PlagueHour_Tooltip>
   <RHAH_Settings_PlagueBlood>血液泵送达到 {0}% 时不感染</RHAH_Settings_PlagueBlood>
   <RHAH_Settings_PlagueBlood_Tooltip>血液泵送不低于这个百分比的人不会被传染。0 到 300，默认 120。</RHAH_Settings_PlagueBlood_Tooltip>
-  <RHAH_Settings_PlagueQuarantine>检疫中不能加入、雇佣或买卖</RHAH_Settings_PlagueQuarantine>
-  <RHAH_Settings_PlagueQuarantine_Tooltip>关闭后，还在检疫的来客可以加入、被雇佣或被交易。</RHAH_Settings_PlagueQuarantine_Tooltip>
   <RHAH_Settings_PlagueReturn>允许康复者回来</RHAH_Settings_PlagueReturn>
   <RHAH_Settings_PlagueReturn_Tooltip>关闭后，离开后康复的人不再回来探望。</RHAH_Settings_PlagueReturn_Tooltip>
   <RHAH_Settings_PlagueDelay>康复后多久回来：{0} 天</RHAH_Settings_PlagueDelay>
@@ -509,8 +507,7 @@
   <RHAH_Choice_Ally>发配到{0}</RHAH_Choice_Ally>
   <RHAH_Choice_NoAlly>没有可以接收他们的盟友派系。</RHAH_Choice_NoAlly>
   <RHAH_Choice_AllySent>已安排{0}人前往{1}。他们实际离图后才转入盟友派系，不会直接出现在对方据点里。好感按原版救治与离图条件结算。</RHAH_Choice_AllySent>
-  <RHAH_Choice_Quarantine>检疫中的来客不能加入、雇佣或转移。</RHAH_Choice_Quarantine>
-  <RHAH_Choice_NoCustodyTarget>没有可转换的来客。检疫中、精神失常、已不再是在场来客，或不允许囚禁的来客不能转换。</RHAH_Choice_NoCustodyTarget>
+  <RHAH_Choice_NoCustodyTarget>没有可转换的来客。精神失常、已不再是在场来客，或不允许囚禁的来客不能转换。</RHAH_Choice_NoCustodyTarget>
   <RHAH_Choice_NoPresent>操作时没有在场的来客可转换。</RHAH_Choice_NoPresent>
   <RHAH_Choice_NoRecruit>没有来客允许收留、雇佣或加入殖民地。</RHAH_Choice_NoRecruit>
   <RHAH_Choice_NoTransfer>没有来客同时允许转移和离图。</RHAH_Choice_NoTransfer>

@@ -13,17 +13,6 @@ namespace HungerAndHavoc.Identity
         static readonly List<PlagueWatchEntry> watchEntries = new List<PlagueWatchEntry>();
 
 
-        internal static bool IsQuarantined(Verse.Pawn pawn)
-        {
-            if (pawn == null)
-            {
-                return false;
-            }
-
-            Map map = pawn.MapHeld ?? pawn.Map;
-            MapComponent_RHAH_Map component = map?.GetComponent<MapComponent_RHAH_Map>();
-            return component != null && component.IsQuarantined(pawn.thingIDNumber);
-        }
 
         internal static void TickMap(MapComponent_RHAH_Map component, Map map)
         {

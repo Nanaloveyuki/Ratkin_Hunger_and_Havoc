@@ -881,7 +881,6 @@ namespace HungerAndHavoc.Pawn.Compat
             string blood = Buffer(weightBuffers, "plague-blood", settings.plagueBloodPumpingSkipPercent, "0");
             settings.plagueBloodPumpingSkipPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PlagueBlood".Translate(settings.plagueBloodPumpingSkipPercent.ToString("0")), settings.plagueBloodPumpingSkipPercent, ref blood, 0f, 300f, "0", "RHAH_Settings_PlagueBlood_Tooltip".Translate());
             weightBuffers["plague-blood"] = blood;
-            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_PlagueQuarantine".Translate(), ref settings.plagueQuarantineBlocksJoin, "RHAH_Settings_PlagueQuarantine_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_PlagueReturn".Translate(), ref settings.plagueReturnEnabled, "RHAH_Settings_PlagueReturn_Tooltip".Translate());
             string delay = Buffer(weightBuffers, "plague-delay", settings.plagueReturnDelayDays, "0");
             settings.plagueReturnDelayDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PlagueDelay".Translate(settings.plagueReturnDelayDays), settings.plagueReturnDelayDays, ref delay, 0f, 60f, "0", "RHAH_Settings_PlagueDelay_Tooltip".Translate());
@@ -894,7 +893,6 @@ namespace HungerAndHavoc.Pawn.Compat
         static IEnumerable<MenuSearchEntry> SearchPlague()
         {
             yield return Entry("plague-enabled", "RHAH_Settings_Plague");
-            yield return Entry("plague-return", "RHAH_Settings_PlagueReturn");
         }
 
 

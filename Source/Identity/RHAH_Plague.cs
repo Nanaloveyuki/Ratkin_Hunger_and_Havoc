@@ -211,22 +211,6 @@ namespace HungerAndHavoc.Identity
             return false;
         }
 
-        internal static bool BlocksGate(RHAH_BehaviorGate gate, bool quarantined, bool blockJoin)
-        {
-            if (!quarantined || !blockJoin)
-            {
-                return false;
-            }
-
-            return gate == RHAH_BehaviorGate.JoinColony ||
-                   gate == RHAH_BehaviorGate.Hire ||
-                   gate == RHAH_BehaviorGate.Transfer;
-        }
-
-        internal static bool BlocksGate(RHAH_BehaviorGate gate, bool quarantined)
-        {
-            return BlocksGate(gate, quarantined, true);
-        }
 
         internal static int ChooseReturn(int alreadyReturnedLoadId, IList<int> recoveredLoadIds)
         {

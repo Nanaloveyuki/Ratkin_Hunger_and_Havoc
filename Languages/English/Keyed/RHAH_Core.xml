@@ -145,8 +145,6 @@
   <RHAH_Settings_PlagueHour_Tooltip>The hour of day when spread is checked. 0 to 23, default 6.</RHAH_Settings_PlagueHour_Tooltip>
   <RHAH_Settings_PlagueBlood>Blood pumping of {0}% prevents infection</RHAH_Settings_PlagueBlood>
   <RHAH_Settings_PlagueBlood_Tooltip>A person at or above this blood pumping is not infected. 0 to 300, default 120.</RHAH_Settings_PlagueBlood_Tooltip>
-  <RHAH_Settings_PlagueQuarantine>Quarantine blocks joining, hiring, and trade</RHAH_Settings_PlagueQuarantine>
-  <RHAH_Settings_PlagueQuarantine_Tooltip>A visitor still in quarantine can join, be hired, or be traded.</RHAH_Settings_PlagueQuarantine_Tooltip>
   <RHAH_Settings_PlagueReturn>Allow recovered visitors to return</RHAH_Settings_PlagueReturn>
   <RHAH_Settings_PlagueReturn_Tooltip>Someone who left and recovered does not come back.</RHAH_Settings_PlagueReturn_Tooltip>
   <RHAH_Settings_PlagueDelay>Days before a return: {0}</RHAH_Settings_PlagueDelay>
@@ -509,8 +507,7 @@
   <RHAH_Choice_Ally>Send to {0}</RHAH_Choice_Ally>
   <RHAH_Choice_NoAlly>No allied faction can take them.</RHAH_Choice_NoAlly>
   <RHAH_Choice_AllySent>{0} visitors have been told to travel to {1}. They join that faction only after leaving the map and do not appear at its settlement. Goodwill follows the vanilla treatment and departure rules.</RHAH_Choice_AllySent>
-  <RHAH_Choice_Quarantine>Visitors in quarantine cannot join, be hired, or be transferred.</RHAH_Choice_Quarantine>
-  <RHAH_Choice_NoCustodyTarget>No visitors can be converted. Visitors in quarantine, in a mental state, no longer present, or who do not permit imprisonment cannot be converted.</RHAH_Choice_NoCustodyTarget>
+  <RHAH_Choice_NoCustodyTarget>No visitors can be converted. Visitors in a mental state, no longer present, or who do not permit imprisonment cannot be converted.</RHAH_Choice_NoCustodyTarget>
   <RHAH_Choice_NoPresent>No visitors were present when the action was taken.</RHAH_Choice_NoPresent>
   <RHAH_Choice_NoRecruit>No visitor permits being taken in, hired, or joining the colony.</RHAH_Choice_NoRecruit>
   <RHAH_Choice_NoTransfer>No visitor permits both transfer and departure.</RHAH_Choice_NoTransfer>

@@ -72,7 +72,7 @@
   <RHAH_Quarantine_Defer>先不处理</RHAH_Quarantine_Defer>
   <RHAH_Quarantine_Stale>这批病人已经不能再作这个选择。</RHAH_Quarantine_Stale>
   <RHAH_Suiyin_N007Choice_Label>来客得了鼠疫</RHAH_Suiyin_N007Choice_Label>
-  <RHAH_Suiyin_N007Choice_Text>来客中有人得了鼠疫。有人还撑着走路，有人已经需要照料。\n\n可以留下观察，也可以放他们走，或者暂不决定。鼠疫需要治疗，放行的人也得有力气才能走。加入、雇佣和买卖是否受限，取决于检疫设置。</RHAH_Suiyin_N007Choice_Text>
+  <RHAH_Suiyin_N007Choice_Text>来客中有人得了鼠疫。有人还撑着走路，有人已经需要照料。\n\n可以留下观察，也可以放他们走，或者暂不决定。鼠疫需要治疗，放行的人也得有力气才能走。之后的处置按当前选项和来客状态决定。</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>病人暂时留下</RHAH_Suiyin_N007Quarantine_Label>
   <RHAH_Suiyin_N007Quarantine_Text>病人暂时留下了。这里还需要照料，不能只靠一句不许走。</RHAH_Suiyin_N007Quarantine_Text>
   <RHAH_Suiyin_N007Release_Label>继续赶路</RHAH_Suiyin_N007Release_Label>

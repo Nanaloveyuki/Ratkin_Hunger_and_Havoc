@@ -145,8 +145,6 @@
   <RHAH_Settings_PlagueHour_Tooltip>1日のうち、この時刻に感染拡大を判定します。範囲は0～23、初期値は6時。</RHAH_Settings_PlagueHour_Tooltip>
   <RHAH_Settings_PlagueBlood>血液循環が{0}%以上なら感染しない</RHAH_Settings_PlagueBlood>
   <RHAH_Settings_PlagueBlood_Tooltip>血液循環がこの割合以上の人は感染しません。範囲は0～300、初期値は120。</RHAH_Settings_PlagueBlood_Tooltip>
-  <RHAH_Settings_PlagueQuarantine>検疫中は加入・雇用・売買を禁止</RHAH_Settings_PlagueQuarantine>
-  <RHAH_Settings_PlagueQuarantine_Tooltip>オフにすると、まだ検疫中の訪問者も加入、雇用、売買の対象にできます。</RHAH_Settings_PlagueQuarantine_Tooltip>
   <RHAH_Settings_PlagueReturn>回復者の再訪を許可</RHAH_Settings_PlagueReturn>
   <RHAH_Settings_PlagueReturn_Tooltip>オフにすると、立ち去った後で回復した訪問者は戻ってこなくなります。</RHAH_Settings_PlagueReturn_Tooltip>
   <RHAH_Settings_PlagueDelay>回復後の再訪まで：{0}日</RHAH_Settings_PlagueDelay>
@@ -507,8 +505,7 @@
   <RHAH_Choice_Ally>{0}へ送る</RHAH_Choice_Ally>
   <RHAH_Choice_NoAlly>受け入れ可能な同盟派閥がありません。</RHAH_Choice_NoAlly>
   <RHAH_Choice_AllySent>{0}人を{1}へ送る手配をしました。実際にマップを離れてから同盟派閥に所属します。相手の拠点に直接出現するわけではありません。友好度はバニラの治療と退去の条件に従って計算されます。</RHAH_Choice_AllySent>
-  <RHAH_Choice_Quarantine>検疫中の訪問者は加入、雇用、移送ができません。</RHAH_Choice_Quarantine>
-  <RHAH_Choice_NoCustodyTarget>身分を変更できる訪問者がいません。検疫中、精神崩壊中、すでにその場の訪問者ではない、または拘禁を許可されていない訪問者は変更できません。</RHAH_Choice_NoCustodyTarget>
+  <RHAH_Choice_NoCustodyTarget>身分を変更できる訪問者がいません。精神崩壊中、すでにその場の訪問者ではない、または拘禁を許可されていない訪問者は変更できません。</RHAH_Choice_NoCustodyTarget>
   <RHAH_Choice_NoPresent>操作時、その場に身分を変更できる訪問者がいませんでした。</RHAH_Choice_NoPresent>
   <RHAH_Choice_NoRecruit>受け入れ、雇用、コロニーへの加入が許可されている訪問者はいません。</RHAH_Choice_NoRecruit>
   <RHAH_Choice_NoTransfer>移送とマップからの退去が両方許可されている訪問者はいません。</RHAH_Choice_NoTransfer>

@@ -32,18 +32,6 @@ namespace HungerAndHavoc.Tests
             Assert.True(RHAH_Plague.SkipsBloodPumping(120f));
         }
 
-        [Fact]
-        public void Quarantine_BlocksOnlyJoinHireTransfer()
-        {
-            List<int> ids = new List<int> { 7 };
-            Assert.True(RHAH_Plague.IsQuarantined(ids, 7));
-            Assert.False(RHAH_Plague.IsQuarantined(ids, 8));
-            Assert.True(RHAH_Plague.BlocksGate(RHAH_BehaviorGate.JoinColony, true));
-            Assert.True(RHAH_Plague.BlocksGate(RHAH_BehaviorGate.Hire, true));
-            Assert.True(RHAH_Plague.BlocksGate(RHAH_BehaviorGate.Transfer, true));
-            Assert.False(RHAH_Plague.BlocksGate(RHAH_BehaviorGate.Beg, true));
-            Assert.False(RHAH_Plague.BlocksGate(RHAH_BehaviorGate.JoinColony, false));
-        }
 
         [Fact]
         public void Resolve_CountsOnlyCureAndDeathWhileSick()

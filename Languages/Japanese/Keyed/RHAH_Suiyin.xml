@@ -72,7 +72,7 @@
   <RHAH_Quarantine_Defer>判断を保留する</RHAH_Quarantine_Defer>
   <RHAH_Quarantine_Stale>この患者たちには、もうこの選択を行えません。</RHAH_Quarantine_Stale>
   <RHAH_Suiyin_N007Choice_Label>訪問者がペストに感染</RHAH_Suiyin_N007Choice_Label>
-  <RHAH_Suiyin_N007Choice_Text>訪問者の中にペストにかかった人がいる。まだ何とか歩いている人もいれば、もう介護が必要な人もいる。\n\n留めて経過を見ることも、行かせることも、ひとまず判断を保留することもできる。ペストには治療が必要だし、解放しても歩けるだけの体力がなければ出発できない。加入、雇用、売買が制限されるかどうかは、検疫の設定による。</RHAH_Suiyin_N007Choice_Text>
+  <RHAH_Suiyin_N007Choice_Text>訪問者の中にペストにかかった人がいる。まだ何とか歩いている人もいれば、もう介護が必要な人もいる。\n\n留めて経過を見ることも、行かせることも、ひとまず判断を保留することもできる。ペストには治療が必要だし、解放しても歩けるだけの体力がなければ出発できない。その後の扱いは、選べる行動と訪問者の状態で決まる。</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>患者はひとまず残る</RHAH_Suiyin_N007Quarantine_Label>
   <RHAH_Suiyin_N007Quarantine_Text>患者たちはひとまず残った。ここでも世話は必要だ。「出ていくな」と言うだけでは済まない。</RHAH_Suiyin_N007Quarantine_Text>
   <RHAH_Suiyin_N007Release_Label>旅を続ける</RHAH_Suiyin_N007Release_Label>

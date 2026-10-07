@@ -28,9 +28,9 @@
 
 `RHAH_BehaviorGate`：Beg, Steal, Fight, LeaveAfterFed, EatOutsideRelief, FeedFromRelief, Gnaw, TailBite, Leash, Carry, JoinColony, Hire, Transfer, Imprison, DropOffChild, ExitMap。
 
-`Hire` 与 `Transfer` 默认允许。检疫名单上的 pawn，`JoinColony`、`Hire`、`Transfer` 为 false，覆盖和行为策略不能放开这三项。
+`Hire` 与 `Transfer` 默认允许。行为闸门只受 Pawn 覆盖、行为策略和默认角色规则影响。
 
-判定顺序：该 pawn 的 `gateOverrides` → `IRHAH_PawnBehavior`（后注册优先）→ `RHAH_PawnDefaults`。无来源标记时 `Allows` 为 false。检疫拒绝发生在这三层之后。
+判定顺序：该 pawn 的 `gateOverrides` → `IRHAH_PawnBehavior`（后注册优先）→ `RHAH_PawnDefaults`。无来源标记时 `Allows` 为 false。
 
 玩法必须问对应闸门，不能只看设置或角色：
 
@@ -38,7 +38,7 @@
 - `DropOffChild`：母亲离场放下孩子。设置 `familyDropEnabled` 仍可整项关闭
 - `TailBite`：囚犯咬幼年尾巴。默认关闭，设置或单只覆盖打开后才执行
 - `Imprison`：原版俘虏进玩家囚犯名单前调用 `ReleaseToColony(Imprisoned)`。关闸或释放策略拒绝时不捕获、不拆 Lord。选择信的俘虏与奴役也问此闸门，不借用 Hire / JoinColony
-- `Transfer`：原版交易把来客卖出或买进玩家派系。关闸后这笔角色交易不成交。检疫同样拒绝
+- `Transfer`：原版交易把来客卖出或买进玩家派系。关闸后这笔角色交易不成交
 - `Leash`：只公开查询和覆盖。牵引适配以后再接，当前没有玩法消费它
 
 `IRHAH_PawnBehavior`：
@@ -85,7 +85,7 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 
 `ReleaseToColony` 必须拆 Lord、清 duty、停访客 JobGiver。标记 Hediff 保留。
 
-选择信的拘捕原地转为囚犯并施加原版麻醉 12 小时，不要求囚室。只处理本图、本批仍活动且允许 Imprison 的访客。麻醉复用已有原版实例或添加新实例，将严重度重置为 1、消失时限设为 30000 tick、每日衰减设为 -0.2；不添加重复组件，存读沿用原版字段。奴役原地转换，要求 Ideology，按原版清隐藏原派系并解锁衣物；转换成功后反抗意志 will 强制为 0。两者排除玩家派系、已有囚犯或奴隶、精神状态和检疫来客；倒地不单独禁止。混合批次仅转换合格成员，其余原状。至少实际成功一人才结算；全部失败保留信和窗口，点击时重新检查资格。转换不搬运、不瞬移、不发押送 Job；之后越狱和解放继续走原版。奴役历史事件记录受害者，不伪造执行者的个人戒律记录。招募和加入检查 JoinColony，雇佣检查 Hire，攻击只检查在场；关闭雇佣和加入闸门不等于检疫，也不阻止攻击。检疫加入限制尊重 plagueQuarantineBlocksJoin 开关。
+选择信的拘捕原地转为囚犯并施加原版麻醉 12 小时，不要求囚室。只处理本图、本批仍活动且允许 Imprison 的访客。麻醉复用已有原版实例或添加新实例，将严重度重置为 1、消失时限设为 30000 tick、每日衰减设为 -0.2；不添加重复组件，存读沿用原版字段。奴役原地转换，要求 Ideology，按原版清隐藏原派系并解锁衣物；转换成功后反抗意志 will 强制为 0。两者排除玩家派系、已有囚犯或奴隶和精神状态；倒地与鼠疫观察名单不单独禁止。混合批次仅转换合格成员，其余原状。至少实际成功一人才结算；全部失败保留信和窗口，点击时重新检查资格。转换不搬运、不瞬移、不发押送 Job；之后越狱和解放继续走原版。奴役历史事件记录受害者，不伪造执行者的个人戒律记录。招募和加入检查 JoinColony，雇佣检查 Hire，攻击只检查在场。鼠疫不覆盖这些闸门，处置不会治愈疾病或移除观察记录。
 
 攻击使用独立入口，先将实际在场成员当前态度置为 Hostile，再问 Fight；显式攻击不受 `batchTurnsHostile` 阻止。允许 Fight 的成员转入敌对派系并保留原生命周期、访客 Lord 和 duty，不因点击攻击强制撤离，也不创建袭击 Lord；不允许 Fight 的成员仍按 `batchLeavesTogether` 决定离场。转敌对立即固定玩家双向关系并刷新现有地图攻击目标缓存，不等下一 tick。真实玩家伤害、主动驱逐与选择拒绝分开记录；只有实际伤害写 hurt，只有新增离场的主动驱逐计驱逐与信任。加入或留驻实际成功至少一人才结算，释放策略拒绝不能仍改玩家派系。盟友选项保持一个，目的地取合格盟友中最小 loadID；只登记允许 Transfer 与 ExitMap 的本图本批成员及实际人数，实际离图后才入盟友并按原版救治条件计好感。
 

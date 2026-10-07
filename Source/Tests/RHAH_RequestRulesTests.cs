@@ -177,6 +177,15 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_RequestRules.OffersVisitorControl("I-051"));
         }
 
+        [Theory]
+        [InlineData("I-032")]
+        [InlineData("I-046")]
+        public void AirdropOffersPermanentJoinOnlyWhileVisitorsArePresent(string displayId)
+        {
+            Assert.True(RHAH_RequestRules.ShowsJoin(displayId, true));
+            Assert.False(RHAH_RequestRules.ShowsJoin(displayId, false));
+        }
+
         [Fact]
         public void VisitorLettersRestoreOptionsTheOldPolicyDropped()
         {

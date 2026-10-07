@@ -129,13 +129,6 @@ namespace HungerAndHavoc.Identity
                 allowed = behavior ?? RHAH_PawnDefaults.Allows(snapshot, gate);
             }
 
-            RHAH_Settings settings = RHAH_Mod.Settings;
-            bool blockJoin = settings == null || settings.plagueQuarantineBlocksJoin;
-            if (RHAH_Plague.BlocksGate(gate, RHAH_PlagueRuntime.IsQuarantined(pawn), blockJoin))
-            {
-                allowed = false;
-            }
-
             RHAH_Api.RaiseGateQueried(pawn, snapshot, gate, allowed);
             return allowed;
         }

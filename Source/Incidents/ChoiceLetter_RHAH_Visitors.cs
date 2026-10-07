@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
-using HungerAndHavoc.Identity;
 using HungerAndHavoc.Pawn;
 using RimWorld;
 using Verse;
@@ -27,21 +26,20 @@ namespace HungerAndHavoc.Incidents
                 }
 
                 List<Verse.Pawn> present = RHAH_ChoiceRuntime.Present(record);
-                bool quarantine = Quarantined(present);
                 string displayId = record.DisplayId;
                 if (RHAH_RequestRules.ShowsRecruit(displayId, true))
                 {
-                    yield return Gated("RHAH_Choice_Recruit", RHAH_ChoiceAction.Recruit, HasAllowed(present, RHAH_BehaviorGate.JoinColony), quarantine, durationDays: StayDays(false));
+                    yield return Gated("RHAH_Choice_Recruit", RHAH_ChoiceAction.Recruit, HasAllowed(present, RHAH_BehaviorGate.JoinColony), durationDays: StayDays(false));
                 }
 
                 if (RHAH_RequestRules.ShowsJoin(displayId, true) || choice == RHAH_ChoiceKind.Abandoned || choice == RHAH_ChoiceKind.Kinship)
                 {
-                    yield return Gated("RHAH_Choice_Join", RHAH_ChoiceAction.Join, HasAllowed(present, RHAH_BehaviorGate.JoinColony), quarantine);
+                    yield return Gated("RHAH_Choice_Join", RHAH_ChoiceAction.Join, HasAllowed(present, RHAH_BehaviorGate.JoinColony));
                 }
 
                 if (RHAH_RequestRules.ShowsHire(displayId, true))
                 {
-                    yield return Gated("RHAH_Choice_Hire", RHAH_ChoiceAction.Hire, HasAllowed(present, RHAH_BehaviorGate.Hire), quarantine, durationDays: StayDays(true));
+                    yield return Gated("RHAH_Choice_Hire", RHAH_ChoiceAction.Hire, HasAllowed(present, RHAH_BehaviorGate.Hire), durationDays: StayDays(true));
                 }
                 if (RHAH_RequestRules.ShowsFoodGive(choice))
                 {
@@ -55,25 +53,24 @@ namespace HungerAndHavoc.Incidents
                         "RHAH_Choice_Enslave",
                         RHAH_ChoiceAction.Enslave,
                         ideology && RHAH_VisitorBatch.HasEligible(present, record.MapId, true),
-                        false,
-                        ideology ? "RHAH_Choice_NoCustodyTarget" : "RHAH_Choice_NoIdeology");
+                        emptyKey: ideology ? "RHAH_Choice_NoCustodyTarget" : "RHAH_Choice_NoIdeology");
                 }
 
                 if (RHAH_RequestRules.ShowsCapture(true))
                 {
                     yield return Gated("RHAH_Choice_Capture", RHAH_ChoiceAction.Capture,
-                        RHAH_VisitorBatch.HasEligible(present, record.MapId, false), false, "RHAH_Choice_NoCustodyTarget");
+                        RHAH_VisitorBatch.HasEligible(present, record.MapId, false), "RHAH_Choice_NoCustodyTarget");
                 }
 
                 if (RHAH_RequestRules.ShowsAttack(true))
                 {
-                    yield return Gated("RHAH_Choice_Attack", RHAH_ChoiceAction.Attack, present.Count > 0, false, "RHAH_Choice_NoPresent");
+                    yield return Gated("RHAH_Choice_Attack", RHAH_ChoiceAction.Attack, present.Count > 0, "RHAH_Choice_NoPresent");
                 }
 
 
                 if (RHAH_RequestRules.ShowsAlly(present.Count > 0, RHAH_ChoiceRuntime.HasAllyDestination()))
                 {
-                    yield return AllyOption(present, quarantine);
+                    yield return AllyOption(present);
                 }
                 yield return Action("RHAH_Choice_Reject", RHAH_ChoiceAction.Reject);
                 yield return Action("RHAH_Choice_Ignore", RHAH_ChoiceAction.Ignore);
@@ -93,17 +90,12 @@ namespace HungerAndHavoc.Incidents
             Scribe_Values.Look(ref choice, "choice", RHAH_ChoiceKind.Visitors);
         }
 
-        DiaOption AllyOption(List<Verse.Pawn> present, bool quarantine)
+        DiaOption AllyOption(List<Verse.Pawn> present)
         {
             RimWorld.Faction faction = RHAH_ChoiceRuntime.AllyDestination();
             string name = faction == null ? string.Empty : faction.Name;
             string label = "RHAH_Choice_Ally".Translate(name).ToString();
             DiaOption option = new DiaOption(label);
-            if (quarantine)
-            {
-                option.Disable("RHAH_Choice_Quarantine".Translate());
-                return option;
-            }
 
             if (faction == null)
             {
@@ -121,15 +113,10 @@ namespace HungerAndHavoc.Incidents
             return option;
         }
 
-        DiaOption Gated(string key, RHAH_ChoiceAction action, bool allowed, bool quarantine, string emptyKey = "RHAH_Choice_NoRecruit", int durationDays = 0)
+        DiaOption Gated(string key, RHAH_ChoiceAction action, bool allowed, string emptyKey = "RHAH_Choice_NoRecruit", int durationDays = 0)
         {
             string label = durationDays > 0 ? key.Translate(RHAH_VisitorRules.StayLabel(durationDays)).ToString() : key.Translate().ToString();
             DiaOption option = new DiaOption(label);
-            if (quarantine && action != RHAH_ChoiceAction.Attack && action != RHAH_ChoiceAction.Reject)
-            {
-                option.Disable("RHAH_Choice_Quarantine".Translate());
-                return option;
-            }
 
             if (!allowed)
             {
@@ -163,7 +150,7 @@ namespace HungerAndHavoc.Incidents
 
         DiaOption Action(string key, RHAH_ChoiceAction action)
         {
-            return Gated(key, action, true, false);
+            return Gated(key, action, true);
         }
 
         bool Settle(RHAH_ChoiceAction action)
@@ -238,10 +225,6 @@ namespace HungerAndHavoc.Incidents
             if (action == RHAH_ChoiceAction.Join || action == RHAH_ChoiceAction.Hire ||
                 action == RHAH_ChoiceAction.Recruit || action == RHAH_ChoiceAction.Ally)
             {
-                if (Quarantined(present))
-                {
-                    return "RHAH_Choice_Quarantine";
-                }
 
                 RHAH_BehaviorGate gate = action == RHAH_ChoiceAction.Join || action == RHAH_ChoiceAction.Recruit
                     ? RHAH_BehaviorGate.JoinColony
@@ -299,23 +282,6 @@ namespace HungerAndHavoc.Incidents
             return false;
         }
 
-        static bool Quarantined(List<Verse.Pawn> pawns)
-        {
-            if (RHAH_Mod.Settings != null && !RHAH_Mod.Settings.plagueQuarantineBlocksJoin)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                if (RHAH_PlagueRuntime.IsQuarantined(pawns[i]))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
 
 
         RHAH_ChoiceRecord FindRecord()

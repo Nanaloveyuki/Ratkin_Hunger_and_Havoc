@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
-using HungerAndHavoc.Identity;
 using RimWorld;
 using Verse;
 
@@ -29,7 +28,6 @@ namespace HungerAndHavoc.Pawn
                 pawn.guest == null || pawn.Map == null || pawn.Map.uniqueID != mapId ||
                 !RHAH_Api.IsVisitor(pawn) || pawn.Faction == Faction.OfPlayer ||
                 pawn.IsPrisoner || pawn.IsSlave || pawn.InMentalState ||
-                RHAH_PlagueRuntime.IsQuarantined(pawn) ||
                 !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Imprison))
             {
                 return false;
