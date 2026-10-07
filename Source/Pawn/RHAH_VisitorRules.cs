@@ -25,6 +25,9 @@ namespace HungerAndHavoc.Pawn
         internal const float DefaultMinGeneratedAge = 0f;
         internal const float DefaultMaxGeneratedAge = 50f;
         internal const float MaxGeneratedAge = 100f;
+        internal const float MinMotherAge = 1f;
+        internal const float DefaultMotherMinAge = 14f;
+        internal const float MaxMotherAge = 14f;
         internal const int MinFedWanderHours = 1;
         internal const int DefaultFedWanderHours = 12;
         internal const int MaxFedWanderHours = 48;
@@ -198,7 +201,8 @@ namespace HungerAndHavoc.Pawn
             float minAge,
             float maxAge,
             float roll,
-            bool youngFollowsRange)
+            bool youngFollowsRange,
+            float motherMinAge = DefaultMotherMinAge)
         {
             if (fixedAge.HasValue)
             {
@@ -212,7 +216,20 @@ namespace HungerAndHavoc.Pawn
 
             float lower = ClampAge(float.IsNaN(minAge) ? DefaultMinGeneratedAge : minAge);
             float upper = ClampAge(float.IsNaN(maxAge) ? DefaultMaxGeneratedAge : maxAge);
-            if (upper < lower)
+            if (IsMotherRole(role))
+            {
+                float mother = ClampMotherAge(motherMinAge);
+                if (lower < mother)
+                {
+                    lower = mother;
+                }
+
+                if (upper < lower)
+                {
+                    upper = lower;
+                }
+            }
+            else if (upper < lower)
             {
                 float swap = lower;
                 lower = upper;
@@ -222,6 +239,26 @@ namespace HungerAndHavoc.Pawn
             float span = upper - lower;
             float safeRoll = roll < 0f || float.IsNaN(roll) ? 0f : roll > 1f ? 1f : roll;
             return lower + span * safeRoll;
+        }
+
+        internal static bool IsMotherRole(RHAH_PawnRole role)
+        {
+            return role == RHAH_PawnRole.Mother || role == RHAH_PawnRole.BeggarMother;
+        }
+
+        internal static float ClampMotherAge(float years)
+        {
+            if (float.IsNaN(years) || float.IsInfinity(years))
+            {
+                return DefaultMotherMinAge;
+            }
+
+            if (years < MinMotherAge)
+            {
+                return MinMotherAge;
+            }
+
+            return years > MaxMotherAge ? MaxMotherAge : years;
         }
 
         internal static float? WalkingAgeFloor(float? age, bool toddlersActive, bool allowImmobileBabies)

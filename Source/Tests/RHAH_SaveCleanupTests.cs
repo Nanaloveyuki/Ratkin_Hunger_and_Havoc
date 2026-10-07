@@ -87,6 +87,42 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void InterceptionExportKeepsColonistsAndRetainedCaravanData()
+        {
+            XDocument document = XDocument.Parse(@"<savegame><game>
+<world><worldObjects><worldObjects>
+<li Class=""RimWorld.Planet.CaravansBattlefield""><def>AttackedNonPlayerCaravan</def><ID>91</ID></li>
+<li Class=""HungerAndHavoc.Incidents.WorldObject_RHAH_Approach""><def>RHAH_Approach</def><ID>92</ID></li>
+</worldObjects></worldObjects></world>
+<maps><li><mapInfo><parent>WorldObject_91</parent></mapInfo><generatorDef>Encounter</generatorDef>
+<retainedCaravanData><name>Homeward</name><outfits><li>Outfit_2</li></outfits></retainedCaravanData>
+<components><li Class=""HungerAndHavoc.Core.MapComponent_RHAH_Map"" /></components>
+<things>
+<li Class=""Verse.Pawn""><def>Human</def><id>100</id><kindDef>Colonist</kindDef><faction>Faction_1</faction></li>
+<li Class=""Verse.Pawn""><def>Ratkin</def><id>101</id><kindDef>RHAH_PawnKind_Ratkin</kindDef>
+<healthTracker><hediffSet><hediffs><li><def>RHAH_HungerMark</def></li></hediffs></hediffSet></healthTracker></li>
+</things>
+<lordManager><lords><li><loadID>3</loadID><lordJob Class=""HungerAndHavoc.Pawn.LordJob_RHAH_Visitor"" /></li></lords></lordManager>
+</li></maps></game></savegame>");
+            XElement map = document.Descendants("maps").Single().Element("li");
+            string colonist = Pawn(document, "100").ToString();
+            string retained = map.Element("retainedCaravanData").ToString();
+
+            new RHAH_SaveCleanup(Plan()).Clean(document);
+
+            Assert.Equal("RimWorld.Planet.CaravansBattlefield", (string)WorldObject(document, "91").Attribute("Class"));
+            Assert.Equal("AttackedNonPlayerCaravan", (string)WorldObject(document, "91").Element("def"));
+            Assert.Equal("WorldObject_91", (string)map.Element("mapInfo").Element("parent"));
+            Assert.Equal("Encounter", (string)map.Element("generatorDef"));
+            Assert.Equal(colonist, Pawn(document, "100").ToString());
+            Assert.Equal(retained, map.Element("retainedCaravanData").ToString());
+            Assert.Equal("RatkinColonist", (string)Pawn(document, "101").Element("kindDef"));
+            Assert.Null(FindBareId(document, "92"));
+            Assert.Empty(map.Element("components").Elements());
+            Assert.Empty(map.Element("lordManager").Element("lords").Elements());
+        }
+
+        [Fact]
         public void SecondPassDoesNotChangeTheDocument()
         {
             RHAH_SaveCleanup first = new RHAH_SaveCleanup(Plan());

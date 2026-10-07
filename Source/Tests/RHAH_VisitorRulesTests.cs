@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Identity;
 using HungerAndHavoc.Incidents;
+using HungerAndHavoc.Core;
 using HungerAndHavoc.Pawn;
 using Xunit;
 
@@ -24,11 +25,26 @@ namespace HungerAndHavoc.Tests
         {
             Assert.Equal(12f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Beggar, null, 10f, 20f, 0.2f, false));
             Assert.Equal(1.5f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, 1.5f, 20f, 40f, 1f, false));
-            Assert.Equal((float?)0f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, null, 0f, 10f, 0f, true));
-            Assert.Equal((float?)0f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.BeggarMother, null, 0f, 50f, 0f, true));
+            Assert.Equal(14f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, null, 0f, 10f, 0f, true));
+            Assert.Equal(14f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.BeggarMother, null, 0f, 50f, 0f, true));
             Assert.Equal((float?)28f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, 28f, 0f, 10f, 0f, true));
             Assert.Equal(24f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, null, 20f, 40f, 0.2f, true));
             Assert.Equal((float?)3.78f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, null, 20f, 40f, 0.2f, false));
+        }
+
+        [Fact]
+        public void MotherAgeUsesItsFloorWithoutChangingYoungRoles()
+        {
+            Assert.Equal(1f, RHAH_VisitorRules.ClampMotherAge(1f));
+            Assert.Equal(14f, RHAH_VisitorRules.ClampMotherAge(40f));
+            Assert.Equal(14f, RHAH_VisitorRules.ClampMotherAge(float.NaN));
+            Assert.Equal(1f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, null, 0f, 50f, 0f, false, 1f));
+            Assert.Equal(50f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.BeggarMother, null, 0f, 50f, 1f, false, 1f));
+            Assert.Equal(14f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, null, 0f, 10f, 1f, false, 14f));
+            Assert.Equal(20f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.BeggarMother, null, 20f, 40f, 0f, false, 1f));
+            Assert.Equal(12f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Beggar, null, 10f, 20f, 0.2f, false, 14f));
+            Assert.Equal((float?)3.78f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.RatkinYoung, null, 0f, 50f, 0.2f, false, 14f));
+            Assert.Equal(28f, RHAH_VisitorRules.GenerationAge(RHAH_PawnRole.Mother, 28f, 0f, 10f, 0f, false, 14f));
         }
 
         [Fact]

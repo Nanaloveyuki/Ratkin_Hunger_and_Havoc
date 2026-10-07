@@ -29,9 +29,11 @@
   <RHAH_Settings_FoodWait_Tooltip>食べ物が見つからない時に待つ時間の上限です。範囲は0～5日、初期値は半日。</RHAH_Settings_FoodWait_Tooltip>
   <RHAH_Settings_MinAge>訪問者の最低年齢：{0}</RHAH_Settings_MinAge>
   <RHAH_Settings_MaxAge>訪問者の最高年齢：{0}</RHAH_Settings_MaxAge>
-  <RHAH_Settings_Age_Tooltip>通常の訪問者の年齢をこの範囲に設定します。設定範囲は0～100歳、初期値は0～50歳。母親の年齢はイベントの指定に従います。ラットキンの子供は、下のスイッチをオンにしない限り、子供用の年齢を使用します。</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_Age_Tooltip>通常の訪問者の年齢をこの範囲に設定します。設定範囲は0～100歳、初期値は0～50歳。母親は、母親用の最低年齢を下回りません。ラットキンの子供は、下のスイッチをオンにしない限り、子供用の年齢を使用します。</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_YoungAge>ラットキンの子供にもこの年齢範囲を使用</RHAH_Settings_YoungAge>
-  <RHAH_Settings_YoungAge_Tooltip>オンにすると、ラットキンの子供にも上の年齢範囲を使います。オフの場合、物乞いの子供は生後1日～2.9歳、その他の子供は3～6.9歳です。母親の年齢はイベントの指定に従います。すでにいる訪問者は変わりません。</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_YoungAge_Tooltip>オンにすると、ラットキンの子供にも上の年齢範囲を使います。オフの場合、物乞いの子供は生後1日～2.9歳、その他の子供は3～6.9歳です。母親は、母親用の最低年齢を下回りません。すでにいる訪問者は変わりません。</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_MotherAge>母親の最低年齢：{0}</RHAH_Settings_MotherAge>
+  <RHAH_Settings_MotherAge_Tooltip>母親と物乞いの母親は、少なくともこの年齢で訪れます。範囲は1～14歳、初期値は14歳。通常の最低年齢の方が高い場合は、そちらを使います。ラットキンの子供は変わりません。すでにいる訪問者は変わりません。</RHAH_Settings_MotherAge_Tooltip>
   <RHAH_Settings_ImmobileBabies>歩けない乳幼児の訪問を許可</RHAH_Settings_ImmobileBabies>
   <RHAH_Settings_ImmobileBabies_Tooltip>Toddlersなどの幼児Modがない場合、4歳未満のラットキンの乳幼児は寝たままで、退去時は大人が抱えて連れ出す必要があります。オフにすると、ラットキンの子供は4歳以上になります。</RHAH_Settings_ImmobileBabies_Tooltip>
   <RHAH_Settings_ImmobileBabies_Toddlers>Toddlersが有効です。3歳未満でも自力で移動できます。このスイッチによる最低年齢の引き上げは行われません。</RHAH_Settings_ImmobileBabies_Toddlers>
@@ -402,6 +404,9 @@
   <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>オンにすると、被災者のキャラバンは閉じ込められた部屋から脱出するための掘削を行いません。オフの場合、マップの端にたどり着けなければ、掘って道を作り立ち去ります。</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
   <RHAH_Settings_SpaceApproach>軌道の拠点で事件を許可</RHAH_Settings_SpaceApproach>
   <RHAH_Settings_SpaceApproach_Tooltip>初期設定はオフです。オフのとき、小惑星や SOS2 の軌道船を含む軌道上の拠点には、歩いて向かうラットキンの一行は生成されず、マップ事件も抽選されません。オンにすると許可されます。すでにオデッセイの軌道層にいる一行は、シャトルの離陸を妨げません。</RHAH_Settings_SpaceApproach_Tooltip>
+  <RHAH_Approach_Intercept>ラットキンを迎撃</RHAH_Approach_Intercept>
+  <RHAH_Approach_InterceptBlocked>今はラットキンを迎撃できません</RHAH_Approach_InterceptBlocked>
+  <RHAH_Approach_InterceptFailed>迎撃マップの生成に失敗しました。ラットキンの一行はワールドマップに残ります。</RHAH_Approach_InterceptFailed>
   <RHAH_Settings_ChildExchangeFood>食べ物と子供の交換を許可</RHAH_Settings_ChildExchangeFood>
   <RHAH_Settings_ChildExchangeFood_Tooltip>オンにすると、「子を取り替えて食らう」で子供を渡す代わりに簡単な食事を渡せます。必要数は「子供1人あたりの簡単な食事」で設定します。商人が食べ物を売るわけではありません。オフの場合、この手紙では引き渡しができず、子供を渡す選択肢もありません。</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>子供を抱えて退去する時に下ろす</RHAH_Settings_FamilyDrop>

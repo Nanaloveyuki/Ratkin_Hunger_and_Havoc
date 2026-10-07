@@ -171,7 +171,8 @@ namespace HungerAndHavoc.Incidents
             float min = settings == null ? 0f : settings.minGeneratedAge;
             float max = settings == null ? 50f : settings.maxGeneratedAge;
             bool youngFollows = settings != null && settings.youngAgeFollowsRange;
-            return HungerAndHavoc.Pawn.RHAH_VisitorRules.GenerationAge(role, null, min, max, Rand.Value, youngFollows);
+            float motherMin = settings == null ? HungerAndHavoc.Pawn.RHAH_VisitorRules.DefaultMotherMinAge : settings.minMotherAge;
+            return HungerAndHavoc.Pawn.RHAH_VisitorRules.GenerationAge(role, null, min, max, Rand.Value, youngFollows, motherMin);
         }
 
 

@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Collections.Generic;
 using HungerAndHavoc.Core;
 using RimWorld;
 using RimWorld.Planet;
@@ -83,6 +84,117 @@ namespace HungerAndHavoc.Incidents
             points = incidentPoints;
             mapId = targetMapId;
             crossing = crossSea;
+        }
+
+        public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(RimWorld.Planet.Caravan caravan)
+        {
+            foreach (FloatMenuOption option in base.GetFloatMenuOptions(caravan))
+            {
+                yield return option;
+            }
+
+            if (!CanIntercept(caravan))
+            {
+                yield break;
+            }
+
+            bool canGenerate = CanGenerateInterceptionMap();
+            yield return new FloatMenuOption(canGenerate
+                ? "RHAH_Approach_Intercept".Translate()
+                : "RHAH_Approach_InterceptBlocked".Translate(),
+                canGenerate ? () => Intercept(caravan) : (Action)null);
+        }
+
+        internal bool CanIntercept(RimWorld.Planet.Caravan caravan)
+        {
+            return RHAH_Runtime.AllowsNewContent && !arriving && Spawned && !Destroyed &&
+                caravan != null && caravan.Spawned && !caravan.Destroyed && caravan.IsPlayerControlled &&
+                caravan.PawnsListForReading.Count > 0 && Tile.Valid && caravan.Tile == Tile && !SpaceLayer();
+        }
+
+        bool CanGenerateInterceptionMap()
+        {
+            if (Find.WorldObjects == null || Find.WorldGrid == null || Find.WorldObjects.AnyMapParentAt(Tile) ||
+                !Find.WorldGrid[Tile].PrimaryBiome.implemented)
+            {
+                return false;
+            }
+
+            foreach (WorldObject candidate in Find.WorldObjects.ObjectsAt(Tile))
+            {
+                if (candidate != this && candidate.def != null && !candidate.def.allowCaravanIncidentsWhichGenerateMap)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        void Intercept(RimWorld.Planet.Caravan caravan)
+        {
+            if (!CanIntercept(caravan) || !CanGenerateInterceptionMap())
+            {
+                return;
+            }
+
+            arriving = true;
+            LongEventHandler.QueueLongEvent(() => EnterInterceptionMap(caravan), "GeneratingMap", false, null);
+        }
+
+        void EnterInterceptionMap(RimWorld.Planet.Caravan caravan)
+        {
+            Map map = null;
+            bool committed = false;
+            try
+            {
+                // 地图生成和远行队进入在同一个长事件内完成
+                arriving = false;
+                if (!CanIntercept(caravan) || !CanGenerateInterceptionMap())
+                {
+                    return;
+                }
+
+                arriving = true;
+                RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
+                IncidentDef incident = entry == null ? null : DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
+                if (incident?.Worker == null)
+                {
+                    return;
+                }
+
+                map = CaravanIncidentUtility.GetOrGenerateMapForIncident(caravan,
+                    new IntVec3(100, 1, 100), WorldObjectDefOf.AttackedNonPlayerCaravan);
+                if (!incident.Worker.TryExecute(new IncidentParms { target = map, points = points, forced = true }))
+                {
+                    Messages.Message("RHAH_Approach_InterceptFailed".Translate(), MessageTypeDefOf.RejectInput, false);
+                    return;
+                }
+
+                Verse.Pawn colonist = caravan.PawnsListForReading[0];
+                CaravanEnterMapUtility.Enter(caravan, map, CaravanEnterMode.Edge,
+                    CaravanDropInventoryMode.DoNotDrop, draftColonists: true);
+                committed = true;
+                Destroy();
+                Find.TickManager.Notify_GeneratedPotentiallyHostileMap();
+                CameraJumper.TryJumpAndSelect(colonist);
+            }
+            finally
+            {
+                arriving = false;
+                if (!committed && map != null)
+                {
+                    if (map.mapPawns.AnyPawnBlockingMapRemoval)
+                    {
+                        // 原版进入中途异常时保留已经放下的玩家成员
+                        Destroy();
+                    }
+                    else
+                    {
+                        map.Parent.Destroy();
+                    }
+                }
+            }
         }
 
         protected override void TickInterval(int delta)

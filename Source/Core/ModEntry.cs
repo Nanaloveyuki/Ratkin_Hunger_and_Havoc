@@ -142,6 +142,8 @@ namespace HungerAndHavoc.Core
             Settings.litterMax = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.litterMax, Settings.litterMin, Generation.RHAH_FertilityRules.MaxLitter));
             listing.Label("RHAH_Settings_FertileAge".Translate(Settings.fertileMinAge.ToString("0")));
             Settings.fertileMinAge = UnityEngine.Mathf.Round(listing.Slider(Settings.fertileMinAge, Generation.RHAH_FertilityRules.MinFertileAge, Generation.RHAH_FertilityRules.MaxFertileAge));
+            listing.Label("RHAH_Settings_MotherAge".Translate(Settings.minMotherAge.ToString("0")));
+            Settings.minMotherAge = UnityEngine.Mathf.Round(listing.Slider(Settings.minMotherAge, Pawn.RHAH_VisitorRules.MinMotherAge, Pawn.RHAH_VisitorRules.MaxMotherAge));
             listing.Label("RHAH_Settings_FertilityPercent".Translate(Settings.fertilityPercent.ToString("0")));
             Settings.fertilityPercent = UnityEngine.Mathf.Round(listing.Slider(Settings.fertilityPercent, Generation.RHAH_FertilityRules.MinFertilityPercent, Generation.RHAH_FertilityRules.MaxFertilityPercent));
             listing.Label("RHAH_Settings_GestationDays".Translate(Settings.gestationDays.ToString("0.0")));

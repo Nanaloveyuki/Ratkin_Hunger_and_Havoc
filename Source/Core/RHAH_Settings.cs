@@ -68,6 +68,7 @@ namespace HungerAndHavoc.Core
         public int maxEventPawns = 30;
         public float minGeneratedAge;
         public float maxGeneratedAge = 50f;
+        public float minMotherAge = Pawn.RHAH_VisitorRules.DefaultMotherMinAge;
         public bool youngAgeFollowsRange;
         public bool allowImmobileBabies;
         public int genderMode;
@@ -328,6 +329,7 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref maxEventPawns, "maxEventPawns", 30);
             Scribe_Values.Look(ref minGeneratedAge, "minGeneratedAge", 0f);
             Scribe_Values.Look(ref maxGeneratedAge, "maxGeneratedAge", 50f);
+            Scribe_Values.Look(ref minMotherAge, "minMotherAge", Pawn.RHAH_VisitorRules.DefaultMotherMinAge);
             Scribe_Values.Look(ref youngAgeFollowsRange, "youngAgeFollowsRange", false);
             Scribe_Values.Look(ref allowImmobileBabies, "allowImmobileBabies", false);
             Scribe_Values.Look(ref genderMode, "genderMode", 0);
@@ -932,6 +934,7 @@ namespace HungerAndHavoc.Core
             {
                 maxGeneratedAge = minGeneratedAge;
             }
+            minMotherAge = Pawn.RHAH_VisitorRules.ClampMotherAge(minMotherAge);
             genderMode = Pawn.RHAH_VisitorRules.ClampBodyMode(genderMode, 4);
             femaleSharePercent = Pawn.RHAH_VisitorRules.ClampFemaleShare(femaleSharePercent);
             playerIdeoPercent = Pawn.RHAH_VisitorRules.ClampPercent(playerIdeoPercent, 0, 100);

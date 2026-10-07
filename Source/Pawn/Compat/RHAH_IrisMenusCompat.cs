@@ -679,6 +679,9 @@ namespace HungerAndHavoc.Pawn.Compat
             string maxAge = Buffer(weightBuffers, "age-max", settings.maxGeneratedAge, "0.0");
             settings.maxGeneratedAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaxAge".Translate(settings.maxGeneratedAge.ToString("0.0")), settings.maxGeneratedAge, ref maxAge, settings.minGeneratedAge, 100f, "0.0", "RHAH_Settings_Age_Tooltip".Translate());
             weightBuffers["age-max"] = maxAge;
+            string motherAge = Buffer(weightBuffers, "mother-age", settings.minMotherAge, "0");
+            settings.minMotherAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MotherAge".Translate(settings.minMotherAge.ToString("0")), settings.minMotherAge, ref motherAge, RHAH_VisitorRules.MinMotherAge, RHAH_VisitorRules.MaxMotherAge, "0", "RHAH_Settings_MotherAge_Tooltip".Translate());
+            weightBuffers["mother-age"] = motherAge;
             string shelter = Buffer(weightBuffers, "shelter-days", settings.shelterDays, "0");
             settings.shelterDays = (int)RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_ShelterDays".Translate(RHAH_VisitorRules.StayLabel(settings.shelterDays)), settings.shelterDays, ref shelter, RHAH_VisitorRules.MinShelterDays, RHAH_VisitorRules.MaxShelterDays, "0", "RHAH_Settings_ShelterDays_Tooltip".Translate());
             weightBuffers["shelter-days"] = shelter;
@@ -1727,6 +1730,10 @@ namespace HungerAndHavoc.Pawn.Compat
             string maxAge = Buffer(weightBuffers, "body-age-max", settings.maxGeneratedAge, "0.0");
             settings.maxGeneratedAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaxAge".Translate(settings.maxGeneratedAge.ToString("0.0")), settings.maxGeneratedAge, ref maxAge, settings.minGeneratedAge, 100f, "0.0", "RHAH_Settings_Age_Tooltip".Translate());
             weightBuffers["body-age-max"] = maxAge;
+            MenuControls.Anchor(list, "mother-age");
+            string motherAge = Buffer(weightBuffers, "body-mother-age", settings.minMotherAge, "0");
+            settings.minMotherAge = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MotherAge".Translate(settings.minMotherAge.ToString("0")), settings.minMotherAge, ref motherAge, RHAH_VisitorRules.MinMotherAge, RHAH_VisitorRules.MaxMotherAge, "0", "RHAH_Settings_MotherAge_Tooltip".Translate());
+            weightBuffers["body-mother-age"] = motherAge;
             MenuControls.Anchor(list, "young-age");
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_YoungAge".Translate(), ref settings.youngAgeFollowsRange, "RHAH_Settings_YoungAge_Tooltip".Translate());
             MenuControls.Anchor(list, "immobile-babies");
@@ -2289,6 +2296,7 @@ namespace HungerAndHavoc.Pawn.Compat
         IEnumerable<MenuSearchEntry> SearchPawnHistory()
         {
             yield return Entry("young-age", "RHAH_Settings_YoungAge");
+            yield return Entry("mother-age", "RHAH_Settings_MotherAge");
             yield return Entry("immobile-babies", "RHAH_Settings_ImmobileBabies");
             yield return Entry("gender-mode", "RHAH_Settings_Gender");
             yield return Entry("apparel-mode", "RHAH_Settings_Apparel");

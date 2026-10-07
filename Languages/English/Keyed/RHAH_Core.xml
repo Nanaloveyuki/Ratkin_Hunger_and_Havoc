@@ -29,9 +29,11 @@
   <RHAH_Settings_FoodWait_Tooltip>How long a visitor waits after finding nothing to eat. Range 0 to 5 days, default half a day.</RHAH_Settings_FoodWait_Tooltip>
   <RHAH_Settings_MinAge>Minimum arrival age: {0}</RHAH_Settings_MinAge>
   <RHAH_Settings_MaxAge>Maximum arrival age: {0}</RHAH_Settings_MaxAge>
-  <RHAH_Settings_Age_Tooltip>Ordinary visitors fall inside this range. 0 to 100, default 0 to 50. Mothers keep the age the event asks for. Ratkin young keep their own ages unless the switch below is on.</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_Age_Tooltip>Ordinary visitors fall inside this range. 0 to 100, default 0 to 50. Mothers stay at least as old as their own minimum. Ratkin young keep their own ages unless the switch below is on.</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_YoungAge>Ratkin young use this age range</RHAH_Settings_YoungAge>
-  <RHAH_Settings_YoungAge_Tooltip>With this on, ratkin young also fall inside the range above. Off, beggar young are 1 day to 2.9 years, and other young are 3 to 6.9. Mothers keep the event age. People already here stay as they are.</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_YoungAge_Tooltip>With this on, ratkin young also fall inside the range above. Off, beggar young are 1 day to 2.9 years, and other young are 3 to 6.9. Mothers stay at least as old as their own minimum. People already here stay as they are.</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_MotherAge>Minimum mother age: {0}</RHAH_Settings_MotherAge>
+  <RHAH_Settings_MotherAge_Tooltip>A mother or begging mother arrives at least this old. 1 to 14, default 14. A higher ordinary arrival age wins. Ratkin young stay as they are. People already here stay as they are.</RHAH_Settings_MotherAge_Tooltip>
   <RHAH_Settings_ImmobileBabies>Allow babies who cannot walk</RHAH_Settings_ImmobileBabies>
   <RHAH_Settings_ImmobileBabies_Tooltip>Without a toddler mod, ratkin babies under 4 stay down. An adult has to carry them out. With this off, ratkin young are at least 4.</RHAH_Settings_ImmobileBabies_Tooltip>
   <RHAH_Settings_ImmobileBabies_Toddlers>Toddlers is active. Children under 3 can move. This switch no longer raises their age.</RHAH_Settings_ImmobileBabies_Toddlers>
@@ -404,6 +406,9 @@
   <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>Famine traders stay inside a closed room instead of digging out. Off, they dig out when they cannot reach the map edge.</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
   <RHAH_Settings_SpaceApproach>Allow incidents at orbital homes</RHAH_Settings_SpaceApproach>
   <RHAH_Settings_SpaceApproach_Tooltip>Off by default. Orbital homes, including asteroids and SOS2 ships, do not receive ratkin who walk in, and map incidents are not drawn for them. Turn this on to allow them. A group already on an Odyssey orbit layer does not block a shuttle launch.</RHAH_Settings_SpaceApproach_Tooltip>
+  <RHAH_Approach_Intercept>Intercept Ratkin</RHAH_Approach_Intercept>
+  <RHAH_Approach_InterceptBlocked>Cannot intercept the Ratkin right now</RHAH_Approach_InterceptBlocked>
+  <RHAH_Approach_InterceptFailed>Failed to generate the interception map. The Ratkin caravan remains on the world.</RHAH_Approach_InterceptFailed>
   <RHAH_Settings_ChildExchangeFood>Allow food in place of children</RHAH_Settings_ChildExchangeFood>
   <RHAH_Settings_ChildExchangeFood_Tooltip>Child exchange accepts simple meals in place of handing over a child. The cost follows Simple meals per child. Traders do not sell food. With substitution off, this letter cannot be delivered; handing over a child is not available in this choice either.</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>Set children down when leaving</RHAH_Settings_FamilyDrop>
