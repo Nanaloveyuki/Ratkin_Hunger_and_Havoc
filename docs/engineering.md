@@ -236,8 +236,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_EarlyFertilityPatch` 是 `internal`，Postfix `PregnancyUtility.CanEverProduceChild`。原版生育阶段从 13 岁起。补丁只在任一方有早熟、原版报告拒绝、且双方达到设定年龄时改成通过。死亡、同性、不育和已怀孕仍拒绝。
 `RHAH_HighFertilityPatch` 是 `internal`，Postfix `PregnancyUtility.PregnancyChanceForPartners`。原版几率不看本模组百分比。补丁只在任一方有高育时乘以设定百分比。其它配对不改。
 `RHAH_FastBirthPatch` 是 `internal`，Postfix `Hediff_Pregnant.TickInterval`。原版进度按种族孕期走，`GestationProgress` 不能从外部写入。补丁只在有速产且设定天数短于该种族孕期时，按天数比补上差额。到 1 后人类进产程，其它种族走原版分娩。没有速产的人走原版。
-`RHAH_RoomLovinPatch` 是 `internal`，Postfix `JobGiver_DoLovin.TryGiveJob`。原版只在冷却结束后自己找人。补丁只在结果为空、携带者有乱起、伴侣在同一张地图且双方能生育时补一个爱爱 Job。已有工作、征召中和睡着时不补。
-`RHAH_RoomBirthPatch` 是 `internal`，Postfix `JobDriver_Lovin.MakeNewToils`，不改返回的 Toil。每次构造 Toil 时登记或替换同一个全局结束动作，只在 `JobCondition.Succeeded` 时额外判定一次；正常耗尽 Toil 时，原版最后受孕先于这个动作。几率仍是 5% 乘双方怀孕几率，并去掉哺乳这一项。走到床前、中断和无法完成不判定。其它来源的不育不改。其它爱爱不改。
+`RHAH_RoomLovinPatch` 是 `internal`，Postfix `JobGiver_DoLovin.TryGiveJob`。原版只在冷却结束后找同床伴侣。补丁只在结果为空、携带者有乱起时，从同一张地图、同一室内房间的异性里挑编号最小的人补一个爱爱 Job。不看恋人、未婚夫或配偶。室外、已有工作、征召中和睡着时不补。
+`RHAH_RoomBirthPatch` 是 `internal`，Postfix `JobDriver_Lovin.MakeNewToils`，不改返回的 Toil。每次构造 Toil 时登记或替换同一个全局结束动作，只在 `JobCondition.Succeeded` 时额外判定一次；正常耗尽 Toil 时，原版最后受孕先于这个动作。基础几率用 `lovinPregnancyPercent`，默认 50%，范围 0% 到 100%，再乘双方怀孕几率，并去掉哺乳这一项。走到床前、中断和无法完成不判定。其它来源的不育不改。其它爱爱不改。
 `RHAH_LargeLitterPatch` 是 `internal`，Postfix `PregnancyUtility.ApplyBirthOutcome`。原版人类一次只生一个，而且没有父亲时不会把母亲的可遗传异种写到孩子身上。补丁只在母亲有多崽时按概率图补足数量。多出来的幼崽使用父母的内源基因，双方可遗传异种相同、或只有一方有可遗传异种时写入该异种。正式孩子和多出来的幼崽都会再套一次这个异种，基因留在原初基因组。没有多崽、也没有可遗传异种的分娩不改基因。
 
 ## 检查门禁

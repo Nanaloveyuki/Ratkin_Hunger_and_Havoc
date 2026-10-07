@@ -136,6 +136,8 @@ namespace HungerAndHavoc.Core
             Settings.fertilityPercent = UnityEngine.Mathf.Round(listing.Slider(Settings.fertilityPercent, Generation.RHAH_FertilityRules.MinFertilityPercent, Generation.RHAH_FertilityRules.MaxFertilityPercent));
             listing.Label("RHAH_Settings_GestationDays".Translate(Settings.gestationDays.ToString("0.0")));
             Settings.gestationDays = listing.Slider(Settings.gestationDays, Generation.RHAH_FertilityRules.MinGestationDays, Generation.RHAH_FertilityRules.VanillaGestationFloorDays);
+            listing.Label("RHAH_Settings_LovinPregnancy".Translate(Settings.lovinPregnancyPercent.ToString("0")));
+            Settings.lovinPregnancyPercent = UnityEngine.Mathf.Round(listing.Slider(Settings.lovinPregnancyPercent, Generation.RHAH_FertilityRules.MinLovinPregnancyPercent, Generation.RHAH_FertilityRules.MaxLovinPregnancyPercent));
             Generation.RHAH_FertilityRules.ClampLitter(ref Settings.litterMin, ref Settings.litterPeak, ref Settings.litterMax);
 
             listing.End();

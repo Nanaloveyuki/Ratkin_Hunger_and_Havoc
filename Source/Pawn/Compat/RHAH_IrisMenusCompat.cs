@@ -1687,6 +1687,14 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
+            if (defName == RHAH_FertilityRules.RoomFertility)
+            {
+                string percent = Buffer(weightBuffers, "lovin-pregnancy", settings.lovinPregnancyPercent, "0");
+                settings.lovinPregnancyPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_LovinPregnancy".Translate(settings.lovinPregnancyPercent.ToString("0")), settings.lovinPregnancyPercent, ref percent, RHAH_FertilityRules.MinLovinPregnancyPercent, RHAH_FertilityRules.MaxLovinPregnancyPercent, "0", "RHAH_Menu_Genes_LovinPregnancyTip".Translate());
+                weightBuffers["lovin-pregnancy"] = percent;
+                return;
+            }
+
             if (defName == RHAH_FertilityRules.FastBirth)
             {
                 string days = Buffer(weightBuffers, "gestation-days", settings.gestationDays, "0.0");
@@ -2274,6 +2282,7 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("fertile-age", "RHAH_Settings_FertileAge");
             yield return Entry("fertility-percent", "RHAH_Settings_FertilityPercent");
             yield return Entry("gestation-days", "RHAH_Settings_GestationDays");
+            yield return Entry("lovin-pregnancy", "RHAH_Settings_LovinPregnancy");
         }
 
         IEnumerable<MenuSearchEntry> SearchPawnHistory()

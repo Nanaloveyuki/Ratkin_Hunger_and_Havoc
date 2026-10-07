@@ -71,7 +71,7 @@
   <GeneDef MayRequire="Ludeon.RimWorld.Biotech">
     <defName>RHAH_Gene_RoomFertility</defName>
     <label>乱起</label>
-    <description>携带此基因的人会主动找人爱爱。爱爱结束时才判定受孕，哺乳期也可以受孕。双方生理年龄都要达到 1 岁。</description>
+    <description>携带此基因的人会主动找同一房间里的异性爱爱。爱爱结束时才判定受孕，默认几率是 50%，可以调整。哺乳期也可以受孕。双方生理年龄都要达到 1 岁。</description>
     <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
     <displayCategory>Reproduction</displayCategory>
     <displayOrderInCategory>223</displayOrderInCategory>
@@ -79,8 +79,9 @@
     <selectionWeight>0</selectionWeight>
     <biostatMet>3</biostatMet>
     <customEffectDescriptions>
-      <li>主动分配爱爱</li>
+      <li>主动找同一房间里的异性爱爱</li>
       <li>爱爱结束后才判定受孕</li>
+      <li>默认受孕几率 50%，可以调整</li>
       <li>哺乳期也可以受孕</li>
       <li>双方生理年龄都要达到 1 岁</li>
     </customEffectDescriptions>

@@ -68,6 +68,27 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void LovinPregnancyChanceDefaultsToHalfAndStaysInsideZeroToOne()
+        {
+            Assert.Equal(0.5f, RHAH_FertilityRules.LovinPregnancyChance(50f));
+            Assert.Equal(0f, RHAH_FertilityRules.LovinPregnancyChance(-10f));
+            Assert.Equal(1f, RHAH_FertilityRules.LovinPregnancyChance(140f));
+            Assert.Equal(50f, RHAH_FertilityRules.ClampLovinPregnancyPercent(float.NaN));
+        }
+
+        [Fact]
+        public void RoomPartnerIgnoresMarriageAndRejectsTheOutdoors()
+        {
+            Assert.True(RHAH_FertilityRules.RoomPartner(true, true, false, true, false, false));
+            Assert.False(RHAH_FertilityRules.RoomPartner(true, true, true, true, false, false));
+            Assert.False(RHAH_FertilityRules.RoomPartner(true, false, false, true, false, false));
+            Assert.False(RHAH_FertilityRules.RoomPartner(false, true, false, true, false, false));
+            Assert.False(RHAH_FertilityRules.RoomPartner(true, true, false, false, false, false));
+            Assert.False(RHAH_FertilityRules.RoomPartner(true, true, false, true, true, false));
+            Assert.False(RHAH_FertilityRules.RoomPartner(true, true, false, true, false, true));
+        }
+
+        [Fact]
         public void LitterRequestKeepsHeritableGenesAsEndogenes()
         {
             GeneDef ears = Gene("RK_Gene_LargeEars");

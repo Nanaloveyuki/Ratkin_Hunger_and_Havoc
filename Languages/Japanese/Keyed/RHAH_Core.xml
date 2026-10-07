@@ -302,6 +302,7 @@
   <RHAH_Settings_FertileAge>妊娠可能な最低年齢：{0}</RHAH_Settings_FertileAge>
   <RHAH_Settings_FertilityPercent>妊娠確率：{0}%</RHAH_Settings_FertilityPercent>
   <RHAH_Settings_GestationDays>最短妊娠期間：{0}日</RHAH_Settings_GestationDays>
+  <RHAH_Settings_LovinPregnancy>愛し合った後の妊娠確率：{0}%</RHAH_Settings_LovinPregnancy>
   <RHAH_Menu_Genes_LitterCurve>出産する子供の数</RHAH_Menu_Genes_LitterCurve>
   <RHAH_Menu_Genes_LitterTip>{0}人、相対確率：{1}</RHAH_Menu_Genes_LitterTip>
   <RHAH_Menu_Genes_LitterMinTip>1回の出産で生まれる子供の最少人数です。範囲は1～12。</RHAH_Menu_Genes_LitterMinTip>
@@ -310,6 +311,7 @@
   <RHAH_Menu_Genes_FertileAgeTip>双方の生物学的年齢がこの年齢に達すると、妊娠可能になります。範囲は1～14歳。</RHAH_Menu_Genes_FertileAgeTip>
   <RHAH_Menu_Genes_FertilityTip>通常の人と比べた妊娠確率です。範囲は100～1000%。</RHAH_Menu_Genes_FertilityTip>
   <RHAH_Menu_Genes_GestationTip>最短3日。上限はバニラの妊娠期間の下限を超えません。</RHAH_Menu_Genes_GestationTip>
+  <RHAH_Menu_Genes_LovinPregnancyTip>愛し合いが正常に終わった後の妊娠確率です。範囲は0～100%。双方それぞれの妊娠確率も引き続き掛けられます。</RHAH_Menu_Genes_LovinPregnancyTip>
   <RHAH_Menu_PawnHistory_Note>新しい訪問者は、チェックした生い立ちから1つを抽選します。イベントで素性が設定されている人物の生い立ちは変更しませんが、特性は抽選できます。</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>すべての生い立ちを有効にする</RHAH_Menu_PawnHistory_EnableAll>
   <RHAH_Menu_PawnHistory_DisableAll>すべての生い立ちを無効にする</RHAH_Menu_PawnHistory_DisableAll>

@@ -11,7 +11,6 @@ namespace HungerAndHavoc.Generation
 {
     internal static class RHAH_Fertility
     {
-        const float VanillaLovinPregnancyChance = 0.05f;
 
         internal static bool Has(VersePawn pawn, string defName)
         {
@@ -330,7 +329,9 @@ namespace HungerAndHavoc.Generation
                 return;
             }
 
-            float chance = VanillaLovinPregnancyChance * PregnancyChance(mother, father);
+            RHAH_Settings settings = RHAH_Mod.Settings;
+            float percent = settings == null ? RHAH_FertilityRules.DefaultLovinPregnancyPercent : settings.lovinPregnancyPercent;
+            float chance = RHAH_FertilityRules.LovinPregnancyChance(percent) * PregnancyChance(mother, father);
             if (!Rand.Chance(chance))
             {
                 return;
@@ -434,29 +435,41 @@ namespace HungerAndHavoc.Generation
 
         static VersePawn Partner(VersePawn pawn)
         {
-            if (pawn.relations == null)
+            if (pawn?.Map?.mapPawns == null)
             {
                 return null;
             }
 
-            List<DirectPawnRelation> relations = pawn.relations.DirectRelations;
-            for (int i = 0; i < relations.Count; i++)
+            Room room = pawn.GetRoom();
+            if (room == null || room.PsychologicallyOutdoors)
             {
-                VersePawn other = relations[i].otherPawn;
-                if (other == null || other.Map != pawn.Map || other.Dead || other.gender == pawn.gender)
+                return null;
+            }
+
+            VersePawn partner = null;
+            System.Collections.Generic.IReadOnlyList<VersePawn> spawned = pawn.Map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < spawned.Count; i++)
+            {
+                VersePawn other = spawned[i];
+                Room otherRoom = other?.GetRoom();
+                if (!RHAH_FertilityRules.RoomPartner(
+                    other != null && other.Map == pawn.Map,
+                    otherRoom == room,
+                    otherRoom != null && otherRoom.PsychologicallyOutdoors,
+                    other != null && other.gender != pawn.gender,
+                    other != null && other.Dead,
+                    other == pawn))
                 {
                     continue;
                 }
 
-                if (pawn.relations.DirectRelationExists(PawnRelationDefOf.Lover, other) ||
-                    pawn.relations.DirectRelationExists(PawnRelationDefOf.Fiance, other) ||
-                    pawn.relations.DirectRelationExists(PawnRelationDefOf.Spouse, other))
+                if (partner == null || other.thingIDNumber < partner.thingIDNumber)
                 {
-                    return other;
+                    partner = other;
                 }
             }
 
-            return null;
+            return partner;
         }
     }
 

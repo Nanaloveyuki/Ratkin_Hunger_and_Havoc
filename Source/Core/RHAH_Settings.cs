@@ -23,6 +23,7 @@ namespace HungerAndHavoc.Core
         public float fertileMinAge = Generation.RHAH_FertilityRules.DefaultFertileAge;
         public float fertilityPercent = Generation.RHAH_FertilityRules.DefaultFertilityPercent;
         public float gestationDays = Generation.RHAH_FertilityRules.DefaultGestationDays;
+        public float lovinPregnancyPercent = Generation.RHAH_FertilityRules.DefaultLovinPregnancyPercent;
         public bool reliefEnabled = true;
         public bool allowEatOutsideRelief;
         public bool ignoreReliefAfterFed;
@@ -281,6 +282,7 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref fertileMinAge, "fertileMinAge", Generation.RHAH_FertilityRules.DefaultFertileAge);
             Scribe_Values.Look(ref fertilityPercent, "fertilityPercent", Generation.RHAH_FertilityRules.DefaultFertilityPercent);
             Scribe_Values.Look(ref gestationDays, "gestationDays", Generation.RHAH_FertilityRules.DefaultGestationDays);
+            Scribe_Values.Look(ref lovinPregnancyPercent, "lovinPregnancyPercent", Generation.RHAH_FertilityRules.DefaultLovinPregnancyPercent);
             Scribe_Values.Look(ref reliefEnabled, "reliefEnabled", true);
             Scribe_Values.Look(ref allowEatOutsideRelief, "allowEatOutsideRelief", false);
             Scribe_Values.Look(ref ignoreReliefAfterFed, "ignoreReliefAfterFed", false);
@@ -981,6 +983,7 @@ namespace HungerAndHavoc.Core
             fertileMinAge = Generation.RHAH_FertilityRules.ClampFertileAge(fertileMinAge);
             fertilityPercent = Generation.RHAH_FertilityRules.ClampFertilityPercent(fertilityPercent);
             gestationDays = Generation.RHAH_FertilityRules.ClampGestationDays(gestationDays);
+            lovinPregnancyPercent = Generation.RHAH_FertilityRules.ClampLovinPregnancyPercent(lovinPregnancyPercent);
         }
 
 

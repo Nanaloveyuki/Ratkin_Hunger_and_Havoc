@@ -28,6 +28,10 @@ namespace HungerAndHavoc.Generation
         internal const float VanillaGestationFloorDays = 5.661f;
         internal const float DefaultGestationDays = 5.661f;
 
+        internal const float MinLovinPregnancyPercent = 0f;
+        internal const float MaxLovinPregnancyPercent = 100f;
+        internal const float DefaultLovinPregnancyPercent = 50f;
+
         internal static int ClampLitter(int value)
         {
             return Mathf.Clamp(value, MinLitter, MaxLitter);
@@ -148,6 +152,27 @@ namespace HungerAndHavoc.Generation
             }
 
             return Mathf.Min(requested, raceDays);
+        }
+
+        internal static float ClampLovinPregnancyPercent(float percent)
+        {
+            if (float.IsNaN(percent) || float.IsInfinity(percent))
+            {
+                return DefaultLovinPregnancyPercent;
+            }
+
+            return Mathf.Clamp(percent, MinLovinPregnancyPercent, MaxLovinPregnancyPercent);
+        }
+
+        internal static float LovinPregnancyChance(float percent)
+        {
+            return ClampLovinPregnancyPercent(percent) / 100f;
+        }
+
+        // 不看婚恋 只看同一室内
+        internal static bool RoomPartner(bool sameMap, bool sameRoom, bool outdoors, bool oppositeGender, bool dead, bool self)
+        {
+            return sameMap && sameRoom && !outdoors && oppositeGender && !dead && !self;
         }
     }
 }

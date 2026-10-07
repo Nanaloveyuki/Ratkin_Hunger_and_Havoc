@@ -18,11 +18,12 @@
   <RHAH_Gene_HighFertility.customEffectDescriptions.0>Pregnancy chance uses the set percent</RHAH_Gene_HighFertility.customEffectDescriptions.0>
   <RHAH_Gene_HighFertility.customEffectDescriptions.1>Range is 100% to 1000% of normal</RHAH_Gene_HighFertility.customEffectDescriptions.1>
   <RHAH_Gene_RoomFertility.label>room fertility</RHAH_Gene_RoomFertility.label>
-  <RHAH_Gene_RoomFertility.description>Carriers of this gene seek lovin' on their own. Conception is checked when lovin' ends, and it can happen while lactating. Both partners must be at least 1 year old.</RHAH_Gene_RoomFertility.description>
-  <RHAH_Gene_RoomFertility.customEffectDescriptions.0>Assigns lovin' on its own</RHAH_Gene_RoomFertility.customEffectDescriptions.0>
+  <RHAH_Gene_RoomFertility.description>Carriers of this gene seek lovin' with someone of the other gender in the same room. Conception is checked when lovin' ends. The default chance is 50%, and it can be changed. Conception can happen while lactating. Both partners must be at least 1 year old.</RHAH_Gene_RoomFertility.description>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.0>Seeks lovin' with someone of the other gender in the same room</RHAH_Gene_RoomFertility.customEffectDescriptions.0>
   <RHAH_Gene_RoomFertility.customEffectDescriptions.1>Conception is checked after lovin' ends</RHAH_Gene_RoomFertility.customEffectDescriptions.1>
-  <RHAH_Gene_RoomFertility.customEffectDescriptions.2>Conception can happen while lactating</RHAH_Gene_RoomFertility.customEffectDescriptions.2>
-  <RHAH_Gene_RoomFertility.customEffectDescriptions.3>Both partners must be at least 1 year old</RHAH_Gene_RoomFertility.customEffectDescriptions.3>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.2>Default conception chance is 50%, and it can be changed</RHAH_Gene_RoomFertility.customEffectDescriptions.2>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.3>Conception can happen while lactating</RHAH_Gene_RoomFertility.customEffectDescriptions.3>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.4>Both partners must be at least 1 year old</RHAH_Gene_RoomFertility.customEffectDescriptions.4>
   <RHAH_Gene_FastBirth.label>fast birth</RHAH_Gene_FastBirth.label>
   <RHAH_Gene_FastBirth.description>Carriers of this gene have a shorter pregnancy. It can be as short as 3 days, and no longer than the vanilla lower bound.</RHAH_Gene_FastBirth.description>
   <RHAH_Gene_FastBirth.customEffectDescriptions.0>Pregnancy is shortened to the set length</RHAH_Gene_FastBirth.customEffectDescriptions.0>
