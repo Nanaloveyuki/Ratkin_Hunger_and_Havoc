@@ -393,6 +393,10 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_ChoiceVisitorsGreen | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_GreenIncident | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_QuarantineLetter | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
+| RHAH_EnvoyLetter, RHAH_GrainHoleLetter, RHAH_RevisitLetter | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
+| RHAH_RatkinTraderCaravan | IncidentDef | Remove |
+| RHAH_PrisonerNeeds | ThinkTreeDef | Remove |
+| RHAH_Thought_LeftAlone, RHAH_Thought_CaptiveYear, RHAH_Thought_FamilyHere, RHAH_Thought_Regret | ThoughtDef | Remove |
 | RHAH_PawnKind_Ratkin | PawnKindDef | Replace。保留 pawn 的 thingID。`kindDef` 改成仍会随 NewRatkinPlus 加载、种族同为 `Ratkin`、不属于本模组的 PawnKind。按 defName 序选第一个。没有这种种类就中止，不换成人类 |
 
 替代 Def 必须已经加载，且不属于本模组。写死的目标是 `Ancients`、`Baseliner`、`Randy`、`Site`。种类和背景的具体 defName 在导出时按上表从已加载 Def 里选，不写进本页。尚无 TraderKind。

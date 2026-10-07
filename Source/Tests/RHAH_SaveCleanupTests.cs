@@ -71,7 +71,7 @@ namespace HungerAndHavoc.Tests
             Assert.Equal("WorldObject_30", (string)MapParent(document, "30"));
             Assert.Equal("Encounter", (string)MapGenerator(document, "30"));
             Assert.Null(mapped.Element("parts"));
-            Assert.Null(mapped.Element("residents"));
+            Assert.Equal("Thing_11", (string)mapped.Element("residents").Element("li"));
             Assert.Null(FindBareId(document, "31"));
             XElement record = WorldObject(document, "32");
             Assert.Equal("Site", (string)record.Element("def"));

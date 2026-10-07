@@ -288,7 +288,6 @@ namespace HungerAndHavoc.Core
 
             site.SetElementValue("def", "Site");
             Remove(site.Element("parts"));
-            Remove(site.Element("residents"));
             Remove(site.Element("cleared"));
             Remove(site.Element("nextCheck"));
             RetargetGenerator(site);
