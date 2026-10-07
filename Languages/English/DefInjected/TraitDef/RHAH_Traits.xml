@@ -65,7 +65,7 @@
   <RHAH_Trait_Distrustful.degreeDatas.0.label>distrustful</RHAH_Trait_Distrustful.degreeDatas.0.label>
   <RHAH_Trait_Distrustful.degreeDatas.0.description>{PAWN_nameDef} has a hard time trusting anyone anymore. Even kindness often looks like a trap to {PAWN_objective}.</RHAH_Trait_Distrustful.degreeDatas.0.description>
   <RHAH_Trait_WeakFlesh.degreeDatas.0.label>frail</RHAH_Trait_WeakFlesh.degreeDatas.0.label>
-  <RHAH_Trait_WeakFlesh.degreeDatas.0.description>{PAWN_nameDef} is frail and does not take knocks well.</RHAH_Trait_WeakFlesh.degreeDatas.0.description>
+  <RHAH_Trait_WeakFlesh.degreeDatas.0.description>{PAWN_nameDef} is frail, and a knock leaves a mark.</RHAH_Trait_WeakFlesh.degreeDatas.0.description>
   <RHAH_Trait_WeakGut.degreeDatas.0.label>weak stomach</RHAH_Trait_WeakGut.degreeDatas.0.label>
   <RHAH_Trait_WeakGut.degreeDatas.0.description>{PAWN_nameDef} has a weak stomach and gets hungry again soon after a meal.</RHAH_Trait_WeakGut.degreeDatas.0.description>
   <RHAH_Trait_Chillblood.degreeDatas.0.label>cold-sensitive</RHAH_Trait_Chillblood.degreeDatas.0.label>
@@ -83,11 +83,11 @@
   <RHAH_Trait_PlagueSurvivor.degreeDatas.0.label>plague aftereffects</RHAH_Trait_PlagueSurvivor.degreeDatas.0.label>
   <RHAH_Trait_PlagueSurvivor.degreeDatas.0.description>{PAWN_nameDef} survived an epidemic once and faces illness with a little more confidence now. Tiredness comes easily, though.</RHAH_Trait_PlagueSurvivor.degreeDatas.0.description>
   <RHAH_Trait_GrainSneak.degreeDatas.0.label>poker-faced</RHAH_Trait_GrainSneak.degreeDatas.0.label>
-  <RHAH_Trait_GrainSneak.degreeDatas.0.description>{PAWN_nameDef} does not like to let real thoughts show on {PAWN_possessive} face.</RHAH_Trait_GrainSneak.degreeDatas.0.description>
+  <RHAH_Trait_GrainSneak.degreeDatas.0.description>{PAWN_nameDef} keeps real thoughts off {PAWN_possessive} face.</RHAH_Trait_GrainSneak.degreeDatas.0.description>
   <RHAH_Trait_SiegeDigger.degreeDatas.0.label>born digger</RHAH_Trait_SiegeDigger.degreeDatas.0.label>
   <RHAH_Trait_SiegeDigger.degreeDatas.0.description>{PAWN_nameDef} is good at digging ways out and trenches. When bored, even the couch looks worth scratching at.</RHAH_Trait_SiegeDigger.degreeDatas.0.description>
   <RHAH_Trait_GranaryBreaker.degreeDatas.0.label>combative</RHAH_Trait_GranaryBreaker.degreeDatas.0.label>
-  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef} is not afraid of a fight. The fists are ready before the challenge is even finished.</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
+  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef} steps into a fight. The fists are ready before the challenge is even finished.</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
   <RHAH_Trait_AilingMother.degreeDatas.0.label>bleeding heart</RHAH_Trait_AilingMother.degreeDatas.0.label>
   <RHAH_Trait_AilingMother.degreeDatas.0.description>{PAWN_nameDef} always wants the children somewhere safe. When a young companion goes hungry, falls ill or is downed, {PAWN_pronoun} feels anxious and sad. People often sneer at such a bleeding heart.</RHAH_Trait_AilingMother.degreeDatas.0.description>
   <RHAH_Trait_FamilyThief.degreeDatas.0.label>fiercely protective</RHAH_Trait_FamilyThief.degreeDatas.0.label>

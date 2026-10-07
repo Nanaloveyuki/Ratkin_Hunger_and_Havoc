@@ -31,9 +31,9 @@
   <RHAH_Settings_MaxAge>訪問者の最高年齢：{0}</RHAH_Settings_MaxAge>
   <RHAH_Settings_Age_Tooltip>通常の訪問者の年齢をこの範囲に設定します。設定範囲は0～100歳、初期値は0～50歳。母親は、母親用の最低年齢を下回りません。ラットキンの子供は、下のスイッチをオンにしない限り、子供用の年齢を使用します。</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_YoungAge>ラットキンの子供にもこの年齢範囲を使用</RHAH_Settings_YoungAge>
-  <RHAH_Settings_YoungAge_Tooltip>オンにすると、ラットキンの子供にも上の年齢範囲を使います。オフの場合、物乞いの子供は生後1日～2.9歳、その他の子供は3～6.9歳です。母親は、母親用の最低年齢を下回りません。すでにいる訪問者は変わりません。</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_YoungAge_Tooltip>オンにすると、新しく来るラットキンの子供も上の年齢範囲を使います。オフの場合、物乞いの子供は生後1日～2.9歳、その他の子供は3～6.9歳です。母親は、これまでどおり母親用の最低年齢を使います。</RHAH_Settings_YoungAge_Tooltip>
   <RHAH_Settings_MotherAge>母親の最低年齢：{0}</RHAH_Settings_MotherAge>
-  <RHAH_Settings_MotherAge_Tooltip>母親と物乞いの母親は、少なくともこの年齢で訪れます。範囲は1～14歳、初期値は14歳。通常の最低年齢の方が高い場合は、そちらを使います。ラットキンの子供は変わりません。すでにいる訪問者は変わりません。</RHAH_Settings_MotherAge_Tooltip>
+  <RHAH_Settings_MotherAge_Tooltip>新しく来る母親と物乞いの母親は、少なくともこの年齢です。範囲は1～14歳、初期値は14歳。通常の到来年齢のほうが高い場合は、そちらを使います。ラットキンの子供は、子供用の年齢のままです。</RHAH_Settings_MotherAge_Tooltip>
   <RHAH_Settings_ImmobileBabies>歩けない乳幼児の訪問を許可</RHAH_Settings_ImmobileBabies>
   <RHAH_Settings_ImmobileBabies_Tooltip>Toddlersなどの幼児Modがない場合、4歳未満のラットキンの乳幼児は寝たままで、退去時は大人が抱えて連れ出す必要があります。オフにすると、ラットキンの子供は4歳以上になります。</RHAH_Settings_ImmobileBabies_Tooltip>
   <RHAH_Settings_ImmobileBabies_Toddlers>Toddlersが有効です。3歳未満でも自力で移動できます。このスイッチによる最低年齢の引き上げは行われません。</RHAH_Settings_ImmobileBabies_Toddlers>
@@ -45,18 +45,18 @@
   <RHAH_Settings_FemaleShare>女性の割合：{0}%</RHAH_Settings_FemaleShare>
   <RHAH_Settings_FemaleShare_Tooltip>「割合で指定」の場合のみ有効です。0なら全員男性、100なら全員女性になります。イベントで性別が指定されている人物は変わりません。</RHAH_Settings_FemaleShare_Tooltip>
   <RHAH_Settings_PlayerIdeo>プレイヤーの文化：{0}%</RHAH_Settings_PlayerIdeo>
-  <RHAH_Settings_PlayerIdeo_Tooltip>新しい訪問者と、後から入植する人のうち、この割合をコロニーの主要な文化に変えます。100なら全員、0なら到着時の文化のままです。奴隷と囚人は主要な文化の人数に入りません。Ideologyがない場合は使いません。</RHAH_Settings_PlayerIdeo_Tooltip>
+  <RHAH_Settings_PlayerIdeo_Tooltip>新しい訪問者と、後から入植する人のうち、この割合がプレイヤー派閥の主要な文化になります。100なら全員、0なら到着時の文化のままです。Ideologyがない場合、またはプレイヤー派閥に主要な文化がない場合は変わりません。</RHAH_Settings_PlayerIdeo_Tooltip>
   <RHAH_Settings_Apparel>服装</RHAH_Settings_Apparel>
   <RHAH_Settings_Apparel_0>普段着</RHAH_Settings_Apparel_0>
   <RHAH_Settings_Apparel_1>普段着</RHAH_Settings_Apparel_1>
   <RHAH_Settings_Apparel_2>普段着と耐寒・耐暑服</RHAH_Settings_Apparel_2>
   <RHAH_Settings_Apparel_3>衣服なし</RHAH_Settings_Apparel_3>
   <RHAH_Settings_MaxTraits>このModの特性数の上限：{0}</RHAH_Settings_MaxTraits>
-  <RHAH_Settings_MaxTraits_Tooltip>新しい訪問者が得るこのModの特性を、1人あたりこの数までに制限します。0では抽選しません。範囲は0～3。すでにいる訪問者は変わりません。</RHAH_Settings_MaxTraits_Tooltip>
+  <RHAH_Settings_MaxTraits_Tooltip>新しい訪問者が得るこのModの特性は、1人あたりこの数までです。0では付けません。範囲は0～3。すでにいる人は、持っている特性のままです。</RHAH_Settings_MaxTraits_Tooltip>
   <RHAH_Settings_VanillaTraits>バニラの特性を維持</RHAH_Settings_VanillaTraits>
-  <RHAH_Settings_VanillaTraits_Tooltip>オフにすると、新しい訪問者は年齢に応じたバニラの特性を得なくなります。このModの特性は上の上限に従って抽選します。</RHAH_Settings_VanillaTraits_Tooltip>
+  <RHAH_Settings_VanillaTraits_Tooltip>オフにすると、新しい訪問者は年齢に応じたバニラの特性を得ません。このModの特性は、上の上限に従って選ばれます。</RHAH_Settings_VanillaTraits_Tooltip>
   <RHAH_Settings_TraitAge>年齢に合った特性を選ぶ</RHAH_Settings_TraitAge>
-  <RHAH_Settings_TraitAge_Tooltip>オフにすると、子供用と大人用の特性がどちらも抽選対象になります。オンの場合、子供には大人用、大人には子供用の特性を付けません。</RHAH_Settings_TraitAge_Tooltip>
+  <RHAH_Settings_TraitAge_Tooltip>オフにすると、子供用と大人用の特性がどちらも選ばれます。オンの場合、子供には大人用、大人には子供用の特性は付きません。</RHAH_Settings_TraitAge_Tooltip>
   <RHAH_Settings_ContentSort>リストの分類</RHAH_Settings_ContentSort>
   <RHAH_Settings_ContentSort_0>出典別</RHAH_Settings_ContentSort_0>
   <RHAH_Settings_ContentSort_1>名前順</RHAH_Settings_ContentSort_1>
@@ -103,7 +103,7 @@
   <RHAH_Settings_Begging>物乞いを許可</RHAH_Settings_Begging>
   <RHAH_Settings_Begging_Tooltip>オフにすると、訪問者は入植者に食べ物をねだらなくなります。</RHAH_Settings_Begging_Tooltip>
   <RHAH_Settings_BegAutoGive>物乞いに成功したら所持品の食べ物を自動で渡す</RHAH_Settings_BegAutoGive>
-  <RHAH_Settings_BegAutoGive_Tooltip>初期設定はオフです。オンにすると、物乞いに成功した時、相手の所持品から物乞いを許可した食べ物を1食分取り、栄養の高い物を優先します。オフでも物乞いは行いますが、自動では渡さず、成功にも数えません。右クリックで渡す食べ物、救援エリアでの食事、世話による給餌には影響しません。</RHAH_Settings_BegAutoGive_Tooltip>
+  <RHAH_Settings_BegAutoGive_Tooltip>初期設定はオフです。オンにすると、物乞いに成功したとき、相手の所持品から物乞いを許可した食べ物を1食分取ります。栄養の高いものを優先します。オフでも訪問者は頼みますが、食べ物は所持品に残り、成功にも数えません。右クリックで渡す食べ物、救援エリアでの食事、世話による給餌はこれまでどおりです。</RHAH_Settings_BegAutoGive_Tooltip>
   <RHAH_Settings_BegSuccessChance>初回の物乞いの成功率：{0}%</RHAH_Settings_BegSuccessChance>
   <RHAH_Settings_BegSuccessChance_Tooltip>同じ入植者に初めて物乞いする時の基本成功率です。下の社交スキルの補正を加え、最大100%になります。初期値は35。</RHAH_Settings_BegSuccessChance_Tooltip>
   <RHAH_Settings_BegSocialBonus>社交スキル1レベルごとの成功率：+{0}%</RHAH_Settings_BegSocialBonus>
@@ -134,7 +134,7 @@
   <RHAH_Settings_BatchLeave>同じ集団全員で立ち去る</RHAH_Settings_BatchLeave>
   <RHAH_Settings_BatchLeave_Tooltip>オフにすると、傷害や追放の影響を受けるのはその1人だけです。同じ集団の他の訪問者は残ります。</RHAH_Settings_BatchLeave_Tooltip>
   <RHAH_Settings_ShortStayLockApparel>短期滞在中は現在の衣服を固定</RHAH_Settings_ShortStayLockApparel>
-  <RHAH_Settings_ShortStayLockApparel_Tooltip>初期値はオンです。短期滞在の開始時に、その時着ている衣服を固定します。滞在が終わる時、または囚人・奴隷・入植者になる時は、その時に固定した衣服だけを外します。オフにすると、新しく始まる短期滞在では衣服を固定しません。すでに滞在中の人はそのままです。</RHAH_Settings_ShortStayLockApparel_Tooltip>
+  <RHAH_Settings_ShortStayLockApparel_Tooltip>初期値はオンです。短期滞在の開始時に、そのとき着ている衣服を固定します。滞在が終わるとき、または囚人、奴隷、入植者になるときは、そのときに固定した衣服だけを外します。オフにすると、新しく始まる短期滞在では衣服を固定しません。すでに滞在中の人は、その衣服を固定したままです。</RHAH_Settings_ShortStayLockApparel_Tooltip>
   <RHAH_Settings_BroadcastCooldown>放送のクールダウン：{0}日</RHAH_Settings_BroadcastCooldown>
   <RHAH_Settings_BroadcastCooldown_Tooltip>放送後、次の放送まで待つ日数です。範囲は0～10日、初期値は3日。</RHAH_Settings_BroadcastCooldown_Tooltip>
   <RHAH_Settings_RefugeeCamp>避難キャンプの設営を許可</RHAH_Settings_RefugeeCamp>
@@ -184,7 +184,7 @@
   <RHAH_Settings_GiveFoods_Sort_2>バニラの分類別</RHAH_Settings_GiveFoods_Sort_2>
   <RHAH_Settings_GiveFoods_Other>その他</RHAH_Settings_GiveFoods_Other>
   <RHAH_Settings_RefugeeApparel>支給可能な衣服</RHAH_Settings_RefugeeApparel>
-  <RHAH_Settings_RefugeeApparel_Tooltip>オフにした衣服は新しい訪問者に支給されません。耐寒・耐暑服は環境設定のページで設定します。まず耐寒・耐暑服を着せ、その後、重複しない普段着を追加します。</RHAH_Settings_RefugeeApparel_Tooltip>
+  <RHAH_Settings_RefugeeApparel_Tooltip>オフにした衣服は、新しい訪問者には渡しません。耐寒・耐暑服は環境のページで設定し、先に着せます。普段着は、その服を置き換えない位置にだけ足します。</RHAH_Settings_RefugeeApparel_Tooltip>
   <RHAH_Settings_RefugeeApparel_All>すべて許可</RHAH_Settings_RefugeeApparel_All>
   <RHAH_Settings_RefugeeApparel_None>すべて禁止</RHAH_Settings_RefugeeApparel_None>
   <RHAH_Settings_RefugeeApparel_Search>衣服やModを検索</RHAH_Settings_RefugeeApparel_Search>
@@ -200,21 +200,21 @@
   <RHAH_Menu_Narrative>物語</RHAH_Menu_Narrative>
   <RHAH_Menu_Other>その他</RHAH_Menu_Other>
   <RHAH_Menu_Environment>環境への適応</RHAH_Menu_Environment>
-  <RHAH_Menu_Environment_Note>気温が新しい訪問者の耐えられる範囲を外れた場合、必要な防護を満たす最も薄い耐寒・耐暑服を支給します。どれも足りなければ最も厚い服を使います。すでにいる訪問者は変わりません。</RHAH_Menu_Environment_Note>
+  <RHAH_Menu_Environment_Note>気温が新しい訪問者の耐えられる範囲を外れた場合、必要な防護を満たす最も薄い耐寒・耐暑服を渡します。どれも足りなければ、最も厚い服を使います。すでにいる人は、着ている衣服のままです。</RHAH_Menu_Environment_Note>
   <RHAH_Menu_Environment_Disabled>耐寒・耐暑服は無効です。新しい訪問者には追加で支給されません。</RHAH_Menu_Environment_Disabled>
   <RHAH_Menu_Environment_Cold>耐寒</RHAH_Menu_Environment_Cold>
   <RHAH_Menu_Environment_Heat>耐暑</RHAH_Menu_Environment_Heat>
   <RHAH_Settings_TemperatureApparel>{0}を使用</RHAH_Settings_TemperatureApparel>
-  <RHAH_Settings_TemperatureApparel_Tooltip>オフにすると、新しい訪問者はこの耐寒・耐暑服を受け取りません。すでに着ている訪問者は変わりません。</RHAH_Settings_TemperatureApparel_Tooltip>
+  <RHAH_Settings_TemperatureApparel_Tooltip>オフにすると、新しい訪問者はこの耐寒・耐暑服を受け取りません。すでに着ている人は、そのまま着続けます。</RHAH_Settings_TemperatureApparel_Tooltip>
   <RHAH_Settings_TemperatureInsulation>{0}：{2} +{1}°C</RHAH_Settings_TemperatureInsulation>
   <RHAH_Settings_TemperatureInsulation_Tooltip>ドラッグでこの耐寒・耐暑服の防護性能を設定します。範囲は0～100。0にすると、この防護はなくなります。</RHAH_Settings_TemperatureInsulation_Tooltip>
   <RHAH_Menu_CompatDiagnostics>互換性と診断</RHAH_Menu_CompatDiagnostics>
   <RHAH_Menu_Ending>エンディング</RHAH_Menu_Ending>
   <RHAH_Menu_Genes>遺伝子</RHAH_Menu_Genes>
-  <RHAH_Menu_DevEvents>開発者用イベント</RHAH_Menu_DevEvents>
+  <RHAH_Menu_DevEvents>イベントを手動で発生</RHAH_Menu_DevEvents>
   <RHAH_Menu_EventFrequency>イベント頻度</RHAH_Menu_EventFrequency>
-  <RHAH_Menu_PawnHistory>キャラクターの生い立ち</RHAH_Menu_PawnHistory>
-  <RHAH_Menu_Developer>開発者</RHAH_Menu_Developer>
+  <RHAH_Menu_PawnHistory>訪問者の生い立ち</RHAH_Menu_PawnHistory>
+  <RHAH_Menu_Developer>開発者モード</RHAH_Menu_Developer>
   <RHAH_Menu_Experimental>実験的機能</RHAH_Menu_Experimental>
   <RHAH_Menu_Removal>セーブとアンインストール</RHAH_Menu_Removal>
   <RHAH_RemovalSection>現在のセーブ</RHAH_RemovalSection>
@@ -241,24 +241,24 @@
   <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}。放送可：{4}。</RHAH_Menu_EventMeta>
   <RHAH_Menu_Events_Note>チェックしたイベントが発生可能になります。スライダーで大まかに、右の入力欄で正確な値を設定します。規模は人数や要求量に影響します。重みが0なら発生しません。</RHAH_Menu_Events_Note>
   <RHAH_Menu_EventEnabled>発生を許可</RHAH_Menu_EventEnabled>
-  <RHAH_Menu_EventEnabled_Tip>オフにすると、このイベントは抽選されず、デバッグページからの予約もできません。すでにいる訪問者は変わりません。</RHAH_Menu_EventEnabled_Tip>
+  <RHAH_Menu_EventEnabled_Tip>オフにすると、このイベントは選ばれず、開発者モードのページからも予約できません。すでにいる訪問者は、今のままです。</RHAH_Menu_EventEnabled_Tip>
   <RHAH_Menu_DebugPoints>規模</RHAH_Menu_DebugPoints>
-  <RHAH_Menu_DebugPoints_Tip>自然発生とデバッグでの発生の両方に、この規模を使います。訪問者数、援助や情報交換での要求量が変わります。範囲は1～10000。スライダーで大まかに、入力欄で正確な値を設定します。</RHAH_Menu_DebugPoints_Tip>
+  <RHAH_Menu_DebugPoints_Tip>自然に起きるイベントも、開発者モードからの発生も、この規模を使います。訪問者の人数、援助や情報交換での要求量が変わります。範囲は1～10000。スライダーで大まかに、入力欄で正確な値を設定します。</RHAH_Menu_DebugPoints_Tip>
   <RHAH_Menu_IncidentWeight>発生の重み</RHAH_Menu_IncidentWeight>
-  <RHAH_Menu_IncidentWeight_Tip>100は一覧で定義された重みです。大きいほど抽選されやすく、0では抽選しません。スライダーで大まかに、入力欄で正確な値を設定します。</RHAH_Menu_IncidentWeight_Tip>
+  <RHAH_Menu_IncidentWeight_Tip>100はイベント一覧の重みです。大きいほど現れやすく、0では現れません。スライダーで大まかに、入力欄で正確な値を設定します。</RHAH_Menu_IncidentWeight_Tip>
   <RHAH_Menu_Attitude>到着時の態度</RHAH_Menu_Attitude>
-  <RHAH_Menu_Attitude_Tip>このイベントで訪問者が現れる時の態度を、5段階から選びます。初期値は一覧で定義された態度です。スイインがストーリーテラーで信頼が負の場合は、さらに1段階悪化します。敵対よりは下がりません。すでにいる訪問者は変わりません。</RHAH_Menu_Attitude_Tip>
+  <RHAH_Menu_Attitude_Tip>このイベントの訪問者が現れるときの態度を、5段階から選びます。変えていなければ、イベント一覧の態度を使います。スイインがストーリーテラーで信頼が負の場合は、さらに1段階悪化します。敵対は敵対のままです。すでにいる訪問者の態度は変わりません。</RHAH_Menu_Attitude_Tip>
   <RHAH_Menu_Attitude_Hostile>敵対</RHAH_Menu_Attitude_Hostile>
   <RHAH_Menu_Attitude_LeaningHostile>やや敵対的</RHAH_Menu_Attitude_LeaningHostile>
   <RHAH_Menu_Attitude_Neutral>中立</RHAH_Menu_Attitude_Neutral>
   <RHAH_Menu_Attitude_LeaningFriendly>やや友好的</RHAH_Menu_Attitude_LeaningFriendly>
   <RHAH_Menu_Attitude_Friendly>友好的</RHAH_Menu_Attitude_Friendly>
-  <RHAH_Menu_Chain>イベントの連鎖</RHAH_Menu_Chain>
-  <RHAH_Menu_Chain_Tip>開発者用の発生設定です。短い連鎖は今回だけ発生します。長い連鎖は今後の続編用ですが、現時点では今回だけ発生します。</RHAH_Menu_Chain_Tip>
-  <RHAH_Menu_Chain_Short>短い連鎖</RHAH_Menu_Chain_Short>
-  <RHAH_Menu_Chain_Long>長い連鎖</RHAH_Menu_Chain_Long>
-  <RHAH_Menu_Trigger>発生させる</RHAH_Menu_Trigger>
-  <RHAH_Menu_TriggerInstant>即時生成</RHAH_Menu_TriggerInstant>
+  <RHAH_Menu_Chain>その後</RHAH_Menu_Chain>
+  <RHAH_Menu_Chain_Tip>短いその後では、この一行が現れたあと、捕食者が向かうことがあります。長いその後では、その後の設定があるイベントで、子供がその後の年齢に達してから手紙が届きます。今回発生する一行は、どちらも一度だけです。</RHAH_Menu_Chain_Tip>
+  <RHAH_Menu_Chain_Short>短いその後</RHAH_Menu_Chain_Short>
+  <RHAH_Menu_Chain_Long>長いその後</RHAH_Menu_Chain_Long>
+  <RHAH_Menu_Trigger>通常の手順で発生</RHAH_Menu_Trigger>
+  <RHAH_Menu_TriggerInstant>今すぐこのマップに配置</RHAH_Menu_TriggerInstant>
   <RHAH_Menu_TriggerInstant_Tip>予約やワールドマップ上の移動を省略し、現在のマップにすぐ生成します。キャラバンへの待ち伏せでは襲撃者を、避難キャンプでは住民を直接生成します。新しいコンテンツとイベントのスイッチは適用されます。</RHAH_Menu_TriggerInstant_Tip>
   <RHAH_Menu_Instant_Failed>生成できませんでした。イベントのスイッチ、マップ条件、ログを確認してください。</RHAH_Menu_Instant_Failed>
   <RHAH_Menu_Queue_Disabled>新しいコンテンツは無効です。</RHAH_Menu_Queue_Disabled>
@@ -268,7 +268,7 @@
   <RHAH_Menu_Queue_Fired>生成しました。</RHAH_Menu_Queue_Fired>
   <RHAH_Menu_Queue_Queued>予約しました。一時停止ウィンドウを閉じると生成されます。</RHAH_Menu_Queue_Queued>
   <RHAH_Menu_Queue_Failed>予約できませんでした。</RHAH_Menu_Queue_Failed>
-  <RHAH_Menu_DevEvents_Note>「発生させる」は通常の手順で予約し、マップへの訪問者は先にワールドマップ上を移動します。「即時生成」は現在のマップにすぐ生成するため、ウィンドウを閉じたりキャラバンを出したりする必要はありません。</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_DevEvents_Note>開発者モードのページです。「通常の手順で発生」では予約され、マップへの訪問者は先にワールドマップを移動します。「今すぐこのマップに配置」では、このマップにすぐ現れます。ウィンドウを閉じる必要も、キャラバンを出す必要もありません。</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>現在のマップがありません。</RHAH_Menu_Pawns_NoMap>
   <RHAH_Menu_Pawns_None>このマップに「飢えと災い」の訪問者はいません。</RHAH_Menu_Pawns_None>
   <RHAH_Menu_Pawns_Invalid>この訪問者はもういません。</RHAH_Menu_Pawns_Invalid>
@@ -291,9 +291,9 @@
   <RHAH_Menu_Ending_Gap>ここではまだエンディングの有効・無効を設定できません。</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>ここではまだ遺伝子を調整できません。</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>Biotechが必要です。有効にすると、ここで訪問者のゼノタイプを調整できます。</RHAH_Menu_Genes_NoBiotech>
-  <RHAH_Menu_Genes_Note>表示される割合は、「訪問者の生成を高速化」がオンの場合の抽選確率です。重みの範囲は0～100で、0は抽選に参加しません。ラットキンに許可されたゼノタイプだけを表示します。原種ラットキンの初期相対重みは100で、他のゼノタイプと同じ抽選に参加し、各重みに応じて確率を計算します。すべて0の場合は、許可された原種ラットキンを優先し、なければラットキンの標準ゼノタイプ候補から既定の割合で生成します。標準候補が空の場合は、許可された飢饉ラットキンを試します。高速化をオフにすると、標準候補を直接使用します。使用可能なゼノタイプがない場合、訪問者の生成を停止します。</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_Note>表示される割合は、訪問者の出現を速くしているときの確率です。重みは0～100です。0のゼノタイプは現れません。ここに出るのは、ラットキンが使えるゼノタイプだけです。原種ラットキンの初期の相対重みは100で、ほかのゼノタイプと一緒に選ばれます。確率は、その重みを合計で割った値です。すべての重みが0なら、許可された原種ラットキンを使います。原種が使えない場合は、ラットキン自身のゼノタイプの割合を使います。それも空なら、許可された飢饉ラットキンを試します。出現を速くする設定をオフにすると、その割合を直接使います。使えるゼノタイプがなければ、訪問者の生成は止まります。</RHAH_Menu_Genes_Note>
   <RHAH_Menu_Genes_Reset>重みを初期値に戻す</RHAH_Menu_Genes_Reset>
-  <RHAH_Menu_Genes_Fallback>現在の重みの合計は0です。許可された原種ラットキン、またはラットキンの標準ゼノタイプを使用します。どちらも使えなければ、許可された飢饉ラットキンを試します。すべて使用不可の場合、訪問者の生成を停止します。</RHAH_Menu_Genes_Fallback>
+  <RHAH_Menu_Genes_Fallback>現在の重みの合計は0です。訪問者は、許可された原種ラットキンか、ラットキン自身の割合を使います。それも空なら、許可された飢饉ラットキンを試します。どれも使えなければ、訪問者の生成は止まります。</RHAH_Menu_Genes_Fallback>
   <RHAH_Menu_Genes_WeightTip>推奨の重み：{1}。抽選確率は、この重みを有効な重みの合計で割った値です。</RHAH_Menu_Genes_WeightTip>
   <RHAH_Menu_Genes_Missing>現在、このゼノタイプは読み込まれていません：{0}</RHAH_Menu_Genes_Missing>
   <RHAH_Menu_Genes_Switches>このModの遺伝子</RHAH_Menu_Genes_Switches>
@@ -318,34 +318,34 @@
   <RHAH_Menu_Genes_FertilityTip>通常の人と比べた妊娠確率です。範囲は100～1000%。</RHAH_Menu_Genes_FertilityTip>
   <RHAH_Menu_Genes_GestationTip>最短3日。上限はバニラの妊娠期間の下限を超えません。</RHAH_Menu_Genes_GestationTip>
   <RHAH_Menu_Genes_LovinPregnancyTip>愛し合いが正常に終わった後の妊娠確率です。範囲は0～100%。双方それぞれの妊娠確率も引き続き掛けられます。</RHAH_Menu_Genes_LovinPregnancyTip>
-  <RHAH_Menu_PawnHistory_Note>新しい訪問者は、チェックした生い立ちから1つを抽選します。イベントで素性が設定されている人物の生い立ちは変更しませんが、特性は抽選できます。</RHAH_Menu_PawnHistory_Note>
+  <RHAH_Menu_PawnHistory_Note>新しい訪問者は、チェックした生い立ちから一つを受け取ります。イベントですでに素性が決まっている人は、その素性のままです。特性は、そのあとでも選ばれます。</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>すべての生い立ちを有効にする</RHAH_Menu_PawnHistory_EnableAll>
   <RHAH_Menu_PawnHistory_DisableAll>すべての生い立ちを無効にする</RHAH_Menu_PawnHistory_DisableAll>
-  <RHAH_Menu_PawnHistory_ItemTip>オフにすると、この生い立ちは抽選されません。すでにいる人物は変わりません。</RHAH_Menu_PawnHistory_ItemTip>
+  <RHAH_Menu_PawnHistory_ItemTip>オフにすると、新しい訪問者はこの生い立ちを受け取りません。すでにいる人は、今の生い立ちのままです。</RHAH_Menu_PawnHistory_ItemTip>
   <RHAH_Menu_PawnTrait>特性</RHAH_Menu_PawnTrait>
   <RHAH_Menu_PawnTrait_EnableAll>すべての特性を有効にする</RHAH_Menu_PawnTrait_EnableAll>
   <RHAH_Menu_PawnTrait_DisableAll>すべての特性を無効にする</RHAH_Menu_PawnTrait_DisableAll>
-  <RHAH_Menu_PawnTrait_ItemTip>オフにすると、この特性は抽選されません。すでにいる人物は変わりません。</RHAH_Menu_PawnTrait_ItemTip>
+  <RHAH_Menu_PawnTrait_ItemTip>オフにすると、新しい訪問者はこの特性を受け取りません。すでにいる人は、今の特性のままです。</RHAH_Menu_PawnTrait_ItemTip>
   <RHAH_Menu_PawnTrait_Weight>重み</RHAH_Menu_PawnTrait_Weight>
-  <RHAH_Menu_PawnTrait_WeightTip>大きいほど抽選されやすく、0では抽選しません。選ばれた後、重みを100で割った確率で付与するか決めます。スライダーで大まかに、入力欄で正確な値を設定します。</RHAH_Menu_PawnTrait_WeightTip>
-  <RHAH_Settings_PawnHistories>新しい訪問者の生い立ちを抽選</RHAH_Settings_PawnHistories>
-  <RHAH_Settings_PawnHistories_Tooltip>オフにすると、新しい訪問者はこれらの生い立ちを得なくなります。すでにいる訪問者は変わりません。</RHAH_Settings_PawnHistories_Tooltip>
-  <RHAH_Settings_PawnTraits>新しい訪問者の特性を抽選</RHAH_Settings_PawnTraits>
-  <RHAH_Settings_PawnTraits_Tooltip>オフにすると、新しい訪問者はこのModの特性を得なくなります。すでにいる人物は変わりません。1人あたりの最大数は上の上限に従います。</RHAH_Settings_PawnTraits_Tooltip>
+  <RHAH_Menu_PawnTrait_WeightTip>大きいほど選ばれやすく、0では現れません。選ばれたあと、重みを100で割った確率で、実際に付くかどうかが決まります。スライダーで大まかに、入力欄で正確な値を設定します。</RHAH_Menu_PawnTrait_WeightTip>
+  <RHAH_Settings_PawnHistories>新しい訪問者に生い立ちを付ける</RHAH_Settings_PawnHistories>
+  <RHAH_Settings_PawnHistories_Tooltip>オフにすると、新しい訪問者はこれらの生い立ちを持たずに現れます。すでにいる人は、今の生い立ちのままです。</RHAH_Settings_PawnHistories_Tooltip>
+  <RHAH_Settings_PawnTraits>新しい訪問者にこのModの特性を付ける</RHAH_Settings_PawnTraits>
+  <RHAH_Settings_PawnTraits_Tooltip>オフにすると、新しい訪問者はこのModの特性を得ません。すでにいる人は、今の特性のままです。1人あたりの数は、これまでどおり上の上限に従います。</RHAH_Settings_PawnTraits_Tooltip>
   <RHAH_Menu_Experimental_Gap>現在、このページでは訪問者の生成の高速化のみ設定できます。</RHAH_Menu_Experimental_Gap>
   <RHAH_Menu_Experimental_Note>これらの設定は訪問者が現れるまでの処理時間を変えます。オフにしても、訪問者は各イベントで定められた装備、生い立ち、健康状態、遺伝子で現れます。</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>訪問者の生成を高速化</RHAH_Settings_OptimizeGeneration>
-  <RHAH_Settings_OptimizeGeneration_Tooltip>訪問者がより早く現れるようになり、ランダムな服装や素性の選択が一部省略されます。ゼノタイプの指定がない場合は、遺伝子ページの重みに従って抽選します。</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>線は、このイベント群の間隔式から算出した、これからの各日に少なくとも1回発生する確率です。横軸は日数、縦軸はその日の確率を表します。平均日数は式内のaverageDaysです。0にすると、このイベント群を無効にします。線にマウスを合わせると、その日の確率が表示されます。グラフは現在の信頼と季節から推定します。</RHAH_Menu_Frequency_Gap>
+  <RHAH_Settings_OptimizeGeneration_Tooltip>訪問者がより早く現れ、ランダムな服装と素性は少なくなります。ゼノタイプが決まっていない場合は、遺伝子ページの重みで決まります。</RHAH_Settings_OptimizeGeneration_Tooltip>
+  <RHAH_Menu_Frequency_Gap>線は、このグループがこれからの各日に少なくとも1回起きる確率です。上の平均日数と間隔の式から求めます。横軸は日数、縦軸はその日の確率です。0にすると、このグループは起きません。線にマウスを合わせると、その日の確率が表示されます。グラフは現在の信頼と季節で推定します。</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>好ましいイベントの平均間隔（日）</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>好ましくないイベントの平均間隔（日）</RHAH_Menu_Frequency_Negative>
   <RHAH_Menu_Frequency_Window>表示日数</RHAH_Menu_Frequency_Window>
-  <RHAH_Menu_Frequency_WindowTip>曲線に表示する今後の日数です。範囲は5～360日。グラフの横幅だけを変え、イベントの頻度は変えません。</RHAH_Menu_Frequency_WindowTip>
+  <RHAH_Menu_Frequency_WindowTip>曲線に表示する今後の日数です。5～360日。表示する日数だけが変わり、イベントの頻度は変わりません。</RHAH_Menu_Frequency_WindowTip>
   <RHAH_Menu_Frequency_Curve>その日の発生確率</RHAH_Menu_Frequency_Curve>
   <RHAH_Menu_Frequency_CurveTip>{0}日目、その日の確率：{1}。</RHAH_Menu_Frequency_CurveTip>
   <RHAH_Menu_Frequency_Pace>間隔の計算式</RHAH_Menu_Frequency_Pace>
-  <RHAH_Menu_Frequency_PaceTip>式は、その日の平均間隔を日単位で返します。averageDays、day、trust、season、演算子 + - * /、括弧、min、max、abs、clampを使用できます。dayは定住後の日数、seasonは0～3です。結果は0～60に制限します。式の誤り、0による除算、空欄の場合はaverageDaysを使用します。0にすると、このイベント群を無効にします。</RHAH_Menu_Frequency_PaceTip>
-  <RHAH_Menu_Developer_Note>デバッグでの予約は開発者用イベントのページにあります。バージョンとIrisMenusの情報は「互換性と診断」にあります。</RHAH_Menu_Developer_Note>
+  <RHAH_Menu_Frequency_PaceTip>その日の平均間隔を、日単位で表します。上の平均日数（averageDaysと書きます）、day、trust、season、演算子 + - * /、括弧、min、max、abs、clampを使えます。dayは定住後の日数、seasonは0～3です。結果は0～60に収まります。式の誤り、0による除算、空欄の場合は、上の平均日数を使います。結果が0なら、このグループは起きません。</RHAH_Menu_Frequency_PaceTip>
+  <RHAH_Menu_Developer_Note>開発者モードの予約は、イベントを手動で発生させるページにあります。バージョンとIrisMenusの情報は「互換性と診断」にあります。</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>最後に一覧に表示した訪問者</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>物乞い</RHAH_Menu_Family_Beggar>
   <RHAH_Menu_Family_Thief>窃盗</RHAH_Menu_Family_Thief>
@@ -400,7 +400,7 @@
   <RHAH_Settings_FoodGiveHint_Tooltip>チェックすると、初めて給餌を選んだ時も、訪問者への食べ物の渡し方を表示しません。</RHAH_Settings_FoodGiveHint_Tooltip>
   <RHAH_Settings_TraderIgnoreEnvironment>キャラバンが悪環境を無視</RHAH_Settings_TraderIgnoreEnvironment>
   <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>オンにすると、被災者のキャラバンは、寒さ、暑さ、危険な天候のためにマップに入ってすぐ立ち去ることはありません。オフの場合は、悪環境で立ち去ります。</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
-  <RHAH_Settings_TraderIgnoreEnclosed>キャラバンが閉鎖空間を無視</RHAH_Settings_TraderIgnoreEnclosed>
+  <RHAH_Settings_TraderIgnoreEnclosed>キャラバンは閉じた部屋に留まる</RHAH_Settings_TraderIgnoreEnclosed>
   <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>オンにすると、被災者のキャラバンは閉じ込められた部屋から脱出するための掘削を行いません。オフの場合、マップの端にたどり着けなければ、掘って道を作り立ち去ります。</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
   <RHAH_Settings_SpaceApproach>軌道の拠点で事件を許可</RHAH_Settings_SpaceApproach>
   <RHAH_Settings_SpaceApproach_Tooltip>初期設定はオフです。オフのとき、小惑星や SOS2 の軌道船を含む軌道上の拠点には、歩いて向かうラットキンの一行は生成されず、マップ事件も抽選されません。オンにすると許可されます。すでにオデッセイの軌道層にいる一行は、シャトルの離陸を妨げません。</RHAH_Settings_SpaceApproach_Tooltip>
@@ -444,7 +444,7 @@
   <RHAH_Choice_Intel_Label>情報</RHAH_Choice_Intel_Label>
   <RHAH_Choice_Intel_Text>ラットキンが拠点の近くにやって来ました。ある場所についての手掛かりを知っていて、{2}を{1}渡せば教えるそうです。ただでは教えません。先に品物を渡してから、場所を教えるという条件です。\n\n引き渡すと、該当する地点がワールドマップに表示されます。</RHAH_Choice_Intel_Text>
   <RHAH_Choice_Baby_Label>赤ん坊を要求</RHAH_Choice_Baby_Label>
-  <RHAH_Choice_Baby_Text>ラットキンが拠点の近くにやって来て、赤ん坊を1人ほしいと言っています。食べ物も薬もシルバーも求めず、よりによって子供です。\n\n今回は子供を渡すことはできません。拒否するか、返答を保留できます。</RHAH_Choice_Baby_Text>
+  <RHAH_Choice_Baby_Text>ラットキンが私たちの拠点の近くにやって来て、赤ん坊を1人ほしいと言っています。\n\n拒否するか、返答を保留できます。食べ物による代替を有効にしている場合は、必要な簡単な食事を代わりに渡せます。子供を渡すことはできません。</RHAH_Choice_Baby_Text>
   <RHAH_Choice_Abandoned_Label>置き去りにされた子ラットキン</RHAH_Choice_Abandoned_Label>
   <RHAH_Choice_Abandoned_Text>ラットキンの母親が、なぜか子供たちを私たちの拠点の近くに置いていきました。もう養えないのに見捨てることもできず、私たちのところへ連れてきたのでしょうか。子供たちを引き取ってほしいようです。\n\nこの子たちだけでは、おそらく生きていけません。どうしましょうか？</RHAH_Choice_Abandoned_Text>
   <RHAH_Choice_Refugees_Label>難民</RHAH_Choice_Refugees_Label>
@@ -482,14 +482,14 @@
   <RHAH_Choice_Orphan_Label>ペストの孤児</RHAH_Choice_Orphan_Label>
   <RHAH_Choice_Orphan_Text>ラットキンの孤児が1人、私たちの拠点の近くにやって来ました。母親はついていません。この災いの中では、大人が1人いなくなるだけで、生き延びる手段がいくつも失われてしまいます。\n\nどうしましょうか？</RHAH_Choice_Orphan_Text>
   <RHAH_Choice_KinshipGrown_Text>ラットキンが1人、私たちの拠点の近くにやって来て、入植者を見るなり「ママ」と呼びました。呼ばれた人には見覚えがないのに、相手は人違いではないと言い張っています。\n\nどうしましょうか？</RHAH_Choice_KinshipGrown_Text>
-  <RHAH_Choice_VisitorHint>訪問者への対応：返答期限は{0}日です。利用できる選択肢は下にあります。食べ物を渡す場合は、入植者を選択して訪問者を右クリックしてください。拒否したり期限が過ぎたりすると、訪問者は立ち去るか敵対する場合があります。結果は態度と集団の反応設定によります。</RHAH_Choice_VisitorHint>
-  <RHAH_Choice_RequestHint>返答期限：{0}日。拒否したり期限が過ぎたりすると、訪問者は立ち去るか敵対する場合があります。結果は態度と集団の反応設定によります。</RHAH_Choice_RequestHint>
-  <RHAH_Choice_IntelHint>返答期限：{0}日。品物を渡さなければ地点は教えてもらえません。拒否したり期限が過ぎたりすると、訪問者は立ち去るか敵対する場合があります。結果は態度と集団の反応設定によります。</RHAH_Choice_IntelHint>
-  <RHAH_Choice_PlagueHint>ペスト：この集団の訪問者は感染しており、コロニー内に病気が広がる可能性があります。検疫の制限は現在の設定に従います。</RHAH_Choice_PlagueHint>
-  <RHAH_Choice_PlagueDisabledHint>ペストは無効です。この集団はこのイベントによって病気になったり、検疫に入ったりしません。</RHAH_Choice_PlagueDisabledHint>
-  <RHAH_Choice_ChildExchangeFoodHint>引き渡し条件：今回は子供を渡せません。食べ物による代替は有効で、子供1人につき簡単な食事{0}食分、今回は合計{1}食分が必要です。食べ物を渡しても、子供が自動でコロニーに加入することはありません。</RHAH_Choice_ChildExchangeFoodHint>
-  <RHAH_Choice_ChildExchangeNoFoodHint>引き渡し条件：今回は子供を渡せず、食べ物による代替も無効です。拒否するか、返答を保留できます。</RHAH_Choice_ChildExchangeNoFoodHint>
-  <RHAH_Choice_ChildExchangeZeroFoodHint>引き渡し条件：今回は子供を渡せません。食べ物による代替は有効ですが、子供1人あたりの簡単な食事が0に設定されているため、引き渡しできません。</RHAH_Choice_ChildExchangeZeroFoodHint>
+  <RHAH_Choice_VisitorHint>返答できるのは{0}日です。食べ物を渡す場合は、入植者を選んで訪問者を右クリックしてください。拒否するか期限が過ぎると、訪問者は態度と集団の反応設定に従って立ち去るか、敵対します。</RHAH_Choice_VisitorHint>
+  <RHAH_Choice_RequestHint>返答できるのは{0}日です。拒否するか期限が過ぎると、訪問者は態度と集団の反応設定に従って立ち去るか、敵対します。</RHAH_Choice_RequestHint>
+  <RHAH_Choice_IntelHint>返答できるのは{0}日です。物資を渡すと、訪問者は地点を教えてくれます。拒否するか期限が過ぎると、訪問者は態度と集団の反応設定に従って立ち去るか、敵対します。</RHAH_Choice_IntelHint>
+  <RHAH_Choice_PlagueHint>この訪問者たちはペストを抱えており、コロニー内に広がる可能性があります。検疫は現在の設定に従います。</RHAH_Choice_PlagueHint>
+  <RHAH_Choice_PlagueDisabledHint>ペストは無効です。この一行は健康なまま現れ、検疫も行いません。</RHAH_Choice_PlagueDisabledHint>
+  <RHAH_Choice_ChildExchangeFoodHint>この依頼は簡単な食事で応えられます。子供1人につき{0}食分、今回は合計{1}食分です。子供を渡すことはできません。子供たちをコロニーに受け入れるかどうかは、別に決める必要があります。</RHAH_Choice_ChildExchangeFoodHint>
+  <RHAH_Choice_ChildExchangeNoFoodHint>食べ物による代替は無効で、子供を渡すこともできません。拒否するか、返答を保留できます。</RHAH_Choice_ChildExchangeNoFoodHint>
+  <RHAH_Choice_ChildExchangeZeroFoodHint>子供1人あたりの食事数が0に設定されているため、引き渡せません。食事を渡すには、数を0より大きくしてください。子供を渡すことはできません。</RHAH_Choice_ChildExchangeZeroFoodHint>
   <RHAH_Choice_AbandonedGrown_Text>ラットキンの母親が、なぜか子供たちを私たちの拠点の近くに置いていきました。もう養えないのに見捨てることもできず、私たちのところへ連れてきたのでしょうか。受け入れてほしいようです。\n\n世話をする人がいなければ、子供たちはおそらく生きていくのが難しいでしょう。どうしましょうか？</RHAH_Choice_AbandonedGrown_Text>
   <RHAH_Choice_ChildExchangeGrown_Text>ラットキンの母親が、ラットキンを1人、私たちの拠点の近くに連れてきました。立ち去る前に、途切れ途切れに話します。「この子をもう食べさせていけないんです、チュウ。食べ物を少し頂けませんか。それとも、交換しませんか？」\n\nこの母親は自分の子供を、食べ物、あるいは「食べ物」と交換したいそうです。どうしましょうか？</RHAH_Choice_ChildExchangeGrown_Text>
   <RHAH_Choice_BeggarFamilyGrown_Text>{0}がやって来ました。\n\n飢饉に追われたラットキンの母親と{1}人の子供が、私たちの拠点の近くまで来ました。母親は食べ物を乞い、子供たちはそのそばにいます。\n\n「お願いです、チュウ。私たち親子に少し食べ物を恵んでください」\n\n少し間を置いて、母親は続けました。「どんな仕事でも、何でもします。不満なんてありません」\n\nどうしましょうか？</RHAH_Choice_BeggarFamilyGrown_Text>
@@ -504,63 +504,63 @@
   <RHAH_Choice_HerbalMedicine>薬草</RHAH_Choice_HerbalMedicine>
   <RHAH_Choice_Silver>シルバー</RHAH_Choice_Silver>
   <RHAH_Choice_Deliver>引き渡す（物資を渡す）</RHAH_Choice_Deliver>
-  <RHAH_Choice_Reject>拒否（態度に応じて退去または敵対）</RHAH_Choice_Reject>
-  <RHAH_Choice_Ignore>無視（関わらない）</RHAH_Choice_Ignore>
+  <RHAH_Choice_Reject>拒否（立ち去るか、敵対することがある）</RHAH_Choice_Reject>
+  <RHAH_Choice_Ignore>無視（ひとまず関わらない）</RHAH_Choice_Ignore>
   <RHAH_Choice_Join>受け入れる（コロニーに加入）</RHAH_Choice_Join>
-  <RHAH_Choice_Hire>長期労働者として雇う（{0}、契約終了後に退去）</RHAH_Choice_Hire>
+  <RHAH_Choice_Hire>長期労働者として雇う（{0}後に立ち去る）</RHAH_Choice_Hire>
   <RHAH_Choice_Feed>食べ物を与える（渡されるのを待つ）</RHAH_Choice_Feed>
-  <RHAH_Choice_Recruit>短期労働者として受け入れる（{0}、契約終了後に退去）</RHAH_Choice_Recruit>
-  <RHAH_Choice_Enslave>奴隷にする（対象の訪問者をその場で奴隷にし、反抗心を0にする）</RHAH_Choice_Enslave>
-  <RHAH_Choice_Capture>捕らえる（対象の訪問者をその場で囚人にし、12時間麻酔）</RHAH_Choice_Capture>
-  <RHAH_Choice_Attack>攻撃（集団全員が敵対）</RHAH_Choice_Attack>
+  <RHAH_Choice_Recruit>短期労働者として受け入れる（{0}後に立ち去る）</RHAH_Choice_Recruit>
+  <RHAH_Choice_Enslave>奴隷にする（その場で奴隷になり、反抗心をなくす）</RHAH_Choice_Enslave>
+  <RHAH_Choice_Capture>捕らえる（その場で囚人になり、12時間眠る）</RHAH_Choice_Capture>
+  <RHAH_Choice_Attack>攻撃（一行全員が敵対する）</RHAH_Choice_Attack>
   <RHAH_Choice_Ally>{0}へ送る</RHAH_Choice_Ally>
-  <RHAH_Choice_NoAlly>受け入れ可能な同盟派閥がありません。</RHAH_Choice_NoAlly>
-  <RHAH_Choice_AllySent>{0}人を{1}へ送る手配をしました。実際にマップを離れてから同盟派閥に所属します。相手の拠点に直接出現するわけではありません。友好度はバニラの治療と退去の条件に従って計算されます。</RHAH_Choice_AllySent>
-  <RHAH_Choice_NoCustodyTarget>身分を変更できる訪問者がいません。精神崩壊中、すでにその場の訪問者ではない、または拘禁を許可されていない訪問者は変更できません。</RHAH_Choice_NoCustodyTarget>
-  <RHAH_Choice_NoPresent>操作時、その場に身分を変更できる訪問者がいませんでした。</RHAH_Choice_NoPresent>
-  <RHAH_Choice_NoRecruit>受け入れ、雇用、コロニーへの加入が許可されている訪問者はいません。</RHAH_Choice_NoRecruit>
-  <RHAH_Choice_NoTransfer>移送とマップからの退去が両方許可されている訪問者はいません。</RHAH_Choice_NoTransfer>
-  <RHAH_Choice_NoIdeology>奴隷化にはIdeology DLCを有効にする必要があります。</RHAH_Choice_NoIdeology>
-  <RHAH_Choice_CustodyFailed>身分を変更できた訪問者はいません。この手紙には引き続き対応できます。</RHAH_Choice_CustodyFailed>
-  <RHAH_Choice_FeedHint>訪問者はその場で待ちます。入植者を1人選択し、待っている訪問者を右クリックして食べ物を渡してください。この選択だけでは、届ける人を自動で割り当てません。</RHAH_Choice_FeedHint>
+  <RHAH_Choice_NoAlly>受け入れられる同盟派閥がありません。</RHAH_Choice_NoAlly>
+  <RHAH_Choice_AllySent>{0}人が{1}へ向かっています。このマップを離れると、その派閥の一員になります。相手の拠点で直接見つけることはできません。友好度は、受けた治療と無事に立ち去れるかどうかで変わります。</RHAH_Choice_AllySent>
+  <RHAH_Choice_NoCustodyTarget>今、捕らえたり奴隷にしたりできる訪問者はいません。精神崩壊中か、すでに立ち去ったか、拘禁から守られているのかもしれません。</RHAH_Choice_NoCustodyTarget>
+  <RHAH_Choice_NoPresent>訪問者はすでに立ち去っています。この手配を受ける人はいません。</RHAH_Choice_NoPresent>
+  <RHAH_Choice_NoRecruit>この訪問者たちは、受け入れたり、雇ったり、コロニーに加えたりできません。</RHAH_Choice_NoRecruit>
+  <RHAH_Choice_NoTransfer>今、同盟へ送れて、かつマップを離れられる訪問者はいません。</RHAH_Choice_NoTransfer>
+  <RHAH_Choice_NoIdeology>奴隷にするには、Ideology拡張が必要です。</RHAH_Choice_NoIdeology>
+  <RHAH_Choice_CustodyFailed>訪問者を捕らえたり奴隷にしたりできませんでした。手紙でもう一度選べます。</RHAH_Choice_CustodyFailed>
+  <RHAH_Choice_FeedHint>訪問者は、食べ物を渡す手配を待っています。入植者を1人選び、待っている訪問者を右クリックして、渡す食べ物を選んでください。</RHAH_Choice_FeedHint>
   <RHAH_Choice_FeedHintDismiss>再表示しない</RHAH_Choice_FeedHintDismiss>
   <RHAH_Choice_FeedWaiting>{0}人の訪問者が食べ物を待っています。</RHAH_Choice_FeedWaiting>
   <RHAH_Choice_FeedBlocked>{0}は今、食べ物を受け取れません。</RHAH_Choice_FeedBlocked>
-  <RHAH_Choice_FeedNoVisitor>{0}は食べ物を渡せる訪問者ではありません。</RHAH_Choice_FeedNoVisitor>
+  <RHAH_Choice_FeedNoVisitor>{0}は、食べ物を渡せる訪問者ではありません。</RHAH_Choice_FeedNoVisitor>
   <RHAH_Choice_FeedNotHungry>{0}は今、食べ物を必要としていません。</RHAH_Choice_FeedNotHungry>
   <RHAH_Choice_GiveFood>{1}に{0}を渡す</RHAH_Choice_GiveFood>
   <RHAH_Choice_NoFood>{1}に渡せる食べ物がありません</RHAH_Choice_NoFood>
-  <RHAH_Choice_Short>在庫不足です。必要量：{0}。</RHAH_Choice_Short>
-  <RHAH_Choice_NoBaby>今回は子供を渡せません。「子を取り替えて食らう」では、食べ物による代替を有効にし、子供1人あたりの食事数を0より大きく設定し、必要な簡単な食事を用意する必要があります。</RHAH_Choice_NoBaby>
-  <RHAH_Choice_Stale>現在、この手紙ではその選択はできません。</RHAH_Choice_Stale>
+  <RHAH_Choice_Short>在庫が足りません。まだ{0}必要です。</RHAH_Choice_Short>
+  <RHAH_Choice_NoBaby>今回は子供を渡せません。簡単な食事で代わりにするには、食べ物による代替を有効にし、子供1人あたりの数を0より大きくして、十分な簡単な食事を用意してください。</RHAH_Choice_NoBaby>
+  <RHAH_Choice_Stale>この手紙では、もうその選択はできません。</RHAH_Choice_Stale>
   <RHAH_Choice_Delivered>物資を引き渡しました。</RHAH_Choice_Delivered>
-  <RHAH_Choice_SiteUnavailable>情報地点を作成できなかったため、物資はまだ渡していません。この手紙には引き続き対応できます。</RHAH_Choice_SiteUnavailable>
+  <RHAH_Choice_SiteUnavailable>訪問者は地点を用意できませんでした。物資はまだ手元にあり、手紙でもう一度選べます。</RHAH_Choice_SiteUnavailable>
   <RHAH_Choice_Fed>訪問者は食事を済ませました。</RHAH_Choice_Fed>
   <RHAH_Intel_Label>情報地点</RHAH_Intel_Label>
   <RHAH_Intel_Text>交換が成立しました。近くに地点が現れました。</RHAH_Intel_Text>
   <RHAH_Broadcast_Label>希望を放送する</RHAH_Broadcast_Label>
   <RHAH_Broadcast_Cooldown>放送はまだクールダウン中です</RHAH_Broadcast_Cooldown>
-  <RHAH_Broadcast_Empty>放送可能なイベントがありません</RHAH_Broadcast_Empty>
-  <RHAH_Broadcast_Queued>放送を送りました。ラットキンからの応答を待っています。</RHAH_Broadcast_Queued>
+  <RHAH_Broadcast_Empty>今、放送できるイベントはありません</RHAH_Broadcast_Empty>
+  <RHAH_Broadcast_Queued>放送は送りました。ラットキンからの応答を待っています。</RHAH_Broadcast_Queued>
   <RHAH_Broadcast_Unavailable>今は希望を放送できません</RHAH_Broadcast_Unavailable>
-  <RHAH_Settings_EndingFloor>豊作の年に必要な信頼：{0}</RHAH_Settings_EndingFloor>
-  <RHAH_Settings_EndingFloor_Tooltip>豊作の年に必要な信頼です。範囲は0～100、初期値は50。希望の街の条件は、この値以上でなければなりません。</RHAH_Settings_EndingFloor_Tooltip>
+  <RHAH_Settings_EndingFloor>豊年に必要な信頼：{0}</RHAH_Settings_EndingFloor>
+  <RHAH_Settings_EndingFloor_Tooltip>「ラットキンの豊年」に必要な最低信頼です。範囲は0～100、初期値は50。「希望の街」に必要な信頼は、少なくともこれと同じ高さです。</RHAH_Settings_EndingFloor_Tooltip>
   <RHAH_Settings_EndingHope>希望の街に必要な信頼：{0}</RHAH_Settings_EndingHope>
-  <RHAH_Settings_EndingHope_Tooltip>希望の街に必要な信頼です。豊作の年の値以上、上限100、初期値は75。</RHAH_Settings_EndingHope_Tooltip>
+  <RHAH_Settings_EndingHope_Tooltip>「希望の街」に必要な最低信頼です。「ラットキンの豊年」以上、最高100、初期値は75。</RHAH_Settings_EndingHope_Tooltip>
   <RHAH_Settings_EndingHalt>信頼崩壊の境界：{0}</RHAH_Settings_EndingHalt>
-  <RHAH_Settings_EndingHalt_Tooltip>信頼がこの値以下になると、信頼崩壊のエンディングに進みます。範囲は-100～0、初期値は-75。</RHAH_Settings_EndingHalt_Tooltip>
-  <RHAH_Settings_EndingKinds>下位エンディングに必要な種類数：{0}</RHAH_Settings_EndingKinds>
-  <RHAH_Settings_EndingKinds_Tooltip>下位エンディングに必要な、成功した出来事の種類数です。範囲は1～14、初期値は6。</RHAH_Settings_EndingKinds_Tooltip>
+  <RHAH_Settings_EndingHalt_Tooltip>スイインの信頼がこの値以下になると、「記録の打ち切り」が起こることがあります。範囲は-100～0、初期値は-75。</RHAH_Settings_EndingHalt_Tooltip>
+  <RHAH_Settings_EndingKinds>結末までのイベントの種類：{0}</RHAH_Settings_EndingKinds>
+  <RHAH_Settings_EndingKinds_Tooltip>「答えのない記録」または「失望した傍観者」を迎えるには、少なくともこれだけの種類のイベントを無事に完了する必要があります。範囲は1～14、初期値は6。</RHAH_Settings_EndingKinds_Tooltip>
   <RHAH_Settings_EndingThreat>大規模な脅威の間隔：{0}日</RHAH_Settings_EndingThreat>
-  <RHAH_Settings_EndingThreat_Tooltip>スイインが信頼に応じて大規模な脅威の間隔を調整する際の基準日数です。範囲は1～60日、初期値は13日。</RHAH_Settings_EndingThreat_Tooltip>
+  <RHAH_Settings_EndingThreat_Tooltip>スイインが大規模な脅威を起こす基本間隔です。信頼が高いほど間隔は長くなり、低いほど短くなります。範囲は1～60日、初期値は13日。</RHAH_Settings_EndingThreat_Tooltip>
   <RHAH_Menu_Narrative_TrustDeltas>信頼の変化</RHAH_Menu_Narrative_TrustDeltas>
-  <RHAH_Settings_NarrativeKinds_Tooltip>この手紙を受け取るまでに必要な、経験したイベントの種類数です。範囲は1～14。</RHAH_Settings_NarrativeKinds_Tooltip>
-  <RHAH_Settings_NarrativeTheft>食糧庫の穴に必要な窃盗の種類数：{0}</RHAH_Settings_NarrativeTheft>
-  <RHAH_Settings_NarrativeTheft_Tooltip>同じマップで、この数の種類の窃盗が行われると食糧庫の穴が開きます。範囲は1～14、初期値は2。</RHAH_Settings_NarrativeTheft_Tooltip>
+  <RHAH_Settings_NarrativeKinds_Tooltip>少なくともこれだけの種類のイベントを経験すると、スイインがこの手紙を送ります。範囲は1～14。</RHAH_Settings_NarrativeKinds_Tooltip>
+  <RHAH_Settings_NarrativeTheft>食糧庫の穴までの窃盗：{0}回</RHAH_Settings_NarrativeTheft>
+  <RHAH_Settings_NarrativeTheft_Tooltip>一つのコロニーでこれだけの回数の窃盗が起きると、食糧庫の穴が現れることがあります。範囲は1～14回、初期値は2回。</RHAH_Settings_NarrativeTheft_Tooltip>
   <RHAH_Settings_NarrativeSilver>記録の手紙のシルバー：{0}</RHAH_Settings_NarrativeSilver>
-  <RHAH_Settings_NarrativeSilver_Tooltip>記録の手紙に添えられるシルバーです。範囲は0～10000、初期値は300。信頼が正の場合、さらにその値に応じて加算します。</RHAH_Settings_NarrativeSilver_Tooltip>
+  <RHAH_Settings_NarrativeSilver_Tooltip>スイインが記録の手紙に添えて送る基本のシルバーです。あなたへの信頼が0より高い場合は、信頼に応じてさらに足します。範囲は0～10000、初期値は300。</RHAH_Settings_NarrativeSilver_Tooltip>
   <RHAH_Settings_NarrativeBonus>信頼による加算：{0}%</RHAH_Settings_NarrativeBonus>
-  <RHAH_Settings_NarrativeBonus_Tooltip>信頼が100の時、シルバーをこの割合だけ追加します。範囲は0～100、初期値は25。信頼が負の場合は加算しません。</RHAH_Settings_NarrativeBonus_Tooltip>
+  <RHAH_Settings_NarrativeBonus_Tooltip>信頼が100のとき、スイインは基本のシルバーにこの割合を足します。信頼が0から100の間では、加算は比例して減ります。範囲は0～100%、初期値は25%。</RHAH_Settings_NarrativeBonus_Tooltip>
   <RHAH_Settings_NarrativeRescue>買い戻しに必要なシルバー：{0}</RHAH_Settings_NarrativeRescue>
   <RHAH_Settings_NarrativeRescue_Tooltip>追放した母親や子供が再訪した時、引き留めるために支払うシルバーです。範囲は0～10000、初期値は250。</RHAH_Settings_NarrativeRescue_Tooltip>
   <RHAH_Settings_NarrativeRescueReward>お返しのシルバー：{0}</RHAH_Settings_NarrativeRescueReward>
@@ -570,30 +570,30 @@
   <RHAH_Settings_NarrativeHand>記録を渡す報酬：{0}</RHAH_Settings_NarrativeHand>
   <RHAH_Settings_NarrativeHand_Tooltip>移住記録を引き渡した時に得るシルバーです。範囲は0～10000、初期値は100。</RHAH_Settings_NarrativeHand_Tooltip>
   <RHAH_Settings_NarrativeCare>定着に必要な日数：{0}</RHAH_Settings_NarrativeCare>
-  <RHAH_Settings_NarrativeCare_Tooltip>満腹で病気のない状態でこの日数滞在すると、定着したとみなします。範囲は0～120日、初期値は5日。</RHAH_Settings_NarrativeCare_Tooltip>
+  <RHAH_Settings_NarrativeCare_Tooltip>訪問者がコロニーで満腹かつペストのない日をこれだけ重ねると、落ち着いたとみなします。範囲は0～120日、初期値は5日。</RHAH_Settings_NarrativeCare_Tooltip>
   <RHAH_Settings_NarrativeMissing>行方不明とみなすまでの日数：{0}</RHAH_Settings_NarrativeMissing>
-  <RHAH_Settings_NarrativeMissing_Tooltip>マップを離れてからこの日数が過ぎると、行方不明として記録します。範囲は0～60日、初期値は1日。</RHAH_Settings_NarrativeMissing_Tooltip>
+  <RHAH_Settings_NarrativeMissing_Tooltip>これだけの日数、訪問者の行方を知れないと、スイインはその人を行方不明とみなします。範囲は0～60日、初期値は1日。</RHAH_Settings_NarrativeMissing_Tooltip>
   <RHAH_Settings_NarrativeObserve>観察期間：{0}日</RHAH_Settings_NarrativeObserve>
-  <RHAH_Settings_NarrativeObserve_Tooltip>救済や託された子供の世話を観察する最長期間です。範囲は0～120日、初期値は30日。期限までに落ち着いた暮らしを用意できなければ、成功には数えません。</RHAH_Settings_NarrativeObserve_Tooltip>
-  <RHAH_Settings_NarrativeHole>食糧庫の穴を放置できる期間：{0}日</RHAH_Settings_NarrativeHole>
-  <RHAH_Settings_NarrativeHole_Tooltip>食糧庫の穴に対処せずこの日数が過ぎると、放置した結果を確定します。範囲は0～30日、初期値は3日。</RHAH_Settings_NarrativeHole_Tooltip>
+  <RHAH_Settings_NarrativeObserve_Tooltip>スイインは、援助と託された子供の結果が分かるまで、最長これだけの日数を待ちます。期限までに訪問者が落ち着かなければ、その援助は成功になりません。範囲は0～120日、初期値は30日。</RHAH_Settings_NarrativeObserve_Tooltip>
+  <RHAH_Settings_NarrativeHole>食糧庫の穴が消えるまで：{0}日</RHAH_Settings_NarrativeHole>
+  <RHAH_Settings_NarrativeHole_Tooltip>食糧庫の穴を放っておくと、これだけの日数で消え、痕跡も途切れます。範囲は0～30日、初期値は3日。</RHAH_Settings_NarrativeHole_Tooltip>
   <RHAH_Settings_NarrativeEnvoyWait>使者の待ち時間：{0}日</RHAH_Settings_NarrativeEnvoyWait>
-  <RHAH_Settings_NarrativeEnvoyWait_Tooltip>使者が入口で待つ期限です。範囲は0～30日、初期値は3日。</RHAH_Settings_NarrativeEnvoyWait_Tooltip>
+  <RHAH_Settings_NarrativeEnvoyWait_Tooltip>使者は最長これだけの日数を待ちます。返答がなければ、使者は立ち去ります。範囲は0～30日、初期値は3日。</RHAH_Settings_NarrativeEnvoyWait_Tooltip>
   <RHAH_Settings_NarrativeEnvoyCheck>使者の確認期間：{0}日</RHAH_Settings_NarrativeEnvoyCheck>
-  <RHAH_Settings_NarrativeEnvoyCheck_Tooltip>確認を引き受けた後、さらに与えられる日数です。範囲は0～30日、初期値は1日。</RHAH_Settings_NarrativeEnvoyCheck_Tooltip>
+  <RHAH_Settings_NarrativeEnvoyCheck_Tooltip>使者の話を確かめると引き受けたあと、使者はさらにこれだけの日数を待ちます。範囲は0～30日、初期値は1日。</RHAH_Settings_NarrativeEnvoyCheck_Tooltip>
   <RHAH_Settings_NarrativeRelicDays>記録地点の有効期間：{0}日</RHAH_Settings_NarrativeRelicDays>
-  <RHAH_Settings_NarrativeRelicDays_Tooltip>記録地点を訪問できる日数です。範囲は0～120日、初期値は15日。</RHAH_Settings_NarrativeRelicDays_Tooltip>
+  <RHAH_Settings_NarrativeRelicDays_Tooltip>移動の記録がある地点は、これだけの日数残ったあと、ワールドマップから消えます。範囲は0～120日、初期値は15日。</RHAH_Settings_NarrativeRelicDays_Tooltip>
   <RHAH_Settings_NarrativeReturn>回復後の再訪：{0}日</RHAH_Settings_NarrativeReturn>
-  <RHAH_Settings_NarrativeReturn_Tooltip>検疫後に立ち去った人が戻ってくるまでの日数です。範囲は0～120日、初期値は15日。</RHAH_Settings_NarrativeReturn_Tooltip>
+  <RHAH_Settings_NarrativeReturn_Tooltip>訪問者は、回復して検疫を離れてから、これだけの日数で戻ってくることがあります。範囲は0～120日、初期値は15日。</RHAH_Settings_NarrativeReturn_Tooltip>
   <RHAH_Settings_NarrativeYears>追放後の再訪：{0}年</RHAH_Settings_NarrativeYears>
-  <RHAH_Settings_NarrativeYears_Tooltip>追放した母親や子供が再び現れるまでの年数です。範囲は0～20年、初期値は4年。1年は60日として計算します。</RHAH_Settings_NarrativeYears_Tooltip>
+  <RHAH_Settings_NarrativeYears_Tooltip>母親または子供を追放したあと、キャラバンはこれだけの年数のうちに再び出会うことがあります。範囲は0～20年、初期値は4年。1年は60日です。</RHAH_Settings_NarrativeYears_Tooltip>
   <RHAH_Settings_NarrativeAside>ひと言の手紙の間隔：{0}日</RHAH_Settings_NarrativeAside>
-  <RHAH_Settings_NarrativeAside_Tooltip>ひと言の手紙を送る最短間隔です。範囲は0～30日、初期値は3日。</RHAH_Settings_NarrativeAside_Tooltip>
+  <RHAH_Settings_NarrativeAside_Tooltip>スイインの短い手紙の最短間隔です。範囲は0～30日、初期値は3日。</RHAH_Settings_NarrativeAside_Tooltip>
   <RHAH_Settings_NarrativeCutoff>ひと言の手紙を止める信頼：{0}</RHAH_Settings_NarrativeCutoff>
-  <RHAH_Settings_NarrativeCutoff_Tooltip>信頼がこの値以下になると、ひと言の手紙は届かなくなります。結果の手紙は引き続き届きます。範囲は-100～0、初期値は-75。</RHAH_Settings_NarrativeCutoff_Tooltip>
+  <RHAH_Settings_NarrativeCutoff_Tooltip>スイインの信頼がこの値以下になると、短い手紙は止まりますが、出来事の結果はこれまでどおり知らせます。範囲は-100～0、初期値は-75。</RHAH_Settings_NarrativeCutoff_Tooltip>
   <RHAH_Settings_NarrativeAdult>使者の年齢：{0}</RHAH_Settings_NarrativeAdult>
-  <RHAH_Settings_NarrativeAdult_Tooltip>スイインが派遣する使者の年齢です。範囲は1～80歳、初期値は18歳。</RHAH_Settings_NarrativeAdult_Tooltip>
-  <RHAH_Settings_TrustRange_Tooltip>この出来事による信頼の増減です。範囲は-100～100。0なら信頼は変わりません。</RHAH_Settings_TrustRange_Tooltip>
+  <RHAH_Settings_NarrativeAdult_Tooltip>スイインが送る使者の年齢です。範囲は1～80歳、初期値は18歳。</RHAH_Settings_NarrativeAdult_Tooltip>
+  <RHAH_Settings_TrustRange_Tooltip>これが起きたとき、スイインのあなたへの信頼が増減する量です。範囲は-100～100。0なら信頼は変わりません。</RHAH_Settings_TrustRange_Tooltip>
   <RHAH_Settings_TrustKill>殺害：{0}</RHAH_Settings_TrustKill>
   <RHAH_Settings_TrustCaptive>捕縛：{0}</RHAH_Settings_TrustCaptive>
   <RHAH_Settings_TrustEntrust>託された子供の定着：{0}</RHAH_Settings_TrustEntrust>
@@ -621,7 +621,7 @@
   <RHAH_Settings_BegSlapMood>平手打ちされた時の心情：{0}</RHAH_Settings_BegSlapMood>
   <RHAH_Settings_BegSlapMood_Tooltip>繰り返し物乞いをして平手打ちされた時の心情です。範囲は-50～50、初期値は-10。</RHAH_Settings_BegSlapMood_Tooltip>
   <RHAH_Settings_BegKnock>平手打ち後の昏睡：{0}時間</RHAH_Settings_BegKnock>
-  <RHAH_Settings_BegKnock_Tooltip>平手打ち後に意識を失う時間です。範囲は0～24時間、初期値は0で、この場合は30分になります。0にしても30分間は意識を失います。</RHAH_Settings_BegKnock_Tooltip>
+  <RHAH_Settings_BegKnock_Tooltip>平手打ちで物乞いする人が意識を失う時間です。1～24はその時間数を使います。0は初期値で、30分間意識を失います。</RHAH_Settings_BegKnock_Tooltip>
   <RHAH_Settings_BegBruise>平手打ちによる打撲：{0}</RHAH_Settings_BegBruise>
   <RHAH_Settings_BegBruise_Tooltip>最初の平手打ちによる打撲の重症度です。範囲は0～40、初期値は4。</RHAH_Settings_BegBruise_Tooltip>
   <RHAH_Settings_BegBruiseStep>打撲の悪化：{0}</RHAH_Settings_BegBruiseStep>
@@ -659,21 +659,21 @@
   <RHAH_Settings_FoodRefeed>再び食べ物を探す栄養失調の重症度：{0}</RHAH_Settings_FoodRefeed>
   <RHAH_Settings_FoodRefeed_Tooltip>栄養失調がこの重症度に達すると、満腹でも再び食べ物を探します。範囲は0～1、初期値は0.40。</RHAH_Settings_FoodRefeed_Tooltip>
   <RHAH_Settings_PlagueSeverity>ペストの重症度：{0}</RHAH_Settings_PlagueSeverity>
-  <RHAH_Settings_PlagueSeverity_Tooltip>新たに感染した時に抽選される重症度の上限です。範囲は0.01～1、初期値は0.10。</RHAH_Settings_PlagueSeverity_Tooltip>
-  <RHAH_Settings_FollowPredator>短い連鎖の捕食発生率：{0}%</RHAH_Settings_FollowPredator>
-  <RHAH_Settings_FollowPredator_Tooltip>短い連鎖の期限後、その集団に捕食者の出現を予約する確率です。範囲は0～100、初期値は10。</RHAH_Settings_FollowPredator_Tooltip>
+  <RHAH_Settings_PlagueSeverity_Tooltip>新しい感染が達しうる重症度の上限です。範囲は0.01～1、初期値は0.10。</RHAH_Settings_PlagueSeverity_Tooltip>
+  <RHAH_Settings_FollowPredator>短いその後の捕食者：{0}%</RHAH_Settings_FollowPredator>
+  <RHAH_Settings_FollowPredator_Tooltip>イベントが短いその後を使う場合、その一行が現れたあと、この確率で捕食者が向かいます。範囲は0～100、初期値は10。0では向かいません。</RHAH_Settings_FollowPredator_Tooltip>
   <RHAH_Settings_FollowBirth>出産後の観察：{0}日</RHAH_Settings_FollowBirth>
   <RHAH_Settings_FollowBirth_Tooltip>出産間近の流民が子供を産んだ後、心情を付けるまで観察する日数です。範囲は0～60日、初期値は3日。</RHAH_Settings_FollowBirth_Tooltip>
   <RHAH_Settings_FollowPlagueBirth>ペストでの出産の観察：{0}日</RHAH_Settings_FollowPlagueBirth>
   <RHAH_Settings_FollowPlagueBirth_Tooltip>ペストを患う出産間近の流民に心情を付けるまで観察する日数です。範囲は0～60日、初期値は5日。</RHAH_Settings_FollowPlagueBirth_Tooltip>
   <RHAH_Settings_FollowMother>母親の再訪：{0}日</RHAH_Settings_FollowMother>
   <RHAH_Settings_FollowMother_Tooltip>ペストを患う母親が立ち去ってから戻るまでの日数です。範囲は0～120日、初期値は15日。</RHAH_Settings_FollowMother_Tooltip>
-  <RHAH_Settings_FollowYears>長い連鎖の待機年数：{0}</RHAH_Settings_FollowYears>
-  <RHAH_Settings_FollowYears_Tooltip>長い連鎖では、子供が続編の対象年齢に達してから、さらにこの年数が過ぎると手紙を送ります。範囲は0～20年、初期値は2年。</RHAH_Settings_FollowYears_Tooltip>
+  <RHAH_Settings_FollowYears>長いその後：{0}年</RHAH_Settings_FollowYears>
+  <RHAH_Settings_FollowYears_Tooltip>その後の設定があるイベントで長いその後を選ぶと、子供がその後の年齢に達してから、手紙は最長これだけの年数を待ちます。範囲は0～20、初期値は2。母親が戻る場合は、別の日数を使います。</RHAH_Settings_FollowYears_Tooltip>
   <RHAH_Settings_FollowAdult>続編の対象年齢：{0}</RHAH_Settings_FollowAdult>
-  <RHAH_Settings_FollowAdult_Tooltip>長い連鎖や続編の心情で使う年齢です。範囲は1～80歳、初期値は14歳。</RHAH_Settings_FollowAdult_Tooltip>
+  <RHAH_Settings_FollowAdult_Tooltip>長いその後と、そのあとの心情で使う年齢です。範囲は1～80歳、初期値は14歳。</RHAH_Settings_FollowAdult_Tooltip>
   <RHAH_Settings_FollowMood>続編の心情の倍率：{0}%</RHAH_Settings_FollowMood>
-  <RHAH_Settings_FollowMood_Tooltip>14歳の続編で付く心情をこの割合で調整します。範囲は0～300、初期値は100。0でも、正負の向きを保って1ポイント残します。</RHAH_Settings_FollowMood_Tooltip>
+  <RHAH_Settings_FollowMood_Tooltip>そのあとの心情を、この割合で調整します。範囲は0～300、初期値は100。1ポイント未満になっても、元の向きで1ポイント残ります。</RHAH_Settings_FollowMood_Tooltip>
   <RHAH_Settings_RequestRange_Tooltip>この段階で要求する量の下限または上限です。実際の量は、資産に応じて上下限の間で決まります。</RHAH_Settings_RequestRange_Tooltip>
   <RHAH_Settings_RequestSimpleMin>簡単な食事の最少数：{0}</RHAH_Settings_RequestSimpleMin>
   <RHAH_Settings_RequestSimpleMax>簡単な食事の最多数：{0}</RHAH_Settings_RequestSimpleMax>

@@ -22,7 +22,7 @@
   <GeneDef MayRequire="Ludeon.RimWorld.Biotech">
     <defName>RHAH_Gene_LargeLitter</defName>
     <label>多崽</label>
-    <description>携带此基因的人分娩时产下多只幼崽。数量在设定的下限和上限之间，中间数量最常见。</description>
+    <description>携带此基因的人分娩时产下多只幼崽。数量落在可调的下限和上限之间，中间数量最常见。</description>
     <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
     <displayCategory>Reproduction</displayCategory>
     <displayOrderInCategory>220</displayOrderInCategory>
@@ -30,7 +30,7 @@
     <selectionWeight>0</selectionWeight>
     <biostatMet>1</biostatMet>
     <customEffectDescriptions>
-      <li>分娩数量在设定的下限和上限之间</li>
+      <li>分娩数量落在可调的下限和上限之间</li>
       <li>中间数量最常见，两端较少</li>
     </customEffectDescriptions>
   </GeneDef>
@@ -38,7 +38,7 @@
   <GeneDef MayRequire="Ludeon.RimWorld.Biotech">
     <defName>RHAH_Gene_EarlyFertility</defName>
     <label>早熟</label>
-    <description>携带此基因的人达到设定年龄后即可参与受孕。双方生理年龄都要达到这个年龄。原版生育阶段限制不再拦住他们。</description>
+    <description>携带此基因的人达到可调年龄后即可参与受孕。双方生理年龄都要达到这个年龄。通常的生育阶段限制拦不住他们。</description>
     <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
     <displayCategory>Reproduction</displayCategory>
     <displayOrderInCategory>221</displayOrderInCategory>
@@ -46,7 +46,7 @@
     <selectionWeight>0</selectionWeight>
     <biostatMet>1</biostatMet>
     <customEffectDescriptions>
-      <li>达到设定年龄后可参与受孕</li>
+      <li>达到可调年龄后可参与受孕</li>
       <li>双方生理年龄都要达到这个年龄</li>
       <li>年龄范围 1 到 14 岁</li>
     </customEffectDescriptions>
@@ -55,7 +55,7 @@
   <GeneDef MayRequire="Ludeon.RimWorld.Biotech">
     <defName>RHAH_Gene_HighFertility</defName>
     <label>高育</label>
-    <description>携带此基因的人参与繁殖时，怀孕几率按设定的百分比计算。范围是常人的 100% 到 1000%。</description>
+    <description>携带此基因的人参与繁殖时，怀孕几率按可调百分比计算。范围是常人的 100% 到 1000%。</description>
     <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
     <displayCategory>Reproduction</displayCategory>
     <displayOrderInCategory>222</displayOrderInCategory>
@@ -63,7 +63,7 @@
     <selectionWeight>0</selectionWeight>
     <biostatMet>2</biostatMet>
     <customEffectDescriptions>
-      <li>怀孕几率按设定百分比计算</li>
+      <li>怀孕几率按可调百分比计算</li>
       <li>范围是常人的 100% 到 1000%</li>
     </customEffectDescriptions>
   </GeneDef>
@@ -71,7 +71,7 @@
   <GeneDef MayRequire="Ludeon.RimWorld.Biotech">
     <defName>RHAH_Gene_RoomFertility</defName>
     <label>乱起</label>
-    <description>携带此基因的人会主动找同一房间里的异性爱爱。爱爱结束时才判定受孕，默认几率是 50%，可以调整。哺乳期也可以受孕。双方生理年龄都要达到 1 岁。</description>
+    <description>携带此基因的人会主动找同一房间里的异性爱爱。爱爱结束后才算受孕，默认几率是 50%，可以调整。哺乳期也可以受孕。双方生理年龄都要达到 1 岁。</description>
     <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
     <displayCategory>Reproduction</displayCategory>
     <displayOrderInCategory>223</displayOrderInCategory>
@@ -80,7 +80,7 @@
     <biostatMet>3</biostatMet>
     <customEffectDescriptions>
       <li>主动找同一房间里的异性爱爱</li>
-      <li>爱爱结束后才判定受孕</li>
+      <li>爱爱结束后才算受孕</li>
       <li>默认受孕几率 50%，可以调整</li>
       <li>哺乳期也可以受孕</li>
       <li>双方生理年龄都要达到 1 岁</li>
@@ -90,7 +90,7 @@
   <GeneDef MayRequire="Ludeon.RimWorld.Biotech">
     <defName>RHAH_Gene_FastBirth</defName>
     <label>速产</label>
-    <description>携带此基因的人孕期更短。最短可到 3 天，最长不超过原版孕期下限。</description>
+    <description>携带此基因的人孕期更短。最短可到 3 天，最长不超过通常孕期的下限。</description>
     <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
     <displayCategory>Reproduction</displayCategory>
     <displayOrderInCategory>224</displayOrderInCategory>
@@ -98,9 +98,9 @@
     <selectionWeight>0</selectionWeight>
     <biostatMet>2</biostatMet>
     <customEffectDescriptions>
-      <li>孕期按设定缩短</li>
+      <li>孕期按可调天数缩短</li>
       <li>最短 3 天</li>
-      <li>最长不超过原版孕期下限</li>
+      <li>最长不超过通常孕期的下限</li>
     </customEffectDescriptions>
   </GeneDef>
 </Defs>

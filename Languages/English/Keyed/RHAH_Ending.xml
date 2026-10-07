@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <RHAH_Menu_Ending_Note>Endings appear only while Suiyin is the storyteller, and a save gets one. Turning one off stops that ending from starting. One already recorded stays recorded, and another ending is not substituted for it.</RHAH_Menu_Ending_Note>
-  <RHAH_Ending_Toggle_Tooltip>When off, this ending does not start. One already shown is not rolled back, and another ending is not substituted for it.</RHAH_Ending_Toggle_Tooltip>
+  <RHAH_Menu_Ending_Note>These endings appear only while Suiyin is the storyteller. Each save can reach one ending. Turning an ending off prevents it from triggering. If this save has already reached an ending, that result remains.</RHAH_Menu_Ending_Note>
+  <RHAH_Ending_Toggle_Tooltip>Turning this off prevents this ending from triggering. If this save has already reached an ending, its result remains.</RHAH_Ending_Toggle_Tooltip>
   <RHAH_Ending_Identity>Identity letter</RHAH_Ending_Identity>
-  <RHAH_Ending_Identity_Tooltip>Sent once, and only while Suiyin is the storyteller. It arrives when trust is high enough. There is no separate choice.</RHAH_Ending_Identity_Tooltip>
+  <RHAH_Ending_Identity_Tooltip>While Suiyin is the storyteller, she sends this letter once her trust is high enough. She sends it once per save.</RHAH_Ending_Identity_Tooltip>
   <RHAH_Ending_Aid>Aid required: {0}</RHAH_Ending_Aid>
-  <RHAH_Ending_Aid_Tooltip>A year of plenty and the city of hope wait for this many completed acts of aid. Default 99.</RHAH_Ending_Aid_Tooltip>
+  <RHAH_Ending_Aid_Tooltip>You need to complete at least this many acts of aid to qualify for "A year of plenty" or "City of hope". Default 99.</RHAH_Ending_Aid_Tooltip>
   <RHAH_Ending_Broadcast>Broadcasts required: {0}</RHAH_Ending_Broadcast>
-  <RHAH_Ending_Broadcast_Tooltip>Only broadcasts that actually go out. Default 3.</RHAH_Ending_Broadcast_Tooltip>
+  <RHAH_Ending_Broadcast_Tooltip>This count includes only broadcasts that actually go out. Default 3.</RHAH_Ending_Broadcast_Tooltip>
   <RHAH_Ending_Expel>Expulsion limit: {0}</RHAH_Ending_Expel>
-  <RHAH_Ending_Expel_Tooltip>Past this many forced departures, the high endings no longer qualify. Fighting an attack does not count. Default 3.</RHAH_Ending_Expel_Tooltip>
+  <RHAH_Ending_Expel_Tooltip>If you force more departures than this limit, a year of plenty and the city of hope become unavailable. Fighting off an attack does not count. Default 3.</RHAH_Ending_Expel_Tooltip>
   <RHAH_Ending_Adults>Adult famine Ratkin: {0}</RHAH_Ending_Adults>
-  <RHAH_Ending_Adults_Tooltip>Adult famine Ratkin colonists in one player home. Counted once a year. Default 100.</RHAH_Ending_Adults_Tooltip>
+  <RHAH_Ending_Adults_Tooltip>"City of hope" requires at least this many adult famine Ratkin colonists in one home. The population is counted once a year. Default 100.</RHAH_Ending_Adults_Tooltip>
   <RHAH_Ending_Wait>Ending wait: {0} days</RHAH_Ending_Wait>
-  <RHAH_Ending_Wait_Tooltip>Low and middling endings wait at least this long. The halted record does not. Default 30.</RHAH_Ending_Wait_Tooltip>
-  <RHAH_Ending_Preview_Note>A developer preview shows the text only. It does not record an ending or an identity.</RHAH_Ending_Preview_Note>
+  <RHAH_Ending_Wait_Tooltip>When Suiyin's trust is low or middling, endings wait at least this many days before appearing. "The record stops" can occur immediately. Default 30.</RHAH_Ending_Wait_Tooltip>
+  <RHAH_Ending_Preview_Note>You can preview endings and the identity letter in dev mode. Previews display the text while leaving your game progress unchanged.</RHAH_Ending_Preview_Note>
 
   <RHAH_Ending_E01_Label>A year of plenty</RHAH_Ending_E01_Label>
   <RHAH_Ending_E01_Text>When the last act of aid went into the ledger, Suiyin wrote a name in the margin. Halfway through, she stopped.\n\n"I promised to take her child somewhere there would be food. That time, I failed. I looked for the child on every list after that. I never found them."\n\nThe next page lists food sent, patients tended, and visitors allowed to leave.\n\n"There are many people here I have never met. You helped them stay alive. I should say that once."\n\n"Thank you. Children growing up there: eat when it is time to eat. Your share has already been set aside."\n\nAid: {0}. Broadcasts: {1}. The famine is not over. This colony is a place people can reach.</RHAH_Ending_E01_Text>

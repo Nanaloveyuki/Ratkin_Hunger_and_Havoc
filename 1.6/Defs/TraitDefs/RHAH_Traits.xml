@@ -739,7 +739,7 @@
     <degreeDatas>
       <li>
         <label>面瘫脸</label>
-        <description>{PAWN_nameDef}不爱把真实想法写在脸上。</description>
+        <description>{PAWN_nameDef}脸上很少露出真实想法。</description>
         <statOffsets>
         <HuntingStealth>0.15</HuntingStealth>
         <SocialImpact>-0.08</SocialImpact>
@@ -776,7 +776,7 @@
     <degreeDatas>
       <li>
         <label>好斗</label>
-        <description>{PAWN_nameDef}不怕打架。决斗的话还没说完，拳头就已经准备好了。</description>
+        <description>{PAWN_nameDef}见架就上。决斗的话还没说完，拳头就已经准备好了。</description>
         <statOffsets>
         <MeleeHitChance>3</MeleeHitChance>
         </statOffsets>
@@ -824,7 +824,7 @@
     <degreeDatas>
       <li>
         <label>冷面</label>
-        <description>{PAWN_nameDef}不容易让人亲近。</description>
+        <description>{PAWN_nameDef}让人很难亲近。</description>
         <statOffsets>
         <SocialImpact>-0.12</SocialImpact>
         </statOffsets>

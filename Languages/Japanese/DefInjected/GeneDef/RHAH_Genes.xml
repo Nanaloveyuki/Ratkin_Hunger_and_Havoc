@@ -5,28 +5,28 @@
   <RHAH_Gene_ThinRations.customEffectDescriptions.0>最大栄養量が通常の85%に減少</RHAH_Gene_ThinRations.customEffectDescriptions.0>
   <RHAH_Gene_ThinRations.customEffectDescriptions.1>空腹にもなり、餓死もする</RHAH_Gene_ThinRations.customEffectDescriptions.1>
   <RHAH_Gene_LargeLitter.label>多産</RHAH_Gene_LargeLitter.label>
-  <RHAH_Gene_LargeLitter.description>この遺伝子を持つ人は、一度の出産で複数の子を産みます。子の数は設定した下限と上限の間で決まり、中間の数が最も多くなります。</RHAH_Gene_LargeLitter.description>
-  <RHAH_Gene_LargeLitter.customEffectDescriptions.0>一度に産まれる子の数は設定した下限から上限まで</RHAH_Gene_LargeLitter.customEffectDescriptions.0>
+  <RHAH_Gene_LargeLitter.description>この遺伝子を持つ人は、一度の出産で複数の子を産みます。子の数は調整できる下限と上限の間で決まり、中間の数が最も多くなります。</RHAH_Gene_LargeLitter.description>
+  <RHAH_Gene_LargeLitter.customEffectDescriptions.0>一度に産まれる子の数は調整できる下限から上限まで</RHAH_Gene_LargeLitter.customEffectDescriptions.0>
   <RHAH_Gene_LargeLitter.customEffectDescriptions.1>中間の数が多く、両端の数は少ない</RHAH_Gene_LargeLitter.customEffectDescriptions.1>
   <RHAH_Gene_EarlyFertility.label>早熟</RHAH_Gene_EarlyFertility.label>
-  <RHAH_Gene_EarlyFertility.description>この遺伝子を持つ人は、設定した年齢に達すると子をもうけられます。双方の生物学的年齢が、この年齢に達している必要があります。通常の生殖可能な成長段階に達するまで待つ必要はありません。</RHAH_Gene_EarlyFertility.description>
-  <RHAH_Gene_EarlyFertility.customEffectDescriptions.0>設定した年齢に達すると子をもうけられる</RHAH_Gene_EarlyFertility.customEffectDescriptions.0>
+  <RHAH_Gene_EarlyFertility.description>この遺伝子を持つ人は、調整できる年齢に達すると子をもうけられます。双方の生物学的年齢が、この年齢に達している必要があります。通常の生殖可能な成長段階の制限は、彼らを止められません。</RHAH_Gene_EarlyFertility.description>
+  <RHAH_Gene_EarlyFertility.customEffectDescriptions.0>調整できる年齢に達すると子をもうけられる</RHAH_Gene_EarlyFertility.customEffectDescriptions.0>
   <RHAH_Gene_EarlyFertility.customEffectDescriptions.1>双方の生物学的年齢が設定年齢以上であることが必要</RHAH_Gene_EarlyFertility.customEffectDescriptions.1>
   <RHAH_Gene_EarlyFertility.customEffectDescriptions.2>年齢の設定範囲は1～14歳</RHAH_Gene_EarlyFertility.customEffectDescriptions.2>
   <RHAH_Gene_HighFertility.label>高い受胎率</RHAH_Gene_HighFertility.label>
-  <RHAH_Gene_HighFertility.description>この遺伝子を持つ人の妊娠確率は、設定した倍率で計算されます。範囲は通常の100～1000%です。</RHAH_Gene_HighFertility.description>
-  <RHAH_Gene_HighFertility.customEffectDescriptions.0>妊娠確率を設定した倍率で計算</RHAH_Gene_HighFertility.customEffectDescriptions.0>
+  <RHAH_Gene_HighFertility.description>この遺伝子を持つ人の妊娠確率は、調整できる割合で計算されます。範囲は通常の100～1000%です。</RHAH_Gene_HighFertility.description>
+  <RHAH_Gene_HighFertility.customEffectDescriptions.0>妊娠確率を調整できる割合で計算</RHAH_Gene_HighFertility.customEffectDescriptions.0>
   <RHAH_Gene_HighFertility.customEffectDescriptions.1>範囲は通常の100～1000%</RHAH_Gene_HighFertility.customEffectDescriptions.1>
   <RHAH_Gene_RoomFertility.label>積極的な子作り</RHAH_Gene_RoomFertility.label>
-  <RHAH_Gene_RoomFertility.description>この遺伝子を持つ人は、同じ部屋にいる異性を自分から探して愛し合います。妊娠の判定は愛し合った後に行われ、初期値は50%で変更できます。授乳中でも妊娠できます。双方の生物学的年齢が1歳以上である必要があります。</RHAH_Gene_RoomFertility.description>
+  <RHAH_Gene_RoomFertility.description>この遺伝子を持つ人は、同じ部屋にいる異性を自分から探して愛し合います。愛し合った後に受胎が決まり、初期値は50%で変更できます。授乳中でも妊娠できます。双方の生物学的年齢が1歳以上である必要があります。</RHAH_Gene_RoomFertility.description>
   <RHAH_Gene_RoomFertility.customEffectDescriptions.0>同じ部屋にいる異性を自分から探す</RHAH_Gene_RoomFertility.customEffectDescriptions.0>
-  <RHAH_Gene_RoomFertility.customEffectDescriptions.1>妊娠の判定は愛し合った後に行う</RHAH_Gene_RoomFertility.customEffectDescriptions.1>
+  <RHAH_Gene_RoomFertility.customEffectDescriptions.1>愛し合った後に受胎が決まる</RHAH_Gene_RoomFertility.customEffectDescriptions.1>
   <RHAH_Gene_RoomFertility.customEffectDescriptions.2>妊娠確率の初期値は50%で、変更できる</RHAH_Gene_RoomFertility.customEffectDescriptions.2>
   <RHAH_Gene_RoomFertility.customEffectDescriptions.3>授乳中でも妊娠できる</RHAH_Gene_RoomFertility.customEffectDescriptions.3>
   <RHAH_Gene_RoomFertility.customEffectDescriptions.4>双方の生物学的年齢が1歳以上であることが必要</RHAH_Gene_RoomFertility.customEffectDescriptions.4>
   <RHAH_Gene_FastBirth.label>短い妊娠期間</RHAH_Gene_FastBirth.label>
-  <RHAH_Gene_FastBirth.description>この遺伝子を持つ人は、妊娠期間が短くなります。最短で3日、最長でも通常の妊娠期間の最小値を超えません。</RHAH_Gene_FastBirth.description>
-  <RHAH_Gene_FastBirth.customEffectDescriptions.0>設定に応じて妊娠期間を短縮</RHAH_Gene_FastBirth.customEffectDescriptions.0>
+  <RHAH_Gene_FastBirth.description>この遺伝子を持つ人は、妊娠期間が短くなります。最短で3日、最長でも通常の妊娠期間の下限を超えません。</RHAH_Gene_FastBirth.description>
+  <RHAH_Gene_FastBirth.customEffectDescriptions.0>妊娠期間を調整できる日数まで短縮</RHAH_Gene_FastBirth.customEffectDescriptions.0>
   <RHAH_Gene_FastBirth.customEffectDescriptions.1>最短で3日</RHAH_Gene_FastBirth.customEffectDescriptions.1>
-  <RHAH_Gene_FastBirth.customEffectDescriptions.2>最長でも通常の妊娠期間の最小値まで</RHAH_Gene_FastBirth.customEffectDescriptions.2>
+  <RHAH_Gene_FastBirth.customEffectDescriptions.2>最長でも通常の妊娠期間の下限まで</RHAH_Gene_FastBirth.customEffectDescriptions.2>
 </LanguageData>

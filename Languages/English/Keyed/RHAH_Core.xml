@@ -8,55 +8,55 @@
   <RHAH_Menu_Relief>Relief zone</RHAH_Menu_Relief>
   <RHAH_Menu_Relief_Note>Visitors look for food they can reach inside the marked cells. Food outside, the limit after a meal, and leaving are set below.</RHAH_Menu_Relief_Note>
   <RHAH_Settings_ReliefEnabled>Use the relief zone</RHAH_Settings_ReliefEnabled>
-  <RHAH_Settings_ReliefEnabled_Tooltip>Visitors ignore the marked cells. A zone already drawn stays on the map.</RHAH_Settings_ReliefEnabled_Tooltip>
+  <RHAH_Settings_ReliefEnabled_Tooltip>With this off, visitors ignore the marked cells. A zone already drawn stays on the map.</RHAH_Settings_ReliefEnabled_Tooltip>
   <RHAH_Settings_EatOutsideRelief>Allow food outside the relief zone</RHAH_Settings_EatOutsideRelief>
-  <RHAH_Settings_EatOutsideRelief_Tooltip>Visitors may only eat food they can reach inside the zone. With none, they beg, wait, or leave.</RHAH_Settings_EatOutsideRelief_Tooltip>
+  <RHAH_Settings_EatOutsideRelief_Tooltip>With this off, visitors eat only food they can reach inside the zone. If the zone has none, they beg, wait, or leave.</RHAH_Settings_EatOutsideRelief_Tooltip>
   <RHAH_Settings_IgnoreReliefAfterFed>Ignore the relief zone after eating</RHAH_Settings_IgnoreReliefAfterFed>
-  <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>After a visitor is full, the next meal may come from outside the zone. With this off, a full visitor stops looking for another meal.</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
+  <RHAH_Settings_IgnoreReliefAfterFed_Tooltip>On, a full visitor may take the next meal from outside the zone. Off, a full visitor stops looking for another meal.</RHAH_Settings_IgnoreReliefAfterFed_Tooltip>
   <RHAH_Settings_LeaveAfterFed>Leave the map after eating</RHAH_Settings_LeaveAfterFed>
-  <RHAH_Settings_LeaveAfterFed_Tooltip>A visitor who can reach an exit leaves after eating. A child too young to walk is carried out. With this off, a full visitor stays.</RHAH_Settings_LeaveAfterFed_Tooltip>
+  <RHAH_Settings_LeaveAfterFed_Tooltip>On, a visitor who can reach an exit leaves after eating. An adult carries out a child too young or too weak to walk. Off, a full visitor stays on the map.</RHAH_Settings_LeaveAfterFed_Tooltip>
   <RHAH_Settings_MaxEventPawns>Visitors per event: {0}</RHAH_Settings_MaxEventPawns>
-  <RHAH_Settings_MaxEventPawns_Tooltip>One event stays under this count. 1 to 100, default 30. A count below the event minimum still uses that minimum. A mother and child stay together.</RHAH_Settings_MaxEventPawns_Tooltip>
+  <RHAH_Settings_MaxEventPawns_Tooltip>One incident stays at or under this count. 1 to 100, default 30. A lower count still uses that incident's minimum. A mother and child stay together.</RHAH_Settings_MaxEventPawns_Tooltip>
   <RHAH_Settings_ReliefScore>Relief food bonus: {0}%</RHAH_Settings_ReliefScore>
-  <RHAH_Settings_ReliefScore_Tooltip>Food inside the zone also gains this bonus, on top of distance and whether it is suitable. Range 0 to 100%, default 10%.</RHAH_Settings_ReliefScore_Tooltip>
+  <RHAH_Settings_ReliefScore_Tooltip>Food inside the zone adds this share of its distance and suitability score. 0 to 100%, default 10%.</RHAH_Settings_ReliefScore_Tooltip>
   <RHAH_Settings_FedWander>Wander after eating, then leave</RHAH_Settings_FedWander>
-  <RHAH_Settings_FedWander_Tooltip>A full visitor wanders, then leaves. With this off, they head for an exit at once. If leaving after eating is off, a full visitor stays on the map.</RHAH_Settings_FedWander_Tooltip>
+  <RHAH_Settings_FedWander_Tooltip>On, a full visitor wanders, then leaves. Off, they head for an exit at once. If leaving after eating is off, a full visitor stays on the map.</RHAH_Settings_FedWander_Tooltip>
   <RHAH_Settings_FedWanderHours>Wander after eating: {0} hours</RHAH_Settings_FedWanderHours>
   <RHAH_Settings_FedWanderHours_Tooltip>How long a full visitor wanders before leaving. 1 to 48 hours, default 12. Unused while wandering is off.</RHAH_Settings_FedWanderHours_Tooltip>
   <RHAH_Settings_WaitFood>Wait when no food is found</RHAH_Settings_WaitFood>
-  <RHAH_Settings_WaitFood_Tooltip>Visitors keep looking for the set time. Food found later starts the next wait over. With this off, they leave.</RHAH_Settings_WaitFood_Tooltip>
+  <RHAH_Settings_WaitFood_Tooltip>On, visitors keep looking for the set time. Finding food starts the next wait over. Off, they leave at once.</RHAH_Settings_WaitFood_Tooltip>
   <RHAH_Settings_FoodWait>Wait without food: {0} days</RHAH_Settings_FoodWait>
-  <RHAH_Settings_FoodWait_Tooltip>How long a visitor waits after finding nothing to eat. Range 0 to 5 days, default half a day.</RHAH_Settings_FoodWait_Tooltip>
+  <RHAH_Settings_FoodWait_Tooltip>How long a visitor waits after finding nothing to eat. 0 to 5 days, default half a day.</RHAH_Settings_FoodWait_Tooltip>
   <RHAH_Settings_MinAge>Minimum arrival age: {0}</RHAH_Settings_MinAge>
   <RHAH_Settings_MaxAge>Maximum arrival age: {0}</RHAH_Settings_MaxAge>
-  <RHAH_Settings_Age_Tooltip>Ordinary visitors fall inside this range. 0 to 100, default 0 to 50. Mothers stay at least as old as their own minimum. Ratkin young keep their own ages unless the switch below is on.</RHAH_Settings_Age_Tooltip>
+  <RHAH_Settings_Age_Tooltip>Ordinary visitors arrive inside this range. 0 to 100, default 0 to 50. A mother stays at least as old as her own minimum. Ratkin young keep their own ages unless the switch below is on.</RHAH_Settings_Age_Tooltip>
   <RHAH_Settings_YoungAge>Ratkin young use this age range</RHAH_Settings_YoungAge>
-  <RHAH_Settings_YoungAge_Tooltip>With this on, ratkin young also fall inside the range above. Off, beggar young are 1 day to 2.9 years, and other young are 3 to 6.9. Mothers stay at least as old as their own minimum. People already here stay as they are.</RHAH_Settings_YoungAge_Tooltip>
+  <RHAH_Settings_YoungAge_Tooltip>On, newly arriving ratkin young also use the range above. Off, begging young are 1 day to 2.9 years, and other young are 3 to 6.9. Mothers still use their own minimum age.</RHAH_Settings_YoungAge_Tooltip>
   <RHAH_Settings_MotherAge>Minimum mother age: {0}</RHAH_Settings_MotherAge>
-  <RHAH_Settings_MotherAge_Tooltip>A mother or begging mother arrives at least this old. 1 to 14, default 14. A higher ordinary arrival age wins. Ratkin young stay as they are. People already here stay as they are.</RHAH_Settings_MotherAge_Tooltip>
+  <RHAH_Settings_MotherAge_Tooltip>A newly arriving mother or begging mother is at least this old. 1 to 14, default 14. If the ordinary arrival age is higher, that age wins. Ratkin young keep their own ages.</RHAH_Settings_MotherAge_Tooltip>
   <RHAH_Settings_ImmobileBabies>Allow babies who cannot walk</RHAH_Settings_ImmobileBabies>
-  <RHAH_Settings_ImmobileBabies_Tooltip>Without a toddler mod, ratkin babies under 4 stay down. An adult has to carry them out. With this off, ratkin young are at least 4.</RHAH_Settings_ImmobileBabies_Tooltip>
-  <RHAH_Settings_ImmobileBabies_Toddlers>Toddlers is active. Children under 3 can move. This switch no longer raises their age.</RHAH_Settings_ImmobileBabies_Toddlers>
+  <RHAH_Settings_ImmobileBabies_Tooltip>Without a toddler mod, ratkin under 4 stay down, and an adult has to carry them out. Off, ratkin young arrive at least 4 years old.</RHAH_Settings_ImmobileBabies_Tooltip>
+  <RHAH_Settings_ImmobileBabies_Toddlers>Toddlers is active. Children under 3 can move on their own. This switch no longer raises their age.</RHAH_Settings_ImmobileBabies_Toddlers>
   <RHAH_Settings_Gender>Gender</RHAH_Settings_Gender>
   <RHAH_Settings_Gender_0>Random</RHAH_Settings_Gender_0>
   <RHAH_Settings_Gender_1>By share</RHAH_Settings_Gender_1>
   <RHAH_Settings_Gender_2>All female</RHAH_Settings_Gender_2>
   <RHAH_Settings_Gender_3>All male</RHAH_Settings_Gender_3>
   <RHAH_Settings_FemaleShare>Female share: {0}%</RHAH_Settings_FemaleShare>
-  <RHAH_Settings_FemaleShare_Tooltip>Used only by share. 0 is all male. 100 is all female. Someone whose gender the event already set keeps it.</RHAH_Settings_FemaleShare_Tooltip>
+  <RHAH_Settings_FemaleShare_Tooltip>Used only when gender is set by share. 0 is all male. 100 is all female. Someone whose gender the incident already set keeps it.</RHAH_Settings_FemaleShare_Tooltip>
   <RHAH_Settings_PlayerIdeo>Player ideoligion: {0}%</RHAH_Settings_PlayerIdeo>
-  <RHAH_Settings_PlayerIdeo_Tooltip>This share of new arrivals, and of people who later join, takes the colony's primary ideoligion. 100 converts all of them. 0 keeps the ideoligion they arrived with. Slaves and prisoners do not count toward the primary ideoligion. Unused without Ideology.</RHAH_Settings_PlayerIdeo_Tooltip>
+  <RHAH_Settings_PlayerIdeo_Tooltip>This share of new arrivals, and of people who later join, takes the player faction's primary ideoligion. 100 converts all of them. 0 keeps the ideoligion they arrived with. With Ideology off, or with no primary ideoligion, nothing changes.</RHAH_Settings_PlayerIdeo_Tooltip>
   <RHAH_Settings_Apparel>Clothing</RHAH_Settings_Apparel>
   <RHAH_Settings_Apparel_0>Plain clothes</RHAH_Settings_Apparel_0>
   <RHAH_Settings_Apparel_1>Plain clothes</RHAH_Settings_Apparel_1>
   <RHAH_Settings_Apparel_2>Plain clothes, then a temperature wrap</RHAH_Settings_Apparel_2>
   <RHAH_Settings_Apparel_3>No clothing</RHAH_Settings_Apparel_3>
   <RHAH_Settings_MaxTraits>Mod traits: {0}</RHAH_Settings_MaxTraits>
-  <RHAH_Settings_MaxTraits_Tooltip>A new visitor gains at most this many mod traits. 0 draws none. Range 0 to 3. People already here keep theirs.</RHAH_Settings_MaxTraits_Tooltip>
+  <RHAH_Settings_MaxTraits_Tooltip>A new visitor gains at most this many mod traits. 0 gives none. Range 0 to 3. People already here keep the traits they have.</RHAH_Settings_MaxTraits_Tooltip>
   <RHAH_Settings_VanillaTraits>Keep vanilla traits</RHAH_Settings_VanillaTraits>
-  <RHAH_Settings_VanillaTraits_Tooltip>With this off, new visitors gain no age-based vanilla traits. Mod traits still follow the limit above.</RHAH_Settings_VanillaTraits_Tooltip>
+  <RHAH_Settings_VanillaTraits_Tooltip>Off, new visitors gain no age-based vanilla traits. Mod traits still follow the limit above.</RHAH_Settings_VanillaTraits_Tooltip>
   <RHAH_Settings_TraitAge>Traits follow age</RHAH_Settings_TraitAge>
-  <RHAH_Settings_TraitAge_Tooltip>With this off, child traits and adult traits can both be drawn. With it on, children miss adult traits and adults miss child traits.</RHAH_Settings_TraitAge_Tooltip>
+  <RHAH_Settings_TraitAge_Tooltip>Off, child traits and adult traits can both be chosen. On, children miss adult traits and adults miss child traits.</RHAH_Settings_TraitAge_Tooltip>
   <RHAH_Settings_ContentSort>List grouping</RHAH_Settings_ContentSort>
   <RHAH_Settings_ContentSort_0>By source</RHAH_Settings_ContentSort_0>
   <RHAH_Settings_ContentSort_1>By name</RHAH_Settings_ContentSort_1>
@@ -70,9 +70,9 @@
   <RHAH_Menu_Content_conflict>Conflict</RHAH_Menu_Content_conflict>
   <RHAH_Menu_Content_siege>Siege</RHAH_Menu_Content_siege>
   <RHAH_Settings_ShelterDays>Short-term stay: {0}</RHAH_Settings_ShelterDays>
-  <RHAH_Settings_ShelterDays_Tooltip>A short-term worker leaves when the time is up. Minimum 5 days, maximum 1 year, default 5 days. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_ShelterDays_Tooltip>
+  <RHAH_Settings_ShelterDays_Tooltip>A short-term worker leaves when the time is up. Minimum 5 days, maximum 1 year, default 5 days. A downed visitor stays on the map and resumes the remaining time after waking.</RHAH_Settings_ShelterDays_Tooltip>
   <RHAH_Settings_HireDays>Long-term stay: {0}</RHAH_Settings_HireDays>
-  <RHAH_Settings_HireDays_Tooltip>A long-term worker leaves when the time is up. Minimum 5 days, maximum 10 years, default 1 year. A downed visitor stays on the map and resumes the remaining time.</RHAH_Settings_HireDays_Tooltip>
+  <RHAH_Settings_HireDays_Tooltip>A long-term worker leaves when the time is up. Minimum 5 days, maximum 10 years, default 1 year. A downed visitor stays on the map and resumes the remaining time after waking.</RHAH_Settings_HireDays_Tooltip>
   <RHAH_Stay_Year>1 year</RHAH_Stay_Year>
   <RHAH_Stay_Years>{0} years</RHAH_Stay_Years>
   <RHAH_Stay_YearsDays>{0} years, {1} days</RHAH_Stay_YearsDays>
@@ -81,13 +81,13 @@
   <RHAH_Stay_Inspect>Leaves in {0}</RHAH_Stay_Inspect>
   <RHAH_Stay_InspectPaused>Downed, departure timer paused ({0} left)</RHAH_Stay_InspectPaused>
   <RHAH_Settings_ColdClothes>Give new visitors a temperature wrap</RHAH_Settings_ColdClothes>
-  <RHAH_Settings_ColdClothes_Tooltip>When the map is outside what a new visitor can bear, they get the lightest wrap that covers the gap. If none does, they get the thickest. Someone already wearing one keeps it. With this off, no extra clothing is given.</RHAH_Settings_ColdClothes_Tooltip>
+  <RHAH_Settings_ColdClothes_Tooltip>When the map is outside what a new visitor can bear, they get the lightest wrap that covers the gap. If none covers it, they get the thickest. Someone already wearing one keeps it. Off, no extra clothing is given.</RHAH_Settings_ColdClothes_Tooltip>
   <RHAH_Settings_TempMin>Minimum incident temperature: {0}°C</RHAH_Settings_TempMin>
   <RHAH_Settings_TempMax>Maximum incident temperature: {0}°C</RHAH_Settings_TempMax>
-  <RHAH_Settings_Temp_Tooltip>New map incidents stop while the map is outside this range. Default -35°C to 70°C. Caravans ignore it.</RHAH_Settings_Temp_Tooltip>
+  <RHAH_Settings_Temp_Tooltip>While the map is outside this range, new incidents aimed at the map stop. Default -35°C to 70°C. Caravans ignore this limit.</RHAH_Settings_Temp_Tooltip>
   <RHAH_Choice_Shelter>Take in short-term ({0})</RHAH_Choice_Shelter>
   <RHAH_Settings_ReliefFoods>Allowed foods</RHAH_Settings_ReliefFoods>
-  <RHAH_Settings_ReliefFoods_Tooltip>Visitors may take any food left on.</RHAH_Settings_ReliefFoods_Tooltip>
+  <RHAH_Settings_ReliefFoods_Tooltip>Visitors can take any food left on.</RHAH_Settings_ReliefFoods_Tooltip>
   <RHAH_Settings_ReliefFoods_All>Allow all</RHAH_Settings_ReliefFoods_All>
   <RHAH_Settings_ReliefFoods_None>Disable all</RHAH_Settings_ReliefFoods_None>
   <RHAH_Settings_ReliefFoods_Search>Search foods or mods</RHAH_Settings_ReliefFoods_Search>
@@ -101,20 +101,20 @@
   <RHAH_Menu_Visitors>Visitors</RHAH_Menu_Visitors>
   <RHAH_Menu_Plague>Plague</RHAH_Menu_Plague>
   <RHAH_Settings_Begging>Allow begging</RHAH_Settings_Begging>
-  <RHAH_Settings_Begging_Tooltip>Visitors no longer beg from colonists.</RHAH_Settings_Begging_Tooltip>
+  <RHAH_Settings_Begging_Tooltip>Off, visitors stop begging from colonists.</RHAH_Settings_Begging_Tooltip>
   <RHAH_Settings_BegAutoGive>Give carried food when begging succeeds</RHAH_Settings_BegAutoGive>
-  <RHAH_Settings_BegAutoGive_Tooltip>Off by default. When on, a successful beg takes one allowed food from the colonist's inventory, highest nutrition first. When off, begging still happens, but nothing is given and it does not count as success. Handing food over, relief food, and childcare feeding stay separate.</RHAH_Settings_BegAutoGive_Tooltip>
+  <RHAH_Settings_BegAutoGive_Tooltip>Off by default. On, a successful beg takes one allowed food from the colonist's pack, highest nutrition first. Off, the visitor still asks, the food stays in the pack, and the beg does not count as success. Handing food over, relief food, and feeding during care continue as usual.</RHAH_Settings_BegAutoGive_Tooltip>
   <RHAH_Settings_BegSuccessChance>First beg succeeds: {0}%</RHAH_Settings_BegSuccessChance>
-  <RHAH_Settings_BegSuccessChance_Tooltip>Base chance the first time a colonist is begged. Social skill adds the bonus below, capped at 100%. Default 35.</RHAH_Settings_BegSuccessChance_Tooltip>
+  <RHAH_Settings_BegSuccessChance_Tooltip>Base chance the first time someone begs from one colonist. Social skill adds the bonus below, up to 100%. Default 35.</RHAH_Settings_BegSuccessChance_Tooltip>
   <RHAH_Settings_BegSocialBonus>Social skill bonus: +{0}% per level</RHAH_Settings_BegSocialBonus>
-  <RHAH_Settings_BegSocialBonus_Tooltip>Extra success chance per social skill level. 0 to 20, default 3. A later beg to the same colonist cannot succeed.</RHAH_Settings_BegSocialBonus_Tooltip>
+  <RHAH_Settings_BegSocialBonus_Tooltip>Extra success chance for each level of the beggar's Social skill. 0 to 20, default 3. A later beg to the same colonist cannot succeed.</RHAH_Settings_BegSocialBonus_Tooltip>
   <RHAH_Settings_BegFoods>Food that can be begged</RHAH_Settings_BegFoods>
-  <RHAH_Settings_BegFoods_Tooltip>Food turned off is not taken from inventory when begging succeeds. Raw food and ingredients are not on this list.</RHAH_Settings_BegFoods_Tooltip>
+  <RHAH_Settings_BegFoods_Tooltip>Food turned off stays in the pack when a beg succeeds. Raw food and ingredients are not on this list.</RHAH_Settings_BegFoods_Tooltip>
   <RHAH_Settings_BegFoods_All>Allow all</RHAH_Settings_BegFoods_All>
   <RHAH_Settings_BegFoods_None>Forbid all</RHAH_Settings_BegFoods_None>
   <RHAH_Settings_BegFoods_Search>Search foods or mods</RHAH_Settings_BegFoods_Search>
   <RHAH_Settings_BegFoods_Empty>No foods match.</RHAH_Settings_BegFoods_Empty>
-  <RHAH_Settings_BegFoods_Quote>Food you turn off cannot be taken by begging. Meals added later can still be begged. Handing food over uses a separate list.</RHAH_Settings_BegFoods_Quote>
+  <RHAH_Settings_BegFoods_Quote>Food you turn off cannot be taken by begging. Meals added later can still be begged. Handing food over uses its own list.</RHAH_Settings_BegFoods_Quote>
   <RHAH_Settings_BegFoods_Sort>Begging food grouping</RHAH_Settings_BegFoods_Sort>
   <RHAH_Settings_BegFoods_Sort_0>By mod</RHAH_Settings_BegFoods_Sort_0>
   <RHAH_Settings_BegFoods_Sort_1>By name</RHAH_Settings_BegFoods_Sort_1>
@@ -122,43 +122,43 @@
   <RHAH_Settings_BegFailCooldown>Wander after failed begging: {0} hours</RHAH_Settings_BegFailCooldown>
   <RHAH_Settings_BegFailCooldown_Tooltip>After every suitable colonist refuses, the visitor wanders this long before begging again. 3 to 12 hours, default 3.</RHAH_Settings_BegFailCooldown_Tooltip>
   <RHAH_Settings_BegSlapChance>Slap on a repeat beg: {0}%</RHAH_Settings_BegSlapChance>
-  <RHAH_Settings_BegSlapChance_Tooltip>The second time the same colonist is begged, and every time after, they may slap the beggar. 0 to 100, default 50.</RHAH_Settings_BegSlapChance_Tooltip>
+  <RHAH_Settings_BegSlapChance_Tooltip>The second time the same colonist is begged, and every time after, they may slap the beggar at this chance. 0 to 100, default 50.</RHAH_Settings_BegSlapChance_Tooltip>
   <RHAH_Settings_Stealing>Allow stealing</RHAH_Settings_Stealing>
-  <RHAH_Settings_Stealing_Tooltip>Visitors no longer steal.</RHAH_Settings_Stealing_Tooltip>
+  <RHAH_Settings_Stealing_Tooltip>Off, visitors stop stealing.</RHAH_Settings_Stealing_Tooltip>
   <RHAH_Settings_Fighting>Allow fighting back</RHAH_Settings_Fighting>
-  <RHAH_Settings_Fighting_Tooltip>When harmed or driven off, visitors leave instead of fighting.</RHAH_Settings_Fighting_Tooltip>
+  <RHAH_Settings_Fighting_Tooltip>Off, a harmed or driven-off visitor leaves instead of fighting back.</RHAH_Settings_Fighting_Tooltip>
   <RHAH_Settings_Gnawing>Allow gnawing trees and walls</RHAH_Settings_Gnawing>
-  <RHAH_Settings_Gnawing_Tooltip>Visitors no longer gnaw bark or walls for food.</RHAH_Settings_Gnawing_Tooltip>
+  <RHAH_Settings_Gnawing_Tooltip>Off, visitors stop gnawing bark or walls for food.</RHAH_Settings_Gnawing_Tooltip>
   <RHAH_Settings_BatchHostile>The whole group turns hostile</RHAH_Settings_BatchHostile>
-  <RHAH_Settings_BatchHostile_Tooltip>Harming or driving off one visitor no longer turns the rest of that group hostile.</RHAH_Settings_BatchHostile_Tooltip>
+  <RHAH_Settings_BatchHostile_Tooltip>Off, harming or driving off one visitor leaves the rest of that group as they are.</RHAH_Settings_BatchHostile_Tooltip>
   <RHAH_Settings_BatchLeave>The whole group leaves together</RHAH_Settings_BatchLeave>
-  <RHAH_Settings_BatchLeave_Tooltip>Harm or expulsion affects only that visitor. The rest of the group stays.</RHAH_Settings_BatchLeave_Tooltip>
+  <RHAH_Settings_BatchLeave_Tooltip>Off, harm or expulsion affects only that visitor. The rest of the group stays.</RHAH_Settings_BatchLeave_Tooltip>
   <RHAH_Settings_ShortStayLockApparel>Lock current clothes for short stays</RHAH_Settings_ShortStayLockApparel>
-  <RHAH_Settings_ShortStayLockApparel_Tooltip>On by default. Starting a short stay locks the clothes worn then. When the stay ends, or the visitor becomes a prisoner, slave, or colonist, only those locks are removed. Off, a newly started short stay does not lock clothes. A stay already underway is left as it is.</RHAH_Settings_ShortStayLockApparel_Tooltip>
+  <RHAH_Settings_ShortStayLockApparel_Tooltip>On by default. Starting a short stay locks the clothes worn then. When the stay ends, or the visitor becomes a prisoner, slave, or colonist, only those locks come off. Off, a newly started short stay leaves clothes unlocked. A stay already underway keeps those clothes locked.</RHAH_Settings_ShortStayLockApparel_Tooltip>
   <RHAH_Settings_BroadcastCooldown>Broadcast cooldown: {0} days</RHAH_Settings_BroadcastCooldown>
-  <RHAH_Settings_BroadcastCooldown_Tooltip>Days before another broadcast. 0 to 10, default 3.</RHAH_Settings_BroadcastCooldown_Tooltip>
+  <RHAH_Settings_BroadcastCooldown_Tooltip>Days to wait after one broadcast before another. 0 to 10 days, default 3.</RHAH_Settings_BroadcastCooldown_Tooltip>
   <RHAH_Settings_RefugeeCamp>Allow refugee camps</RHAH_Settings_RefugeeCamp>
-  <RHAH_Settings_RefugeeCamp_Tooltip>Temporary refugee camps stop appearing.</RHAH_Settings_RefugeeCamp_Tooltip>
+  <RHAH_Settings_RefugeeCamp_Tooltip>Off, temporary refugee camps stop appearing.</RHAH_Settings_RefugeeCamp_Tooltip>
   <RHAH_Settings_Plague>Allow the plague</RHAH_Settings_Plague>
-  <RHAH_Settings_Plague_Tooltip>New visitors arrive healthy, and it stops spreading. People already sick still need treatment.</RHAH_Settings_Plague_Tooltip>
+  <RHAH_Settings_Plague_Tooltip>Off, new visitors arrive healthy and the plague stops spreading through the colony. People already sick still need treatment.</RHAH_Settings_Plague_Tooltip>
   <RHAH_Settings_PlaguePerCarrier>Spread chance per sick visitor: {0}%</RHAH_Settings_PlaguePerCarrier>
   <RHAH_Settings_PlaguePerCarrier_Tooltip>Each sick ratkin on the map adds this much chance that a colonist catches it. 0 to 100, default 0.5.</RHAH_Settings_PlaguePerCarrier_Tooltip>
   <RHAH_Settings_PlagueCap>Spread chance cap: {0}%</RHAH_Settings_PlagueCap>
-  <RHAH_Settings_PlagueCap_Tooltip>One check will not infect a colonist more often than this. 0 to 100, default 30.</RHAH_Settings_PlagueCap_Tooltip>
+  <RHAH_Settings_PlagueCap_Tooltip>One check gives a colonist at most this chance of catching it. 0 to 100, default 30.</RHAH_Settings_PlagueCap_Tooltip>
   <RHAH_Settings_PlagueDays>Spread interval: {0} days</RHAH_Settings_PlagueDays>
-  <RHAH_Settings_PlagueDays_Tooltip>How many days pass between spread checks. 1 to 30, default 3.</RHAH_Settings_PlagueDays_Tooltip>
+  <RHAH_Settings_PlagueDays_Tooltip>Days between spread checks. 1 to 30, default 3.</RHAH_Settings_PlagueDays_Tooltip>
   <RHAH_Settings_PlagueHour>Check hour: {0}</RHAH_Settings_PlagueHour>
   <RHAH_Settings_PlagueHour_Tooltip>The hour of day when spread is checked. 0 to 23, default 6.</RHAH_Settings_PlagueHour_Tooltip>
   <RHAH_Settings_PlagueBlood>Blood pumping of {0}% prevents infection</RHAH_Settings_PlagueBlood>
-  <RHAH_Settings_PlagueBlood_Tooltip>A person at or above this blood pumping is not infected. 0 to 300, default 120.</RHAH_Settings_PlagueBlood_Tooltip>
+  <RHAH_Settings_PlagueBlood_Tooltip>A person at or above this blood pumping stays uninfected. 0 to 300, default 120.</RHAH_Settings_PlagueBlood_Tooltip>
   <RHAH_Settings_PlagueReturn>Allow recovered visitors to return</RHAH_Settings_PlagueReturn>
-  <RHAH_Settings_PlagueReturn_Tooltip>Someone who left and recovered does not come back.</RHAH_Settings_PlagueReturn_Tooltip>
+  <RHAH_Settings_PlagueReturn_Tooltip>Off, someone who left and recovered stays away.</RHAH_Settings_PlagueReturn_Tooltip>
   <RHAH_Settings_PlagueDelay>Days before a return: {0}</RHAH_Settings_PlagueDelay>
-  <RHAH_Settings_PlagueDelay_Tooltip>After leaving and recovering, they return after this many days. 0 to 60, default 15.</RHAH_Settings_PlagueDelay_Tooltip>
+  <RHAH_Settings_PlagueDelay_Tooltip>After leaving and recovering, they return to the map edge after this many days. 0 to 60, default 15.</RHAH_Settings_PlagueDelay_Tooltip>
   <RHAH_Settings_PlagueStay>Stay after returning: {0} days</RHAH_Settings_PlagueStay>
   <RHAH_Settings_PlagueStay_Tooltip>A returned visitor leaves after this many days. 0 to 15, default 1.</RHAH_Settings_PlagueStay_Tooltip>
   <RHAH_Settings_SuiyinTempo>Suiyin changes major threats with trust</RHAH_Settings_SuiyinTempo>
-  <RHAH_Settings_SuiyinTempo_Tooltip>With Suiyin as storyteller, major threats no longer speed up or slow down with trust.</RHAH_Settings_SuiyinTempo_Tooltip>
+  <RHAH_Settings_SuiyinTempo_Tooltip>Off, major threats stay on their normal pace while Suiyin is the storyteller.</RHAH_Settings_SuiyinTempo_Tooltip>
   <RHAH_Settings_WeightWild>Wild: {0}</RHAH_Settings_WeightWild>
   <RHAH_Settings_WeightBeggar>Begging: {0}</RHAH_Settings_WeightBeggar>
   <RHAH_Settings_WeightThief>Theft: {0}</RHAH_Settings_WeightThief>
@@ -169,10 +169,10 @@
   <RHAH_Settings_WeightIntel>Intel: {0}</RHAH_Settings_WeightIntel>
   <RHAH_Settings_WeightSeason>Spring and winter: {0}</RHAH_Settings_WeightSeason>
   <RHAH_Settings_WeightPlague>Plague incidents: {0}</RHAH_Settings_WeightPlague>
-  <RHAH_Settings_Weight_Tooltip>Incidents of this kind are multiplied by this before the draw. 0 to 5. At 0, that kind stops appearing.</RHAH_Settings_Weight_Tooltip>
+  <RHAH_Settings_Weight_Tooltip>Incidents of this kind are multiplied by this before one is chosen. 0 to 5. At 0, that kind stops appearing.</RHAH_Settings_Weight_Tooltip>
   <RHAH_Settings_ReliefFoods_Quote>Visitors stop taking food you turn off. Food added later stays available.</RHAH_Settings_ReliefFoods_Quote>
   <RHAH_Settings_GiveFoods>Food that can be handed over</RHAH_Settings_GiveFoods>
-  <RHAH_Settings_GiveFoods_Tooltip>Food turned off does not appear when a colonist hands food to a visitor.</RHAH_Settings_GiveFoods_Tooltip>
+  <RHAH_Settings_GiveFoods_Tooltip>Food turned off stays out of the right-click option for handing food to a visitor.</RHAH_Settings_GiveFoods_Tooltip>
   <RHAH_Settings_GiveFoods_All>Allow all</RHAH_Settings_GiveFoods_All>
   <RHAH_Settings_GiveFoods_None>Forbid all</RHAH_Settings_GiveFoods_None>
   <RHAH_Settings_GiveFoods_Search>Search foods or mods</RHAH_Settings_GiveFoods_Search>
@@ -184,12 +184,12 @@
   <RHAH_Settings_GiveFoods_Sort_2>By vanilla category</RHAH_Settings_GiveFoods_Sort_2>
   <RHAH_Settings_GiveFoods_Other>Other</RHAH_Settings_GiveFoods_Other>
   <RHAH_Settings_RefugeeApparel>Clothing that can be generated</RHAH_Settings_RefugeeApparel>
-  <RHAH_Settings_RefugeeApparel_Tooltip>Clothing you turn off is not given to new visitors. Temperature clothing is set on the environment page and worn first. Ordinary clothing is added only where it fits.</RHAH_Settings_RefugeeApparel_Tooltip>
+  <RHAH_Settings_RefugeeApparel_Tooltip>Clothing you turn off is kept from new visitors. Temperature clothing is set on the environment page and worn first. Ordinary clothing is added only where it does not replace the wrap.</RHAH_Settings_RefugeeApparel_Tooltip>
   <RHAH_Settings_RefugeeApparel_All>Allow all</RHAH_Settings_RefugeeApparel_All>
   <RHAH_Settings_RefugeeApparel_None>Forbid all</RHAH_Settings_RefugeeApparel_None>
   <RHAH_Settings_RefugeeApparel_Search>Search clothing or mods</RHAH_Settings_RefugeeApparel_Search>
   <RHAH_Settings_RefugeeApparel_Empty>No clothing matches.</RHAH_Settings_RefugeeApparel_Empty>
-  <RHAH_Settings_RefugeeApparel_Quote>Visitors receive only vanilla tribalwear, specified NewRatkinPlus clothing, and vanilla baby and child basics. Clothing from other mods stays out of the default list. Ordinary clothing never replaces temperature clothing.</RHAH_Settings_RefugeeApparel_Quote>
+  <RHAH_Settings_RefugeeApparel_Quote>By default, visitors receive only vanilla tribalwear, the specified NewRatkinPlus clothes, and vanilla baby and child basics. Clothes from other mods stay off the default list. Ordinary clothes never replace a temperature wrap.</RHAH_Settings_RefugeeApparel_Quote>
   <RHAH_Settings_RefugeeApparel_Sort>Clothing grouping</RHAH_Settings_RefugeeApparel_Sort>
   <RHAH_Settings_RefugeeApparel_Sort_0>By mod</RHAH_Settings_RefugeeApparel_Sort_0>
   <RHAH_Settings_RefugeeApparel_Sort_1>By name</RHAH_Settings_RefugeeApparel_Sort_1>
@@ -200,21 +200,21 @@
   <RHAH_Menu_Narrative>Narrative</RHAH_Menu_Narrative>
   <RHAH_Menu_Other>Other</RHAH_Menu_Other>
   <RHAH_Menu_Environment>Environment</RHAH_Menu_Environment>
-  <RHAH_Menu_Environment_Note>When the map is outside what a new visitor can bear, they get the lightest wrap that covers the gap. If none does, they get the thickest. People already here keep what they wear.</RHAH_Menu_Environment_Note>
-  <RHAH_Menu_Environment_Disabled>Temperature wraps are off. New visitors get no extra clothing.</RHAH_Menu_Environment_Disabled>
+  <RHAH_Menu_Environment_Note>When the map is outside what a new visitor can bear, they get the lightest wrap that covers the gap. If none covers it, they get the thickest. People already here keep the clothes they are wearing.</RHAH_Menu_Environment_Note>
+  <RHAH_Menu_Environment_Disabled>Temperature wraps are off. New visitors get none of this extra clothing.</RHAH_Menu_Environment_Disabled>
   <RHAH_Menu_Environment_Cold>Cold</RHAH_Menu_Environment_Cold>
   <RHAH_Menu_Environment_Heat>Heat</RHAH_Menu_Environment_Heat>
   <RHAH_Settings_TemperatureApparel>Use {0}</RHAH_Settings_TemperatureApparel>
-  <RHAH_Settings_TemperatureApparel_Tooltip>With this off, new visitors do not get this wrap. Someone already wearing it keeps it.</RHAH_Settings_TemperatureApparel_Tooltip>
+  <RHAH_Settings_TemperatureApparel_Tooltip>Off, new visitors get none of this wrap. Someone already wearing it keeps wearing it.</RHAH_Settings_TemperatureApparel_Tooltip>
   <RHAH_Settings_TemperatureInsulation>{0}: +{1}°C {2}</RHAH_Settings_TemperatureInsulation>
-  <RHAH_Settings_TemperatureInsulation_Tooltip>Drag to set this wrap's protection. Range 0 to 100. At 0 it adds none.</RHAH_Settings_TemperatureInsulation_Tooltip>
+  <RHAH_Settings_TemperatureInsulation_Tooltip>Drag to set this wrap's protection. Range 0 to 100. At 0 it adds none of this protection.</RHAH_Settings_TemperatureInsulation_Tooltip>
   <RHAH_Menu_CompatDiagnostics>Compatibility and diagnostics</RHAH_Menu_CompatDiagnostics>
   <RHAH_Menu_Ending>Ending</RHAH_Menu_Ending>
   <RHAH_Menu_Genes>Genes</RHAH_Menu_Genes>
-  <RHAH_Menu_DevEvents>Dev events</RHAH_Menu_DevEvents>
+  <RHAH_Menu_DevEvents>Dev mode: trigger incidents</RHAH_Menu_DevEvents>
   <RHAH_Menu_EventFrequency>Event frequency</RHAH_Menu_EventFrequency>
-  <RHAH_Menu_PawnHistory>Pawn history</RHAH_Menu_PawnHistory>
-  <RHAH_Menu_Developer>Developer</RHAH_Menu_Developer>
+  <RHAH_Menu_PawnHistory>Visitor histories</RHAH_Menu_PawnHistory>
+  <RHAH_Menu_Developer>Dev mode</RHAH_Menu_Developer>
   <RHAH_Menu_Experimental>Experimental</RHAH_Menu_Experimental>
   <RHAH_Menu_Removal>Save and removal</RHAH_Menu_Removal>
   <RHAH_RemovalSection>This save</RHAH_RemovalSection>
@@ -240,36 +240,36 @@
   <RHAH_Menu_Unavailable>Not available</RHAH_Menu_Unavailable>
   <RHAH_Menu_Settings_Missing>Settings are not ready. Reopen this page and try again.</RHAH_Menu_Settings_Missing>
   <RHAH_Menu_EventMeta>{0} / {1} / {2} / {3}. Broadcast: {4}.</RHAH_Menu_EventMeta>
-  <RHAH_Menu_Events_Note>A checked event can happen. Drag for a rough value, type the exact one. Scale changes headcount and requests. At weight 0, it stops appearing.</RHAH_Menu_Events_Note>
+  <RHAH_Menu_Events_Note>A checked incident can happen. Drag for a rough value, type the exact one. Scale changes how many people arrive and how much they ask for. At weight 0, it stops appearing.</RHAH_Menu_Events_Note>
   <RHAH_Menu_EventEnabled>Allow this incident</RHAH_Menu_EventEnabled>
-  <RHAH_Menu_EventEnabled_Tip>With this off, the incident stays out of the draw and cannot be queued from the debug page. Visitors already here stay.</RHAH_Menu_EventEnabled_Tip>
+  <RHAH_Menu_EventEnabled_Tip>Off, this incident stays out of the draw and cannot be queued from the dev mode page. Visitors already here stay as they are.</RHAH_Menu_EventEnabled_Tip>
   <RHAH_Menu_DebugPoints>Scale</RHAH_Menu_DebugPoints>
-  <RHAH_Menu_DebugPoints_Tip>Natural fires and debug triggers use this size. It changes how many visitors arrive and how much aid or intel asks for. Range 1 to 10000. The slider is rough. The field is exact.</RHAH_Menu_DebugPoints_Tip>
+  <RHAH_Menu_DebugPoints_Tip>Natural incidents and dev mode triggers both use this size. It changes how many visitors arrive and how much aid or intel asks for. Range 1 to 10000. The slider is rough. The field is exact.</RHAH_Menu_DebugPoints_Tip>
   <RHAH_Menu_IncidentWeight>Appearance weight</RHAH_Menu_IncidentWeight>
-  <RHAH_Menu_IncidentWeight_Tip>100 keeps the catalog weight. Higher is drawn more often. 0 stays out. The slider is rough. The field is exact.</RHAH_Menu_IncidentWeight_Tip>
+  <RHAH_Menu_IncidentWeight_Tip>100 keeps the weight from the incident list. A higher weight appears more often. 0 stays out. The slider is rough. The field is exact.</RHAH_Menu_IncidentWeight_Tip>
   <RHAH_Menu_Attitude>Arrival attitude</RHAH_Menu_Attitude>
-  <RHAH_Menu_Attitude_Tip>The five-step attitude used when this incident spawns. Empty keeps the catalog attitude. Under Suiyin, negative trust steps it down once. Hostile does not step down. Visitors already here stay.</RHAH_Menu_Attitude_Tip>
+  <RHAH_Menu_Attitude_Tip>The five-step attitude used when this incident arrives. Leave it unchanged and the incident list decides. Under Suiyin, negative trust steps it down once. Hostile stays hostile. Visitors already here keep their attitude.</RHAH_Menu_Attitude_Tip>
   <RHAH_Menu_Attitude_Hostile>Hostile</RHAH_Menu_Attitude_Hostile>
   <RHAH_Menu_Attitude_LeaningHostile>Leaning hostile</RHAH_Menu_Attitude_LeaningHostile>
   <RHAH_Menu_Attitude_Neutral>Neutral</RHAH_Menu_Attitude_Neutral>
   <RHAH_Menu_Attitude_LeaningFriendly>Leaning friendly</RHAH_Menu_Attitude_LeaningFriendly>
   <RHAH_Menu_Attitude_Friendly>Friendly</RHAH_Menu_Attitude_Friendly>
-  <RHAH_Menu_Chain>Chain</RHAH_Menu_Chain>
-  <RHAH_Menu_Chain_Tip>Reserved for the developer trigger. Short plays this incident once. Long will continue later. It still plays once for now.</RHAH_Menu_Chain_Tip>
-  <RHAH_Menu_Chain_Short>Short</RHAH_Menu_Chain_Short>
-  <RHAH_Menu_Chain_Long>Long</RHAH_Menu_Chain_Long>
-  <RHAH_Menu_Trigger>Trigger</RHAH_Menu_Trigger>
-  <RHAH_Menu_TriggerInstant>Spawn now</RHAH_Menu_TriggerInstant>
-  <RHAH_Menu_TriggerInstant_Tip>Spawn immediately on the current map, skipping the queue and world travel. Caravan ambushes spawn attackers here; refugee camps spawn residents here. New content and incident switches still apply.</RHAH_Menu_TriggerInstant_Tip>
-  <RHAH_Menu_Instant_Failed>Nothing spawned. Check the incident switch, map conditions, and log.</RHAH_Menu_Instant_Failed>
+  <RHAH_Menu_Chain>Follow-up</RHAH_Menu_Chain>
+  <RHAH_Menu_Chain_Tip>Short follow-up may send predators once this group appears. Long follow-up sends a later letter once the children reach the follow-up age, for incidents that have one. This still plays the incident once.</RHAH_Menu_Chain_Tip>
+  <RHAH_Menu_Chain_Short>Short follow-up</RHAH_Menu_Chain_Short>
+  <RHAH_Menu_Chain_Long>Long follow-up</RHAH_Menu_Chain_Long>
+  <RHAH_Menu_Trigger>Queue the normal way</RHAH_Menu_Trigger>
+  <RHAH_Menu_TriggerInstant>Place them on this map now</RHAH_Menu_TriggerInstant>
+  <RHAH_Menu_TriggerInstant_Tip>Place them on the current map at once, skipping the queue and world travel. A caravan ambush places its attackers here. A refugee camp places its residents here. New content and incident switches still apply.</RHAH_Menu_TriggerInstant_Tip>
+  <RHAH_Menu_Instant_Failed>Nothing appeared. Check the incident switch, the map, and the log.</RHAH_Menu_Instant_Failed>
   <RHAH_Menu_Queue_Disabled>New content is off.</RHAH_Menu_Queue_Disabled>
   <RHAH_Menu_Queue_NoGame>No game is loaded.</RHAH_Menu_Queue_NoGame>
   <RHAH_Menu_Queue_NoMap>No usable map.</RHAH_Menu_Queue_NoMap>
   <RHAH_Menu_Queue_NoCaravan>No player caravan.</RHAH_Menu_Queue_NoCaravan>
-  <RHAH_Menu_Queue_Fired>Spawned.</RHAH_Menu_Queue_Fired>
-  <RHAH_Menu_Queue_Queued>Queued. It spawns when the pausing window closes.</RHAH_Menu_Queue_Queued>
-  <RHAH_Menu_Queue_Failed>Nothing queued.</RHAH_Menu_Queue_Failed>
-  <RHAH_Menu_DevEvents_Note>Trigger queues the normal event; map visitors travel across the world first. Spawn now creates them on the current map without closing this window or sending a caravan.</RHAH_Menu_DevEvents_Note>
+  <RHAH_Menu_Queue_Fired>They have appeared.</RHAH_Menu_Queue_Fired>
+  <RHAH_Menu_Queue_Queued>Queued. It appears when the pausing window closes.</RHAH_Menu_Queue_Queued>
+  <RHAH_Menu_Queue_Failed>Nothing was queued.</RHAH_Menu_Queue_Failed>
+  <RHAH_Menu_DevEvents_Note>Dev mode page. Queue the normal way and map visitors travel across the world first. Place them on this map now and they appear here without closing the window or sending a caravan.</RHAH_Menu_DevEvents_Note>
   <RHAH_Menu_Pawns_NoMap>No current map.</RHAH_Menu_Pawns_NoMap>
   <RHAH_Menu_Pawns_None>No Hunger and Havoc visitors on this map.</RHAH_Menu_Pawns_None>
   <RHAH_Menu_Pawns_Invalid>That visitor is gone.</RHAH_Menu_Pawns_Invalid>
@@ -292,9 +292,9 @@
   <RHAH_Menu_Ending_Gap>Ending switches are not available here yet.</RHAH_Menu_Ending_Gap>
   <RHAH_Menu_Genes_Gap>Gene settings are not available here yet.</RHAH_Menu_Genes_Gap>
   <RHAH_Menu_Genes_NoBiotech>Biotech is required. With it, you can set the xenotypes of visitors here.</RHAH_Menu_Genes_NoBiotech>
-  <RHAH_Menu_Genes_Note>The percent is the chance with faster generation enabled. Weights range from 0 to 100; zero stays out of the draw. Only permitted ratkin xenotypes are listed. The base ratkin xenotype defaults to a relative weight of 100 and coexists with the others; each chance is its weight over the total. At all zeroes, visitors use the permitted base ratkin xenotype, otherwise the native ratkin mix. If that pool is empty, they try the permitted famine ratkin xenotype. With faster generation off, they use the native pool directly. No available xenotype stops visitor generation.</RHAH_Menu_Genes_Note>
-  <RHAH_Menu_Genes_Reset>Reset weights</RHAH_Menu_Genes_Reset>
-  <RHAH_Menu_Genes_Fallback>The enabled weights add up to 0. Visitors use the permitted base ratkin xenotype or the native ratkin mix, then try the permitted famine ratkin xenotype. If none is available, visitors are not generated.</RHAH_Menu_Genes_Fallback>
+  <RHAH_Menu_Genes_Note>The percent is the chance while faster arrival is on. Weights run from 0 to 100. At 0, that xenotype stays out. Only ratkin xenotypes the race allows are listed. The base ratkin xenotype starts at a relative weight of 100 and stays in with the others. Each chance is its weight divided by the total. If every weight is 0, visitors use the allowed base ratkin xenotype, or the ratkin's own xenotype mix if that base is unavailable. An empty mix then tries the allowed famine ratkin xenotype. With faster arrival off, visitors use that mix directly. If no xenotype is available, visitor generation stops.</RHAH_Menu_Genes_Note>
+  <RHAH_Menu_Genes_Reset>Restore default weights</RHAH_Menu_Genes_Reset>
+  <RHAH_Menu_Genes_Fallback>The enabled weights add up to 0. Visitors use the allowed base ratkin xenotype, or the ratkin's own mix. If that is also empty, they try the allowed famine ratkin xenotype. If none of those is available, visitor generation stops.</RHAH_Menu_Genes_Fallback>
   <RHAH_Menu_Genes_WeightTip>Suggested weight {1}. Chance is this weight divided by the sum of enabled weights.</RHAH_Menu_Genes_WeightTip>
   <RHAH_Menu_Genes_Missing>This xenotype is not loaded: {0}</RHAH_Menu_Genes_Missing>
   <RHAH_Menu_Genes_Switches>Mod genes</RHAH_Menu_Genes_Switches>
@@ -319,34 +319,34 @@
   <RHAH_Menu_Genes_FertilityTip>Pregnancy chance compared with normal. Range 100% to 1000%.</RHAH_Menu_Genes_FertilityTip>
   <RHAH_Menu_Genes_GestationTip>The shortest pregnancy is 3 days. It cannot run longer than the vanilla lower bound.</RHAH_Menu_Genes_GestationTip>
   <RHAH_Menu_Genes_LovinPregnancyTip>Chance of pregnancy after lovin' finishes. Range 0% to 100%. Each partner's own pregnancy chance is still applied.</RHAH_Menu_Genes_LovinPregnancyTip>
-  <RHAH_Menu_PawnHistory_Note>New visitors draw one checked history. Someone whose story the event already wrote keeps it. Traits can still be drawn.</RHAH_Menu_PawnHistory_Note>
+  <RHAH_Menu_PawnHistory_Note>New visitors take one checked history. Someone whose story the incident already wrote keeps that story. Traits can still be chosen.</RHAH_Menu_PawnHistory_Note>
   <RHAH_Menu_PawnHistory_EnableAll>Enable all histories</RHAH_Menu_PawnHistory_EnableAll>
   <RHAH_Menu_PawnHistory_DisableAll>Disable all histories</RHAH_Menu_PawnHistory_DisableAll>
-  <RHAH_Menu_PawnHistory_ItemTip>With this off, the history stays out of the draw. People already here keep theirs.</RHAH_Menu_PawnHistory_ItemTip>
+  <RHAH_Menu_PawnHistory_ItemTip>Off, new visitors no longer receive this history. People already here keep the history they have.</RHAH_Menu_PawnHistory_ItemTip>
   <RHAH_Menu_PawnTrait>Traits</RHAH_Menu_PawnTrait>
   <RHAH_Menu_PawnTrait_EnableAll>Enable all traits</RHAH_Menu_PawnTrait_EnableAll>
   <RHAH_Menu_PawnTrait_DisableAll>Disable all traits</RHAH_Menu_PawnTrait_DisableAll>
-  <RHAH_Menu_PawnTrait_ItemTip>With this off, the trait stays out of the draw. People already here keep theirs.</RHAH_Menu_PawnTrait_ItemTip>
+  <RHAH_Menu_PawnTrait_ItemTip>Off, new visitors no longer receive this trait. People already here keep the trait they have.</RHAH_Menu_PawnTrait_ItemTip>
   <RHAH_Menu_PawnTrait_Weight>Weight</RHAH_Menu_PawnTrait_Weight>
-  <RHAH_Menu_PawnTrait_WeightTip>A higher weight is drawn more often. 0 stays out. After the draw, weight divided by 100 is the chance to gain it. The slider is rough. The field is exact.</RHAH_Menu_PawnTrait_WeightTip>
-  <RHAH_Settings_PawnHistories>Draw histories for new visitors</RHAH_Settings_PawnHistories>
-  <RHAH_Settings_PawnHistories_Tooltip>New visitors no longer receive these histories. People already here stay as they are.</RHAH_Settings_PawnHistories_Tooltip>
-  <RHAH_Settings_PawnTraits>Draw traits for new visitors</RHAH_Settings_PawnTraits>
-  <RHAH_Settings_PawnTraits_Tooltip>With this off, new visitors gain no mod trait. People already here keep theirs. Each visitor follows the limit above.</RHAH_Settings_PawnTraits_Tooltip>
+  <RHAH_Menu_PawnTrait_WeightTip>A higher weight is chosen more often. 0 stays out. After it is chosen, weight divided by 100 is the chance they actually gain it. The slider is rough. The field is exact.</RHAH_Menu_PawnTrait_WeightTip>
+  <RHAH_Settings_PawnHistories>Give new visitors a history</RHAH_Settings_PawnHistories>
+  <RHAH_Settings_PawnHistories_Tooltip>Off, new visitors arrive without these histories. People already here keep the histories they have.</RHAH_Settings_PawnHistories_Tooltip>
+  <RHAH_Settings_PawnTraits>Give new visitors mod traits</RHAH_Settings_PawnTraits>
+  <RHAH_Settings_PawnTraits_Tooltip>Off, new visitors gain none of this mod's traits. People already here keep the traits they have. Each visitor still follows the limit above.</RHAH_Settings_PawnTraits_Tooltip>
   <RHAH_Menu_Experimental_Gap>This page only speeds up how visitors appear.</RHAH_Menu_Experimental_Gap>
-  <RHAH_Menu_Experimental_Note>These options change how long visitors take to appear. With one off, visitors still use each incident's own apparel, history, health, and genes.</RHAH_Menu_Experimental_Note>
+  <RHAH_Menu_Experimental_Note>These options change how long visitors take to appear. With one off, visitors still arrive with that incident's own clothes, history, health, and genes.</RHAH_Menu_Experimental_Note>
   <RHAH_Settings_OptimizeGeneration>Speed up visitor arrival</RHAH_Settings_OptimizeGeneration>
-  <RHAH_Settings_OptimizeGeneration_Tooltip>Visitors appear faster, with less random clothing and status. Without a set xenotype, the gene page weights decide.</RHAH_Settings_OptimizeGeneration_Tooltip>
-  <RHAH_Menu_Frequency_Gap>The line is the chance this pool fires at least once on each coming day, using that pool's interval formula. Days run across. That day's chance runs up. Average days is averageDays in the formula. 0 turns this pool off. Rest the cursor on the line to read the chance. The graph uses the current trust and season.</RHAH_Menu_Frequency_Gap>
+  <RHAH_Settings_OptimizeGeneration_Tooltip>Visitors appear faster, with less random clothing and status. Without a set xenotype, the weights on the gene page decide.</RHAH_Settings_OptimizeGeneration_Tooltip>
+  <RHAH_Menu_Frequency_Gap>The line is the chance this group fires at least once on each coming day, from the average days above and the interval formula. Days run across. That day's chance runs up. 0 turns this group off. Rest the cursor on the line to read that day's chance. The graph uses the current trust and season.</RHAH_Menu_Frequency_Gap>
   <RHAH_Menu_Frequency_Positive>Positive incidents, average days</RHAH_Menu_Frequency_Positive>
   <RHAH_Menu_Frequency_Negative>Negative incidents, average days</RHAH_Menu_Frequency_Negative>
   <RHAH_Menu_Frequency_Window>Days shown</RHAH_Menu_Frequency_Window>
-  <RHAH_Menu_Frequency_WindowTip>How many coming days the curve shows. From 5 to 360. This only changes the graph, not how often incidents fire.</RHAH_Menu_Frequency_WindowTip>
+  <RHAH_Menu_Frequency_WindowTip>How many coming days the curve shows. 5 to 360. This only changes how many days are shown, not how often incidents fire.</RHAH_Menu_Frequency_WindowTip>
   <RHAH_Menu_Frequency_Curve>Chance that day</RHAH_Menu_Frequency_Curve>
   <RHAH_Menu_Frequency_CurveTip>Day {0}, chance {1}.</RHAH_Menu_Frequency_CurveTip>
   <RHAH_Menu_Frequency_Pace>Interval formula</RHAH_Menu_Frequency_Pace>
-  <RHAH_Menu_Frequency_PaceTip>The formula gives that day's average interval, in days. It may use averageDays, day, trust, season, + - * /, parentheses, min, max, abs, and clamp. day is days since settling. season runs from 0 to 3. The result is kept between 0 and 60. A bad formula, a division by zero, or an empty field uses averageDays. 0 turns this pool off.</RHAH_Menu_Frequency_PaceTip>
-  <RHAH_Menu_Developer_Note>Debug queues live under Dev events. Version and IrisMenus are under Compatibility and diagnostics.</RHAH_Menu_Developer_Note>
+  <RHAH_Menu_Frequency_PaceTip>That day's average gap, in days. It can use the average days above (written as averageDays), day, trust, season, + - * /, parentheses, min, max, abs, and clamp. day is days since settling. season runs from 0 to 3. The result stays between 0 and 60. A bad formula, a division by 0, or an empty field uses the average days above. A result of 0 turns this group off.</RHAH_Menu_Frequency_PaceTip>
+  <RHAH_Menu_Developer_Note>Dev mode queues are on the trigger page. Version and IrisMenus are under Compatibility and diagnostics.</RHAH_Menu_Developer_Note>
   <RHAH_Menu_Developer_LastPawn>Last listed visitor</RHAH_Menu_Developer_LastPawn>
   <RHAH_Menu_Family_Beggar>Beggar</RHAH_Menu_Family_Beggar>
   <RHAH_Menu_Family_Thief>Thief</RHAH_Menu_Family_Thief>
@@ -393,48 +393,48 @@
   <RHAH_Role_Envoy>Survivor envoy</RHAH_Role_Envoy>
   <RHAH_Role_Refugee>Famine refugee</RHAH_Role_Refugee>
   <RHAH_Settings_AidRequests>Enable aid requests</RHAH_Settings_AidRequests>
-  <RHAH_Settings_AidRequests_Tooltip>New aid and baby exchanges stop sending letters. An open request can still be delivered or refused.</RHAH_Settings_AidRequests_Tooltip>
+  <RHAH_Settings_AidRequests_Tooltip>Off, new aid and baby-exchange letters stop. An open request can still be delivered or refused.</RHAH_Settings_AidRequests_Tooltip>
   <RHAH_Settings_IntelTrades>Enable intel trades</RHAH_Settings_IntelTrades>
-  <RHAH_Settings_IntelTrades_Tooltip>New intel stops being traded for a site. Sites already placed stay on the world.</RHAH_Settings_IntelTrades_Tooltip>
+  <RHAH_Settings_IntelTrades_Tooltip>Off, new intel stops being traded for a site. Sites already placed stay on the world.</RHAH_Settings_IntelTrades_Tooltip>
   <RHAH_Settings_VisitorChoices>Enable visitor choices</RHAH_Settings_VisitorChoices>
-  <RHAH_Settings_VisitorChoices_Tooltip>New visitors stop asking to be taken in, hired, or sent away. The right-click menu still handles people already here.</RHAH_Settings_VisitorChoices_Tooltip>
-  <RHAH_Settings_FoodGiveHint>Do not explain feeding again</RHAH_Settings_FoodGiveHint>
-  <RHAH_Settings_FoodGiveHint_Tooltip>The first time you choose to feed them, the letter no longer explains how to hand the food over.</RHAH_Settings_FoodGiveHint_Tooltip>
-  <RHAH_Settings_TraderIgnoreEnvironment>Trader caravans ignore harsh conditions</RHAH_Settings_TraderIgnoreEnvironment>
-  <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>Famine traders do not leave as soon as they enter because of cold, heat, or dangerous weather. Off, harsh conditions still send them away.</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
-  <RHAH_Settings_TraderIgnoreEnclosed>Trader caravans ignore enclosed rooms</RHAH_Settings_TraderIgnoreEnclosed>
-  <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>Famine traders stay inside a closed room instead of digging out. Off, they dig out when they cannot reach the map edge.</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
+  <RHAH_Settings_VisitorChoices_Tooltip>Off, new visitors stop asking to be taken in, hired, or sent away. The right-click menu still handles people already here.</RHAH_Settings_VisitorChoices_Tooltip>
+  <RHAH_Settings_FoodGiveHint>Skip the feeding reminder</RHAH_Settings_FoodGiveHint>
+  <RHAH_Settings_FoodGiveHint_Tooltip>On, the first time you choose to feed them, the letter skips the explanation of how to hand the food over.</RHAH_Settings_FoodGiveHint_Tooltip>
+  <RHAH_Settings_TraderIgnoreEnvironment>Trader caravans ignore harsh weather</RHAH_Settings_TraderIgnoreEnvironment>
+  <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>On, famine traders stay after entering even in cold, heat, or dangerous weather. Off, harsh weather still sends them away.</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
+  <RHAH_Settings_TraderIgnoreEnclosed>Trader caravans stay in closed rooms</RHAH_Settings_TraderIgnoreEnclosed>
+  <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>On, famine traders stay inside a closed room instead of digging out. Off, they dig out when they cannot reach the map edge.</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
   <RHAH_Settings_SpaceApproach>Allow incidents at orbital homes</RHAH_Settings_SpaceApproach>
-  <RHAH_Settings_SpaceApproach_Tooltip>Off by default. Orbital homes, including asteroids and SOS2 ships, do not receive ratkin who walk in, and map incidents are not drawn for them. Turn this on to allow them. A group already on an Odyssey orbit layer does not block a shuttle launch.</RHAH_Settings_SpaceApproach_Tooltip>
+  <RHAH_Settings_SpaceApproach_Tooltip>Off by default. Orbital homes, asteroids, and SOS2 ships then receive no ratkin who walk in, and map incidents stay out of the draw. Turn this on to allow both. A group already on an Odyssey orbit layer still leaves the shuttle launch clear.</RHAH_Settings_SpaceApproach_Tooltip>
   <RHAH_Approach_Intercept>Intercept Ratkin</RHAH_Approach_Intercept>
   <RHAH_Approach_InterceptBlocked>Cannot intercept the Ratkin right now</RHAH_Approach_InterceptBlocked>
-  <RHAH_Approach_InterceptFailed>Failed to generate the interception map. The Ratkin caravan remains on the world.</RHAH_Approach_InterceptFailed>
+  <RHAH_Approach_InterceptFailed>The interception map failed to generate. The Ratkin caravan is still where it was.</RHAH_Approach_InterceptFailed>
   <RHAH_Settings_ChildExchangeFood>Allow food in place of children</RHAH_Settings_ChildExchangeFood>
-  <RHAH_Settings_ChildExchangeFood_Tooltip>Child exchange accepts simple meals in place of handing over a child. The cost follows Simple meals per child. Traders do not sell food. With substitution off, this letter cannot be delivered; handing over a child is not available in this choice either.</RHAH_Settings_ChildExchangeFood_Tooltip>
+  <RHAH_Settings_ChildExchangeFood_Tooltip>On, child exchange accepts simple meals instead of handing over a child. The cost follows Simple meals per child. Traders still sell no food. Off, this letter cannot be delivered, and handing over a child is not one of the choices either.</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>Set children down when leaving</RHAH_Settings_FamilyDrop>
-  <RHAH_Settings_FamilyDrop_Tooltip>A mother no longer sets down a child she is still carrying.</RHAH_Settings_FamilyDrop_Tooltip>
+  <RHAH_Settings_FamilyDrop_Tooltip>Off, a mother keeps carrying a child as she leaves.</RHAH_Settings_FamilyDrop_Tooltip>
   <RHAH_Settings_MotherFeed>Mothers feed children</RHAH_Settings_MotherFeed>
-  <RHAH_Settings_MotherFeed_Tooltip>A mother no longer hands one meal from her pack to a hungry child.</RHAH_Settings_MotherFeed_Tooltip>
+  <RHAH_Settings_MotherFeed_Tooltip>Off, a mother keeps the meal in her pack instead of handing one to a hungry child.</RHAH_Settings_MotherFeed_Tooltip>
   <RHAH_Settings_PrisonerScavenge>Prisoners scavenge the ground</RHAH_Settings_PrisonerScavenge>
-  <RHAH_Settings_PrisonerScavenge_Tooltip>A hungry prisoner no longer licks one layer of filth off the ground.</RHAH_Settings_PrisonerScavenge_Tooltip>
+  <RHAH_Settings_PrisonerScavenge_Tooltip>Off, a hungry prisoner leaves the filth on the ground.</RHAH_Settings_PrisonerScavenge_Tooltip>
   <RHAH_Settings_TailBite>Allow tail bites</RHAH_Settings_TailBite>
-  <RHAH_Settings_TailBite_Tooltip>A hungry prisoner bites off the tail of a nearby sleeping prisoner under 3 who still has one. Off by default.</RHAH_Settings_TailBite_Tooltip>
+  <RHAH_Settings_TailBite_Tooltip>On, a hungry prisoner bites off the tail of a nearby sleeping prisoner under 3 who still has one. Off by default.</RHAH_Settings_TailBite_Tooltip>
   <RHAH_Settings_FamineDoors>Famine visitors may open doors</RHAH_Settings_FamineDoors>
   <RHAH_Settings_FamineDoors_Tooltip>Off by default. On, famine visitors may open colonist doors. They still leave doors shut while an enemy is on the map.</RHAH_Settings_FamineDoors_Tooltip>
   <RHAH_Settings_PlagueSafe>Plague safe mode</RHAH_Settings_PlagueSafe>
-  <RHAH_Settings_PlagueSafe_Tooltip>Off by default. On, the plague stops short of killing. The sick cannot move, but the plague itself does not kill them.</RHAH_Settings_PlagueSafe_Tooltip>
+  <RHAH_Settings_PlagueSafe_Tooltip>Off by default. On, the plague stops short of killing. The sick cannot move, but the plague itself leaves them alive.</RHAH_Settings_PlagueSafe_Tooltip>
   <RHAH_Settings_GreenLetters>Green famine letters</RHAH_Settings_GreenLetters>
   <RHAH_Settings_GreenLetters_Tooltip>On by default. Off, famine incident letters use the ordinary blue.</RHAH_Settings_GreenLetters_Tooltip>
   <RHAH_Settings_Broadcast>Allow hope broadcasts</RHAH_Settings_Broadcast>
-  <RHAH_Settings_Broadcast_Tooltip>Colonists can broadcast from a comms console to call famine ratkin here. Turning this off stops new broadcasts. Groups already on the road keep coming.</RHAH_Settings_Broadcast_Tooltip>
+  <RHAH_Settings_Broadcast_Tooltip>Colonists can broadcast from a comms console and call famine ratkin here. Off, new broadcasts stop. Groups already on the road keep coming.</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_Stagger>Visitors arrive in batches</RHAH_Settings_Stagger>
-  <RHAH_Settings_Stagger_Tooltip>Queued incidents spawn one batch at a time. Off, queued incidents spawn as soon as they can.</RHAH_Settings_Stagger_Tooltip>
+  <RHAH_Settings_Stagger_Tooltip>On, queued incidents arrive one batch at a time, with a short wait between them. Off, queued incidents arrive as soon as they can, one after another.</RHAH_Settings_Stagger_Tooltip>
   <RHAH_Settings_PredationChance>Ratkin refugees hunted: {0}%</RHAH_Settings_PredationChance>
   <RHAH_Settings_PredationChance_Tooltip>Each camp map rolls this chance for a predator. 0 to 100, default 10. At 0, none arrive.</RHAH_Settings_PredationChance_Tooltip>
-  <RHAH_Settings_PredationFightBack>Refugees fight back</RHAH_Settings_PredationFightBack>
-  <RHAH_Settings_PredationFightBack_Tooltip>Off, hunted camp Ratkin run. Anyone who cannot use violence still cannot fight.</RHAH_Settings_PredationFightBack_Tooltip>
-  <RHAH_Settings_PredationFollowDifficulty>Outside predators follow the save difficulty once the Ratkin are gone</RHAH_Settings_PredationFollowDifficulty>
-  <RHAH_Settings_PredationFollowDifficulty_Tooltip>On, they resume normal hunting when no reachable Ratkin or corpse remains. Off, a hungry predator with nothing reachable leaves the map.</RHAH_Settings_PredationFollowDifficulty_Tooltip>
+  <RHAH_Settings_PredationFightBack>Refugees fight predators</RHAH_Settings_PredationFightBack>
+  <RHAH_Settings_PredationFightBack_Tooltip>Off, hunted camp ratkin run. Anyone who cannot use violence still cannot fight.</RHAH_Settings_PredationFightBack_Tooltip>
+  <RHAH_Settings_PredationFollowDifficulty>Outside predators hunt normally once the ratkin are gone</RHAH_Settings_PredationFollowDifficulty>
+  <RHAH_Settings_PredationFollowDifficulty_Tooltip>On, they resume ordinary hunting when no reachable ratkin or corpse remains. Off, a hungry predator with nothing reachable leaves the map.</RHAH_Settings_PredationFollowDifficulty_Tooltip>
   <RHAH_Predation_Label>Predator</RHAH_Predation_Label>
   <RHAH_Predation_Text>A wild predator has started hunting these Ratkin refugees. It goes for the young first.</RHAH_Predation_Text>
   <RHAH_OutsidePredators_Label>Outside predator</RHAH_OutsidePredators_Label>
@@ -446,7 +446,7 @@
   <RHAH_Choice_Intel_Label>Intel</RHAH_Choice_Intel_Label>
   <RHAH_Choice_Intel_Text>A ratkin has arrived near the colony with a lead on a place, willing to trade it for {1} {2}. The information is not free: goods first, directions afterward.\n\nDelivering the goods marks the corresponding site on the world map.</RHAH_Choice_Intel_Text>
   <RHAH_Choice_Baby_Label>Asking for a baby</RHAH_Choice_Baby_Label>
-  <RHAH_Choice_Baby_Text>A ratkin has arrived near the colony, asking for a baby. Not food, medicine, or silver. A child.\n\nA child cannot be handed over in this choice. You can refuse or leave the request unanswered.</RHAH_Choice_Baby_Text>
+  <RHAH_Choice_Baby_Text>A ratkin has arrived near our colony and asked us for a baby.\n\nWe can refuse or leave the request unanswered. If food substitution is enabled, we can hand over the required simple meals instead; a child cannot be handed over.</RHAH_Choice_Baby_Text>
   <RHAH_Choice_Abandoned_Label>Abandoned young ratkin</RHAH_Choice_Abandoned_Label>
   <RHAH_Choice_Abandoned_Text>A ratkin mother has left her children near our colony for reasons unknown. Perhaps she could no longer feed them, but could not bear to abandon them completely, so she brought them here. It seems she wants us to adopt them.\n\nThese young ratkin probably cannot survive on their own. What should we do?</RHAH_Choice_Abandoned_Text>
   <RHAH_Choice_Refugees_Label>Refugees</RHAH_Choice_Refugees_Label>
@@ -484,14 +484,14 @@
   <RHAH_Choice_Orphan_Label>Plague orphan</RHAH_Choice_Orphan_Label>
   <RHAH_Choice_Orphan_Text>A ratkin orphan has arrived near our colony without a mother. In this famine, one less adult means many fewer ways to stay alive.\n\nWhat should we do?</RHAH_Choice_Orphan_Text>
   <RHAH_Choice_KinshipGrown_Text>A ratkin has arrived near our colony and started calling a colonist Mother. The colonist has never met this ratkin, but the visitor insists there is no mistake.\n\nWhat should we do?</RHAH_Choice_KinshipGrown_Text>
-  <RHAH_Choice_VisitorHint>Visitor choices: you have {0} days to respond. See the available options below. To hand over food, select a colonist and right-click a visitor. Refusal or expiry may make them leave or turn hostile, depending on attitude and group reaction settings.</RHAH_Choice_VisitorHint>
-  <RHAH_Choice_RequestHint>Time to respond: {0} days. Refusal or expiry may make them leave or turn hostile, depending on attitude and group reaction settings.</RHAH_Choice_RequestHint>
-  <RHAH_Choice_IntelHint>Time to respond: {0} days. No delivery means no site. Refusal or expiry may make them leave or turn hostile, depending on attitude and group reaction settings.</RHAH_Choice_IntelHint>
-  <RHAH_Choice_PlagueHint>Plague: these visitors carry disease, which may spread through the colony. Quarantine restrictions follow your current settings.</RHAH_Choice_PlagueHint>
-  <RHAH_Choice_PlagueDisabledHint>Plague is disabled: this group will not become infected or enter quarantine because of this incident.</RHAH_Choice_PlagueDisabledHint>
-  <RHAH_Choice_ChildExchangeFoodHint>Delivery terms: a child cannot be handed over in this choice. Food substitution is enabled, at {0} simple meals per child, {1} meals in total. Delivering food does not automatically make the arrivals join the colony.</RHAH_Choice_ChildExchangeFoodHint>
-  <RHAH_Choice_ChildExchangeNoFoodHint>Delivery terms: a child cannot be handed over in this choice, and food substitution is disabled. You can refuse or leave the request unanswered.</RHAH_Choice_ChildExchangeNoFoodHint>
-  <RHAH_Choice_ChildExchangeZeroFoodHint>Delivery terms: a child cannot be handed over in this choice. Food substitution is enabled, but meals per child is set to 0, so delivery is unavailable.</RHAH_Choice_ChildExchangeZeroFoodHint>
+  <RHAH_Choice_VisitorHint>We have {0} days to answer. To arrange food delivery, select a colonist and right-click a visitor. If we refuse or the deadline passes, they will leave or turn hostile according to their attitude and the group reaction settings.</RHAH_Choice_VisitorHint>
+  <RHAH_Choice_RequestHint>We have {0} days to answer. If we refuse or the deadline passes, they will leave or turn hostile according to their attitude and the group reaction settings.</RHAH_Choice_RequestHint>
+  <RHAH_Choice_IntelHint>We have {0} days to answer. The visitor will reveal the site after we deliver the goods. If we refuse or the deadline passes, they will leave or turn hostile according to their attitude and the group reaction settings.</RHAH_Choice_IntelHint>
+  <RHAH_Choice_PlagueHint>These visitors carry the plague, and it may spread through the colony. Quarantine follows the current settings.</RHAH_Choice_PlagueHint>
+  <RHAH_Choice_PlagueDisabledHint>The plague is off. This group arrives healthy and skips quarantine.</RHAH_Choice_PlagueDisabledHint>
+  <RHAH_Choice_ChildExchangeFoodHint>We can fulfill this request with simple meals: {0} per child, {1} in total. A child cannot be handed over; taking the children into the colony requires a separate decision.</RHAH_Choice_ChildExchangeFoodHint>
+  <RHAH_Choice_ChildExchangeNoFoodHint>Food substitution is disabled, and a child cannot be handed over. We can refuse or leave the request unanswered.</RHAH_Choice_ChildExchangeNoFoodHint>
+  <RHAH_Choice_ChildExchangeZeroFoodHint>Meals per child is set to 0, so delivery is unavailable. To deliver meals, set the amount above 0; a child cannot be handed over.</RHAH_Choice_ChildExchangeZeroFoodHint>
   <RHAH_Choice_AbandonedGrown_Text>A ratkin mother has left her children near our colony for reasons unknown. Perhaps she could no longer feed them, but could not bear to abandon them completely, so she brought them here. It seems she wants us to take them in.\n\nWithout anyone looking out for them, they will probably struggle to survive. What should we do?</RHAH_Choice_AbandonedGrown_Text>
   <RHAH_Choice_ChildExchangeGrown_Text>A ratkin mother has brought one of her children near our colony. Before leaving, she says haltingly, "I really can't feed my child anymore, squeak. Could you give me some food? Or... could we make a trade?"\n\nShe wants food in exchange for her child. Or perhaps a different child who would count as 'food'. What should we do?</RHAH_Choice_ChildExchangeGrown_Text>
   <RHAH_Choice_BeggarFamilyGrown_Text>{0} has arrived.\n\nFamine has driven a ratkin mother and her {1} children near our colony. She begs us for food while they stand beside her.\n\n"Please, squeak. Give me and my children some food."\n\nShe pauses. "We wouldn't complain even if you worked us like beasts."\n\nWhat should we do?</RHAH_Choice_BeggarFamilyGrown_Text>
@@ -506,37 +506,37 @@
   <RHAH_Choice_HerbalMedicine>herbal medicine</RHAH_Choice_HerbalMedicine>
   <RHAH_Choice_Silver>silver</RHAH_Choice_Silver>
   <RHAH_Choice_Deliver>Deliver (hand over the goods)</RHAH_Choice_Deliver>
-  <RHAH_Choice_Reject>Refuse (leave or turn hostile, depending on attitude)</RHAH_Choice_Reject>
-  <RHAH_Choice_Ignore>Ignore (leave them alone)</RHAH_Choice_Ignore>
+  <RHAH_Choice_Reject>Refuse (may leave or turn hostile)</RHAH_Choice_Reject>
+  <RHAH_Choice_Ignore>Ignore (leave them for now)</RHAH_Choice_Ignore>
   <RHAH_Choice_Join>Take in (join the colony)</RHAH_Choice_Join>
-  <RHAH_Choice_Hire>Hire long-term ({0}, then they leave)</RHAH_Choice_Hire>
-  <RHAH_Choice_Feed>Feed (they wait for food)</RHAH_Choice_Feed>
-  <RHAH_Choice_Recruit>Take in short-term ({0}, then they leave)</RHAH_Choice_Recruit>
-  <RHAH_Choice_Enslave>Enslave (eligible visitors become slaves where they stand, their will to resist reset to zero)</RHAH_Choice_Enslave>
-  <RHAH_Choice_Capture>Capture (eligible visitors become prisoners where they stand and are anesthetized for 12 hours)</RHAH_Choice_Capture>
-  <RHAH_Choice_Attack>Attack (the group turns hostile)</RHAH_Choice_Attack>
+  <RHAH_Choice_Hire>Hire long-term (leave after {0})</RHAH_Choice_Hire>
+  <RHAH_Choice_Feed>Feed (they wait for the food)</RHAH_Choice_Feed>
+  <RHAH_Choice_Recruit>Take in short-term (leave after {0})</RHAH_Choice_Recruit>
+  <RHAH_Choice_Enslave>Enslave (become slaves where they stand, will cleared)</RHAH_Choice_Enslave>
+  <RHAH_Choice_Capture>Capture (become prisoners where they stand, asleep for 12 hours)</RHAH_Choice_Capture>
+  <RHAH_Choice_Attack>Attack (the whole group turns hostile)</RHAH_Choice_Attack>
   <RHAH_Choice_Ally>Send to {0}</RHAH_Choice_Ally>
   <RHAH_Choice_NoAlly>No allied faction can take them.</RHAH_Choice_NoAlly>
-  <RHAH_Choice_AllySent>{0} visitors have been told to travel to {1}. They join that faction only after leaving the map and do not appear at its settlement. Goodwill follows the vanilla treatment and departure rules.</RHAH_Choice_AllySent>
-  <RHAH_Choice_NoCustodyTarget>No visitors can be converted. Visitors in a mental state, no longer present, or who do not permit imprisonment cannot be converted.</RHAH_Choice_NoCustodyTarget>
-  <RHAH_Choice_NoPresent>No visitors were present when the action was taken.</RHAH_Choice_NoPresent>
-  <RHAH_Choice_NoRecruit>No visitor permits being taken in, hired, or joining the colony.</RHAH_Choice_NoRecruit>
-  <RHAH_Choice_NoTransfer>No visitor permits both transfer and departure.</RHAH_Choice_NoTransfer>
-  <RHAH_Choice_NoIdeology>Enslaving requires the Ideology DLC.</RHAH_Choice_NoIdeology>
-  <RHAH_Choice_CustodyFailed>No visitors changed status. You can still respond to this letter.</RHAH_Choice_CustodyFailed>
-  <RHAH_Choice_FeedHint>They will wait where they are. Select a colonist, then right-click a waiting visitor to hand over food. Nobody is sent to deliver it.</RHAH_Choice_FeedHint>
+  <RHAH_Choice_AllySent>{0} people are on their way to {1} and will become members of that faction after leaving this map. They cannot be found directly at its settlement; goodwill changes depend on their treatment and whether they leave safely.</RHAH_Choice_AllySent>
+  <RHAH_Choice_NoCustodyTarget>No visitor can currently be captured or enslaved. They may be in a mental break, have already left, or be protected from imprisonment.</RHAH_Choice_NoCustodyTarget>
+  <RHAH_Choice_NoPresent>The visitors have left. Nobody remains to receive this arrangement.</RHAH_Choice_NoPresent>
+  <RHAH_Choice_NoRecruit>None of these visitors can be taken in, hired, or joined to the colony.</RHAH_Choice_NoRecruit>
+  <RHAH_Choice_NoTransfer>No visitor can currently be sent to an ally and leave the map.</RHAH_Choice_NoTransfer>
+  <RHAH_Choice_NoIdeology>Enslaving needs the Ideology expansion.</RHAH_Choice_NoIdeology>
+  <RHAH_Choice_CustodyFailed>The attempt to capture or enslave the visitors failed. You can choose again in the letter.</RHAH_Choice_CustodyFailed>
+  <RHAH_Choice_FeedHint>The visitors will wait for you to arrange food delivery. Select a colonist, then right-click a waiting visitor and choose the food to give them.</RHAH_Choice_FeedHint>
   <RHAH_Choice_FeedHintDismiss>Do not show this again</RHAH_Choice_FeedHintDismiss>
-  <RHAH_Choice_FeedWaiting>Visitors waiting for food: {0}.</RHAH_Choice_FeedWaiting>
+  <RHAH_Choice_FeedWaiting>{0} visitors are waiting for food.</RHAH_Choice_FeedWaiting>
   <RHAH_Choice_FeedBlocked>{0} cannot take food right now.</RHAH_Choice_FeedBlocked>
-  <RHAH_Choice_FeedNoVisitor>{0} is not a visitor you can feed.</RHAH_Choice_FeedNoVisitor>
-  <RHAH_Choice_FeedNotHungry>{0} does not need food right now.</RHAH_Choice_FeedNotHungry>
+  <RHAH_Choice_FeedNoVisitor>{0} is not one of the visitors you can feed.</RHAH_Choice_FeedNoVisitor>
+  <RHAH_Choice_FeedNotHungry>{0} needs no food right now.</RHAH_Choice_FeedNotHungry>
   <RHAH_Choice_GiveFood>Give {0} to {1}</RHAH_Choice_GiveFood>
   <RHAH_Choice_NoFood>No food to give {1}</RHAH_Choice_NoFood>
-  <RHAH_Choice_Short>Not enough in storage. They need {0}.</RHAH_Choice_Short>
-  <RHAH_Choice_NoBaby>A child cannot be handed over in this choice. Child exchange also requires food substitution, a meals-per-child cost above 0, and enough simple meals.</RHAH_Choice_NoBaby>
-  <RHAH_Choice_Stale>This choice is no longer available for this letter.</RHAH_Choice_Stale>
+  <RHAH_Choice_Short>Storage is short. They still need {0}.</RHAH_Choice_Short>
+  <RHAH_Choice_NoBaby>A child cannot be handed over this time. To use simple meals instead, turn food substitution on, set meals per child above 0, and have enough simple meals.</RHAH_Choice_NoBaby>
+  <RHAH_Choice_Stale>This letter can no longer take that choice.</RHAH_Choice_Stale>
   <RHAH_Choice_Delivered>The goods have been handed over.</RHAH_Choice_Delivered>
-  <RHAH_Choice_SiteUnavailable>The intel site could not be created. No goods have been handed over. You can still respond to this letter.</RHAH_Choice_SiteUnavailable>
+  <RHAH_Choice_SiteUnavailable>The visitor could not provide a site. You still have the goods and can choose again in the letter.</RHAH_Choice_SiteUnavailable>
   <RHAH_Choice_Fed>The visitors have eaten.</RHAH_Choice_Fed>
   <RHAH_Intel_Label>Intel site</RHAH_Intel_Label>
   <RHAH_Intel_Text>The trade is done. A site has appeared nearby.</RHAH_Intel_Text>
@@ -545,24 +545,24 @@
   <RHAH_Broadcast_Empty>No incident can be broadcast</RHAH_Broadcast_Empty>
   <RHAH_Broadcast_Queued>The broadcast has been sent. Waiting for ratkin to respond.</RHAH_Broadcast_Queued>
   <RHAH_Broadcast_Unavailable>Cannot broadcast hope now</RHAH_Broadcast_Unavailable>
-  <RHAH_Settings_EndingFloor>Good year trust: {0}</RHAH_Settings_EndingFloor>
-  <RHAH_Settings_EndingFloor_Tooltip>Trust required for the good year. 0 to 100, default 50. Hope City cannot sit below this.</RHAH_Settings_EndingFloor_Tooltip>
-  <RHAH_Settings_EndingHope>Hope City trust: {0}</RHAH_Settings_EndingHope>
-  <RHAH_Settings_EndingHope_Tooltip>Trust required for Hope City. It cannot sit below the good year. Up to 100, default 75.</RHAH_Settings_EndingHope_Tooltip>
+  <RHAH_Settings_EndingFloor>Year of plenty trust: {0}</RHAH_Settings_EndingFloor>
+  <RHAH_Settings_EndingFloor_Tooltip>Minimum trust for "A year of plenty". Range 0 to 100, default 50. The trust requirement for "City of hope" is at least this high.</RHAH_Settings_EndingFloor_Tooltip>
+  <RHAH_Settings_EndingHope>City of hope trust: {0}</RHAH_Settings_EndingHope>
+  <RHAH_Settings_EndingHope_Tooltip>Minimum trust for "City of hope", at least as high as for "A year of plenty" and at most 100. Default 75.</RHAH_Settings_EndingHope_Tooltip>
   <RHAH_Settings_EndingHalt>Trust collapse: {0}</RHAH_Settings_EndingHalt>
-  <RHAH_Settings_EndingHalt_Tooltip>Trust at or below this takes the collapse ending. -100 to 0, default -75.</RHAH_Settings_EndingHalt_Tooltip>
-  <RHAH_Settings_EndingKinds>Low ending kinds: {0}</RHAH_Settings_EndingKinds>
-  <RHAH_Settings_EndingKinds_Tooltip>The low endings need this many successful kinds. 1 to 14, default 6.</RHAH_Settings_EndingKinds_Tooltip>
+  <RHAH_Settings_EndingHalt_Tooltip>When Suiyin's trust falls to this value or lower, "The record stops" can occur. Range -100 to 0, default -75.</RHAH_Settings_EndingHalt_Tooltip>
+  <RHAH_Settings_EndingKinds>Incident kinds before an ending: {0}</RHAH_Settings_EndingKinds>
+  <RHAH_Settings_EndingKinds_Tooltip>At least this many kinds of incidents must be completed successfully before "An unanswered record" or "A disappointed witness" can occur. Range 1 to 14, default 6.</RHAH_Settings_EndingKinds_Tooltip>
   <RHAH_Settings_EndingThreat>Major threat interval: {0} days</RHAH_Settings_EndingThreat>
-  <RHAH_Settings_EndingThreat_Tooltip>Base days Suiyin uses when trust changes major threats. 1 to 60, default 13.</RHAH_Settings_EndingThreat_Tooltip>
+  <RHAH_Settings_EndingThreat_Tooltip>Base interval between Suiyin's major threats. Higher trust lengthens the interval; lower trust shortens it. Range 1 to 60 days, default 13 days.</RHAH_Settings_EndingThreat_Tooltip>
   <RHAH_Menu_Narrative_TrustDeltas>Trust changes</RHAH_Menu_Narrative_TrustDeltas>
-  <RHAH_Settings_NarrativeKinds_Tooltip>Event kinds required before this letter. 1 to 14.</RHAH_Settings_NarrativeKinds_Tooltip>
-  <RHAH_Settings_NarrativeTheft>Grain-hole theft kinds: {0}</RHAH_Settings_NarrativeTheft>
-  <RHAH_Settings_NarrativeTheft_Tooltip>Thefts of this many kinds on one map open the grain hole. 1 to 14, default 2.</RHAH_Settings_NarrativeTheft_Tooltip>
+  <RHAH_Settings_NarrativeKinds_Tooltip>Suiyin sends this letter after you have experienced at least this many kinds of incidents. Range 1 to 14.</RHAH_Settings_NarrativeKinds_Tooltip>
+  <RHAH_Settings_NarrativeTheft>Grain-hole thefts: {0}</RHAH_Settings_NarrativeTheft>
+  <RHAH_Settings_NarrativeTheft_Tooltip>A grain hole can appear after this many thefts at one colony. Range 1 to 14 thefts, default 2.</RHAH_Settings_NarrativeTheft_Tooltip>
   <RHAH_Settings_NarrativeSilver>Record silver: {0}</RHAH_Settings_NarrativeSilver>
-  <RHAH_Settings_NarrativeSilver_Tooltip>Silver sent with the record letter. 0 to 10000, default 300. Positive trust adds a share.</RHAH_Settings_NarrativeSilver_Tooltip>
+  <RHAH_Settings_NarrativeSilver_Tooltip>Base amount of silver Suiyin sends with the record letter. If her trust in you is above 0, she adds more silver in proportion to her trust. Range 0 to 10000, default 300.</RHAH_Settings_NarrativeSilver_Tooltip>
   <RHAH_Settings_NarrativeBonus>Trust bonus: {0}%</RHAH_Settings_NarrativeBonus>
-  <RHAH_Settings_NarrativeBonus_Tooltip>At trust 100, silver gains this much extra. 0 to 100, default 25. Negative trust adds nothing.</RHAH_Settings_NarrativeBonus_Tooltip>
+  <RHAH_Settings_NarrativeBonus_Tooltip>At trust 100, Suiyin adds this percentage of the base silver amount. Between trust 0 and 100, the bonus is reduced proportionally. Range 0 to 100%, default 25%.</RHAH_Settings_NarrativeBonus_Tooltip>
   <RHAH_Settings_NarrativeRescue>Ransom silver: {0}</RHAH_Settings_NarrativeRescue>
   <RHAH_Settings_NarrativeRescue_Tooltip>Silver paid to keep the banished mother or child. 0 to 10000, default 250.</RHAH_Settings_NarrativeRescue_Tooltip>
   <RHAH_Settings_NarrativeRescueReward>Return silver: {0}</RHAH_Settings_NarrativeRescueReward>
@@ -572,30 +572,30 @@
   <RHAH_Settings_NarrativeHand>Hand over the record: {0}</RHAH_Settings_NarrativeHand>
   <RHAH_Settings_NarrativeHand_Tooltip>Silver gained by handing the migration record over. 0 to 10000, default 100.</RHAH_Settings_NarrativeHand_Tooltip>
   <RHAH_Settings_NarrativeCare>Settlement days: {0}</RHAH_Settings_NarrativeCare>
-  <RHAH_Settings_NarrativeCare_Tooltip>Days fed and healthy before a stay counts as settled. 0 to 120, default 5.</RHAH_Settings_NarrativeCare_Tooltip>
+  <RHAH_Settings_NarrativeCare_Tooltip>Visitors count as settled after accumulating this many days at the colony while fed and free of plague. Range 0 to 120 days, default 5 days.</RHAH_Settings_NarrativeCare_Tooltip>
   <RHAH_Settings_NarrativeMissing>Missing days: {0}</RHAH_Settings_NarrativeMissing>
-  <RHAH_Settings_NarrativeMissing_Tooltip>Days off the map before someone counts as missing. 0 to 60, default 1.</RHAH_Settings_NarrativeMissing_Tooltip>
+  <RHAH_Settings_NarrativeMissing_Tooltip>Suiyin considers a visitor missing after this many days without knowing their whereabouts. Range 0 to 60 days, default 1 day.</RHAH_Settings_NarrativeMissing_Tooltip>
   <RHAH_Settings_NarrativeObserve>Watch days: {0}</RHAH_Settings_NarrativeObserve>
-  <RHAH_Settings_NarrativeObserve_Tooltip>Aid and entrusted children are watched this long. 0 to 120, default 30. Unsettled groups then close without a success.</RHAH_Settings_NarrativeObserve_Tooltip>
-  <RHAH_Settings_NarrativeHole>Ignore the grain hole: {0} days</RHAH_Settings_NarrativeHole>
-  <RHAH_Settings_NarrativeHole_Tooltip>Days before an untouched grain hole counts as ignored. 0 to 30, default 3.</RHAH_Settings_NarrativeHole_Tooltip>
+  <RHAH_Settings_NarrativeObserve_Tooltip>Suiyin waits up to this many days to learn the outcome of aid and entrusted children. If the visitors remain unsettled by the deadline, the aid does not count as successful. Range 0 to 120 days, default 30 days.</RHAH_Settings_NarrativeObserve_Tooltip>
+  <RHAH_Settings_NarrativeHole>Grain hole disappears after: {0} days</RHAH_Settings_NarrativeHole>
+  <RHAH_Settings_NarrativeHole_Tooltip>If you leave a grain hole alone, it disappears after this many days and the trail is lost. Range 0 to 30 days, default 3 days.</RHAH_Settings_NarrativeHole_Tooltip>
   <RHAH_Settings_NarrativeEnvoyWait>Envoy wait: {0} days</RHAH_Settings_NarrativeEnvoyWait>
-  <RHAH_Settings_NarrativeEnvoyWait_Tooltip>Days the envoy waits at the door. 0 to 30, default 3.</RHAH_Settings_NarrativeEnvoyWait_Tooltip>
+  <RHAH_Settings_NarrativeEnvoyWait_Tooltip>The envoy waits up to this many days. If you leave the request unanswered, he leaves. Range 0 to 30 days, default 3 days.</RHAH_Settings_NarrativeEnvoyWait_Tooltip>
   <RHAH_Settings_NarrativeEnvoyCheck>Envoy check: {0} days</RHAH_Settings_NarrativeEnvoyCheck>
-  <RHAH_Settings_NarrativeEnvoyCheck_Tooltip>Extra days after agreeing to check the envoy's claim. 0 to 30, default 1.</RHAH_Settings_NarrativeEnvoyCheck_Tooltip>
+  <RHAH_Settings_NarrativeEnvoyCheck_Tooltip>After you agree to check the envoy's account, he waits this many more days. Range 0 to 30 days, default 1 day.</RHAH_Settings_NarrativeEnvoyCheck_Tooltip>
   <RHAH_Settings_NarrativeRelicDays>Record site: {0} days</RHAH_Settings_NarrativeRelicDays>
-  <RHAH_Settings_NarrativeRelicDays_Tooltip>Days the record site stays open. 0 to 120, default 15.</RHAH_Settings_NarrativeRelicDays_Tooltip>
+  <RHAH_Settings_NarrativeRelicDays_Tooltip>The migration record site remains available for this many days, then disappears from the world map. Range 0 to 120 days, default 15 days.</RHAH_Settings_NarrativeRelicDays_Tooltip>
   <RHAH_Settings_NarrativeReturn>Recovery visit: {0} days</RHAH_Settings_NarrativeReturn>
-  <RHAH_Settings_NarrativeReturn_Tooltip>Days before someone who left quarantine comes back. 0 to 120, default 15.</RHAH_Settings_NarrativeReturn_Tooltip>
+  <RHAH_Settings_NarrativeReturn_Tooltip>Visitors can return this many days after recovering and leaving quarantine. Range 0 to 120 days, default 15 days.</RHAH_Settings_NarrativeReturn_Tooltip>
   <RHAH_Settings_NarrativeYears>Banishment visit: {0} years</RHAH_Settings_NarrativeYears>
-  <RHAH_Settings_NarrativeYears_Tooltip>Years before a banished mother or child appears again. 0 to 20, default 4. A year is 60 days.</RHAH_Settings_NarrativeYears_Tooltip>
+  <RHAH_Settings_NarrativeYears_Tooltip>After a mother or child is banished, a caravan may encounter them again within this many years. Range 0 to 20 years, default 4. A year is 60 days.</RHAH_Settings_NarrativeYears_Tooltip>
   <RHAH_Settings_NarrativeAside>Aside gap: {0} days</RHAH_Settings_NarrativeAside>
-  <RHAH_Settings_NarrativeAside_Tooltip>Minimum days between asides. 0 to 30, default 3.</RHAH_Settings_NarrativeAside_Tooltip>
+  <RHAH_Settings_NarrativeAside_Tooltip>Minimum interval between Suiyin's short notes. Range 0 to 30 days, default 3 days.</RHAH_Settings_NarrativeAside_Tooltip>
   <RHAH_Settings_NarrativeCutoff>Asides stop: {0}</RHAH_Settings_NarrativeCutoff>
-  <RHAH_Settings_NarrativeCutoff_Tooltip>Asides stop at or below this trust. Result letters still arrive. -100 to 0, default -75.</RHAH_Settings_NarrativeCutoff_Tooltip>
+  <RHAH_Settings_NarrativeCutoff_Tooltip>When Suiyin's trust falls to this value or lower, she stops sending short notes but still sends incident outcomes. Range -100 to 0, default -75.</RHAH_Settings_NarrativeCutoff_Tooltip>
   <RHAH_Settings_NarrativeAdult>Envoy age: {0}</RHAH_Settings_NarrativeAdult>
-  <RHAH_Settings_NarrativeAdult_Tooltip>Age of the envoy Suiyin sends. 1 to 80, default 18.</RHAH_Settings_NarrativeAdult_Tooltip>
-  <RHAH_Settings_TrustRange_Tooltip>Trust added or removed for this outcome. -100 to 100. Zero changes nothing.</RHAH_Settings_TrustRange_Tooltip>
+  <RHAH_Settings_NarrativeAdult_Tooltip>Age of the envoy Suiyin sends. Range 1 to 80 years, default 18.</RHAH_Settings_NarrativeAdult_Tooltip>
+  <RHAH_Settings_TrustRange_Tooltip>Amount added to or subtracted from Suiyin's trust in you when this happens. Range -100 to 100; at 0, trust stays unchanged.</RHAH_Settings_TrustRange_Tooltip>
   <RHAH_Settings_TrustKill>Killed: {0}</RHAH_Settings_TrustKill>
   <RHAH_Settings_TrustCaptive>Captive: {0}</RHAH_Settings_TrustCaptive>
   <RHAH_Settings_TrustEntrust>Child settled: {0}</RHAH_Settings_TrustEntrust>
@@ -623,7 +623,7 @@
   <RHAH_Settings_BegSlapMood>Slapped: {0}</RHAH_Settings_BegSlapMood>
   <RHAH_Settings_BegSlapMood_Tooltip>Mood after a slap for begging again. -50 to 50, default -10.</RHAH_Settings_BegSlapMood_Tooltip>
   <RHAH_Settings_BegKnock>Slap stun: {0} hours</RHAH_Settings_BegKnock>
-  <RHAH_Settings_BegKnock_Tooltip>Hours a slap stuns the beggar. 0 to 24. Default 0, which is half an hour. Zero still stuns for half an hour.</RHAH_Settings_BegKnock_Tooltip>
+  <RHAH_Settings_BegKnock_Tooltip>Hours a slap stuns the beggar. 1 to 24 uses that many hours. 0 is the default and stuns for half an hour.</RHAH_Settings_BegKnock_Tooltip>
   <RHAH_Settings_BegBruise>Slap bruise: {0}</RHAH_Settings_BegBruise>
   <RHAH_Settings_BegBruise_Tooltip>Severity of the first bruise. 0 to 40, default 4.</RHAH_Settings_BegBruise_Tooltip>
   <RHAH_Settings_BegBruiseStep>Bruise step: {0}</RHAH_Settings_BegBruiseStep>
@@ -661,21 +661,21 @@
   <RHAH_Settings_FoodRefeed>Eat again at malnutrition: {0}</RHAH_Settings_FoodRefeed>
   <RHAH_Settings_FoodRefeed_Tooltip>Fed visitors look for food again at this malnutrition. 0 to 1, default 0.40.</RHAH_Settings_FoodRefeed_Tooltip>
   <RHAH_Settings_PlagueSeverity>Plague severity: {0}</RHAH_Settings_PlagueSeverity>
-  <RHAH_Settings_PlagueSeverity_Tooltip>Highest severity rolled for a new infection. 0.01 to 1, default 0.10.</RHAH_Settings_PlagueSeverity_Tooltip>
-  <RHAH_Settings_FollowPredator>Short-chain predators: {0}%</RHAH_Settings_FollowPredator>
-  <RHAH_Settings_FollowPredator_Tooltip>Chance a short chain later sends predators. 0 to 100, default 10.</RHAH_Settings_FollowPredator_Tooltip>
+  <RHAH_Settings_PlagueSeverity_Tooltip>Highest severity a new infection can reach. 0.01 to 1, default 0.10.</RHAH_Settings_PlagueSeverity_Tooltip>
+  <RHAH_Settings_FollowPredator>Short follow-up predators: {0}%</RHAH_Settings_FollowPredator>
+  <RHAH_Settings_FollowPredator_Tooltip>When an incident uses the short follow-up, this is the chance predators are sent once that group appears. 0 to 100, default 10. At 0, none are sent.</RHAH_Settings_FollowPredator_Tooltip>
   <RHAH_Settings_FollowBirth>Birth watch: {0} days</RHAH_Settings_FollowBirth>
   <RHAH_Settings_FollowBirth_Tooltip>Days after a laboring birth before the mood is written. 0 to 60, default 3.</RHAH_Settings_FollowBirth_Tooltip>
   <RHAH_Settings_FollowPlagueBirth>Plague birth watch: {0} days</RHAH_Settings_FollowPlagueBirth>
   <RHAH_Settings_FollowPlagueBirth_Tooltip>Days after a plague birth before the mood is written. 0 to 60, default 5.</RHAH_Settings_FollowPlagueBirth_Tooltip>
   <RHAH_Settings_FollowMother>Mother returns: {0} days</RHAH_Settings_FollowMother>
   <RHAH_Settings_FollowMother_Tooltip>Days before a plague mother comes back. 0 to 120, default 15.</RHAH_Settings_FollowMother_Tooltip>
-  <RHAH_Settings_FollowYears>Long-chain years: {0}</RHAH_Settings_FollowYears>
-  <RHAH_Settings_FollowYears_Tooltip>Years after the child reaches the follow-up age before the letter. 0 to 20, default 2.</RHAH_Settings_FollowYears_Tooltip>
+  <RHAH_Settings_FollowYears>Long follow-up: {0} years</RHAH_Settings_FollowYears>
+  <RHAH_Settings_FollowYears_Tooltip>When an incident with a follow-up uses the long one, the letter waits at most this many years after the children reach the follow-up age. 0 to 20, default 2. The mother's return uses its own day count.</RHAH_Settings_FollowYears_Tooltip>
   <RHAH_Settings_FollowAdult>Follow-up age: {0}</RHAH_Settings_FollowAdult>
-  <RHAH_Settings_FollowAdult_Tooltip>Age used by long chains and follow-up moods. 1 to 80, default 14.</RHAH_Settings_FollowAdult_Tooltip>
+  <RHAH_Settings_FollowAdult_Tooltip>Age used by the long follow-up and its later mood. 1 to 80, default 14.</RHAH_Settings_FollowAdult_Tooltip>
   <RHAH_Settings_FollowMood>Follow-up mood: {0}%</RHAH_Settings_FollowMood>
-  <RHAH_Settings_FollowMood_Tooltip>Scales follow-up mood. 0 to 300, default 100. Zero still keeps a 1-point sign.</RHAH_Settings_FollowMood_Tooltip>
+  <RHAH_Settings_FollowMood_Tooltip>Scales the later mood by this much. 0 to 300, default 100. A result under 1 point still leaves 1 point in the original direction.</RHAH_Settings_FollowMood_Tooltip>
   <RHAH_Settings_RequestRange_Tooltip>Minimum or maximum for this request. Wealth still picks a count inside the range.</RHAH_Settings_RequestRange_Tooltip>
   <RHAH_Settings_RequestSimpleMin>Simple meals, minimum: {0}</RHAH_Settings_RequestSimpleMin>
   <RHAH_Settings_RequestSimpleMax>Simple meals, maximum: {0}</RHAH_Settings_RequestSimpleMax>

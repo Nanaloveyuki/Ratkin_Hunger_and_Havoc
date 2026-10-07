@@ -67,7 +67,7 @@
   <SitePartDef>
     <defName>RHAH_RefugeeCamp</defName>
     <label>临时安居点</label>
-    <description>一群鼠族在这里搭了木屋。</description>
+    <description>一群鼠族在这处营地搭了木屋。</description>
     <siteTexture>World/WorldObjects/DefaultSettlement</siteTexture>
     <expandingIconTexture>World/WorldObjects/Expanding/Camp</expandingIconTexture>
     <disallowsAutomaticDetectionTimerStart>true</disallowsAutomaticDetectionTimerStart>

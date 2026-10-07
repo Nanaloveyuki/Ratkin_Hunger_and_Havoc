@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <RHAH_Menu_Ending_Note>结局只在穗音叙事下出现，每档只落一个。关掉的那一条不再新触发，已经记下的不撤掉，也不会改去触发另一条。</RHAH_Menu_Ending_Note>
-  <RHAH_Ending_Toggle_Tooltip>关闭后这项不再新触发。已经出现的不撤掉。关掉它不会改触发另一条结局。</RHAH_Ending_Toggle_Tooltip>
+  <RHAH_Menu_Ending_Note>这些结局只在穗音担任叙事者时出现，每个存档只会迎来一个结局。关闭某个结局后，它就无法触发；如果当前存档已经达成结局，关闭选项后仍会保留这个结果。</RHAH_Menu_Ending_Note>
+  <RHAH_Ending_Toggle_Tooltip>关闭后，这个结局就无法触发。如果当前存档已经达成结局，原有结果会保留。</RHAH_Ending_Toggle_Tooltip>
   <RHAH_Ending_Identity>身份告知</RHAH_Ending_Identity>
-  <RHAH_Ending_Identity_Tooltip>只在穗音叙事下出现一次。信任够了就寄来，不另做选择。</RHAH_Ending_Identity_Tooltip>
+  <RHAH_Ending_Identity_Tooltip>穗音担任叙事者时，信任达到要求后会寄来这封信。每个存档只寄一次。</RHAH_Ending_Identity_Tooltip>
   <RHAH_Ending_Aid>接济门槛：{0}</RHAH_Ending_Aid>
-  <RHAH_Ending_Aid_Tooltip>广义接济达到这个次数后，才检查丰年和希望之城。默认 99。</RHAH_Ending_Aid_Tooltip>
+  <RHAH_Ending_Aid_Tooltip>你需要完成至少这么多次接济，才有机会达成“鼠族丰年”或“希望之城”。默认 99。</RHAH_Ending_Aid_Tooltip>
   <RHAH_Ending_Broadcast>广播门槛：{0}</RHAH_Ending_Broadcast>
-  <RHAH_Ending_Broadcast_Tooltip>只计成功发出的广播。默认 3。</RHAH_Ending_Broadcast_Tooltip>
+  <RHAH_Ending_Broadcast_Tooltip>这个门槛只计成功发出的广播。默认 3。</RHAH_Ending_Broadcast_Tooltip>
   <RHAH_Ending_Expel>主动驱逐上限：{0}</RHAH_Ending_Expel>
-  <RHAH_Ending_Expel_Tooltip>超过这个次数后，不再满足丰年和希望之城。抵御来袭不算主动驱逐。默认 3。</RHAH_Ending_Expel_Tooltip>
+  <RHAH_Ending_Expel_Tooltip>你主动赶走来客超过这个次数后，丰年和希望之城不再出现。你打退来袭的人不算。默认 3。</RHAH_Ending_Expel_Tooltip>
   <RHAH_Ending_Adults>成年饥荒鼠族：{0}</RHAH_Ending_Adults>
-  <RHAH_Ending_Adults_Tooltip>同一处玩家家园里的成年饥荒鼠族殖民者。按年清点。默认 100。</RHAH_Ending_Adults_Tooltip>
+  <RHAH_Ending_Adults_Tooltip>达成“希望之城”需要同一处家园有至少这么多名成年饥荒鼠族殖民者。人数每年清点一次。默认 100。</RHAH_Ending_Adults_Tooltip>
   <RHAH_Ending_Wait>结尾等待：{0} 天</RHAH_Ending_Wait>
-  <RHAH_Ending_Wait_Tooltip>中低信任结尾至少等这么多天。记录中止不等。默认 30。</RHAH_Ending_Wait_Tooltip>
-  <RHAH_Ending_Preview_Note>开发者预览只显示文本。不记下结局，也不记下身份。</RHAH_Ending_Preview_Note>
+  <RHAH_Ending_Wait_Tooltip>穗音的信任处于中低水平时，结局至少等待这么多天才会出现。“记录中止”可以立即出现。默认 30。</RHAH_Ending_Wait_Tooltip>
+  <RHAH_Ending_Preview_Note>你可以在开发模式中预览结局和身份来信。预览只显示文本，当前游戏进度保持原样。</RHAH_Ending_Preview_Note>
 
   <RHAH_Ending_E01_Label>鼠族丰年</RHAH_Ending_E01_Label>
   <RHAH_Ending_E01_Text>最后一笔接济记进账时，穗音在纸边写了一个名字。写到一半，她停了很久。\n\n「我答应过，要把她的孩子带到有饭吃的地方。那一次我没做到。后来每份名单我都找过那个孩子。一直没有。」\n\n下一页列着送出的食物、照料过的病人，以及放行离开的来客。\n\n「这里有很多我没见过的人。他们还能活着，你们出了力。这句话我该说一次。」\n\n「谢谢你们。正在这里长大的孩子，吃饭的时候就吃饭。你们的那一份，已经有人留下了。」\n\n接济 {0} 次，广播 {1} 次。灾年还没结束。这处殖民地已经是有人能够走到的地方。</RHAH_Ending_E01_Text>

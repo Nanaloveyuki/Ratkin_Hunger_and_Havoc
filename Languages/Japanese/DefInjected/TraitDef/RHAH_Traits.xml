@@ -65,7 +65,7 @@
   <RHAH_Trait_Distrustful.degreeDatas.0.label>疑り深い</RHAH_Trait_Distrustful.degreeDatas.0.label>
   <RHAH_Trait_Distrustful.degreeDatas.0.description>{PAWN_nameDef}はもう他人をなかなか信用できない。親切でさえ、{PAWN_objective}には罠に見えることが多い。</RHAH_Trait_Distrustful.degreeDatas.0.description>
   <RHAH_Trait_WeakFlesh.degreeDatas.0.label>体が弱い</RHAH_Trait_WeakFlesh.degreeDatas.0.label>
-  <RHAH_Trait_WeakFlesh.degreeDatas.0.description>{PAWN_nameDef}は体がとても弱く、少しぶつけただけでもこたえる。</RHAH_Trait_WeakFlesh.degreeDatas.0.description>
+  <RHAH_Trait_WeakFlesh.degreeDatas.0.description>{PAWN_nameDef}は体がとても弱く、ぶつけたあとが残る。</RHAH_Trait_WeakFlesh.degreeDatas.0.description>
   <RHAH_Trait_WeakGut.degreeDatas.0.label>胃が弱い</RHAH_Trait_WeakGut.degreeDatas.0.label>
   <RHAH_Trait_WeakGut.degreeDatas.0.description>{PAWN_nameDef}は胃が弱く、食べてから間もないのにまた腹が空く。</RHAH_Trait_WeakGut.degreeDatas.0.description>
   <RHAH_Trait_Chillblood.degreeDatas.0.label>寒がり</RHAH_Trait_Chillblood.degreeDatas.0.label>
@@ -83,17 +83,17 @@
   <RHAH_Trait_PlagueSurvivor.degreeDatas.0.label>疫病の後遺症</RHAH_Trait_PlagueSurvivor.degreeDatas.0.label>
   <RHAH_Trait_PlagueSurvivor.degreeDatas.0.description>{PAWN_nameDef}は疫病を生き延びたことがあり、また病気になっても少しは気を強く持てる。ただ、疲れやすい。</RHAH_Trait_PlagueSurvivor.degreeDatas.0.description>
   <RHAH_Trait_GrainSneak.degreeDatas.0.label>ポーカーフェイス</RHAH_Trait_GrainSneak.degreeDatas.0.label>
-  <RHAH_Trait_GrainSneak.degreeDatas.0.description>{PAWN_nameDef}は本音を顔に出したがらない。</RHAH_Trait_GrainSneak.degreeDatas.0.description>
+  <RHAH_Trait_GrainSneak.degreeDatas.0.description>{PAWN_nameDef}は本音を顔にほとんど出さない。</RHAH_Trait_GrainSneak.degreeDatas.0.description>
   <RHAH_Trait_SiegeDigger.degreeDatas.0.label>掘るのが好き</RHAH_Trait_SiegeDigger.degreeDatas.0.label>
   <RHAH_Trait_SiegeDigger.degreeDatas.0.description>{PAWN_nameDef}は抜け道や塹壕を掘るのが得意だ。暇を持て余すと、ソファまでひっかきたくなる。</RHAH_Trait_SiegeDigger.degreeDatas.0.description>
   <RHAH_Trait_GranaryBreaker.degreeDatas.0.label>けんか好き</RHAH_Trait_GranaryBreaker.degreeDatas.0.label>
-  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef}はけんかを恐れない。決闘を申し込む言葉が終わる前に、もう拳を構えている。</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
+  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef}はけんかがあると飛び込んでいく。決闘を申し込む言葉が終わる前に、もう拳を構えている。</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
   <RHAH_Trait_AilingMother.degreeDatas.0.label>お人好し</RHAH_Trait_AilingMother.degreeDatas.0.label>
   <RHAH_Trait_AilingMother.degreeDatas.0.description>{PAWN_nameDef}はいつも、子供を一番安全な場所に置こうとする。身近な幼い仲間が飢えたり、病気になったり、倒れたりすると、{PAWN_pronoun}は不安になり、悲しくなる。そのせいで甘すぎるお人好しだと罵られることもしょっちゅうだ。</RHAH_Trait_AilingMother.degreeDatas.0.description>
   <RHAH_Trait_FamilyThief.degreeDatas.0.label>身内思い</RHAH_Trait_FamilyThief.degreeDatas.0.label>
   <RHAH_Trait_FamilyThief.degreeDatas.0.description>{PAWN_nameDef}は決まりよりも身内を大事にする。身近な幼い仲間が飢えたり、病気になったり、倒れたりすると、{PAWN_pronoun}はじっとしていられない。</RHAH_Trait_FamilyThief.degreeDatas.0.description>
   <RHAH_Trait_QuarantineGuard.degreeDatas.0.label>近寄りがたい</RHAH_Trait_QuarantineGuard.degreeDatas.0.label>
-  <RHAH_Trait_QuarantineGuard.degreeDatas.0.description>{PAWN_nameDef}は人を寄せつけにくい。</RHAH_Trait_QuarantineGuard.degreeDatas.0.description>
+  <RHAH_Trait_QuarantineGuard.degreeDatas.0.description>{PAWN_nameDef}は人をなかなか近づけない。</RHAH_Trait_QuarantineGuard.degreeDatas.0.description>
   <RHAH_Trait_WrongKin.degreeDatas.0.label>方向音痴</RHAH_Trait_WrongKin.degreeDatas.0.label>
   <RHAH_Trait_WrongKin.degreeDatas.0.description>{PAWN_nameDef}は知らない家の戸口を自分の家と勘違いしやすい。間違いだとわかると、落ち込んでしまいやすい。</RHAH_Trait_WrongKin.degreeDatas.0.description>
   <RHAH_Trait_CrowdChild.degreeDatas.0.label>人の輪が好き</RHAH_Trait_CrowdChild.degreeDatas.0.label>

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <RHAH_Menu_Ending_Note>結末はスイインをストーリーテラーにした場合のみ発生し、セーブごとに一つです。無効にした結末は新たに発生しません。すでに記録された結末は取り消されず、別の結末に切り替わることもありません。</RHAH_Menu_Ending_Note>
-  <RHAH_Ending_Toggle_Tooltip>無効にすると、この結末は新たに発生しません。すでに発生したものは取り消されません。無効にしても、別の結末に切り替わりません。</RHAH_Ending_Toggle_Tooltip>
+  <RHAH_Menu_Ending_Note>これらの結末は、スイインがストーリーテラーのときだけ現れます。セーブごとに迎える結末は一つです。ある結末を無効にすると、その結末は発生しなくなります。このセーブですでに結末を迎えている場合、その結果は残ります。</RHAH_Menu_Ending_Note>
+  <RHAH_Ending_Toggle_Tooltip>これを無効にすると、この結末は発生しなくなります。このセーブですでに結末を迎えている場合、その結果は残ります。</RHAH_Ending_Toggle_Tooltip>
   <RHAH_Ending_Identity>身分を明かす手紙</RHAH_Ending_Identity>
-  <RHAH_Ending_Identity_Tooltip>スイインをストーリーテラーにした場合のみ、一度届きます。信頼が十分になると送られ、別途選択する必要はありません。</RHAH_Ending_Identity_Tooltip>
+  <RHAH_Ending_Identity_Tooltip>スイインがストーリーテラーのとき、信頼が十分になると、この手紙を送ります。セーブごとに一度だけです。</RHAH_Ending_Identity_Tooltip>
   <RHAH_Ending_Aid>援助の必要回数：{0}</RHAH_Ending_Aid>
-  <RHAH_Ending_Aid_Tooltip>各種の援助がこの回数に達すると、「ラットキンの豊年」と「希望の街」の条件を判定します。初期値は 99。</RHAH_Ending_Aid_Tooltip>
+  <RHAH_Ending_Aid_Tooltip>「ラットキンの豊年」または「希望の街」を迎えるには、少なくともこれだけの援助を完了する必要があります。初期値は99。</RHAH_Ending_Aid_Tooltip>
   <RHAH_Ending_Broadcast>放送の必要回数：{0}</RHAH_Ending_Broadcast>
-  <RHAH_Ending_Broadcast_Tooltip>成功した放送のみ数えます。初期値は 3。</RHAH_Ending_Broadcast_Tooltip>
+  <RHAH_Ending_Broadcast_Tooltip>実際に発信された放送だけを数えます。初期値は3。</RHAH_Ending_Broadcast_Tooltip>
   <RHAH_Ending_Expel>自発的な追放の上限：{0}</RHAH_Ending_Expel>
-  <RHAH_Ending_Expel_Tooltip>この回数を超えると、「ラットキンの豊年」と「希望の街」の条件を満たせなくなります。襲撃を撃退しても、自発的な追放には数えません。初期値は 3。</RHAH_Ending_Expel_Tooltip>
+  <RHAH_Ending_Expel_Tooltip>この回数を超えて訪問者を追い出すと、「ラットキンの豊年」と「希望の街」は迎えられなくなります。襲撃を撃退しても、追い出したことには数えません。初期値は3。</RHAH_Ending_Expel_Tooltip>
   <RHAH_Ending_Adults>成年の飢饉ラットキン：{0}</RHAH_Ending_Adults>
-  <RHAH_Ending_Adults_Tooltip>プレイヤーの一つの本拠地にいる、成年の飢饉ラットキン入植者の人数です。年ごとに数えます。初期値は 100。</RHAH_Ending_Adults_Tooltip>
+  <RHAH_Ending_Adults_Tooltip>「希望の街」を迎えるには、一つの拠点に少なくともこれだけの成年の飢饉ラットキン入植者が必要です。人数は年に一度数えます。初期値は100。</RHAH_Ending_Adults_Tooltip>
   <RHAH_Ending_Wait>結末までの待機期間：{0} 日</RHAH_Ending_Wait>
-  <RHAH_Ending_Wait_Tooltip>信頼が中程度または低い場合の結末は、少なくともこの日数だけ待ってから発生します。「記録の打ち切り」には待機期間がありません。初期値は 30。</RHAH_Ending_Wait_Tooltip>
-  <RHAH_Ending_Preview_Note>開発者用プレビューでは文章だけを表示します。結末も身分の告知も記録しません。</RHAH_Ending_Preview_Note>
+  <RHAH_Ending_Wait_Tooltip>スイインの信頼が中程度または低い場合、結末は少なくともこれだけの日数が過ぎてから現れます。「記録の打ち切り」はすぐに起こることがあります。初期値は30。</RHAH_Ending_Wait_Tooltip>
+  <RHAH_Ending_Preview_Note>開発者モードで、結末と身分の手紙を確認できます。確認では文章だけを表示し、ゲームの進行は変わりません。</RHAH_Ending_Preview_Note>
   <RHAH_Ending_E01_Label>ラットキンの豊年</RHAH_Ending_E01_Label>
   <RHAH_Ending_E01_Text>最後の援助を帳面につけたとき、スイインは紙の端に名前を書いた。途中で手を止め、長いこと動かなかった。\n\n「子供を、食べ物のある場所へ連れていくと、あの人に約束しました。あのときは、できませんでした。それから名簿を手にするたびに、あの子を探しました。ずっと、見つかりません。」\n\n次のページには、送り出した食べ物、世話をした患者、旅を続けられるようになった訪問者が並んでいる。\n\n「ここには、私が会ったこともない人が大勢います。あの人たちが今も生きているのは、あなたたちが力を貸してくれたからです。一度は、そう伝えなければいけませんでした。」\n\n「ありがとうございます。ここで育っている子供たちは、食事のときには、ただ食べればいいんです。あなたたちの分も、ちゃんと誰かが残してくれています。」\n\n援助 {0} 回、放送 {1} 回。災いの年は、まだ終わっていない。それでも、このコロニーはもう、人がたどり着ける場所になっている。</RHAH_Ending_E01_Text>
   <RHAH_Ending_E02_Label>希望の街</RHAH_Ending_E02_Label>

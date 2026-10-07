@@ -3,7 +3,7 @@
   <WorldObjectDef>
     <defName>RHAH_Approach</defName>
     <label>鼠族远行队</label>
-    <description>一队鼠族正在向殖民地走来。人还没到。</description>
+    <description>一队鼠族正在向我们据点走来。他们还在路上。</description>
     <worldObjectClass>HungerAndHavoc.Incidents.WorldObject_RHAH_Approach</worldObjectClass>
     <texture>World/WorldObjects/Caravan</texture>
     <useDynamicDrawer>true</useDynamicDrawer>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <RHAH_Approach.label>ratkin approach</RHAH_Approach.label>
-  <RHAH_Approach.description>Ratkin are walking toward a colony. Nobody has arrived.</RHAH_Approach.description>
+  <RHAH_Approach.label>ratkin travelers</RHAH_Approach.label>
+  <RHAH_Approach.description>A group of ratkin is walking toward our colony. They are still on the way.</RHAH_Approach.description>
 </LanguageData>

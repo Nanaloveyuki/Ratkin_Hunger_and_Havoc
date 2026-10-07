@@ -83,17 +83,17 @@
   <RHAH_Trait_PlagueSurvivor.degreeDatas.0.label>疫病后遗症</RHAH_Trait_PlagueSurvivor.degreeDatas.0.label>
   <RHAH_Trait_PlagueSurvivor.degreeDatas.0.description>{PAWN_nameDef}从疫病里活下来过，再遇上病也有些底气，只是人容易疲倦。</RHAH_Trait_PlagueSurvivor.degreeDatas.0.description>
   <RHAH_Trait_GrainSneak.degreeDatas.0.label>面瘫脸</RHAH_Trait_GrainSneak.degreeDatas.0.label>
-  <RHAH_Trait_GrainSneak.degreeDatas.0.description>{PAWN_nameDef}不爱把真实想法写在脸上。</RHAH_Trait_GrainSneak.degreeDatas.0.description>
+  <RHAH_Trait_GrainSneak.degreeDatas.0.description>{PAWN_nameDef}脸上很少露出真实想法。</RHAH_Trait_GrainSneak.degreeDatas.0.description>
   <RHAH_Trait_SiegeDigger.degreeDatas.0.label>爱挖东西</RHAH_Trait_SiegeDigger.degreeDatas.0.label>
   <RHAH_Trait_SiegeDigger.degreeDatas.0.description>{PAWN_nameDef}挖出路和壕沟很在行，闲着无聊时连沙发都想挠两下。</RHAH_Trait_SiegeDigger.degreeDatas.0.description>
   <RHAH_Trait_GranaryBreaker.degreeDatas.0.label>好斗</RHAH_Trait_GranaryBreaker.degreeDatas.0.label>
-  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef}不怕打架。决斗的话还没说完，拳头就已经准备好了。</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
+  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef}见架就上。决斗的话还没说完，拳头就已经准备好了。</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
   <RHAH_Trait_AilingMother.degreeDatas.0.label>圣母心</RHAH_Trait_AilingMother.degreeDatas.0.label>
   <RHAH_Trait_AilingMother.degreeDatas.0.description>{PAWN_nameDef}总想把孩子放在最安全的地方。身边的幼小同伴挨饿、病倒或倒下时，{PAWN_pronoun}会感到不安和悲伤，尽管经常会被别人骂圣母。</RHAH_Trait_AilingMother.degreeDatas.0.description>
   <RHAH_Trait_FamilyThief.degreeDatas.0.label>护犊子</RHAH_Trait_FamilyThief.degreeDatas.0.label>
   <RHAH_Trait_FamilyThief.degreeDatas.0.description>{PAWN_nameDef}把自己人看得比规矩重。身边的幼小同伴挨饿、病倒或倒下时，{PAWN_pronoun}会坐不住。</RHAH_Trait_FamilyThief.degreeDatas.0.description>
   <RHAH_Trait_QuarantineGuard.degreeDatas.0.label>冷面</RHAH_Trait_QuarantineGuard.degreeDatas.0.label>
-  <RHAH_Trait_QuarantineGuard.degreeDatas.0.description>{PAWN_nameDef}不容易让人亲近。</RHAH_Trait_QuarantineGuard.degreeDatas.0.description>
+  <RHAH_Trait_QuarantineGuard.degreeDatas.0.description>{PAWN_nameDef}让人很难亲近。</RHAH_Trait_QuarantineGuard.degreeDatas.0.description>
   <RHAH_Trait_WrongKin.degreeDatas.0.label>路痴</RHAH_Trait_WrongKin.degreeDatas.0.label>
   <RHAH_Trait_WrongKin.degreeDatas.0.description>{PAWN_nameDef}容易把陌生的门认成家，认错了也容易失落。</RHAH_Trait_WrongKin.degreeDatas.0.description>
   <RHAH_Trait_CrowdChild.degreeDatas.0.label>喜欢聚众</RHAH_Trait_CrowdChild.degreeDatas.0.label>

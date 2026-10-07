@@ -1,162 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_Suiyin_N001_Label>A letter from Suiyin</RHAH_Suiyin_N001_Label>
-  <RHAH_Suiyin_N001_Text>My name is Suiyin. I get some of the news from your side. It arrives late, and it is not always right.\n\nMore ratkin are on the roads. Some want food, some want to trade, and some will take what they can. Do not open the door because I wrote this. I am not vouching for them.\n\nI will write again when there is more to say.</RHAH_Suiyin_N001_Text>
+  <RHAH_Suiyin_N001_Text>My name is Suiyin. Some news from your colony reaches me, though letters arrive late and what I hear is not always accurate.\n\nLately I have seen more ratkin on the roads. Some seek food, some trade, and some steal. Judge each group for yourselves before letting them through your door.\n\nI will write again when I hear more.</RHAH_Suiyin_N001_Text>
   <RHAH_Suiyin_N002_Label>More news</RHAH_Suiyin_N002_Label>
-  <RHAH_Suiyin_N002_Text>More news has reached me. {0} different kinds of visitors have passed through your colony lately.\n\nSome wanted a meal; others needed a place to stay. Some were hardly polite when they arrived, but ended up staying too. Hearing that they have somewhere to live is always a relief.\n\nYou do not need to write back. I will keep asking around.</RHAH_Suiyin_N002_Text>
+  <RHAH_Suiyin_N002_Text>More news has reached me. These days, {0} different kinds of visitors have passed through your colony.\n\nI hear some only wanted a meal, while others wanted somewhere to stay. Some were hardly polite when they arrived, but stayed afterward. Knowing they have a place to live always lets me breathe easier.\n\nI will keep asking around and write again when I hear more.</RHAH_Suiyin_N002_Text>
   <RHAH_Suiyin_N003_Label>Travel money</RHAH_Suiyin_N003_Label>
-  <RHAH_Suiyin_N003_Text>I paid for the silver that arrived, all {0} of it.\n\nI asked someone to take a detour. He complained that carrying so little was not worth the trip, then came back asking when the next run would be. I have not promised him another.\n\nThe money is there. Use it for what you need now. You do not have to take anyone in to repay the favor.</RHAH_Suiyin_N003_Text>
+  <RHAH_Suiyin_N003_Text>The silver that reached your colony is mine. I paid all {0} of it.\n\nI asked a carrier to take a detour. The carrier complained that so little was not worth the trip, then came back and asked me when the next run would be. I have not promised the carrier another.\n\nThe money is in your hands now. Use it for what you need. You do not have to take anyone in to repay me.</RHAH_Suiyin_N003_Text>
   <RHAH_Suiyin_N004Entry_Label>A child left behind</RHAH_Suiyin_N004Entry_Label>
-  <RHAH_Suiyin_N004Entry_Text>Poor things, aren't they?</RHAH_Suiyin_N004Entry_Text>
+  <RHAH_Suiyin_N004Entry_Text>After I heard this, I could only think how pitiful those children are. Don't you think so too?</RHAH_Suiyin_N004Entry_Text>
   <RHAH_Suiyin_N004ChildAlone_Label>Where did mother go?</RHAH_Suiyin_N004ChildAlone_Label>
-  <RHAH_Suiyin_N004ChildAlone_Text>The child lingers where the basket used to be. It has been taken apart, and the boards used elsewhere.\n\n"Where did mother go?"\n\nThat is what the child asks.</RHAH_Suiyin_N004ChildAlone_Text>
+  <RHAH_Suiyin_N004ChildAlone_Text>I hear the child stood for a long time where the basket used to be. You had taken it apart and used the boards elsewhere.\n\nThe child asked, "Where did mother go?"</RHAH_Suiyin_N004ChildAlone_Text>
   <RHAH_Suiyin_N004FamilyHere_Label>Still here</RHAH_Suiyin_N004FamilyHere_Label>
-  <RHAH_Suiyin_N004FamilyHere_Text>The child finds the mother first. They do not say much.\n\n"You're still here. That's what matters..."</RHAH_Suiyin_N004FamilyHere_Text>
+  <RHAH_Suiyin_N004FamilyHere_Text>I hear the child found the mother first. Mother and child did not say much.\n\nThe child said, "You're still here. That's what matters..."</RHAH_Suiyin_N004FamilyHere_Text>
   <RHAH_Suiyin_N004Captive_Label>Still alive</RHAH_Suiyin_N004Captive_Label>
-  <RHAH_Suiyin_N004Captive_Text>The child has learned to watch people's faces. At least the child is alive, and staying that way has become a daily task.\n\nSuiyin adds a short line beside the child's name.</RHAH_Suiyin_N004Captive_Text>
+  <RHAH_Suiyin_N004Captive_Text>I hear the child has learned to read people's faces. At least the child is alive, though every day takes care and caution to stay that way.\n\nI drew a short line beside the child's name.</RHAH_Suiyin_N004Captive_Text>
   <RHAH_Suiyin_N004Story_Label>Nothing left to see</RHAH_Suiyin_N004Story_Label>
-  <RHAH_Suiyin_N004Story_Text>The room has been cleared. In a while, the map will not show what happened here.\n\nSuiyin does not write any more.</RHAH_Suiyin_N004Story_Text>
+  <RHAH_Suiyin_N004Story_Text>I hear the mother is dead, and the child could not stay. The room has been cleared. Before long, there may be little sign of what happened there.\n\nI did not write any more about it.</RHAH_Suiyin_N004Story_Text>
   <RHAH_Suiyin_N004Banished_Label>Sent away</RHAH_Suiyin_N004Banished_Label>
-  <RHAH_Suiyin_N004Banished_Text>You sent them beyond the border. There are fewer people to care for, and empty beds.\n\nA caravan may meet the survivor again within {0} years.</RHAH_Suiyin_N004Banished_Text>
+  <RHAH_Suiyin_N004Banished_Text>I hear you sent them past the border. The colony has fewer people to care for now, and the beds are empty.\n\nI expect a caravan may meet the one who lived again within {0} years.</RHAH_Suiyin_N004Banished_Text>
   <RHAH_Suiyin_N004Revisit_Label>Seen again</RHAH_Suiyin_N004Revisit_Label>
-  <RHAH_Suiyin_N004Revisit_Text>The caravan sees them on the road. The survivor has learned to find food, and the old cloth still bears the colony's colors.\n\nYou can leave them by the road, or pay {0} silver and receive {2} silver after {1} years. You can also kill them and end the matter here.</RHAH_Suiyin_N004Revisit_Text>
+  <RHAH_Suiyin_N004Revisit_Text>I hear the caravan met them on the road. The one who lived can find food now, and the old cloth still has your colony's colors.\n\nYou can leave them by the road. You can pay {0} silver and receive {2} silver after {1} years. Or you can kill them, and the matter ends there.</RHAH_Suiyin_N004Revisit_Text>
   <RHAH_Suiyin_N004RescuePaid_Label>A promised return</RHAH_Suiyin_N004RescuePaid_Label>
-  <RHAH_Suiyin_N004RescuePaid_Text>The {0} silver has been paid. They have promised to send {2} silver after {1} years. Let's hope there is still news of them by then.</RHAH_Suiyin_N004RescuePaid_Text>
+  <RHAH_Suiyin_N004RescuePaid_Text>I hear the {0} silver has been paid. They promised to send {2} silver after {1} years. I hope I still hear word of them by then.</RHAH_Suiyin_N004RescuePaid_Text>
   <RHAH_Suiyin_N004Killed_Label>It ends here</RHAH_Suiyin_N004Killed_Label>
-  <RHAH_Suiyin_N004Killed_Text>Suiyin writes only one sentence: "It ends here."</RHAH_Suiyin_N004Killed_Text>
+  <RHAH_Suiyin_N004Killed_Text>I wrote only one sentence: "It ends here."</RHAH_Suiyin_N004Killed_Text>
   <RHAH_Suiyin_N004Regret_Label>If only</RHAH_Suiyin_N004Regret_Label>
-  <RHAH_Suiyin_N004Regret_Text>The mother still walks to the old spot. The child is no longer there.\n\n"If only that day..."\n\nShe does not finish the sentence.</RHAH_Suiyin_N004Regret_Text>
+  <RHAH_Suiyin_N004Regret_Text>I hear the mother still walks to the old place, where the child is no longer waiting.\n\nShe said, "If only that day..."\n\nShe did not finish the sentence.</RHAH_Suiyin_N004Regret_Text>
   <RHAH_Suiyin_N005Accepted_Label>Settle them first</RHAH_Suiyin_N005Accepted_Label>
-  <RHAH_Suiyin_N005Accepted_Text>The food has been handed over, and the exchange checked again.\n\nThe young ratkin are still here. Someone still needs to arrange their next meal and a place to sleep tonight.</RHAH_Suiyin_N005Accepted_Text>
+  <RHAH_Suiyin_N005Accepted_Text>I hear the food changed hands, and the trader checked the exchange once more.\n\nThe young ratkin are still in your colony. Their next meal and somewhere to sleep tonight need to be arranged first.</RHAH_Suiyin_N005Accepted_Text>
   <RHAH_Suiyin_N005Cared_Label>The old name</RHAH_Suiyin_N005Cared_Label>
-  <RHAH_Suiyin_N005Cared_Text>Over the past few days, someone has always had to stop work to watch the child. At least the crying no longer begins with a question about what name to use.\n\nShould we use the old name again?</RHAH_Suiyin_N005Cared_Text>
+  <RHAH_Suiyin_N005Cared_Text>I hear someone has been putting work aside to look after the child these past few days. Now, when the child cries, the carers know which name to call.\n\nSomeone asked, "Should we start using the old name again?"</RHAH_Suiyin_N005Cared_Text>
   <RHAH_Suiyin_N005Dead_Label>Tragedy</RHAH_Suiyin_N005Dead_Label>
-  <RHAH_Suiyin_N005Dead_Text>Not every child survived. May the glitterworld they have gone to be free of famine.</RHAH_Suiyin_N005Dead_Text>
+  <RHAH_Suiyin_N005Dead_Text>I hear the child did not survive. May the glitterworld the child has gone to be free of famine.</RHAH_Suiyin_N005Dead_Text>
   <RHAH_Suiyin_N005Left_Label>No longer here</RHAH_Suiyin_N005Left_Label>
-  <RHAH_Suiyin_N005Left_Text>The child is no longer in your care. How will the next person look after the child? We have no way of knowing.</RHAH_Suiyin_N005Left_Text>
+  <RHAH_Suiyin_N005Left_Text>I hear the child is no longer in your care. How the next people raise that child, I cannot say.</RHAH_Suiyin_N005Left_Text>
   <RHAH_Suiyin_N005Missing_Label>Not settled</RHAH_Suiyin_N005Missing_Label>
-  <RHAH_Suiyin_N005Missing_Text>The child never settled here. We have no way of knowing what happened, and can only hope there is a future ahead.</RHAH_Suiyin_N005Missing_Text>
+  <RHAH_Suiyin_N005Missing_Text>I hear the child never settled in your colony. What happened to that child in between, I cannot say. I can only hope the child still has days ahead.</RHAH_Suiyin_N005Missing_Text>
   <RHAH_Suiyin_N005Rejected_Label>An empty basket</RHAH_Suiyin_N005Rejected_Label>
-  <RHAH_Suiyin_N005Rejected_Text>The exchange fell through. The young ratkin were taken away in a hurry.</RHAH_Suiyin_N005Rejected_Text>
+  <RHAH_Suiyin_N005Rejected_Text>I hear the exchange fell through. The trader took the young ratkin and left in a hurry.</RHAH_Suiyin_N005Rejected_Text>
   <RHAH_Suiyin_N005TimedOut_Label>No answer</RHAH_Suiyin_N005TimedOut_Label>
-  <RHAH_Suiyin_N005TimedOut_Text>The agreed time passed without an answer. The young ratkin were taken away.</RHAH_Suiyin_N005TimedOut_Text>
+  <RHAH_Suiyin_N005TimedOut_Text>I hear the time they named has passed, and you still gave no answer. The trader took the young ratkin and left.</RHAH_Suiyin_N005TimedOut_Text>
   <RHAH_Suiyin_N005Broken_Label>The trade breaks</RHAH_Suiyin_N005Broken_Label>
-  <RHAH_Suiyin_N005Broken_Text>The planned handover never happened. It seems the agreed terms no longer stand.</RHAH_Suiyin_N005Broken_Text>
+  <RHAH_Suiyin_N005Broken_Text>I hear the agreed handover fell through, so the terms no longer hold.</RHAH_Suiyin_N005Broken_Text>
   <RHAH_Suiyin_N006Entry_Label>Grain at the wall</RHAH_Suiyin_N006Entry_Label>
-  <RHAH_Suiyin_N006Entry_Text>A few mouthfuls are missing from the food store. There is a narrow hole at the foot of the wall, with crumbs caught around its edge. It looks like ratkin have eaten here, perhaps after gnawing through the floor.\n\nYou can seal it with {0} wood, leave a portion of food as bait, or clear the area around it. Clearing destroys up to {1} nearby portions of food. Left alone, the hole will disappear after {2} days.</RHAH_Suiyin_N006Entry_Text>
+  <RHAH_Suiyin_N006Entry_Text>I hear a few mouthfuls of food have gone missing from your colony. There is a narrow hole at the foot of the wall, with crumbs around its edge. It looks as though ratkin gnawed through the floor to reach the food.\n\nYou can seal it with {0} wood, leave a portion of food as bait, or clear the area around it. Clearing destroys up to {1} portions of nearby food. If you leave it alone, the hole disappears after {2} days.</RHAH_Suiyin_N006Entry_Text>
   <RHAH_Suiyin_N006Sealed_Label>The hole is filled</RHAH_Suiyin_N006Sealed_Label>
-  <RHAH_Suiyin_N006Sealed_Text>The hole is filled. Today's count matches again.\n\nNobody goes to see who was on the other side.</RHAH_Suiyin_N006Sealed_Text>
+  <RHAH_Suiyin_N006Sealed_Text>Word reached me that the hole is filled, and today's food count finally matches.\n\nAs for who was on the other side, I hear you did not look any further.</RHAH_Suiyin_N006Sealed_Text>
   <RHAH_Suiyin_N006BaitSet_Label>Bait left</RHAH_Suiyin_N006BaitSet_Label>
-  <RHAH_Suiyin_N006BaitSet_Text>Food is by the hole. Tonight there is one portion less. Check the trail after a day.</RHAH_Suiyin_N006BaitSet_Text>
+  <RHAH_Suiyin_N006BaitSet_Text>I hear one portion of food was left by the hole, so tonight you are short that mouthful. After a day, go back and see whether the trail is still there.</RHAH_Suiyin_N006BaitSet_Text>
   <RHAH_Suiyin_N006BaitGone_Label>A dragged trail</RHAH_Suiyin_N006BaitGone_Label>
-  <RHAH_Suiyin_N006BaitGone_Text>The bait is gone. There is a fresh trail outside. One more rain and it will be hard to read.</RHAH_Suiyin_N006BaitGone_Text>
+  <RHAH_Suiyin_N006BaitGone_Text>I hear the bait is gone, with a fresh drag mark outside the hole. The next rain will probably make that trail hard to follow.</RHAH_Suiyin_N006BaitGone_Text>
   <RHAH_Suiyin_N006Traced_Label>A place marked</RHAH_Suiyin_N006Traced_Label>
-  <RHAH_Suiyin_N006Traced_Text>A place has been marked along the trail. Someone still has to walk there to see what is inside.</RHAH_Suiyin_N006Traced_Text>
+  <RHAH_Suiyin_N006Traced_Text>I hear you marked a place along the trail. What is inside that place, someone still has to walk there and see.</RHAH_Suiyin_N006Traced_Text>
   <RHAH_Suiyin_N006Stopped_Label>No further</RHAH_Suiyin_N006Stopped_Label>
-  <RHAH_Suiyin_N006Stopped_Text>The trail ends here. The hole has been sealed.</RHAH_Suiyin_N006Stopped_Text>
+  <RHAH_Suiyin_N006Stopped_Text>I hear you stopped following the trail here and sealed the hole.</RHAH_Suiyin_N006Stopped_Text>
   <RHAH_Suiyin_N006Cleaned_Label>The edge is cleared</RHAH_Suiyin_N006Cleaned_Label>
-  <RHAH_Suiyin_N006Cleaned_Text>You turn over the places around the hole where food could hide. The scraps come out, and they cannot be eaten.\n\nAt least nobody has to watch the gap tonight.</RHAH_Suiyin_N006Cleaned_Text>
+  <RHAH_Suiyin_N006Cleaned_Text>I hear you searched the hiding places around the hole. The scraps you swept out are spoiled.\n\nAt least there is one less gap to watch tonight.</RHAH_Suiyin_N006Cleaned_Text>
   <RHAH_Suiyin_N006Gone_Label>The hole is gone</RHAH_Suiyin_N006Gone_Label>
-  <RHAH_Suiyin_N006Gone_Text>When you look again, the hole is gone. That path cannot be followed.</RHAH_Suiyin_N006Gone_Text>
+  <RHAH_Suiyin_N006Gone_Text>I hear that when you looked again, the hole was gone. You cannot follow that trail any farther.</RHAH_Suiyin_N006Gone_Text>
   <RHAH_Hole_Seal>Seal it ({0} wood)</RHAH_Hole_Seal>
   <RHAH_Hole_Bait>Leave a portion as bait</RHAH_Hole_Bait>
   <RHAH_Hole_Clean>Clear the area (up to {0} food)</RHAH_Hole_Clean>
   <RHAH_Hole_Ignore>Leave it</RHAH_Hole_Ignore>
   <RHAH_Hole_Trace>Follow the trail</RHAH_Hole_Trace>
   <RHAH_Hole_Stop>Stop here</RHAH_Hole_Stop>
-  <RHAH_Hole_NoWood>Not enough wood. Sealing the hole requires {0}.</RHAH_Hole_NoWood>
-  <RHAH_Hole_NoFood>No food by the hole to use as bait.</RHAH_Hole_NoFood>
-  <RHAH_Hole_Stale>This hole can no longer be handled.</RHAH_Hole_Stale>
+  <RHAH_Hole_NoWood>Sealing the hole requires {0} wood. Gather enough before trying again.</RHAH_Hole_NoWood>
+  <RHAH_Hole_NoFood>There is no food by the hole to leave as bait.</RHAH_Hole_NoFood>
+  <RHAH_Hole_Stale>This hole has already been dealt with.</RHAH_Hole_Stale>
   <RHAH_Quarantine_Hold>Hold them</RHAH_Quarantine_Hold>
   <RHAH_Quarantine_Release>Let them go</RHAH_Quarantine_Release>
   <RHAH_Quarantine_Defer>Leave it for later</RHAH_Quarantine_Defer>
-  <RHAH_Quarantine_Stale>This group can no longer take that choice.</RHAH_Quarantine_Stale>
+  <RHAH_Quarantine_Stale>Whether this group stays or goes has already been decided.</RHAH_Quarantine_Stale>
   <RHAH_Suiyin_N007Choice_Label>Visitors with plague</RHAH_Suiyin_N007Choice_Label>
-  <RHAH_Suiyin_N007Choice_Text>Some of the visitors have ratkin plague. Some are still on their feet; others already need care.\n\nYou can keep them under observation, let them go, or postpone the decision. The plague needs treatment, and those you release still need the strength to leave. Further decisions follow the available options and the visitors' current condition.</RHAH_Suiyin_N007Choice_Text>
+  <RHAH_Suiyin_N007Choice_Text>I hear some of the visitors have ratkin plague. Some of those visitors can still walk. Others already need someone to care for them.\n\nYou can keep the visitors here and watch them, let them go, or leave the choice for later. The plague has to be treated. Any visitor you send away still needs the strength to travel.</RHAH_Suiyin_N007Choice_Text>
   <RHAH_Suiyin_N007Quarantine_Label>The sick stay</RHAH_Suiyin_N007Quarantine_Label>
-  <RHAH_Suiyin_N007Quarantine_Text>The sick stay for now. They still need care. A sentence telling them not to leave is not care.</RHAH_Suiyin_N007Quarantine_Text>
+  <RHAH_Suiyin_N007Quarantine_Text>I hear the patients are staying in your colony for now. They will need care while they recover.</RHAH_Suiyin_N007Quarantine_Text>
   <RHAH_Suiyin_N007Release_Label>On the road again</RHAH_Suiyin_N007Release_Label>
-  <RHAH_Suiyin_N007Release_Text>You let them continue their journey. Some move at once; others must wait until they can manage it.</RHAH_Suiyin_N007Release_Text>
+  <RHAH_Suiyin_N007Release_Text>I hear you told those visitors to keep traveling. Some of them moved at once. Others still have to wait until their bodies can manage it.</RHAH_Suiyin_N007Release_Text>
   <RHAH_Suiyin_N007Defer_Label>Not yet</RHAH_Suiyin_N007Defer_Label>
-  <RHAH_Suiyin_N007Defer_Text>The sick stay as they are. The disease is still there, and the choice is still open.</RHAH_Suiyin_N007Defer_Text>
+  <RHAH_Suiyin_N007Defer_Text>I hear these patients remain as they were for now. They still have the plague, and their departure is still undecided.</RHAH_Suiyin_N007Defer_Text>
   <RHAH_Suiyin_N007Broken_Label>The watch failed</RHAH_Suiyin_N007Broken_Label>
-  <RHAH_Suiyin_N007Broken_Text>Someone still infected left the map. The rest are no longer held.\n\nWhere the ones who left went is not visible from here.</RHAH_Suiyin_N007Broken_Text>
+  <RHAH_Suiyin_N007Broken_Text>I hear some patients left your area before recovering, and quarantine ended for the rest.\n\nI have had no word of where they went afterward.</RHAH_Suiyin_N007Broken_Text>
   <RHAH_Suiyin_N007Recovered_Label>Fit to travel</RHAH_Suiyin_N007Recovered_Label>
-  <RHAH_Suiyin_N007Recovered_Text>The recovered visitors have left. This time, they do not have to carry the plague with them.\n\nLet's hope they only want a meal next time we meet.</RHAH_Suiyin_N007Recovered_Text>
+  <RHAH_Suiyin_N007Recovered_Text>I hear the people who recovered have left your colony. This time those people do not have to carry the plague on the road.\n\nI hope that the next time we meet, those people only come to ask for a meal.</RHAH_Suiyin_N007Recovered_Text>
   <RHAH_Suiyin_N007Stayed_Label>Staying</RHAH_Suiyin_N007Stayed_Label>
-  <RHAH_Suiyin_N007Stayed_Text>The recovered people stay in the colony. The sick beds are empty. They still need a place of their own.</RHAH_Suiyin_N007Stayed_Text>
+  <RHAH_Suiyin_N007Stayed_Text>I hear the people who recovered stayed in your colony. The sickbeds are empty, and those people still need a place of their own.</RHAH_Suiyin_N007Stayed_Text>
   <RHAH_Suiyin_N007AllDead_Label>None lived</RHAH_Suiyin_N007AllDead_Label>
-  <RHAH_Suiyin_N007AllDead_Text>None of these patients survived.</RHAH_Suiyin_N007AllDead_Text>
+  <RHAH_Suiyin_N007AllDead_Text>I hear not one of these patients survived.</RHAH_Suiyin_N007AllDead_Text>
   <RHAH_Suiyin_N007Missing_Label>Visitors missing</RHAH_Suiyin_N007Missing_Label>
-  <RHAH_Suiyin_N007Missing_Text>The visitors who had plague have gone missing. After a long wait, there is still no word of them.</RHAH_Suiyin_N007Missing_Text>
+  <RHAH_Suiyin_N007Missing_Text>I hear the visitors who had the plague are missing. I have waited this long, and I still have no word of those visitors.</RHAH_Suiyin_N007Missing_Text>
   <RHAH_Suiyin_N007Return_Label>A known face</RHAH_Suiyin_N007Return_Label>
-  <RHAH_Suiyin_N007Return_Text>There is a familiar face outside. The plague was gone when this visitor last left.\n\nThis time, the request is only for a meal. You can welcome the visitor or send them on their way.</RHAH_Suiyin_N007Return_Text>
+  <RHAH_Suiyin_N007Return_Text>I hear a familiar face has appeared outside your door again. That visitor had already recovered from the plague when they last left.\n\nThis time they only ask for a meal. You can welcome them or let them continue on their way.</RHAH_Suiyin_N007Return_Text>
   <RHAH_Suiyin_N008Arrive_Label>Someone asking the way</RHAH_Suiyin_N008Arrive_Label>
-  <RHAH_Suiyin_N008Arrive_Text>"We... want to trade for food."\n\n{0} tries to put the words in order.\n\n"We need food, and we need to know which roads are still open. Give me {1} simple meals, and I will tell you where an old store is. You can check my story first, if you want."\n\nThe visitor will wait {2} days.</RHAH_Suiyin_N008Arrive_Text>
+  <RHAH_Suiyin_N008Arrive_Text>Someone sent me word of a visitor asking the way at your colony. At first, all the visitor said was, "We... trade for food."\n\n{0} tried again: "We need food, and we need to know which roads are still open. Give me {1} simple meals, and I will give you the location of an old store. You can check my story first."\n\nI hear the visitor will wait {2} days.</RHAH_Suiyin_N008Arrive_Text>
   <RHAH_Suiyin_N008Trade_Label>The place is given</RHAH_Suiyin_N008Trade_Label>
-  <RHAH_Suiyin_N008Trade_Text>"Enough. Don't bring any more. I can't carry all that by myself."\n\n{0} gives you the promised location and checks the way home once more.</RHAH_Suiyin_N008Trade_Text>
+  <RHAH_Suiyin_N008Trade_Text>I received word that {0} gave you the promised location and checked the way back once more.\n\nThe visitor said, "Enough. Don't bring any more. I can't carry all that by myself."</RHAH_Suiyin_N008Trade_Text>
   <RHAH_Suiyin_N008Proof_Label>It matches</RHAH_Suiyin_N008Proof_Label>
-  <RHAH_Suiyin_N008Proof_Text>"That part checks out. I can't promise the rest, and you don't have to believe me yet."\n\n{0} kinds of events have been corroborated. The exchange is still available.</RHAH_Suiyin_N008Proof_Text>
+  <RHAH_Suiyin_N008Proof_Text>I hear the visitor checked the story and said, "That part matches. I cannot promise the rest, and you do not have to believe me yet."\n\nThe visitor has matched {0} kinds of visits to the story. You can still go ahead with the trade.</RHAH_Suiyin_N008Proof_Text>
   <RHAH_Suiyin_N008NoProof_Label>Wrong place</RHAH_Suiyin_N008NoProof_Label>
-  <RHAH_Suiyin_N008NoProof_Text>"I may have come to the wrong place."\n\nThe visitor leaves.</RHAH_Suiyin_N008NoProof_Text>
+  <RHAH_Suiyin_N008NoProof_Text>I hear the visitor said, "I may have found the wrong place," and left.</RHAH_Suiyin_N008NoProof_Text>
   <RHAH_Suiyin_N008Refuse_Label>Forget it, then</RHAH_Suiyin_N008Refuse_Label>
-  <RHAH_Suiyin_N008Refuse_Text>"Forget it, then. I still need to get out before dark."</RHAH_Suiyin_N008Refuse_Text>
+  <RHAH_Suiyin_N008Refuse_Text>I hear the visitor left these words: "Forget it, then. I still need to get out before dark."</RHAH_Suiyin_N008Refuse_Text>
   <RHAH_Suiyin_N008Drive_Label>Driven off</RHAH_Suiyin_N008Drive_Label>
-  <RHAH_Suiyin_N008Drive_Text>The visitor was driven off by force.</RHAH_Suiyin_N008Drive_Text>
+  <RHAH_Suiyin_N008Drive_Text>I hear you drove the visitor off by force.</RHAH_Suiyin_N008Drive_Text>
   <RHAH_Suiyin_N008Dead_Label>Dead</RHAH_Suiyin_N008Dead_Label>
-  <RHAH_Suiyin_N008Dead_Text>The visitor who asked the way has died, leaving no information behind.</RHAH_Suiyin_N008Dead_Text>
+  <RHAH_Suiyin_N008Dead_Text>I hear the visitor who came asking the way is dead. The lead to the location died with them.</RHAH_Suiyin_N008Dead_Text>
   <RHAH_Suiyin_N008Left_Label>Gone</RHAH_Suiyin_N008Left_Label>
-  <RHAH_Suiyin_N008Left_Text>The visitor who asked the way has left the area.</RHAH_Suiyin_N008Left_Text>
+  <RHAH_Suiyin_N008Left_Text>I hear the one who came asking the way has left your area.</RHAH_Suiyin_N008Left_Text>
   <RHAH_Suiyin_N008Missing_Label>No sign</RHAH_Suiyin_N008Missing_Label>
-  <RHAH_Suiyin_N008Missing_Text>The visitor who asked the way is missing.</RHAH_Suiyin_N008Missing_Text>
+  <RHAH_Suiyin_N008Missing_Text>I asked around. The one who came asking the way is missing.</RHAH_Suiyin_N008Missing_Text>
   <RHAH_Suiyin_N008Timeout_Label>The wait is over</RHAH_Suiyin_N008Timeout_Label>
-  <RHAH_Suiyin_N008Timeout_Text>The agreed time has passed without an exchange. The visitor leaves, dejected.</RHAH_Suiyin_N008Timeout_Text>
+  <RHAH_Suiyin_N008Timeout_Text>I hear the time they named has passed, and the trade was never made. The visitor left with head down.</RHAH_Suiyin_N008Timeout_Text>
   <RHAH_Envoy_Trade>Hand over {0} simple meals</RHAH_Envoy_Trade>
   <RHAH_Envoy_Proof>Check the story first</RHAH_Envoy_Proof>
   <RHAH_Envoy_Refuse>Refuse</RHAH_Envoy_Refuse>
   <RHAH_Envoy_Drive>Drive off (trust change: {0})</RHAH_Envoy_Drive>
-  <RHAH_Envoy_NoMeals>Not enough simple meals. The exchange requires {0}.</RHAH_Envoy_NoMeals>
-  <RHAH_Envoy_Stale>This matter can no longer be handled.</RHAH_Envoy_Stale>
+  <RHAH_Envoy_NoMeals>Not enough simple meals. This trade needs {0}.</RHAH_Envoy_NoMeals>
+  <RHAH_Envoy_Stale>These negotiations with the visitor have ended.</RHAH_Envoy_Stale>
   <RHAH_Suiyin_N009Arrive_Label>An old store</RHAH_Suiyin_N009Arrive_Label>
-  <RHAH_Suiyin_N009Arrive_Text>The grain you expected is not here. The box holds hauling lists, ration counts, and a stack of damp paper.\n\nA number on the top sheet was changed twice. The last correction is unsigned.\n\nThe site remains available for {0} days.</RHAH_Suiyin_N009Arrive_Text>
+  <RHAH_Suiyin_N009Arrive_Text>I hear you reached the old store, but found none of the grain you expected. The box holds hauling lists, ration counts, and a stack of damp paper.\n\nA number on the top page was changed twice. The last change has no signature.\n\nThis site remains for {0} days, giving you time to examine it.</RHAH_Suiyin_N009Arrive_Text>
   <RHAH_Suiyin_N009Take_Label>Records taken</RHAH_Suiyin_N009Take_Label>
-  <RHAH_Suiyin_N009Take_Text>Everything that can be carried has been packed. Some pages are stuck together; don't pull them apart yet.\n\nYou also brought back {0} silver.</RHAH_Suiyin_N009Take_Text>
+  <RHAH_Suiyin_N009Take_Text>I hear you packed all the records you could carry. Some pages are stuck together; take care when separating them.\n\nYou also found {0} silver. Remember to take it with you.</RHAH_Suiyin_N009Take_Text>
   <RHAH_Suiyin_N009Leave_Label>Left in place</RHAH_Suiyin_N009Leave_Label>
-  <RHAH_Suiyin_N009Leave_Text>You do not take the box. The place is noted. Whether the next group takes it is not decided here.</RHAH_Suiyin_N009Leave_Text>
+  <RHAH_Suiyin_N009Leave_Text>I hear the box stays where it is, and you have noted the place. Whether the next people take the box is not mine to decide.</RHAH_Suiyin_N009Leave_Text>
   <RHAH_Suiyin_N009Hand_Label>Given over</RHAH_Suiyin_N009Hand_Label>
-  <RHAH_Suiyin_N009Hand_Text>The records go to them. The silver is {0}.</RHAH_Suiyin_N009Hand_Text>
+  <RHAH_Suiyin_N009Hand_Text>I hear you gave the records to the visitors, who left {0} silver in return.</RHAH_Suiyin_N009Hand_Text>
   <RHAH_Suiyin_N009Share_Label>One copy each</RHAH_Suiyin_N009Share_Label>
-  <RHAH_Suiyin_N009Share_Text>You keep a copy. They keep the other. There is no silver now, and no promise that it comes back.</RHAH_Suiyin_N009Share_Text>
+  <RHAH_Suiyin_N009Share_Text>I hear you kept one copy and the visitors kept the other. This time you exchanged only records, with each side keeping its own copy.</RHAH_Suiyin_N009Share_Text>
   <RHAH_Suiyin_N009Destroy_Label>Records destroyed</RHAH_Suiyin_N009Destroy_Label>
-  <RHAH_Suiyin_N009Destroy_Text>The paper and the box are no longer usable. There is no second copy here to check the list against.</RHAH_Suiyin_N009Destroy_Text>
+  <RHAH_Suiyin_N009Destroy_Text>I hear the paper and wooden box were destroyed. What the list said can no longer be checked.</RHAH_Suiyin_N009Destroy_Text>
   <RHAH_Suiyin_N009Empty_Label>An empty store</RHAH_Suiyin_N009Empty_Label>
-  <RHAH_Suiyin_N009Empty_Text>The place is still there. What could be taken is already gone. The walk brought nothing back.</RHAH_Suiyin_N009Empty_Text>
+  <RHAH_Suiyin_N009Empty_Text>I hear you found the promised location, but everything worth taking was gone. It was a wasted trip.</RHAH_Suiyin_N009Empty_Text>
   <RHAH_Suiyin_Journal_Label>Record {0}</RHAH_Suiyin_Journal_Label>
-  <RHAH_Suiyin_Journal_Text>Another group has reached your colony. I will write down what I have heard so far, and keep asking about what happens next.</RHAH_Suiyin_Journal_Text>
-  <RHAH_Journal_1>The young ratkin are here, but whoever brought them has gone. Were they sent to the wrong place, or left here on purpose?</RHAH_Journal_1>
-  <RHAH_Journal_2>The visitor used the wrong name. The name can be corrected. Staying is separate.</RHAH_Journal_2>
-  <RHAH_Journal_3>The mothers are in labor and still on the road. They need somewhere to rest, and food for the children about to be born.</RHAH_Journal_3>
-  <RHAH_Journal_4>This group only intends to pass through. They will stop a while, then keep going.</RHAH_Journal_4>
-  <RHAH_Journal_5>A grain sack is short. We do not know whether the people who took it will travel far or wait for another chance.</RHAH_Journal_5>
-  <RHAH_Journal_6>There were many people at the gate. The fates that can be checked are written down.</RHAH_Journal_6>
-  <RHAH_Journal_7>Someone is offering information for supplies. A place marked on the map still needs a visit before we can know whether the story is true.</RHAH_Journal_7>
-  <RHAH_Journal_8>A caravan has arrived with goods. They want to make their sales, then continue on their own road.</RHAH_Journal_8>
-  <RHAH_Journal_9>The besiegers came with hostile intent. We have to defend this place first.</RHAH_Journal_9>
-  <RHAH_Journal_10>After this group passed, the food on the ground and the living both changed.</RHAH_Journal_10>
-  <RHAH_Journal_11>The visitors arrived sick. Calling it revenge does not name who sent them.</RHAH_Journal_11>
-  <RHAH_Journal_12>The people on the road wanted the caravan's supplies. Paying or fighting is the caravan's own cost.</RHAH_Journal_12>
-  <RHAH_Journal_13>They came alone. Nobody traveling with them can answer for them.</RHAH_Journal_13>
-  <RHAH_Journal_14>They have come asking for aid. What you can give depends on your own stores. Let's hope it lasts until the next place with food.</RHAH_Journal_14>
+  <RHAH_Suiyin_Journal_Text>I hear another group has reached your colony. I will write down what I have heard. I still have to ask after what happens next.</RHAH_Suiyin_Journal_Text>
+  <RHAH_Journal_1>I hear the young ratkin reached your colony, but the people who brought them did not stay. Was it the wrong place, or did they leave the children there on purpose? I still need to ask.</RHAH_Journal_1>
+  <RHAH_Journal_2>I hear the visitor used the wrong name. The name can be corrected. Whether that visitor stays is another matter.</RHAH_Journal_2>
+  <RHAH_Journal_3>I hear the mothers are close to birth and still on the road. Those mothers need a place to rest, and a mouthful of food for the children about to be born.</RHAH_Journal_3>
+  <RHAH_Journal_4>I hear this group is only passing through your colony. After a brief stop, they still have to travel on.</RHAH_Journal_4>
+  <RHAH_Journal_5>I hear grain has gone missing from your stores. Have those who took it traveled on, or are they waiting for another chance? I have had no word yet.</RHAH_Journal_5>
+  <RHAH_Journal_6>I hear many people came to your gate. I will note the destinations I can confirm, then ask after the others.</RHAH_Journal_6>
+  <RHAH_Journal_7>I hear a visitor is trading information for supplies. Someone still has to walk to the place marked on the map before I know whether that visitor told the truth.</RHAH_Journal_7>
+  <RHAH_Journal_8>I hear a caravan has come with goods. Those traders want the sales made, then they will take their own road.</RHAH_Journal_8>
+  <RHAH_Journal_9>I hear the people closing in are hostile. You need to defend the colony first.</RHAH_Journal_9>
+  <RHAH_Journal_10>I received news of this group of visitors. I still need to ask how much food you had left after their departure, and who stayed behind.</RHAH_Journal_10>
+  <RHAH_Journal_11>I hear the visitors came sick. One messenger calls it revenge, but that messenger cannot name who sent them.</RHAH_Journal_11>
+  <RHAH_Journal_12>I hear the people blocking the road want the caravan's supplies. Whether the caravan hands them over or fights, it has to bear the cost.</RHAH_Journal_12>
+  <RHAH_Journal_13>I hear those people came on their own, with no companions to speak for them.</RHAH_Journal_13>
+  <RHAH_Journal_14>I hear those people have come asking for help. How much you can give still depends on your own stores. I hope that food lasts until the next place where they can eat.</RHAH_Journal_14>
   <RHAH_Suiyin_Aside_1_Label>Another child</RHAH_Suiyin_Aside_1_Label>
-  <RHAH_Suiyin_Aside_1_Text>Someone is talking about a child's place again. The last time does not decide this one.</RHAH_Suiyin_Aside_1_Text>
+  <RHAH_Suiyin_Aside_1_Text>I hear people discussing a child's future again. You will need to consider this situation afresh.</RHAH_Suiyin_Aside_1_Text>
   <RHAH_Suiyin_Aside_2_Label>Another place</RHAH_Suiyin_Aside_2_Label>
-  <RHAH_Suiyin_Aside_2_Text>The grain trail has another place. Do not treat them as the same until someone walks there.</RHAH_Suiyin_Aside_2_Text>
+  <RHAH_Suiyin_Aside_2_Text>Word reached me of another mark along that grain route. You can follow the new lead and see what is there.</RHAH_Suiyin_Aside_2_Text>
   <RHAH_Suiyin_Aside_3_Label>News again</RHAH_Suiyin_Aside_3_Label>
-  <RHAH_Suiyin_Aside_3_Text>Someone can travel again, so news can arrive again. Whether this visitor heard about the quarantine still has to be asked.</RHAH_Suiyin_Aside_3_Text>
+  <RHAH_Suiyin_Aside_3_Text>Word reached me that the visitor can travel again. I would like to ask them to find out how the patients fared after that quarantine.</RHAH_Suiyin_Aside_3_Text>
   <RHAH_Suiyin_Aside_4_Label>The place he named</RHAH_Suiyin_Aside_4_Label>
-  <RHAH_Suiyin_Aside_4_Text>The place he named is there. This time, the thing he promised is actually in it.</RHAH_Suiyin_Aside_4_Text>
+  <RHAH_Suiyin_Aside_4_Text>Word reached me that you found the place the visitor described, along with what they promised to give you.</RHAH_Suiyin_Aside_4_Text>
   <RHAH_Menu_Narrative_Nodes>Letters</RHAH_Menu_Narrative_Nodes>
-  <RHAH_Menu_Narrative_Node>Letter switch</RHAH_Menu_Narrative_Node>
+  <RHAH_Menu_Narrative_Node>Send this letter</RHAH_Menu_Narrative_Node>
   <RHAH_Menu_Narrative_Thresholds>Thresholds</RHAH_Menu_Narrative_Thresholds>
   <RHAH_Menu_Narrative_Progress>Event kinds before the record letter</RHAH_Menu_Narrative_Progress>
   <RHAH_Menu_Narrative_Reward>Event kinds before the silver letter</RHAH_Menu_Narrative_Reward>
@@ -165,7 +165,7 @@
   <RHAH_Menu_Narrative_Journals>Records</RHAH_Menu_Narrative_Journals>
   <RHAH_Menu_Narrative_JournalOpen>Open record {0}</RHAH_Menu_Narrative_JournalOpen>
   <RHAH_Menu_Narrative_Aside>Asides</RHAH_Menu_Narrative_Aside>
-  <RHAH_Menu_Narrative_TrustClosed>Trust is too low for asides. Result letters still arrive.</RHAH_Menu_Narrative_TrustClosed>
+  <RHAH_Menu_Narrative_TrustClosed>Trust is too low, so Suiyin has stopped sending asides. She still sends letters when events reach an outcome.</RHAH_Menu_Narrative_TrustClosed>
   <RHAH_Record_Take>Take</RHAH_Record_Take>
   <RHAH_Record_Leave>Leave</RHAH_Record_Leave>
   <RHAH_Record_Hand>Hand over</RHAH_Record_Hand>
@@ -175,5 +175,5 @@
   <RHAH_Revisit_Pay>Pay {0} silver</RHAH_Revisit_Pay>
   <RHAH_Revisit_Kill>Kill them</RHAH_Revisit_Kill>
   <RHAH_Revisit_NoSilver>The caravan has less than {0} silver.</RHAH_Revisit_NoSilver>
-  <RHAH_Revisit_Stale>This matter can no longer be handled.</RHAH_Revisit_Stale>
+  <RHAH_Revisit_Stale>This meeting with the old acquaintance has ended.</RHAH_Revisit_Stale>
 </LanguageData>
