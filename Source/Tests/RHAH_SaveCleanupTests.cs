@@ -91,8 +91,11 @@ namespace HungerAndHavoc.Tests
         {
             XDocument document = XDocument.Parse(@"<savegame><game>
 <world><worldObjects><worldObjects>
-<li Class=""RimWorld.Planet.CaravansBattlefield""><def>AttackedNonPlayerCaravan</def><ID>91</ID></li>
+<li Class=""HungerAndHavoc.Incidents.WorldObject_RHAH_Interception""><def>RHAH_Interception</def><ID>91</ID>
+<displayId></displayId><spawnBatchId>0</spawnBatchId><settled>False</settled></li>
 <li Class=""HungerAndHavoc.Incidents.WorldObject_RHAH_Approach""><def>RHAH_Approach</def><ID>92</ID></li>
+<li Class=""HungerAndHavoc.Incidents.WorldObject_RHAH_Interception""><def>RHAH_Interception</def><ID>93</ID></li>
+<li Class=""RimWorld.Planet.CaravansBattlefield""><def>AttackedNonPlayerCaravan</def><ID>94</ID></li>
 </worldObjects></worldObjects></world>
 <maps><li><mapInfo><parent>WorldObject_91</parent></mapInfo><generatorDef>Encounter</generatorDef>
 <retainedCaravanData><name>Homeward</name><outfits><li>Outfit_2</li></outfits></retainedCaravanData>
@@ -102,7 +105,7 @@ namespace HungerAndHavoc.Tests
 <li Class=""Verse.Pawn""><def>Ratkin</def><id>101</id><kindDef>RHAH_PawnKind_Ratkin</kindDef>
 <healthTracker><hediffSet><hediffs><li><def>RHAH_HungerMark</def></li></hediffs></hediffSet></healthTracker></li>
 </things>
-<lordManager><lords><li><loadID>3</loadID><lordJob Class=""HungerAndHavoc.Pawn.LordJob_RHAH_Visitor"" /></li></lords></lordManager>
+<lordManager><lords><li><loadID>3</loadID><lordJob Class=""HungerAndHavoc.Pawn.LordJob_RHAH_Intercept""><exitCell>(-1, -1, -1)</exitCell></lordJob></li></lords></lordManager>
 </li></maps></game></savegame>");
             XElement map = document.Descendants("maps").Single().Element("li");
             string colonist = Pawn(document, "100").ToString();
@@ -110,14 +113,22 @@ namespace HungerAndHavoc.Tests
 
             new RHAH_SaveCleanup(Plan()).Clean(document);
 
-            Assert.Equal("RimWorld.Planet.CaravansBattlefield", (string)WorldObject(document, "91").Attribute("Class"));
-            Assert.Equal("AttackedNonPlayerCaravan", (string)WorldObject(document, "91").Element("def"));
+            XElement parent = WorldObject(document, "91");
+            Assert.Equal("RimWorld.Planet.Site", (string)parent.Attribute("Class"));
+            Assert.Equal("Site", (string)parent.Element("def"));
+            Assert.Equal("91", (string)parent.Element("ID"));
+            Assert.Null(parent.Element("displayId"));
+            Assert.Null(parent.Element("spawnBatchId"));
+            Assert.Null(parent.Element("settled"));
             Assert.Equal("WorldObject_91", (string)map.Element("mapInfo").Element("parent"));
             Assert.Equal("Encounter", (string)map.Element("generatorDef"));
             Assert.Equal(colonist, Pawn(document, "100").ToString());
             Assert.Equal(retained, map.Element("retainedCaravanData").ToString());
             Assert.Equal("RatkinColonist", (string)Pawn(document, "101").Element("kindDef"));
             Assert.Null(FindBareId(document, "92"));
+            Assert.Null(FindBareId(document, "93"));
+            Assert.Equal("RimWorld.Planet.CaravansBattlefield", (string)WorldObject(document, "94").Attribute("Class"));
+            Assert.Equal("AttackedNonPlayerCaravan", (string)WorldObject(document, "94").Element("def"));
             Assert.Empty(map.Element("components").Elements());
             Assert.Empty(map.Element("lordManager").Element("lords").Elements());
         }
@@ -183,7 +194,7 @@ namespace HungerAndHavoc.Tests
                 "RHAH_PawnKind_Ratkin", "RHAH_Faction_Neutral", "RHAH_History_A001", "RHAH_History_Y001",
                 "RHAH_Xenotype_Ratkin", "RHAH_Suiyin", "RHAH_HungerMark", "RHAH_Trait_HardyLabor",
                 "RHAH_Gene_ThinRations", "RHAH_GuanyinTu", "RHAH_Beg", "RHAH_RefugeeMassacre",
-                "RHAH_RefugeeCamp", "RHAH_RecordSite", "RHAH_Approach", "RHAH_ChoiceRequest"
+                "RHAH_RefugeeCamp", "RHAH_RecordSite", "RHAH_Approach", "RHAH_Interception", "RHAH_ChoiceRequest"
             };
             for (int i = 0; i < defs.Length; i++)
             {
@@ -195,10 +206,12 @@ namespace HungerAndHavoc.Tests
             plan.OwnedClasses.Add("HungerAndHavoc.Narrative.NarrativeState");
             plan.OwnedClasses.Add("HungerAndHavoc.Core.MapComponent_RHAH_Map");
             plan.OwnedClasses.Add("HungerAndHavoc.Pawn.LordJob_RHAH_Visitor");
+            plan.OwnedClasses.Add("HungerAndHavoc.Pawn.LordJob_RHAH_Intercept");
             plan.OwnedClasses.Add("HungerAndHavoc.Pawn.JobDriver_RHAH_Beg");
             plan.OwnedClasses.Add("HungerAndHavoc.Pawn.Area_RHAH_Relief");
             plan.OwnedClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp");
             plan.OwnedClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_Approach");
+            plan.OwnedClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_Interception");
             plan.OwnedClasses.Add("HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Request");
             plan.Replacements.Add("RHAH_PawnKind_Ratkin", "RatkinColonist");
             plan.Replacements.Add("RHAH_Faction_Neutral", "Ancients");
@@ -209,7 +222,9 @@ namespace HungerAndHavoc.Tests
             plan.GeneDefs.Add("RHAH_Gene_ThinRations");
             plan.CampObjectDefs.Add("RHAH_RefugeeCamp");
             plan.CampObjectDefs.Add("RHAH_RecordSite");
+            plan.CampObjectDefs.Add("RHAH_Interception");
             plan.CampObjectClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp");
+            plan.CampObjectClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_Interception");
             plan.MapGeneratorReplacements.Add("RHAH_RefugeeCamp", "Encounter");
             plan.MapGeneratorReplacements.Add("RHAH_RecordSite", "Encounter");
             return plan;

@@ -13,4 +13,21 @@
     <expandMore>true</expandMore>
     <validLaunchTarget>false</validLaunchTarget>
   </WorldObjectDef>
+  <WorldObjectDef ParentName="StaticWorldObjectBase">
+    <defName>RHAH_Interception</defName>
+    <label>拦截地点</label>
+    <description>鼠族在这里和我们的远行队碰上了。这处地点是临时的，不会再引来别的袭击。</description>
+    <worldObjectClass>HungerAndHavoc.Incidents.WorldObject_RHAH_Interception</worldObjectClass>
+    <mapGenerator>Encounter</mapGenerator>
+    <texture>World/WorldObjects/Caravan</texture>
+    <expandingIcon>true</expandingIcon>
+    <expandingIconTexture>World/WorldObjects/Expanding/Caravan</expandingIconTexture>
+    <expandingIconPriority>50</expandingIconPriority>
+    <comps>
+      <li Class="WorldObjectCompProperties_FormCaravan" />
+    </comps>
+    <IncidentTargetTags>
+      <li>Map_Misc</li>
+    </IncidentTargetTags>
+  </WorldObjectDef>
 </Defs>

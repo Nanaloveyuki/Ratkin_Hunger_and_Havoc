@@ -114,15 +114,21 @@ namespace HungerAndHavoc.Incidents
 
         bool CanGenerateInterceptionMap()
         {
-            if (Find.WorldObjects == null || Find.WorldGrid == null || Find.WorldObjects.AnyMapParentAt(Tile) ||
+            if (Find.WorldObjects == null || Find.WorldGrid == null ||
                 !Find.WorldGrid[Tile].PrimaryBiome.implemented)
+            {
+                return false;
+            }
+
+            MapParent existing = Find.WorldObjects.MapParentAt(Tile);
+            if (existing != null && (!(existing is WorldObject_RHAH_Interception interception) || !interception.CanReuse))
             {
                 return false;
             }
 
             foreach (WorldObject candidate in Find.WorldObjects.ObjectsAt(Tile))
             {
-                if (candidate != this && candidate.def != null && !candidate.def.allowCaravanIncidentsWhichGenerateMap)
+                if (candidate != this && candidate != existing && candidate.def != null && !candidate.def.allowCaravanIncidentsWhichGenerateMap)
                 {
                     return false;
                 }
@@ -145,10 +151,11 @@ namespace HungerAndHavoc.Incidents
         void EnterInterceptionMap(RimWorld.Planet.Caravan caravan)
         {
             Map map = null;
-            bool committed = false;
+            bool created = Current.Game.FindMap(Tile) == null;
+            bool completionQueued = false;
             try
             {
-                // 地图生成和远行队进入在同一个长事件内完成
+                // 生成器的绘制初始化排在长事件结束后
                 arriving = false;
                 if (!CanIntercept(caravan) || !CanGenerateInterceptionMap())
                 {
@@ -156,16 +163,41 @@ namespace HungerAndHavoc.Incidents
                 }
 
                 arriving = true;
-                RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId(displayId);
-                IncidentDef incident = entry == null ? null : DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
-                if (incident?.Worker == null)
+                WorldObjectDef parentDef = DefDatabase<WorldObjectDef>.GetNamedSilentFail("RHAH_Interception");
+                if (parentDef == null)
                 {
                     return;
                 }
 
                 map = CaravanIncidentUtility.GetOrGenerateMapForIncident(caravan,
-                    new IntVec3(100, 1, 100), WorldObjectDefOf.AttackedNonPlayerCaravan);
-                if (!incident.Worker.TryExecute(new IncidentParms { target = map, points = points, forced = true }))
+                    new IntVec3(100, 1, 100), parentDef);
+                if (map == null)
+                {
+                    return;
+                }
+
+                LongEventHandler.ExecuteWhenFinished(() => CompleteInterception(caravan, map, created));
+                completionQueued = true;
+            }
+            finally
+            {
+                if (!completionQueued)
+                {
+                    arriving = false;
+                    if (created && map != null)
+                    {
+                        LongEventHandler.ExecuteWhenFinished(() => CleanupInterceptionMap(map));
+                    }
+                }
+            }
+        }
+
+        void CompleteInterception(RimWorld.Planet.Caravan caravan, Map map, bool created)
+        {
+            bool committed = false;
+            try
+            {
+                if (!RHAH_Interception.TrySpawn(map, displayId, points))
                 {
                     Messages.Message("RHAH_Approach_InterceptFailed".Translate(), MessageTypeDefOf.RejectInput, false);
                     return;
@@ -182,18 +214,23 @@ namespace HungerAndHavoc.Incidents
             finally
             {
                 arriving = false;
-                if (!committed && map != null)
+                if (!committed && map != null && (created || map.mapPawns.AnyPawnBlockingMapRemoval))
                 {
-                    if (map.mapPawns.AnyPawnBlockingMapRemoval)
-                    {
-                        // 原版进入中途异常时保留已经放下的玩家成员
-                        Destroy();
-                    }
-                    else
-                    {
-                        map.Parent.Destroy();
-                    }
+                    CleanupInterceptionMap(map);
                 }
+            }
+        }
+
+        void CleanupInterceptionMap(Map map)
+        {
+            if (map.mapPawns.AnyPawnBlockingMapRemoval)
+            {
+                // 原版进入中途异常时保留已经放下的玩家成员
+                Destroy();
+            }
+            else
+            {
+                map.Parent.Destroy();
             }
         }
 

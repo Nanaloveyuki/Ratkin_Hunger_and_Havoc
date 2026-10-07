@@ -52,7 +52,7 @@ namespace HungerAndHavoc.Pawn
                 }
 
                 Verse.Pawn child = FindLinked(pawn, lord, childId);
-                if (!RHAH_FamilyRules.StillCarried(child != null, child != null && child.CarriedBy == pawn))
+                if (!RHAH_FamilyRules.StillCarried(pawn, child))
                 {
                     continue;
                 }
@@ -95,7 +95,7 @@ namespace HungerAndHavoc.Pawn
             drop.initAction = () =>
             {
                 Verse.Pawn child = job.GetTarget(TargetIndex.A).Pawn;
-                if (child == null || child.CarriedBy != pawn)
+                if (!RHAH_FamilyRules.StillCarried(pawn, child))
                 {
                     return;
                 }

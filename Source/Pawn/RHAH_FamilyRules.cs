@@ -71,9 +71,10 @@ namespace HungerAndHavoc.Pawn
         internal const int WorkTicks = 150;
         internal const string TailPartDef = "RK_BodyPart_Tail";
 
-        internal static bool StillCarried(bool childExists, bool carriedByMother)
+        internal static bool StillCarried(Verse.Pawn mother, Verse.Pawn child)
         {
-            return childExists && carriedByMother;
+            return mother != null && child != null && mother.carryTracker?.CarriedThing == child &&
+                child.CarriedBy == mother;
         }
 
         internal static bool CanGiveFood(bool motherHasFood, bool childCanEat)

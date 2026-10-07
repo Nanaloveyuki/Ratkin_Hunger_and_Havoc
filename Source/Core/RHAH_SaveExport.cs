@@ -126,7 +126,9 @@ namespace HungerAndHavoc.Core
 
             plan.CampObjectDefs.Add("RHAH_RefugeeCamp");
             plan.CampObjectDefs.Add("RHAH_RecordSite");
+            plan.CampObjectDefs.Add("RHAH_Interception");
             plan.CampObjectClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp");
+            plan.CampObjectClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_Interception");
             WorldObjectDef site = RequireDef<WorldObjectDef>("Site");
             if (content.AllDefs.Contains(site))
             {

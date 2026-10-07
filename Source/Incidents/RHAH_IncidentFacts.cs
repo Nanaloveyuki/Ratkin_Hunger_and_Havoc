@@ -33,7 +33,7 @@ namespace HungerAndHavoc.Incidents
                     Map = context.Map,
                     PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
                     Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(context.Attitude),
-                    SpawnCell = context.DropPod ? IntVec3.Invalid : context.SpawnCell,
+                    SpawnCell = context.SpawnCell,
                     Gender = RHAH_IncidentRoster.GenderAt(context.DisplayId, i),
                     BiologicalAge = GenerationAge(role, context.DisplayId),
                     StartLabor = RHAH_IncidentRoster.StartsLabor(context.DisplayId),
@@ -71,6 +71,15 @@ namespace HungerAndHavoc.Incidents
             }
             if (context.DropPod)
             {
+                // 先在地图建立身份和 Lord 再装入原版空投舱
+                for (int i = 0; i < arrived.Count; i++)
+                {
+                    if (arrived[i].Spawned)
+                    {
+                        arrived[i].DeSpawn();
+                    }
+                }
+
                 Pawn.RHAH_VisitorRules.DropPods(arrived, context.Map, context.SpawnCell, arrived[0].Faction);
             }
 

@@ -55,6 +55,11 @@ namespace HungerAndHavoc.Pawn
 
             RHAH_Api.SetLifecycle(__instance, RHAH_Lifecycle.Dead);
             RHAH_VisitorGroup.NotifyDead(__instance);
+            if (HungerAndHavoc.Incidents.RHAH_Interception.IsInterception(comp.State.spawnBatchId))
+            {
+                return;
+            }
+
             RHAH_SuiyinTrust.Note(1, RHAH_SuiyinTrust.Value(RHAH_SuiyinTrust.Kill, RHAH_Mod.Settings == null ? RHAH_SuiyinTrust.Kill : RHAH_Mod.Settings.trustCaptive));
         }
     }
@@ -85,6 +90,11 @@ namespace HungerAndHavoc.Pawn
             {
                 return;
             }
+            if (HungerAndHavoc.Incidents.RHAH_Interception.IsInterception(comp.State.spawnBatchId))
+            {
+                return;
+            }
+
 
             if (HungerAndHavoc.Incidents.RHAH_ChoiceRuntime.TryJoinAlly(__instance, __state, false))
             {

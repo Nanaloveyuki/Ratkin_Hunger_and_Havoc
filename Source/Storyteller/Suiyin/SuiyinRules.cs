@@ -1537,6 +1537,11 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
             if (record.Failed)
             {
+                if (record.Id == 0)
+                {
+                    return false;
+                }
+
                 record.Closed = true;
                 record.Counted = false;
                 return false;
@@ -1606,6 +1611,55 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             bool aid = !record.Driven && pending == 0 && left + settled == living && (record.Delivered || settled == living);
             record.Counted = aid;
             return aid;
+        }
+
+        internal bool OpenInterception(int mapId, int batchId, int tick, IList<int> loadIds)
+        {
+            if (batchId <= 0 || FindJournal(batchId) != null)
+            {
+                return false;
+            }
+
+            List<int> ids = RHAH_NarrativePace.MemberIds(loadIds, loadIds == null ? 0 : loadIds.Count);
+            if (ids.Count == 0)
+            {
+                return false;
+            }
+
+            SuiyinJournalCase record = new SuiyinJournalCase
+            {
+                Id = 0,
+                MapId = mapId,
+                BatchId = batchId,
+                StartedTick = tick,
+                Failed = true,
+                Counted = false,
+                Closed = false
+            };
+            for (int i = 0; i < ids.Count; i++)
+            {
+                record.People.Add(new SuiyinMember { LoadId = ids[i], Presence = SuiyinPresence.Left });
+            }
+
+            Journals.Add(record);
+            return true;
+        }
+
+        internal bool FailInterception(int batchId)
+        {
+            SuiyinJournalCase record = FindJournal(batchId);
+            if (record == null || record.Closed || record.Counted || record.Id != 0 || !record.Failed)
+            {
+                return false;
+            }
+
+            record.Closed = true;
+            record.Counted = false;
+            record.Delivered = false;
+            record.Driven = false;
+            record.Empty = false;
+            Trust = SuiyinNodes.ClampTrust(Trust - 2);
+            return true;
         }
 
         internal bool MarkJournalFailed(int batchId)

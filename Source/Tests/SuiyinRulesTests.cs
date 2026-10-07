@@ -390,6 +390,61 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void InterceptionFailsAPromisedJournalOnce()
+        {
+            SuiyinBook book = new SuiyinBook();
+            book.Trust = 10;
+            Assert.True(book.OpenJournal(14, 1, 9, 0, new[] { 41, 42 }, true));
+            book.Journals[0].People[0].Presence = SuiyinPresence.Left;
+            book.Journals[0].People[1].Presence = SuiyinPresence.Left;
+            Assert.False(book.OpenInterception(7, 9, 100, new[] { 41, 42 }));
+            Assert.False(book.FailInterception(9));
+            Assert.Equal(10, book.Trust);
+            Assert.Equal(14, book.Journals[0].Id);
+            Assert.False(book.Journals[0].Failed);
+            Assert.False(book.Journals[0].Closed);
+            Assert.True(book.CloseJournal(book.Journals[0], 2000));
+            Assert.True(book.Journals[0].Counted);
+            Assert.Equal(10, book.Trust);
+
+            SuiyinBook intercepted = new SuiyinBook();
+            intercepted.Trust = 10;
+            Assert.True(intercepted.OpenInterception(7, 21, 100, new[] { 51, 52 }));
+            Assert.Equal(0, intercepted.Journals[0].Id);
+            Assert.True(intercepted.Journals[0].Failed);
+            Assert.False(intercepted.Journals[0].Closed);
+            Assert.False(intercepted.Journals[0].Counted);
+            Assert.Equal(SuiyinPresence.Left, intercepted.Journals[0].People[0].Presence);
+            Assert.Equal(10, intercepted.Trust);
+            Assert.Empty(intercepted.Pending);
+            Assert.Empty(intercepted.JournalNoted);
+            Assert.False(intercepted.CloseJournal(intercepted.Journals[0], 2000));
+            Assert.False(intercepted.Journals[0].Closed);
+            Assert.False(intercepted.Journals[0].Counted);
+            Assert.Equal(10, intercepted.Trust);
+            Assert.True(intercepted.FailInterception(21));
+            Assert.Equal(8, intercepted.Trust);
+            Assert.True(intercepted.Journals[0].Closed);
+            Assert.False(intercepted.Journals[0].Counted);
+            Assert.False(intercepted.FailInterception(21));
+            Assert.Equal(8, intercepted.Trust);
+            Assert.False(intercepted.OpenInterception(7, 21, 300, new[] { 51 }));
+            Assert.False(intercepted.OpenInterception(7, 0, 300, new[] { 51 }));
+            Assert.False(intercepted.OpenInterception(7, 22, 300, new int[0]));
+            Assert.Single(intercepted.Journals);
+
+            SuiyinBook missing = new SuiyinBook();
+            missing.Trust = 10;
+            Assert.False(missing.FailInterception(0));
+            Assert.False(missing.FailInterception(9));
+            Assert.Equal(10, missing.Trust);
+            Assert.Empty(missing.Journals);
+            Assert.Empty(missing.Pending);
+        }
+
+
+
+        [Fact]
         public void QueuedLettersUseExistingKeys()
         {
             Assert.Equal("RHAH_Suiyin_N001", SuiyinBook.LetterKey(SuiyinLetter.N001, 0));

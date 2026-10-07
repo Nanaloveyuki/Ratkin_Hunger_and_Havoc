@@ -290,6 +290,9 @@ namespace HungerAndHavoc.Core
             Remove(site.Element("parts"));
             Remove(site.Element("cleared"));
             Remove(site.Element("nextCheck"));
+            Remove(site.Element("displayId"));
+            Remove(site.Element("spawnBatchId"));
+            Remove(site.Element("settled"));
             RetargetGenerator(site);
             ReplacedDefs++;
         }

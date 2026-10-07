@@ -10,6 +10,8 @@
 
 `ReleaseToColony` 把访客变成殖民地相关 pawn，标记仍在。
 
+拦截批次由 `LordJob_RHAH_Intercept` 控制穿图，正常访客 JobGiver 与批次态度反应不接管它。死亡仍写 Dead，捕获与入籍仍走 `ReleaseToColony` 和原闸门；拦截死亡、捕获和离图的逐人信任由整批终态减二替代。来源批次以 `journalCases` 的 `id=0` 标记识别，离开临时地图后仍可识别，不改变 API 或 Comp 键。
+
 角色 `RatkinYoung` 表示幼年鼠族。代码和 API 不使用含义不清的 `Egg` 或 `RatkinEgg`。
 
 存档字段（Comp，新键使用 camelCase；正式发布后存档键冻结）：
@@ -78,6 +80,7 @@ RHAH_PawnBehaviors.Register(new MyPolicy());
 赈灾取食搜整张地图，不再用 40 格曼哈顿距离截断。食物和可收获植物清单按地图缓存到当前 tick，涂改赈灾区或改取食设置时清掉。寻路仍只验分数最高的 3 个。有幼童模组且操作阶段至少 1 时，倒地不阻止取食，进食本身仍由幼童模组放慢。没有幼童模组时，倒地的来客不自己取食。
 
 家庭 Job 走同一条寻食调度和囚犯 `Humanlike_PostDuty`。母亲离场且 `familyDropEnabled` 开启时，先放下仍抱着、并登记在 `childPawnLoadIds` 里的孩子，放下成功才写入 `droppedChildLoadIds`。`motherFeedEnabled` 开启时，母亲把背包里一份可吃的食物交给食物低于 30% 的已登记孩子，放不进背包就丢在孩子脚下。本模组来源的饥饿囚犯在 `prisonerScavengeEnabled` 开启时舔掉 12 格内的一层污物，营养 +0.15，并获得 `RHAH_Thought_ScavengedFilth`。`tailBiteEnabled` 默认关闭；开启后，允许 `TailBite` 的饥饿囚犯咬掉 12 格内睡着、不满 3 岁、仍有 `RK_BodyPart_Tail` 的囚犯的天然鼠尾。睡着时尾巴变为新鲜缺失，咬的人营养 +0.35。对方中途醒来则只造成 4 点咬伤，不获得这两份心情。找不到污物或尾巴时，沿用一小时寻食冷却。
+`RHAH_DropChild` 关闭原版开工前自动放下（`dropThingBeforeJob=false`），由放下 toil 完成落地、记账和移出 Lord。派发与执行都同时核对孩子的 `CarriedBy` 和母亲真实的 `carryTracker.CarriedThing`；只有 holder 引用、但容器为空或装着另一对象时跳过，不写弃养记录。
 
 招募、短工和长工仍保留来源标记，但停留期间不发乞讨、偷窃、啃咬、赈灾取食、等待和本模组离场。期限结束且不再倒地后，拒绝工作、休息、娱乐和任何非玩家强制任务，只保留被动近战反击、逃跑和进食。倒地期间计时暂停，这些限制先不生效。`shortStayLockApparel` 默认开启，只在短工开始时锁定当时穿的衣物，引用写入 `shortStayLockedApparel`。短工结束，或永久身份转换时，只解开这些引用，不调用 `UnlockAll`。关闭后新开始的短工不锁，已经开始的短工不追溯。长工和招募不锁。
 

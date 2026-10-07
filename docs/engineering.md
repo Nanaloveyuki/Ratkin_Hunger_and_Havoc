@@ -159,6 +159,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Core.RHAH_DefOf` | `[DefOf]` 静态字段 | `HungerAndHavoc.dll` | `DefOfHelper` 反射绑定公开静态 Def 字段 |
 | `HungerAndHavoc.Core.HarmonyBootstrap` | `[StaticConstructorOnStartup]` | `HungerAndHavoc.dll` | Verse 启动扫描公开静态构造入口 |
 | `HungerAndHavoc.Pawn.LordJob_RHAH_Visitor` | Lord `lordJob` / `LordMaker` | `HungerAndHavoc.dll` | Verse 按类型创建并存档 Lord |
+| `HungerAndHavoc.Pawn.LordJob_RHAH_Intercept` | Lord `lordJob` / `LordMaker` | `HungerAndHavoc.dll` | Verse 按类型创建并存档拦截 Lord。`exitCell` 用原版 `IntVec3` 键，不属于 API |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_Beg` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.ThinkNode_ConditionalRHAH_Visitor` | ThinkTree / Duty XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 ThinkNode |
@@ -202,6 +203,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Incidents.RHAH_PredatorRecord` | `predators` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.EventMgr.RHAH_EventChainRecord` | `eventChains` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.Incidents.WorldObject_RHAH_Approach` | WorldObjectDef `worldObjectClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建世界物体；类型名写入 `.rws`。没有 Pawn，不属于 API |
+| `HungerAndHavoc.Incidents.WorldObject_RHAH_Interception` | WorldObjectDef `RHAH_Interception.worldObjectClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建临时拦截地图父物体；类型名写入 `.rws`。字段 `displayId`、`spawnBatchId`、`settled` 由父物体保存，不属于 API |
 | `HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox` | ThingDef `thingClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建建筑；类型名写入地图 `.rws`。不属于 API |
 | `HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety` | HediffDef `hediffClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名跨程序集创建 Hediff |
 | `HungerAndHavoc.Pawn.CompProperties_RHAH_Clay` | ThingDef XML `Class=` | `HungerAndHavoc.dll` | Verse 按 XML `Class` 反序列化 CompProperties |

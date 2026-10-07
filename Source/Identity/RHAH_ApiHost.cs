@@ -84,7 +84,8 @@ namespace HungerAndHavoc.Identity
             global::HungerAndHavoc.Pawn.RHAH_VisitorGroup.NotifyReleased(pawn);
             global::HungerAndHavoc.Pawn.Compat.RHAH_LeashBridge.ClearDeparture(pawn);
             RHAH_Api.RaiseReleasedToColony(pawn, comp.ToSnapshot(), reason);
-            if (reason == RHAH_ReleaseReason.Imprisoned || reason == RHAH_ReleaseReason.Enslaved)
+            if ((reason == RHAH_ReleaseReason.Imprisoned || reason == RHAH_ReleaseReason.Enslaved) &&
+                !Incidents.RHAH_Interception.IsInterception(comp.State.spawnBatchId))
             {
                 global::HungerAndHavoc.Pawn.RHAH_SuiyinTrust.Note(1, global::HungerAndHavoc.Pawn.RHAH_SuiyinTrust.Value(global::HungerAndHavoc.Pawn.RHAH_SuiyinTrust.Hold, Core.RHAH_Mod.Settings == null ? global::HungerAndHavoc.Pawn.RHAH_SuiyinTrust.Hold : Core.RHAH_Mod.Settings.trustHold));
             }

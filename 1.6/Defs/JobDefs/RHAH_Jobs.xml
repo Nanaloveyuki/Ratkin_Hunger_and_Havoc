@@ -15,6 +15,7 @@
     <defName>RHAH_DropChild</defName>
     <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_DropChild</driverClass>
     <reportString>放下孩子</reportString>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
   </JobDef>
   <JobDef>
     <defName>RHAH_MotherFeed</defName>

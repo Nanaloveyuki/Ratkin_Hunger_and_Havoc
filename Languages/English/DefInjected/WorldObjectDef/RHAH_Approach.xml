@@ -2,4 +2,6 @@
 <LanguageData>
   <RHAH_Approach.label>ratkin travelers</RHAH_Approach.label>
   <RHAH_Approach.description>A group of ratkin is walking toward our colony. They are still on the way.</RHAH_Approach.description>
+  <RHAH_Interception.label>interception site</RHAH_Interception.label>
+  <RHAH_Interception.description>The ratkin met our caravan here. The site is temporary and will not draw further raids.</RHAH_Interception.description>
 </LanguageData>

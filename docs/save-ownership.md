@@ -190,6 +190,26 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | crossing | crossing | false | 否 | 岛上出发时为 true，允许走进海洋格。旧档缺键时按陆地走 |
 | arrivalPending | arrivalPending | false | 否 | 已进入到达事务，等待时不再寻路；旧档缺键继续原行走，到达后设为 true |
 
+### WorldObject_RHAH_Interception
+
+类型名：`HungerAndHavoc.Incidents.WorldObject_RHAH_Interception`。临时拦截地图的父物体，继承 `MapParent`。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| displayId | displayId | 空字符串 | 否 | 被拦截事件的显示 ID。`PostLoadInit` 把 null 补成空字符串。父物体负责保存 |
+| spawnBatchId | spawnBatchId | 0 | 否 | 拦截批次。0 表示没有批次。父物体负责保存 |
+| settled | settled | false | 否 | 这批拦截是否已经结算。父物体负责保存 |
+
+### LordJob_RHAH_Intercept
+
+类型名：`HungerAndHavoc.Pawn.LordJob_RHAH_Intercept`。
+
+| 字段 | 存档键 | 默认值 | 集合 | 说明 |
+| --- | --- | --- | --- | --- |
+| exitCell | exitCell | IntVec3.Invalid | 否 | 离图目标格，按原版 `IntVec3` 写入键 `exitCell`。默认 `(-1, -1, -1)` |
+
+穿图与离场 duty 按每名 pawn 的当前位置重建，单 toil 索引保持 0，无新增存档字段或 toilData。
+
 
 
 ## 可序列化类型
@@ -200,6 +220,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Identity.CompRHAH_Pawn | HediffComp `Class` | Remove，随身份 Hediff 删除 |
 | HungerAndHavoc.Identity.CompProperties_RHAH_Pawn | Def XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.LordJob_RHAH_Visitor | Lord `lordJob` | Remove。卸载后该 Lord 必须消失，pawn 回原版 ThinkTree |
+| HungerAndHavoc.Pawn.LordJob_RHAH_Intercept | Lord `lordJob` | Remove。卸载后该 Lord 必须消失，pawn 回原版 ThinkTree。`exitCell` 随 Lord 删除，不改地图上的玩家 |
+| HungerAndHavoc.Incidents.WorldObject_RHAH_Interception | WorldObjectDef `worldObjectClass` | 已有地图或居民：Replace，类名改成 `RimWorld.Planet.Site`。没有地图也没有居民：Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Beg | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw | Job `driverClass` | Remove |
 | HungerAndHavoc.Pawn.JobDriver_RHAH_DropChild | Job `driverClass` | Remove |
@@ -253,7 +275,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | closed | closed | false | 否 | |
 | end | end | 0 | 否 | 0 未结束，1 完成，2 失败，3 到期，4 取消 |
 
-Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_Approach` 已登记。GameComponent 与 MapComponent 的键在下一节。
+Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp`、`RHAH_Approach` 与 `RHAH_Interception` 已登记。GameComponent 与 MapComponent 的键在下一节。
 ### Generation runtime
 
 | 类型 | 字段 | 存档键 | 卸载 |
@@ -340,7 +362,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN007Case | mapId, startedTick, outcome, choiceOpen, returnDueTick, returnPawnId, returnDone, visitors | 嵌在 quarantineCases | Remove。`choiceOpen` 默认 false，true 表示还没把选择信放进队列 |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN008Case | mapId, pawnId, startedTick, deadline, checkUntil, presence, missingSince, outcome, mealsReady, proofAvailable, holdMigrated | 嵌在 envoyCases | Remove。`holdMigrated` 默认 false；新到达为 true。旧记录首次找到 N-008 来源且两闸门仍为 false 的使者时，以 `rhah:envoyHold=uu` 接管旧留驻；缺少历史覆盖信息时只能假定两项 false 来自旧使者持有，迁移仅做一次 |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN009Case | startedTick, deadline, mapPresent, playersInside, envoyHere, boxDestroyed, outcome, siteId, boxId, mapEntered | relicCase | Remove |
-| HungerAndHavoc.Storyteller.Suiyin.SuiyinJournalCase | id, mapId, batchId, startedTick, delivered, driven, failed, empty, closed, counted, people | 嵌在 journalCases | Remove |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinJournalCase | id, mapId, batchId, startedTick, delivered, driven, failed, empty, closed, counted, people | 嵌在 journalCases | Remove。`id=0` 是拦截失败标记，`failed=true`、`counted=false`；`closed=false` 表示尚未扣二信任，终态关闭后不重复扣除。普通观察不关闭这个标记；`people` 的 Presence 为 Left，不启动原事件照护判定 |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinNotice | letter, arg, privateNotice | 嵌在 pendingNotices | Remove |
 | RHAH_BeggarSiege | IncidentDef | Remove |
 | RHAH_Beg | JobDef | Remove |
@@ -357,6 +379,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp` 与 `RHAH_A
 | RHAH_RefugeeCamp | MapGeneratorDef | Replace。已生成地图在 `maps/li/generatorDef` 保存；按 `mapInfo/parent` 匹配保留地点，只将自有生成器改为已加载、非本模组的 `Site.mapGenerator`，为空时使用原版 `Encounter`。替代 Def 缺失时中止 |
 | RHAH_RefugeeCamp | GenStepDef | Remove，随地点部件清理，不改其它地图 |
 | RHAH_Approach | WorldObjectDef | Remove。不替换成原版商队。卸载后物体消失，未到达的事件不再生成 |
+| RHAH_Interception | WorldObjectDef | 没有地图、也没有居民：Remove，删整个世界物体。已有地图或居民：Replace。保留世界物体 ID、地图、玩家 pawn 和 `retainedCaravanData`，类名与 Def 改成已加载的原版 `Site`，去掉 `displayId`、`spawnBatchId`、`settled`。地图生成器已是原版 `Encounter`，不另换。`Site` 不能接住已生成地图就中止，不删地图。只带重组远行队组件，不带限时侦测或战场袭击。旧档里的原版 `AttackedNonPlayerCaravan` / `CaravansBattlefield` 只是当时的临时地图父物体，保持原样，不改成 `Site`，也不当作本模组地图迁移 |
 | RHAH_RecordSite | WorldObjectDef | Replace。`worldObjectClass` 已是原版 `Site`。没有地图也没有居民：删整个世界物体。已有地图或居民：保留世界物体 ID、地图和居民，Def 改成已加载的原版 `Site`，地图生成器改成 `Site` 自带的生成器。`Site` 不能接住已生成地图就中止 |
 | RHAH_RecordSite | SitePartDef | Remove。同名地点部件单独删除，不把它当成世界物体 |
 | RHAH_RecordSite | MapGeneratorDef | Replace。按 `maps/li/mapInfo/parent` 匹配保留地点，将该地图的自有 `generatorDef` 改为已加载、非本模组的 `Site.mapGenerator`，为空时使用原版 `Encounter`。替代 Def 缺失时中止 |

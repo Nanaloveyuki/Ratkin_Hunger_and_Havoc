@@ -2,4 +2,6 @@
 <LanguageData>
   <RHAH_Approach.label>ラットキンの遠行隊</RHAH_Approach.label>
   <RHAH_Approach.description>ラットキンの一団が、私たちの拠点へ向かっています。まだ道の途中です。</RHAH_Approach.description>
+  <RHAH_Interception.label>迎撃地点</RHAH_Interception.label>
+  <RHAH_Interception.description>ラットキンが、ここで私たちの隊商と出くわしました。この地点は一時的なもので、別の襲撃を呼び込みません。</RHAH_Interception.description>
 </LanguageData>
