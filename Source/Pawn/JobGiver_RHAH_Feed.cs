@@ -27,7 +27,15 @@ namespace HungerAndHavoc.Pawn
                 return null;
             }
 
-            if (pawn.Map == null || pawn.Downed || JobDefOf.Ingest == null)
+            if (pawn.Map == null || JobDefOf.Ingest == null)
+            {
+                return null;
+            }
+
+            if (RHAH_VisitorRules.BlocksReliefFeed(
+                pawn.Downed,
+                ModsConfig.IsActive("cyanobot.toddlers"),
+                Compat.RHAH_ChildMovement.ManipulationStage(pawn)))
             {
                 return null;
             }
@@ -125,9 +133,21 @@ namespace HungerAndHavoc.Pawn
 
             Thing best = null;
             float bestScore = float.NegativeInfinity;
-            List<Thing> foods = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
+            MapComponent_RHAH_Map mapState = pawn.Map.GetComponent<MapComponent_RHAH_Map>();
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            List<Thing> foods;
+            List<Thing> plants;
+            if (mapState != null)
+            {
+                mapState.FoodLists(now, out foods, out plants);
+            }
+            else
+            {
+                foods = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
+                plants = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.HarvestablePlant);
+            }
+
             Consider(pawn, foods, insideZone, ref best, ref bestScore);
-            List<Thing> plants = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.HarvestablePlant);
             Consider(pawn, plants, insideZone, ref best, ref bestScore);
             return best;
         }

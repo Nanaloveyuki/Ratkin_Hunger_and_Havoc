@@ -398,6 +398,8 @@
   <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>开启后，灾荒商队不会因为太冷、太热或危险天气刚进图就离开。关闭后，恶劣环境仍会让他们离开。</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
   <RHAH_Settings_TraderIgnoreEnclosed>商队无视封闭空间</RHAH_Settings_TraderIgnoreEnclosed>
   <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>开启后，灾荒商队在封闭房间里不挖路离开。关闭后，到不了地图边缘时他们会挖路走。</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
+  <RHAH_Settings_SpaceApproach>允许太空家园刷新远行队</RHAH_Settings_SpaceApproach>
+  <RHAH_Settings_SpaceApproach_Tooltip>默认关闭。关闭时，轨道和小行星这类太空家园不生成步行而来的鼠族远行队。打开后才允许。已经在太空的远行队不挡住穿梭机起飞。</RHAH_Settings_SpaceApproach_Tooltip>
   <RHAH_Settings_ChildExchangeFood>允许用食物换孩子</RHAH_Settings_ChildExchangeFood>
   <RHAH_Settings_ChildExchangeFood_Tooltip>开启后，易子而食可以用简单餐替代交出孩子，份数由“每个孩子的简单餐”决定。商人不卖食物。关闭后，这封信不能交付；交出孩子也不在本次选择中。</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>携幼离场时放下孩子</RHAH_Settings_FamilyDrop>

@@ -38,6 +38,7 @@ namespace HungerAndHavoc.Core
         public bool foodGiveHintDismissed;
         public bool traderIgnoresHarshEnvironment = true;
         public bool traderIgnoresEnclosedSpace = true;
+        public bool spaceApproachEnabled;
         public bool childExchangeFoodSubstitution = true;
         public bool familyDropEnabled = true;
         public bool motherFeedEnabled = true;
@@ -296,6 +297,7 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref foodGiveHintDismissed, "foodGiveHintDismissed", false);
             Scribe_Values.Look(ref traderIgnoresHarshEnvironment, "traderIgnoresHarshEnvironment", true);
             Scribe_Values.Look(ref traderIgnoresEnclosedSpace, "traderIgnoresEnclosedSpace", true);
+            Scribe_Values.Look(ref spaceApproachEnabled, "spaceApproachEnabled", false);
             Scribe_Values.Look(ref childExchangeFoodSubstitution, "childExchangeFoodSubstitution", true);
             Scribe_Values.Look(ref familyDropEnabled, "familyDropEnabled", true);
             Scribe_Values.Look(ref motherFeedEnabled, "motherFeedEnabled", true);

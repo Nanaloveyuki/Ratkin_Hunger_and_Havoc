@@ -396,6 +396,8 @@
   <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>オンにすると、被災者のキャラバンは、寒さ、暑さ、危険な天候のためにマップに入ってすぐ立ち去ることはありません。オフの場合は、悪環境で立ち去ります。</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
   <RHAH_Settings_TraderIgnoreEnclosed>キャラバンが閉鎖空間を無視</RHAH_Settings_TraderIgnoreEnclosed>
   <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>オンにすると、被災者のキャラバンは閉じ込められた部屋から脱出するための掘削を行いません。オフの場合、マップの端にたどり着けなければ、掘って道を作り立ち去ります。</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
+  <RHAH_Settings_SpaceApproach>軌道の拠点へ向かう一行を許可</RHAH_Settings_SpaceApproach>
+  <RHAH_Settings_SpaceApproach_Tooltip>初期設定はオフです。オフのとき、小惑星を含む軌道上の拠点には、歩いて向かうラットキンの一行は生成されません。オンにすると許可されます。すでに軌道上にいる一行は、シャトルの離陸を妨げません。</RHAH_Settings_SpaceApproach_Tooltip>
   <RHAH_Settings_ChildExchangeFood>食べ物と子供の交換を許可</RHAH_Settings_ChildExchangeFood>
   <RHAH_Settings_ChildExchangeFood_Tooltip>オンにすると、「子を取り替えて食らう」で子供を渡す代わりに簡単な食事を渡せます。必要数は「子供1人あたりの簡単な食事」で設定します。商人が食べ物を売るわけではありません。オフの場合、この手紙では引き渡しができず、子供を渡す選択肢もありません。</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>子供を抱えて退去する時に下ろす</RHAH_Settings_FamilyDrop>

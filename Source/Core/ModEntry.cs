@@ -82,6 +82,8 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_TraderIgnoreEnvironment_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_TraderIgnoreEnclosed".Translate(), ref Settings.traderIgnoresEnclosedSpace,
                 "RHAH_Settings_TraderIgnoreEnclosed_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_SpaceApproach".Translate(), ref Settings.spaceApproachEnabled,
+                "RHAH_Settings_SpaceApproach_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_ChildExchangeFood".Translate(), ref Settings.childExchangeFoodSubstitution,
                 "RHAH_Settings_ChildExchangeFood_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_FamilyDrop".Translate(), ref Settings.familyDropEnabled,

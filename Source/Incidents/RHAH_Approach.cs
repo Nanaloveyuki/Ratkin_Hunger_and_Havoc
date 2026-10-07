@@ -7,6 +7,16 @@ namespace HungerAndHavoc.Incidents
 {
     internal static class RHAH_Approach
     {
+        internal static bool SpaceLayer(PlanetTile tile)
+        {
+            return tile.Valid && tile.Layer != null && tile.Layer.Def != null && tile.Layer.Def.isSpace;
+        }
+
+        internal static bool SpaceApproachEnabled()
+        {
+            return Core.RHAH_Mod.Settings != null && Core.RHAH_Mod.Settings.spaceApproachEnabled;
+        }
+
         internal static bool TrySend(string displayId, float points, int mapId)
         {
             if (!Core.RHAH_Runtime.AllowsNewContent || string.IsNullOrEmpty(displayId) || Find.WorldObjects == null)
@@ -60,7 +70,7 @@ namespace HungerAndHavoc.Incidents
                 for (int i = 0; i < Find.Maps.Count; i++)
                 {
                     Map map = Find.Maps[i];
-                    if (map != null && map.IsPlayerHome)
+                    if (map != null && map.IsPlayerHome && RHAH_ApproachRules.AllowsHome(SpaceLayer(map.Tile), SpaceApproachEnabled()))
                     {
                         homes.Add(map.uniqueID);
                     }

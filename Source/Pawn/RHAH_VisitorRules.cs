@@ -856,6 +856,16 @@ namespace HungerAndHavoc.Pawn
             return !toddlersActive && eventBaby && ageDowned && !injuredDowned;
         }
 
+        internal static bool WithinFoodRange(float manhattan, float limit)
+        {
+            return !float.IsNaN(manhattan) && !float.IsInfinity(manhattan) && manhattan <= limit;
+        }
+
+        internal static bool BlocksReliefFeed(bool downed, bool toddlersActive, int manipulationStage)
+        {
+            return downed && !(toddlersActive && manipulationStage >= 1);
+        }
+
         // 倒地或还不能走的来客不接受别人塞来的离图 Goto
         internal static bool RejectsSelfExit(bool visitor, bool exitOnArrival, bool canWalkOut)
         {

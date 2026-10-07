@@ -54,7 +54,7 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("return null;", gnaw);
             Assert.Contains("TryCreate(pawn, true)", ReadPawn("RHAH_StayWorkPatch.cs"));
             string leave = ReadPawn("JobGiver_RHAH_Leave.cs");
-            Assert.Contains("RHAH_BehaviorGate.LeaveAfterFed", leave);
+            Assert.Contains("LordJob_RHAH_Visitor.ReadyToLeave", leave);
         }
 
         [Fact]
@@ -135,8 +135,9 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("internal static Job TryCreate(Verse.Pawn pawn)", source);
             Assert.DoesNotContain("using Pawn = Verse.Pawn", source);
             bool visitor = source.Contains("RHAH_Api.IsVisitor") ||
-                           source.Contains("RHAH_VisitorGate");
-            Assert.True(visitor, fileName + " must check IsVisitor or RHAH_VisitorGate");
+                           source.Contains("RHAH_VisitorGate") ||
+                           source.Contains("RHAH_BatchAttitude.CanOrderLeave");
+            Assert.True(visitor, fileName + " must check IsVisitor, RHAH_VisitorGate, or CanOrderLeave");
             Assert.Contains("Allows", source);
             Assert.Contains(gate, source);
             int visitorIndex = IndexOfVisitorCheck(source);
@@ -150,17 +151,19 @@ namespace HungerAndHavoc.Tests
         {
             int api = source.IndexOf("RHAH_Api.IsVisitor");
             int gate = source.IndexOf("RHAH_VisitorGate");
-            if (api < 0)
+            int leave = source.IndexOf("RHAH_BatchAttitude.CanOrderLeave");
+            int first = api >= 0 ? api : int.MaxValue;
+            if (gate >= 0 && gate < first)
             {
-                return gate;
+                first = gate;
             }
 
-            if (gate < 0)
+            if (leave >= 0 && leave < first)
             {
-                return api;
+                first = leave;
             }
 
-            return api < gate ? api : gate;
+            return first == int.MaxValue ? -1 : first;
         }
 
         static string ReadPawn(string fileName, [CallerFilePath] string testFile = null)

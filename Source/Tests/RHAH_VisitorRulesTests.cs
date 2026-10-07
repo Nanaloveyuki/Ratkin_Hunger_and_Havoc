@@ -86,6 +86,18 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void ReliefFoodCoversTheMapAndToddlersCanEatWhileDowned()
+        {
+            Assert.True(RHAH_VisitorRules.WithinFoodRange(400f, float.MaxValue));
+            Assert.False(RHAH_VisitorRules.WithinFoodRange(41f, 40f));
+            Assert.False(RHAH_VisitorRules.BlocksReliefFeed(true, true, 1));
+            Assert.False(RHAH_VisitorRules.BlocksReliefFeed(true, true, 2));
+            Assert.True(RHAH_VisitorRules.BlocksReliefFeed(true, true, 0));
+            Assert.True(RHAH_VisitorRules.BlocksReliefFeed(true, false, 2));
+            Assert.False(RHAH_VisitorRules.BlocksReliefFeed(false, false, 0));
+        }
+
+        [Fact]
         public void GenderModeOverridesARandomRollButNotARequestedGender()
         {
             Assert.Equal(2, RHAH_VisitorRules.ResolveGender(null, 2, 0, 0f));

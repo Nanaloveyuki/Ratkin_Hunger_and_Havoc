@@ -220,6 +220,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_ClayEatThingPatch` 与 `RHAH_ClayEatDefPatch` 是 `internal`，Postfix `FoodUtility.WillEat` 的 Thing 和 ThingDef 重载。观音土十五天吃满三块后原版仍把它当食物。补丁只在目标是 `RHAH_GuanyinTu` 且饱腹窗口未过时返回 false，不改其它食物。
 `RHAH_TraitColor` 是 `internal`，Postfix `Trait.LabelCap`。原版特质名没有本模组颜色。补丁只给 `RHAH_Trait_` 前缀上色，已有颜色标签时不改。
 `RHAH_CaravanLeavePatch` 是 `internal`，Prefix `Transition.CheckSignal`。原版交易 Lord 会因危险温度、异常天气、危险状况或到不了地图边缘离图。补丁只拦本模组商队：环境离图看 `traderIgnoresHarshEnvironment`，封闭空间看 `traderIgnoresEnclosedSpace`。其它 Lord 不改。
+`RHAH_ApproachLaunchPatch` 是 `internal`，Postfix `WorldTargeter.CurrentTargetUnderMouse`。起飞选点先命中动态绘制的世界物体。补丁只在目标是太空层上的 `RHAH_Approach` 时改成同格合法目标，没有则改成空格。地面远行队和其它物体不改。
 `RHAH_CaravanFoodSalePatch` 是 `internal`，Postfix `TraderKindDef.WillTrade`。原版商人种类会卖营养食物。补丁只在当前交易对象是本模组商队时，把非 `Meal_RatEgg` 的营养食物改成不卖。鼠蛋菜和其它商人不改。
 `RHAH_CuisineCarrierPatch` 是 `internal`，Postfix `TraderCaravanUtility.GetTraderCaravanRole`。原版交易 Lord 只把驮运动物的背包当货物，不卖人类随行的背包。补丁只在 Lord 是交易 Lord、角色属于本模组商队、且未满 14 岁时改成驮夫。商人本人、已是驮夫和其它 Lord 不改。
 `RHAH_CuisineGoodsPatch` 是 `internal`，Postfix `Pawn_TraderTracker.Goods`。原版访客 Lord 只列商人自己未标价的背包。补丁只在商人属于本模组商队、派系不敌对、且 Lord 不是交易 Lord 时，把同 Lord 随行的背包并进货物。交易 Lord、敌对派系和其它商人不改。

@@ -2079,6 +2079,7 @@ namespace HungerAndHavoc.Pawn.Compat
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_FoodGiveHint".Translate(), ref settings.foodGiveHintDismissed, "RHAH_Settings_FoodGiveHint_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_TraderIgnoreEnvironment".Translate(), ref settings.traderIgnoresHarshEnvironment, "RHAH_Settings_TraderIgnoreEnvironment_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_TraderIgnoreEnclosed".Translate(), ref settings.traderIgnoresEnclosedSpace, "RHAH_Settings_TraderIgnoreEnclosed_Tooltip".Translate());
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_SpaceApproach".Translate(), ref settings.spaceApproachEnabled, "RHAH_Settings_SpaceApproach_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_ChildExchangeFood".Translate(), ref settings.childExchangeFoodSubstitution, "RHAH_Settings_ChildExchangeFood_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_Stagger".Translate(), ref settings.staggerGeneration, "RHAH_Settings_Stagger_Tooltip".Translate());
         }

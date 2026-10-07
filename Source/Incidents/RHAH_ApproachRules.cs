@@ -97,6 +97,16 @@ namespace HungerAndHavoc.Incidents
             return best;
         }
 
+        internal static bool AllowsHome(bool spaceLayer, bool spaceEnabled)
+        {
+            return !spaceLayer || spaceEnabled;
+        }
+
+        internal static bool BlocksLaunch(bool spaceLayer)
+        {
+            return !spaceLayer;
+        }
+
         internal static bool TryConsumeNext(WorldPath path, out PlanetTile next)
         {
             next = default;

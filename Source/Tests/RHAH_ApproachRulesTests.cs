@@ -59,6 +59,16 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void SpaceHomesStayOutUnlessAllowed()
+        {
+            Assert.False(RHAH_ApproachRules.AllowsHome(true, false));
+            Assert.True(RHAH_ApproachRules.AllowsHome(true, true));
+            Assert.True(RHAH_ApproachRules.AllowsHome(false, false));
+            Assert.False(RHAH_ApproachRules.BlocksLaunch(true));
+            Assert.True(RHAH_ApproachRules.BlocksLaunch(false));
+        }
+
+        [Fact]
         public void SingleHomeIsTheOnlyTarget()
         {
             Assert.Equal(7, RHAH_ApproachRules.PickHome(new List<int> { 7 }, 4));

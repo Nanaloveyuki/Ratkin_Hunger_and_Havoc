@@ -398,6 +398,8 @@
   <RHAH_Settings_TraderIgnoreEnvironment_Tooltip>Famine traders do not leave as soon as they enter because of cold, heat, or dangerous weather. Off, harsh conditions still send them away.</RHAH_Settings_TraderIgnoreEnvironment_Tooltip>
   <RHAH_Settings_TraderIgnoreEnclosed>Trader caravans ignore enclosed rooms</RHAH_Settings_TraderIgnoreEnclosed>
   <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>Famine traders stay inside a closed room instead of digging out. Off, they dig out when they cannot reach the map edge.</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
+  <RHAH_Settings_SpaceApproach>Allow travelers toward orbital homes</RHAH_Settings_SpaceApproach>
+  <RHAH_Settings_SpaceApproach_Tooltip>Off by default. Orbital homes, including asteroids, do not receive ratkin who walk in. Turn this on to allow them. A group already in orbit does not block a shuttle launch.</RHAH_Settings_SpaceApproach_Tooltip>
   <RHAH_Settings_ChildExchangeFood>Allow food in place of children</RHAH_Settings_ChildExchangeFood>
   <RHAH_Settings_ChildExchangeFood_Tooltip>Child exchange accepts simple meals in place of handing over a child. The cost follows Simple meals per child. Traders do not sell food. With substitution off, this letter cannot be delivered; handing over a child is not available in this choice either.</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_FamilyDrop>Set children down when leaving</RHAH_Settings_FamilyDrop>

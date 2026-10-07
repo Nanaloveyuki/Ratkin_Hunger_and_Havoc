@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using HungerAndHavoc.Core;
 using RimWorld;
@@ -144,7 +145,22 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
-            WorldPath path = map.Tile.Layer.Pather.FindPath(Tile, map.Tile, null);
+            if (!RHAH_ApproachRules.AllowsHome(SpaceLayer(), SpaceApproachEnabled()))
+            {
+                return false;
+            }
+
+            WorldPath path;
+            try
+            {
+                path = map.Tile.Layer.Pather.FindPath(Tile, map.Tile, null);
+            }
+            catch (Exception exception)
+            {
+                Log.Error("[RHAH] Approach pathing failed for " + displayId + ". " + exception);
+                return false;
+            }
+
             if (!RHAH_ApproachRules.TryConsumeNext(path, out PlanetTile next))
             {
                 if (RHAH_ApproachRules.ReleasePath(path == null, path == WorldPath.NotFound))
@@ -166,6 +182,16 @@ namespace HungerAndHavoc.Incidents
             float road = Find.WorldGrid.GetRoadMovementDifficultyMultiplier(Tile, next, null);
             costLeft = RHAH_ApproachRules.MoveTicks(difficulty, road);
             return true;
+        }
+
+        bool SpaceLayer()
+        {
+            return RHAH_Approach.SpaceLayer(Tile);
+        }
+
+        bool SpaceApproachEnabled()
+        {
+            return RHAH_Approach.SpaceApproachEnabled();
         }
 
         bool OnDestination()

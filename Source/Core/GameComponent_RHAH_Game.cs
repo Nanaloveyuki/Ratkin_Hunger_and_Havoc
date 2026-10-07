@@ -586,6 +586,9 @@ namespace HungerAndHavoc.Core
     {
         List<int> visitorPawnLoadIds = new List<int>();
         Dictionary<int, int> foodSearchTicks = new Dictionary<int, int>();
+        List<Verse.Thing> cachedFoods;
+        List<Verse.Thing> cachedPlants;
+        int foodListTick = -1;
         Dictionary<int, int> wallGnawCounts = new Dictionary<int, int>();
         List<int> plagueQuarantineLoadIds = new List<int>();
         int plagueRecovered;
@@ -659,6 +662,27 @@ namespace HungerAndHavoc.Core
         public void InvalidateFoodSearch()
         {
             foodSearchTicks.Clear();
+            InvalidateFoodLists();
+        }
+
+        public void FoodLists(int tick, out List<Verse.Thing> foods, out List<Verse.Thing> plants)
+        {
+            if (cachedFoods == null || foodListTick != tick)
+            {
+                foodListTick = tick;
+                cachedFoods = map?.listerThings?.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
+                cachedPlants = map?.listerThings?.ThingsInGroup(ThingRequestGroup.HarvestablePlant);
+            }
+
+            foods = cachedFoods;
+            plants = cachedPlants;
+        }
+
+        public void InvalidateFoodLists()
+        {
+            foodListTick = -1;
+            cachedFoods = null;
+            cachedPlants = null;
         }
 
         public int NextWallGnaw(int pawnLoadId)

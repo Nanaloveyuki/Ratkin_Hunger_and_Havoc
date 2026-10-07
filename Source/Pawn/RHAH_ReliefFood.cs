@@ -127,11 +127,6 @@ namespace HungerAndHavoc.Pawn
                 return RHAH_FoodReject.Zone;
             }
 
-            if ((food.PositionHeld - pawn.Position).LengthManhattan > SearchRadius)
-            {
-                return RHAH_FoodReject.Unreachable;
-            }
-
             if (food.IsForbidden(pawn))
             {
                 return RHAH_FoodReject.Forbidden;
