@@ -73,6 +73,16 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void SharedTileAddsInterceptWhenThePlayerCaravanHidesIt()
+        {
+            Assert.True(RHAH_ApproachRules.IncludeApproachMenu(true, false, true, true));
+            Assert.False(RHAH_ApproachRules.IncludeApproachMenu(true, true, true, true));
+            Assert.False(RHAH_ApproachRules.IncludeApproachMenu(false, false, true, true));
+            Assert.False(RHAH_ApproachRules.IncludeApproachMenu(true, false, false, true));
+            Assert.False(RHAH_ApproachRules.IncludeApproachMenu(true, false, true, false));
+        }
+
+        [Fact]
         public void SingleHomeIsTheOnlyTarget()
         {
             Assert.Equal(7, RHAH_ApproachRules.PickHome(new List<int> { 7 }, 4));

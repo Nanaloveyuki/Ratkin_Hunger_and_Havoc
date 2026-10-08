@@ -112,6 +112,12 @@ namespace HungerAndHavoc.Incidents
             return !spaceLayer;
         }
 
+        // 玩家队图标优先级更高 右键先命中玩家队 同格的鼠族队要另外问一次
+        internal static bool IncludeApproachMenu(bool playerCaravanHit, bool approachHit, bool sameTile, bool canIntercept)
+        {
+            return playerCaravanHit && !approachHit && sameTile && canIntercept;
+        }
+
         internal static bool TryConsumeNext(WorldPath path, out PlanetTile next)
         {
             next = default;
