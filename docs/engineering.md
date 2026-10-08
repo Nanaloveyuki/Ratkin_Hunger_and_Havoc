@@ -225,6 +225,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_TraitColor` 是 `internal`，Postfix `Trait.LabelCap`。原版特质名没有本模组颜色。补丁只给 `RHAH_Trait_` 前缀上色，已有颜色标签时不改。
 `RHAH_CaravanLeavePatch` 是 `internal`，Prefix `Transition.CheckSignal`。原版交易 Lord 会因危险温度、异常天气、危险状况或到不了地图边缘离图。补丁只拦本模组商队：环境离图看 `traderIgnoresHarshEnvironment`，封闭空间看 `traderIgnoresEnclosedSpace`。其它 Lord 不改。
 `RHAH_ApproachLaunchPatch` 是 `internal`，Postfix `WorldTargeter.CurrentTargetUnderMouse`。起飞选点先命中动态绘制的世界物体。补丁只在目标是太空层上的 `RHAH_Approach` 时改成同格合法目标，没有则改成空格。地面远行队和其它物体不改。
+`RHAH_ApproachMenuPatch` 是 `internal`，Postfix `FloatMenuMakerWorld.ChoicesAtFor(Vector2, Caravan)`。原版右键只收集鼠标下的世界物体，玩家远行队图标优先级高于鼠族远行队，同格时菜单不会问到鼠族队。补丁只在鼠标已经命中这支玩家队、同格有可拦截的鼠族队、且这支鼠族队不在鼠标列表里时，把该队自己的菜单项补进去。异格、已在列表里和 `CanIntercept` 拒绝的不补。
 `RHAH_GiveToPawnCountPatch` 是 `internal`，Prefix `GiveItemsToPawnUtility.ItemCountLeftToCollect`。原版用整个 Lord 的搬运量扣当前接收者的剩余量，同批第二人会被第一人的搬运扣成零。补丁只接 `LordJob_RHAH_Visitor` 的等待名单成员，改为扣送往本人的搬运量；其它 Lord 和未登记成员走原版。
 `RHAH_CaravanFoodSalePatch` 是 `internal`，Postfix `TraderKindDef.WillTrade`。原版商人种类会卖营养食物。补丁只在当前交易对象是本模组商队时，把非 `Meal_RatEgg` 的营养食物改成不卖。鼠蛋菜和其它商人不改。
 `RHAH_CuisineCarrierPatch` 是 `internal`，Postfix `TraderCaravanUtility.GetTraderCaravanRole`。原版交易 Lord 只把驮运动物的背包当货物，不卖人类随行的背包。补丁只在 Lord 是交易 Lord、角色属于本模组商队、且未满 14 岁时改成驮夫。商人本人、已是驮夫和其它 Lord 不改。
@@ -241,7 +242,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 `RHAH_EarlyFertilityPatch` 是 `internal`，Postfix `PregnancyUtility.CanEverProduceChild`。原版生育阶段从 13 岁起。补丁只在任一方有早熟、原版报告拒绝、且双方达到设定年龄时改成通过。死亡、同性、不育和已怀孕仍拒绝。
 `RHAH_HighFertilityPatch` 是 `internal`，Postfix `PregnancyUtility.PregnancyChanceForPartners`。原版几率不看本模组百分比。补丁只在任一方有高育时乘以设定百分比。其它配对不改。
 `RHAH_FastBirthPatch` 是 `internal`，Postfix `Hediff_Pregnant.TickInterval`。原版进度按种族孕期走，`GestationProgress` 不能从外部写入。补丁只在有速产且设定天数短于该种族孕期时，按天数比补上差额。到 1 后人类进产程，其它种族走原版分娩。没有速产的人走原版。
-`RHAH_RoomLovinPatch` 是 `internal`，Postfix `JobGiver_DoLovin.TryGiveJob`。原版只在冷却结束后找同床伴侣。补丁只在结果为空、携带者有乱起时，从同一张地图、同一室内房间的异性里挑编号最小的人补一个爱爱 Job。不看恋人、未婚夫或配偶。室外、已有工作、征召中和睡着时不补。
+`RHAH_RoomLovinPatch` 是 `internal`，Postfix `JobGiver_DoLovin.TryGiveJob`。原版只在冷却结束后找同床伴侣。补丁只在结果为空、携带者有乱起、冷却已过、人醒着且已经躺在非医疗床上、伴侣也躺在这张床上时，从同一室内房间的异性里挑编号最小的人补一个爱爱 Job。不看恋人、未婚夫或配偶。发出时把双方 `canLovinTick` 至少推后 1250 tick，避免原版立刻失败后同一 tick 重开。室外、没躺下、已有爱爱、征召中、睡着和冷却中不补。
 `RHAH_RoomBirthPatch` 是 `internal`，Postfix `JobDriver_Lovin.MakeNewToils`，不改返回的 Toil。每次构造 Toil 时登记或替换同一个全局结束动作，只在 `JobCondition.Succeeded` 时额外判定一次；正常耗尽 Toil 时，原版最后受孕先于这个动作。基础几率用 `lovinPregnancyPercent`，默认 50%，范围 0% 到 100%，再乘双方怀孕几率，并去掉哺乳这一项。走到床前、中断和无法完成不判定。其它来源的不育不改。其它爱爱不改。
 `RHAH_LargeLitterPatch` 是 `internal`，Postfix `PregnancyUtility.ApplyBirthOutcome`。原版人类一次只生一个，而且没有父亲时不会把母亲的可遗传异种写到孩子身上。补丁只在母亲有多崽时按概率图补足数量。多出来的幼崽使用父母的内源基因，双方可遗传异种相同、或只有一方有可遗传异种时写入该异种。正式孩子和多出来的幼崽都会再套一次这个异种，基因留在原初基因组。没有多崽、也没有可遗传异种的分娩不改基因。
 

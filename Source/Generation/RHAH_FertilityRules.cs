@@ -174,5 +174,18 @@ namespace HungerAndHavoc.Generation
         {
             return sameMap && sameRoom && !outdoors && oppositeGender && !dead && !self;
         }
+
+        internal const int MinRoomLovinCooldownTicks = 1250;
+
+        // 人必须已经躺在非医疗床上 冷却没过就不再发
+        internal static bool RoomLovinReady(int now, int canLovinTick, bool drafted, bool awake, bool alreadyLovin)
+        {
+            return now >= canLovinTick && !drafted && awake && !alreadyLovin;
+        }
+
+        internal static bool RoomLovinBed(bool hasBed, bool medical, bool partnerInBed, int partnerCanLovinTick, int now)
+        {
+            return hasBed && !medical && partnerInBed && now >= partnerCanLovinTick;
+        }
     }
 }

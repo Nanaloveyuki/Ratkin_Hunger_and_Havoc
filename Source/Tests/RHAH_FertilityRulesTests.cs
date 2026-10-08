@@ -89,6 +89,22 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void RoomLovinWaitsUntilBothAreInTheSameBedAndCooledDown()
+        {
+            Assert.False(RHAH_FertilityRules.RoomLovinReady(100, 101, false, true, false));
+            Assert.False(RHAH_FertilityRules.RoomLovinReady(100, 100, true, true, false));
+            Assert.False(RHAH_FertilityRules.RoomLovinReady(100, 100, false, false, false));
+            Assert.False(RHAH_FertilityRules.RoomLovinReady(100, 100, false, true, true));
+            Assert.True(RHAH_FertilityRules.RoomLovinReady(100, 100, false, true, false));
+            Assert.False(RHAH_FertilityRules.RoomLovinBed(false, false, true, 100, 100));
+            Assert.False(RHAH_FertilityRules.RoomLovinBed(true, true, true, 100, 100));
+            Assert.False(RHAH_FertilityRules.RoomLovinBed(true, false, false, 100, 100));
+            Assert.False(RHAH_FertilityRules.RoomLovinBed(true, false, true, 101, 100));
+            Assert.True(RHAH_FertilityRules.RoomLovinBed(true, false, true, 100, 100));
+            Assert.Equal(1250, RHAH_FertilityRules.MinRoomLovinCooldownTicks);
+        }
+
+        [Fact]
         public void LitterRequestKeepsHeritableGenesAsEndogenes()
         {
             GeneDef ears = Gene("RK_Gene_LargeEars");

@@ -418,18 +418,33 @@ namespace HungerAndHavoc.Generation
                 return;
             }
 
-            if (pawn.CurJobDef == JobDefOf.Lovin || pawn.Drafted || !pawn.Awake())
+            // 原版没躺上目标床会立刻失败且不写冷却 同一 tick 会反复重开
+            if (!RHAH_FertilityRules.RoomLovinReady(
+                Find.TickManager.TicksGame,
+                pawn.mindState == null ? 0 : pawn.mindState.canLovinTick,
+                pawn.Drafted,
+                pawn.Awake(),
+                pawn.CurJobDef == JobDefOf.Lovin))
             {
                 return;
             }
 
             VersePawn partner = Partner(pawn);
-            Building_Bed bed = partner == null ? null : pawn.CurrentBed() ?? partner.CurrentBed();
-            if (partner == null || bed == null || !RHAH_Fertility.CanProduce(pawn, partner))
+            Building_Bed bed = pawn.CurrentBed();
+            if (!RHAH_FertilityRules.RoomLovinBed(
+                bed != null,
+                bed != null && bed.Medical,
+                partner != null && partner.CurrentBed() == bed,
+                partner?.mindState == null ? 0 : partner.mindState.canLovinTick,
+                Find.TickManager.TicksGame) ||
+                !RHAH_Fertility.CanProduce(pawn, partner))
             {
                 return;
             }
 
+            int until = Find.TickManager.TicksGame + RHAH_FertilityRules.MinRoomLovinCooldownTicks;
+            pawn.mindState.canLovinTick = until;
+            partner.mindState.canLovinTick = until;
             __result = JobMaker.MakeJob(JobDefOf.Lovin, partner, bed);
         }
 
