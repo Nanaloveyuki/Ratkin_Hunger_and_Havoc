@@ -4,6 +4,7 @@ using HungerAndHavoc.Core;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using Verse.AI.Group;
 
 namespace HungerAndHavoc.Pawn
 {
@@ -89,7 +90,7 @@ namespace HungerAndHavoc.Pawn
             Area_RHAH_Relief area = RHAH_ReliefArea.Get(pawn.Map);
             if (area == null || area.TrueCount == 0)
             {
-                return pawn.Position;
+                return VisitorWaitSpot(pawn);
             }
 
             IntVec3[] picked = new IntVec3[PathChecks];
@@ -113,7 +114,15 @@ namespace HungerAndHavoc.Pawn
                 }
             }
 
-            return pawn.Position;
+            return VisitorWaitSpot(pawn);
+        }
+
+        static IntVec3 VisitorWaitSpot(Verse.Pawn pawn)
+        {
+            LordJob_RHAH_Visitor visitor = pawn.GetLord()?.LordJob as LordJob_RHAH_Visitor;
+            IntVec3 spot = visitor == null ? IntVec3.Invalid : visitor.WaitSpot;
+            return spot.IsValid && spot.InBounds(pawn.Map) && spot.Standable(pawn.Map) &&
+                pawn.CanReach(spot, PathEndMode.OnCell, Danger.Deadly) ? spot : pawn.Position;
         }
 
         static void Insert(IntVec3[] picked, float[] scores, ref int count, IntVec3 cell, float distance)

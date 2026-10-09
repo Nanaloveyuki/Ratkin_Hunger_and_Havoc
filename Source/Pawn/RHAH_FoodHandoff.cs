@@ -35,7 +35,7 @@ namespace HungerAndHavoc.Pawn
 
         internal static bool Start(Verse.Pawn receiver, int count)
         {
-            if (receiver == null || count <= 0)
+            if (count <= 0 || Refusal(receiver) != null)
             {
                 return false;
             }
@@ -57,7 +57,7 @@ namespace HungerAndHavoc.Pawn
                 lord.ReceiveMemo("RHAH_WaitFood");
             }
 
-            return true;
+            return lord.CurLordToil is LordToil_RHAH_WaitFood;
         }
 
         internal static bool CanEnterFoodWait(LordToil toil)
@@ -70,7 +70,9 @@ namespace HungerAndHavoc.Pawn
         {
             Lord lord = pawn == null ? null : pawn.GetLord();
             if (!RHAH_Api.IsVisitor(pawn) || pawn.Dead || !pawn.Spawned || pawn.Downed ||
-                !(lord != null && lord.LordJob is LordJob_RHAH_Visitor))
+                !(lord != null && lord.LordJob is LordJob_RHAH_Visitor) ||
+                (!CanEnterFoodWait(lord.CurLordToil) && !(lord.CurLordToil is LordToil_RHAH_WaitFood)) ||
+                RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving)
             {
                 return "RHAH_Choice_FeedNoVisitor";
             }

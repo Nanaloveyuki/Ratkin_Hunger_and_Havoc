@@ -20,6 +20,50 @@ namespace HungerAndHavoc.Pawn
         List<Verse.Pawn> foodReceivers;
         ThingDef foodDef;
         int foodCount;
+        bool waitSpotResolved;
+
+        internal IntVec3 WaitSpot
+        {
+            get
+            {
+                ResolveWaitSpot();
+                return waitSpot;
+            }
+        }
+
+        void ResolveWaitSpot()
+        {
+            if (waitSpotResolved || lord?.lordManager?.map == null)
+            {
+                return;
+            }
+
+            Verse.Pawn searcher = null;
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                Verse.Pawn member = lord.ownedPawns[i];
+                if (!member.Spawned || member.Dead)
+                {
+                    continue;
+                }
+                searcher = member;
+                if (!member.Downed)
+                {
+                    break;
+                }
+            }
+            if (searcher == null)
+            {
+                return;
+            }
+
+            // 沿用原版访客的室外停留点 按来客自身权限检查路径
+            if (RCellFinder.TryFindRandomSpotJustOutsideColony(searcher, out IntVec3 destination))
+            {
+                waitSpot = destination;
+            }
+            waitSpotResolved = true;
+        }
 
         internal bool PreserveForAttitudeChange { get; set; }
 
@@ -61,11 +105,11 @@ namespace HungerAndHavoc.Pawn
         public override StateGraph CreateGraph()
         {
             StateGraph graph = new StateGraph();
-            LordToil_Travel travel = new LordToil_RHAH_VisitorTravel(waitSpot);
+            LordToil_Travel travel = new LordToil_RHAH_VisitorTravel(this);
             graph.AddToil(travel);
             graph.StartingToil = travel;
 
-            LordToil_RHAH_VisitorSeek seek = new LordToil_RHAH_VisitorSeek(waitSpot);
+            LordToil_RHAH_VisitorSeek seek = new LordToil_RHAH_VisitorSeek(this);
             graph.AddToil(seek);
             LordToil_RHAH_WaitFood waitFood = new LordToil_RHAH_WaitFood(this);
             graph.AddToil(waitFood);
@@ -81,6 +125,7 @@ namespace HungerAndHavoc.Pawn
             Transition toFood = new Transition(seek, waitFood, false, true);
             toFood.AddSource(travel);
             toFood.AddTrigger(new Trigger_Memo("RHAH_WaitFood"));
+            toFood.AddPostAction(new TransitionAction_EndAllJobs());
             graph.AddTransition(toFood, false);
             Transition toLeave = new Transition(seek, leave, false, true);
             toLeave.AddSource(travel);
@@ -245,10 +290,17 @@ namespace HungerAndHavoc.Pawn
         {
             return pawn != null && foodReceivers != null && foodReceivers.Contains(pawn);
         }
+        internal void EndFoodWait()
+        {
+            foodReceivers?.Clear();
+            foodDef = null;
+            foodCount = 0;
+        }
+
 
         bool FoodWaitExpired()
         {
-            if (foodReceivers == null)
+            if (foodReceivers == null || foodReceivers.Count == 0)
             {
                 return false;
             }
@@ -256,13 +308,13 @@ namespace HungerAndHavoc.Pawn
             for (int i = 0; i < foodReceivers.Count; i++)
             {
                 Verse.Pawn receiver = foodReceivers[i];
-                if (FoodWaitExpired(receiver, receiver == null ? null : RHAH_Api.Get(receiver)))
+                if (WaitingForFood(receiver) && !FoodWaitExpired(receiver, RHAH_Api.Get(receiver)))
                 {
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         static bool FoodWaitExpired(Verse.Pawn pawn, IRHAH_Pawn snapshot)
@@ -370,12 +422,18 @@ namespace HungerAndHavoc.Pawn
 
     internal sealed class LordToil_RHAH_VisitorTravel : LordToil_Travel
     {
-        internal LordToil_RHAH_VisitorTravel(IntVec3 destination) : base(destination)
+        readonly LordJob_RHAH_Visitor job;
+        bool dutiesReady;
+
+        internal LordToil_RHAH_VisitorTravel(LordJob_RHAH_Visitor job) : base(job.WaitSpot)
         {
+            this.job = job;
         }
 
         public override void UpdateAllDuties()
         {
+            SetDestination(job.WaitSpot);
+            dutiesReady = true;
             // TravelOrLeave 到不了点就出图 入场点在边缘时会立刻离开
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
@@ -386,25 +444,66 @@ namespace HungerAndHavoc.Pawn
                 pawn.mindState.duty = duty;
             }
         }
+
+        public override void LordToilTick()
+        {
+            // 读档会恢复旧赶路数据 首次运行时按停留点重建职责
+            if (!dutiesReady)
+            {
+                UpdateAllDuties();
+            }
+            if (Find.TickManager.TicksGame % 205 != 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                Verse.Pawn pawn = lord.ownedPawns[i];
+                // 倒地和不能自走的幼年来客留在照护组 不阻挡其他人寻食
+                if (!pawn.Spawned || !Compat.RHAH_ChildMovement.CanWalkOut(pawn) ||
+                    RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving)
+                {
+                    continue;
+                }
+                if (!pawn.Position.InHorDistOf(Data.dest, AllArrivedCheckRadius) ||
+                    !pawn.CanReach(Data.dest, PathEndMode.ClosestTouch, Danger.Deadly))
+                {
+                    return;
+                }
+            }
+            lord.ReceiveMemo("TravelArrived");
+        }
     }
 
     internal sealed class LordToil_RHAH_VisitorSeek : LordToil
     {
-        readonly IntVec3 waitSpot;
+        readonly LordJob_RHAH_Visitor job;
+        bool dutiesReady;
 
-        public LordToil_RHAH_VisitorSeek(IntVec3 waitSpot)
+        public LordToil_RHAH_VisitorSeek(LordJob_RHAH_Visitor job)
         {
-            this.waitSpot = waitSpot;
+            this.job = job;
         }
 
         public override void UpdateAllDuties()
         {
+            IntVec3 waitSpot = job.WaitSpot;
+            dutiesReady = true;
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
                 Verse.Pawn pawn = lord.ownedPawns[i];
                 pawn.mindState.duty = RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving
                     ? new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave)
                     : new PawnDuty(RHAH_DefOf.RHAH_VisitorSeek, waitSpot, 10f);
+            }
+        }
+
+        public override void LordToilTick()
+        {
+            if (!dutiesReady)
+            {
+                UpdateAllDuties();
             }
         }
     }
@@ -449,6 +548,35 @@ namespace HungerAndHavoc.Pawn
                     : new PawnDuty(DutyDefOf.WanderClose_NoNeeds, pawn.Position, 3f);
             }
         }
+        public override void LordToilTick()
+        {
+            if (Find.TickManager.TicksGame % 197 != 0)
+            {
+                return;
+            }
+            for (int i = 0; i < lord.ownedPawns.Count; i++)
+            {
+                Verse.Pawn pawn = lord.ownedPawns[i];
+                IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
+                if (snapshot == null || snapshot.Lifecycle == RHAH_Lifecycle.Leaving ||
+                    !RHAH_BatchAttitude.CanOrderLeave(pawn) || !LordJob_RHAH_Visitor.ReadyToLeave(pawn, snapshot))
+                {
+                    continue;
+                }
+                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
+                pawn.mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
+                if (pawn.CurJob != null)
+                {
+                    pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
+                }
+            }
+        }
+
+        public override void Cleanup()
+        {
+            job.EndFoodWait();
+        }
+
 
         public override IEnumerable<FloatMenuOption> ExtraFloatMenuOptions(Verse.Pawn requester, Verse.Pawn current)
         {

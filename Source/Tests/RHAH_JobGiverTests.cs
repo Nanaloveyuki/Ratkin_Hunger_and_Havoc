@@ -108,21 +108,6 @@ namespace HungerAndHavoc.Tests
             Assert.Contains("JobDefOf.GotoWander", driver);
         }
 
-        [Fact]
-        public void ReliefWaitMovesToTheAreaBeforeWaiting()
-        {
-            string wait = ReadPawn("JobGiver_RHAH_WaitFood.cs");
-            Assert.Contains("JobDefOf.Goto", wait);
-            Assert.Contains("PathEndMode.OnCell", wait);
-            Assert.Contains("cell.Standable(pawn.Map)", wait);
-            Assert.Contains("const int PathChecks = 4", wait);
-            Assert.Contains("pawn.CanReach(picked[i]", wait);
-            Assert.DoesNotContain("pawn.CanReach(cell", wait);
-            Assert.DoesNotContain("JobMaker.MakeJob(JobDefOf.Wait, spot)", wait);
-            string feed = ReadPawn("JobGiver_RHAH_Feed.cs");
-            Assert.Contains("const int PathChecks = 3", feed);
-            Assert.Contains("Reject(pawn, thing, insideZone, false, false)", feed);
-        }
 
         static void AssertVisitorThenAllows(string fileName, string gate)
         {

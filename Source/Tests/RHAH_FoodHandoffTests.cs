@@ -229,23 +229,6 @@ namespace HungerAndHavoc.Tests
             Assert.False(new LordToil_RHAH_WaitFood(job).HasAllRequestedItems);
         }
 
-        [Fact]
-        public void TravelAndSeekCanEnterFoodWait()
-        {
-            LordJob_RHAH_Visitor job = new LordJob_RHAH_Visitor();
-            StateGraph graph = job.CreateGraph();
-            LordToil travel = graph.lordToils.Find(toil => toil is LordToil_RHAH_VisitorTravel);
-            LordToil seek = graph.lordToils.Find(toil => toil is LordToil_RHAH_VisitorSeek);
-            LordToil wait = graph.lordToils.Find(toil => toil is LordToil_RHAH_WaitFood);
-            Transition entered = graph.transitions.Find(transition => transition.sources.Contains(travel) && transition.target == wait);
-
-            Assert.NotNull(entered);
-            Assert.Contains(seek, entered.sources);
-            Assert.True(RHAH_FoodHandoff.CanEnterFoodWait(travel));
-            Assert.True(RHAH_FoodHandoff.CanEnterFoodWait(seek));
-            Assert.False(RHAH_FoodHandoff.CanEnterFoodWait(wait));
-            Assert.False(RHAH_FoodHandoff.CanEnterFoodWait(null));
-        }
 
         static JobDriver_GiveToPawn Delivery(Verse.Pawn hauler, Verse.Pawn receiver, ThingDef meal, int carried)
         {

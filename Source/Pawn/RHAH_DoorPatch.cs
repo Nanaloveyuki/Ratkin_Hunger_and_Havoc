@@ -13,7 +13,8 @@ namespace HungerAndHavoc.Pawn
     {
         static void Postfix(Building_Door __instance, Verse.Pawn p, ref bool __result)
         {
-            if (!__result || !RHAH_Api.IsVisitor(p))
+            if (!__result || p?.Faction == null || p.Faction.IsPlayer ||
+                !RHAH_AttitudeFactions.IsAttitudeFaction(p.Faction) || !RHAH_Api.IsVisitor(p))
             {
                 return;
             }
