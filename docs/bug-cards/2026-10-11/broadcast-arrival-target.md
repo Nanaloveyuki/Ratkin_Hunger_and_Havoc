@@ -52,4 +52,4 @@
 - 恢复温度后真实生成 5 名访客到 map0，仅新增一封到达选择信，队伍销毁；再次存读，信的 5 个目标仍全部在 map0，另一地图没有该批访客
 - 让原 map0 无法按保存 ID 解析后，到达队伍终止，地图 1 未生成该批访客；日志明确记录 `Saved map is gone. map=0`
 - 边界：本次集成烟雾直接驱动接近队伍入口，未重新操作通讯台完整作业。缺少玩家原档，不能断言该目标碰撞覆盖所有间歇原因
-- 隔离游戏保留了旧 ODF 可选 `Oxygendsl.Rhah` 适配程序集，其 `IRHAH_PawnBehavior` 类型加载报错；核心 ODF 与本模组事件链已加载。该外部程序集兼容问题独立于五条反馈，未修改其它仓库或扩大 API
+- 当时隔离游戏的 ODF 可选 `Oxygendsl.Rhah` 适配器出现 `IRHAH_PawnBehavior` 类型加载报错，核心 ODF 与本模组事件链已加载。后续核对证明不是旧适配器或 API 删除，而是 ODF 先于 RHAH 加载时提前扫描了反向依赖；独立修复与验收见 [odf-rhah-adapter-load-order.md](odf-rhah-adapter-load-order.md)，本广播修复没有改 API
