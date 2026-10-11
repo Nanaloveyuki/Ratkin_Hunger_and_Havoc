@@ -137,6 +137,10 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(7, RHAH_IncidentSchedule.DecodeTargetId(-7, RHAH_IncidentTarget.Caravan));
             Assert.Equal(0, RHAH_IncidentSchedule.DecodeTargetId(12, RHAH_IncidentTarget.Caravan));
             Assert.Equal(0, RHAH_IncidentSchedule.DecodeTargetId(-7, RHAH_IncidentTarget.Map));
+            Assert.Equal(int.MinValue, RHAH_IncidentSchedule.TargetId(caravan: false, 0));
+            Assert.NotEqual(RHAH_IncidentSchedule.UnspecifiedTargetId, RHAH_IncidentSchedule.MapZeroTargetId);
+            Assert.Equal(0, RHAH_IncidentSchedule.DecodeTargetId(int.MinValue, RHAH_IncidentTarget.Map));
+            Assert.Equal(0, RHAH_IncidentSchedule.DecodeTargetId(int.MinValue, RHAH_IncidentTarget.Caravan));
         }
 
         [Fact]

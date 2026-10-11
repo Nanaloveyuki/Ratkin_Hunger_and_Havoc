@@ -13,6 +13,7 @@ namespace HungerAndHavoc.Core
         internal readonly HashSet<string> OwnedClasses = new HashSet<string>(StringComparer.Ordinal);
         internal readonly HashSet<string> ThingDefs = new HashSet<string>(StringComparer.Ordinal);
         internal readonly HashSet<string> GeneDefs = new HashSet<string>(StringComparer.Ordinal);
+        internal readonly HashSet<string> ThoughtStageKeys = new HashSet<string>(StringComparer.Ordinal);
         internal readonly HashSet<string> CampObjectDefs = new HashSet<string>(StringComparer.Ordinal);
         internal readonly HashSet<string> CampObjectClasses = new HashSet<string>(StringComparer.Ordinal);
         internal readonly Dictionary<string, string> Replacements = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -95,6 +96,16 @@ namespace HungerAndHavoc.Core
                 else
                 {
                     Remove(node);
+                }
+            }
+
+            foreach (XElement cache in ContentNodes(game).Where(item => item.Name == "SpokenThoughtTicks" &&
+                item.Parent?.Parent?.Name == "hediffs").ToList())
+            {
+                foreach (XElement key in (cache.Element("keys")?.Elements("li") ?? Enumerable.Empty<XElement>())
+                    .Where(item => plan.ThoughtStageKeys.Contains(item.Value)).ToList())
+                {
+                    Remove(key);
                 }
             }
 

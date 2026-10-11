@@ -70,16 +70,16 @@
   <RHAH_Menu_Content_conflict>冲突</RHAH_Menu_Content_conflict>
   <RHAH_Menu_Content_siege>围攻</RHAH_Menu_Content_siege>
   <RHAH_Settings_ShelterDays>短工：{0}</RHAH_Settings_ShelterDays>
-  <RHAH_Settings_ShelterDays_Tooltip>短工到期后离开。最短 5 天，最长 1 年，默认 5 天。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_ShelterDays_Tooltip>
+  <RHAH_Settings_ShelterDays_Tooltip>短工到期后离开。最短 5 天，最长 1 年，默认 5 天。如果来客因伤病倒地，期限暂停，恢复后继续；还不能走路的孩子到期后由同组照护者带走。</RHAH_Settings_ShelterDays_Tooltip>
   <RHAH_Settings_HireDays>长工：{0}</RHAH_Settings_HireDays>
-  <RHAH_Settings_HireDays_Tooltip>长工到期后离开。最短 5 天，最长 10 年，默认 1 年。倒地时不消失，醒来后继续剩下的时间。</RHAH_Settings_HireDays_Tooltip>
+  <RHAH_Settings_HireDays_Tooltip>长工到期后离开。最短 5 天，最长 10 年，默认 1 年。如果来客因伤病倒地，期限暂停，恢复后继续；还不能走路的孩子到期后由同组照护者带走。</RHAH_Settings_HireDays_Tooltip>
   <RHAH_Stay_Year>1 年</RHAH_Stay_Year>
   <RHAH_Stay_Years>{0} 年</RHAH_Stay_Years>
   <RHAH_Stay_YearsDays>{0} 年 {1} 天</RHAH_Stay_YearsDays>
   <RHAH_Stay_Day>1 天</RHAH_Stay_Day>
   <RHAH_Stay_Days>{0} 天</RHAH_Stay_Days>
   <RHAH_Stay_Inspect>{0}后离开</RHAH_Stay_Inspect>
-  <RHAH_Stay_InspectPaused>倒地，离开倒计时暂停（剩余 {0}）</RHAH_Stay_InspectPaused>
+  <RHAH_Stay_InspectPaused>因伤病倒地，离开倒计时暂停（剩余 {0}）</RHAH_Stay_InspectPaused>
   <RHAH_Settings_ColdClothes>给新来客一件温度衣</RHAH_Settings_ColdClothes>
   <RHAH_Settings_ColdClothes_Tooltip>地图气温超出新来客能受的范围时，发一件刚好够用的温度衣。都不够时用最厚的一件。已经穿过的不再换。关闭后不额外发衣。</RHAH_Settings_ColdClothes_Tooltip>
   <RHAH_Settings_TempMin>事件最低气温：{0}°C</RHAH_Settings_TempMin>

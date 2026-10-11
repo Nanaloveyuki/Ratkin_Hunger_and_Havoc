@@ -132,7 +132,18 @@ namespace HungerAndHavoc.Trade
 
             EventMgr.RHAH_EventChainEntry.NoteStarted(entry.DisplayId, destination == null ? 0 : map.uniqueID,
                 caravan == null ? 0 : caravan.ID, Find.TickManager.TicksGame, tick + 1);
+            Find.LetterStack.ReceiveLetter(CreateAmbushLetter(entry, attackers, faction));
+            if (destination == null)
+            {
+                Find.TickManager.Notify_GeneratedPotentiallyHostileMap();
+            }
             return true;
+        }
+
+        internal static ChoiceLetter CreateAmbushLetter(RHAH_IncidentEntry entry, List<Verse.Pawn> attackers, Faction faction)
+        {
+            return LetterMaker.MakeLetter(entry.LabelKey.Translate(), "RHAH_CaravanAmbush_LetterText".Translate(),
+                LetterDefOf.ThreatBig, new LookTargets(attackers), faction);
         }
 
         internal static Faction RequireAmbushFaction()

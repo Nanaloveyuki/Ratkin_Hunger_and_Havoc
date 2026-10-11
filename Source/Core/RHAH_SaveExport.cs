@@ -120,6 +120,14 @@ namespace HungerAndHavoc.Core
                 plan.GeneDefs.Add(def.defName);
             }
 
+            foreach (ThoughtDef def in content.AllDefs.OfType<ThoughtDef>())
+            {
+                for (int i = 0; i < (def.stages?.Count ?? 0); i++)
+                {
+                    plan.ThoughtStageKeys.Add(def.defName + "_" + i);
+                }
+            }
+
             plan.CampObjectDefs.Add("RHAH_RefugeeCamp");
             plan.CampObjectDefs.Add("RHAH_RecordSite");
             plan.CampObjectDefs.Add("RHAH_Interception");

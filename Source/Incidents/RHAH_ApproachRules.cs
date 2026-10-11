@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using RimWorld.Planet;
 
 namespace HungerAndHavoc.Incidents
@@ -61,21 +60,6 @@ namespace HungerAndHavoc.Incidents
             return MinTiles + offset;
         }
 
-        internal static int PickHome(IReadOnlyList<int> homeIds, int roll)
-        {
-            if (homeIds == null || homeIds.Count == 0)
-            {
-                return 0;
-            }
-
-            int index = roll % homeIds.Count;
-            if (index < 0)
-            {
-                index += homeIds.Count;
-            }
-
-            return homeIds[index];
-        }
 
         internal static bool CanWalk(bool impassable, bool crossSea)
         {

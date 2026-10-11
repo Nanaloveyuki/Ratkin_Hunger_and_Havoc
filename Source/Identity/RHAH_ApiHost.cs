@@ -108,6 +108,7 @@ namespace HungerAndHavoc.Identity
             if (lifecycle == RHAH_Lifecycle.Released || lifecycle == RHAH_Lifecycle.Dead)
             {
                 global::HungerAndHavoc.Pawn.RHAH_VisitorStay.UnlockShortStayApparel(pawn, comp);
+                comp.SetStay(0, -1, 0);
             }
 
             RHAH_Api.RaiseLifecycleChanged(pawn, comp.ToSnapshot(), lifecycle);

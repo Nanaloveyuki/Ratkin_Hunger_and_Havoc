@@ -82,13 +82,6 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_ApproachRules.IncludeApproachMenu(true, false, true, false));
         }
 
-        [Fact]
-        public void SingleHomeIsTheOnlyTarget()
-        {
-            Assert.Equal(7, RHAH_ApproachRules.PickHome(new List<int> { 7 }, 4));
-            Assert.Equal(9, RHAH_ApproachRules.PickHome(new List<int> { 7, 9 }, 1));
-            Assert.Equal(0, RHAH_ApproachRules.PickHome(null, 1));
-        }
 
         [Fact]
         public void AdjacentPathYieldsTheColonyOnce()

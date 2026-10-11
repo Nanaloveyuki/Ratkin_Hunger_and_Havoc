@@ -70,16 +70,16 @@
   <RHAH_Menu_Content_conflict>衝突</RHAH_Menu_Content_conflict>
   <RHAH_Menu_Content_siege>包囲</RHAH_Menu_Content_siege>
   <RHAH_Settings_ShelterDays>短期雇用：{0}</RHAH_Settings_ShelterDays>
-  <RHAH_Settings_ShelterDays_Tooltip>短期労働者は契約期間が終わると立ち去ります。最短5日、最長1年、初期値は5日。倒れても消えず、起き上がると残りの期間を再開します。</RHAH_Settings_ShelterDays_Tooltip>
+  <RHAH_Settings_ShelterDays_Tooltip>短期労働者は契約期間が終わると立ち去ります。最短5日、最長1年、初期値は5日。けがや病気で倒れた訪問者の期間は回復まで一時停止します。幼くて歩けない子供は、期間が終わると同じグループの世話役に運ばれて立ち去ります。</RHAH_Settings_ShelterDays_Tooltip>
   <RHAH_Settings_HireDays>長期雇用：{0}</RHAH_Settings_HireDays>
-  <RHAH_Settings_HireDays_Tooltip>長期労働者は契約期間が終わると立ち去ります。最短5日、最長10年、初期値は1年。倒れても消えず、起き上がると残りの期間を再開します。</RHAH_Settings_HireDays_Tooltip>
+  <RHAH_Settings_HireDays_Tooltip>長期労働者は契約期間が終わると立ち去ります。最短5日、最長10年、初期値は1年。けがや病気で倒れた訪問者の期間は回復まで一時停止します。幼くて歩けない子供は、期間が終わると同じグループの世話役に運ばれて立ち去ります。</RHAH_Settings_HireDays_Tooltip>
   <RHAH_Stay_Year>1年</RHAH_Stay_Year>
   <RHAH_Stay_Years>{0}年</RHAH_Stay_Years>
   <RHAH_Stay_YearsDays>{0}年{1}日</RHAH_Stay_YearsDays>
   <RHAH_Stay_Day>1日</RHAH_Stay_Day>
   <RHAH_Stay_Days>{0}日</RHAH_Stay_Days>
   <RHAH_Stay_Inspect>{0}後に立ち去る</RHAH_Stay_Inspect>
-  <RHAH_Stay_InspectPaused>倒れている。退去のカウントダウンは一時停止（残り{0}）</RHAH_Stay_InspectPaused>
+  <RHAH_Stay_InspectPaused>けがや病気で倒れている。退去のカウントダウンは一時停止（残り{0}）</RHAH_Stay_InspectPaused>
   <RHAH_Settings_ColdClothes>新しい訪問者に耐寒・耐暑服を支給</RHAH_Settings_ColdClothes>
   <RHAH_Settings_ColdClothes_Tooltip>マップの気温が新しい訪問者の耐えられる範囲を外れた場合、必要な防護を満たす最も薄い耐寒・耐暑服を支給します。どれも足りなければ最も厚い服を使います。すでに着ている服は交換しません。オフの場合、追加の衣服は支給しません。</RHAH_Settings_ColdClothes_Tooltip>
   <RHAH_Settings_TempMin>イベントが発生する最低気温：{0}°C</RHAH_Settings_TempMin>

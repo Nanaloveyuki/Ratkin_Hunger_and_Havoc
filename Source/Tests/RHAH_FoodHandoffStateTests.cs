@@ -95,6 +95,7 @@ namespace HungerAndHavoc.Tests
             Assert.False(wait.HasAllRequestedItems);
         }
 
+
         static void MapFor(params Verse.Pawn[] pawns)
         {
             Map map = Uninitialized<Map>();

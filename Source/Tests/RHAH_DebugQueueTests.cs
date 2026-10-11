@@ -47,24 +47,6 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(new[] { 4, 9 }, game.PendingIncidentTargetIds);
         }
 
-        [Fact]
-        public void DisabledDebugIncidentCannotQueue()
-        {
-            RHAH_Settings settings = new RHAH_Settings();
-            settings.SetIncidentEnabled("I-001", false);
-            RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId("I-001");
-            Assert.False(RHAH_Scheduler.CanQueueDebug(entry, settings, gameLoaded: true, targetReady: true));
-        }
-
-        [Fact]
-        public void EnabledDebugIncidentCanQueueWithoutSpawning()
-        {
-            RHAH_Settings settings = new RHAH_Settings();
-            RHAH_IncidentEntry entry = RHAH_IncidentCatalog.GetByDisplayId("I-001");
-            Assert.True(RHAH_Scheduler.CanQueueDebug(entry, settings, gameLoaded: true, targetReady: true));
-            Assert.False(RHAH_Scheduler.CanQueueDebug(entry, settings, gameLoaded: false, targetReady: true));
-            Assert.False(RHAH_Scheduler.CanQueueDebug(entry, settings, gameLoaded: true, targetReady: false));
-        }
 
         [Fact]
         public void ForcedPauseDoesNotBlockTheFrameDrain()

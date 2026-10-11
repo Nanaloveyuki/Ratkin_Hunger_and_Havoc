@@ -57,7 +57,13 @@ namespace HungerAndHavoc.Pawn
                 lord.ReceiveMemo("RHAH_WaitFood");
             }
 
-            return lord.CurLordToil is LordToil_RHAH_WaitFood;
+            if (!(lord.CurLordToil is LordToil_RHAH_WaitFood))
+            {
+                return false;
+            }
+
+            RHAH_BatchAttitude.AcceptFood(receiver);
+            return true;
         }
 
         internal static bool CanEnterFoodWait(LordToil toil)

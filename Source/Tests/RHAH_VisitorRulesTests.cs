@@ -221,6 +221,32 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_VisitorRules.RejectsSelfExit(false, true, false));
         }
 
+        [Theory]
+        [InlineData(false, true, false, false, true, false)]
+        [InlineData(true, true, false, false, true, false)]
+        [InlineData(true, false, false, false, true, true)]
+        [InlineData(true, true, true, false, true, true)]
+        [InlineData(true, true, false, true, true, true)]
+        [InlineData(true, true, false, false, false, true)]
+        public void OnlyMedicalDowningPausesChildStay(bool downed, bool ageDowned, bool forcedDowned, bool painShock, bool awake, bool expected)
+        {
+            Assert.Equal(expected, RHAH_VisitorRules.PausesStay(downed, ageDowned, forcedDowned, painShock, awake));
+        }
+
+        [Theory]
+        [InlineData(true, RHAH_Lifecycle.Leaving, 0, false, false, true)]
+        [InlineData(true, RHAH_Lifecycle.Released, 0, false, false, false)]
+        [InlineData(true, RHAH_Lifecycle.Dead, 0, false, false, false)]
+        [InlineData(true, RHAH_Lifecycle.SeekingFood, 0, false, false, false)]
+        [InlineData(true, RHAH_Lifecycle.Leaving, 1, false, false, false)]
+        [InlineData(true, RHAH_Lifecycle.Leaving, 0, true, false, false)]
+        [InlineData(true, RHAH_Lifecycle.Leaving, 0, false, true, false)]
+        [InlineData(false, RHAH_Lifecycle.Leaving, 0, false, false, false)]
+        public void LegacyDepartureRecoveryNeverClaimsPermanentOrCurrentColonyMembers(bool player, RHAH_Lifecycle lifecycle, int stayKind, bool prisoner, bool slave, bool expected)
+        {
+            Assert.Equal(expected, RHAH_VisitorRules.RestoresStuckDeparture(player, lifecycle, stayKind, prisoner, slave));
+        }
+
         [Fact]
         public void ColonyStayBlocksModBehaviorAndExpiredWorkKeepsDefense()
         {

@@ -61,7 +61,7 @@ namespace HungerAndHavoc.Identity
                 comp.State.stayKind,
                 now,
                 comp.State.leaveAfterGameTick,
-                pawn != null && pawn.Downed,
+                Pawn.RHAH_VisitorStay.PausesStay(pawn),
                 comp.State.stayRemainingTicks);
         }
     }

@@ -48,6 +48,7 @@ ODF 根组件、根 `eventChainSchemaVersion` 和框架类型属于 Oxygen DSL F
 - 身份 Hediff `RHAH_HungerMark` 及其 `CompRHAH_Pawn`。来源、角色、生命周期、`extraData` 一起消失。其它模组写在 `extraData` 里的键不保留
 - 本模组其它 Hediff、记忆、精神状态、本模组基因条目、特质、本模组衣物、观音土、观音土账单
 - 引用这些东西的当前 Job、排队 Job、预约。Scribe 字典的 keys 与 values 保持等长
+- 外部 Hediff 的 `SpokenThoughtTicks` 只移除本包 ThoughtDef 实际阶段组成的精确缓存键及对应 tick。外部 Hediff 和其余键值保留；未知阶段和其它位置同名文本继续按未知引用中止
 - 访客 Lord。Pawn 回到原版 ThinkTree
 - 选择信、本模组 LetterDef、进行中的 `RHAH_RefugeeMassacre` 任务及其尚未生成的世界物体
 - `Area_RHAH_Relief`。格子不并入家区
@@ -109,3 +110,5 @@ ODF 根组件、根 `eventChainSchemaVersion` 和框架类型属于 Oxygen DSL F
 - RHAH provider 分区删除，ODF 根组件、根 schema、其它 provider 和 ODF meta 保留；失败迁移的原记录随 RHAH 组件删除
 
 2026-10-11 ODF 切换验收在独立 RimWorld 1.6.4871 中完成：真实导出备份先保存 Active 分区，再停用 live provider；已有来客、捕食者和叙事事实保留。清理副本只删 RHAH 分区，未知 owner 原 XML、ODF 根、schema 和 meta 保留。随后用不启用 RHAH 及其闸门样例的新进程，实际加载清理副本、运行 10 tick、保存、重新加载、再运行 2 tick。原玩家安装、配置和存档未覆盖。此前 2026-09-29 的验收不作为此次切换证据；本次原始回执见相邻 ODF 仓库的 `tmp/eventchain-acceptance/`。
+
+2026-10-11 对外部 `SpokenThoughtTicks` 增加实际 ThoughtDef 阶段精确清理。真实隔离游戏导出后仅停用 RHAH，保留前置并加载两图副本，推进 120 tick。未发现本模组字符串引用残留；加载仍有原版袭击 Lord trigger 索引及整数 think node 缓存缺失警告，未将可加载算成零警告。详见 `bug-cards/2026-10-11/unload-spoken-thought-cache.md`。

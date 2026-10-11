@@ -16,7 +16,7 @@
     <defName>RHAH_VisitorLeave</defName>
     <thinkNode Class="ThinkNode_Priority">
       <subNodes>
-        <li Class="HungerAndHavoc.Pawn.JobGiver_RHAH_Leave" />
+        <li Class="HungerAndHavoc.Pawn.JobGiver_RHAH_Visitor" />
       </subNodes>
     </thinkNode>
   </DutyDef>

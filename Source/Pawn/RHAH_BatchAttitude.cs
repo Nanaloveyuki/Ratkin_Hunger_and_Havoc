@@ -122,25 +122,62 @@ namespace HungerAndHavoc.Pawn
                     continue;
                 }
 
-                LordJob_RHAH_Visitor visitor = member.GetLord()?.LordJob as LordJob_RHAH_Visitor;
-                PawnDuty duty = member.mindState?.duty;
+                SetVisitorFaction(member, hostile);
+            }
+        }
+
+        internal static void AcceptFood(Verse.Pawn receiver)
+        {
+            Faction neutral = RHAH_AttitudeFactions.Require(RHAH_Attitude.Neutral);
+            if (neutral == null || !CanOrderLeave(receiver))
+            {
+                return;
+            }
+
+            List<Verse.Pawn> members = Collect(receiver.MapHeld, CompRHAH_Pawn.TryGet(receiver).State.spawnBatchId);
+            if (members.Count == 0)
+            {
+                members.Add(receiver);
+            }
+            for (int i = 0; i < members.Count; i++)
+            {
+                if (CompRHAH_Pawn.TryGet(members[i]).State.attitude != RHAH_Attitude.Hostile)
+                {
+                    continue;
+                }
+                CompRHAH_Pawn.TryGet(members[i]).State.SetAttitude(RHAH_Attitude.Neutral);
+                SetVisitorFaction(members[i], neutral);
+            }
+        }
+
+        internal static void SetVisitorFaction(Verse.Pawn member, Faction faction)
+        {
+            Lord lord = member.GetLord();
+            LordJob_RHAH_Visitor visitor = lord?.LordJob as LordJob_RHAH_Visitor;
+            PawnDuty duty = member.mindState?.duty;
+            if (visitor != null)
+            {
+                visitor.PreserveForAttitudeChange = true;
+            }
+            try
+            {
+                if (member.Faction != faction)
+                {
+                    member.SetFaction(faction);
+                }
                 if (visitor != null)
                 {
-                    visitor.PreserveForAttitudeChange = true;
+                    visitor.SetFaction(faction);
                 }
-                try
+            }
+            finally
+            {
+                if (visitor != null)
                 {
-                    member.SetFaction(hostile);
-                }
-                finally
-                {
-                    if (visitor != null)
+                    visitor.PreserveForAttitudeChange = false;
+                    if (member.mindState != null)
                     {
-                        visitor.PreserveForAttitudeChange = false;
-                        if (member.mindState != null)
-                        {
-                            member.mindState.duty = duty;
-                        }
+                        member.mindState.duty = duty;
                     }
                 }
             }

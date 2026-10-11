@@ -61,12 +61,12 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | lifecycle | lifecycle | Arriving | 否 | `RHAH_Lifecycle` |
 | hasBeenFed | hasBeenFed | false | 否 | |
 | leaveAfterGameTick | leaveAfterGameTick | -1 | 否 | |
-| stayKind | stayKind | 0 | 否 | 0 无，1 收留，2 雇佣 |
-| stayRemainingTicks | stayRemainingTicks | 0 | 否 | 倒地时冻结的剩余 tick |
-| foodWaitUntilTick | foodWaitUntilTick | -1 | 否 | 断粮等待截止。找到食物后回到 -1 |
+| stayKind | stayKind | 0 | 否 | 0 无，1 收留，2 雇佣，3 临时征募。到期、Released 或 Dead 清为 0；Released 终态优先于旧期限 |
+| stayRemainingTicks | stayRemainingTicks | 0 | 否 | 医疗倒地时冻结的剩余 tick，暂停期间滚动原离场期限；年龄不能行走不暂停。到期或终态清为 0 |
+| foodWaitUntilTick | foodWaitUntilTick | -1 | 否 | 断粮或交接等待截止。未收齐交接者按本人截止离场；本人收齐清为 -1，真实进食才写 Fed |
 | carriesPlague | carriesPlague | false | 否 | |
 | attitudeAtArrival | attitudeAtArrival | Neutral | 否 | `RHAH_Attitude` |
-| attitude | attitude | Neutral | 否 | 当前 `RHAH_Attitude`。旧档缺键且到达态度不是 Neutral 时回退到 `attitudeAtArrival` |
+| attitude | attitude | Neutral | 否 | 当前 `RHAH_Attitude`，forceSave 保留明确 Neutral 停战。仅旧档缺键时回退到 `attitudeAtArrival`；键、类型和默认值不变 |
 | parentPawnLoadId | parentPawnLoadId | 0 | 否 | |
 | childPawnLoadIds | childPawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
 | gateOverrides | gateOverrides | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同 |
@@ -294,7 +294,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp`、`RHAH_App
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | active generation batches | activeGenerationBatches | Remove |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | pending incident display IDs | pendingIncidentDisplayIds | Remove |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | pending incident points | pendingIncidentPoints | Remove。与显示 ID 等长。旧档缺列表时按当前调试点补齐 |
-| HungerAndHavoc.Core.GameComponent_RHAH_Game | pending incident target IDs | pendingIncidentTargetIds | Remove。与显示 ID 等长。地图为正数 uniqueID，商队为负数 -ID，0 为未指定。旧档缺列表时按 0 补齐。null 与空集合都是空队列 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | pending incident target IDs | pendingIncidentTargetIds | Remove。与显示 ID 等长。地图为正数 uniqueID，明确首图 0 编码为 int.MinValue；商队为负数 -ID（不包含 int.MinValue），旧 0 为未指定。旧档缺列表仍按 0 补齐，不重释为首图。null 与空集合都是空队列 |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | plague return load ID | plagueReturnLoadId | Remove |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | plague return map ID | plagueReturnMapId | Remove |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | plague return phase | plagueReturnPhase | Remove |
@@ -440,6 +440,7 @@ ODF 是必需依赖，事件链存档由 `Oxygendsl.Mod.GameComponent_Oxygendsl`
 | RHAH_Thought_PlagueLeft, RHAH_Thought_PlagueLived, RHAH_Thought_OrphanBad, RHAH_Thought_OrphanGood, RHAH_Thought_TraderSilent | ThoughtDef | Remove |
 | RHAH_Thought_CleanBirth, RHAH_Thought_NextBirth, RHAH_Thought_BornSick, RHAH_Thought_DropSick, RHAH_Thought_DropLived, RHAH_Thought_WrongSick, RHAH_Thought_WrongFed | ThoughtDef | Remove |
 | RHAH_Thought_ScavengedFilth, RHAH_Thought_TailBitten, RHAH_Thought_BitATail, RHAH_Thought_AteRatEggMeal | ThoughtDef | Remove |
+| 外部 Hediff 的 SpokenThoughtTicks | 字符串思想阶段缓存 | Remove。仅在 healthTracker/hediffSet/hediffs 下的外部 Hediff 中，按本包已加载 ThoughtDef 的实际 stages 生成精确 defName_stageIndex 白名单；删除匹配的 keys/li 及同索引 values/li。外部 Hediff、外部键和 tick 配对保留；未知阶段或其它位置同名文本仍中止导出，不按前缀猜删 |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_YoungInNeed | 无存档字段 | Remove |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_NearbyDisease | 无存档字段 | Remove |
 

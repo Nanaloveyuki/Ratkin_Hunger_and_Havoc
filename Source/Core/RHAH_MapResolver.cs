@@ -43,7 +43,7 @@ namespace HungerAndHavoc.Core
 
         internal static Map MapById(int mapId)
         {
-            if (mapId <= 0 || Find.Maps == null)
+            if (mapId < 0 || Find.Maps == null)
             {
                 return null;
             }
@@ -105,7 +105,8 @@ namespace HungerAndHavoc.Core
                     : Waiting("Saved caravan is not ready.");
             }
 
-            if (rawId == HungerAndHavoc.Incidents.RHAH_IncidentSchedule.UnspecifiedTargetId)
+            if (rawId == HungerAndHavoc.Incidents.RHAH_IncidentSchedule.UnspecifiedTargetId &&
+                savedId != HungerAndHavoc.Incidents.RHAH_IncidentSchedule.MapZeroTargetId)
             {
                 Map selected = RHAH_MapResolver.Resolve();
                 return selected == null ? Waiting("No usable map.") : Ready(selected);

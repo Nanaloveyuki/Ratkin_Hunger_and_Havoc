@@ -82,9 +82,9 @@ namespace HungerAndHavoc.Identity
             Scribe_Values.Look(ref state.stayRemainingTicks, "stayRemainingTicks", 0);
             Scribe_Values.Look(ref state.carriesPlague, "carriesPlague", false);
             Scribe_Values.Look(ref state.attitudeAtArrival, "attitudeAtArrival", RHAH_Attitude.Neutral);
-            Scribe_Values.Look(ref state.attitude, "attitude", RHAH_Attitude.Neutral);
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && state.attitude == RHAH_Attitude.Neutral &&
-                state.attitudeAtArrival != RHAH_Attitude.Neutral)
+            Scribe_Values.Look(ref state.attitude, "attitude", RHAH_Attitude.Neutral, true);
+            if (Scribe.mode == LoadSaveMode.LoadingVars &&
+                Scribe.loader.curXmlParent?["attitude"] == null)
             {
                 state.attitude = state.attitudeAtArrival;
             }

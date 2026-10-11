@@ -40,11 +40,10 @@ namespace HungerAndHavoc.Pawn.Compat
             string version = string.IsNullOrEmpty(meta.ModVersion) ? "unspecified" : meta.ModVersion;
             bool supported = meta.SupportedVersionsReadOnly != null &&
                 meta.SupportedVersionsReadOnly.Any(item => item != null && item.Major == 1 && item.Minor == 6);
-            if (!supported || (!string.IsNullOrEmpty(meta.ModVersion) &&
-                !string.Equals(meta.ModVersion, SupportedVersion, StringComparison.Ordinal)))
+            if (!supported)
             {
-                Log.Warning("[RHAH] IrisMenus version " + version + " does not match supported " +
-                    SupportedVersion + ". Menu pages were not registered.");
+                Log.Warning("[RHAH] IrisMenus " + version + " does not declare RimWorld " +
+                    SupportedVersion + " support. Menu pages were not registered.");
                 return;
             }
 

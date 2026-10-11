@@ -29,6 +29,64 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(2, original.Root.Element("game").Element("components").Elements("li").First().Element("eventChainProviders").Elements("li").Count());
         }
 
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void ExportRemovesOnlyOwnedSpokenThoughtStagesAndTheirTicks(bool worldPawn)
+        {
+            XElement cache = XElement.Parse(@"<SpokenThoughtTicks><keys>
+<li>RHAH_Thought_GrainGreed_0</li><li>RHAH_Thought_GrainGreed_1</li>
+<li>Foreign_Thought_0</li><li>RHAH_Thought_BeggingRejected_0</li><li>Foreign_Thought_1</li>
+</keys><values><li>10</li><li>20</li><li>30</li><li>40</li><li>50</li></values></SpokenThoughtTicks>");
+            XElement hediff = new XElement("li", new XAttribute("Class", "Foreign.SpeechHediff"),
+                new XElement("def", "ForeignSpeech"), new XElement("loadID", "71"), cache);
+            XElement pawn = new XElement(worldPawn ? "li" : "thing", new XElement("id", "11"),
+                new XElement("healthTracker", new XElement("hediffSet", new XElement("hediffs", hediff))));
+            XElement owner = worldPawn
+                ? new XElement("world", new XElement("worldPawns", new XElement("pawnsAlive", pawn)))
+                : new XElement("maps", new XElement("li", new XElement("things", pawn)));
+            XDocument document = new XDocument(new XElement("savegame", new XElement("game", owner)));
+            RHAH_SaveCleanupPlan plan = Plan();
+            plan.ThoughtStageKeys.UnionWith(new[]
+            {
+                "RHAH_Thought_GrainGreed_0", "RHAH_Thought_GrainGreed_1", "RHAH_Thought_BeggingRejected_0"
+            });
+
+            new RHAH_SaveCleanup(plan).Clean(document);
+
+            Assert.Equal(new[] { "Foreign_Thought_0", "Foreign_Thought_1" },
+                cache.Element("keys").Elements("li").Select(item => item.Value));
+            Assert.Equal(new[] { "30", "50" }, cache.Element("values").Elements("li").Select(item => item.Value));
+            Assert.Equal("Foreign.SpeechHediff", (string)hediff.Attribute("Class"));
+            Assert.Equal("ForeignSpeech", (string)hediff.Element("def"));
+            Assert.Equal("71", (string)hediff.Element("loadID"));
+            Assert.Equal("11", (string)pawn.Element("id"));
+            string once = document.ToString();
+            new RHAH_SaveCleanup(plan).Clean(document);
+            Assert.Equal(once, document.ToString());
+        }
+
+        [Theory]
+        [InlineData("RHAH_Thought_GrainGreed_99", true)]
+        [InlineData("RHAH_Thought_Unknown_0", true)]
+        [InlineData("RHAH_Thought_GrainGreed_0", false)]
+        public void UnknownOrMisplacedSpokenThoughtStageStillAborts(string key, bool inHediff)
+        {
+            XElement cache = new XElement("SpokenThoughtTicks", new XElement("keys", new XElement("li", key)),
+                new XElement("values", new XElement("li", "123")));
+            XElement content = inHediff ? new XElement("hediffs", new XElement("li", cache)) : cache;
+            XDocument document = new XDocument(new XElement("savegame", new XElement("game", content)));
+            RHAH_SaveCleanupPlan plan = Plan();
+            plan.ThoughtStageKeys.Add("RHAH_Thought_GrainGreed_0");
+
+            InvalidOperationException error = Assert.Throws<InvalidOperationException>(
+                () => new RHAH_SaveCleanup(plan).Clean(document));
+
+            Assert.Contains(key, error.Message);
+            Assert.Equal(key, cache.Element("keys").Element("li").Value);
+            Assert.Equal("123", cache.Element("values").Element("li").Value);
+        }
+
         [Fact]
         public void ExportRemovesShortStayLocksButKeepsForeignLocks()
         {

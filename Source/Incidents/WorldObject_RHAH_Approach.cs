@@ -69,7 +69,7 @@ namespace HungerAndHavoc.Incidents
         {
             StringBuilder text = new StringBuilder();
             text.Append("RHAH_Approach_Inspect".Translate(IncidentLabel()));
-            if (mapId > 0)
+            if (mapId >= 0)
             {
                 text.AppendLine();
                 text.Append("RHAH_Approach_Target".Translate(MapLabel()));

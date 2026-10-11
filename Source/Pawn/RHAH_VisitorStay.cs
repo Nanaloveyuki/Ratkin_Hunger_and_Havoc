@@ -1,4 +1,5 @@
 using HungerAndHavoc.Api;
+using System.Collections.Generic;
 using RimWorld;
 using Verse.AI.Group;
 using HungerAndHavoc.Core;
@@ -58,14 +59,25 @@ namespace HungerAndHavoc.Pawn
         internal static bool Tick(Verse.Pawn pawn, int now)
         {
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
-            if (comp == null || comp.State.stayKind == (int)RHAH_StayKind.None || pawn.Dead)
+            if (comp == null || pawn.Dead || pawn.IsPrisoner || pawn.IsSlave ||
+                !comp.State.IsActiveVisitor)
             {
                 return false;
             }
 
-            bool downed = pawn.Downed;
+            if (!RHAH_VisitorRules.IsColonyStay(comp.State.stayKind))
+            {
+                if (RHAH_VisitorRules.RestoresStuckDeparture(pawn.Faction == Faction.OfPlayer,
+                    comp.State.lifecycle, comp.State.stayKind, pawn.IsPrisoner, pawn.IsSlave))
+                {
+                    return RestoreDeparture(pawn, comp);
+                }
+                return false;
+            }
+
+            bool downed = PausesStay(pawn);
             int remaining = RHAH_VisitorRules.RemainingStay(now, comp.State.leaveAfterGameTick, downed, comp.State.stayRemainingTicks);
-            int deadline = RHAH_VisitorRules.ResumeStay(now, comp.State.leaveAfterGameTick, downed ? remaining : 0, downed);
+            int deadline = downed ? now + remaining : comp.State.leaveAfterGameTick;
             comp.SetStay(comp.State.stayKind, deadline, remaining);
             if (!RHAH_VisitorRules.StayExpired(now, deadline, downed))
             {
@@ -86,16 +98,101 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
 
+            return RestoreDeparture(pawn, comp);
+        }
+
+        internal static bool PausesStay(Verse.Pawn pawn)
+        {
+            if (pawn == null || !pawn.Downed)
+            {
+                return false;
+            }
+            if (pawn.ageTracker?.CurLifeStage?.alwaysDowned != true || pawn.health?.capacities == null)
+            {
+                return true;
+            }
+            // 原版婴儿移动能力固定为零 伤病暂停看强制倒地 疼痛和意识
+            return RHAH_VisitorRules.PausesStay(true, true, pawn.health.forceDowned, pawn.health.InPainShock,
+                pawn.health.capacities.CanBeAwake);
+        }
+
+        static bool RestoreDeparture(Verse.Pawn pawn, CompRHAH_Pawn comp)
+        {
+            Faction visitorFaction = RHAH_AttitudeFactions.Require(comp.State.attitude);
+            if (visitorFaction == null)
+            {
+                return false;
+            }
+            RHAH_BatchAttitude.SetVisitorFaction(pawn, visitorFaction);
             UnlockShortStayApparel(pawn, comp);
             comp.SetStay((int)RHAH_StayKind.None, -1, 0);
-            if (pawn.Faction == Faction.OfPlayer)
-            {
-                pawn.SetFaction(null);
-            }
-
-            RHAH_VisitorGroup.NotifyReleased(pawn);
+            comp.SetFoodWait(-1);
             RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
+            if (pawn.mindState != null)
+            {
+                pawn.mindState.duty = new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave);
+            }
+            pawn.jobs?.StopAll();
             return true;
+        }
+
+        internal static void RebuildDepartureGroups(List<Verse.Pawn> pawns, Map map)
+        {
+            List<Verse.Pawn> members = SimplePool<List<Verse.Pawn>>.Get();
+            try
+            {
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    Verse.Pawn pawn = pawns[i];
+                    if (!NeedsDepartureGroup(pawn) || pawn.GetLord() != null)
+                    {
+                        continue;
+                    }
+                    int batch = RHAH_Api.Get(pawn).SpawnBatchId;
+                    Lord existing = null;
+                    members.Clear();
+                    for (int j = 0; j < pawns.Count; j++)
+                    {
+                        Verse.Pawn member = pawns[j];
+                        if (!NeedsDepartureGroup(member) || RHAH_Api.Get(member).SpawnBatchId != batch)
+                        {
+                            continue;
+                        }
+                        Lord lord = member.GetLord();
+                        if (lord?.LordJob is LordJob_RHAH_Visitor)
+                        {
+                            existing = lord;
+                        }
+                        else if (lord == null)
+                        {
+                            members.Add(member);
+                        }
+                    }
+                    if (existing != null)
+                    {
+                        for (int j = 0; j < members.Count; j++)
+                        {
+                            existing.AddPawn(members[j]);
+                        }
+                        existing.CurLordToil?.UpdateAllDuties();
+                    }
+                    else
+                    {
+                        RHAH_VisitorGroup.TryStart(members, map, pawn.PositionHeld, RHAH_Api.Get(pawn).Role);
+                    }
+                }
+            }
+            finally
+            {
+                members.Clear();
+                SimplePool<List<Verse.Pawn>>.Return(members);
+            }
+        }
+
+        static bool NeedsDepartureGroup(Verse.Pawn pawn)
+        {
+            return RHAH_BatchAttitude.CanOrderLeave(pawn) &&
+                RHAH_Api.Get(pawn).Lifecycle == RHAH_Lifecycle.Leaving;
         }
 
         internal static void LockShortStayApparel(Verse.Pawn pawn, CompRHAH_Pawn comp)
@@ -157,7 +254,7 @@ namespace HungerAndHavoc.Pawn
                 comp.State.stayKind,
                 now,
                 comp.State.leaveAfterGameTick,
-                pawn.Downed);
+                PausesStay(pawn));
         }
 
         internal static bool RejectsAssignedJob(Verse.Pawn pawn, Job job, ThinkNode giver)

@@ -9,7 +9,8 @@ namespace HungerAndHavoc.Pawn
     {
         internal static bool TryComplete(Verse.Pawn pawn)
         {
-            if (!RHAH_Api.IsVisitor(pawn) || pawn.needs == null || pawn.needs.food == null)
+            if (!RHAH_Api.IsVisitor(pawn) || !RHAH_VisitorRules.AllowsModBehavior(RHAH_VisitorStay.Kind(pawn)) ||
+                pawn.needs == null || pawn.needs.food == null)
             {
                 return false;
             }

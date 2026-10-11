@@ -67,47 +67,12 @@ namespace HungerAndHavoc.Incidents
             return true;
         }
 
-        internal static int PickMapId(int savedId)
-        {
-            List<int> homes = new List<int>();
-            if (Find.Maps != null)
-            {
-                for (int i = 0; i < Find.Maps.Count; i++)
-                {
-                    Map map = Find.Maps[i];
-                    if (map != null && map.IsPlayerHome && RHAH_ApproachRules.AllowsHome(SpaceHome(map), SpaceApproachEnabled()))
-                    {
-                        homes.Add(map.uniqueID);
-                    }
-                }
-            }
-
-            if (savedId > 0 && homes.Contains(savedId))
-            {
-                return savedId;
-            }
-
-            return RHAH_ApproachRules.PickHome(homes, Rand.Range(0, homes.Count == 0 ? 1 : homes.Count));
-        }
 
         static Map Home(int mapId)
         {
-            int picked = PickMapId(mapId);
-            if (Find.Maps == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < Find.Maps.Count; i++)
-            {
-                Map map = Find.Maps[i];
-                if (map != null && map.IsPlayerHome && map.uniqueID == picked)
-                {
-                    return map;
-                }
-            }
-
-            return null;
+            Map home = Core.RHAH_MapResolver.MapById(mapId);
+            return home != null && home.IsPlayerHome &&
+                RHAH_ApproachRules.AllowsHome(SpaceHome(home), SpaceApproachEnabled()) ? home : null;
         }
 
         static PlanetTile OppositeShore(PlanetTile home)

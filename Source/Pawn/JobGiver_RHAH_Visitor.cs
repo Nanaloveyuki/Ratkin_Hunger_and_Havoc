@@ -1,12 +1,39 @@
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Trade;
 using HungerAndHavoc.Api;
+using RimWorld;
+using Verse;
+using Verse.AI.Group;
 using Verse.AI;
 
 namespace HungerAndHavoc.Pawn
 {
     public class JobGiver_RHAH_Visitor : ThinkNode_JobGiver
     {
+        static readonly VisitorFight fight = new VisitorFight();
+
+        internal class VisitorFight : JobGiver_AIFightEnemies
+        {
+            internal Job TryCreate(Verse.Pawn pawn)
+            {
+                return CanFight(pawn) ? base.TryGiveJob(pawn) : null;
+            }
+        }
+
+        internal static bool CanFight(Verse.Pawn pawn)
+        {
+            LordJob_RHAH_Visitor visitor = pawn?.GetLord()?.LordJob as LordJob_RHAH_Visitor;
+            if (visitor != null && pawn.GetLord().CurLordToil is LordToil_RHAH_WaitFood && visitor.ListedForFood(pawn))
+            {
+                return false;
+            }
+            return RHAH_BatchAttitude.CanOrderLeave(pawn) && pawn.Spawned && !pawn.Downed &&
+                !(pawn.stances?.stunner?.Stunned ?? false) && pawn.DevelopmentalStage.Adult() &&
+                RHAH_Api.Get(pawn).Attitude == RHAH_Attitude.Hostile &&
+                pawn.Faction != null && pawn.Faction.HostileTo(Faction.OfPlayer) &&
+                RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Fight) &&
+                !pawn.WorkTagIsDisabled(WorkTags.Violent);
+        }
         protected override Job TryGiveJob(Verse.Pawn pawn)
         {
             if (!RHAH_BatchAttitude.CanOrderLeave(pawn))
@@ -15,6 +42,12 @@ namespace HungerAndHavoc.Pawn
             }
 
             MarkSeekingFood(pawn);
+
+            Job attack = fight.TryCreate(pawn);
+            if (attack != null)
+            {
+                return attack;
+            }
 
             Job departure = JobGiver_RHAH_Leave.TryCreate(pawn);
             if (departure != null || RHAH_Api.Get(pawn).Lifecycle == RHAH_Lifecycle.Leaving)

@@ -9,6 +9,7 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
+using HungerAndHavoc.Api;
 using Xunit;
 
 namespace HungerAndHavoc.Tests
@@ -131,6 +132,74 @@ namespace HungerAndHavoc.Tests
             finally
             {
                 File.Delete(path);
+            }
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void NeutralCeasefireSurvivesSaveLoadResaveWhileMissingLegacyAttitudeFallsBack(bool legacy)
+        {
+            string path = Path.GetTempFileName();
+            try
+            {
+                CompRHAH_Pawn comp = new CompRHAH_Pawn();
+                comp.ApplySeed(new RHAH_PawnSeed(attitudeAtArrival: RHAH_Attitude.Hostile));
+                comp.State.SetAttitude(RHAH_Attitude.Neutral);
+                Scribe.saver.InitSaving(path, "record");
+                comp.CompExposeData();
+                Scribe.saver.FinalizeSaving();
+                XmlDocument saved = new XmlDocument();
+                saved.Load(path);
+                Assert.Equal("Neutral", saved.SelectSingleNode("/record/attitude")?.InnerText);
+                if (legacy)
+                {
+                    XmlNode attitude = saved.SelectSingleNode("/record/attitude");
+                    attitude.ParentNode.RemoveChild(attitude);
+                    saved.Save(path);
+                }
+                string original = File.ReadAllText(path);
+                CompRHAH_Pawn loaded = LoadComp(path);
+                RHAH_Attitude expected = legacy ? RHAH_Attitude.Hostile : RHAH_Attitude.Neutral;
+                Assert.Equal(expected, loaded.State.attitude);
+                Assert.Equal(RHAH_Attitude.Hostile, loaded.State.attitudeAtArrival);
+                Assert.Equal(original, File.ReadAllText(path));
+                Scribe.saver.InitSaving(path, "record");
+                loaded.CompExposeData();
+                Scribe.saver.FinalizeSaving();
+                Assert.Equal(expected, LoadComp(path).State.attitude);
+            }
+            finally
+            {
+                File.Delete(path);
+            }
+        }
+
+        static CompRHAH_Pawn LoadComp(string path)
+        {
+            CompRHAH_Pawn comp = new CompRHAH_Pawn();
+            Scribe.loader.InitLoading(path);
+            CompRecord record = new CompRecord(comp);
+            Scribe.loader.curParent = record;
+            record.ExposeData();
+            Scribe.loader.crossRefs.RegisterForCrossRefResolve(record);
+            Scribe.loader.initer.RegisterForPostLoadInit(record);
+            Scribe.loader.FinalizeLoading();
+            return comp;
+        }
+
+        sealed class CompRecord : IExposable
+        {
+            readonly CompRHAH_Pawn comp;
+
+            internal CompRecord(CompRHAH_Pawn comp)
+            {
+                this.comp = comp;
+            }
+
+            public void ExposeData()
+            {
+                comp.CompExposeData();
             }
         }
 

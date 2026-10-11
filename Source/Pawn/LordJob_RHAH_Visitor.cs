@@ -67,6 +67,15 @@ namespace HungerAndHavoc.Pawn
 
         internal bool PreserveForAttitudeChange { get; set; }
 
+        internal void SetFaction(Faction value)
+        {
+            faction = value;
+            if (lord != null)
+            {
+                lord.faction = value;
+            }
+        }
+
         public override bool ShouldRemovePawn(Verse.Pawn pawn, PawnLostCondition reason)
         {
             return reason != PawnLostCondition.Incapped &&
@@ -292,6 +301,17 @@ namespace HungerAndHavoc.Pawn
         }
         internal void EndFoodWait()
         {
+            if (foodReceivers != null)
+            {
+                for (int i = 0; i < foodReceivers.Count; i++)
+                {
+                    Verse.Pawn receiver = foodReceivers[i];
+                    if (receiver != null && !WaitingForFood(receiver))
+                    {
+                        CompRHAH_Pawn.TryGet(receiver)?.SetFoodWait(-1);
+                    }
+                }
+            }
             foodReceivers?.Clear();
             foodDef = null;
             foodCount = 0;
@@ -375,6 +395,19 @@ namespace HungerAndHavoc.Pawn
             if (snapshot.Lifecycle == RHAH_Lifecycle.Leaving)
             {
                 return true;
+            }
+
+            Lord lord = pawn.GetLord();
+            LordJob_RHAH_Visitor visitor = lord?.LordJob as LordJob_RHAH_Visitor;
+            if (lord?.CurLordToil is LordToil_RHAH_WaitFood && visitor.ListedForFood(pawn))
+            {
+                if (visitor.WaitingForFood(pawn))
+                {
+                    int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+                    int deadline = FoodWaitDeadline(pawn);
+                    return deadline >= 0 && tick >= deadline;
+                }
+                CompRHAH_Pawn.TryGet(pawn)?.SetFoodWait(-1);
             }
 
             RHAH_Settings settings = RHAH_Mod.Settings;

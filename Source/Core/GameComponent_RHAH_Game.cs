@@ -138,10 +138,9 @@ namespace HungerAndHavoc.Core
                 return false;
             }
 
-            if (entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map)
+            if (entry.Target == HungerAndHavoc.Incidents.RHAH_IncidentTarget.Map && queued.Target is Map saved)
             {
-                int approachMap = HungerAndHavoc.Incidents.RHAH_Approach.PickMapId(
-                    queued.Target is Map saved ? saved.uniqueID : 0);
+                int approachMap = saved.uniqueID;
                 if (HungerAndHavoc.Incidents.RHAH_Approach.TrySend(displayId, points, approachMap))
                 {
                     Log.Message("[RHAH] Approach started for " + displayId + ". points=" + points.ToString("0.##") +
@@ -527,10 +526,29 @@ namespace HungerAndHavoc.Core
                     continue;
                 }
 
-                System.Collections.Generic.IReadOnlyList<Verse.Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-                for (int i = 0; i < pawns.Count; i++)
+                List<Verse.Pawn> pawns = SimplePool<List<Verse.Pawn>>.Get();
+                try
                 {
-                    HungerAndHavoc.Pawn.RHAH_VisitorStay.Tick(pawns[i], tick);
+                    IReadOnlyList<Verse.Pawn> spawned = map.mapPawns.AllPawnsSpawned;
+                    for (int i = 0; i < spawned.Count; i++)
+                    {
+                        pawns.Add(spawned[i]);
+                        Verse.Pawn carried = spawned[i].carryTracker?.CarriedThing as Verse.Pawn;
+                        if (carried != null && !pawns.Contains(carried))
+                        {
+                            pawns.Add(carried);
+                        }
+                    }
+                    for (int i = 0; i < pawns.Count; i++)
+                    {
+                        HungerAndHavoc.Pawn.RHAH_VisitorStay.Tick(pawns[i], tick);
+                    }
+                    HungerAndHavoc.Pawn.RHAH_VisitorStay.RebuildDepartureGroups(pawns, map);
+                }
+                finally
+                {
+                    pawns.Clear();
+                    SimplePool<List<Verse.Pawn>>.Return(pawns);
                 }
             }
         }

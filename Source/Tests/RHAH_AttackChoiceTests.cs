@@ -24,6 +24,7 @@ namespace HungerAndHavoc.Tests
         readonly List<IRHAH_PawnBehavior> previousBehaviors;
         readonly FactionDef previousHostileDef;
         readonly Faction player;
+        readonly FactionDef previousNeutralDef;
         readonly Faction hostile;
         readonly Map map;
         readonly GameComponent_RHAH_Game choices;
@@ -42,6 +43,7 @@ namespace HungerAndHavoc.Tests
                 binding.SetValue(null, previousBinding);
             }
             previousHostileDef = RHAH_DefOf.RHAH_Faction_Hostile;
+            previousNeutralDef = RHAH_DefOf.RHAH_Faction_Neutral;
             previousHost = (IRHAH_ApiHost)Field(typeof(RHAH_Api), "host").GetValue(null);
             previousBehaviors = new List<IRHAH_PawnBehavior>(
                 (List<IRHAH_PawnBehavior>)Field(typeof(RHAH_PawnBehaviors), "handlers").GetValue(null));
@@ -53,6 +55,7 @@ namespace HungerAndHavoc.Tests
             Current.Game.components = new List<GameComponent>();
             Current.Game.tickManager = new TickManager();
             Field(typeof(Game), "maps").SetValue(Current.Game, new List<Map>());
+            Current.Game.questManager = new QuestManager();
             World world = Uninitialized<World>();
             world.factionManager = new FactionManager();
             world.worldPawns = new WorldPawns();
@@ -81,6 +84,7 @@ namespace HungerAndHavoc.Tests
             Current.ProgramState = previousProgramState;
             RHAH_Mod.Settings = previousSettings;
             RHAH_DefOf.RHAH_Faction_Hostile = previousHostileDef;
+            RHAH_DefOf.RHAH_Faction_Neutral = previousNeutralDef;
             RHAH_Api.Bind(previousHost);
             RHAH_PawnBehaviors.ResetForTests();
             for (int i = 0; i < previousBehaviors.Count; i++)
@@ -166,6 +170,105 @@ namespace HungerAndHavoc.Tests
             Assert.Contains(target, map.attackTargetsCache.TargetsHostileToFaction(hostile));
         }
 
+
+        [Theory]
+        [InlineData("gate")]
+        [InlineData("downed")]
+        [InlineData("child")]
+        [InlineData("baby")]
+        [InlineData("neutral")]
+        public void VisitorCombatRejectsGateHealthDevelopmentAndAttitudeBoundaries(string blocked)
+        {
+            Verse.Pawn pawn = Visitor(1);
+            pawn.kindDef = new PawnKindDef();
+            CompRHAH_Pawn.TryGet(pawn).State.SetAttitude(RHAH_Attitude.Hostile);
+            if (blocked == "gate")
+            {
+                RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.Fight, false);
+            }
+            else if (blocked == "downed")
+            {
+                Field(typeof(Pawn_HealthTracker), "healthState").SetValue(pawn.health, PawnHealthState.Down);
+            }
+            else if (blocked == "child" || blocked == "baby")
+            {
+                LifeStageAge age = Uninitialized<LifeStageAge>();
+                age.def = new LifeStageDef { developmentalStage = blocked == "child" ? DevelopmentalStage.Child : DevelopmentalStage.Baby };
+                pawn.def.race.lifeStageAges = new List<LifeStageAge> { age };
+                pawn.ageTracker = new Pawn_AgeTracker(pawn);
+                Field(typeof(Pawn_AgeTracker), "cachedLifeStageIndex").SetValue(pawn.ageTracker, 0);
+                RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.Fight, true);
+            }
+            else
+            {
+                CompRHAH_Pawn.TryGet(pawn).State.SetAttitude(RHAH_Attitude.Neutral);
+                RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.Fight, true);
+            }
+            Assert.False(JobGiver_RHAH_Visitor.CanFight(pawn));
+        }
+
+
+
+        [Fact]
+        public void PermanentReleaseClearsStayAndNeverExpiresAdoptedChild()
+        {
+            Verse.Pawn pawn = Visitor(1);
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            comp.SetStay((int)RHAH_StayKind.Shelter, 100, 100);
+            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Released);
+            Assert.Equal(0, comp.State.stayKind);
+            Assert.Equal(-1, comp.State.leaveAfterGameTick);
+            pawn.SetFactionDirect(player);
+            comp.SetStay((int)RHAH_StayKind.Shelter, 100, 0);
+            Assert.False(RHAH_VisitorStay.Tick(pawn, 200));
+            Assert.Same(player, pawn.Faction);
+            Assert.Equal(RHAH_Lifecycle.Released, comp.State.lifecycle);
+        }
+
+        [Fact]
+        public void ShortstayMealsDoNotReplaceTheTemporaryResidenceDeadline()
+        {
+            Verse.Pawn pawn = Visitor(1);
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            comp.SetStay((int)RHAH_StayKind.Shelter, 60000, 60000);
+            Assert.False(RHAH_Feeding.TryComplete(pawn));
+            Assert.Equal(60000, comp.State.leaveAfterGameTick);
+            Assert.False(comp.State.hasBeenFed);
+        }
+
+        [Fact]
+        public void FoodAcceptanceDoesNotDowngradeFriendlyBatchMembers()
+        {
+            RHAH_DefOf.RHAH_Faction_Neutral = hostile.def;
+            Verse.Pawn pawn = Visitor(1);
+            CompRHAH_Pawn.TryGet(pawn).State.SetAttitude(RHAH_Attitude.Friendly);
+            map.mapPawns = Uninitialized<MapPawns>();
+            Field(typeof(MapPawns), "pawnsSpawned").SetValue(map.mapPawns, new List<Verse.Pawn> { pawn });
+            RHAH_BatchAttitude.AcceptFood(pawn);
+            Assert.Equal(RHAH_Attitude.Friendly, RHAH_Api.Get(pawn).Attitude);
+        }
+
+        [Fact]
+        public void MedicalDowningPreservesRemainingResidenceAndExpiryBoundary()
+        {
+            Verse.Pawn pawn = Visitor(1);
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            comp.State.SetAttitude(RHAH_Attitude.Hostile);
+            comp.SetStay((int)RHAH_StayKind.Shelter, 100, 20);
+            pawn.SetFactionDirect(player);
+            Field(typeof(Pawn_HealthTracker), "healthState").SetValue(pawn.health, PawnHealthState.Down);
+            Assert.False(RHAH_VisitorStay.Tick(pawn, 200));
+            Assert.Equal(220, comp.State.leaveAfterGameTick);
+            Assert.Equal(20, comp.State.stayRemainingTicks);
+            Field(typeof(Pawn_HealthTracker), "healthState").SetValue(pawn.health, PawnHealthState.Mobile);
+            Assert.False(RHAH_VisitorStay.Tick(pawn, 219));
+            pawn.SetFactionDirect(hostile);
+            Assert.True(RHAH_VisitorStay.Tick(pawn, 220));
+            Assert.Equal(RHAH_Lifecycle.Leaving, comp.State.lifecycle);
+        }
+
+
+
         RHAH_ChoiceAction Attack(params Verse.Pawn[] pawns)
         {
             RHAH_ChoiceRecord record = new RHAH_ChoiceRecord
@@ -200,7 +303,7 @@ namespace HungerAndHavoc.Tests
             pawn.health.hediffSet = new HediffSet(pawn);
             pawn.mindState = Uninitialized<Pawn_MindState>();
             pawn.mindState.mentalStateHandler = new MentalStateHandler(pawn);
-            Hediff_RHAH_Mark mark = new Hediff_RHAH_Mark { pawn = pawn };
+            Hediff_RHAH_Mark mark = new Hediff_RHAH_Mark { pawn = pawn, def = new HediffDef() };
             mark.comps = new List<HediffComp> { new CompRHAH_Pawn { parent = mark } };
             pawn.health.hediffSet.hediffs.Add(mark);
             RHAH_Api.TryMarkOrigin(pawn, new RHAH_PawnSeed("I-005", 7, 0, RHAH_PawnRole.Refugee, RHAH_Lifecycle.SeekingFood));

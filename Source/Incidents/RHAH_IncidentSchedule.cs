@@ -274,6 +274,7 @@ namespace HungerAndHavoc.Incidents
 
 
         internal const int UnspecifiedTargetId = 0;
+        internal const int MapZeroTargetId = int.MinValue;
 
         internal static int RawId(IIncidentTarget target)
         {
@@ -301,6 +302,11 @@ namespace HungerAndHavoc.Incidents
 
         internal static int TargetId(bool caravan, int rawId)
         {
+            if (!caravan && rawId == 0)
+            {
+                return MapZeroTargetId;
+            }
+
             if (rawId <= 0)
             {
                 return UnspecifiedTargetId;
@@ -314,6 +320,11 @@ namespace HungerAndHavoc.Incidents
             if (savedId == UnspecifiedTargetId)
             {
                 return UnspecifiedTargetId;
+            }
+
+            if (savedId == MapZeroTargetId)
+            {
+                return kind == RHAH_IncidentTarget.Map ? 0 : UnspecifiedTargetId;
             }
 
             if (kind == RHAH_IncidentTarget.Caravan)

@@ -823,6 +823,17 @@ namespace HungerAndHavoc.Pawn
             return !downed && deadline >= 0 && now >= deadline;
         }
 
+        internal static bool PausesStay(bool downed, bool ageDowned, bool forcedDowned, bool painShock, bool canBeAwake)
+        {
+            return downed && (!ageDowned || forcedDowned || painShock || !canBeAwake);
+        }
+
+        internal static bool RestoresStuckDeparture(bool playerFaction, RHAH_Lifecycle lifecycle, int stayKind, bool prisoner, bool slave)
+        {
+            return playerFaction && lifecycle == RHAH_Lifecycle.Leaving &&
+                !IsColonyStay(stayKind) && !prisoner && !slave;
+        }
+
         internal static int RemainingStay(int now, int deadline, bool downed, int savedRemaining)
         {
             if (downed)
