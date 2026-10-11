@@ -130,7 +130,7 @@ namespace HungerAndHavoc.Trade
                 return false;
             }
 
-            EventMgr.RHAH_EventChainClock.NoteStarted(entry.DisplayId, destination == null ? 0 : map.uniqueID,
+            EventMgr.RHAH_EventChainEntry.NoteStarted(entry.DisplayId, destination == null ? 0 : map.uniqueID,
                 caravan == null ? 0 : caravan.ID, Find.TickManager.TicksGame, tick + 1);
             return true;
         }

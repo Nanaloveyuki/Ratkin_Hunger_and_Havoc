@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using HungerAndHavoc.EventMgr;
+using Oxygendsl.Mod.Events;
 
 namespace HungerAndHavoc.Core
 {
@@ -47,8 +49,9 @@ namespace HungerAndHavoc.Core
 
             RequireReplacements(game);
             RequireKnownTypes(game);
+            RemovedEntries += OxygenEventChainHost.RemoveProviderState(document, RHAH_EventChainProvider.ProviderKey);
             // 先撤销短工加的原版锁 再移除身份 Hediff
-            foreach (XElement ownedLocks in game.Descendants("shortStayLockedApparel").ToList())
+            foreach (XElement ownedLocks in ContentNodes(game).Where(item => item.Name == "shortStayLockedApparel").ToList())
             {
                 XElement pawn = ownedLocks.Ancestors().FirstOrDefault(item => item.Element("apparel") != null);
                 XElement locked = pawn?.Element("apparel")?.Element("lockedApparel");
@@ -63,18 +66,18 @@ namespace HungerAndHavoc.Core
                     reference.Remove();
                 }
             }
-            foreach (XElement quest in game.Descendants("quests").Elements()
+            foreach (XElement quest in ContentNodes(game).Where(item => item.Name == "quests").Elements()
                 .Where(item => plan.OwnedDefs.Contains((string)item.Element("root") ?? string.Empty)).ToList())
             {
                 Remove(quest);
             }
 
-            foreach (XElement site in game.Descendants().Where(IsMappedCamp).ToList())
+            foreach (XElement site in ContentNodes(game).Where(IsMappedCamp).ToList())
             {
                 ConvertCamp(site);
             }
 
-            foreach (XElement node in game.Descendants().Where(IsOwnedClass).ToList())
+            foreach (XElement node in ContentNodes(game).Where(IsOwnedClass).ToList())
             {
                 if (node.Document == null || IsMappedCamp(node))
                 {
@@ -95,7 +98,7 @@ namespace HungerAndHavoc.Core
                 }
             }
 
-            foreach (XElement node in game.Descendants().Where(IsOwnedScalar).ToList())
+            foreach (XElement node in ContentNodes(game).Where(IsOwnedScalar).ToList())
             {
                 if (node.Document == null)
                 {
@@ -114,7 +117,7 @@ namespace HungerAndHavoc.Core
 
             while (true)
             {
-                List<XElement> references = game.Descendants()
+                List<XElement> references = ContentNodes(game)
                     .Where(item => !item.HasElements && removedReferences.Contains(item.Value)).ToList();
                 if (references.Count == 0)
                 {
@@ -158,7 +161,7 @@ namespace HungerAndHavoc.Core
             }
 
             List<string> unresolved = new List<string>();
-            foreach (XElement item in game.Descendants())
+            foreach (XElement item in ContentNodes(game))
             {
                 if (unresolved.Count >= 12)
                 {
@@ -189,7 +192,7 @@ namespace HungerAndHavoc.Core
         void RequireKnownTypes(XElement game)
         {
             List<string> unknown = new List<string>();
-            foreach (XElement item in game.Descendants())
+            foreach (XElement item in ContentNodes(game))
             {
                 if (unknown.Count >= 12)
                 {
@@ -215,7 +218,7 @@ namespace HungerAndHavoc.Core
         void RequireReplacements(XElement game)
         {
             HashSet<string> missing = new HashSet<string>(StringComparer.Ordinal);
-            foreach (XElement node in game.Descendants().Where(IsOwnedScalar))
+            foreach (XElement node in ContentNodes(game).Where(IsOwnedScalar))
             {
                 if (!plan.Replacements.ContainsKey(node.Value) && NeedsReplacement(node))
                 {
@@ -332,6 +335,19 @@ namespace HungerAndHavoc.Core
 
                 generator.Value = replacement;
                 ReplacedDefs++;
+            }
+        }
+
+        static IEnumerable<XElement> ContentNodes(XElement game)
+        {
+            foreach (XElement node in game.Descendants())
+            {
+                bool framework = node.AncestorsAndSelf().Any(item => item.Parent?.Name == "components" &&
+                    ClassName(item) == "Oxygendsl.Mod.GameComponent_Oxygendsl");
+                if (!framework)
+                {
+                    yield return node;
+                }
             }
         }
 

@@ -183,6 +183,11 @@ namespace HungerAndHavoc.Core
             }
 
             listing.Label("RHAH_RemovalSection".Translate());
+            if (game.EventChainMigrationStatus.StartsWith("failed:", System.StringComparison.Ordinal))
+            {
+                listing.Label("RHAH_EventChainsFailure".Translate(game.EventChainMigrationStatus));
+            }
+
             if (game.NewContentDisabled)
             {
                 listing.Label("RHAH_RemovalDisabled".Translate());

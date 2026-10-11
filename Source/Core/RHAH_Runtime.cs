@@ -19,7 +19,20 @@ namespace HungerAndHavoc.Core
                 }
 
                 GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
-                return game == null || !game.NewContentDisabled;
+                if (game != null && (game.NewContentDisabled || game.EventChainMigrationStatus.StartsWith("failed:", System.StringComparison.Ordinal)))
+                {
+                    return false;
+                }
+
+                if (!UnityData.IsInMainThread)
+                {
+                    return true;
+                }
+
+                Oxygendsl.Core.Events.EventChainRuntime runtime = Current.Game?.GetComponent<Oxygendsl.Mod.GameComponent_Oxygendsl>()?.EventChains;
+                Oxygendsl.Core.Events.EventChainProviderState state = runtime?.GetProviderState(EventMgr.RHAH_EventChainProvider.ProviderKey);
+                return state != null ? state.Mode == Oxygendsl.Core.Events.EventChainMode.Active :
+                    game == null || (!game.EventChainsLoaded && Current.ProgramState != ProgramState.Playing);
             }
         }
 

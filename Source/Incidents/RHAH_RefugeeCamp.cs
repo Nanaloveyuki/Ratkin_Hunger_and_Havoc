@@ -158,7 +158,7 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
-            EventMgr.RHAH_EventChainClock.NoteStarted("I-051", map.uniqueID, 0,
+            EventMgr.RHAH_EventChainEntry.NoteStarted("I-051", map.uniqueID, 0,
                 Find.TickManager.TicksGame, RHAH_Api.Get(spawned[0]).SpawnBatchId);
             return true;
         }
@@ -312,7 +312,7 @@ namespace HungerAndHavoc.Incidents
 
             QuestUtility.SendLetterQuestAvailable(quest);
             int started = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
-            EventMgr.RHAH_EventChainClock.NoteStarted("I-051", map.uniqueID, 0, started, started);
+            EventMgr.RHAH_EventChainEntry.NoteStarted("I-051", map.uniqueID, 0, started, started);
             return true;
         }
 

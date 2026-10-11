@@ -9,6 +9,27 @@ namespace HungerAndHavoc.Tests
     public class RHAH_SaveCleanupTests
     {
         [Fact]
+        public void ExportRemovesOnlyRatkinProviderPartition()
+        {
+            XDocument document = XDocument.Parse("<savegame><meta><modIds><li>nanaloveyuki.oxygendsl</li><li>nanaloveyuki.ratkin.hungerandhavoc</li></modIds><modNames><li>Oxygen</li><li>Ratkin</li></modNames></meta><game><components><li Class='Oxygendsl.Mod.GameComponent_Oxygendsl'><eventChainSchemaVersion>1</eventChainSchemaVersion><eventChainProviders><li><providerId>nanaloveyuki.ratkin.hungerandhavoc</providerId><instances><li><id>7</id></li></instances></li><li><providerId>foreign.provider</providerId><instances><li><payload>RHAH_Unknown</payload><reference>RHAH_HungerMark</reference><data Class='HungerAndHavoc.Future.UnknownRecord'>foreign bytes</data></li></instances></li></eventChainProviders><enabled>true</enabled></li><li Class='ForeignComponent'><eventChainProviders><li><providerId>nanaloveyuki.ratkin.hungerandhavoc</providerId><payload>unrelated field</payload></li></eventChainProviders></li></components></game></savegame>");
+            XDocument original = new XDocument(document);
+            XElement framework = document.Root.Element("game").Element("components").Elements("li").First();
+            string foreign = framework.Element("eventChainProviders").Elements("li").Last().ToString();
+            string unrelated = document.Root.Element("game").Element("components").Elements("li").Last().ToString();
+
+            new RHAH_SaveCleanup(Plan()).Clean(document);
+
+            Assert.Equal("Oxygendsl.Mod.GameComponent_Oxygendsl", (string)framework.Attribute("Class"));
+            Assert.Equal("1", framework.Element("eventChainSchemaVersion").Value);
+            Assert.Equal("true", framework.Element("enabled").Value);
+            Assert.Equal(foreign, framework.Element("eventChainProviders").Elements("li").Single().ToString());
+            Assert.Equal(unrelated, document.Root.Element("game").Element("components").Elements("li").Last().ToString());
+            Assert.Contains("nanaloveyuki.oxygendsl", document.Root.Element("meta").Element("modIds").Value);
+            Assert.DoesNotContain("nanaloveyuki.ratkin.hungerandhavoc", document.Root.Element("meta").Element("modIds").Value);
+            Assert.Equal(2, original.Root.Element("game").Element("components").Elements("li").First().Element("eventChainProviders").Elements("li").Count());
+        }
+
+        [Fact]
         public void ExportRemovesShortStayLocksButKeepsForeignLocks()
         {
             XDocument document = XDocument.Parse("<savegame><game><pawn><apparel><lockedApparel><li>Thing_1</li><li>Thing_2</li></lockedApparel></apparel><healthTracker><hediffSet><hediffs><li><def>RHAH_HungerMark</def><shortStayLockedApparel><li>Thing_2</li></shortStayLockedApparel></li></hediffs></hediffSet></healthTracker></pawn></game></savegame>");

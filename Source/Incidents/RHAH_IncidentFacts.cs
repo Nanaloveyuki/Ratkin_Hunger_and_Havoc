@@ -101,7 +101,7 @@ namespace HungerAndHavoc.Incidents
                 loadIds.ToArray()));
             HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Open(context, loadIds);
             OpenChoice(context, created, arrived);
-            EventMgr.RHAH_EventChainClock.NoteStarted(context.DisplayId, context.Map.uniqueID, 0, tick, context.SpawnBatchId);
+            EventMgr.RHAH_EventChainEntry.NoteStarted(context.DisplayId, context.Map.uniqueID, 0, tick, context.SpawnBatchId);
 
             return true;
         }

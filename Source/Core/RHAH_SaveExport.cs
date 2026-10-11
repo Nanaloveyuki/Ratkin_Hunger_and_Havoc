@@ -17,11 +17,6 @@ namespace HungerAndHavoc.Core
                 Find.TickManager.Pause();
             }
 
-            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
-            if (game != null)
-            {
-                game.DisableNewContent();
-            }
 
             string stamp = DateTime.UtcNow.ToString("yyyyMMdd-HHmmss") + "-" + Guid.NewGuid().ToString("N").Substring(0, 8);
             string backup = UniqueName("RHAH-backup-" + stamp);
@@ -43,6 +38,7 @@ namespace HungerAndHavoc.Core
                         Scribe.ExitNode();
                     }
                 });
+                Current.Game?.GetComponent<GameComponent_RHAH_Game>()?.DisableNewContent();
                 XDocument document = XDocument.Load(backupPath);
                 RHAH_SaveCleanup cleanup = new RHAH_SaveCleanup(BuildPlan());
                 cleanup.Clean(document);

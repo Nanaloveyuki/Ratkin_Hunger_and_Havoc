@@ -168,27 +168,6 @@ namespace HungerAndHavoc.EventMgr
         internal const string TakenBad = "RHAH_Thought_TakenBad";
         internal const string TakenFed = "RHAH_Thought_TakenFed";
 
-        internal static bool UsesShortPredator(string displayId)
-        {
-            return !string.IsNullOrEmpty(displayId) && displayId.StartsWith("I-");
-        }
-
-        internal static bool RollsPredator(bool longChain, bool alreadyRolled, int chancePercent)
-        {
-            return !longChain && !alreadyRolled && Clamp(chancePercent) > 0;
-        }
-
-        internal static bool LongCheckDue(int tick, int instanceId)
-        {
-            int hour = GenDate.TicksPerHour;
-            if (tick < 0 || instanceId <= 0 || hour <= 0)
-            {
-                return false;
-            }
-
-            int phase = instanceId % hour;
-            return tick % hour == phase;
-        }
 
         internal static bool PredatorSelected(int chancePercent, float roll)
         {

@@ -46,8 +46,9 @@ namespace HungerAndHavoc.Incidents
             }
 
             component.PredationSelected = true;
-            component.PredationPendingTick = Verse.Find.TickManager.TicksGame + RHAH_PredationRules.ArrivalDelayTicks;
             Remember(component, residents);
+            HungerAndHavoc.EventMgr.RHAH_EventChainEntry.QueueArrival(map,
+                Verse.Find.TickManager.TicksGame + RHAH_PredationRules.ArrivalDelayTicks);
         }
 
         internal static void Tick(MapComponent_RHAH_Map component, Map map)
@@ -63,11 +64,6 @@ namespace HungerAndHavoc.Incidents
             }
 
             int now = Verse.Find.TickManager.TicksGame;
-            if (component.PredationPendingTick >= 0 && now >= component.PredationPendingTick)
-            {
-                component.PredationPendingTick = -1;
-                TryArrive(component, map);
-            }
 
             List<RHAH_PredatorRecord> predators = component.Predators;
             if (!RHAH_PredationRules.ShouldScan(CountActive(predators, map), now, component.PredationNextTick))
@@ -148,7 +144,7 @@ namespace HungerAndHavoc.Incidents
             return map?.Parent is WorldObject_RHAH_RefugeeCamp && component != null && component.IsPredationPrey(victim);
         }
 
-        static void TryArrive(MapComponent_RHAH_Map component, Map map)
+        internal static void TryArrive(MapComponent_RHAH_Map component, Map map)
         {
             if (!component.PredationSelected || !HasLivingPrey(component, map))
             {

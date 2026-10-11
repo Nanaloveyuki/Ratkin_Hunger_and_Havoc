@@ -361,7 +361,6 @@ namespace HungerAndHavoc.Incidents
                 trust,
                 season,
                 RimWorld.Storyteller.CheckInterval);
-            HungerAndHavoc.EventMgr.RHAH_EventChainClock.Check(RimWorld.Storyteller.CheckInterval);
         }
     }
 }

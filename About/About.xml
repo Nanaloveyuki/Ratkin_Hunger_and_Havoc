@@ -11,7 +11,7 @@
 
 **独立作品，使用新的包名与存档字段，不读取“鼠灾-大荒年”或其 Continued 的旧档。请勿与那些模组同时启用。**
 
-需要 NewRatkinPlus、Harmony 和 Biotech。推荐加上 IrisMenus，设置太多，需要分页。
+需要 NewRatkinPlus、Harmony、Biotech 和 Oxygen DSL Framework。推荐加上 IrisMenus，设置太多，需要分页。
 
 ## 新增内容
 
@@ -78,7 +78,7 @@ Famine, war, or something else has left these ratkin with one meal and then none
 
 **A separate mod, with its own package ID and save fields. It does not load saves from Great Famine Year or its Continued versions. Do not enable those mods together with this one.**
 
-Requires NewRatkinPlus, Harmony, and Biotech. IrisMenus is recommended. There are too many settings for one page.
+Requires NewRatkinPlus, Harmony, Biotech, and Oxygen DSL Framework. IrisMenus is recommended. There are too many settings for one page.
 
 ## Additions
 
@@ -158,6 +158,10 @@ Compatibility with Combat Extended is unknown. The likely clash is the temperatu
       <packageId>Ludeon.RimWorld.Biotech</packageId>
       <displayName>Biotech</displayName>
     </li>
+    <li>
+      <packageId>nanaloveyuki.oxygendsl</packageId>
+      <displayName>Oxygen DSL Framework</displayName>
+    </li>
   </modDependencies>
   <incompatibleWith>
     <li>lezhizhong.mouse.disaster.famine</li>
@@ -167,6 +171,7 @@ Compatibility with Combat Extended is unknown. The likely clash is the temperatu
   <loadAfter>
     <li>Nanaloveyuki.IrisMenus</li>
     <li>brrainz.harmony</li>
+    <li>nanaloveyuki.oxygendsl</li>
     <li>Ludeon.RimWorld</li>
     <li>Ludeon.RimWorld.Biotech</li>
     <li>Solaris.RatkinRaceMod</li>

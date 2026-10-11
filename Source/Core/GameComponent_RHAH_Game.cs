@@ -4,6 +4,8 @@ using HungerAndHavoc.Incidents;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
+using Oxygendsl.Core.Events;
+using Oxygendsl.Mod.Events;
 
 namespace HungerAndHavoc.Core
 {
@@ -28,6 +30,8 @@ namespace HungerAndHavoc.Core
         int generationCursor;
         List<RHAH_EventChainRecord> eventChains = new List<RHAH_EventChainRecord>();
         int nextEventChainId = 1;
+        string eventChainMigrationStatus = "";
+        bool eventChainsLoaded;
         bool newContentDisabled;
 
         public IReadOnlyList<string> ActiveGenerationBatches => activeGenerationBatches;
@@ -41,8 +45,10 @@ namespace HungerAndHavoc.Core
         public IReadOnlyList<RHAH_ChoiceRecord> OpenChoices => openChoices;
         public int BroadcastCooldownUntilTick { get => broadcastCooldownUntilTick; set => broadcastCooldownUntilTick = value; }
         internal int NextChoiceId { get => nextChoiceId; set => nextChoiceId = value; }
-        internal IReadOnlyList<RHAH_EventChainRecord> EventChains => eventChains;
-        internal int NextEventChainId => nextEventChainId;
+        internal IReadOnlyList<RHAH_EventChainRecord> LegacyEventChains => eventChains;
+        internal int LegacyNextEventChainId => nextEventChainId;
+        internal string EventChainMigrationStatus { get => eventChainMigrationStatus; set => eventChainMigrationStatus = value; }
+        internal bool EventChainsLoaded => eventChainsLoaded;
         internal bool NewContentDisabled => newContentDisabled;
 
 
@@ -73,7 +79,6 @@ namespace HungerAndHavoc.Core
             HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Tick(tick);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_Envoy.Tick(tick);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_RecordSite.Tick(tick);
-            RHAH_EventChainRuntime.TickDue(eventChains, tick);
         }
 
         public override void GameComponentUpdate()
@@ -441,8 +446,17 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref begCooldownTicks, "begCooldownTicks", LookMode.Value);
             Scribe_Collections.Look(ref beggedPawnIds, "beggedPawnIds", LookMode.Value);
             Scribe_Collections.Look(ref beggedColonistIds, "beggedColonistIds", LookMode.Value);
-            Scribe_Collections.Look(ref eventChains, "eventChains", LookMode.Deep);
-            Scribe_Values.Look(ref nextEventChainId, "nextEventChainId", 1);
+            if (Scribe.mode == LoadSaveMode.Saving && eventChainMigrationStatus == "")
+            {
+                eventChainMigrationStatus = "failed: ODF provider initialization unavailable; original data retained";
+            }
+            if (Scribe.mode != LoadSaveMode.Saving || eventChainMigrationStatus.StartsWith("failed:", StringComparison.Ordinal))
+            {
+                Scribe_Collections.Look(ref eventChains, "eventChains", LookMode.Deep);
+                Scribe_Values.Look(ref nextEventChainId, "nextEventChainId", 1);
+            }
+
+            Scribe_Values.Look(ref eventChainMigrationStatus, "eventChainMigrationStatus", "");
             Scribe_Values.Look(ref newContentDisabled, "newContentDisabled", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -478,7 +492,8 @@ namespace HungerAndHavoc.Core
                 Align(beggedPawnIds, beggedColonistIds, 0);
                 Pawn.RHAH_Begging.Load(begCooldownPawnIds, begCooldownTicks, beggedPawnIds, beggedColonistIds);
                 eventChains = eventChains ?? new List<RHAH_EventChainRecord>();
-                RHAH_EventChainRuntime.Repair(eventChains, ref nextEventChainId);
+                eventChainMigrationStatus = eventChainMigrationStatus ?? "";
+                eventChainsLoaded = true;
                 for (int i = openChoices.Count - 1; i >= 0; i--)
                 {
                     if (openChoices[i] == null)
@@ -494,6 +509,8 @@ namespace HungerAndHavoc.Core
         internal void DisableNewContent()
         {
             newContentDisabled = true;
+            OxygenEventChainHost.Runtime?.SetMode(RHAH_EventChainProvider.ProviderKey, EventChainMode.Disabled,
+                Find.TickManager == null ? 0 : Find.TickManager.TicksGame, "Current save new content disabled");
         }
         static void TickStays(int tick)
         {
@@ -566,24 +583,10 @@ namespace HungerAndHavoc.Core
             }
         }
 
-        internal int StartEventChain(string displayId, int siteId, int tick, int deadlineTick, string payload)
+        internal void ClearLegacyEventChains()
         {
-            return RHAH_EventChainRuntime.Start(eventChains, ref nextEventChainId, displayId, siteId, tick, deadlineTick, payload);
-        }
-
-        internal bool SetEventChainStage(int instanceId, int stage, int deadlineTick, string payload)
-        {
-            return RHAH_EventChainRuntime.SetStage(eventChains, instanceId, stage, deadlineTick, payload);
-        }
-
-        internal bool EndEventChain(int instanceId, int tick, RHAH_EventChainEnd end)
-        {
-            return RHAH_EventChainRuntime.End(eventChains, instanceId, tick, end);
-        }
-
-        internal int CheckEventChains(RHAH_EventChainSite site, int tick)
-        {
-            return RHAH_EventChainRuntime.Check(eventChains, ref nextEventChainId, site, tick);
+            eventChains.Clear();
+            nextEventChainId = 1;
         }
     }
 
@@ -604,6 +607,7 @@ namespace HungerAndHavoc.Core
         bool predationRolled;
         bool predationSelected;
         int predationPendingTick = -1;
+        int predationArrivalInstanceId;
         int predationNextTick = -1;
         int holeThingId;
 
@@ -614,7 +618,8 @@ namespace HungerAndHavoc.Core
         public int PlagueLastSpreadDay { get => plagueLastSpreadDay; set => plagueLastSpreadDay = value; }
         public bool PredationRolled { get => predationRolled; set => predationRolled = value; }
         public bool PredationSelected { get => predationSelected; set => predationSelected = value; }
-        public int PredationPendingTick { get => predationPendingTick; set => predationPendingTick = value; }
+        internal int LegacyPredationPendingTick { get => predationPendingTick; set => predationPendingTick = value; }
+        internal int PredationArrivalInstanceId { get => predationArrivalInstanceId; set => predationArrivalInstanceId = value; }
         public int PredationNextTick { get => predationNextTick; set => predationNextTick = value; }
         public int HoleThingId { get => holeThingId; set => holeThingId = value; }
         public List<Verse.Pawn> PredationPrey => predationPrey;
@@ -758,8 +763,7 @@ namespace HungerAndHavoc.Core
         {
             int tick = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
             bool predatorsDue = Predators.Count > 0 && tick >= PredationNextTick;
-            bool arrivalDue = PredationPendingTick >= 0 && tick >= PredationPendingTick;
-            if (predatorsDue || arrivalDue)
+            if (predatorsDue)
             {
                 bool camp = map.Parent is WorldObject_RHAH_RefugeeCamp;
                 HungerAndHavoc.Incidents.RHAH_CampPredation.TickSite(this, map, camp || predationPrey.Count > 0);
@@ -785,7 +789,13 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref predators, "predators", LookMode.Deep);
             Scribe_Values.Look(ref predationRolled, "predationRolled", false);
             Scribe_Values.Look(ref predationSelected, "predationSelected", false);
-            Scribe_Values.Look(ref predationPendingTick, "predationPendingTick", -1);
+            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
+            if (Scribe.mode != LoadSaveMode.Saving || (game?.EventChainMigrationStatus ?? "").StartsWith("failed:", StringComparison.Ordinal))
+            {
+                Scribe_Values.Look(ref predationPendingTick, "predationPendingTick", -1);
+            }
+
+            Scribe_Values.Look(ref predationArrivalInstanceId, "predationArrivalInstanceId", 0);
             Scribe_Values.Look(ref predationNextTick, "predationNextTick", -1);
             Scribe_Values.Look(ref holeThingId, "holeThingId", 0);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)

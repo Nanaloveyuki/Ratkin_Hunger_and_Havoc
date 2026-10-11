@@ -7,89 +7,41 @@ using Verse;
 
 namespace HungerAndHavoc.EventMgr
 {
-    internal sealed class RHAH_EventFollowChain : IRHAH_EventChain
-    {
-        internal const int StageShort = 0;
-        internal const int StageLong = 1;
-        internal const int StageDone = 2;
-
-        public string DisplayId => "RHAH_Follow";
-
-        public bool Owns(string displayId)
-        {
-            return displayId == DisplayId || RHAH_EventFollowRules.UsesShortPredator(displayId);
-        }
-
-        public bool CanStart(RHAH_EventChainSite site, int tick)
-        {
-            return false;
-        }
-
-        public bool OnStart(List<RHAH_EventChainRecord> records, RHAH_EventChainContext context)
-        {
-            return true;
-        }
-
-        public bool OnTick(List<RHAH_EventChainRecord> records, RHAH_EventChainContext context)
-        {
-            if (context == null || context.Stage >= StageDone || !RHAH_EventFollowRules.ReadPayload(context.Payload, out string displayId, out int batchId, out int mapId))
-            {
-                return false;
-            }
-
-            if (context.Stage == StageShort)
-            {
-                RHAH_EventFollowRuntime.TryPredator(mapId, batchId);
-                return RHAH_EventChainRuntime.SetStage(records, context.InstanceId, StageDone, context.DeadlineTick, context.Payload);
-            }
-
-            if (!RHAH_EventFollowRules.LongCheckDue(context.Tick, context.InstanceId))
-            {
-                return false;
-            }
-
-            RHAH_EventFollowRuntime.TryLong(displayId, batchId, mapId, context);
-            return true;
-        }
-
-        public void OnEnd(RHAH_EventChainContext context, RHAH_EventChainEnd end)
-        {
-        }
-    }
 
     internal static class RHAH_EventFollowRuntime
     {
         static readonly List<Verse.Pawn> batchBuffer = new List<Verse.Pawn>();
 
-        internal static void TryPredator(int mapId, int batchId)
+        internal static string TryPredator(int mapId, int batchId)
         {
-            if (mapId <= 0 || Current.Game == null)
+            if (mapId < 0 || Current.Game == null)
             {
-                return;
+                return "no_map";
             }
 
             Map map = FindMap(mapId);
             if (map == null)
             {
-                return;
+                return "map_unavailable";
             }
 
             int chance = Core.RHAH_Mod.Settings == null ? RHAH_EventFollowRules.ShortPredatorPercent : Core.RHAH_Mod.Settings.followPredatorPercent;
-            if (!RHAH_EventFollowRules.PredatorSelected(chance, Rand.Value))
+            float roll = Rand.Value;
+            if (!RHAH_EventFollowRules.PredatorSelected(chance, roll))
             {
-                return;
+                return "roll=" + roll.ToString("R", System.Globalization.CultureInfo.InvariantCulture) + ";selected=false";
             }
 
             List<Verse.Pawn> prey = Batch(map, batchId);
             if (prey.Count == 0)
             {
-                return;
+                return "roll=" + roll.ToString("R", System.Globalization.CultureInfo.InvariantCulture) + ";selected=true;no_prey";
             }
 
             MapComponent_RHAH_Map component = map.GetComponent<MapComponent_RHAH_Map>();
             if (component == null)
             {
-                return;
+                return "map_component_unavailable";
             }
 
             for (int i = 0; i < prey.Count; i++)
@@ -98,12 +50,17 @@ namespace HungerAndHavoc.EventMgr
             }
 
             component.PredationSelected = true;
-            component.PredationPendingTick = Find.TickManager.TicksGame + HungerAndHavoc.Incidents.RHAH_PredationRules.ArrivalDelayTicks;
+            if (RHAH_EventChainEntry.QueueArrival(map, Find.TickManager.TicksGame + HungerAndHavoc.Incidents.RHAH_PredationRules.ArrivalDelayTicks) == 0)
+            {
+                throw new System.InvalidOperationException("ODF predation arrival queue is unavailable.");
+            }
+
+            return "roll=" + roll.ToString("R", System.Globalization.CultureInfo.InvariantCulture) + ";selected=true";
         }
 
-        internal static bool TryLong(string displayId, int batchId, int mapId, RHAH_EventChainContext context)
+        internal static bool LongReady(string displayId, int batchId, int mapId)
         {
-            Map map = mapId > 0 ? FindMap(mapId) : null;
+            Map map = mapId >= 0 ? FindMap(mapId) : null;
             if (map == null)
             {
                 return false;
@@ -115,9 +72,18 @@ namespace HungerAndHavoc.EventMgr
                 return false;
             }
 
-            Send(displayId, batch);
-            GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
-            return game != null && game.EndEventChain(context.InstanceId, context.Tick, RHAH_EventChainEnd.Completed);
+            return true;
+        }
+
+        internal static void NotifyLong(string displayId, int batchId, int mapId)
+        {
+            Map map = FindMap(mapId);
+            if (map == null)
+            {
+                throw new System.InvalidOperationException("Long follow map became unavailable.");
+            }
+
+            Send(displayId, Batch(map, batchId));
         }
 
         static bool Ready(string displayId, List<Verse.Pawn> batch)
@@ -181,8 +147,13 @@ namespace HungerAndHavoc.EventMgr
             return batchBuffer;
         }
 
-        static Map FindMap(int mapId)
+        internal static Map FindMap(int mapId)
         {
+            if (Current.Game == null)
+            {
+                return null;
+            }
+
             List<Map> maps = Find.Maps;
             if (maps == null)
             {

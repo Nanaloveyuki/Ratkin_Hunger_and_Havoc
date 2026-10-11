@@ -12,7 +12,7 @@ namespace HungerAndHavoc.EventMgr
         public int deadlineTick = -1;
         public string payload = "";
         public bool closed;
-        public int end = (int)RHAH_EventChainEnd.None;
+        public int end;
 
         public void ExposeData()
         {
@@ -27,22 +27,5 @@ namespace HungerAndHavoc.EventMgr
             Scribe_Values.Look(ref end, "end", 0);
         }
 
-        internal void Repair()
-        {
-            if (displayId == null)
-            {
-                displayId = "";
-            }
-
-            if (payload == null)
-            {
-                payload = "";
-            }
-
-            if (deadlineTick < -1)
-            {
-                deadlineTick = -1;
-            }
-        }
     }
 }
