@@ -28,7 +28,7 @@
 | `scripts/` | 检查、构建和部署脚本 |
 | `tmp/` | 临时文件，已 gitignore，不当源码或发布输入 |
 
-已有层是 Core、Identity、Generation、Incidents、Pawn、Narrative、Storyteller、Trade、Data、EventMgr、Tests。`Source/Storyteller/{Name}` 使用 `HungerAndHavoc.Storyteller.{Name}`，一个叙事者一个目录。当前只有穗音。World、Patches、UI 等有第一个类型再建模，不建空目录。不要再建 `Source/Behavior`。IrisMenus 绘制留在 `Source/Pawn/Compat`，和注册一起在缺少 IrisMenus.dll 时排除。不建 `Source/Settings` 或 `Source/UI`：设置数据仍在 `Core`，函数求值留在对应领域。`Source/Data` 使用 `HungerAndHavoc.Data`，只放经历和特质的静态记录与选择，不引用存档或设置。`Source/EventMgr` 使用 `HungerAndHavoc.EventMgr`，只放事件链注册、站点实例和双时钟，具体出现物由各事件实现。
+已有层是 Core、Identity、Generation、Incidents、Pawn、Narrative、Storyteller、Trade、Data、EventMgr、Tests。`Source/Storyteller/{Name}` 使用 `HungerAndHavoc.Storyteller.{Name}`，一个叙事者一个目录。当前只有穗音。World、Patches、UI 等有第一个类型再建模，不建空目录。不要再建 `Source/Behavior`。IrisMenus 绘制留在 `Source/Pawn/Compat`，和注册一起在缺少 IrisMenus.dll 时排除。不建 `Source/Settings` 或 `Source/UI`：设置数据仍在 `Core`，函数求值留在对应领域。`Source/Data` 使用 `HungerAndHavoc.Data`，只放经历和特质的静态记录与选择，不引用存档或设置。`Source/EventMgr` 使用 `HungerAndHavoc.EventMgr`，只放 ODF provider、脚本、动作和旧档转换；事件链计时和实例持久化由 ODF 负责，具体出现物由各事件实现。
 
 ## 分层与程序集
 
@@ -115,6 +115,22 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - Tick 热路径默认避免 LINQ、闭包、装箱、重复字符串拼接和临时集合；使用 `for`、缓存和可复用缓冲区时必须保持可读性
 - 性能约束以代码审查、分配分析或基准结果验证，不以机械行数或圈复杂度阈值替代判断
 
+### 事件链与 Oxygen DSL Framework
+
+- Oxygen DSL Framework（`nanaloveyuki.oxygendsl`）是必需依赖，必须先于本模组加载。实现引用 `Oxygendsl.Core.dll` 和 `Oxygendsl.Mod.dll`，`Private=False`；发布包不得附带任何 ODF 程序集。稳定 `HungerAndHavoc.Api` 的签名、目标框架和依赖保持不变，不暴露 ODF 类型
+- ODF 是事件链唯一运行时。`RHAH_EventChainProvider` 的 provider key 为 `nanaloveyuki.ratkin.hungerandhavoc`，注册既有 `I-001`..`I-051` 及内部到达定义 `RHAH_PredationArrival`。内部定义不增加事件显示 ID。`RHAH_EventFollow.oxy` 和 `RHAH_PredationArrival.oxy` 嵌入实现程序集，资源名分别为 `HungerAndHavoc.EventMgr.RHAH_EventFollow.oxy`、`HungerAndHavoc.EventMgr.RHAH_PredationArrival.oxy`
+- 不保留旧 `IRHAH_EventChain`、注册表、双时钟或扫描运行时。`RHAH_EventChainRecord` 只用于读旧档和保存失败迁移的原记录，不能执行。ODF host 在所有引用解析完成、provider 注册之后、运行时 Activate 之前调用迁移；不新增 Harmony
+- 自动迁移保留实例 ID、站点、阶段、开始 tick、期限、payload 和结局，不重新抽取随机结果。开放阶段 0 在加载 tick + 1 检查；阶段 1 保持 `id % 2500` 的原相位，选择严格晚于加载 tick 的首次检查；开放阶段 2 保持 dormant（`NextTick=-1`）。已关闭且旧 end 为 0 映射 Completed，其它合法结局按编号映射。时间加法溢出不能回绕为过期或立即执行
+- 迁移是整批原子导入，包含地图待到达记录。未知定义、非法 ID、阶段、结局或 payload 使迁移失败；保留原 `eventChains`、`nextEventChainId` 和 `predationPendingTick`，记录 `eventChainMigrationStatus`，暂停并显示诊断，不丢弃或修正记录后继续执行。成功后清空旧输入，保存只写 ODF 分区和新键
+- 已存在的 ODF provider 分区优先，包括显式空分区；不把旧记录再次导入。若分区 `MigrationStatus` 为 `failed:...`，继续保留原失败迁移输入，不把这个诊断分区当成迁移成功。完整存档优先级和键表见 [save-ownership.md](save-ownership.md)
+- Prepare 解析并校验 payload 一次，缓存类型化事实；tick 不重复解析。短阶段的抽取和到达动作记录 receipt，读档不重放不确定的动作。安居点和后续事件选中捕食者后，都在 120 tick 后到达；每图仅一个待到达实例，重复请求按旧规则合并。`predationArrivalInstanceId` 只引用 ODF 实例，猎物引用和捕食者 AI 仍由地图组件保存
+- 地图 `uniqueID` 可以为 0，非负站点按地图查询，负站点按商队查询；不能把首图 0 当作不存在。到达 payload 与实例 SiteId 必须相同，Prepare 不接收负地图 ID
+- 初始化复用既有 `HarmonyBootstrap` 入口，注册和迁移订阅排到 `LongEventHandler.ExecuteWhenFinished` 的 Unity 主线程。异步地图生成的捕食者请求同样转到主线程；地图初始化期间读取当前游戏组件的 EventChains，不因 `ProgramState` 暂时不是 Playing 丢弃 120 tick 请求
+- 原始格式或 ODF 根 schema 未就绪时不执行后续，不启用旧引擎。尚未获得迁移结果的保存写入明确 failed 诊断并保留旧输入，不能因准备回调被跳过而删掉旧数据
+- 短阶段已完成的 dormant 实例和终态实例不解析 payload；活动实例缓存 Prepare 事实。每个 provider 只编译并缓存两份 Oxygen 决策脚本，不为 51 个定义重复编译
+- `newContentDisabled` 把本 provider 设为 Disabled，保留实例、来客和世界事实。卸载导出先备份原当前状态再禁用；只对序列化副本调用 `OxygenEventChainHost.RemoveProviderState(document, providerId)` 删除本 provider 分区，保留 ODF 根组件、根 schema、其它分区和 ODF 的 meta。不可清理 live runtime，不能把 ODF 框架类型列成本模组所有物
+
+
 ## Harmony 与外部联动
 
 - Harmony 默认只补原版或种族框架的明确缺口
@@ -130,6 +146,8 @@ API 程序集的公开类型采用白名单，当前目标包括：
 
 - 每个游戏版本使用独立目录、Def、程序集和发布配置，不把版本内容放在仓库根目录
 - TargetFramework、RimWorld 参考程序集、Harmony 版本和 API 依赖必须可复现并记录在项目配置或发布说明中
+- 实现和测试目标框架是 `net48`。先构建 ODF Mod，其 `tmp/build/` 输出包含 `Oxygendsl.Mod.dll` 和通过 ProjectReference 复制的 `Oxygendsl.Core.dll`；Core 自身仍为 `netstandard2.0`。`Source/HungerAndHavoc.csproj` 的 `OxygenDslDir` 缺省指向项目目录的 `../../Oxygen-Dsl-Framework`，测试项目用 `../../../Oxygen-Dsl-Framework` 指向同一仓库。外部位置用 `-p:OxygenDslDir=/绝对路径` 配置。测试 runner 可复制这两个引用，模组发布输出不得复制
+- WSL `scripts/deploy.sh` 用 `OXYGEN_DSL_DIR` 覆盖位置，PowerShell 构建部署用 `-OxygenDslDir`。这些入口传入绝对框架目录，只发布本模组 DLL；先独立构建与安装兼容 ODF
 - 源码、文档、检查脚本和必要的许可证文件可提交；`bin/`、`obj/`、PDB、临时文件和本地游戏目录不作为源码提交
 - 发布包只包含目标版本所需的 `About/`、版本目录、语言、程序集、补丁和许可证内容
 - 发布前必须通过构建、单元测试、脚手架检查、XML/Def/语言键检查、API 白名单检查和存档契约检查
@@ -261,6 +279,7 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 禁止旧前缀、旧产品名和含义不清的 Egg 身份名
 - `IRHAH_Pawn`、`RegisterRatkinMatcher` 和稳定 API 事件签名
 - 测试程序集只能通过 `InternalsVisibleTo` 访问内部实现，且不得成为运行时依赖
+- ODF 必需依赖、加载顺序和不随包复制框架程序集；事件链迁移的 ID、阶段、相位、期限、payload、结局、失败保留和显式分区优先级；卸载只移除本 provider 分区
 - 修 bug 时的范围、Language、存档和卸载门禁见 [bug-handling.md](bug-handling.md)
 
 这些检查属于 CI 阻断级门禁。`scripts/verify-scaffold.py` 检查中英 Keyed 对称、源码里的 `Translate` 字面量、中文 Def 正文的英文 DefInjected、`Scribe_*.Look` 键是否出现在卸载归属表、Hediff XML 类型名和旧前缀。动态拼接的翻译键不在字面量扫描里，事件标签另按目录 defName 检查。

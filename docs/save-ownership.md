@@ -32,6 +32,17 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 1.0.3（简称 1.3）到 1.0.4（简称 1.4）：`LordJob_RHAH_Visitor.ExposeData` 在 `LoadingVars` 读取字段前，仅预处理当前 Lord 的 XML。旧单人 `foodReceiver` 引用转为 `foodReceivers/li`；旧键为空、`null` 或 `IsNull="True"` 时转为空列表。新键已存在时以新键为准，包括显式空列表；不合并旧引用。转换幂等，之后由原版 Scribe 解析 Pawn 引用，保存只写新键。不修改磁盘原档、不改 `foodDef`、`foodCount` 或 Pawn 的 `foodWaitUntilTick`，不受当前存档停用新内容影响，不增加 tick 扫描。旧键只作加载迁移输入，不再作运行时字段；卸载随整个访客 Lord Remove。
 
+事件链切换到 Oxygen DSL Framework（ODF）：只读本模组旧 `eventChains`、`nextEventChainId` 和地图 `predationPendingTick`，不读旧鼠灾数据。所有引用解析完成后、ODF Activate 之前自动整批导入。实例 ID、`siteId`、stage、`startedTick`、`deadlineTick`、payload 和合法结局保持原值，不重抽随机结果。开放 stage 0 的下次检查是加载 tick + 1；stage 1 取严格晚于加载 tick 且与 `id % 2500` 同相位的首次 tick；stage 2 保持 `NextTick=-1`，只保留原期限，不重跑已完成短阶段。时间计算溢出时不能回绕。`closed=true` 且 end=0 映射 Completed，其它 end 按 1 完成、2 失败、3 到期、4 取消映射。
+
+迁移包含地图尚未到达的捕食者，保留旧 pending tick、猎物引用和已选结果；新地图键 `predationArrivalInstanceId` 引用 ODF 内部到达定义实例。安居点和事件后续共用该定义，新请求在选中结果后 120 tick 执行，每图只留一个待到达实例，重复请求按旧规则合并。地图的捕食者 AI 状态不转交 ODF。
+
+地图 `uniqueID=0` 是合法首图 ID，迁移和到达 payload 接受非负地图 ID；负站点继续表示商队。失败保留使用原 Scribe 默认值语义，保存时可能省略默认 XML 字段，但不修正、丢弃或重编号原记录值。
+
+原子导入成功后清空旧记录和 pending tick，后续保存不写旧键。若有非法或重复 ID、非法 stage/end、未知定义或错误 payload，整个导入失败，不丢弃记录、不重新抽取、不执行旧引擎；原 `eventChains`、`nextEventChainId` 和各地图 `predationPendingTick` 只在失败时原样存回。`eventChainMigrationStatus` 保存诊断；ODF provider 分区保持 Paused，在日志与 ODF 运行检查显示原因。
+
+已经存在的 ODF provider 分区是权威格式，包括明确为空的分区；忽略旧输入，不再次导入。唯一失败保留例外：分区 `MigrationStatus` 以 `failed:` 开头时，继续保留原失败迁移输入，不将该诊断分区视为成功迁移。停用新内容不阻止读档迁移；迁移完成后 provider 设为 Disabled，保留所有实例和世界事实。
+
+
 
 ## 游戏存档键
 
@@ -247,7 +258,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Generation.RHAH_GenerationExtension | ThingDef `modExtensions` XML `Class` | 不单独出现在 `.rws`。保留旧 XML 字段 `allowRefugeeApparel` 以便解析既有外部 Def，但不再参与默认准入；没有 `ratkinApparel` 字段或快照存储 |
 | HungerAndHavoc.Pawn.StatPart_RHAH_TemperatureApparel | StatDef `parts` XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Incidents.RHAH_PredatorRecord | 捕食者深存档，嵌在 `predators` | Remove。随地图组件删除，不替换成原版动物 |
-| HungerAndHavoc.EventMgr.RHAH_EventChainRecord | 事件链深存档，嵌在 `eventChains` | Remove。随游戏组件删除，不替换成原版事件 |
+| HungerAndHavoc.EventMgr.RHAH_EventChainRecord | 旧 `eventChains` 的只读迁移记录；只有失败迁移再次保存 | Remove。随游戏组件删除，不执行或替换成原版事件 |
 
 ### RHAH_PredatorRecord
 
@@ -261,17 +272,17 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 ### RHAH_EventChainRecord
 
-类型名：`HungerAndHavoc.EventMgr.RHAH_EventChainRecord`。嵌在 `eventChains` 里。
+类型名：`HungerAndHavoc.EventMgr.RHAH_EventChainRecord`。仅作旧 `eventChains` 迁移输入；导入失败时原样保存，成功后不再保存。该类型没有可运行的事件链职责。
 
 | 字段 | 存档键 | 默认值 | 集合 | 说明 |
 | --- | --- | --- | --- | --- |
-| id | id | 0 | 否 | 实例 ID。读档后 `nextEventChainId` 至少比最大 id 大 1 |
-| displayId | displayId | 空字符串 | 否 | 注册键。`PostLoadInit` 把 null 补成空字符串。空键或 id 小于等于 0 的记录丢弃 |
+| id | id | 0 | 否 | 原实例 ID，必须为正且整批唯一。迁移保留；非法或重复时整批失败，不丢弃或重新编号 |
+| displayId | displayId | 空字符串 | 否 | 原定义 ID，必须是注册的 `I-001`..`I-051`；未知或空 ID 使整批迁移失败 |
 | siteId | siteId | 0 | 否 | 地图为正数 uniqueID，商队为负数 -ID，0 为世界格 |
-| stage | stage | 0 | 否 | 事件自己定义的阶段 |
-| startedTick | startedTick | 0 | 否 | |
-| deadlineTick | deadlineTick | -1 | 否 | -1 表示没有期限。读档后小于 -1 归 -1 |
-| payload | payload | 空字符串 | 否 | 事件自己的出现物文本。`PostLoadInit` 把 null 补成空字符串 |
+| stage | stage | 0 | 否 | 0 短阶段、1 长阶段、2 短阶段已做完。迁移保留；其它值整批失败 |
+| startedTick | startedTick | 0 | 否 | 原开始 tick，迁移不重置 |
+| deadlineTick | deadlineTick | -1 | 否 | -1 表示没有期限。迁移保留原期限，不归一化非法值后继续 |
+| payload | payload | 空字符串 | 否 | 原出现物文本；Prepare 校验并解析一次。错误载荷使整批失败，不重新生成 |
 | closed | closed | false | 否 | |
 | end | end | 0 | 否 | 0 未结束，1 完成，2 失败，3 到期，4 取消 |
 
@@ -308,14 +319,30 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp`、`RHAH_App
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predators | predators | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation rolled | predationRolled | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation selected | predationSelected | Remove |
-| HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation pending tick | predationPendingTick | Remove |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | legacy camp predation pending tick | predationPendingTick | Remove。默认 -1。只作加载迁移输入；失败时原样保存，成功或已有权威 ODF 分区时清空且不再保存 |
+| HungerAndHavoc.Core.MapComponent_RHAH_Map | predation arrival instance id | predationArrivalInstanceId | Remove。默认 0 表示无待到达实例；正数引用本 provider 的 ODF 到达实例，每图至多一个 |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | camp predation next tick | predationNextTick | Remove |
 | HungerAndHavoc.Core.MapComponent_RHAH_Map | grain hole thing id | holeThingId | Remove |
-| HungerAndHavoc.Core.GameComponent_RHAH_Game | event chains | eventChains | Remove。旧档缺列表时为空。null 与空集合都是没有链 |
-| HungerAndHavoc.Core.GameComponent_RHAH_Game | next event chain id | nextEventChainId | Remove。默认 1。读档后小于等于已有实例 id 时抬到最大 id 加 1 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | legacy event chains | eventChains | Remove。旧档缺列表时为空，null 与空集合都是无旧链。只作加载迁移输入；失败时原样保存，成功后清空且不再保存 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | legacy next event chain id | nextEventChainId | Remove。默认 1。迁移验证与已有 ID 的关系并保留有效分配游标，不重用 ID；只在失败时保存原值 |
+| HungerAndHavoc.Core.GameComponent_RHAH_Game | event chain migration status | eventChainMigrationStatus | Remove。默认空字符串；持久化迁移结果或失败原因。`failed:...` 保留旧输入且不运行旧引擎 |
 | HungerAndHavoc.Core.GameComponent_RHAH_Game | new content disabled | newContentDisabled | Remove。仅此存档停用新内容。默认 false。清理时整个组件删除，不迁移到副本。null 与缺键都是 false |
 
-生成队列、批次保护和全局调度属于唯一全局运行时组件；本图访客索引和寻食缓存属于唯一地图组件。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
+生成队列和批次保护仍由 `GameComponent_RHAH_Game` 负责；本图访客索引、寻食缓存、猎物引用和捕食者 AI 属于地图组件。事件链只由 ODF 游戏组件的一个运行时执行；RHAH 没有第二个事件链 tick 或扫描器。地图拆除时由 MapComponent 随地图卸载，不能保留 Pawn 或 Map 引用。
+
+### ODF provider 分区
+
+ODF 是必需依赖，事件链存档由 `Oxygendsl.Mod.GameComponent_Oxygendsl` 所有。RHAH 只拥有 `providerId` 为 `nanaloveyuki.ratkin.hungerandhavoc` 的分区，包括本分区实例、到达实例、receipts、模式和迁移诊断；不拥有 ODF 类型或其它 provider 数据。分区内 ID 只在本 provider 内分配，不能与 `predationArrivalInstanceId` 之外的地图自有事实混为一项。
+
+| 所有者 | 存档位置 | 卸载动作 |
+| --- | --- | --- |
+| ODF 根组件 | `GameComponent_Oxygendsl` 及 `eventChainSchemaVersion` | 保留。ODF 仍安装，根 schema 不归 RHAH 所有 |
+| RHAH provider | `eventChainProviders/li` 中 `providerId=nanaloveyuki.ratkin.hungerandhavoc` 的整项 | Remove。仅在序列化副本调用 `Oxygendsl.Mod.Events.OxygenEventChainHost.RemoveProviderState(document, providerId)` |
+| 其它 provider | `eventChainProviders/li` 中其它 `providerId` 的整项 | 保留，不删实例、receipts、暂停原因或空分区 |
+| ODF 模组元数据 | save meta 中 `nanaloveyuki.oxygendsl` | 保留。导出只移除 RHAH 的 meta，不把依赖一起卸载 |
+
+`newContentDisabled` 把本 provider 设为 Disabled，不删除实例或世界物体。导出先备份原当前状态，随后禁用本 provider；`RemoveProviderState` 只处理序列化副本，不清理正在运行的 ODF runtime。失败迁移的旧记录仍随 RHAH 游戏/地图组件 Remove。完整玩家流程见 [unload-export.md](unload-export.md)。
+
 
 ## Def
 
@@ -696,6 +723,7 @@ Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp`、`RHAH_App
 ## 卸载边界
 
 - 按本页识别所有权，不删除其它模组的特质、种族、基因或 Hediff
+- 事件链只删除 RHAH provider 分区；保留 ODF 根组件、根 schema、其它 provider 和 ODF meta，依赖仍安装
 - 原档不覆盖；失败则中止，不把半成品当成可卸载副本
 - 未知本模组 Def 或类型引用必须中止，不猜测删除其所属节点
 - 清理交叉引用时保持 Scribe 字典 keys/values 同步

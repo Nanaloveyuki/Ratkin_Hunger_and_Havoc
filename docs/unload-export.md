@@ -8,10 +8,13 @@
 
 已加载存档时，原版设置页和 IrisMenus「存档与卸载」页都提供两步。无存档时两步都不可用。
 
-1. **仅此存档停用新内容。** 状态写进 `GameComponent_RHAH_Game.newContentDisabled`，不改 `RHAH_Settings.enableNewContent`。已有来客、信件和世界物体留着。玩家再保存一次，停用才进原档。调度读取这个标志，和全局开关一起决定是否生成新内容。
-2. **备份并导出卸载用副本。** 暂停，并先把停用标志写入内存。先把当前世界存成独立备份，再对序列化副本做 XML 清理。原档不覆盖。正在运行的世界不清理，保持暂停。
-3. 成功后退出。只卸本模组，保留鼠族、Harmony、Biotech。重启后加载 `RHAH-removed-*`。确认副本能加载、运行、保存、再加载，再决定是否删旧档。
+1. **仅此存档停用新内容。** 状态写进 `GameComponent_RHAH_Game.newContentDisabled`，不改 `RHAH_Settings.enableNewContent`。ODF 中本模组的 provider 同时设为 Disabled，停止事件后续和待到达实例，但保留实例、已有来客、信件和世界物体。玩家再保存一次，停用才进原档。
+2. **备份并导出卸载用副本。** 暂停，先把当前状态存成独立备份，再把停用标志写入内存并禁用本 provider；备份保留点击导出前的停用状态。随后保存并清理序列化副本。原档不覆盖。正在运行的世界不清理，保持暂停。
+3. 成功后退出。只卸本模组，保留鼠族、Harmony、Biotech 和 Oxygen DSL Framework。重启后加载 `RHAH-removed-*`。确认副本能加载、运行、保存、再加载，再决定是否删旧档。
 4. `RHAH-backup-*` 仍含本模组数据。加载备份必须留着本模组。导出失败时备份不是清理副本。
+
+事件链只由 ODF 执行，不保留旧 RHAH 引擎。已有饥与祸存档在加载时自动迁移旧记录，保持 ID、阶段、开始时间、期限、payload、已选结果和长事件检查相位，不重新抽取随机结果。迁移失败时暂停并显示原因，原 `eventChains`、`nextEventChainId` 和地图 `predationPendingTick` 保留且只在失败时存回。已存在的 ODF provider 分区（包括显式空分区）优先；`MigrationStatus=failed:...` 的诊断分区继续保留失败原记录。详细转换见 [save-ownership.md](save-ownership.md)。
+
 
 ## 明确不做
 
@@ -23,7 +26,7 @@
 
 ## 所有权
 
-运行时计划只认三样：
+RHAH 运行时清理计划按以下来源识别本模组所有物；ODF provider 分区通过框架公开 API 单独移除：
 
 - 本包 `ModContentPack.AllDefs`
 - 实现程序集里的类型全名
@@ -32,6 +35,11 @@
 不认 `MouseDisaster`、旧 packageId、旧类型名。`HungerAndHavoc.Guard` 无存档类型，不清理。
 
 `Replace` 的替代 Def 必须已经加载，且不属于本模组。替代 Def 缺失就中止，不挑一个“看起来接近”的。
+
+ODF 根组件、根 `eventChainSchemaVersion` 和框架类型属于 Oxygen DSL Framework，不属于 RHAH。清理只调用 `Oxygendsl.Mod.Events.OxygenEventChainHost.RemoveProviderState(document, "nanaloveyuki.ratkin.hungerandhavoc")`，删序列化副本的 `eventChainProviders` 中这个 provider 的整项。保留其它 provider（包括空分区）的数据，以及 ODF save meta；不移除 ODF 模组、不改 live runtime。框架 API 返回移除的分区数，供导出计数使用。
+其它清理扫描跳过整个 ODF 根组件；其它 provider 的 payload 即使含 `RHAH_` 文本、对象引用或未知类型名，也不替换、不删除、不作为 RHAH 残留中止条件。
+
+
 
 ## 删除
 
@@ -44,7 +52,8 @@
 - 选择信、本模组 LetterDef、进行中的 `RHAH_RefugeeMassacre` 任务及其尚未生成的世界物体
 - `Area_RHAH_Relief`。格子不并入家区
 - `RHAH_Approach` 整段删除。还在路上的事件不再生成。它没有 Pawn
-- `GameComponent_RHAH_Game`、`NarrativeState` 与各地图的 `MapComponent_RHAH_Map` 整段删除。生成队列里还没落地的角色随队列取消。叙事计数、穗音深存档、事件链随组件删除
+- `GameComponent_RHAH_Game`、`NarrativeState` 与各地图的 `MapComponent_RHAH_Map` 整段删除。生成队列里还没落地的角色随队列取消。叙事计数、穗音深存档和失败迁移的旧事件链随组件删除
+- ODF 中仅删除 RHAH provider 分区，连同事件链、待到达实例、receipts 和迁移诊断；ODF 根组件及其它 provider 保留
 - 清理副本的 meta 去掉本包。不改备份的 meta
 
 二次清理同一份副本必须得到同一份 XML。
@@ -77,12 +86,13 @@
 
 - 原版设置页：只有 `Current.Game` 存在时两步可用。无存档时显示说明
 - IrisMenus：单独一页 `removal`，缺 IrisMenus 时不注册。现有页面不挪
-- 文案走 Keyed，中英成对。键是 `RHAH_Removal*`。确认文案写明：暂停、不覆盖原档、运行中的世界不清理、未知引用会中止、成功后退出并只卸本模组
+- 文案走 Keyed，中英成对。键是 `RHAH_Removal*`。确认文案写明：暂停、先备份当前状态再停用、不覆盖原档、运行中的世界不清理、未知引用会中止、成功后退出并只卸本模组，保留 Oxygen DSL Framework 和其它依赖
 
 ## 代码
 
 - XML 清理在 `Source/Core/RHAH_SaveCleanup.cs`，`internal`，不进 API，不 Tick
 - 停用标志和导出入口在 `GameComponent_RHAH_Game` 与 `Source/Core/RHAH_SaveExport.cs`。`newContentDisabled` 已登记，动作为 Remove，因为清理时整个组件会被删掉
+- ODF 分区清理只用 `OxygenEventChainHost.RemoveProviderState`；不把 ODF 类型并入 RHAH 所有权计划，不自行删除框架根节点
 - 设置按钮在 `Source/Core/ModEntry.cs`。IrisMenus 页在 `Source/Pawn/Compat/RHAH_IrisMenusCompat.cs`
 
 ## 验证
@@ -96,5 +106,6 @@
 - 同一份 XML 再清一次不变
 - 使用原版 `mapInfo/parent` 和 `generatorDef` 结构的已生成地点保留地图归属，替换生成器
 - 未知 `HungerAndHavoc.*` 类型在修改副本前中止
+- RHAH provider 分区删除，ODF 根组件、根 schema、其它 provider 和 ODF meta 保留；失败迁移的原记录随 RHAH 组件删除
 
-卸模组后的加载、运行、保存、再加载已在 2026-09-29 那轮真实游戏测试里手工走过。合成存档测试仍不代替这一步。
+2026-10-11 ODF 切换验收在独立 RimWorld 1.6.4871 中完成：真实导出备份先保存 Active 分区，再停用 live provider；已有来客、捕食者和叙事事实保留。清理副本只删 RHAH 分区，未知 owner 原 XML、ODF 根、schema 和 meta 保留。随后用不启用 RHAH 及其闸门样例的新进程，实际加载清理副本、运行 10 tick、保存、重新加载、再运行 2 tick。原玩家安装、配置和存档未覆盖。此前 2026-09-29 的验收不作为此次切换证据；本次原始回执见相邻 ODF 仓库的 `tmp/eventchain-acceptance/`。
