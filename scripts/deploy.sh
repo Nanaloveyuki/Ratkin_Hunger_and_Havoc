@@ -6,6 +6,7 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 configuration="${CONFIGURATION:-Release}"
 rimworld="${RIMWORLD_DIR:-${RimWorldDir:-/mnt/e/Apps/Steam/steamapps/common/RimWorld}}"
+oxygen="${OXYGEN_DSL_DIR:-$root/../Oxygen-Dsl-Framework}"
 target="$rimworld/Mods/RatkinHungerAndHavoc"
 package_id="nanaloveyuki.ratkin.hungerandhavoc"
 
@@ -28,7 +29,7 @@ for project in \
   Source/HungerAndHavoc.csproj \
   Guard/Source/HungerAndHavocGuard.csproj
 do
-  dotnet build "$root/$project" -c "$configuration" -p:RimWorldDir="$rimworld" --nologo -v q
+  dotnet build "$root/$project" -c "$configuration" -p:RimWorldDir="$rimworld" -p:OxygenDslDir="$oxygen" --nologo -v q
 done
 
 if [[ -L "$target" ]]; then

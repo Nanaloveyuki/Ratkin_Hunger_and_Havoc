@@ -2,10 +2,12 @@
 param(
     [string]$RimWorldDir = 'E:\Apps\Steam\steamapps\common\RimWorld',
     [ValidateSet('Debug', 'Release')][string]$Configuration = 'Release',
+    [string]$OxygenDslDir,
     [switch]$BuildOnly
 )
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
+if (!$OxygenDslDir) { $OxygenDslDir = Join-Path (Split-Path $root -Parent) 'Oxygen-Dsl-Framework' }
 & python3 (Join-Path $root 'scripts/verify-scaffold.py')
 if ($LASTEXITCODE -ne 0) { throw 'Scaffold verification failed.' }
 foreach ($project in @(
@@ -13,7 +15,7 @@ foreach ($project in @(
         'Source/HungerAndHavoc.csproj',
         'Guard/Source/HungerAndHavocGuard.csproj'
     )) {
-    & dotnet build (Join-Path $root $project) -c $Configuration "-p:RimWorldDir=$RimWorldDir" --nologo
+    & dotnet build (Join-Path $root $project) -c $Configuration "-p:RimWorldDir=$RimWorldDir" "-p:OxygenDslDir=$OxygenDslDir" --nologo
     if ($LASTEXITCODE -ne 0) { throw "Build failed: $project" }
 }
 if ($BuildOnly) { return }

@@ -144,6 +144,29 @@ def check_about():
         errors.append("About.xml incompatibleWith original")
     if (ROOT / "1.6/Assemblies/0Harmony.dll").exists():
         errors.append("do not ship 1.6/Assemblies/0Harmony.dll; Harmony is a mod dependency")
+    if about:
+        try:
+            metadata = ET.fromstring(about)
+        except ET.ParseError as exc:
+            errors.append("invalid About.xml: " + str(exc))
+        else:
+            dependency_ids = {
+                (node.text or "").strip().casefold()
+                for node in metadata.findall("modDependencies/li/packageId")
+            }
+            load_after_ids = {
+                (node.text or "").strip().casefold()
+                for node in metadata.findall("loadAfter/li")
+            }
+            if "nanaloveyuki.oxygendsl" not in dependency_ids:
+                errors.append("Oxygen DSL Framework must be a required mod dependency")
+            if "nanaloveyuki.oxygendsl" not in load_after_ids:
+                errors.append("Hunger and Havoc must load after Oxygen DSL Framework")
+    for path in sorted(ROOT.rglob("*")):
+        if {".git", "tmp", "bin", "obj"}.intersection(path.relative_to(ROOT).parts):
+            continue
+        if path.is_file() and path.suffix.casefold() == ".dll" and path.name.casefold().startswith("oxygendsl."):
+            errors.append("do not bundle ODF assemblies: " + path.relative_to(ROOT).as_posix())
 
 
 def check_load_folders():
