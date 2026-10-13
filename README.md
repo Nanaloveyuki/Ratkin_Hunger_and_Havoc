@@ -100,6 +100,8 @@ The five ordinary-event endings have been retired, along with their settings and
 
 其它模组请使用 `HungerAndHavoc.Api.RHAH_Api`，不要扫描经历或私有类型。
 
+实现、默认值和配置以源码、Def 与项目文件为准。根及就近 `AGENTS.md` 只记录项目或目录约束；文档保留设计理由、剧情稿、[存档与卸载契约](docs/save-ownership.md) 及必要操作说明。[缺陷与实施工作项](docs/agents/issue-tracker.md) 统一通过本仓库 GitHub Issues 跟踪。
+
 ## 构建
 
 退出 RimWorld 后：
