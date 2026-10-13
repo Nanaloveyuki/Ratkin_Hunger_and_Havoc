@@ -187,6 +187,9 @@ namespace HungerAndHavoc.EventMgr
                 case "I-033":
                 case "I-037":
                 case "I-041":
+                case "I-038":
+                case "I-046":
+                case "I-047":
                     return true;
                 default:
                     return false;
@@ -209,7 +212,8 @@ namespace HungerAndHavoc.EventMgr
             int motherDays = settings == null ? MotherReturnDays : settings.followMotherReturnDays;
             int years = settings == null ? LongReturnYears : settings.followLongReturnYears;
             int days = displayId == "I-037" ? motherDays : years * 60;
-            return startedTick + days * TicksPerDay;
+            long due = (long)startedTick + (long)days * TicksPerDay;
+            return due >= int.MaxValue ? int.MaxValue : (int)due;
         }
 
         internal static string Payload(string displayId, int batchId, int mapId)

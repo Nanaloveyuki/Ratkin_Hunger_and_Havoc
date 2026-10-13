@@ -17,7 +17,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal const int Spread = 250;
 
         internal const string EnvoyHoldKey = "rhah:envoyHold";
-        internal const string QuarantineHoldKey = "rhah:quarantineHold";
 
         internal static void HoldVisitor(Verse.Pawn pawn, string key)
         {
@@ -27,8 +26,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return;
             }
 
-            string otherKey = key == EnvoyHoldKey ? QuarantineHoldKey : EnvoyHoldKey;
             string previous;
+            string otherKey = key == EnvoyHoldKey ? HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.HoldKey : EnvoyHoldKey;
             if (!comp.State.TryGetExtra(otherKey, out previous))
             {
                 previous = GateValue(comp.State.GetGateOverride(RHAH_BehaviorGate.LeaveAfterFed)) +
@@ -48,7 +47,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             RHAH_Api.SetExtra(pawn, key, null);
-            string otherKey = key == EnvoyHoldKey ? QuarantineHoldKey : EnvoyHoldKey;
+            string otherKey = key == EnvoyHoldKey ? HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.HoldKey : EnvoyHoldKey;
             if (!comp.State.TryGetExtra(otherKey, out string other))
             {
                 RestoreGate(pawn, comp, RHAH_BehaviorGate.LeaveAfterFed, previous[0]);

@@ -3,7 +3,7 @@
   <WorldObjectDef>
     <defName>RHAH_Approach</defName>
     <label>鼠族远行队</label>
-    <description>一队鼠族正在向我们据点走来。他们还在路上。</description>
+    <description>一队鼠族正在前往我们的据点。</description>
     <worldObjectClass>HungerAndHavoc.Incidents.WorldObject_RHAH_Approach</worldObjectClass>
     <texture>World/WorldObjects/Caravan</texture>
     <useDynamicDrawer>true</useDynamicDrawer>
@@ -16,7 +16,7 @@
   <WorldObjectDef ParentName="StaticWorldObjectBase">
     <defName>RHAH_Interception</defName>
     <label>拦截地点</label>
-    <description>鼠族在这里和我们的远行队碰上了。这处地点是临时的，不会再引来别的袭击。</description>
+    <description>我们的远行队在这里拦住了一队鼠族。</description>
     <worldObjectClass>HungerAndHavoc.Incidents.WorldObject_RHAH_Interception</worldObjectClass>
     <mapGenerator>Encounter</mapGenerator>
     <texture>World/WorldObjects/Caravan</texture>

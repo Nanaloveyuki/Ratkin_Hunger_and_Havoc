@@ -131,6 +131,7 @@ namespace HungerAndHavoc.Core
             plan.CampObjectDefs.Add("RHAH_RefugeeCamp");
             plan.CampObjectDefs.Add("RHAH_RecordSite");
             plan.CampObjectDefs.Add("RHAH_Interception");
+            plan.CampObjectDefs.Add("RHAH_KingdomSite");
             plan.CampObjectClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_RefugeeCamp");
             plan.CampObjectClasses.Add("HungerAndHavoc.Incidents.WorldObject_RHAH_Interception");
             WorldObjectDef site = RequireDef<WorldObjectDef>("Site");
@@ -152,6 +153,7 @@ namespace HungerAndHavoc.Core
 
             plan.Replacements.Add("RHAH_Suiyin", RequireDef<StorytellerDef>("Randy").defName);
             plan.Replacements.Add("RHAH_Xenotype_Ratkin", RequireDef<XenotypeDef>("Baseliner").defName);
+            plan.Replacements.Add("RHAH_LongKeepsake", RequireDef<ThingDef>("Cloth").defName);
             FactionDef ancients = RequireDef<FactionDef>("Ancients");
             if (content.AllDefs.Contains(ancients))
             {

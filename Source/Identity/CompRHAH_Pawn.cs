@@ -96,6 +96,7 @@ namespace HungerAndHavoc.Identity
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 state.EnsureCollections();
+                HungerAndHavoc.Core.RHAH_QuarantineMigration.RestoreVisitorGates(state);
                 if (shortStayLockedApparel == null)
                 {
                     shortStayLockedApparel = new System.Collections.Generic.List<RimWorld.Apparel>();

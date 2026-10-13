@@ -13,7 +13,8 @@ namespace HungerAndHavoc.Pawn
     {
         static void Postfix(Verse.Pawn pawn, ref Job __result)
         {
-            if (__result == null || __result.def != JobDefOf.Ingest || !RHAH_Api.IsVisitor(pawn))
+            if (__result == null || __result.def != JobDefOf.Ingest || !RHAH_Api.IsVisitor(pawn) ||
+                !RHAH_VisitorRules.AllowsModBehavior(RHAH_VisitorStay.Kind(pawn)))
             {
                 return;
             }

@@ -59,9 +59,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             TickEntrust(state, book, tick);
-            RHAH_Revisit.Tick(tick);
             TickCare(state, book, tick);
-            TickReturn(book, tick);
         }
 
         static void OpenEntrust(NarrativeState state, RHAH_ChoiceRecord record, int tick)
@@ -263,36 +261,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
         }
 
-        static void TickReturn(SuiyinBook book, int tick)
-        {
-            List<SuiyinN007Case> cases = book.N007;
-            if (cases == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < cases.Count; i++)
-            {
-                SuiyinN007Case record = cases[i];
-                if (record == null || record.ReturnDone || record.ReturnDueTick < 0 || tick < record.ReturnDueTick)
-                {
-                    continue;
-                }
-
-                Verse.Pawn pawn = FindPawn(record.ReturnPawnId);
-                bool alive = pawn != null && !pawn.Dead && !pawn.Destroyed;
-                if (alive && !pawn.Spawned)
-                {
-                    Map map = MapById(record.MapId) ?? Find.AnyPlayerHomeMap;
-                    if (!RHAH_Revisit.TryBringHome(pawn, map))
-                    {
-                        continue;
-                    }
-                }
-
-                book.ClaimReturn(record, tick, alive && pawn.Spawned);
-            }
-        }
 
         static void ReadMember(SuiyinMember member, int tick, bool care)
         {

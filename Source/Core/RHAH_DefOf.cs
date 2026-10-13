@@ -37,7 +37,6 @@ namespace HungerAndHavoc.Core
         public static FactionDef RHAH_Faction_Friendly;
         public static LetterDef RHAH_ChoiceRequest;
         public static LetterDef RHAH_ChoiceVisitors;
-        public static LetterDef RHAH_QuarantineLetter;
         public static LetterDef RHAH_GreenIncident;
         public static LetterDef RHAH_ChoiceRequestGreen;
         public static LetterDef RHAH_ChoiceVisitorsGreen;

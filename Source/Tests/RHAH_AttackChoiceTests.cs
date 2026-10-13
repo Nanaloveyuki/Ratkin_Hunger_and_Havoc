@@ -37,6 +37,7 @@ namespace HungerAndHavoc.Tests
             {
                 binding.SetValue(null, true);
                 System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(RHAH_DefOf).TypeHandle);
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(JobDefOf).TypeHandle);
             }
             finally
             {
@@ -209,31 +210,77 @@ namespace HungerAndHavoc.Tests
 
 
 
-        [Fact]
-        public void PermanentReleaseClearsStayAndNeverExpiresAdoptedChild()
+        [Theory]
+        [InlineData(RHAH_Lifecycle.Released)]
+        [InlineData(RHAH_Lifecycle.Dead)]
+        public void TerminalIdentityNeverBlocksWorkForResidualExpiredStay(RHAH_Lifecycle lifecycle)
         {
             Verse.Pawn pawn = Visitor(1);
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
             comp.SetStay((int)RHAH_StayKind.Shelter, 100, 100);
-            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Released);
+            RHAH_Api.SetLifecycle(pawn, lifecycle);
             Assert.Equal(0, comp.State.stayKind);
             Assert.Equal(-1, comp.State.leaveAfterGameTick);
             pawn.SetFactionDirect(player);
             comp.SetStay((int)RHAH_StayKind.Shelter, 100, 0);
+            Assert.False(RHAH_VisitorStay.BlocksAssignedWork(pawn, 200));
             Assert.False(RHAH_VisitorStay.Tick(pawn, 200));
             Assert.Same(player, pawn.Faction);
-            Assert.Equal(RHAH_Lifecycle.Released, comp.State.lifecycle);
+            Assert.Equal(lifecycle, comp.State.lifecycle);
         }
 
-        [Fact]
-        public void ShortstayMealsDoNotReplaceTheTemporaryResidenceDeadline()
+        [Theory]
+        [InlineData((int)RHAH_StayKind.Shelter)]
+        [InlineData((int)RHAH_StayKind.Hire)]
+        [InlineData((int)RHAH_StayKind.Recruit)]
+        public void WorkerMealsPreserveContractAndAllowWorkUntilExpiry(int kindValue)
+        {
+            RHAH_StayKind kind = (RHAH_StayKind)kindValue;
+            Verse.Pawn pawn = Visitor(1);
+            pawn.SetFactionDirect(player);
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            int deadline = RHAH_VisitorRules.BeginStay(0, kind, 5, 240);
+            comp.SetStay((int)kind, deadline, deadline);
+            LifeStageAge age = Uninitialized<LifeStageAge>();
+            age.def = new LifeStageDef { bodySizeFactor = 1f, foodMaxFactor = 1f };
+            pawn.def.race.lifeStageAges = new List<LifeStageAge> { age };
+            pawn.ageTracker = new Pawn_AgeTracker(pawn);
+            Field(typeof(Pawn_AgeTracker), "cachedLifeStageIndex").SetValue(pawn.ageTracker, 0);
+            pawn.needs = new Pawn_NeedsTracker();
+            pawn.needs.food = Uninitialized<Need_Food>();
+            Field(typeof(Need), "pawn").SetValue(pawn.needs.food, pawn);
+            Field(typeof(Need), "curLevelInt").SetValue(pawn.needs.food, pawn.needs.food.MaxLevel);
+
+            Assert.False(RHAH_Feeding.TryComplete(pawn));
+            Assert.Equal(deadline, comp.State.leaveAfterGameTick);
+            Assert.Equal(deadline, comp.State.stayRemainingTicks);
+            Assert.Equal(RHAH_Lifecycle.SeekingFood, comp.State.lifecycle);
+            Assert.False(comp.State.hasBeenFed);
+            Assert.False(RHAH_VisitorStay.BlocksAssignedWork(pawn, deadline - 1));
+            Assert.True(RHAH_VisitorStay.BlocksAssignedWork(pawn, deadline));
+        }
+
+        [Theory]
+        [InlineData((int)RHAH_StayKind.Shelter)]
+        [InlineData((int)RHAH_StayKind.Hire)]
+        [InlineData((int)RHAH_StayKind.Recruit)]
+        public void WorkerMealsAreNotFilteredByVisitorReliefRules(int kind)
         {
             Verse.Pawn pawn = Visitor(1);
-            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
-            comp.SetStay((int)RHAH_StayKind.Shelter, 60000, 60000);
-            Assert.False(RHAH_Feeding.TryComplete(pawn));
-            Assert.Equal(60000, comp.State.leaveAfterGameTick);
-            Assert.False(comp.State.hasBeenFed);
+            pawn.SetFactionDirect(player);
+            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed);
+            CompRHAH_Pawn.TryGet(pawn).SetStay(kind, 1000, 1000);
+            RHAH_Mod.Settings.ignoreReliefAfterFed = true;
+            Thing food = new Thing { def = Uninitialized<ThingDef>() };
+            Field(typeof(Thing), "mapIndexOrState").SetValue(food, (sbyte)0);
+            Job original = new Job { def = JobDefOf.Ingest, targetA = food };
+            object[] args = { pawn, original };
+
+            typeof(RHAH_ReliefFoodPatch).GetMethod("Postfix", BindingFlags.Static | BindingFlags.NonPublic)
+                .Invoke(null, args);
+
+            Assert.Same(original, args[1]);
+            Assert.Equal(1000, CompRHAH_Pawn.TryGet(pawn).State.leaveAfterGameTick);
         }
 
         [Fact]

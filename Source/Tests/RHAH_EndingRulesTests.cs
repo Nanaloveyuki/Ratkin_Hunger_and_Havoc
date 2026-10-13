@@ -1,183 +1,142 @@
-using HungerAndHavoc.Incidents;
+using System;
+using System.Collections;
+using System.IO;
+using System.Reflection;
+using System.Xml;
 using HungerAndHavoc.Narrative;
 using HungerAndHavoc.Storyteller.Suiyin;
+using Verse;
 using Xunit;
 
 namespace HungerAndHavoc.Tests
 {
-    public class RHAH_EndingRulesTests
+    public sealed class RHAH_EndingRulesTests : IDisposable
     {
+        readonly ScribeSaver previousSaver = Scribe.saver;
+        readonly ScribeLoader previousLoader = Scribe.loader;
+        readonly LoadSaveMode previousMode = Scribe.mode;
+        readonly bool previousProfiling = DeepProfiler.enabled;
+        readonly object previousPrefs = PrefsField.GetValue(null);
+        readonly IDictionary previousTypeCache = (IDictionary)TypeCacheField.GetValue(null);
+        readonly string path = Path.GetTempFileName();
+        static FieldInfo PrefsField => typeof(Prefs).GetField("data", BindingFlags.Static | BindingFlags.NonPublic);
+        static FieldInfo TypeCacheField => typeof(GenTypes).GetField("typeCache", BindingFlags.Static | BindingFlags.NonPublic);
+
+        public RHAH_EndingRulesTests()
+        {
+            Scribe.saver = new ScribeSaver();
+            Scribe.loader = new ScribeLoader();
+            Scribe.mode = LoadSaveMode.Inactive;
+            DeepProfiler.enabled = false;
+            PrefsField.SetValue(null, new PrefsData { devMode = false });
+            // 独立测试没有活动模组程序集；全名解析不查询 AllTypes，仅登记实际深存档图
+            Type[] serializedTypes =
+            {
+                typeof(KingdomArcState), typeof(KingdomArcProgress), typeof(KingdomMaterialRecord),
+                typeof(SuiyinN004Case), typeof(SuiyinN005Case), typeof(SuiyinN006Case),
+                typeof(SuiyinN008Case), typeof(SuiyinN009Case), typeof(SuiyinJournalCase), typeof(SuiyinNotice)
+            };
+            IDictionary typeCache = (IDictionary)Activator.CreateInstance(previousTypeCache.GetType());
+            foreach (DictionaryEntry entry in previousTypeCache) typeCache.Add(entry.Key, entry.Value);
+            Type keyType = typeof(GenTypes).GetNestedType("TypeCacheKey", BindingFlags.NonPublic);
+            foreach (Type type in serializedTypes)
+            {
+                object key = Activator.CreateInstance(keyType, new object[] { type.FullName, null });
+                typeCache[key] = type;
+            }
+            TypeCacheField.SetValue(null, typeCache);
+        }
+
+        public void Dispose()
+        {
+            Scribe.ForceStop();
+            Scribe.saver = previousSaver;
+            Scribe.loader = previousLoader;
+            Scribe.mode = previousMode;
+            DeepProfiler.enabled = previousProfiling;
+            PrefsField.SetValue(null, previousPrefs);
+            TypeCacheField.SetValue(null, previousTypeCache);
+            File.Delete(path);
+        }
+
         [Fact]
         public void ThreatFactor_MatchesTrustAnchors()
         {
             Assert.Equal(1.25f, RHAH_EndingRules.ThreatFactor(-100));
             Assert.Equal(1f, RHAH_EndingRules.ThreatFactor(0));
             Assert.Equal(0.75f, RHAH_EndingRules.ThreatFactor(100));
-            Assert.Equal(13f / 1.25f, RHAH_EndingRules.ThreatInterval(-100, 13f), 3);
-            Assert.Equal(13f, RHAH_EndingRules.ThreatInterval(0, 13f), 3);
-            Assert.Equal(13f / 0.75f, RHAH_EndingRules.ThreatInterval(100, 13f), 3);
         }
 
         [Fact]
-        public void OneEnding_BlocksAnyLaterEnding()
-        {
-            RHAH_EndingFacts low = Facts(10, true, 10, 0, 0, 0, 6, false, 30, false, false, false, false, false, 0);
-            Assert.Equal(RHAH_EndingId.E03, RHAH_EndingRules.Next(low, RHAH_EndingGoals.Defaults()));
-
-            RHAH_EndingFacts shown = Facts(80, true, 99, 3, 3, 100, 6, false, 30, false, false, true, false, false, 0);
-            Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(shown, RHAH_EndingGoals.Defaults()));
-            Assert.Equal(RHAH_EndingId.E01, RHAH_EndingRules.Next(
-                Facts(60, true, 99, 3, 1, 10, 6, false, 30, false, false, false, false, false, 0),
-                RHAH_EndingGoals.Defaults()));
-        }
-
-        [Fact]
-        public void Hope_RequiresAdultsAndHigherTrust()
-        {
-            Assert.Equal(RHAH_EndingId.E01, RHAH_EndingRules.Next(
-                Facts(80, true, 99, 3, 0, 99, 6, false, 30, false, false, false, false, false, 0),
-                RHAH_EndingGoals.Defaults()));
-            Assert.Equal(RHAH_EndingId.E02, RHAH_EndingRules.Next(
-                Facts(75, true, 99, 3, 3, 100, 6, false, 0, false, false, false, false, false, 0),
-                RHAH_EndingGoals.Defaults()));
-            Assert.Equal(RHAH_EndingId.E01, RHAH_EndingRules.Next(
-                Facts(74, true, 99, 3, 3, 100, 0, false, 0, false, false, false, false, false, 0),
-                RHAH_EndingGoals.Defaults()));
-            Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(
-                Facts(49, true, 99, 3, 3, 100, 0, false, 0, false, false, false, false, false, 0),
-                RHAH_EndingGoals.Defaults()));
-        }
-
-        [Fact]
-        public void OtherNarrator_GetsNoEnding()
-        {
-            Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(
-                Facts(0, false, 99, 3, 0, 100, 6, true, 30, false, false, false, false, false, 0),
-                RHAH_EndingGoals.Defaults()));
-            Assert.False(RHAH_EndingRules.IdentityDue(
-                Facts(90, false, 99, 3, 0, 100, 6, true, 30, true, true, false, false, false, 0),
-                RHAH_EndingGoals.Defaults()));
-            Assert.False(RHAH_EndingRuntime.Counts(false, null));
-            Assert.True(RHAH_EndingRuntime.Counts(true, null));
-        }
-
-        [Fact]
-        public void Halt_FiresOnceAndDoesNotCloseTheSchedule()
-        {
-            RHAH_EndingFacts halt = Facts(-75, true, 0, 0, 9, 0, 1, false, 0, false, false, false, false, false, 0);
-            Assert.Equal(RHAH_EndingId.E05, RHAH_EndingRules.Next(halt, RHAH_EndingGoals.Defaults()));
-            RHAH_EndingFacts again = Facts(-100, true, 0, 0, 9, 0, 1, false, 0, false, false, false, false, true, 0);
-            Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(again, RHAH_EndingGoals.Defaults()));
-            Assert.True(RHAH_EndingRules.AsidesClosed(-80, false, -75));
-            Assert.False(RHAH_EndingRuntime.IsNarrator("Randy"));
-        }
-
-        [Fact]
-        public void DisabledEnding_DoesNotStartAndShownEndingStays()
-        {
-            RHAH_EndingGoals closed = new RHAH_EndingGoals(99, 3, 3, 100, 30, true, false, true, true, true, true, true, true, 50, 75, -75, 6, 13f);
-            Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(
-                Facts(80, false, 99, 3, 0, 100, 6, false, 30, false, false, false, false, false, 0),
-                closed));
-            Assert.Equal(RHAH_EndingId.None, RHAH_EndingRules.Next(
-                Facts(10, true, 0, 0, 0, 0, 6, false, 30, false, false, false, false, false, 0),
-                new RHAH_EndingGoals(99, 3, 3, 100, 30, true, true, true, true, false, true, true, true, 50, 75, -75, 6, 13f)));
-        }
-
-        [Fact]
-        public void Identity_SendsTheOfferedTierOnce()
-        {
-            RHAH_EndingGoals goals = RHAH_EndingGoals.Defaults();
-            Assert.False(RHAH_EndingRules.IdentityDue(Facts(49, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 0), goals));
-            Assert.True(RHAH_EndingRules.IdentityDue(Facts(50, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 0), goals));
-            Assert.Equal("RHAH_Ending_IdentityPartial", RHAH_EndingRuntime.IdentityKey(RHAH_EndingRules.IdentityOffer(50, 50, 75)));
-            Assert.Equal("RHAH_Ending_IdentityFull", RHAH_EndingRuntime.IdentityKey(RHAH_EndingRules.IdentityOffer(75, 50, 75)));
-            Assert.False(RHAH_EndingRules.IdentityDue(Facts(80, true, 0, 0, 0, 0, 0, true, 0, false, false, false, false, false, 2), goals));
-            Assert.Equal(50, Facts(50, true, 1, 0, 0, 0, 0, false, 0, false, false, false, false, false, 0).Trust);
-        }
-
-        [Fact]
-        public void SaveRoundTrip_KeepsShownEndingAndCounters()
+        public void IdentityDue_RequiresRelicAndConsumesTierWithoutChangingTrust()
         {
             NarrativeState state = new NarrativeState(null);
-            state.RecordTrust(60);
-            state.NoteAid(0);
-            state.NoteBroadcast(60000);
-            state.NoteExpulsion(120000);
-            state.NoteCompletedKind(120000, 1);
-            state.NoteRelicDone(180000);
-            state.SetAdultCount(12, 180000);
-            state.MarkEnding(RHAH_EndingId.E03);
-            state.MarkIdentity(RHAH_IdentityTier.Partial, true);
+            state.RecordTrust(75);
+            Assert.False(state.IdentityDue(true, true, 50, 75));
 
+            state.NoteRelicDone(100);
+            Assert.True(state.IdentityDue(true, true, 50, 75));
+            state.MarkIdentity(RHAH_IdentityTier.Full, false);
+
+            Assert.False(state.IdentityDue(true, true, 50, 75));
+            Assert.Equal(75, state.Snapshot().Trust);
+        }
+
+        [Theory]
+        [InlineData(49, 0)]
+        [InlineData(50, 1)]
+        [InlineData(75, 2)]
+        public void IdentityOffer_UsesConfiguredTrustTiers(int trust, int expected)
+        {
+            Assert.Equal(expected, (int)RHAH_EndingRules.IdentityOffer(trust, 50, 75));
+        }
+
+        [Theory]
+        [InlineData(80, 0, false, true)]
+        [InlineData(-80, 0, false, false)]
+        [InlineData(80, 2, false, false)]
+        [InlineData(80, 0, true, false)]
+        public void PublishedSave_PreservesRetiredInputsAndIdentityConsumption(int trust, int tier, bool refused, bool identityDue)
+        {
+            File.WriteAllText(path, "<record><trust>" + trust + "</trust>" +
+                "<endingE01>True</endingE01><endingE02>False</endingE02><endingE03>True</endingE03>" +
+                "<endingE04>False</endingE04><endingE05>True</endingE05><adultCount>123</adultCount>" +
+                "<firstFactTick>700</firstFactTick><nextAdultCheckTick>900</nextAdultCheckTick>" +
+                "<relicDone>True</relicDone><identityTier>" + tier + "</identityTier><identityRefused>" + refused + "</identityRefused></record>");
+            NarrativeState loaded = Load();
+            Assert.Equal(trust, loaded.Snapshot().Trust);
+            Assert.Equal(trust, loaded.Book.Trust);
+            Assert.Equal(identityDue, loaded.IdentityDue(true, true, 50, 75));
+            Assert.False(loaded.IdentityDue(false, true, 50, 75));
+            Assert.False(loaded.IdentityDue(true, false, 50, 75));
+
+            Scribe.saver.InitSaving(path, "record");
+            loaded.ExposeData();
+            Scribe.saver.FinalizeSaving();
+            XmlDocument saved = new XmlDocument();
+            saved.Load(path);
+            Assert.True(bool.Parse(saved.SelectSingleNode("/record/endingE01").InnerText));
+            Assert.True(bool.Parse(saved.SelectSingleNode("/record/endingE03").InnerText));
+            Assert.True(bool.Parse(saved.SelectSingleNode("/record/endingE05").InnerText));
+            Assert.Equal("123", saved.SelectSingleNode("/record/adultCount").InnerText);
+            Assert.Equal("700", saved.SelectSingleNode("/record/firstFactTick").InnerText);
+            Assert.Equal("900", saved.SelectSingleNode("/record/nextAdultCheckTick").InnerText);
+
+            NarrativeState reloaded = Load();
+            Assert.Equal(trust, reloaded.Snapshot().Trust);
+            Assert.Equal(trust, reloaded.Book.Trust);
+            Assert.Equal(identityDue, reloaded.IdentityDue(true, true, 50, 75));
+        }
+
+        NarrativeState Load()
+        {
+            Scribe.loader.InitLoading(path);
             NarrativeState loaded = new NarrativeState(null);
-            loaded.RecordTrust(state.Snapshot().Trust);
-            for (int i = 0; i < state.AidCount; i++)
-            {
-                loaded.NoteAid(0);
-            }
-
-            for (int i = 0; i < state.BroadcastCount; i++)
-            {
-                loaded.NoteBroadcast(60000);
-            }
-
-            for (int i = 0; i < state.ExpulsionCount; i++)
-            {
-                loaded.NoteExpulsion(120000);
-            }
-
-            for (int journal = 1; journal <= state.CompletedKindCount; journal++)
-            {
-                loaded.NoteCompletedKind(120000, journal);
-            }
-
-            if (state.RelicDone)
-            {
-                loaded.NoteRelicDone(180000);
-            }
-
-            loaded.SetAdultCount(state.AdultCount, 180000);
-            loaded.MarkEnding(RHAH_EndingId.E03);
-            loaded.MarkIdentity(RHAH_IdentityTier.Partial, true);
-
-            Assert.Equal(1, loaded.AidCount);
-            Assert.Equal(1, loaded.BroadcastCount);
-            Assert.Equal(12, loaded.AdultCount);
-            Assert.True(loaded.EndingShown(RHAH_EndingId.E03));
-            Assert.False(loaded.IdentityDue(200000, true, RHAH_EndingGoals.Defaults()));
-            Assert.Equal(RHAH_EndingId.None, loaded.PendingEnding(200000, true, new RHAH_EndingGoals(1, 1, 3, 100, 30, true, true, true, true, true, true, true, true, 50, 75, -75, 6, 13f)));
-        }
-
-        static RHAH_EndingFacts Facts(
-            int trust,
-            bool narrator,
-            int aid,
-            int broadcasts,
-            int expulsions,
-            int adults,
-            int kinds,
-            bool relic,
-            int waited,
-            bool e01,
-            bool e02,
-            bool e03,
-            bool e04,
-            bool e05,
-            int identity)
-        {
-            return new RHAH_EndingFacts(trust, narrator, aid, broadcasts, expulsions, adults, kinds, relic, waited, e01, e02, e03, e04, e05, identity);
-        }
-
-        [Fact]
-        public void PromiseMarksAidWithoutCountingDelivery()
-        {
-            Assert.True(RHAH_RequestRules.PromisesAid(RHAH_ChoiceKind.Aid, RHAH_ChoiceAction.Deliver));
-            Assert.True(RHAH_RequestRules.PromisesAid(RHAH_ChoiceKind.Abandoned, RHAH_ChoiceAction.Join));
-            Assert.False(RHAH_RequestRules.PromisesAid(RHAH_ChoiceKind.Aid, RHAH_ChoiceAction.Reject));
-            Assert.False(RHAH_RequestRules.PromisesAid(RHAH_ChoiceKind.Intel, RHAH_ChoiceAction.Deliver));
-            Assert.True(RHAH_EndingRules.CountsExpulsion(true, true));
-            Assert.False(RHAH_EndingRules.CountsExpulsion(false, true));
+            Scribe.loader.curParent = loaded;
+            loaded.ExposeData();
+            Scribe.loader.initer.RegisterForPostLoadInit(loaded);
+            Scribe.loader.FinalizeLoading();
+            return loaded;
         }
     }
 }

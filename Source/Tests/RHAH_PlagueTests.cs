@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using HungerAndHavoc.Api;
 using HungerAndHavoc.Identity;
 using Xunit;
 
@@ -33,38 +31,5 @@ namespace HungerAndHavoc.Tests
         }
 
 
-        [Fact]
-        public void Resolve_CountsOnlyCureAndDeathWhileSick()
-        {
-            PlagueWatch watch = new PlagueWatch();
-            watch.Entries.Add(new PlagueWatchEntry { LoadId = 1, Dead = false, StillSick = false });
-            watch.Entries.Add(new PlagueWatchEntry { LoadId = 2, Dead = true, StillSick = true });
-            watch.Entries.Add(new PlagueWatchEntry { LoadId = 3, Dead = false, LeftMap = true, StillSick = true });
-            watch.Entries.Add(new PlagueWatchEntry { LoadId = 4, Keep = true, StillSick = true });
-            watch.Entries.Add(new PlagueWatchEntry { LoadId = 5, Missing = true });
-
-            watch.Entries.Add(new PlagueWatchEntry { LoadId = 2, Dead = true, StillSick = true, Counted = true });
-
-            PlagueTally first = RHAH_Plague.ResolveQuarantine(watch);
-            PlagueTally second = RHAH_Plague.ResolveQuarantine(watch);
-
-            Assert.Equal(1, first.Recovered);
-            Assert.Equal(1, first.Died);
-            Assert.Equal(0, second.Recovered);
-            Assert.Equal(0, second.Died);
-            Assert.False(watch.Entries[3].Counted);
-            Assert.True(watch.Entries[2].Counted);
-            Assert.True(watch.Entries[4].Counted);
-        }
-
-        [Fact]
-        public void Return_PicksOneRecoveredSurvivorOnce()
-        {
-            List<int> recovered = new List<int> { 9, 11 };
-
-            Assert.Equal(9, RHAH_Plague.ChooseReturn(0, recovered));
-            Assert.Equal(0, RHAH_Plague.ChooseReturn(9, recovered));
-            Assert.Equal(0, RHAH_Plague.ChooseReturn(0, new List<int>()));
-        }
     }
 }

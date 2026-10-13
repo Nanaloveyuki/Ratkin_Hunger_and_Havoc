@@ -26,37 +26,39 @@ namespace HungerAndHavoc.Incidents
                     yield break;
                 }
 
-                DiaOption deliver = new DiaOption("RHAH_Choice_Deliver".Translate());
                 Map map = ResolveMap();
-                bool enough = map != null && RHAH_ChoiceRuntime.Stock(map, kind) >= amount;
-                if (kind == RHAH_RequestKind.Baby)
+                RHAH_ChoiceRecord record = FindRecord(Current.Game?.GetComponent<GameComponent_RHAH_Game>());
+                if (kind == RHAH_RequestKind.Baby && record != null)
                 {
-                    RHAH_ChoiceRecord record = FindRecord(Current.Game?.GetComponent<GameComponent_RHAH_Game>());
-                    bool food = record != null &&
-                        RHAH_RequestRules.CanSubstituteFood(
-                            RHAH_Mod.Settings == null || RHAH_Mod.Settings.childExchangeFoodSubstitution,
-                            record.Choice,
-                            map == null ? 0 : RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal),
-                            record.PawnLoadIds.Count);
-                    if (food)
+                    List<Verse.Pawn> children = RHAH_ChildExchange.Candidates(record);
+                    for (int i = 0; i < children.Count; i++)
                     {
-                        enough = true;
-                        deliver.action = () => Wrapped(deliver, RHAH_ChoiceAction.Deliver);
-                        deliver.resolveTree = false;
+                        Verse.Pawn child = children[i];
+                        DiaOption childOption = new DiaOption((record.DisplayId == "I-019" ? "RHAH_ChildExchange_LegacyChoose" : "RHAH_ChildExchange_Choose").Translate(child.LabelShortCap));
+                        childOption.action = () => Wrapped(childOption, RHAH_ChoiceAction.Deliver, child, false);
+                        childOption.resolveTree = false;
+                        if (!RHAH_ChildExchange.CanDeliver(record, child, false)) childOption.Disable("RHAH_ChildExchange_Unavailable".Translate());
+                        yield return childOption;
                     }
-                    else
+                    if (children.Count == 0)
                     {
-                        enough = false;
-                        deliver.Disable("RHAH_Choice_NoBaby".Translate());
+                        DiaOption noChild = new DiaOption("RHAH_ChildExchange_ChooseNone".Translate());
+                        noChild.Disable("RHAH_ChildExchange_NoChild".Translate());
+                        yield return noChild;
                     }
                 }
-                else if (!enough)
-                {
-                    deliver.Disable("RHAH_Choice_Short".Translate(amount));
-                }
+                bool foodAlternative = kind == RHAH_RequestKind.Baby;
+                DiaOption deliver = new DiaOption((foodAlternative ? "RHAH_ChildExchange_Food" :
+                    record != null && record.TransactionVersion == RHAH_RequestRules.TransactionVersion ? "RHAH_Transaction_Accept" : "RHAH_Choice_Deliver").Translate());
+                bool enough = record != null && (record.TransactionVersion == RHAH_RequestRules.TransactionVersion
+                    ? RHAH_FoodTransaction.CanDeliver(record)
+                    : foodAlternative ? RHAH_ChildExchange.CanDeliver(record, null, true)
+                    : map != null && RHAH_ChoiceRuntime.Stock(map, kind) >= amount);
+                if (!enough) deliver.Disable((foodAlternative ? "RHAH_ChildExchange_Unavailable" :
+                    record != null && record.TransactionVersion == RHAH_RequestRules.TransactionVersion ? "RHAH_Transaction_Unavailable" : "RHAH_Choice_Short").Translate(amount));
                 else
                 {
-                    deliver.action = () => Wrapped(deliver, RHAH_ChoiceAction.Deliver);
+                    deliver.action = () => Wrapped(deliver, RHAH_ChoiceAction.Deliver, null, foodAlternative);
                     deliver.resolveTree = false;
                 }
 
@@ -67,7 +69,7 @@ namespace HungerAndHavoc.Incidents
                 ignore.action = () => Wrapped(ignore, RHAH_ChoiceAction.Ignore);
                 ignore.resolveTree = false;
 
-                yield return deliver;
+                if (!foodAlternative || record?.DisplayId == "I-013") yield return deliver;
                 yield return reject;
                 yield return ignore;
                 yield return Option_Postpone;
@@ -86,70 +88,34 @@ namespace HungerAndHavoc.Incidents
         }
 
         // 仅当信件真的离开信栈才关闭它自己的窗口
-        void Wrapped(DiaOption option, RHAH_ChoiceAction action)
+        void Wrapped(DiaOption option, RHAH_ChoiceAction action, Verse.Pawn outgoingChild = null, bool foodAlternative = false)
         {
             bool open = Find.LetterStack != null && Find.LetterStack.LettersListForReading.Contains(this);
-            Settle(action);
+            Settle(action, outgoingChild, foodAlternative);
             if (open && (Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)))
             {
                 option.dialog?.Close();
             }
         }
 
-        void Settle(RHAH_ChoiceAction action)
+        void Settle(RHAH_ChoiceAction action, Verse.Pawn outgoingChild, bool foodAlternative)
         {
             GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
-            RHAH_Settings settings = RHAH_Mod.Settings;
-            Map map = ResolveMap();
-            RHAH_ChoiceRecord open = FindRecord(game);
-            bool enabled = settings == null || settings.AllowsRequest(open == null ? (site == RHAH_IntelSiteKind.None ? RHAH_ChoiceKind.Aid : RHAH_ChoiceKind.Intel) : open.Choice);
-            bool foodForChild = open != null && open.Choice == RHAH_ChoiceKind.ChildExchange && kind == RHAH_RequestKind.Baby &&
-                (settings == null || settings.childExchangeFoodSubstitution);
-            int foodAmount = foodForChild ? RHAH_RequestRules.FoodForChildren(open.PawnLoadIds.Count) : 0;
-            bool canDeliver = action == RHAH_ChoiceAction.Deliver && map != null && (foodForChild
-                ? RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= foodAmount && foodAmount > 0
-                : RHAH_RequestRules.CanDeliver(kind, RHAH_ChoiceRuntime.Stock(map, kind), amount, false));
-
-            int tick = Find.TickManager.TicksGame;
-            RHAH_ChoiceAction requested = open != null && open.Open && open.ExpireTick >= 0 && tick >= open.ExpireTick
-                ? RHAH_ChoiceAction.Timeout : action;
-            RHAH_ChoiceAction settled = open == null || Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)
-                ? RHAH_ChoiceAction.None : RHAH_RequestRules.Settle(requested, enabled, !open.Open, canDeliver);
+            RHAH_ChoiceRecord record = FindRecord(game);
+            if (record == null || Find.LetterStack == null || !Find.LetterStack.LettersListForReading.Contains(this)) return;
+            bool enabled = RHAH_Mod.Settings == null || RHAH_Mod.Settings.AllowsRequest(record.Choice);
+            RHAH_ChoiceAction settled = RHAH_ChoiceRuntime.TrySettleRequest(game, choiceId, action,
+                Find.TickManager.TicksGame, enabled, outgoingChild, foodAlternative);
             if (settled == RHAH_ChoiceAction.None)
             {
-                TaggedString reason = action == RHAH_ChoiceAction.Deliver && open != null && open.Open && enabled && map != null && !canDeliver
-                    ? kind == RHAH_RequestKind.Baby ? "RHAH_Choice_NoBaby".Translate()
-                        : "RHAH_Choice_Short".Translate(amount)
-                    : "RHAH_Choice_Stale".Translate();
-                Messages.Message(reason, MessageTypeDefOf.RejectInput);
+                Messages.Message((record.TransactionVersion == RHAH_RequestRules.TransactionVersion ? "RHAH_Transaction_Unavailable" :
+                    record.Kind == RHAH_RequestKind.Baby ? "RHAH_ChildExchange_Unavailable" : "RHAH_Choice_Stale").Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
-
-            RHAH_RequestKind consumed = foodForChild ? RHAH_RequestKind.SimpleMeal : kind;
-            int consumedAmount = foodForChild ? foodAmount : amount;
-            bool removesStock = RHAH_RequestRules.RemovesStock(settled, consumed);
-            bool createsSite = RHAH_RequestRules.CreatesSite(settled, site);
-            bool completed = createsSite
-                ? RHAH_ChoiceRuntime.TryCreateSite(map, site, () => !removesStock || RHAH_ChoiceRuntime.TryConsume(map, consumed, consumedAmount))
-                : !removesStock || RHAH_ChoiceRuntime.TryConsume(map, consumed, consumedAmount);
-            if (!completed)
-            {
-                Messages.Message(createsSite ? "RHAH_Choice_SiteUnavailable".Translate() : "RHAH_Choice_Short".Translate(consumedAmount), MessageTypeDefOf.RejectInput);
-                return;
-            }
-
-            RHAH_ChoiceRuntime.TrySettle(game, choiceId, settled, tick, enabled, canDeliver);
-            RHAH_ChoiceRecord record = FindRecord(game);
-            RHAH_ChoiceRuntime.Apply(record);
             if (settled == RHAH_ChoiceAction.Deliver)
-            {
-                Messages.Message("RHAH_Choice_Delivered".Translate(), MessageTypeDefOf.PositiveEvent);
-            }
-
-            if (Find.LetterStack != null)
-            {
-                Find.LetterStack.RemoveLetter(this);
-            }
+                Messages.Message((record.TransactionVersion == RHAH_RequestRules.TransactionVersion ? "RHAH_Transaction_Completed" :
+                    record.Kind == RHAH_RequestKind.Baby ? "RHAH_ChildExchange_Completed" : "RHAH_Choice_Delivered").Translate(), MessageTypeDefOf.PositiveEvent);
+            Find.LetterStack.RemoveLetter(this);
         }
 
         bool StillOpen()

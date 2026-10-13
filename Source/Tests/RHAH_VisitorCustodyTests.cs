@@ -116,16 +116,13 @@ namespace HungerAndHavoc.Tests
             Assert.False(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
         }
 
+
         [Fact]
-        public void QuarantineDoesNotOverrideOtherwiseValidCustodyEligibility()
+        public void ActivePlagueDoesNotOverrideOtherwiseValidCustodyEligibility()
         {
             Verse.Pawn pawn = Visitor(map);
             Hediff plague = Plague(pawn, 0.4f);
-            MapComponent_RHAH_Map component = new MapComponent_RHAH_Map(map);
-            map.components.Add(component);
-            component.Quarantine(pawn.thingIDNumber);
 
-            Assert.True(component.IsQuarantined(pawn.thingIDNumber));
             Assert.True(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
             Assert.True(RHAH_VisitorBatch.HasEligible(new List<Verse.Pawn> { pawn }, map.uniqueID, false));
             Assert.Same(plague, pawn.health.hediffSet.GetFirstHediffOfDef(plague.def));
@@ -136,20 +133,16 @@ namespace HungerAndHavoc.Tests
         [InlineData(RHAH_BehaviorGate.JoinColony)]
         [InlineData(RHAH_BehaviorGate.Hire)]
         [InlineData(RHAH_BehaviorGate.Transfer)]
-        public void PlagueWatchDoesNotOverrideDispositionGates(RHAH_BehaviorGate gate)
+        public void ActivePlagueDoesNotOverrideDispositionGates(RHAH_BehaviorGate gate)
         {
             Verse.Pawn pawn = Visitor(map);
             Hediff plague = Plague(pawn, 0.4f);
-            MapComponent_RHAH_Map component = new MapComponent_RHAH_Map(map);
-            map.components.Add(component);
-            component.Quarantine(pawn.thingIDNumber);
 
             Assert.True(RHAH_Api.Allows(pawn, gate));
             RHAH_Api.SetGate(pawn, gate, false);
             Assert.False(RHAH_Api.Allows(pawn, gate));
             RHAH_Api.SetGate(pawn, gate, true);
             Assert.True(RHAH_Api.Allows(pawn, gate));
-            Assert.Contains(pawn.thingIDNumber, component.PlagueQuarantineLoadIds);
             Assert.Same(plague, pawn.health.hediffSet.GetFirstHediffOfDef(plague.def));
             Assert.Equal(0.4f, plague.Severity);
         }
@@ -194,6 +187,34 @@ namespace HungerAndHavoc.Tests
             Assert.True(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
             Assert.True(RHAH_VisitorBatch.HasEligible(new List<Verse.Pawn> { pawn }, map.uniqueID, false));
         }
+
+        [Fact]
+        public void MissingCarriedRewardCannotPayOrCloseTransaction()
+        {
+            Verse.Pawn pawn = Visitor(map);
+            RHAH_ChoiceRecord record = Open(pawn);
+            record.DisplayId = "I-020";
+            record.Kind = RHAH_RequestKind.SimpleMeal;
+            record.Choice = RHAH_ChoiceKind.Intel;
+            record.TransactionVersion = 1;
+            record.QuotedFoodDefName = "RawPotatoes";
+            record.QuotedFoodCount = 54;
+            record.RewardDefNames.Add("Silver");
+            record.RewardCounts.Add(100);
+            record.RewardThingIds.Add(123);
+            Assert.Equal(RHAH_ChoiceAction.None,
+                RHAH_ChoiceRuntime.TrySettleRequest(choices, record.Id, RHAH_ChoiceAction.Deliver, 9, true));
+            Assert.True(record.Open);
+            Assert.Equal(54, record.QuotedFoodCount);
+            Assert.True(RHAH_Api.IsVisitor(pawn));
+            Assert.Equal(RHAH_ChoiceAction.Timeout,
+                RHAH_ChoiceRuntime.TrySettle(choices, record.Id, RHAH_ChoiceAction.Timeout, 10, true, false));
+            Assert.Equal(RHAH_ChoiceAction.Timeout, record.Settled);
+            Assert.Equal(RHAH_ChoiceAction.None,
+                RHAH_ChoiceRuntime.TrySettleRequest(choices, record.Id, RHAH_ChoiceAction.Deliver, 11, true));
+            Assert.Equal(new[] { 123 }, record.RewardThingIds);
+        }
+
 
         [Fact]
         public void CaptureGatePropagatesReleaseVetoWithoutChangingVisitorState()
@@ -488,6 +509,7 @@ namespace HungerAndHavoc.Tests
             return type.GetField(name, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                 ?? throw new InvalidOperationException(type.FullName + "." + name);
         }
+
 
         sealed class ReleasePolicy : IRHAH_PawnBehavior
         {

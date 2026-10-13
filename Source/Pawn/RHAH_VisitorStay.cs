@@ -245,7 +245,7 @@ namespace HungerAndHavoc.Pawn
         internal static bool BlocksAssignedWork(Verse.Pawn pawn, int now)
         {
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
-            if (comp == null || pawn == null)
+            if (comp == null || pawn == null || !comp.State.IsActiveVisitor)
             {
                 return false;
             }

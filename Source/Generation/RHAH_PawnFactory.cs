@@ -77,10 +77,6 @@ namespace HungerAndHavoc.Generation
                 RHAH_Plague.InfectCarrier(pawn, request.CarriesPlague);
             }
 
-            if (plagueOn && request.CarriesPlague)
-            {
-                request.Map?.GetComponent<MapComponent_RHAH_Map>()?.Quarantine(pawn.thingIDNumber);
-            }
 
             if (registerBatch)
             {

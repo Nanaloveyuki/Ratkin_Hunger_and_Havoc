@@ -99,7 +99,7 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void QuarantineDeniedChildIsNotPaired()
+        public void GateDeniedChildIsNotPaired()
         {
             List<IRHAH_Pawn> snapshots = new List<IRHAH_Pawn>
             {

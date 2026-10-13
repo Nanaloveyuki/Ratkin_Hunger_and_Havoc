@@ -100,10 +100,6 @@ namespace HungerAndHavoc.Trade
                     for (int i = 0; i < attackers.Count; i++)
                     {
                         GenSpawn.Spawn(attackers[i], cell, map);
-                        if (entry.Category == RHAH_IncidentCategory.Plague && (Core.RHAH_Mod.Settings == null || Core.RHAH_Mod.Settings.plagueEnabled))
-                        {
-                            map.GetComponent<Core.MapComponent_RHAH_Map>()?.Quarantine(attackers[i].thingIDNumber);
-                        }
                     }
                 }
             }

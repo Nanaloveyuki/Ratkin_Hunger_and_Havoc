@@ -27,6 +27,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
+            HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.NotePlayerWounds(harmed, __result.hediffs);
             RHAH_BatchAttitude.TryShift(harmed, RHAH_BatchReaction.Harm);
         }
     }

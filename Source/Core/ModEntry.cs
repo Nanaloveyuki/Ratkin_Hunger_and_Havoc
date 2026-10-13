@@ -11,6 +11,11 @@ namespace HungerAndHavoc.Core
         public RHAH_Mod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<RHAH_Settings>();
+            if (Settings.ObsoleteIncidentSettingsLoaded)
+            {
+                WriteSettings();
+                Settings.ObsoleteIncidentSettingsLoaded = false;
+            }
 #if RHAH_IRISMENUS
             Pawn.Compat.RHAH_IrisMenusCompat.TryRegister(this);
 #endif
@@ -29,6 +34,10 @@ namespace HungerAndHavoc.Core
             listing.CheckboxLabeled("RHAH_Settings_EnableNewContent".Translate(), ref Settings.enableNewContent,
                 "RHAH_Settings_EnableNewContent_Tooltip".Translate());
             DrawRemoval(listing);
+            listing.Label("RHAH_Menu_Narrative_Kingdom".Translate());
+            listing.Label("RHAH_Settings_Kingdom_Summary".Translate());
+            Storyteller.Suiyin.KingdomArcRuntime.DrawEntry(listing);
+            listing.GapLine();
             listing.CheckboxLabeled("RHAH_Settings_OptimizeGeneration".Translate(), ref Settings.optimizeGeneration,
                 "RHAH_Settings_OptimizeGeneration_Tooltip".Translate());
             bool relief = Settings.reliefEnabled;

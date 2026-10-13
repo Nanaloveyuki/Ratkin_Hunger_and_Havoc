@@ -3,7 +3,7 @@
   <ThingDef ParentName="MealBaseIngredientless">
     <defName>RHAH_GuanyinTu</defName>
     <label>观音土</label>
-    <description>石块磨出来的土团。能暂时把饥饿压住，不能当饭。十五天里吃过三块后，胃里的结块还在，就吃不下去。</description>
+    <description>石块磨成的土团，只有少量营养，吃下后能暂时减缓饥饿。吃到摄入上限后，需要等一段时间才能再吃观音土；上限和间隔可在设置中调整。</description>
     <graphicData>
       <texPath>Things/Item/RHAH_GuanyinTu</texPath>
       <graphicClass>Graphic_Single</graphicClass>

@@ -3,7 +3,7 @@
   <HediffDef ParentName="InfectionBase">
     <defName>RHAH_Plague</defName>
     <label>鼠疫</label>
-    <description>一种在拥挤、饥饿的鼠族中迅速传播的疫病。发热、虚弱。不治疗会致死。接触病人可能被传染。</description>
+    <description>一种在拥挤、饥饿的鼠族中传播的疫病。患者会发热、虚弱，病情恶化可能致死。接触患者可能受到感染。</description>
     <makesSickThought>true</makesSickThought>
     <lethalSeverity>1</lethalSeverity>
     <tendable>true</tendable>

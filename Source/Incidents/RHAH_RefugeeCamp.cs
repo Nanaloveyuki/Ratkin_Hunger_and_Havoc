@@ -105,7 +105,7 @@ namespace HungerAndHavoc.Incidents
             slate.Set("campMaxAdults", settings == null ? RHAH_RefugeeCampRules.MaxAdults : settings.campMaxAdults);
             slate.Set("campMinChildren", settings == null ? RHAH_RefugeeCampRules.MinChildren : settings.campMinChildren);
             slate.Set("campMaxChildren", settings == null ? RHAH_RefugeeCampRules.MaxChildren : settings.campMaxChildren);
-            quest.AddInvolvedFaction(sponsor);
+            quest.GetFirstOrAddPart<QuestPart_InvolvedFactions>().factions.Add(sponsor);
             quest.SpawnWorldObject(site);
             string cleared = QuestGenUtility.HardcodedSignalWithQuestID("site.ResidentsCleared");
             int goodwill = Core.RHAH_Mod.Settings == null ? RHAH_RefugeeCampRules.Goodwill : Core.RHAH_Mod.Settings.campGoodwill;

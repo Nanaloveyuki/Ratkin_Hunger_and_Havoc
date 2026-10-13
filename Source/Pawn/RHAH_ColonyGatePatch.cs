@@ -27,9 +27,29 @@ namespace HungerAndHavoc.Pawn
     [HarmonyPatch(typeof(Tradeable_Pawn), "ResolveTrade")]
     internal static class RHAH_TradePawnGatePatch
     {
-        static bool Prefix(Tradeable_Pawn __instance)
+        static bool Prefix(Tradeable_Pawn __instance, out List<Verse.Pawn> __state)
         {
-            return RHAH_ColonyGates.AllowsTrade(__instance);
+            __state = null;
+            if (!RHAH_ColonyGates.AllowsTrade(__instance)) return false;
+            if (__instance == null || __instance.ActionToDo == TradeAction.None) return true;
+            bool buy = __instance.ActionToDo == TradeAction.PlayerBuys;
+            List<Thing> things = buy ? __instance.thingsTrader : __instance.thingsColony;
+            int count = buy ? __instance.CountToTransferToSource : __instance.CountToTransferToDestination;
+            __state = new List<Verse.Pawn>();
+            for (int i = 0; things != null && i < things.Count && i < count; i++) if (things[i] is Verse.Pawn pawn) __state.Add(pawn);
+            return true;
+        }
+
+        static void Postfix(Tradeable_Pawn __instance, List<Verse.Pawn> __state)
+        {
+            if (__state == null || __instance == null) return;
+            bool buy = __instance.ActionToDo == TradeAction.PlayerBuys;
+            for (int i = 0; i < __state.Count; i++)
+            {
+                Verse.Pawn pawn = __state[i];
+                bool completed = !pawn.Destroyed && (buy ? pawn.Faction == Faction.OfPlayer || pawn.IsSlaveOfColony : pawn.Faction != Faction.OfPlayer && !pawn.IsPrisonerOfColony && !pawn.IsSlaveOfColony);
+                if (completed) HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.NotifyTrade(pawn, buy);
+            }
         }
     }
 

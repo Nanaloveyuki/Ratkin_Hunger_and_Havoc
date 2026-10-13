@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using HarmonyLib;
-using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
 using RimWorld;
 using Verse;
@@ -45,11 +44,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             HungerAndHavoc.Incidents.RHAH_GrainHole.ExpireMissingMaps(state, tick);
 
             bool narrator = Find.Storyteller?.def?.defName == NarratorDefName;
-            if (state.AdultCheckDue(tick))
-            {
-                state.SetAdultCount(CountAdults(), tick);
-            }
-
             if (!Counts(narrator, settings))
             {
                 DeliverNotices(state, narrator);
@@ -60,17 +54,11 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             DeliverNotices(state, narrator);
             DropReward(state);
 
-            RHAH_EndingGoals goals = settings == null ? RHAH_EndingGoals.Defaults() : settings.EndingGoals();
-            RHAH_EndingId ending = state.PendingEnding(tick, narrator, goals);
-            if (ending != RHAH_EndingId.None)
+            int trustFloor = settings == null ? RHAH_EndingRules.TrustFloor : settings.endingTrustFloor;
+            int hopeTrust = settings == null ? RHAH_EndingRules.HopeTrust : settings.endingHopeTrust;
+            if (state.IdentityDue(narrator, settings == null || settings.endingIdentity, trustFloor, hopeTrust))
             {
-                state.MarkEnding(ending);
-                Show(ending, narrator, state);
-            }
-
-            if (state.IdentityDue(tick, narrator, goals))
-            {
-                RHAH_IdentityTier offer = RHAH_EndingRules.IdentityOffer(state.Snapshot().Trust, goals.TrustFloor, goals.HopeTrust);
+                RHAH_IdentityTier offer = RHAH_EndingRules.IdentityOffer(state.Snapshot().Trust, trustFloor, hopeTrust);
                 state.MarkIdentity(offer, false);
                 ShowIdentity(offer);
             }
@@ -108,15 +96,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     continue;
                 }
 
-                if (notice.Letter == SuiyinLetter.N007Opened)
-                {
-                    if (!RHAH_Quarantine.OpenLetter(notice.Arg))
-                    {
-                        book.Pending.Add(notice);
-                    }
-
-                    continue;
-                }
 
                 string key = SuiyinBook.LetterKey(notice.Letter, notice.Arg);
                 if (key == null)
@@ -124,7 +103,31 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     continue;
                 }
 
-                Find.LetterStack.ReceiveLetter((key + "_Label").Translate(), NoticeText(notice, book.Config), LetterDefOf.NeutralEvent);
+                switch (notice.Letter)
+                {
+                    case SuiyinLetter.N005Accepted:
+                    case SuiyinLetter.N005Rejected:
+                    case SuiyinLetter.N005TimedOut:
+                    case SuiyinLetter.N005Broken:
+                    case SuiyinLetter.N006Sealed:
+                    case SuiyinLetter.N006BaitSet:
+                    case SuiyinLetter.N006Stopped:
+                    case SuiyinLetter.N006Cleaned:
+                    case SuiyinLetter.N008Trade:
+                    case SuiyinLetter.N008Proof:
+                    case SuiyinLetter.N008Refuse:
+                    case SuiyinLetter.N008Drive:
+                    case SuiyinLetter.N009Take:
+                    case SuiyinLetter.N009Leave:
+                    case SuiyinLetter.N009Hand:
+                    case SuiyinLetter.N009Share:
+                    case SuiyinLetter.N009Destroy:
+                        Messages.Message(NoticeText(notice, book.Config), MessageTypeDefOf.NeutralEvent, false);
+                        break;
+                    default:
+                        Find.LetterStack.ReceiveLetter((key + "_Label").Translate(), NoticeText(notice, book.Config), LetterDefOf.NeutralEvent);
+                        break;
+                }
             }
         }
 
@@ -137,13 +140,10 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     return key.Translate(config.RevisitYears);
                 case SuiyinLetter.N004RescuePaid:
                     return key.Translate(notice.Arg, config.RevisitYears, config.RescueReward);
-                case SuiyinLetter.N008Arrive:
                 case SuiyinLetter.N008Trade:
                     Verse.Pawn pawn = RHAH_PawnIndex.Find(notice.Arg, Find.TickManager == null ? 0 : Find.TickManager.TicksGame);
                     string name = pawn == null ? "RHAH_Choice_Visitors_Label".Translate().ToString() : pawn.LabelShort;
-                    return notice.Letter == SuiyinLetter.N008Trade
-                        ? key.Translate(name)
-                        : key.Translate(name, RHAH_Mod.Settings == null ? RHAH_Envoy.MealCost : RHAH_Mod.Settings.envoyMealCost, config.EnvoyWaitDays);
+                    return key.Translate(name);
                 case SuiyinLetter.N009Arrive:
                     return key.Translate(config.RelicDays);
                 default:
@@ -180,91 +180,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
 
 
-        internal static int CountAdults()
-        {
-            if (Find.Maps == null)
-            {
-                return 0;
-            }
-
-            int best = 0;
-            List<Map> maps = Find.Maps;
-            for (int i = 0; i < maps.Count; i++)
-            {
-                Map map = maps[i];
-                if (map == null || !map.IsPlayerHome || map.mapPawns == null)
-                {
-                    continue;
-                }
-
-                int count = 0;
-                List<Verse.Pawn> colonists = map.mapPawns.FreeColonists;
-                for (int pawnIndex = 0; pawnIndex < colonists.Count; pawnIndex++)
-                {
-                    Verse.Pawn pawn = colonists[pawnIndex];
-                    if (pawn != null && pawn.DevelopmentalStage == DevelopmentalStage.Adult && RHAH_Api.IsRatkin(pawn) && RHAH_Api.IsOrigin(pawn))
-                    {
-                        count++;
-                    }
-                }
-
-                if (count > best)
-                {
-                    best = count;
-                }
-            }
-
-            return best;
-        }
-
-        internal static string TextKey(RHAH_EndingId id, bool narrator)
-        {
-            if (!narrator && (id == RHAH_EndingId.E01 || id == RHAH_EndingId.E02))
-            {
-                return "RHAH_Ending_Public";
-            }
-
-            if (id == RHAH_EndingId.E01)
-            {
-                return "RHAH_Ending_E01";
-            }
-
-            if (id == RHAH_EndingId.E02)
-            {
-                return "RHAH_Ending_E02";
-            }
-
-            if (id == RHAH_EndingId.E03)
-            {
-                return "RHAH_Ending_E03";
-            }
-
-            if (id == RHAH_EndingId.E04)
-            {
-                return "RHAH_Ending_E04";
-            }
-
-            if (id == RHAH_EndingId.E05)
-            {
-                return "RHAH_Ending_E05";
-            }
-
-            return null;
-        }
-
-        static void Show(RHAH_EndingId id, bool narrator, NarrativeState state)
-        {
-            string key = TextKey(id, narrator);
-            if (key == null || Current.Game == null)
-            {
-                return;
-            }
-
-            string label = (key + "_Label").Translate();
-            string body = (key + "_Text").Translate(state.AidCount, state.BroadcastCount, state.AdultCount);
-            GameVictoryUtility.ShowCredits(label + "\n\n" + body, null, false, 5f);
-            Find.LetterStack.ReceiveLetter(label, body, LetterDefOf.PositiveEvent);
-        }
 
         internal static string IdentityKey(RHAH_IdentityTier tier)
         {
@@ -277,18 +192,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             Find.LetterStack.ReceiveLetter((key + "_Label").Translate(), (key + "_Text").Translate(), LetterDefOf.NeutralEvent);
         }
 
-        internal static string Preview(RHAH_EndingId id, bool narrator, int aid, int broadcasts, int adults, int trust, int trustFloor, int hopeTrust)
-        {
-            string key = id == RHAH_EndingId.None
-                ? IdentityKey(RHAH_EndingRules.IdentityOffer(trust, trustFloor, hopeTrust))
-                : TextKey(id, narrator);
-            if (key == null)
-            {
-                return string.Empty;
-            }
-
-            return (key + "_Label").Translate() + "\n\n" + (key + "_Text").Translate(aid, broadcasts, adults);
-        }
     }
 
     // 只改穗音自己的家园 RandomMain 不改其它叙事者、任务袭击、商队和本模组事件池

@@ -56,31 +56,27 @@ namespace HungerAndHavoc.Identity
 
         public bool ReleaseToColony(Verse.Pawn pawn, RHAH_ReleaseReason reason)
         {
+            if (!CanReleaseToColony(pawn, reason)) return false;
+            CommitReleaseToColony(pawn, reason);
+            return true;
+        }
+
+        internal static bool CanReleaseToColony(Verse.Pawn pawn, RHAH_ReleaseReason reason)
+        {
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
-            if (comp == null)
-            {
-                return false;
-            }
-
-            if (comp.State.IsReleased)
-            {
-                return true;
-            }
-
+            if (comp == null) return false;
+            if (comp.State.IsReleased) return true;
+            if (!RHAH_PawnState.IsLegalTransition(comp.State.lifecycle, RHAH_Lifecycle.Released)) return false;
             IRHAH_Pawn current = comp.ToSnapshot();
-            bool? decision = RHAH_PawnBehaviors.Query(
-                handler => handler.ShouldReleaseToColony(pawn, current, reason));
-            if (decision == false)
-            {
-                return false;
-            }
+            return RHAH_PawnBehaviors.Query(handler => handler.ShouldReleaseToColony(pawn, current, reason)) != false;
+        }
 
-            SetLifecycle(pawn, RHAH_Lifecycle.Released);
-            if (!comp.State.IsReleased)
-            {
-                return false;
-            }
-
+        // Caller commits only after every participant has passed the release preflight.
+        internal static void CommitReleaseToColony(Verse.Pawn pawn, RHAH_ReleaseReason reason)
+        {
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            if (comp.State.IsReleased) return;
+            ChangeLifecycle(pawn, RHAH_Lifecycle.Released);
             global::HungerAndHavoc.Pawn.RHAH_VisitorGroup.NotifyReleased(pawn);
             global::HungerAndHavoc.Pawn.Compat.RHAH_LeashBridge.ClearDeparture(pawn);
             RHAH_Api.RaiseReleasedToColony(pawn, comp.ToSnapshot(), reason);
@@ -89,10 +85,14 @@ namespace HungerAndHavoc.Identity
             {
                 global::HungerAndHavoc.Pawn.RHAH_SuiyinTrust.Note(1, global::HungerAndHavoc.Pawn.RHAH_SuiyinTrust.Value(global::HungerAndHavoc.Pawn.RHAH_SuiyinTrust.Hold, Core.RHAH_Mod.Settings == null ? global::HungerAndHavoc.Pawn.RHAH_SuiyinTrust.Hold : Core.RHAH_Mod.Settings.trustHold));
             }
-            return true;
         }
 
         public void SetLifecycle(Verse.Pawn pawn, RHAH_Lifecycle lifecycle)
+        {
+            ChangeLifecycle(pawn, lifecycle);
+        }
+
+        static void ChangeLifecycle(Verse.Pawn pawn, RHAH_Lifecycle lifecycle)
         {
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
             if (comp == null)

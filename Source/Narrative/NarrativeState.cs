@@ -45,6 +45,7 @@ namespace HungerAndHavoc.Narrative
         List<int> suiyinDeadlineTick = new List<int>();
         readonly SuiyinLedger suiyin = new SuiyinLedger();
         readonly SuiyinBook book = new SuiyinBook();
+        KingdomArcState kingdom = new KingdomArcState();
         List<string> seenKinds = new List<string>();
         List<int> theftMaps = new List<int>();
         List<int> theftCounts = new List<int>();
@@ -62,6 +63,7 @@ namespace HungerAndHavoc.Narrative
         int aidCount;
         int broadcastCount;
         int expulsionCount;
+        // 退休结局的已发布输入继续存读 不再参与判定
         int adultCount;
         int completedKindCount;
         List<int> completedJournals = new List<int>();
@@ -133,7 +135,7 @@ namespace HungerAndHavoc.Narrative
             }
 
             PullBook();
-            book.Note(fact.DisplayId, fact.MapId, fact.Tick, fact.CarriesPlague, true, fact.BatchId, fact.VisitorIds);
+            book.Note(fact.DisplayId, fact.MapId, fact.Tick, true);
             PushBook();
             if (!string.IsNullOrEmpty(fact.DisplayId))
             {
@@ -143,12 +145,6 @@ namespace HungerAndHavoc.Narrative
             NoteFirstFact(fact.Tick);
         }
 
-        internal void NotePlague(SuiyinPlagueFact fact)
-        {
-            PullBook();
-            book.NotePlague(fact.MapId, fact.Recovered, fact.Died);
-            PushBook();
-        }
 
         internal void PullBook()
         {
@@ -184,19 +180,7 @@ namespace HungerAndHavoc.Narrative
         }
 
 
-        internal int AidCount => aidCount;
-        internal int BroadcastCount => broadcastCount;
-        internal int ExpulsionCount => expulsionCount;
-        internal int AdultCount => adultCount;
         internal int CompletedKindCount => completedKindCount;
-        internal bool RelicDone => relicDone;
-        internal bool EndingShown(RHAH_EndingId id)
-        {
-            return RHAH_EndingRules.Shown(EndingFacts(0, true), id);
-        }
-
-        internal bool AsidesClosed => RHAH_EndingRules.AsidesClosed(trust, endingE05, RHAH_Mod.Settings == null ? RHAH_EndingRules.HaltTrust : RHAH_Mod.Settings.endingHaltTrust);
-
         internal void NoteAid(int tick)
         {
             aidCount++;
@@ -241,75 +225,16 @@ namespace HungerAndHavoc.Narrative
             NoteFirstFact(tick);
         }
 
-        internal void SetAdultCount(int count, int tick)
-        {
-            adultCount = count < 0 ? 0 : count;
-            nextAdultCheckTick = tick + 3600000;
-        }
 
-        internal bool AdultCheckDue(int tick)
+        internal bool IdentityDue(bool narrator, bool enabled, int trustFloor, int hopeTrust)
         {
-            return nextAdultCheckTick < 0 || tick >= nextAdultCheckTick;
-        }
-
-        internal RHAH_EndingFacts EndingFacts(int tick, bool narrator)
-        {
-            int waited = 0;
-            if (firstFactTick >= 0 && tick >= firstFactTick)
+            if (!narrator || !enabled || !relicDone || identityRefused)
             {
-                waited = (tick - firstFactTick) / 60000;
+                return false;
             }
 
-            return new RHAH_EndingFacts(
-                trust,
-                narrator,
-                aidCount,
-                broadcastCount,
-                expulsionCount,
-                adultCount,
-                completedKindCount,
-                relicDone,
-                waited,
-                endingE01,
-                endingE02,
-                endingE03,
-                endingE04,
-                endingE05,
-                identityTier);
-        }
-
-        internal RHAH_EndingId PendingEnding(int tick, bool narrator, RHAH_EndingGoals goals)
-        {
-            return RHAH_EndingRules.Next(EndingFacts(tick, narrator), goals);
-        }
-
-        internal void MarkEnding(RHAH_EndingId id)
-        {
-            if (id == RHAH_EndingId.E01)
-            {
-                endingE01 = true;
-            }
-            else if (id == RHAH_EndingId.E02)
-            {
-                endingE02 = true;
-            }
-            else if (id == RHAH_EndingId.E03)
-            {
-                endingE03 = true;
-            }
-            else if (id == RHAH_EndingId.E04)
-            {
-                endingE04 = true;
-            }
-            else if (id == RHAH_EndingId.E05)
-            {
-                endingE05 = true;
-            }
-        }
-
-        internal bool IdentityDue(int tick, bool narrator, RHAH_EndingGoals goals)
-        {
-            return !identityRefused && RHAH_EndingRules.IdentityDue(EndingFacts(tick, narrator), goals);
+            RHAH_IdentityTier offered = RHAH_EndingRules.IdentityOffer(trust, trustFloor, hopeTrust);
+            return offered != RHAH_IdentityTier.None && identityTier < (int)offered;
         }
 
         internal void MarkIdentity(RHAH_IdentityTier tier, bool refused)
@@ -335,6 +260,7 @@ namespace HungerAndHavoc.Narrative
 
 
         internal SuiyinBook Book => book;
+        internal KingdomArcState Kingdom => kingdom;
 
 
         public NarrativeSnapshot Snapshot()
@@ -354,6 +280,11 @@ namespace HungerAndHavoc.Narrative
             Scribe_Values.Look(ref rescued, "rescued", 0);
             Scribe_Values.Look(ref lost, "lost", 0);
             Scribe_Values.Look(ref failed, "failed", false);
+            Scribe_Deep.Look(ref kingdom, "kingdomArc");
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                kingdom = kingdom ?? new KingdomArcState();
+            }
             if (Scribe.mode == LoadSaveMode.Saving)
             {
                 PullBook();
@@ -406,7 +337,6 @@ namespace HungerAndHavoc.Narrative
             Scribe_Collections.Look(ref book.N004, "entrustCases", LookMode.Deep);
             Scribe_Collections.Look(ref book.N005, "exchangeCases", LookMode.Deep);
             Scribe_Collections.Look(ref book.N006, "holeCases", LookMode.Deep);
-            Scribe_Collections.Look(ref book.N007, "quarantineCases", LookMode.Deep);
             Scribe_Collections.Look(ref book.N008, "envoyCases", LookMode.Deep);
             Scribe_Deep.Look(ref book.N009, "relicCase");
             Scribe_Collections.Look(ref book.Journals, "journalCases", LookMode.Deep);
@@ -442,7 +372,6 @@ namespace HungerAndHavoc.Narrative
                 book.N004 = book.N004 ?? new System.Collections.Generic.List<SuiyinN004Case>();
                 book.N005 = book.N005 ?? new System.Collections.Generic.List<SuiyinN005Case>();
                 book.N006 = book.N006 ?? new System.Collections.Generic.List<SuiyinN006Case>();
-                book.N007 = book.N007 ?? new System.Collections.Generic.List<SuiyinN007Case>();
                 book.N008 = book.N008 ?? new System.Collections.Generic.List<SuiyinN008Case>();
                 book.Journals = book.Journals ?? new System.Collections.Generic.List<SuiyinJournalCase>();
                 book.Pending = book.Pending ?? new System.Collections.Generic.List<SuiyinNotice>();

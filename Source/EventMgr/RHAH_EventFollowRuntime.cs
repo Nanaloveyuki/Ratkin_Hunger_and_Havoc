@@ -75,16 +75,6 @@ namespace HungerAndHavoc.EventMgr
             return true;
         }
 
-        internal static void NotifyLong(string displayId, int batchId, int mapId)
-        {
-            Map map = FindMap(mapId);
-            if (map == null)
-            {
-                throw new System.InvalidOperationException("Long follow map became unavailable.");
-            }
-
-            Send(displayId, Batch(map, batchId));
-        }
 
         static bool Ready(string displayId, List<Verse.Pawn> batch)
         {
@@ -114,17 +104,6 @@ namespace HungerAndHavoc.EventMgr
             return RHAH_EventFollowRules.BatchOutcomeDone(pending, finished);
         }
 
-        static void Send(string displayId, List<Verse.Pawn> batch)
-        {
-            Verse.Pawn focus = batch[0];
-            string key = "RHAH_Follow_" + displayId;
-            if (!key.CanTranslate())
-            {
-                return;
-            }
-
-            Find.LetterStack.ReceiveLetter(key.Translate(), (key + "_Text").Translate(), LetterDefOf.NeutralEvent, new LookTargets(focus));
-        }
 
         static List<Verse.Pawn> Batch(Map map, int batchId)
         {

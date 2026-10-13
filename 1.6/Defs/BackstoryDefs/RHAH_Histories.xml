@@ -5,7 +5,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 逃难佃户</title>
     <titleShort>饥与祸 佃户</titleShort>
-    <description>[PAWN_nameDef]一家替鼠族贵族种地，交完租子，剩下的粮食只够吃个半饱。战乱烧到田边后，佃农名册不再管用，地也保不住了。[PAWN_pronoun]随难民离开了祖辈耕种的土地。</description>
+    <description>[PAWN_nameDef]一家替鼠族贵族种地，交完租子，剩下的粮食只够吃个半饱。战乱烧到田边后，连赖以谋生的土地也保不住了。[PAWN_pronoun]随难民离开了祖辈耕种的土地。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -19,7 +19,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 旱田农户</title>
     <titleShort>饥与祸 农户</titleShort>
-    <description>[PAWN_nameDef]守着家乡最后几畦旱田，连年等不到雨，刚发芽的种子就被晒死。地主照旧催收粮种。[PAWN_pronoun]最后和其他佃户一起提着空袋离开，田里已没什么可守的了。</description>
+    <description>[PAWN_nameDef]守着家乡最后几畦旱田，连年等不到雨，刚发芽的种子就被晒死。地主照旧催收粮食和谷种。[PAWN_pronoun]最后和其他佃户一起提着空袋离开，田里已没什么可守的了。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -33,7 +33,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 荒田拾穗者</title>
     <titleShort>饥与祸 拾穗者</titleShort>
-    <description>征粮的人还没来，[PAWN_nameDef]家里就已经断炊，照看的田地也长满了杂草。夜里去荒田拾穗，又会被鼠群和巡粮队追赶。[PAWN_pronoun]离乡时，身上只剩些捡来的残种。</description>
+    <description>征粮的人还没来，[PAWN_nameDef]家里就已经断炊，照看的田地也长满了杂草。夜里去荒田拾穗，又会被鼠群和巡粮队追赶。[PAWN_pronoun]离乡时，身上只剩些捡来的零散谷种。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -47,7 +47,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 灾年牧工</title>
     <titleShort>饥与祸 牧工</titleShort>
-    <description>[PAWN_nameDef]替牧场照料牲畜。灾年里，牧场主先卖掉一批，又把剩下的大半交作军粮。围栏空了，[PAWN_pronoun]便牵着少数活下来的牲畜随难民去找草地。</description>
+    <description>[PAWN_nameDef]替牧场照料牲畜。灾年里，牧场主先卖掉一批，又把剩下的大半交作军粮。围栏里只剩几头牲畜，[PAWN_pronoun]便牵着它们随难民去找草地。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -75,7 +75,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 粮仓账房</title>
     <titleShort>饥与祸 账房</titleShort>
-    <description>[PAWN_nameDef]在粮仓管账，清点时发现账上的粮袋比仓里的多得多。管事人却打算把亏空推到[PAWN_objective]身上。追责前，[PAWN_pronoun]带着记下的名单逃出了粮仓。</description>
+    <description>[PAWN_nameDef]在粮仓管账，清点时发现账上的粮袋比仓里的多得多。管事人却打算把亏空推到[PAWN_objective]身上。追责前，[PAWN_pronoun]带着抄下的账目逃出了粮仓。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -117,7 +117,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 粮仓木匠</title>
     <titleShort>饥与祸 木匠</titleShort>
-    <description>[PAWN_nameDef]替村里修粮仓，仓壁早被鼠群蛀空，地主却把木料留给自家屋顶。暴雨冲塌粮仓那晚，帮工们连工棚也没保住。[PAWN_pronoun]和他们一起离了村。</description>
+    <description>[PAWN_nameDef]替村里修粮仓，仓壁早被鼠群啃空，地主却把木料留给自家屋顶。暴雨冲塌粮仓那晚，帮工们连工棚也没保住。[PAWN_pronoun]和他们一起离了村。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -173,7 +173,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 熄火的窑工</title>
     <titleShort>饥与祸 窑工</titleShort>
-    <description>[PAWN_nameDef]替地主守了一冬天砖窑，仍换不到足够的燃料和安身处。窑火熄灭后，[PAWN_pronoun]带着被烟熏坏的双手离开，在各处避难所找修屋的活。</description>
+    <description>[PAWN_nameDef]替地主守了一冬天砖窑，窑里的燃料却越来越少，工人也没了安身处。窑火熄灭后，[PAWN_pronoun]带着熏得发黑的双手离开，在各处避难所找修屋的活。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -201,7 +201,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 搭桥的船匠</title>
     <titleShort>饥与祸 船匠</titleShort>
-    <description>[PAWN_nameDef]在河边替人修船。洪水冲断木桥，把逃难队伍困在河滩，[PAWN_pronoun]便临时搭出一座危桥，让家人渡河。水退以后，故乡已经空了。</description>
+    <description>[PAWN_nameDef]在河边替人修船。洪水冲断木桥，把逃难队伍困在河滩，[PAWN_pronoun]便临时搭出一座摇摇欲坠的桥，让家人渡河。水退以后，故乡已经空了。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -243,7 +243,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 旱路脚夫</title>
     <titleShort>饥与祸 脚夫</titleShort>
-    <description>[PAWN_nameDef]在商队搬货，穿过旱地时，水袋被抢，驮兽接连倒下。为了讨回被扣的工钱，[PAWN_pronoun]又接了驮运差事。商队解散后，只剩牵着余下的驮兽继续走。</description>
+    <description>[PAWN_nameDef]在商队搬货，穿过旱地时，水袋被抢，驮兽接连倒下。为了等雇主结清拖欠的工钱，[PAWN_pronoun]继续照料余下的驮兽。商队解散后，也只能牵着它们继续走。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -285,7 +285,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 驿站绘图员</title>
     <titleShort>饥与祸 绘图员</titleShort>
-    <description>[PAWN_nameDef]替驿站画路线，仓库失火，把旧地图烧了个干净。逃难的人只能认残破路标，[PAWN_pronoun]便把记得的道路画在布片上，被众人推作向导。离乡后，已经无路可回。</description>
+    <description>[PAWN_nameDef]替驿站画路线，仓库失火，把旧地图烧了个干净。逃难的人只能认残破路标，[PAWN_pronoun]便把记得的道路画在布片上，被众人推作向导。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -397,7 +397,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 临时厨子</title>
     <titleShort>饥与祸 厨子</titleShort>
-    <description>[PAWN_nameDef]原本在公共厨房打杂，鼠疫夺走厨子后，剩下的粮食没人敢分。为了让孩子先吃上一口，[PAWN_pronoun]接了灶台。厨房关闭时，也随难民离开了。</description>
+    <description>[PAWN_nameDef]原本在公共厨房打杂，鼠疫夺走厨子后，剩下的粮食没人敢分。为了让孩子先吃上一口，[PAWN_pronoun]接下了做饭分粮的活。厨房关闭时，也随难民离开了。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -439,7 +439,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 营地说书人</title>
     <titleShort>饥与祸 说书人</titleShort>
-    <description>[PAWN_nameDef]是个会讲旧故事的纺线工，营地的孩子却被饥饿和警报闹得整夜睡不着。迁营的黑路上，[PAWN_pronoun]靠讲故事让孩子们稳住脚步，就这样留在了难民队伍里。</description>
+    <description>[PAWN_nameDef]是个会讲旧故事的纺线工，营地的孩子被饥饿和警报闹得整夜睡不着。在夜里迁营的路上，[PAWN_pronoun]给孩子们讲故事，陪着他们继续走，就这样留在了难民队伍里。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -453,7 +453,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 封村信使</title>
     <titleShort>饥与祸 信使</titleShort>
-    <description>[PAWN_nameDef]替家人送信换粮。几座村落被封锁后，步行的信使成了仅有的消息通道。巡逻队截断回程那天，[PAWN_pronoun]回不了家，只能继续替别的营地送信。</description>
+    <description>[PAWN_nameDef]靠送信换粮养家。几座村落被封锁后，步行的信使成了仅有的消息通道。巡逻队截断回程那天，[PAWN_pronoun]回不了家，只能继续替别的营地送信。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -467,7 +467,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 集市搬运工</title>
     <titleShort>饥与祸 搬运工</titleShort>
-    <description>[PAWN_nameDef]在集市搬货谋生，集市倒闭后，工钱和雇主一起没了。为了躲开哄抢，[PAWN_pronoun]把粮袋搬进临时营地。货主又在夜里逃走，只好与留下的难民一起转移。</description>
+    <description>[PAWN_nameDef]在集市搬货谋生，集市倒闭后，雇主拖着工钱不发。为了躲开哄抢，[PAWN_pronoun]替货主把粮袋搬进临时营地。货主却在夜里逃走，只好与留下的难民一起转移。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -481,7 +481,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 旧货估价人</title>
     <titleShort>饥与祸 估价人</titleShort>
-    <description>[PAWN_nameDef]靠替旧锅和工具估价，给家里换口粮。灾荒一来，大家却只认粮食了。几次换粮后，抢劫又夺走最后的家当，[PAWN_pronoun]空着手离开，再没东西可估价。</description>
+    <description>[PAWN_nameDef]靠替旧锅和工具估价，给家里换口粮。灾荒一来，大家却只认粮食了。几次换粮后，抢劫又夺走最后的家当，[PAWN_pronoun]空着手离开了集市。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -495,7 +495,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 分粮调停人</title>
     <titleShort>饥与祸 调停人</titleShort>
-    <description>[PAWN_nameDef]曾在村里调水分渠，两支难民队伍争粮时，便被推出来调停。粮仓前的争执还是失了控。[PAWN_pronoun]带着少数愿意听解释的人离开，另找去处。</description>
+    <description>[PAWN_nameDef]曾在村里调解灌溉用水的争执，两支难民队伍争粮时，便被推出来调停。粮仓前的争执还是失了控。[PAWN_pronoun]带着少数愿意听解释的人离开，另找去处。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -508,8 +508,8 @@
     <defName>RHAH_History_A037_RationTicketKeeper</defName>
     <slot>Adulthood</slot>
     <title>饥与祸 粮票保管员</title>
-    <titleShort>饥与祸 票管员</titleShort>
-    <description>[PAWN_nameDef]保管粮票，票上承诺的一周口粮，却被发粮的人扣了下来。[PAWN_pronoun]不肯替他们改账，被赶出了所里。离开时，手里只有一小叠已经兑不了粮的票。</description>
+    <titleShort>饥与祸 粮票保管员</titleShort>
+    <description>[PAWN_nameDef]保管粮票，票上承诺的一周口粮，却被发粮的人扣了下来。[PAWN_pronoun]不肯替他们改账，被赶出了发粮所。离开时，手里只有一小叠已经兑不了粮的票。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -537,7 +537,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 返乡逃兵</title>
     <titleShort>饥与祸 逃兵</titleShort>
-    <description>[PAWN_nameDef]被征进一支缺粮的队伍，军官却独占最后的粮袋。撤退时，[PAWN_pronoun]丢下武器回去找家人。部队认定这是逃兵，家乡的村子也已经空了。</description>
+    <description>[PAWN_nameDef]被征进一支缺粮的队伍，军官却独占最后的粮袋。撤退时，[PAWN_pronoun]丢下武器回去找家人。部队把[PAWN_objective]列为逃兵，家乡的村子也已经空了。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -579,7 +579,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 带伤猎手</title>
     <titleShort>饥与祸 猎手</titleShort>
-    <description>[PAWN_nameDef]靠猎场谋生，旱灾让猎物没了踪影，贵族又封了山林。追踪一头受伤野兽时，[PAWN_pronoun]遭遇鼠群，留下伤疤，也失去了住处。后来随流民去找新的猎场。</description>
+    <description>[PAWN_nameDef]靠猎场谋生，旱灾让猎物没了踪影，贵族又封了山林。后来追踪一头受伤野兽时，[PAWN_pronoun]遭鼠群围攻，留下伤疤。失去住处后，便随流民去找新的猎场。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -649,7 +649,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 伪装逃犯</title>
     <titleShort>饥与祸 逃犯</titleShort>
-    <description>家人几天没吃上东西，[PAWN_nameDef]便夜里潜进粮仓偷粮。败露后，同伴把[PAWN_objective]交出去换通行。逃亡途中，[PAWN_pronoun]学着装成普通难民，混过一道道关卡。</description>
+    <description>家人几天没吃上东西，[PAWN_nameDef]便夜里潜进粮仓偷粮。败露后，同伴把[PAWN_objective]交出去换通行。后来逃出来，[PAWN_pronoun]便学着装成普通难民，混过一道道关卡。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -677,7 +677,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 破仓木匠</title>
     <titleShort>饥与祸 木匠</titleShort>
-    <description>[PAWN_nameDef]靠修门谋生。灾荒来了，粮仓仍锁着，粮食宁愿放霉也不分给饥民。听见仓内有人求救，[PAWN_pronoun]撞开大门，事后却遭追捕，只得离乡。</description>
+    <description>[PAWN_nameDef]靠修门谋生。灾荒来了，粮仓仍锁着，仓主宁愿让粮食发霉也不分给饥民。听见仓内有人求救，[PAWN_pronoun]撞开大门，事后却遭追捕，只得离乡。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -691,7 +691,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 火后失散的幼崽</title>
     <titleShort>饥与祸 失散幼崽</titleShort>
-    <description>纵火烧起时，[PAWN_nameDef]和母亲失散，只能躲进倒塌的屋舍。靠碎粮撑过几天，救援队已经走了。[PAWN_pronoun]最后随后来经过的难民离开。</description>
+    <description>有人纵火烧村时，[PAWN_nameDef]和母亲失散，只能躲进倒塌的屋舍。[PAWN_pronoun]靠碎粮撑过几天，出来时救援队已经走了，最后跟着后来经过的难民离开。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -705,7 +705,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 失去农场的孩子</title>
     <titleShort>饥与祸 农场孩童</titleShort>
-    <description>[PAWN_nameDef]在小农场长大。农场主卖掉土地，带走成年劳力，留下的孩子连庄稼也被征走了。[PAWN_pronoun]只好跟着流民去找吃的。</description>
+    <description>[PAWN_nameDef]在小农场长大。农场主卖掉土地，带走成年劳力，留下的孩子连地里仅剩的庄稼也没保住，全被征粮的人收走了。[PAWN_pronoun]只好跟着流民去找吃的。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -733,7 +733,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 粮坊小帮工</title>
     <titleShort>饥与祸 小帮工</titleShort>
-    <description>[PAWN_nameDef]跟母亲在粮坊旁讨生活，家里最靠得住的吃食就是碎粮。粮坊被征用后，连霉粮也混进了配给。母亲和孩子一起被赶了出去。</description>
+    <description>[PAWN_nameDef]跟母亲在粮坊做帮工，家里最靠得住的吃食就是碎粮。粮坊被征用后，连霉粮也混进了配给。母亲和孩子一起被赶了出去。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -761,7 +761,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 认路的失亲孩童</title>
     <titleShort>饥与祸 认路孩童</titleShort>
-    <description>转移途中，[PAWN_nameDef]与家人走散，只记得枯树、裂桥和几处危险路口。[PAWN_pronoun]靠这些路标避开追赶，被另一支难民队伍收留，却一直没找到原来的家。</description>
+    <description>转移途中，[PAWN_nameDef]与家人走散，只记得枯树、裂桥和几处危险路口。[PAWN_pronoun]靠这些路标避开险路，被另一支难民队伍收留，却一直没找到原来的家。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -789,7 +789,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 磨坊弃童</title>
     <titleShort>饥与祸 弃童</titleShort>
-    <description>欠粮的磨坊里，大人都走了，只把[PAWN_nameDef]留在推不动的石磨旁。[PAWN_pronoun]在那里学会最简单的磨坊活计。磨坊被拆时，便带着这点本事离开。</description>
+    <description>[PAWN_nameDef]在磨坊做小帮工，学会了最简单的活计。主人欠下粮债后，大人都走了，只把[PAWN_objective]留在推不动的石磨旁。磨坊被拆时，[PAWN_pronoun]便带着这点本事离开。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -801,8 +801,8 @@
   <BackstoryDef>
     <defName>RHAH_History_Y009_CampfireListener</defName>
     <slot>Childhood</slot>
-    <title>饥与祸 听故事的营童</title>
-    <titleShort>饥与祸 营童</titleShort>
+    <title>饥与祸 营地里听故事的孩子</title>
+    <titleShort>饥与祸 营地孩童</titleShort>
     <description>[PAWN_nameDef]出生在难民队伍里，从没见过丰年，夜里听大人讲旧收成才能睡着。队伍断粮解散，把[PAWN_objective]留在营火旁。另一批流民经过时，[PAWN_pronoun]才跟着走。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
@@ -859,7 +859,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 护幼长姐</title>
     <titleShort>饥与祸 长姐</titleShort>
-    <description>父母死在逃难路上后，小聚落里的弟妹只剩[PAWN_nameDef]这个姐姐照看。队伍为减轻负担，又把[PAWN_objective]和孩子们留在路边。[PAWN_pronoun]只好自己带着弟妹，寻找肯收留鼠蛋的地方。</description>
+    <description>父母死在逃难路上后，弟妹只剩[PAWN_nameDef]这个姐姐照看。队伍为减轻负担，又把[PAWN_objective]和孩子们留在路边。[PAWN_pronoun]只好自己带着弟妹，寻找肯收留鼠蛋的地方。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -873,7 +873,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 托孤病母</title>
     <titleShort>饥与祸 病母</titleShort>
-    <description>[PAWN_nameDef]带着孩子逃出鼠疫失控的村子，靠碎粮和草药支撑。病情越来越重，[PAWN_pronoun]知道自己走不到下一个营地了。仍把孩子送到了陌生聚落门口，这才倒下。</description>
+    <description>[PAWN_nameDef]带着孩子逃出鼠疫失控的村子，靠碎粮和草药支撑。病情越来越重，[PAWN_pronoun]知道自己撑不了多久了，仍把孩子送到了陌生聚落门口，这才倒下。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -899,9 +899,9 @@
   <BackstoryDef>
     <defName>RHAH_History_A053_GrainThiefForFamily</defName>
     <slot>Adulthood</slot>
-    <title>饥与祸 为家盗粮者</title>
+    <title>饥与祸 为家人盗粮者</title>
     <titleShort>饥与祸 盗粮者</titleShort>
-    <description>[PAWN_nameDef]守着家里最后一袋粮，孩子却还是饿倒了。求粮无门，[PAWN_pronoun]便在夜里摸进仓房。败露后没能跑远，最后只带着家人留下的空碗离开。</description>
+    <description>[PAWN_nameDef]家里最后一袋粮也快吃完了，孩子还是饿倒了。求粮无门，[PAWN_pronoun]便在夜里摸进仓房。偷粮被发现后，只得丢下粮食逃走，最后带着家人留下的空碗离开。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -957,7 +957,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 鼠蛋贩子</title>
     <titleShort>饥与祸 贩子</titleShort>
-    <description>[PAWN_nameDef]曾相信，把孩子卖给有粮的人，至少能让他们熬过冬天。可交易双方都拿不出承诺的东西。[PAWN_pronoun]只好带着一串沉默的鼠蛋继续走，渐渐不敢再看他们的脸。</description>
+    <description>[PAWN_nameDef]曾相信，把孩子卖给有粮的人，至少能让他们熬过冬天。可买家拿不出承诺的粮食，交易一次次落空。[PAWN_pronoun]只好带着一串沉默的鼠蛋继续走，渐渐不敢再看他们的脸。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -971,7 +971,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 城外乞丐</title>
     <titleShort>饥与祸 乞丐</titleShort>
-    <description>[PAWN_nameDef]和其他难民在废弃围墙外搭棚，以为不进城就能躲开冲突。城门一关，棚外却既没退路，也没粮。[PAWN_pronoun]只好到下一处聚落周围，反复求接济。</description>
+    <description>[PAWN_nameDef]和其他难民在城墙外搭棚，以为不进城就能躲开冲突。城门一关，他们进不了城领粮，只好离开棚子。[PAWN_pronoun]到了下一处聚落，仍得反复求接济。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -985,7 +985,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 接济厨子</title>
     <titleShort>饥与祸 厨子</titleShort>
-    <description>[PAWN_nameDef]把逃难队伍从各处凑来的粮食煮成一锅，后来连锅也换成了木柴。接济的人来时，[PAWN_pronoun]拿得出的只有配方和筛霉粮的经验，只求让大家都吃上这一顿。</description>
+    <description>[PAWN_nameDef]把逃难队伍从各处凑来的粮食煮成一锅，后来连锅也拿去换了食物。接济的人来时，[PAWN_pronoun]便凭着做饭和筛霉粮的经验，帮他们准备饭食，只求让大家都吃上这一顿。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1041,7 +1041,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 废墟线人</title>
     <titleShort>饥与祸 线人</titleShort>
-    <description>[PAWN_nameDef]躲进过被鼠群和暴雨掏空的建筑，记住了还能用的门、井和地下室。同行的人为地图翻了脸。[PAWN_pronoun]带着残缺的位置信息逃出来，想用它换一次安全通行。</description>
+    <description>[PAWN_nameDef]躲进过被鼠群和暴雨毁坏的建筑，记住了还能用的门、井和地下室，并记在地图上。同行的人为这张地图翻了脸。[PAWN_pronoun]带着残图逃出来，想用它换一次安全通行。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1055,7 +1055,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 逃走的寨吏</title>
     <titleShort>饥与祸 寨吏</titleShort>
-    <description>[PAWN_nameDef]在一个小聚落记事，那里原本还维持着秩序，直到粮仓账目被改了。居民为粮食分裂后，[PAWN_pronoun]逃了出来，带着另一处小居住点的位置，想换些能带走的物资。</description>
+    <description>[PAWN_nameDef]在一个小聚落记事。粮仓账目被人篡改后，居民为分粮吵得不可开交。[PAWN_pronoun]逃了出来，想用自己知道的另一处小聚落的位置，换些路上能用的物资。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1069,7 +1069,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 待产流民</title>
     <titleShort>饥与祸 流民</titleShort>
-    <description>[PAWN_nameDef]怀着孩子跟队伍找遮雨处，营地却只收能马上干活的人。疫病或抢粮冲突冲散了队伍。[PAWN_pronoun]已经临近生产，只得去陌生殖民地求一个能容身的角落。</description>
+    <description>[PAWN_nameDef]怀着孩子跟队伍找遮雨处，营地却只收能马上干活的人。疫病蔓延，队伍里又起了抢粮冲突，同行的人陆续散了。[PAWN_pronoun]已经临近生产，只得去陌生殖民地求一个能容身的角落。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1083,7 +1083,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 错运脚夫</title>
     <titleShort>饥与祸 脚夫</titleShort>
-    <description>[PAWN_nameDef]在运输队核货单、搬补给，一次坐标错误，却把整批物资投到了无人荒地。发货的人先逃了。[PAWN_pronoun]追到错投的地方，带着还能找到的几件东西，向真正的殖民地求助。</description>
+    <description>[PAWN_nameDef]在运输队核对货单、搬运补给。一次坐标填错，整批物资被投到了无人荒地，发货的人先逃了。[PAWN_pronoun]找到错投地点，带着还能找到的几件东西，到附近的殖民地求助。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1139,7 +1139,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 疫区流亡者</title>
     <titleShort>饥与祸 流亡者</titleShort>
-    <description>[PAWN_nameDef]住的营地被划成疫区，安全的路和干净的食物都不再向他们开放。有人倒下，有人被留下。[PAWN_pronoun]带着还能走的同伴绕开各处聚落，最后走到陌生殖民地附近。</description>
+    <description>[PAWN_nameDef]住的营地被划成疫区，沿途聚落封了路，也拒绝向营地的人供粮。队伍里有人倒下，被同伴留在路边。[PAWN_pronoun]带着还能走的人绕开各处聚落，最后走到陌生殖民地附近。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1167,7 +1167,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 疫营掘地者</title>
     <titleShort>饥与祸 掘地者</titleShort>
-    <description>[PAWN_nameDef]困在疫区营地，饥饿者和感染者同时逼近，外面不敢开门，里面也没了粮。[PAWN_pronoun]从墙脚掘出一条仅容一人的通道逃走。留下的人有没有活下来，至今不知道。</description>
+    <description>[PAWN_nameDef]困在疫区营地，营内的粮食吃完了，营外又聚着饥民和感染者，看守不敢开门。[PAWN_pronoun]从墙脚掘出一条仅容一人通过的通道逃走。留下的人有没有活下来，[PAWN_pronoun]至今不知道。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1181,7 +1181,7 @@
     <slot>Adulthood</slot>
     <title>饥与祸 逃离的疫区信使</title>
     <titleShort>饥与祸 信使</titleShort>
-    <description>[PAWN_nameDef]替一支感染鼠族的队伍传话。他们声称要报复害过自己的人，却连名字都没法核实。队伍只想着报复时，[PAWN_pronoun]带着那封没有收件人的信逃走了。</description>
+    <description>[PAWN_nameDef]替一支染上鼠疫的鼠族队伍传话。队伍里的人声称要报复害过自己的仇人，却连对方的名字都没法核实。见他们一心只想报复，[PAWN_pronoun]便带着那封没有收件人的信逃走了。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1223,7 +1223,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 空屋弃蛋</title>
     <titleShort>饥与祸 弃蛋</titleShort>
-    <description>[PAWN_nameDef]被留在空屋门后，身边只有一块硬了的食物。大人说很快回来，门外的脚步却越来越少。直到路过的难民发现[PAWN_objective]，才离开那间屋。</description>
+    <description>[PAWN_nameDef]被留在空屋门后，身边只有一块硬了的食物。大人说很快回来，门外的脚步却越来越少。路过的难民发现[PAWN_objective]，才把[PAWN_objective]带出了那间屋。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1237,7 +1237,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 门口托孤的鼠蛋</title>
     <titleShort>饥与祸 托孤鼠蛋</titleShort>
-    <description>[PAWN_nameDef]发着热，被母亲抱到陌生聚落门口，只记得她反复摸自己的额头。母亲没力气再走，把[PAWN_objective]推向门内，自己留在门外。这是[PAWN_pronoun]最早记得的事。</description>
+    <description>[PAWN_nameDef]发着热，被母亲抱到陌生聚落门口，只记得母亲反复摸[PAWN_possessive]额头。母亲没力气再走，把[PAWN_objective]推向门内，自己留在门外。这是[PAWN_pronoun]最早记得的事。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1251,7 +1251,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 分粮小帮工</title>
     <titleShort>饥与祸 小帮工</titleShort>
-    <description>乞讨队伍里的大人越来越少，[PAWN_nameDef]便被安排记住谁已经领过一勺吃的。食物不够分时，[PAWN_pronoun]把最后一份留给更小的鼠蛋，自己却被赶出了队伍。</description>
+    <description>乞讨队伍里的大人越来越少，[PAWN_nameDef]便被安排记住谁已经领过一勺吃的。食物不够分时，[PAWN_pronoun]把最后一份留给更小的鼠蛋。争粮的人把这算在[PAWN_objective]头上，将[PAWN_objective]赶出了队伍。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1279,7 +1279,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 洞穴弃崽</title>
     <titleShort>饥与祸 弃崽</titleShort>
-    <description>[PAWN_nameDef]幼时和鼠族住在荒地洞穴。暴雨灌满洞口，大人先带着能走的成员离开。[PAWN_pronoun]在灌木和废墟间躲了几天，才被听见哭声的过路队伍发现。</description>
+    <description>[PAWN_nameDef]幼时和鼠族住在荒地洞穴。暴雨灌满洞口，大人匆忙离开，却把[PAWN_objective]留了下来。[PAWN_pronoun]逃到洞外，在灌木和废墟间躲了几天，才被听见哭声的过路队伍发现。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1349,7 +1349,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 地图边的迷途童</title>
     <titleShort>饥与祸 迷途童</titleShort>
-    <description>[PAWN_nameDef]跟着情报客走过地图标出的宝藏、废墟和小居住点，以为每个圆圈都是能睡觉的地方。一次交易失败，情报客独自逃走。[PAWN_pronoun]手里只剩几处模糊的路标。</description>
+    <description>[PAWN_nameDef]跟着情报客走过地图标出的藏宝地、废墟和小聚落，以为每个圆圈都是能睡觉的地方。一次交易失败，情报客独自逃走。[PAWN_pronoun]只记得沿途几处模糊的路标。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1389,7 +1389,7 @@
   <BackstoryDef>
     <defName>RHAH_History_Y026_MisnamedChild</defName>
     <slot>Childhood</slot>
-    <title>饥与祸 叫错名字的孩子</title>
+    <title>饥与祸 被叫错名字的孩子</title>
     <titleShort>饥与祸 错名孩童</titleShort>
     <description>撤离时，有人把[PAWN_nameDef]叫成另一个孩子的名字。怕被落下，[PAWN_pronoun]没有纠正。真正的家人没来，认错的人也在争执后走了，只剩[PAWN_pronoun]顶着陌生名字继续找队伍。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
@@ -1403,8 +1403,8 @@
   <BackstoryDef>
     <defName>RHAH_History_Y027_FamineCampChild</defName>
     <slot>Childhood</slot>
-    <title>饥与祸 没见过收成的营童</title>
-    <titleShort>饥与祸 营童</titleShort>
+    <title>饥与祸 没见过收成的孩子</title>
+    <titleShort>饥与祸 营地孩童</titleShort>
     <description>[PAWN_nameDef]见到的第一块田，就是征粮后的空地。大人总说等下一季，下一季却只来了霉种和病人。家人在分粮时散了，[PAWN_pronoun]随逃难队离开，始终没见过真正的收成。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
@@ -1419,7 +1419,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 疫区流亡孩童</title>
     <titleShort>饥与祸 疫区孩童</titleShort>
-    <description>[PAWN_nameDef]和家人被赶出疫区，每到一个聚落，都得站在门外等检查。送饭的人越来越少，亲人也陆续走不动了。[PAWN_pronoun]带着空药袋和没写完的名字，继续找下一处隔离棚。</description>
+    <description>[PAWN_nameDef]和家人被赶出疫区，每到一个聚落，都得站在门外等检查。送饭的人越来越少，亲人也陆续走不动了。[PAWN_pronoun]带着空药袋，继续找下一处隔离棚。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1461,7 +1461,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 挑种学徒</title>
     <titleShort>饥与祸 学徒</titleShort>
-    <description>[PAWN_nameDef]家人替粮坊收种，仓库受潮后，好种和霉种混在了一起。[PAWN_pronoun]跟大人一袋袋挑拣，学会了辨种。粮坊关闭时，这点本事就是剩下的东西。</description>
+    <description>[PAWN_nameDef]家人替粮坊收种，仓库受潮后，好种和霉种混在了一起。[PAWN_pronoun]跟大人一袋袋挑拣，学会了分辨哪些种子还能播种。粮坊关闭后，便带着这点本事离开。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1503,7 +1503,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 认粮袋的孩子</title>
     <titleShort>饥与祸 认袋孩童</titleShort>
-    <description>[PAWN_nameDef]常在谷仓门口等家人下工，久了便认得每种粮袋的标记。仓主把存粮转走，又锁了门。[PAWN_pronoun]记着那些标记离开，却再没找到原来的粮仓。</description>
+    <description>[PAWN_nameDef]常在谷仓门口等家人下工，久了便认得每种粮袋的标记。仓主把存粮转走，又锁了门。[PAWN_pronoun]只好离开，却一直记得那些粮袋的标记。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1517,7 +1517,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 清壳小帮工</title>
     <titleShort>饥与祸 小帮工</titleShort>
-    <description>[PAWN_nameDef]在粮坊替大人清谷壳，留下的碎粮还能填肚子。粮坊被征用后，坏粮被强行混进配给。[PAWN_pronoun]和家人赶在发粮前离开了。</description>
+    <description>[PAWN_nameDef]在粮坊替大人清谷壳，留下的碎粮还能填肚子。粮坊被征用后，坏粮被强行混进配给。眼看连吃的也靠不住，[PAWN_pronoun]和家人赶在发粮前离开了。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1559,7 +1559,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 猎场小帮手</title>
     <titleShort>饥与祸 小猎工</titleShort>
-    <description>[PAWN_nameDef]跟家人去被封锁的猎场边缘，找受伤的野兽换肉。一次捕猎撞上鼠群，猎人没再回来。[PAWN_pronoun]带着剩下的皮毛，加入了逃难队伍。</description>
+    <description>[PAWN_nameDef]跟家人去被封锁的猎场边缘，找受伤的野兽猎杀取肉。一次捕猎撞上鼠群，猎人没再回来。[PAWN_pronoun]带着剩下的皮毛，加入了逃难队伍。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>
@@ -1599,7 +1599,7 @@
   <BackstoryDef>
     <defName>RHAH_History_Y041_CampfireOrphan</defName>
     <slot>Childhood</slot>
-    <title>饥与祸 寻亲的营火童</title>
+    <title>饥与祸 营火边寻亲的孩子</title>
     <titleShort>饥与祸 寻亲孩童</titleShort>
     <description>分粮的人群把[PAWN_nameDef]与家人冲散了。[PAWN_pronoun]只记得他们曾守着哪堆营火，便沿夜里的火光找了几天。始终找不到，后来只好跟肯分粮的人走。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
@@ -1685,7 +1685,7 @@
     <slot>Childhood</slot>
     <title>饥与祸 绕关的孩子</title>
     <titleShort>饥与祸 绕关孩童</titleShort>
-    <description>[PAWN_nameDef]跟家人藏在车底，绕过征粮税的关卡，渐渐记住了巡查时辰。一次检查，家人被扣下了。[PAWN_pronoun]逃进另一支队伍，却一直没等到他们。</description>
+    <description>[PAWN_nameDef]跟家人藏在车底，混过征粮税的关卡，渐渐记住了巡查时辰。一次检查，家人被扣下了。[PAWN_pronoun]逃进另一支队伍，却一直没等到他们。</description>
     <bodyTypeMale>Thin</bodyTypeMale>
     <bodyTypeFemale>Thin</bodyTypeFemale>
     <shuffleable>false</shuffleable>

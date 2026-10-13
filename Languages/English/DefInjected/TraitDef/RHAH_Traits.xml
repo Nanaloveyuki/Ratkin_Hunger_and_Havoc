@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_Trait_HardyLabor.degreeDatas.0.label>hardworking</RHAH_Trait_HardyLabor.degreeDatas.0.label>
-  <RHAH_Trait_HardyLabor.degreeDatas.0.description>{PAWN_nameDef} can take hardship. Living on this rimworld, what hardship is left that {PAWN_pronoun} can't take?</RHAH_Trait_HardyLabor.degreeDatas.0.description>
+  <RHAH_Trait_HardyLabor.degreeDatas.0.description>{PAWN_nameDef} can take hardship and works diligently, even at demanding tasks.</RHAH_Trait_HardyLabor.degreeDatas.0.description>
   <RHAH_Trait_FamineFarmer.degreeDatas.0.label>skilled farmer</RHAH_Trait_FamineFarmer.degreeDatas.0.label>
   <RHAH_Trait_FamineFarmer.degreeDatas.0.description>{PAWN_nameDef} knows field work well, from planting to harvesting.</RHAH_Trait_FamineFarmer.degreeDatas.0.description>
   <RHAH_Trait_FieldGleaner.degreeDatas.0.label>compulsive scavenger</RHAH_Trait_FieldGleaner.degreeDatas.0.label>
   <RHAH_Trait_FieldGleaner.degreeDatas.0.description>{PAWN_nameDef} once lived by picking through forgotten corners and waste ground for anything edible. Now it is second nature.</RHAH_Trait_FieldGleaner.degreeDatas.0.description>
   <RHAH_Trait_DisasterHerder.degreeDatas.0.label>skilled herder</RHAH_Trait_DisasterHerder.degreeDatas.0.label>
-  <RHAH_Trait_DisasterHerder.degreeDatas.0.description>Some past experiences taught {PAWN_nameDef} a thing or two about herding. Caring for and taming livestock comes easily now.</RHAH_Trait_DisasterHerder.degreeDatas.0.description>
+  <RHAH_Trait_DisasterHerder.degreeDatas.0.description>{PAWN_nameDef} is good at looking after livestock, with a knack for taming and training animals.</RHAH_Trait_DisasterHerder.degreeDatas.0.description>
   <RHAH_Trait_WellBearer.degreeDatas.0.label>clever hauler</RHAH_Trait_WellBearer.degreeDatas.0.label>
-  <RHAH_Trait_WellBearer.degreeDatas.0.description>{PAWN_nameDef} knows how to carry things with less trouble and less effort. Anyone asking for a lesson just gets told that it comes naturally and cannot be taught.</RHAH_Trait_WellBearer.degreeDatas.0.description>
+  <RHAH_Trait_WellBearer.degreeDatas.0.description>{PAWN_nameDef} knows how to carry things with less trouble and less effort. Asked for a lesson, {PAWN_nameDef} always says it comes naturally and cannot be taught.</RHAH_Trait_WellBearer.degreeDatas.0.description>
   <RHAH_Trait_MoldSifter.degreeDatas.0.label>keen nose</RHAH_Trait_MoldSifter.degreeDatas.0.label>
-  <RHAH_Trait_MoldSifter.degreeDatas.0.description>{PAWN_nameDef} can sniff out which handful of grain is still worth cooking before the mold takes it.</RHAH_Trait_MoldSifter.degreeDatas.0.description>
+  <RHAH_Trait_MoldSifter.degreeDatas.0.description>{PAWN_nameDef} knows the smell of grain well and makes quick work of sorting it, preparing ingredients, and cooking.</RHAH_Trait_MoldSifter.degreeDatas.0.description>
   <RHAH_Trait_GranaryCarpenter.degreeDatas.0.label>skilled builder</RHAH_Trait_GranaryCarpenter.degreeDatas.0.label>
   <RHAH_Trait_GranaryCarpenter.degreeDatas.0.description>{PAWN_nameDef} is handy with jobs like fixing roofs and patching wooden frames.</RHAH_Trait_GranaryCarpenter.degreeDatas.0.description>
   <RHAH_Trait_RagTailor.degreeDatas.0.label>handy</RHAH_Trait_RagTailor.degreeDatas.0.label>
   <RHAH_Trait_RagTailor.degreeDatas.0.description>{PAWN_nameDef} is good at stitching rags and old felt into something usable.</RHAH_Trait_RagTailor.degreeDatas.0.description>
   <RHAH_Trait_HerbReader.degreeDatas.0.label>herb-wise</RHAH_Trait_HerbReader.degreeDatas.0.label>
-  <RHAH_Trait_HerbReader.degreeDatas.0.description>{PAWN_nameDef} knows which herbs can bring a fever down and can be trusted with a bandage. Perhaps that comes from experience.</RHAH_Trait_HerbReader.degreeDatas.0.description>
+  <RHAH_Trait_HerbReader.degreeDatas.0.description>{PAWN_nameDef} recognizes common medicinal herbs and is quick with a bandage.</RHAH_Trait_HerbReader.degreeDatas.0.description>
   <RHAH_Trait_NightFugitive.degreeDatas.0.label>night wanderer</RHAH_Trait_NightFugitive.degreeDatas.0.label>
   <RHAH_Trait_NightFugitive.degreeDatas.0.description>{PAWN_nameDef} is used to treading quietly at night, but always finds daylight a little too bright.</RHAH_Trait_NightFugitive.degreeDatas.0.description>
   <RHAH_Trait_SnowGuide.degreeDatas.0.label>good sense of direction</RHAH_Trait_SnowGuide.degreeDatas.0.label>
-  <RHAH_Trait_SnowGuide.degreeDatas.0.description>{PAWN_nameDef} remembers old trail markers and snow-covered tracks long after seeing them. Finding a way comes naturally.</RHAH_Trait_SnowGuide.degreeDatas.0.description>
+  <RHAH_Trait_SnowGuide.degreeDatas.0.description>{PAWN_nameDef} remembers familiar trails and can often find the way even after snow has covered the tracks.</RHAH_Trait_SnowGuide.degreeDatas.0.description>
   <RHAH_Trait_DustBearer.degreeDatas.0.label>scarred by shortages</RHAH_Trait_DustBearer.degreeDatas.0.label>
   <RHAH_Trait_DustBearer.degreeDatas.0.description>{PAWN_nameDef} wants to carry grain and water all the way to the next camp with food. Putting the load down is hard when it might mean having to ask for help again.</RHAH_Trait_DustBearer.degreeDatas.0.description>
   <RHAH_Trait_CampWatcher.degreeDatas.0.label>steady</RHAH_Trait_CampWatcher.degreeDatas.0.label>
-  <RHAH_Trait_CampWatcher.degreeDatas.0.description>{PAWN_nameDef} keeps it together when something unexpected happens. That has not stopped people calling {PAWN_objective} a bundle of nerves waiting to pop.</RHAH_Trait_CampWatcher.degreeDatas.0.description>
+  <RHAH_Trait_CampWatcher.degreeDatas.0.description>{PAWN_nameDef} rarely panics when something unexpected happens and can hold it together under strain. People sometimes joke that {PAWN_pronoun} is a tightly wound bomb.</RHAH_Trait_CampWatcher.degreeDatas.0.description>
   <RHAH_Trait_AlmsSpeaker.degreeDatas.0.label>eloquent</RHAH_Trait_AlmsSpeaker.degreeDatas.0.label>
   <RHAH_Trait_AlmsSpeaker.degreeDatas.0.description>{PAWN_nameDef} has a way with words. Even the hardest thing to hear can be put in a way people will listen to.</RHAH_Trait_AlmsSpeaker.degreeDatas.0.description>
   <RHAH_Trait_JunkAppraiser.degreeDatas.0.label>shrewd</RHAH_Trait_JunkAppraiser.degreeDatas.0.label>
   <RHAH_Trait_JunkAppraiser.degreeDatas.0.description>{PAWN_nameDef} can tell how much food a sack of old goods is worth and drives a sharp bargain.</RHAH_Trait_JunkAppraiser.degreeDatas.0.description>
   <RHAH_Trait_GrainMediator.degreeDatas.0.label>peacemaker</RHAH_Trait_GrainMediator.degreeDatas.0.label>
-  <RHAH_Trait_GrainMediator.degreeDatas.0.description>{PAWN_nameDef} likes to talk people out of a quarrel before they start grabbing supplies. It helps keep people together, though some call it fence-sitting or meddling.</RHAH_Trait_GrainMediator.degreeDatas.0.description>
+  <RHAH_Trait_GrainMediator.degreeDatas.0.description>{PAWN_nameDef} wants to talk people out of quarrels over food before anyone throws a punch. Some resent the well-meant interference and call it two-faced.</RHAH_Trait_GrainMediator.degreeDatas.0.description>
   <RHAH_Trait_WoundTender.degreeDatas.0.label>careful</RHAH_Trait_WoundTender.degreeDatas.0.label>
   <RHAH_Trait_WoundTender.degreeDatas.0.description>{PAWN_nameDef} has a steady hand with bandages and is rarely distracted by what is happening around {PAWN_objective}.</RHAH_Trait_WoundTender.degreeDatas.0.description>
   <RHAH_Trait_EggKeeper.degreeDatas.0.label>fond of children</RHAH_Trait_EggKeeper.degreeDatas.0.label>
@@ -43,19 +43,19 @@
   <RHAH_Trait_FinePaws.degreeDatas.0.label>deft</RHAH_Trait_FinePaws.degreeDatas.0.label>
   <RHAH_Trait_FinePaws.degreeDatas.0.description>{PAWN_nameDef} has a sure hand with fine work like mending sacks and threading needles.</RHAH_Trait_FinePaws.degreeDatas.0.description>
   <RHAH_Trait_PathScout.degreeDatas.0.label>perceptive</RHAH_Trait_PathScout.degreeDatas.0.label>
-  <RHAH_Trait_PathScout.degreeDatas.0.description>{PAWN_nameDef} is quick to notice connections, often spotting a startling link between two things that seem to have nothing to do with each other.</RHAH_Trait_PathScout.degreeDatas.0.description>
+  <RHAH_Trait_PathScout.degreeDatas.0.description>{PAWN_nameDef} often notices the faintest movement of prey and knows how to stay out of sight while approaching.</RHAH_Trait_PathScout.degreeDatas.0.description>
   <RHAH_Trait_ColumnLead.degreeDatas.0.label>decisive</RHAH_Trait_ColumnLead.degreeDatas.0.label>
-  <RHAH_Trait_ColumnLead.degreeDatas.0.description>{PAWN_nameDef} prefers to weigh the pros and cons of a big decision, then make it without wavering. Hesitation, in {PAWN_possessive} view, is disrespectful to time.</RHAH_Trait_ColumnLead.degreeDatas.0.description>
+  <RHAH_Trait_ColumnLead.degreeDatas.0.description>{PAWN_nameDef} weighs the pros and cons of big decisions, then makes the call with little hesitation. Once the decision is made, {PAWN_nameDef} gets right to work.</RHAH_Trait_ColumnLead.degreeDatas.0.description>
   <RHAH_Trait_ReliefCook.degreeDatas.0.label>communal cook</RHAH_Trait_ReliefCook.degreeDatas.0.label>
-  <RHAH_Trait_ReliefCook.degreeDatas.0.description>{PAWN_nameDef} has a knack for quickly preparing hot food to share. Even the smallest supply of grain is worth dividing up.</RHAH_Trait_ReliefCook.degreeDatas.0.description>
+  <RHAH_Trait_ReliefCook.degreeDatas.0.description>{PAWN_nameDef} is quick at making hot food for everyone and willing to share even when there is little grain to spare.</RHAH_Trait_ReliefCook.degreeDatas.0.description>
   <RHAH_Trait_FamineHunter.degreeDatas.0.label>skilled hunter</RHAH_Trait_FamineHunter.degreeDatas.0.label>
-  <RHAH_Trait_FamineHunter.degreeDatas.0.description>{PAWN_nameDef} has a skill that could come in handy at any time: approaching prey quietly and taking it down at close range.</RHAH_Trait_FamineHunter.degreeDatas.0.description>
+  <RHAH_Trait_FamineHunter.degreeDatas.0.description>{PAWN_nameDef} approaches prey quietly and is handy at taking it down at close range.</RHAH_Trait_FamineHunter.degreeDatas.0.description>
   <RHAH_Trait_HungerRage.degreeDatas.0.label>food anxiety</RHAH_Trait_HungerRage.degreeDatas.0.label>
-  <RHAH_Trait_HungerRage.degreeDatas.0.description>{PAWN_nameDef} gets worked up at the sight of food. The emptier the stomach, the harder it is to fight the urge to eat.</RHAH_Trait_HungerRage.degreeDatas.0.description>
+  <RHAH_Trait_HungerRage.degreeDatas.0.description>{PAWN_nameDef} gets irritable when hungry. The emptier the stomach, the harder it is to fight the urge to eat, and the easier it is to get into a quarrel.</RHAH_Trait_HungerRage.degreeDatas.0.description>
   <RHAH_Trait_FoodSnatcher.degreeDatas.0.label>severe food anxiety</RHAH_Trait_FoodSnatcher.degreeDatas.0.label>
   <RHAH_Trait_FoodSnatcher.degreeDatas.0.description>{PAWN_nameDef} can hardly bear to watch food pass by. "Food is safest when it is all in your stomach," as {PAWN_nameDef} puts it.</RHAH_Trait_FoodSnatcher.degreeDatas.0.description>
   <RHAH_Trait_PlagueDread.degreeDatas.0.label>afraid of illness</RHAH_Trait_PlagueDread.degreeDatas.0.label>
-  <RHAH_Trait_PlagueDread.degreeDatas.0.description>{PAWN_nameDef} is especially afraid of epidemics. Being sick, or having a companion fall ill, makes {PAWN_pronoun} visibly uneasy.</RHAH_Trait_PlagueDread.degreeDatas.0.description>
+  <RHAH_Trait_PlagueDread.degreeDatas.0.description>{PAWN_nameDef} is especially afraid of epidemics. When sick, or when a companion falls ill, {PAWN_pronoun} grows visibly uneasy.</RHAH_Trait_PlagueDread.degreeDatas.0.description>
   <RHAH_Trait_NightTerrors.degreeDatas.0.label>jumpy</RHAH_Trait_NightTerrors.degreeDatas.0.label>
   <RHAH_Trait_NightTerrors.degreeDatas.0.description>Sleep does little to refresh {PAWN_nameDef}, and every little sound puts {PAWN_objective} on edge. The more tired, the more anxious.</RHAH_Trait_NightTerrors.degreeDatas.0.description>
   <RHAH_Trait_FamineSloth.degreeDatas.0.label>slothful</RHAH_Trait_FamineSloth.degreeDatas.0.label>
@@ -85,9 +85,9 @@
   <RHAH_Trait_GrainSneak.degreeDatas.0.label>poker-faced</RHAH_Trait_GrainSneak.degreeDatas.0.label>
   <RHAH_Trait_GrainSneak.degreeDatas.0.description>{PAWN_nameDef} keeps real thoughts off {PAWN_possessive} face.</RHAH_Trait_GrainSneak.degreeDatas.0.description>
   <RHAH_Trait_SiegeDigger.degreeDatas.0.label>born digger</RHAH_Trait_SiegeDigger.degreeDatas.0.label>
-  <RHAH_Trait_SiegeDigger.degreeDatas.0.description>{PAWN_nameDef} is good at digging ways out and trenches. When bored, even the couch looks worth scratching at.</RHAH_Trait_SiegeDigger.degreeDatas.0.description>
+  <RHAH_Trait_SiegeDigger.degreeDatas.0.description>{PAWN_nameDef} is good at digging passages and trenches. When bored, even the couch looks worth scratching at.</RHAH_Trait_SiegeDigger.degreeDatas.0.description>
   <RHAH_Trait_GranaryBreaker.degreeDatas.0.label>combative</RHAH_Trait_GranaryBreaker.degreeDatas.0.label>
-  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef} steps into a fight. The fists are ready before the challenge is even finished.</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
+  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef} is happy to get into a fight. The fists are ready before an opponent has even finished issuing a challenge.</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
   <RHAH_Trait_AilingMother.degreeDatas.0.label>bleeding heart</RHAH_Trait_AilingMother.degreeDatas.0.label>
   <RHAH_Trait_AilingMother.degreeDatas.0.description>{PAWN_nameDef} always wants the children somewhere safe. When a young companion goes hungry, falls ill or is downed, {PAWN_pronoun} feels anxious and sad. People often sneer at such a bleeding heart.</RHAH_Trait_AilingMother.degreeDatas.0.description>
   <RHAH_Trait_FamilyThief.degreeDatas.0.label>fiercely protective</RHAH_Trait_FamilyThief.degreeDatas.0.label>

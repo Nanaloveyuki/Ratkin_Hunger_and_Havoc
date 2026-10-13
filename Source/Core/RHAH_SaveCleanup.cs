@@ -73,6 +73,21 @@ namespace HungerAndHavoc.Core
                 Remove(quest);
             }
 
+            foreach (XElement site in ContentNodes(game).Where(item => ClassName(item) == "HungerAndHavoc.Storyteller.Suiyin.WorldObject_RHAH_KingdomSite").ToList())
+            {
+                XElement pawns = game.Element("world")?.Element("worldPawns")?.Element("pawnsAlive");
+                foreach (XElement recipient in site.Element("kingdomRecipients")?.Elements("li") ?? Enumerable.Empty<XElement>())
+                {
+                    string reference = recipient.Value;
+                    XElement pawn = pawns?.Elements().FirstOrDefault(item => "Thing_" + (string)item.Element("id") == reference);
+                    XElement inventory = pawn?.Element("inventory")?.Element("innerContainer");
+                    if (inventory == null) continue;
+                    XElement supply = site.Element("kingdomSupply")?.Elements().FirstOrDefault(item => !plan.ThingDefs.Contains((string)item.Element("def") ?? ""));
+                    if (supply == null) continue;
+                    supply.Remove();
+                    inventory.Add(supply);
+                }
+            }
             foreach (XElement site in ContentNodes(game).Where(IsMappedCamp).ToList())
             {
                 ConvertCamp(site);

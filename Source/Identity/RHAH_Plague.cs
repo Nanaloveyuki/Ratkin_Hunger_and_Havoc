@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using RimWorld;
 using UnityEngine;
@@ -15,8 +14,6 @@ namespace HungerAndHavoc.Identity
         internal const float BloodPumpingSkipPercent = 120f;
         internal const int SpreadHour = 6;
         internal const int SpreadDayInterval = 3;
-        internal const int ReturnDelayDays = 15;
-        internal const int ReturnStayDays = 1;
 
         internal static HediffDef Def =>
             DefDatabase<HediffDef>.GetNamedSilentFail("RHAH_Plague");
@@ -123,152 +120,6 @@ namespace HungerAndHavoc.Identity
         {
             return CanReceive(pawn, bloodPumpingPercent, BloodPumpingSkipPercent);
         }
-
-        internal static PlagueTally ResolveQuarantine(PlagueWatch watch)
-        {
-            int recovered = 0;
-            int died = 0;
-            if (watch?.Entries == null)
-            {
-                return new PlagueTally(recovered, died);
-            }
-
-            for (int i = 0; i < watch.Entries.Count; i++)
-            {
-                PlagueWatchEntry entry = watch.Entries[i];
-                if (entry == null || entry.Counted)
-                {
-                    continue;
-                }
-
-                PlagueOutcome outcome = Classify(entry);
-                if (outcome == PlagueOutcome.Keep)
-                {
-                    continue;
-                }
-
-                entry.Counted = true;
-                if (outcome == PlagueOutcome.Recovered)
-                {
-                    recovered++;
-                }
-                else if (outcome == PlagueOutcome.Died)
-                {
-                    died++;
-                }
-            }
-
-            return new PlagueTally(recovered, died);
-        }
-
-        internal static PlagueOutcome Classify(PlagueWatchEntry entry)
-        {
-            if (entry == null || entry.Keep)
-            {
-                return PlagueOutcome.Keep;
-            }
-
-            if (entry.Dead && entry.StillSick)
-            {
-                return PlagueOutcome.Died;
-            }
-
-            if (entry.Missing || (entry.StillSick && !entry.Dead))
-            {
-                return PlagueOutcome.Released;
-            }
-
-
-            if (!entry.Dead && !entry.StillSick)
-            {
-                return PlagueOutcome.Recovered;
-            }
-
-            return PlagueOutcome.Released;
-        }
-
-
-        internal static bool QuarantineOpen(IList<int> loadIds)
-        {
-            return loadIds != null && loadIds.Count > 0;
-        }
-
-        internal static bool IsQuarantined(IList<int> loadIds, int pawnLoadId)
-        {
-            if (pawnLoadId <= 0 || loadIds == null)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < loadIds.Count; i++)
-            {
-                if (loadIds[i] == pawnLoadId)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-
-        internal static int ChooseReturn(int alreadyReturnedLoadId, IList<int> recoveredLoadIds)
-        {
-            if (alreadyReturnedLoadId != 0 || recoveredLoadIds == null)
-            {
-                return 0;
-            }
-
-            for (int i = 0; i < recoveredLoadIds.Count; i++)
-            {
-                if (recoveredLoadIds[i] > 0)
-                {
-                    return recoveredLoadIds[i];
-                }
-            }
-
-            return 0;
-        }
-
-    }
-
-    internal sealed class PlagueWatchEntry
-    {
-        internal int LoadId;
-        internal bool Dead;
-        internal bool LeftMap;
-        internal bool StillSick;
-        internal bool Keep;
-        internal bool Missing;
-        internal bool Counted;
-    }
-
-
-
-    internal enum PlagueOutcome
-    {
-        Keep,
-        Recovered,
-        Died,
-        Released
-    }
-
-    internal sealed class PlagueWatch
-    {
-        internal List<PlagueWatchEntry> Entries = new List<PlagueWatchEntry>();
-        internal List<int> RecoveredLoadIds = new List<int>();
-    }
-
-
-    internal readonly struct PlagueTally
-    {
-        internal readonly int Recovered;
-        internal readonly int Died;
-
-        internal PlagueTally(int recovered, int died)
-        {
-            Recovered = recovered;
-            Died = died;
-        }
     }
 }
+

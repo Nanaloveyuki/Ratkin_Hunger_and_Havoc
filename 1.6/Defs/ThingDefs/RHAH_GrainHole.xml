@@ -3,7 +3,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>RHAH_GrainHole</defName>
     <label>粮洞</label>
-    <description>储粮旁边的小洞。没堵上时，每天会少一份附近的餐食，最多三份。可以用木材堵住。</description>
+    <description>储粮附近出现的小洞。洞口敞着时，附近的餐食每天可能少一份，损失次数上限可在设置中调整。可以用木材堵住。</description>
     <thingClass>Building</thingClass>
     <category>Building</category>
     <altitudeLayer>FloorEmplacement</altitudeLayer>

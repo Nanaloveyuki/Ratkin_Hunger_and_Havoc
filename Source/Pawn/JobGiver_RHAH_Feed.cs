@@ -53,7 +53,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             Thing carried = FoodInInventory(pawn);
-            if (carried != null && RHAH_ReliefFood.Reject(pawn, carried, false) == RHAH_FoodReject.None)
+            if (carried != null)
             {
                 return RHAH_ReliefFood.MakeJob(pawn, carried);
             }
@@ -115,7 +115,7 @@ namespace HungerAndHavoc.Pawn
             for (int i = 0; i < container.Count; i++)
             {
                 Thing thing = container[i];
-                if (thing != null && thing.IngestibleNow && RHAH_ReliefFood.FoodAllowed(thing.def))
+                if (RHAH_ReliefFood.Reject(pawn, thing, false) == RHAH_FoodReject.None)
                 {
                     return thing;
                 }

@@ -55,25 +55,64 @@ namespace HungerAndHavoc.Incidents
             return result;
         }
 
-        internal static string Pick(IReadOnlyList<string> candidates, int roll)
+        internal static int GroupCount(IReadOnlyList<string> candidates)
         {
-            if (candidates == null || candidates.Count == 0)
+            int count = 0;
+            for (int i = 0; i < RHAH_IncidentGroups.Count; i++)
+            {
+                if (ScenarioCount(candidates, i) > 0)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        internal static string Pick(IReadOnlyList<string> candidates, float roll)
+        {
+            int groupCount = GroupCount(candidates);
+            if (float.IsNaN(roll) || float.IsInfinity(roll) || roll < 0f || roll >= groupCount)
             {
                 return null;
             }
-
-            int index = roll;
-            if (index < 0)
+            for (int i = 0; i < RHAH_IncidentGroups.Count; i++)
             {
-                index = 0;
+                int count = ScenarioCount(candidates, i);
+                if (count == 0)
+                {
+                    continue;
+                }
+                if (roll >= 1f)
+                {
+                    roll -= 1f;
+                    continue;
+                }
+                int scenarioRoll = System.Math.Min((int)(roll * count), count - 1);
+                for (int j = 0; j < candidates.Count; j++)
+                {
+                    if (RHAH_IncidentGroups.GroupOf(candidates[j]) == i && scenarioRoll-- == 0)
+                    {
+                        return candidates[j];
+                    }
+                }
             }
+            return null;
+        }
 
-            if (index >= candidates.Count)
+        internal static int ScenarioCount(IReadOnlyList<string> candidates, int group)
+        {
+            int count = 0;
+            if (candidates != null)
             {
-                index = candidates.Count - 1;
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    if (RHAH_IncidentGroups.GroupOf(candidates[i]) == group)
+                    {
+                        count++;
+                    }
+                }
             }
-
-            return candidates[index];
+            return count;
         }
     }
 

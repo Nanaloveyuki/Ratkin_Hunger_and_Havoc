@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_Trait_HardyLabor.degreeDatas.0.label>吃苦耐劳</RHAH_Trait_HardyLabor.degreeDatas.0.label>
-  <RHAH_Trait_HardyLabor.degreeDatas.0.description>{PAWN_nameDef}吃得了苦，在这个边缘世界生活，没有什么苦是吃不了的。</RHAH_Trait_HardyLabor.degreeDatas.0.description>
+  <RHAH_Trait_HardyLabor.degreeDatas.0.description>{PAWN_nameDef}吃得了苦，干起费力的活也很勤快。</RHAH_Trait_HardyLabor.degreeDatas.0.description>
   <RHAH_Trait_FamineFarmer.degreeDatas.0.label>擅长耕作</RHAH_Trait_FamineFarmer.degreeDatas.0.label>
   <RHAH_Trait_FamineFarmer.degreeDatas.0.description>{PAWN_nameDef}对田里的活很熟，种地收割都很在行。</RHAH_Trait_FamineFarmer.degreeDatas.0.description>
   <RHAH_Trait_FieldGleaner.degreeDatas.0.label>拾荒后遗症</RHAH_Trait_FieldGleaner.degreeDatas.0.label>
   <RHAH_Trait_FieldGleaner.degreeDatas.0.description>{PAWN_nameDef}曾经靠在边角和废地里翻找还能吃的东西过活，如今已成了下意识的习惯。</RHAH_Trait_FieldGleaner.degreeDatas.0.description>
   <RHAH_Trait_DisasterHerder.degreeDatas.0.label>擅长放牧</RHAH_Trait_DisasterHerder.degreeDatas.0.label>
-  <RHAH_Trait_DisasterHerder.degreeDatas.0.description>{PAWN_nameDef}因为一些经历掌握了放牧的技巧，照看和驯服牲口都很在行。</RHAH_Trait_DisasterHerder.degreeDatas.0.description>
+  <RHAH_Trait_DisasterHerder.degreeDatas.0.description>{PAWN_nameDef}很会照看牲口，驯服和训练动物都很在行。</RHAH_Trait_DisasterHerder.degreeDatas.0.description>
   <RHAH_Trait_WellBearer.degreeDatas.0.label>善用巧力的搬运工</RHAH_Trait_WellBearer.degreeDatas.0.label>
-  <RHAH_Trait_WellBearer.degreeDatas.0.description>{PAWN_nameDef}知道怎么拿东西更方便，也更省力。或许有人请教过这一本领，{PAWN_nameDef}只会说这是天生的，教不了别人。</RHAH_Trait_WellBearer.degreeDatas.0.description>
+  <RHAH_Trait_WellBearer.degreeDatas.0.description>{PAWN_nameDef}知道怎么拿东西更方便，也更省力。有人请教这一本领时，{PAWN_nameDef}总说这是天生的，教不了别人。</RHAH_Trait_WellBearer.degreeDatas.0.description>
   <RHAH_Trait_MoldSifter.degreeDatas.0.label>鼻子灵敏</RHAH_Trait_MoldSifter.degreeDatas.0.label>
-  <RHAH_Trait_MoldSifter.degreeDatas.0.description>{PAWN_nameDef}闻得出哪一把快要发霉的粮还能下锅。</RHAH_Trait_MoldSifter.degreeDatas.0.description>
+  <RHAH_Trait_MoldSifter.degreeDatas.0.description>{PAWN_nameDef}对粮食的气味很熟，挑拣、备料和下锅都很利索。</RHAH_Trait_MoldSifter.degreeDatas.0.description>
   <RHAH_Trait_GranaryCarpenter.degreeDatas.0.label>擅长建造</RHAH_Trait_GranaryCarpenter.degreeDatas.0.label>
   <RHAH_Trait_GranaryCarpenter.degreeDatas.0.description>{PAWN_nameDef}修屋顶、补木架这类活很在行。</RHAH_Trait_GranaryCarpenter.degreeDatas.0.description>
   <RHAH_Trait_RagTailor.degreeDatas.0.label>巧手</RHAH_Trait_RagTailor.degreeDatas.0.label>
   <RHAH_Trait_RagTailor.degreeDatas.0.description>{PAWN_nameDef}擅长把破布和旧毡缝成还能用的东西。</RHAH_Trait_RagTailor.degreeDatas.0.description>
   <RHAH_Trait_HerbReader.degreeDatas.0.label>识药</RHAH_Trait_HerbReader.degreeDatas.0.label>
-  <RHAH_Trait_HerbReader.degreeDatas.0.description>{PAWN_nameDef}认得哪些草能退热，包扎也还算靠得住，或许是靠着过往的经验。</RHAH_Trait_HerbReader.degreeDatas.0.description>
+  <RHAH_Trait_HerbReader.degreeDatas.0.description>{PAWN_nameDef}认得常用的草药，包扎伤口也很利索。</RHAH_Trait_HerbReader.degreeDatas.0.description>
   <RHAH_Trait_NightFugitive.degreeDatas.0.label>惯于夜行</RHAH_Trait_NightFugitive.degreeDatas.0.label>
   <RHAH_Trait_NightFugitive.degreeDatas.0.description>{PAWN_nameDef}夜里走路习惯放轻脚步，白天却总嫌光线刺眼。</RHAH_Trait_NightFugitive.degreeDatas.0.description>
   <RHAH_Trait_SnowGuide.degreeDatas.0.label>强方向感</RHAH_Trait_SnowGuide.degreeDatas.0.label>
-  <RHAH_Trait_SnowGuide.degreeDatas.0.description>{PAWN_nameDef}即使过了许久，也能记得旧路标和被雪盖住的脚印，在探路和寻找方向上很在行。</RHAH_Trait_SnowGuide.degreeDatas.0.description>
+  <RHAH_Trait_SnowGuide.degreeDatas.0.description>{PAWN_nameDef}能记住走过的路，雪把脚印盖住后也常能认出方向。</RHAH_Trait_SnowGuide.degreeDatas.0.description>
   <RHAH_Trait_DustBearer.degreeDatas.0.label>缺食后遗症</RHAH_Trait_DustBearer.degreeDatas.0.label>
   <RHAH_Trait_DustBearer.degreeDatas.0.description>{PAWN_nameDef}总想把粮和饮水一直背到下一处有吃的营地，路上舍不得卸下来，生怕中途又得求助于他人。</RHAH_Trait_DustBearer.degreeDatas.0.description>
   <RHAH_Trait_CampWatcher.degreeDatas.0.label>沉稳</RHAH_Trait_CampWatcher.degreeDatas.0.label>
-  <RHAH_Trait_CampWatcher.degreeDatas.0.description>{PAWN_nameDef}遇见突发事件时不容易慌张，{PAWN_pronoun}还能把精神绷住，尽管也会被人叫作绷绷炸弹。</RHAH_Trait_CampWatcher.degreeDatas.0.description>
+  <RHAH_Trait_CampWatcher.degreeDatas.0.description>{PAWN_nameDef}遇见突发事件时不容易慌张，能绷住精神继续应付。{PAWN_pronoun}这副紧绷的样子，也让人打趣是颗「绷绷炸弹」。</RHAH_Trait_CampWatcher.degreeDatas.0.description>
   <RHAH_Trait_AlmsSpeaker.degreeDatas.0.label>善于言辞</RHAH_Trait_AlmsSpeaker.degreeDatas.0.label>
   <RHAH_Trait_AlmsSpeaker.degreeDatas.0.description>{PAWN_nameDef}会说话，再难听的事也能让人听得进去。</RHAH_Trait_AlmsSpeaker.degreeDatas.0.description>
   <RHAH_Trait_JunkAppraiser.degreeDatas.0.label>精明</RHAH_Trait_JunkAppraiser.degreeDatas.0.label>
   <RHAH_Trait_JunkAppraiser.degreeDatas.0.description>{PAWN_nameDef}看得出一袋旧货还能换多少口粮，谈价钱很精明。</RHAH_Trait_JunkAppraiser.degreeDatas.0.description>
   <RHAH_Trait_GrainMediator.degreeDatas.0.label>和事佬</RHAH_Trait_GrainMediator.degreeDatas.0.label>
-  <RHAH_Trait_GrainMediator.degreeDatas.0.description>{PAWN_nameDef}喜欢在抢夺开始前出面劝开争执的人，帮着维护团结，但也偶尔会被骂两面派和和事佬。</RHAH_Trait_GrainMediator.degreeDatas.0.description>
+  <RHAH_Trait_GrainMediator.degreeDatas.0.description>{PAWN_nameDef}见到有人为粮食争执，总想出面劝开，免得动起手来。也有人嫌这番好意多余，骂上一句两面派。</RHAH_Trait_GrainMediator.degreeDatas.0.description>
   <RHAH_Trait_WoundTender.degreeDatas.0.label>细心</RHAH_Trait_WoundTender.degreeDatas.0.label>
   <RHAH_Trait_WoundTender.degreeDatas.0.description>{PAWN_nameDef}包扎时手很稳，外界的动静也很少让{PAWN_objective}分心。</RHAH_Trait_WoundTender.degreeDatas.0.description>
   <RHAH_Trait_EggKeeper.degreeDatas.0.label>喜爱幼儿</RHAH_Trait_EggKeeper.degreeDatas.0.label>
@@ -43,15 +43,15 @@
   <RHAH_Trait_FinePaws.degreeDatas.0.label>灵巧</RHAH_Trait_FinePaws.degreeDatas.0.label>
   <RHAH_Trait_FinePaws.degreeDatas.0.description>{PAWN_nameDef}做补袋、穿针这类细活很顺手。</RHAH_Trait_FinePaws.degreeDatas.0.description>
   <RHAH_Trait_PathScout.degreeDatas.0.label>机敏</RHAH_Trait_PathScout.degreeDatas.0.label>
-  <RHAH_Trait_PathScout.degreeDatas.0.description>{PAWN_nameDef}对事情之间的关联很敏感，常能从两件看似毫不相干的事里看出令人瞠目结舌的联系。</RHAH_Trait_PathScout.degreeDatas.0.description>
+  <RHAH_Trait_PathScout.degreeDatas.0.description>{PAWN_nameDef}常能留意到猎物的细微动静，靠近时也懂得避开容易暴露自己的地方。</RHAH_Trait_PathScout.degreeDatas.0.description>
   <RHAH_Trait_ColumnLead.degreeDatas.0.label>果断</RHAH_Trait_ColumnLead.degreeDatas.0.label>
-  <RHAH_Trait_ColumnLead.degreeDatas.0.description>{PAWN_nameDef}做重大决策时喜欢评估利弊后直接拍板，很少犹豫。{PAWN_nameDef}认为犹豫是对时间的不尊重。</RHAH_Trait_ColumnLead.degreeDatas.0.description>
+  <RHAH_Trait_ColumnLead.degreeDatas.0.description>{PAWN_nameDef}做重大决策时会权衡利弊，再直接拍板，很少犹豫。决定下来，{PAWN_nameDef}就会赶紧付诸行动。</RHAH_Trait_ColumnLead.degreeDatas.0.description>
   <RHAH_Trait_ReliefCook.degreeDatas.0.label>分粮者</RHAH_Trait_ReliefCook.degreeDatas.0.label>
-  <RHAH_Trait_ReliefCook.degreeDatas.0.description>{PAWN_nameDef}得益于天赋，做起分给大家的热食很利索，再少的粮也愿意分一分。</RHAH_Trait_ReliefCook.degreeDatas.0.description>
+  <RHAH_Trait_ReliefCook.degreeDatas.0.description>{PAWN_nameDef}给大家做热食很利索，手头的粮再少，也愿意分一分。</RHAH_Trait_ReliefCook.degreeDatas.0.description>
   <RHAH_Trait_FamineHunter.degreeDatas.0.label>擅长狩猎</RHAH_Trait_FamineHunter.degreeDatas.0.label>
-  <RHAH_Trait_FamineHunter.degreeDatas.0.description>{PAWN_nameDef}掌握了一门随时可能用得到的技能，靠近猎物时脚步很轻，近身捕猎也颇有一手。</RHAH_Trait_FamineHunter.degreeDatas.0.description>
+  <RHAH_Trait_FamineHunter.degreeDatas.0.description>{PAWN_nameDef}靠近猎物时脚步很轻，近身捕猎也颇有一手。</RHAH_Trait_FamineHunter.degreeDatas.0.description>
   <RHAH_Trait_HungerRage.degreeDatas.0.label>饥饿焦虑症</RHAH_Trait_HungerRage.degreeDatas.0.label>
-  <RHAH_Trait_HungerRage.degreeDatas.0.description>{PAWN_nameDef}一看见食物就容易红眼。肚子越空，越难按住想吃的心。</RHAH_Trait_HungerRage.degreeDatas.0.description>
+  <RHAH_Trait_HungerRage.degreeDatas.0.description>{PAWN_nameDef}一饿就容易烦躁。肚子越空，越难按住想吃的心，也更容易与人起冲突。</RHAH_Trait_HungerRage.degreeDatas.0.description>
   <RHAH_Trait_FoodSnatcher.degreeDatas.0.label>严重饥饿焦虑症</RHAH_Trait_FoodSnatcher.degreeDatas.0.label>
   <RHAH_Trait_FoodSnatcher.degreeDatas.0.description>{PAWN_nameDef}看不得食物从眼前过去。“食物全部吃进肚子里才最安全。”{PAWN_nameDef}如是说。</RHAH_Trait_FoodSnatcher.degreeDatas.0.description>
   <RHAH_Trait_PlagueDread.degreeDatas.0.label>害怕生病</RHAH_Trait_PlagueDread.degreeDatas.0.label>
@@ -85,9 +85,9 @@
   <RHAH_Trait_GrainSneak.degreeDatas.0.label>面瘫脸</RHAH_Trait_GrainSneak.degreeDatas.0.label>
   <RHAH_Trait_GrainSneak.degreeDatas.0.description>{PAWN_nameDef}脸上很少露出真实想法。</RHAH_Trait_GrainSneak.degreeDatas.0.description>
   <RHAH_Trait_SiegeDigger.degreeDatas.0.label>爱挖东西</RHAH_Trait_SiegeDigger.degreeDatas.0.label>
-  <RHAH_Trait_SiegeDigger.degreeDatas.0.description>{PAWN_nameDef}挖出路和壕沟很在行，闲着无聊时连沙发都想挠两下。</RHAH_Trait_SiegeDigger.degreeDatas.0.description>
+  <RHAH_Trait_SiegeDigger.degreeDatas.0.description>{PAWN_nameDef}挖通道和壕沟很在行，闲着无聊时连沙发都想挠两下。</RHAH_Trait_SiegeDigger.degreeDatas.0.description>
   <RHAH_Trait_GranaryBreaker.degreeDatas.0.label>好斗</RHAH_Trait_GranaryBreaker.degreeDatas.0.label>
-  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef}见架就上。决斗的话还没说完，拳头就已经准备好了。</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
+  <RHAH_Trait_GranaryBreaker.degreeDatas.0.description>{PAWN_nameDef}很乐意跟人打一架。对方邀战的话还没说完，拳头就已经准备好了。</RHAH_Trait_GranaryBreaker.degreeDatas.0.description>
   <RHAH_Trait_AilingMother.degreeDatas.0.label>圣母心</RHAH_Trait_AilingMother.degreeDatas.0.label>
   <RHAH_Trait_AilingMother.degreeDatas.0.description>{PAWN_nameDef}总想把孩子放在最安全的地方。身边的幼小同伴挨饿、病倒或倒下时，{PAWN_pronoun}会感到不安和悲伤，尽管经常会被别人骂圣母。</RHAH_Trait_AilingMother.degreeDatas.0.description>
   <RHAH_Trait_FamilyThief.degreeDatas.0.label>护犊子</RHAH_Trait_FamilyThief.degreeDatas.0.label>

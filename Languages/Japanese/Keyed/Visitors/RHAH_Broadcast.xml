@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Broadcast_Label>希望を放送する</RHAH_Broadcast_Label>
+  <RHAH_Broadcast_Cooldown>放送はまだクールダウン中です</RHAH_Broadcast_Cooldown>
+  <RHAH_Broadcast_Empty>今、放送できるイベントはありません</RHAH_Broadcast_Empty>
+  <RHAH_Broadcast_Queued>放送は送りました。ラットキンからの応答を待っています。</RHAH_Broadcast_Queued>
+  <RHAH_Broadcast_Unavailable>今は希望を放送できません</RHAH_Broadcast_Unavailable>
+</LanguageData>

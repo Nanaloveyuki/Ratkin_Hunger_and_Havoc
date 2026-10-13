@@ -3,7 +3,7 @@
   <XenotypeDef MayRequire="Ludeon.RimWorld.Biotech">
     <defName>RHAH_Xenotype_Ratkin</defName>
     <label>饥荒鼠族</label>
-    <description>吃得更少的鼠族。饥饿仍会到来，也仍会饿死。</description>
+    <description>长期生活在饥荒环境中的鼠族，胃口较小，维持饱腹所需的食物也较少。</description>
     <iconPath>UI/Icons/Genes/Gene_RobustDigestion</iconPath>
     <inheritable>true</inheritable>
     <factionlessGenerationWeight>0</factionlessGenerationWeight>

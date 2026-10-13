@@ -6,6 +6,8 @@
 
 功能和修复原则: YAGNI 和消融实验
 
+避免不必要的 Smoke 和 Tests, 不要求做到完美, 只要求尽力
+
 ## 本仓库
 
 - 显示名：`鼠族: 饥与祸` / `Ratkin: Hunger and Havoc`
@@ -113,6 +115,8 @@ IrisMenus 公开 API 在 `/root/repos/csharp/IrisMenus/Source/MenuRegistry.cs` �
 
 ## 验证
 
+日常使用 `make check`、`make ci`、`make deploy`。入口、CI runner、RimCarbon14 MCP 和低噪声调试见 `docs/automation.md`。构建日志默认只读摘要；失败后按 `make report` 的证据路径读具体行，不批量展开 `tmp/`、Player.log、所有 tool schema 或 trace。RimCarbon14 查询先用 `make carbon-status`，需要一个工具的参数才查该工具 schema。写调用不自动重试，先查 operation
+
 ```
 python3 scripts/verify-scaffold.py
 dotnet build Source/Api/HungerAndHavoc.Api.csproj -p:RimWorldDir=/mnt/e/Apps/Steam/steamapps/common/RimWorld
@@ -124,3 +128,17 @@ dotnet test Source/Tests/HungerAndHavoc.Tests.csproj -p:RimWorldDir=/mnt/e/Apps/
 部署用 `scripts/deploy.sh`，不要在游戏运行时覆盖。IrisMenus.dll 是 net48 可选引用，`Private=False`，不要打进 `1.6/Assemblies/`。
 
 不要提交 `bin/`、`obj/`、pdb、`1.6/Assemblies/0Harmony.dll`。Harmony 是模组依赖，不是本仓库程序集。
+
+## Agent skills
+
+### Issue tracker
+
+规格和实施工作项使用当前仓库 GitHub Issues，操作规则见 `docs/agents/issue-tracker.md`
+
+### Triage labels
+
+使用默认分流标签，见 `docs/agents/triage-labels.md`
+
+### Domain docs
+
+单一领域：`GLOSSARY.md` 与 `docs/adr/`，使用规则见 `docs/agents/domain.md`

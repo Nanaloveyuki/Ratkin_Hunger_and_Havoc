@@ -69,6 +69,7 @@ namespace HungerAndHavoc.Incidents
                 Rollback(created);
                 return false;
             }
+            EventMgr.RHAH_LongFollowRuntime.NoteArrival(context.DisplayId, context.SpawnBatchId, context.Map, arrived);
             if (context.DropPod)
             {
                 // 先在地图建立身份和 Lord 再装入原版空投舱
@@ -96,13 +97,12 @@ namespace HungerAndHavoc.Incidents
                 context.Map.uniqueID,
                 tick,
                 context.SpawnBatchId,
-                created.Count,
-                context.CarriesPlague,
-                loadIds.ToArray()));
+                created.Count));
             HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Open(context, loadIds);
             OpenChoice(context, created, arrived);
             EventMgr.RHAH_EventChainEntry.NoteStarted(context.DisplayId, context.Map.uniqueID, 0, tick, context.SpawnBatchId);
 
+            EventMgr.RHAH_LongFollowRuntime.NoteDependentVisitors(context.DisplayId, context.Map.uniqueID, loadIds);
             return true;
         }
 
@@ -248,6 +248,8 @@ namespace HungerAndHavoc.Incidents
                     }
                 }
             }
+            if (RHAH_RequestRules.IsFoodTransaction(record.DisplayId))
+                RHAH_FoodTransaction.Prepare(record, context.Map, arrived);
 
             SendLetter(context, record, Targets(created), arrived);
         }
@@ -359,6 +361,10 @@ namespace HungerAndHavoc.Incidents
             {
                 text = key.Translate(incident, record.Amount, GoodsLabel(record));
             }
+            if (record.TransactionVersion == RHAH_RequestRules.TransactionVersion)
+                text += "\n\n" + RHAH_FoodTransaction.Details(record);
+            if (record.DisplayId == "I-013" || record.DisplayId == "I-019")
+                text += "\n\n" + (record.DisplayId == "I-019" ? "RHAH_ChildExchange_LegacyHint" : "RHAH_ChildExchange_SelectionHint").Translate();
 
             if (record.Choice == RHAH_ChoiceKind.ChildExchange)
             {
@@ -373,7 +379,7 @@ namespace HungerAndHavoc.Incidents
                 }
                 else
                 {
-                    text += "\n\n" + "RHAH_Choice_ChildExchangeFoodHint".Translate(each, RHAH_RequestRules.FoodForChildren(count));
+                    text += "\n\n" + "RHAH_Choice_ChildExchangeFoodHint".Translate(each, RHAH_RequestRules.FoodForChildren(RHAH_ChildExchange.IncomingCount(record)));
                 }
             }
 
@@ -381,6 +387,10 @@ namespace HungerAndHavoc.Incidents
             if (record.Kind == RHAH_RequestKind.None)
             {
                 text += "\n\n" + "RHAH_Choice_VisitorHint".Translate(days);
+            }
+            else if (record.TransactionVersion == RHAH_RequestRules.TransactionVersion)
+            {
+                text += "\n\n" + "RHAH_Transaction_Hint".Translate(days);
             }
             else if (record.Choice == RHAH_ChoiceKind.Intel)
             {
@@ -480,6 +490,11 @@ namespace HungerAndHavoc.Incidents
 
         static string GoodsLabel(RHAH_ChoiceRecord record)
         {
+            if (record.TransactionVersion == RHAH_RequestRules.TransactionVersion)
+            {
+                ThingDef quoted = DefDatabase<ThingDef>.GetNamedSilentFail(record.QuotedFoodDefName);
+                return quoted == null ? "RHAH_Transaction_Food".Translate().ToString() : quoted.LabelCap.ToString();
+            }
             switch (record.Kind)
             {
                 case RHAH_RequestKind.SimpleMeal: return "RHAH_Choice_SimpleMeal".Translate();

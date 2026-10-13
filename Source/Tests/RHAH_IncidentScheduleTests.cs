@@ -153,5 +153,96 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(2, RHAH_IncidentSchedule.NextExecutable(new[] { false, false, false }, ready));
             Assert.Equal(-1, RHAH_IncidentSchedule.NextExecutable(new[] { false }, new[] { false }));
         }
+
+        [Fact]
+        public void ExtraRequestScenariosDoNotMultiplyTheirClassShare()
+        {
+            var previous = HungerAndHavoc.Core.RHAH_Mod.Settings;
+            try
+            {
+                var settings = new HungerAndHavoc.Core.RHAH_Settings();
+                HungerAndHavoc.Core.RHAH_Mod.Settings = settings;
+                foreach (var entry in RHAH_IncidentCatalog.All)
+                {
+                    settings.SetIncidentEnabled(entry.DisplayId, false);
+                }
+                settings.SetIncidentEnabled("I-015", true);
+                Assert.Equal(settings.weightAid, RHAH_IncidentSchedule.TotalWeight(RHAH_AttitudePool.Positive, 0,
+                    RHAH_IncidentSeason.Summer, true, false), 6);
+                Assert.Equal("I-015", RHAH_IncidentSchedule.Select(RHAH_AttitudePool.Positive, 0,
+                    RHAH_IncidentSeason.Summer, true, false, 0f));
+                Assert.Equal("I-018", RHAH_IncidentSchedule.Select(RHAH_AttitudePool.Positive, 0,
+                    RHAH_IncidentSeason.Summer, true, false, settings.weightAid - 0.0001f));
+                Assert.Null(RHAH_IncidentSchedule.Select(RHAH_AttitudePool.Positive, 0,
+                    RHAH_IncidentSeason.Summer, true, false, settings.weightAid));
+            }
+            finally
+            {
+                HungerAndHavoc.Core.RHAH_Mod.Settings = previous;
+            }
+        }
+
+        [Fact]
+        public void RetiredBabyRequestCannotEnterNewSelectionEvenWhenEnabled()
+        {
+            var previous = HungerAndHavoc.Core.RHAH_Mod.Settings;
+            try
+            {
+                var settings = new HungerAndHavoc.Core.RHAH_Settings();
+                HungerAndHavoc.Core.RHAH_Mod.Settings = settings;
+                foreach (var entry in RHAH_IncidentCatalog.All)
+                {
+                    settings.SetIncidentEnabled(entry.DisplayId, entry.DisplayId == "I-019");
+                }
+                Assert.Equal(0f, RHAH_IncidentSchedule.TotalWeight(RHAH_AttitudePool.Positive, 0,
+                    RHAH_IncidentSeason.Summer, true, false));
+                Assert.Null(RHAH_IncidentSchedule.Select(RHAH_AttitudePool.Positive, 0,
+                    RHAH_IncidentSeason.Summer, true, false, 0f));
+            }
+            finally
+            {
+                HungerAndHavoc.Core.RHAH_Mod.Settings = previous;
+            }
+        }
+
+        [Fact]
+        public void BroadcastGivesEachClassOneShareBeforeChoosingItsScenario()
+        {
+            var candidates = new[] { "I-001", "I-005", "I-011" };
+            Assert.Equal("I-001", RHAH_BroadcastRules.Pick(candidates, 0f));
+            Assert.Equal("I-005", RHAH_BroadcastRules.Pick(candidates, 0.5f));
+            Assert.Equal("I-011", RHAH_BroadcastRules.Pick(candidates, 1f));
+            Assert.Equal("I-011", RHAH_BroadcastRules.Pick(candidates, 1.999f));
+            Assert.Null(RHAH_BroadcastRules.Pick(candidates, 2f));
+        }
+
+        [Fact]
+        public void PlagueRefugeesStayInTheRefugeeClassPool()
+        {
+            var previous = HungerAndHavoc.Core.RHAH_Mod.Settings;
+            try
+            {
+                var settings = new HungerAndHavoc.Core.RHAH_Settings();
+                HungerAndHavoc.Core.RHAH_Mod.Settings = settings;
+                foreach (var entry in RHAH_IncidentCatalog.All)
+                {
+                    settings.SetIncidentEnabled(entry.DisplayId, false);
+                }
+                settings.SetIncidentEnabled("I-040", true);
+                Assert.Equal(0f, RHAH_IncidentSchedule.TotalWeight(RHAH_AttitudePool.Negative, 0,
+                    RHAH_IncidentSeason.Summer, true, false));
+                Assert.Equal(settings.weightBeggar * (1f + settings.weightPlague) / 2f,
+                    RHAH_IncidentSchedule.TotalWeight(RHAH_AttitudePool.Positive, 0,
+                        RHAH_IncidentSeason.Summer, true, false), 6);
+                Assert.Equal("I-011", RHAH_IncidentSchedule.Select(RHAH_AttitudePool.Positive, 0,
+                    RHAH_IncidentSeason.Summer, true, false, 0f));
+                Assert.Equal("I-040", RHAH_IncidentSchedule.Select(RHAH_AttitudePool.Positive, 0,
+                    RHAH_IncidentSeason.Summer, true, false, settings.weightBeggar * (1f + settings.weightPlague) / 2f - 0.0001f));
+            }
+            finally
+            {
+                HungerAndHavoc.Core.RHAH_Mod.Settings = previous;
+            }
+        }
     }
 }

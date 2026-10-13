@@ -28,6 +28,12 @@
 | `scripts/` | 检查、构建和部署脚本 |
 | `tmp/` | 临时文件，已 gitignore，不当源码或发布输入 |
 
+语言文件按功能维护。三语 `Keyed/` 使用 `Common`、`Settings`、`Menus`、`Visitors`、`Incidents`、`Narrative` 和 `KingdomArc` 分类；长后续放在 `Incidents/Followups`。设置提示和故事正文分开，新键放入对应功能文件，不再集中到一个 Core XML。
+
+`DefInjected/` 第一层仍是原版 Def 类型名。经历按成年编号段、幼年和基础经历拆分；心情按特质、事件结果和访客行为拆分。同一 Def 的字段与阶段留在同一文件。中英日 Keyed 分类路径保持对应，英文与日文 DefInjected 分类路径保持对应。
+
+原版递归读取 Keyed 与各 Def 类型目录中的 XML；文件移动不改翻译键、Def 字段路径或存档契约。检查脚本按目录收集事件标签，移动语言文件时同步更新直接读文件的测试。数字格式、公式变量、内部 ID、日志和异常诊断留在代码，不逐个符号建立翻译键。
+
 已有层是 Core、Identity、Generation、Incidents、Pawn、Narrative、Storyteller、Trade、Data、EventMgr、Tests。`Source/Storyteller/{Name}` 使用 `HungerAndHavoc.Storyteller.{Name}`，一个叙事者一个目录。当前只有穗音。World、Patches、UI 等有第一个类型再建模，不建空目录。不要再建 `Source/Behavior`。IrisMenus 绘制留在 `Source/Pawn/Compat`，和注册一起在缺少 IrisMenus.dll 时排除。不建 `Source/Settings` 或 `Source/UI`：设置数据仍在 `Core`，函数求值留在对应领域。`Source/Data` 使用 `HungerAndHavoc.Data`，只放经历和特质的静态记录与选择，不引用存档或设置。`Source/EventMgr` 使用 `HungerAndHavoc.EventMgr`，只放 ODF provider、脚本、动作和旧档转换；事件链计时和实例持久化由 ODF 负责，具体出现物由各事件实现。
 
 ## 分层与程序集
@@ -153,6 +159,9 @@ API 程序集的公开类型采用白名单，当前目标包括：
 - 发布前必须通过构建、单元测试、脚手架检查、XML/Def/语言键检查、API 白名单检查和存档契约检查
 - API、存档、事件目录、闸门优先级、XML 类型名和关键 Harmony 目标属于阻断级测试范围
 - 检查失败即阻止合并或发布；风格和性能建议可以单独报告，但不得掩盖契约失败
+- 自动化入口为 `scripts/rhah.py`，快捷命令见根 `Makefile`；`scripts/deploy.sh` 和 PowerShell 部署入口复用同一流水线。完整 CI 先构建审核过的 ODF，再构建主体及其 API、Guard，执行 net48 测试；部署和打包不可绕过门禁。SDK 固定于 `global.json`
+- 公共 CI 只执行不含游戏安装的静态检查和工具测试。完整构建、部署与发布在受保护的手动 self-hosted workflow 上执行，不在 PR 中运行本机 runner。发布只上传白名单包与清单，不上传游戏程序集、凭据、存档或原始日志
+- RimCarbon14 仅作开发工具，通过现有 companion 适配，不成为本模组运行时依赖。摘要有界、原始证据保留在 `tmp/automation/`；过滤记录省略与丢失计数，不将未知调用结果当成功，不自动重放写调用。操作和配置见 [automation.md](automation.md)
 
 ## 例外登记
 
@@ -200,7 +209,11 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_GrainHole` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
 | `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Envoy` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
 | `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Revisit` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
-| `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_Quarantine` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信 |
+| `HungerAndHavoc.Storyteller.Suiyin.ChoiceLetter_RHAH_KingdomArc` | Letter `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档王国篇选择信；阅读窗口与播放状态保持 internal |
+| `HungerAndHavoc.Storyteller.Suiyin.CompProperties_RHAH_KingdomMaterial` | ThingDef `RHAH_KingdomMaterial.comps` XML `Class` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建文书 CompProperties；不是外部 API |
+| `HungerAndHavoc.Storyteller.Suiyin.Comp_RHAH_KingdomMaterial` | `CompProperties.compClass` / Thing `comps` 存档 | `HungerAndHavoc.dll` | Verse 按 `compClass` 创建并保存文书来源、编号与遮名状态；不是外部 API |
+| `HungerAndHavoc.Storyteller.Suiyin.WorldObject_RHAH_KingdomSite` | WorldObjectDef `RHAH_KingdomSite.worldObjectClass` / 世界对象存档 | `HungerAndHavoc.dll` | Verse 按 XML 全名创建与加载王国地点，保存受领者引用及实际供应物件；不是外部 API |
+| `HungerAndHavoc.Storyteller.Suiyin.CaravanArrivalAction_RHAH_KingdomSite` | Caravan 路径 `arrivalAction` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型及无参构造恢复抵达操作，保存地点引用；不是外部 API |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_DropChild` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_MotherFeed` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
 | `HungerAndHavoc.Pawn.JobDriver_RHAH_Scavenge` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建 JobDriver |
@@ -220,6 +233,10 @@ API 程序集的公开类型采用白名单，当前目标包括：
 | `HungerAndHavoc.Incidents.RHAH_ChoiceRecord` | `openChoices` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.Incidents.RHAH_PredatorRecord` | `predators` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
 | `HungerAndHavoc.EventMgr.RHAH_EventChainRecord` | `eventChains` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型读写，不属于 API |
+| `HungerAndHavoc.EventMgr.RHAH_LongFollowRecord` | `longFollows` 深存档 | `HungerAndHavoc.dll` | Scribe 按公开类型创建，保存已登记交互后续，不属于 API |
+| `HungerAndHavoc.EventMgr.ChoiceLetter_RHAH_LongFollow` | LetterDef `letterClass` | `HungerAndHavoc.dll` | Verse 按公开类型创建并存档选择信，不属于 API |
+| `HungerAndHavoc.EventMgr.JobDriver_RHAH_LongMeeting` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建携带孩子的会面/交接 JobDriver |
+| `HungerAndHavoc.EventMgr.JobDriver_RHAH_LongMeetWalk` | JobDef `driverClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建步行会面 JobDriver |
 | `HungerAndHavoc.Incidents.WorldObject_RHAH_Approach` | WorldObjectDef `worldObjectClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建世界物体；类型名写入 `.rws`。没有 Pawn，不属于 API |
 | `HungerAndHavoc.Incidents.WorldObject_RHAH_Interception` | WorldObjectDef `RHAH_Interception.worldObjectClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建临时拦截地图父物体；类型名写入 `.rws`。字段 `displayId`、`spawnBatchId`、`settled` 由父物体保存，不属于 API |
 | `HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox` | ThingDef `thingClass` | `HungerAndHavoc.dll` | Verse 按 XML 全名创建建筑；类型名写入地图 `.rws`。不属于 API |

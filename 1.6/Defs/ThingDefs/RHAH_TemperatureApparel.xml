@@ -40,7 +40,7 @@
   <ThingDef ParentName="RHAH_TemperatureApparelBase">
     <defName>RHAH_Heat_WetCloth</defName>
     <label>陈旧的湿布</label>
-    <description>一块吸了水的旧布，搭在腰上。能挡一点热，干了就没用了。</description>
+    <description>一块吸了水的旧布，搭在腰上，能稍微抵挡炎热。</description>
     <statBases>
       <Insulation_Heat>8</Insulation_Heat>
     </statBases>
@@ -67,7 +67,7 @@
   <ThingDef ParentName="RHAH_TemperatureApparelBase">
     <defName>RHAH_Heat_BarkWrap</defName>
     <label>浸水的树皮遮热衣</label>
-    <description>浸过水的树皮条绑在身上。味道很差，酷热里能凉一阵。</description>
+    <description>浸过水的树皮条，绑在身上遮挡暑热。气味难闻。</description>
     <statBases>
       <Insulation_Heat>28</Insulation_Heat>
     </statBases>
@@ -75,8 +75,8 @@
 
   <ThingDef ParentName="RHAH_TemperatureApparelBase">
     <defName>RHAH_Heat_MudMantle</defName>
-    <label>泥芦降温披</label>
-    <description>泥巴和芦苇压成的厚垫。又湿又重，烈日下还能用。</description>
+    <label>泥芦降温披肩</label>
+    <description>泥巴和芦苇压成的厚垫，披在身上遮挡烈日。又湿又重。</description>
     <statBases>
       <Insulation_Heat>36</Insulation_Heat>
     </statBases>
@@ -85,7 +85,7 @@
   <ThingDef ParentName="RHAH_TemperatureApparelBase">
     <defName>RHAH_Heat_MudShell</defName>
     <label>厚重的降温泥壳</label>
-    <description>身上糊了几层晒干的泥。一动就裂，能挡住很难受的高温。</description>
+    <description>几层晒干的泥巴裹在身上，能抵挡酷热，走动时容易开裂。</description>
     <statBases>
       <Insulation_Heat>44</Insulation_Heat>
     </statBases>
@@ -120,8 +120,8 @@
 
   <ThingDef ParentName="RHAH_TemperatureApparelBase">
     <defName>RHAH_Cold_FurCloak</defName>
-    <label>拼接毛皮短披</label>
-    <description>毛皮碎片拼成的短披。接缝开了，风不容易直接灌进来。</description>
+    <label>拼接毛皮短披肩</label>
+    <description>毛皮碎片拼成的短披肩。接缝有些松散，仍能挡住一部分寒风。</description>
     <statBases>
       <Insulation_Cold>28</Insulation_Cold>
     </statBases>
@@ -129,7 +129,7 @@
 
   <ThingDef ParentName="RHAH_TemperatureApparelBase">
     <defName>RHAH_Cold_SmokedBlanket</defName>
-    <label>烟熏油硬的旧毯</label>
+    <label>烟熏油渍旧毯</label>
     <description>被烟和油脂熏硬的旧毯子。又脏又硬，能把寒气挡在外面。</description>
     <statBases>
       <Insulation_Cold>40</Insulation_Cold>
@@ -139,7 +139,7 @@
   <ThingDef ParentName="RHAH_TemperatureApparelBase">
     <defName>RHAH_Cold_HideWrap</defName>
     <label>厚皮麻布裹衣</label>
-    <description>几层兽皮和麻布绑在身上。不挡手脚，保暖比看起来好。</description>
+    <description>几层兽皮和麻布绑成的裹衣。手脚活动方便，保暖比看起来好。</description>
     <statBases>
       <Insulation_Cold>56</Insulation_Cold>
     </statBases>

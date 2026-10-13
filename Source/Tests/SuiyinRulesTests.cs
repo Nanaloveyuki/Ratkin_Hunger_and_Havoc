@@ -1,9 +1,6 @@
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml;
 using HungerAndHavoc.Narrative;
 using HungerAndHavoc.Storyteller.Suiyin;
 using Xunit;
@@ -12,36 +9,37 @@ namespace HungerAndHavoc.Tests
 {
     public class SuiyinRulesTests
     {
+
         [Fact]
         public void DistinctKindsOpenLettersOnceAndPaySilverOnce()
         {
             SuiyinBook book = new SuiyinBook();
-            book.Note("I-001", 1, 0, false, true);
-            book.Note("I-001", 1, 10, false, true);
+            book.Note("I-001", 1, 0, true);
+            book.Note("I-001", 1, 10, true);
             Assert.Equal(1, book.Distinct);
             Assert.True(book.OpeningSent);
             Assert.False(book.ProgressSent);
             Assert.Equal(1, Count(book, SuiyinLetter.N001));
 
             book.TakeNotices(new List<SuiyinNotice>());
-            book.Note("I-006", 1, 20, false, true);
-            book.Note("I-013", 1, 30, false, true);
+            book.Note("I-006", 1, 20, true);
+            book.Note("I-013", 1, 30, true);
             Assert.True(book.ProgressSent);
             Assert.Equal(3, Arg(book, SuiyinLetter.N002));
-            book.Note("I-013", 1, 40, false, true);
+            book.Note("I-013", 1, 40, true);
             Assert.Equal(1, Count(book, SuiyinLetter.N002));
 
             book.TakeNotices(new List<SuiyinNotice>());
             for (int i = 8; i <= 12; i++)
             {
-                book.Note("I-" + i.ToString("000"), 1, i, false, true);
+                book.Note("I-" + i.ToString("000"), 1, i, true);
             }
 
             Assert.True(book.RewardClaimed);
             Assert.Equal(300, book.RewardPaid);
             Assert.Equal(300, Arg(book, SuiyinLetter.N003));
             book.TakeNotices(new List<SuiyinNotice>());
-            book.Note("I-015", 1, 90, false, true);
+            book.Note("I-015", 1, 90, true);
             Assert.Equal(0, Count(book, SuiyinLetter.N003));
             Assert.Equal(300, book.RewardPaid);
         }
@@ -59,22 +57,6 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(9, state.Book.Trust);
         }
 
-        [Fact]
-        public void PlagueVisitorsOpenOneChoiceAndKeepTheirIds()
-        {
-            SuiyinBook book = new SuiyinBook();
-            book.Note("I-042", 2, 10, true, true, 900, new[] { 41, 0, 41, 42 });
-            Assert.Equal(1, book.N007.Count);
-            Assert.True(book.N007[0].ChoiceOpen);
-            Assert.Equal(2, book.N007[0].Visitors.Count);
-            Assert.Equal(41, book.N007[0].Visitors[0].LoadId);
-            Assert.Equal(42, book.N007[0].Visitors[1].LoadId);
-            Assert.Equal(0, Count(book, SuiyinLetter.N007Opened));
-            book.QueueOpened(2);
-            Assert.Equal(2, Arg(book, SuiyinLetter.N007Opened));
-            book.Note("I-042", 2, 20, true, true, 901, new[] { 43 });
-            Assert.Equal(1, book.N007.Count);
-        }
 
         [Fact]
         public void RewardDueMatchesTheLedgerOnce()
@@ -82,13 +64,13 @@ namespace HungerAndHavoc.Tests
             NarrativeState state = new NarrativeState(null);
             for (int i = 1; i <= 8; i++)
             {
-                state.NoteIncident(new SuiyinIncidentFact("I-" + i.ToString("000"), 1, i * 10, i, 1, false, null));
+                state.NoteIncident(new SuiyinIncidentFact("I-" + i.ToString("000"), 1, i * 10, i, 1));
             }
 
             Assert.Equal(300, state.Book.RewardPaid);
             Assert.Equal(300, state.TakeRewardDue());
             Assert.Equal(0, state.TakeRewardDue());
-            state.NoteIncident(new SuiyinIncidentFact("I-009", 1, 90, 9, 1, false, null));
+            state.NoteIncident(new SuiyinIncidentFact("I-009", 1, 90, 9, 1));
             Assert.Equal(0, state.TakeRewardDue());
         }
 
@@ -101,7 +83,6 @@ namespace HungerAndHavoc.Tests
             Assert.True(state.NoteCompletedKind(30, 5));
             Assert.False(state.NoteCompletedKind(40, 0));
             Assert.Equal(2, state.CompletedKindCount);
-            Assert.Equal(2, state.EndingFacts(60000, true).CompletedKinds);
         }
 
 
@@ -112,9 +93,9 @@ namespace HungerAndHavoc.Tests
             book.Gates = new SuiyinLedger();
             book.Gates.SetEnabled(SuiyinNode.N001, false);
             book.Gates.SetEnabled(SuiyinNode.N002, false);
-            book.Note("I-001", 1, 0, false, true);
-            book.Note("I-006", 1, 1, false, true);
-            book.Note("I-008", 1, 2, false, true);
+            book.Note("I-001", 1, 0, true);
+            book.Note("I-006", 1, 1, true);
+            book.Note("I-008", 1, 2, true);
             Assert.False(book.OpeningSent);
             Assert.False(book.ProgressSent);
             Assert.Equal(0, Count(book, SuiyinLetter.N001));
@@ -125,12 +106,13 @@ namespace HungerAndHavoc.Tests
         {
             SuiyinBook book = new SuiyinBook();
             book.Narrator = false;
-            book.Note("I-001", 1, 0, false, true);
+            book.Note("I-001", 1, 0, true);
             Assert.True(book.OpeningSent);
             Assert.Equal(0, Count(book, SuiyinLetter.N001));
-            book.Note("I-036", 1, 1, true, true);
-            Assert.Equal(1, book.N007.Count);
-            Assert.True(book.N007[0].ChoiceOpen);
+            book.EnvoyClue = true;
+            Assert.True(book.ArriveEnvoy(1, 41, 1));
+            Assert.True(book.ChooseEnvoy(book.N008[0], SuiyinN008Action.Refuse, 2));
+            Assert.Equal(1, Count(book, SuiyinLetter.N008Refuse));
         }
 
         [Fact]
@@ -265,22 +247,6 @@ namespace HungerAndHavoc.Tests
         }
 
 
-        [Fact]
-        public void QuarantineReturnUsesTheSamePawnOnce()
-        {
-            SuiyinBook book = new SuiyinBook();
-            book.Note("I-042", 2, 0, true, true);
-            book.Note("I-042", 2, 10, true, true);
-            Assert.Equal(1, book.N007.Count);
-            SuiyinN007Case record = book.N007[0];
-            Assert.True(book.ChooseQuarantine(record, SuiyinN007Action.Quarantine));
-            Assert.True(book.CloseQuarantine(record, SuiyinN007Outcome.RecoveredLeft, 100, 44));
-            Assert.False(book.CloseQuarantine(record, SuiyinN007Outcome.RecoveredLeft, 200, 44));
-            Assert.False(book.ClaimReturn(record, record.ReturnDueTick - 1, true));
-            Assert.True(book.ClaimReturn(record, record.ReturnDueTick, true));
-            Assert.Equal(44, Arg(book, SuiyinLetter.N007Return));
-            Assert.False(book.ClaimReturn(record, record.ReturnDueTick + 1, true));
-        }
 
         [Fact]
         public void PositiveTrustRaisesNarrativeSilverByAtMostAQuarter()
@@ -298,25 +264,6 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(0, book.ChooseRelic(SuiyinN009Action.Take, 20));
         }
 
-        [Fact]
-        public void RecordBoxThingClassResolvesToTheBuilding()
-        {
-            XmlDocument defs = new XmlDocument();
-            defs.Load(Path.Combine(RepoRoot(), "1.6/Defs/ThingDefs/RHAH_RecordBox.xml"));
-            XmlNode box = defs.SelectSingleNode("//ThingDef[defName='RHAH_RecordBox']/thingClass");
-            Assert.NotNull(box);
-            string typeName = box.InnerText.Trim();
-            Assert.Equal("HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox", typeName);
-            Type resolved = typeof(Building_RHAH_RecordBox).Assembly.GetType(typeName, false);
-            Assert.Same(typeof(Building_RHAH_RecordBox), resolved);
-            Assert.True(resolved.IsPublic);
-            Assert.True(typeof(Verse.Building).IsAssignableFrom(resolved));
-        }
-
-        static string RepoRoot([CallerFilePath] string testFile = null)
-        {
-            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testFile), "..", ".."));
-        }
 
         [Fact]
         public void AsidesFireOnceAndStopWhenTrustIsClosed()
@@ -334,14 +281,33 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void OldArrivalNoticesAreDiscardedWithoutLosingChoicesOrRewards()
+        {
+            SuiyinBook book = new SuiyinBook();
+            book.Pending.Add(new SuiyinNotice(SuiyinLetter.Journal, 14, true));
+            book.Pending.Add(new SuiyinNotice(SuiyinLetter.N004Entry, 7, true));
+            book.Pending.Add(new SuiyinNotice(SuiyinLetter.N006Entry, 0, false));
+            book.Pending.Add(new SuiyinNotice(SuiyinLetter.N008Arrive, 41, false));
+            book.Pending.Add(new SuiyinNotice(SuiyinLetter.N008Refuse, 41, false));
+            book.Pending.Add(new SuiyinNotice(SuiyinLetter.N003, 300, true));
+            List<SuiyinNotice> notices = new List<SuiyinNotice>();
+
+            Assert.Equal(2, book.TakeNotices(notices));
+            Assert.Equal(SuiyinLetter.N008Refuse, notices[0].Letter);
+            Assert.Equal(SuiyinLetter.N003, notices[1].Letter);
+            Assert.Equal(300, notices[1].Arg);
+            Assert.Empty(book.Pending);
+            Assert.Equal(0, book.TakeNotices(new List<SuiyinNotice>()));
+        }
+
+        [Fact]
         public void JournalCountsAidOnceAfterSafeLeave()
         {
             SuiyinBook book = new SuiyinBook();
             Assert.Equal(14, SuiyinBook.JournalFor("I-015"));
             Assert.Equal(5, SuiyinBook.JournalFor("I-006"));
             Assert.True(book.OpenJournal(14, 1, 9, 0, new[] { 41 }, true));
-            Assert.Equal(1, Count(book, SuiyinLetter.Journal));
-            Assert.True(book.Pending[0].Private);
+            Assert.Empty(book.Pending);
             Assert.False(book.OpenJournal(14, 1, 9, 1, new[] { 41 }, true));
             SuiyinJournalCase record = book.Journals[0];
             Assert.False(book.CloseJournal(record, 1000));
@@ -445,76 +411,15 @@ namespace HungerAndHavoc.Tests
 
 
         [Fact]
-        public void QueuedLettersUseExistingKeys()
-        {
-            Assert.Equal("RHAH_Suiyin_N001", SuiyinBook.LetterKey(SuiyinLetter.N001, 0));
-            Assert.Equal("RHAH_Suiyin_N009Empty", SuiyinBook.LetterKey(SuiyinLetter.N009Empty, 0));
-            Assert.Equal("RHAH_Suiyin_Aside_1", SuiyinBook.LetterKey(SuiyinLetter.Aside, 1));
-            Assert.Null(SuiyinBook.LetterKey(SuiyinLetter.Aside, 0));
-            Assert.Null(SuiyinBook.LetterKey(SuiyinLetter.None, 0));
-            Assert.Null(SuiyinBook.LetterKey(SuiyinLetter.N007Opened, 2));
-
-            HashSet<string> keys = Keyed("Languages/English/Keyed/RHAH_Suiyin.xml");
-            HashSet<string> chinese = Keyed("Languages/ChineseSimplified/Keyed/RHAH_Suiyin.xml");
-            foreach (SuiyinLetter letter in Enum.GetValues(typeof(SuiyinLetter)))
-            {
-                string key = letter == SuiyinLetter.Aside
-                    ? SuiyinBook.LetterKey(letter, 1)
-                    : SuiyinBook.LetterKey(letter, 0);
-                if (key == null)
-                {
-                    continue;
-                }
-
-                Assert.Contains(key + "_Label", keys);
-                Assert.Contains(key + "_Text", keys);
-                Assert.Contains(key + "_Label", chinese);
-                Assert.Contains(key + "_Text", chinese);
-            }
-        }
-
-        static HashSet<string> Keyed(string relative)
-        {
-            string path = Path.Combine(FindRoot(), relative);
-            XmlDocument document = new XmlDocument();
-            document.Load(path);
-            HashSet<string> keys = new HashSet<string>();
-            foreach (XmlNode node in document.DocumentElement.ChildNodes)
-            {
-                if (node.NodeType == XmlNodeType.Element)
-                {
-                    keys.Add(node.Name);
-                }
-            }
-
-            return keys;
-        }
-
-        static string FindRoot()
-        {
-            DirectoryInfo directory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-            while (directory != null)
-            {
-                if (File.Exists(Path.Combine(directory.FullName, "Languages/English/Keyed/RHAH_Suiyin.xml")))
-                {
-                    return directory.FullName;
-                }
-
-                directory = directory.Parent;
-            }
-
-            return ".";
-        }
-        [Fact]
         public void SavedClaimsDoNotReset()
         {
             SuiyinBook book = new SuiyinBook();
-            book.Note("I-001", 1, 0, false, true);
+            book.Note("I-001", 1, 0, true);
             book.RewardClaimed = true;
             book.RewardPaid = 300;
             book.N009 = new SuiyinN009Case { StartedTick = 10, Deadline = 900000, Outcome = SuiyinN009Outcome.Taken };
             SuiyinBook loaded = Copy(book);
-            loaded.Note("I-002", 1, 50, false, true);
+            loaded.Note("I-002", 1, 50, true);
             Assert.True(loaded.RewardClaimed);
             Assert.Equal(300, loaded.RewardPaid);
             Assert.Equal(900000, loaded.N009.Deadline);
@@ -527,7 +432,7 @@ namespace HungerAndHavoc.Tests
             SuiyinBook book = new SuiyinBook();
             for (int i = 1; i <= 5; i++)
             {
-                book.Note("I-" + i.ToString("000"), 1, i, false, true);
+                book.Note("I-" + i.ToString("000"), 1, i, true);
             }
 
             Assert.True(book.ArriveEnvoy(4, 9, 10));

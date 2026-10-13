@@ -53,7 +53,7 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void ProviderOwnsExactlyThe51StableIncidentsAndTheInternalArrival()
+        public void ProviderOwnsStableIncidentsInternalArrivalAndManualKingdomDefinitions()
         {
             RHAH_EventChainProvider provider = new RHAH_EventChainProvider();
             Assert.Equal("nanaloveyuki.ratkin.hungerandhavoc", provider.ProviderId);
@@ -65,6 +65,8 @@ namespace HungerAndHavoc.Tests
             }
 
             expected.Add("RHAH_PredationArrival");
+            expected.Add("RHAH_KingdomInvitation");
+            expected.Add("RHAH_KingdomCollaboration");
             Assert.Equal("RHAH_PredationArrival", RHAH_EventChainProvider.ArrivalId);
             Assert.Equal(expected.Count, provider.Definitions.Count);
             for (int i = 0; i < provider.Definitions.Count; i++)
@@ -76,11 +78,11 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void EveryDocumentedLongIdAndOnlyThoseEightUseTheLongFollowRule()
+        public void DocumentedLongParentsAndConcreteVariantsUseTheLongFollowRule()
         {
             HashSet<string> expected = new HashSet<string>(StringComparer.Ordinal)
             {
-                "I-002", "I-012", "I-013", "I-019", "I-032", "I-033", "I-037", "I-041"
+                "I-002", "I-012", "I-013", "I-019", "I-032", "I-033", "I-037", "I-041", "I-038", "I-046", "I-047"
             };
             for (int i = 1; i <= 51; i++)
             {
@@ -220,7 +222,7 @@ namespace HungerAndHavoc.Tests
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
-        public void RealEmbeddedOxygenSourceWaitsOrChoosesTheWhitelistedLongNotification(bool ready)
+        public void PublishedLongNotificationRedirectsIntoInteractiveStageWithoutCompleting(bool ready)
         {
             EventChainScript script = EventChainScript.Compile(RHAH_EventChainProvider.ReadScript("RHAH_EventFollow"));
             IOxygenHostValue snapshot = new DictionaryOxygenHostValue(new Dictionary<string, object>
@@ -238,7 +240,8 @@ namespace HungerAndHavoc.Tests
             EventChainDecision decision = script.Evaluate(snapshot);
 
             Assert.Equal(ready ? "notify_long" : null, decision.ActionId);
-            Assert.Equal(ready ? -1 : 7507, decision.NextTick);
+            Assert.Equal(7507, decision.NextTick);
+            Assert.Equal(ready ? 3 : -1, decision.Stage);
             Assert.Equal(EventChainEnd.None, decision.End);
         }
 

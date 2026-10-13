@@ -1,3 +1,4 @@
+using System;
 using Verse;
 using System.Collections.Generic;
 
@@ -99,6 +100,7 @@ namespace HungerAndHavoc.Incidents
                 case "I-026": return new RHAH_RequestSpec(RHAH_RequestKind.SimpleMeal, RHAH_IntelSiteKind.Settlement, RHAH_ChoiceKind.Intel);
                 case "I-027": return new RHAH_RequestSpec(RHAH_RequestKind.HerbalMedicine, RHAH_IntelSiteKind.Settlement, RHAH_ChoiceKind.Intel);
                 case "I-028": return new RHAH_RequestSpec(RHAH_RequestKind.Silver, RHAH_IntelSiteKind.Settlement, RHAH_ChoiceKind.Intel);
+                case "I-040": return new RHAH_RequestSpec(RHAH_RequestKind.None, RHAH_IntelSiteKind.None, RHAH_ChoiceKind.Refugees);
                 case "I-002":
                 case "I-003":
                 case "I-037": return new RHAH_RequestSpec(RHAH_RequestKind.None, RHAH_IntelSiteKind.None, RHAH_ChoiceKind.Abandoned);
@@ -351,6 +353,49 @@ namespace HungerAndHavoc.Incidents
         }
 
         internal const int FoodPerVisitor = 1;
+        internal const int TransactionVersion = 1;
+        internal const int MaxTransactionFood = 100;
+        internal const float NutritionPerPerson = 2.7f;
+
+        internal static bool IsFoodTransaction(string displayId)
+        {
+            return displayId == "I-020" || displayId == "I-021" || displayId == "I-022" ||
+                displayId == "I-023" || displayId == "I-024" || displayId == "I-025" ||
+                displayId == "I-026" || displayId == "I-027" || displayId == "I-028";
+        }
+
+        internal static int RequiredFoodUnits(int people, float nutrition)
+        {
+            if (people <= 0 || nutrition <= 0f || float.IsNaN(nutrition) || float.IsInfinity(nutrition))
+            {
+                return 0;
+            }
+
+            decimal units = Math.Ceiling(people * (decimal)NutritionPerPerson / (decimal)nutrition);
+            return units >= MaxTransactionFood ? MaxTransactionFood : (int)units;
+        }
+
+        internal static ThingDef LargestFood(IReadOnlyDictionary<ThingDef, int> counts)
+        {
+            ThingDef chosen = null;
+            int largest = 0;
+            foreach (KeyValuePair<ThingDef, int> entry in counts)
+            {
+                if (entry.Value > largest || (entry.Value == largest && chosen != null &&
+                    string.CompareOrdinal(entry.Key.defName, chosen.defName) < 0))
+                {
+                    chosen = entry.Key;
+                    largest = entry.Value;
+                }
+            }
+            return chosen;
+        }
+
+        internal static int RewardUnits(int quotedCount, float foodUnitValue, float rewardUnitValue, float multiplier)
+        {
+            return quotedCount <= 0 || foodUnitValue <= 0f || rewardUnitValue <= 0f || multiplier <= 0f ? 0 :
+                (int)Math.Floor(quotedCount * (double)foodUnitValue * multiplier / rewardUnitValue);
+        }
         internal const int MaxFoodRequest = 12;
 
         internal static int FoodRequestCount(int visitorCount)
@@ -498,6 +543,16 @@ namespace HungerAndHavoc.Incidents
         internal List<int> PawnLoadIds = new List<int>();
         internal int AllyFactionId;
         internal List<int> AllyPawnIds = new List<int>();
+        internal int TransactionVersion;
+        internal string QuotedFoodDefName = string.Empty;
+        internal int QuotedFoodCount;
+        internal List<string> RewardDefNames = new List<string>();
+        internal List<int> RewardCounts = new List<int>();
+        internal List<int> RewardThingIds = new List<int>();
+        internal int OutgoingChildThingId;
+        internal int ResponsibleAdultThingId;
+        internal int ChildExchangeVersion;
+        internal bool ChildFoodAlternative;
 
         internal bool Open => Settled == RHAH_ChoiceAction.None;
 
@@ -530,11 +585,25 @@ namespace HungerAndHavoc.Incidents
             Scribe_Collections.Look(ref PawnLoadIds, "pawnLoadIds", LookMode.Value);
             Scribe_Values.Look(ref AllyFactionId, "allyFactionId", 0);
             Scribe_Collections.Look(ref AllyPawnIds, "allyPawnIds", LookMode.Value);
+            Scribe_Values.Look(ref TransactionVersion, "transactionVersion", 0);
+            Scribe_Values.Look(ref QuotedFoodDefName, "quotedFoodDefName", string.Empty);
+            Scribe_Values.Look(ref QuotedFoodCount, "quotedFoodCount", 0);
+            Scribe_Collections.Look(ref RewardDefNames, "rewardDefNames", LookMode.Value);
+            Scribe_Collections.Look(ref RewardCounts, "rewardCounts", LookMode.Value);
+            Scribe_Collections.Look(ref RewardThingIds, "rewardThingIds", LookMode.Value);
+            Scribe_Values.Look(ref OutgoingChildThingId, "outgoingChildThingId", 0);
+            Scribe_Values.Look(ref ResponsibleAdultThingId, "responsibleAdultThingId", 0);
+            Scribe_Values.Look(ref ChildExchangeVersion, "childExchangeVersion", 0);
+            Scribe_Values.Look(ref ChildFoodAlternative, "childFoodAlternative", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 DisplayId = DisplayId ?? string.Empty;
                 PawnLoadIds = PawnLoadIds ?? new List<int>();
                 AllyPawnIds = AllyPawnIds ?? new List<int>();
+                QuotedFoodDefName = QuotedFoodDefName ?? string.Empty;
+                RewardDefNames = RewardDefNames ?? new List<string>();
+                RewardCounts = RewardCounts ?? new List<int>();
+                RewardThingIds = RewardThingIds ?? new List<int>();
             }
         }
     }

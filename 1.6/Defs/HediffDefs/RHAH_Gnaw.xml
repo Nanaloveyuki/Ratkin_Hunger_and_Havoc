@@ -3,7 +3,7 @@
   <HediffDef>
     <defName>RHAH_GnawedBark</defName>
     <label>啃食树皮</label>
-    <description>粗糙树皮划伤了口腔和消化道。会疼，过一阵会自己好。</description>
+    <description>啃食粗糙树皮时划伤了口腔和消化道，造成疼痛。伤口过一阵会自行恢复。</description>
     <hediffClass>HediffWithComps</hediffClass>
     <initialSeverity>0.2</initialSeverity>
     <isBad>true</isBad>
@@ -23,7 +23,7 @@
   <HediffDef>
     <defName>RHAH_GnawedWall</defName>
     <label>啃食墙皮</label>
-    <description>墙灰和碎屑暂时压住了饿，也划伤了嘴。饥饿变慢，疼痛更重。过一阵会自己好。</description>
+    <description>吃下的墙灰和碎屑暂时减缓了饥饿，却也划伤了口腔，造成较重的疼痛。这些症状过一阵会自行消退。</description>
     <hediffClass>HediffWithComps</hediffClass>
     <initialSeverity>0.2</initialSeverity>
     <isBad>true</isBad>
@@ -44,7 +44,7 @@
   <HediffDef>
     <defName>RHAH_OvergnawedWall</defName>
     <label>过量啃食墙皮</label>
-    <description>吃进太多墙灰后，意识下降，胃几乎装不进东西。疼痛很重。</description>
+    <description>吃进太多墙灰，造成剧烈疼痛和意识下降，能吃下的食物也大幅减少。</description>
     <hediffClass>HediffWithComps</hediffClass>
     <initialSeverity>0.3</initialSeverity>
     <isBad>true</isBad>

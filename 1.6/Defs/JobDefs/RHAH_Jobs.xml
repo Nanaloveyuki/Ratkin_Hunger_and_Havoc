@@ -9,7 +9,7 @@
   <JobDef>
     <defName>RHAH_Gnaw</defName>
     <driverClass>HungerAndHavoc.Pawn.JobDriver_RHAH_Gnaw</driverClass>
-    <reportString>啃树皮</reportString>
+    <reportString>啃食树皮或墙皮</reportString>
   </JobDef>
   <JobDef>
     <defName>RHAH_DropChild</defName>

@@ -19,7 +19,7 @@ namespace HungerAndHavoc.EventMgr
 
         internal RHAH_EventChainProvider()
         {
-            IEventChainDefinition[] items = new IEventChainDefinition[52];
+            IEventChainDefinition[] items = new IEventChainDefinition[54];
             Lazy<EventChainScript> follow = new Lazy<EventChainScript>(() => EventChainScript.Compile(ReadScript("RHAH_EventFollow")));
             Lazy<EventChainScript> arrival = new Lazy<EventChainScript>(() => EventChainScript.Compile(ReadScript("RHAH_PredationArrival")));
             for (int i = 0; i < 51; i++)
@@ -28,6 +28,8 @@ namespace HungerAndHavoc.EventMgr
             }
 
             items[51] = new Definition(ArrivalId, arrival);
+            items[52] = new KingdomArcDefinition();
+            items[53] = new KingdomCollaborationDefinition();
             definitions = Array.AsReadOnly(items);
         }
 
@@ -67,7 +69,7 @@ namespace HungerAndHavoc.EventMgr
 
             public void Prepare(EventChainInstance instance)
             {
-                if (instance == null || instance.DefinitionId != Id || instance.DefinitionVersion != Version || instance.Stage < 0 || instance.Stage > 2)
+                if (instance == null || instance.DefinitionId != Id || instance.DefinitionVersion != Version || instance.Stage < 0 || instance.Stage > 3)
                 {
                     throw new FormatException("Invalid RHAH chain definition, version or stage.");
                 }
@@ -96,7 +98,7 @@ namespace HungerAndHavoc.EventMgr
                 else
                 {
                     if (!RHAH_EventFollowRules.ReadPayload(instance.Payload, out string displayId, out batchId, out siteId) || displayId != Id || siteId != instance.SiteId ||
-                        (instance.Stage == 1 && !RHAH_EventFollowRules.HasLongFollow(Id)))
+                        ((instance.Stage == 1 || instance.Stage == 3) && !RHAH_EventFollowRules.HasLongFollow(Id)))
                     {
                         throw new FormatException("Invalid RHAH follow payload or long-chain stage.");
                     }
@@ -113,6 +115,12 @@ namespace HungerAndHavoc.EventMgr
                     throw new InvalidOperationException("RHAH chain was not prepared.");
                 }
 
+                if (Id != ArrivalId && instance.Stage == 3)
+                {
+                    RHAH_LongFollowRecord record = RHAH_LongFollowRuntime.FindRecord(instance.Id);
+                    if (record != null && record.Completed) return EventChainDecision.Finish(EventChainEnd.Completed);
+                    return EventChainDecision.Action("advance_long", RHAH_LongFollowRuntime.NextTick(instance.Id, tick));
+                }
                 facts.Stage = instance.Stage;
                 facts.Tick = tick;
                 facts.NextTick = instance.NextTick;
@@ -136,10 +144,16 @@ namespace HungerAndHavoc.EventMgr
 
                 if (Id != ArrivalId && instance.Stage == 1 && actionId == "notify_long")
                 {
-                    RHAH_EventFollowRuntime.NotifyLong(Id, facts.BatchId, facts.SiteId);
-                    return EventChainActionResult.Applied("notified", EventChainEnd.Completed);
+                    RHAH_LongFollowRuntime.RegisterChain(instance.Id, Id, facts.BatchId, facts.SiteId, instance.DeadlineTick);
+                    return EventChainActionResult.Applied("interactive_chain_opened");
                 }
 
+                if (Id != ArrivalId && instance.Stage == 3 && actionId == "advance_long")
+                {
+                    string result = RHAH_LongFollowRuntime.Dispatch(instance.Id, Id, facts.BatchId, facts.SiteId, tick);
+                    RHAH_LongFollowRecord record = RHAH_LongFollowRuntime.FindRecord(instance.Id);
+                    return EventChainActionResult.Applied(result, record != null && record.Completed ? EventChainEnd.Completed : EventChainEnd.None);
+                }
                 if (Id == ArrivalId && instance.Stage == 0 && actionId == "arrive_predator")
                 {
                     Map map = RHAH_EventFollowRuntime.FindMap(facts.SiteId);
@@ -204,6 +218,7 @@ namespace HungerAndHavoc.EventMgr
             {
                 OxygenEventChainHost.Register(new RHAH_EventChainProvider());
                 OxygenEventChainHost.Preparing += RHAH_EventChainMigration.PrepareGame;
+                OxygenEventChainHost.Preparing += RHAH_LongFollowRuntime.PrepareGame;
             });
         }
     }

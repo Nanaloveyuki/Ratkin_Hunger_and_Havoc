@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Broadcast_Label>Broadcast hope</RHAH_Broadcast_Label>
+  <RHAH_Broadcast_Cooldown>The broadcast is still cooling down</RHAH_Broadcast_Cooldown>
+  <RHAH_Broadcast_Empty>No incident can be broadcast</RHAH_Broadcast_Empty>
+  <RHAH_Broadcast_Queued>The broadcast has been sent. Waiting for ratkin to respond.</RHAH_Broadcast_Queued>
+  <RHAH_Broadcast_Unavailable>Cannot broadcast hope now</RHAH_Broadcast_Unavailable>
+</LanguageData>

@@ -241,7 +241,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
         }
 
-        internal static void Hold(Verse.Pawn pawn, string key = RHAH_NarrativePace.EnvoyHoldKey)
+        internal static void Hold(Verse.Pawn pawn)
         {
             if (pawn == null || pawn.Dead || pawn.Destroyed || !RHAH_Api.IsVisitor(pawn) || pawn.Faction == Faction.OfPlayer)
             {
@@ -249,8 +249,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
 
-            bool held = RHAH_Api.TryGetExtra(pawn, key, out string previous);
-            RHAH_NarrativePace.HoldVisitor(pawn, key);
+            bool held = RHAH_Api.TryGetExtra(pawn, RHAH_NarrativePace.EnvoyHoldKey, out string previous);
+            RHAH_NarrativePace.HoldVisitor(pawn, RHAH_NarrativePace.EnvoyHoldKey);
             Lord lord = pawn.GetLord();
             if (lord?.CurLordToil is LordToil_RHAH_VisitorLeave && lord.Graph != null && lord.Graph.lordToils != null && lord.Graph.lordToils.Count > 1)
             {
@@ -268,13 +268,12 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
         }
 
-        internal static void Release(Verse.Pawn pawn, string key = RHAH_NarrativePace.EnvoyHoldKey)
+        internal static void Release(Verse.Pawn pawn)
         {
-            bool held = RHAH_Api.TryGetExtra(pawn, key, out string previous);
-            RHAH_NarrativePace.ReturnVisitorGates(pawn, key);
-            string otherKey = key == RHAH_NarrativePace.EnvoyHoldKey ? RHAH_NarrativePace.QuarantineHoldKey : RHAH_NarrativePace.EnvoyHoldKey;
+            bool held = RHAH_Api.TryGetExtra(pawn, RHAH_NarrativePace.EnvoyHoldKey, out string previous);
+            RHAH_NarrativePace.ReturnVisitorGates(pawn, RHAH_NarrativePace.EnvoyHoldKey);
             if (pawn == null || pawn.Dead || pawn.Destroyed || !RHAH_Api.IsVisitor(pawn) || pawn.Faction == Faction.OfPlayer ||
-                RHAH_Api.TryGetExtra(pawn, otherKey, out string other) ||
+                RHAH_Api.TryGetExtra(pawn, HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.HoldKey, out string other) ||
                 (!held && RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving))
             {
                 return;

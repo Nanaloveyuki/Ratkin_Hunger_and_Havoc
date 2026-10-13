@@ -9,9 +9,9 @@ namespace HungerAndHavoc.Tests
         public void Nodes_DefaultOpenUntilDisabled()
         {
             SuiyinLedger ledger = new SuiyinLedger();
-            Assert.True(ledger.Allows(SuiyinNode.N007, 10));
-            ledger.SetEnabled(SuiyinNode.N007, false);
-            Assert.False(ledger.Allows(SuiyinNode.N007, 10));
+            Assert.True(ledger.Allows(SuiyinNode.N008, 10));
+            ledger.SetEnabled(SuiyinNode.N008, false);
+            Assert.False(ledger.Allows(SuiyinNode.N008, 10));
             Assert.True(ledger.Allows(SuiyinNode.N001, 10));
         }
 
@@ -53,16 +53,22 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void Facts_DoNotImplyLetters()
+        public void ImportKeepsEnvoyDeadlineAndIgnoresRetiredNode()
         {
-            SuiyinIncidentFact incident = new SuiyinIncidentFact("I-042", 3, 20, 900, 2, true, new[] { 7 });
-            SuiyinPlagueFact plague = new SuiyinPlagueFact(3, 1, 1);
-            Assert.Equal("I-042", incident.DisplayId);
-            Assert.Equal(20, incident.Tick);
-            Assert.Equal(900, incident.BatchId);
-            Assert.Equal(7, incident.VisitorIds[0]);
-            Assert.Equal(1, plague.Recovered);
-            Assert.Equal(1, plague.Died);
+            SuiyinLedger ledger = new SuiyinLedger();
+            ledger.Import(
+                new System.Collections.Generic.List<bool> { true, true, true, true, true, true, true, false },
+                new System.Collections.Generic.List<bool> { false, false, false, false, false, false, true, true },
+                new System.Collections.Generic.List<int> { -1, -1, -1, -1, -1, -1, 40, 800 });
+            ledger.Start((SuiyinNode)7, 100);
+            ledger.SetEnabled((SuiyinNode)7, true);
+            Assert.False(ledger.Allows((SuiyinNode)7, 10));
+            Assert.False(ledger.Started((SuiyinNode)7));
+            Assert.True(ledger.Started(SuiyinNode.N008));
+            Assert.Equal(800, ledger.Deadline(SuiyinNode.N008));
+            Assert.True(ledger.Allows(SuiyinNode.N008, 800));
+            Assert.False(ledger.Allows(SuiyinNode.N008, 801));
         }
+
     }
 }

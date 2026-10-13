@@ -9,7 +9,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         N004 = 4,
         N005 = 5,
         N006 = 6,
-        N007 = 7,
         N008 = 8,
         N009 = 9,
         N010 = 10,
@@ -23,34 +22,17 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal readonly int Tick;
         internal readonly int BatchId;
         internal readonly int PawnCount;
-        internal readonly bool CarriesPlague;
-        internal readonly int[] VisitorIds;
 
-        internal SuiyinIncidentFact(string displayId, int mapId, int tick, int batchId, int pawnCount, bool carriesPlague, int[] visitorIds)
+        internal SuiyinIncidentFact(string displayId, int mapId, int tick, int batchId, int pawnCount)
         {
             DisplayId = displayId;
             MapId = mapId;
             Tick = tick;
             BatchId = batchId;
             PawnCount = pawnCount;
-            CarriesPlague = carriesPlague;
-            VisitorIds = visitorIds;
         }
     }
 
-    internal readonly struct SuiyinPlagueFact
-    {
-        internal readonly int MapId;
-        internal readonly int Recovered;
-        internal readonly int Died;
-
-        internal SuiyinPlagueFact(int mapId, int recovered, int died)
-        {
-            MapId = mapId;
-            Recovered = recovered;
-            Died = died;
-        }
-    }
 
     internal static class SuiyinNodes
     {
@@ -66,7 +48,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal static bool Known(SuiyinNode node)
         {
             int index = (int)node;
-            return index >= 1 && index <= Count;
+            return index >= 1 && index <= Count && index != 7;
         }
 
         internal static int ClampTrust(int trust)

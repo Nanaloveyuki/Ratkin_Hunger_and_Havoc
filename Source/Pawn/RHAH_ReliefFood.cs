@@ -89,7 +89,13 @@ namespace HungerAndHavoc.Pawn
             bool ignoreZone,
             bool checkPath)
         {
-            if (pawn == null || food == null || food.Destroyed || food.MapHeld != pawn.Map)
+            if (pawn == null || food == null || food.Destroyed)
+            {
+                return RHAH_FoodReject.Missing;
+            }
+
+            bool ownInventory = pawn.inventory != null && food.ParentHolder == pawn.inventory;
+            if (!ownInventory && food.MapHeld != pawn.Map)
             {
                 return RHAH_FoodReject.Missing;
             }
@@ -120,6 +126,11 @@ namespace HungerAndHavoc.Pawn
             if (!pawn.WillEat(eaten, pawn, true, false) && !starving)
             {
                 return RHAH_FoodReject.WillNotEat;
+            }
+
+            if (ownInventory)
+            {
+                return RHAH_FoodReject.None;
             }
 
             if (!ignoreZone && ReliefRulesApply && !InRequestedZone(pawn.Map, food, insideZone))

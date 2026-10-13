@@ -22,14 +22,15 @@ namespace HungerAndHavoc.EventMgr
                 throw new InvalidOperationException("ODF RHAH event chains are not ready.");
             }
 
-            int site = mapId > 0 ? mapId : caravanId > 0 ? -caravanId : 0;
+            int site = mapId >= 0 ? mapId : caravanId > 0 ? -caravanId : 0;
             bool longChain = RHAH_EventFollowRules.OpensLong(displayId, RHAH_Mod.Settings != null && RHAH_Mod.Settings.IncidentUsesLongChain(displayId));
             int deadline = longChain ? RHAH_EventFollowRules.LongDeadline(displayId, tick) : -1;
             int id = runtime.Start(RHAH_EventChainProvider.ProviderKey, displayId, site, RHAH_EventChainMigration.SiteTile(site), tick,
-                deadline, RHAH_EventFollowRules.Payload(displayId, batchId, site), longChain ? 1 : 0, tick == int.MaxValue ? -1 : tick + 1);
+                longChain ? -1 : deadline, RHAH_EventFollowRules.Payload(displayId, batchId, site), longChain ? 3 : 0, tick == int.MaxValue ? -1 : tick + 1);
             if (id > 0 && longChain)
             {
-                runtime.SetStage(RHAH_EventChainProvider.ProviderKey, id, 1, deadline,
+                RHAH_LongFollowRuntime.RegisterChain(id, displayId, batchId, site, deadline);
+                runtime.SetStage(RHAH_EventChainProvider.ProviderKey, id, 3, -1,
                     RHAH_EventFollowRules.Payload(displayId, batchId, site), RHAH_EventChainMigration.NextLongTick(tick, id));
             }
         }

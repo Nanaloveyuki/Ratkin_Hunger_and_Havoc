@@ -20,7 +20,84 @@ namespace HungerAndHavoc.Pawn
         List<Verse.Pawn> foodReceivers;
         ThingDef foodDef;
         int foodCount;
+        IntVec3 passerbyExitCell = IntVec3.Invalid;
         bool waitSpotResolved;
+
+        internal bool IsPasserby
+        {
+            get
+            {
+                return RHAH_PasserbyRules.IsPasserbyLord(lord);
+            }
+        }
+
+        internal IntVec3 PasserbyExitCell
+        {
+            get
+            {
+                ResolvePasserbyExit();
+                return passerbyExitCell;
+            }
+        }
+        internal bool CanRoutePasserby
+        {
+            get
+            {
+                if (!IsPasserby || lord?.ownedPawns == null)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < lord.ownedPawns.Count; i++)
+                {
+                    Verse.Pawn pawn = lord.ownedPawns[i];
+                    IRHAH_Pawn snapshot = RHAH_Api.Get(pawn);
+                    if (snapshot == null || snapshot.Lifecycle == RHAH_Lifecycle.Leaving ||
+                        !RHAH_VisitorRules.AllowsModBehavior(RHAH_VisitorStay.Kind(pawn)))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        internal bool TryRedirectLegacyPasserby()
+        {
+            if (!CanRoutePasserby || lord.Graph?.lordToils == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < lord.Graph.lordToils.Count; i++)
+            {
+                LordToil_RHAH_VisitorTravel travel = lord.Graph.lordToils[i] as LordToil_RHAH_VisitorTravel;
+                if (travel != null && lord.CurLordToil != travel)
+                {
+                    lord.GotoToil(travel);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        void ResolvePasserbyExit()
+        {
+            if (!IsPasserby || passerbyExitCell.IsValid || lord?.lordManager?.map == null)
+            {
+                return;
+            }
+
+            List<Verse.Pawn> members = lord.ownedPawns;
+            IntVec3 exit;
+            if (RHAH_PasserbyRules.TryFindOppositeExit(lord.lordManager.map, members, out exit))
+            {
+                passerbyExitCell = exit;
+            }
+        }
+ 
 
         internal IntVec3 WaitSpot
         {
@@ -127,14 +204,38 @@ namespace HungerAndHavoc.Pawn
             graph.AddToil(leave);
 
             // 空派系只提供敌对检查 不切原版防守或袭击
-
-            Transition arrived = new Transition(travel, seek, false, true);
-            arrived.AddTrigger(new Trigger_Memo("TravelArrived"));
-            graph.AddTransition(arrived, false);
             Transition toFood = new Transition(seek, waitFood, false, true);
             toFood.AddSource(travel);
             toFood.AddTrigger(new Trigger_Memo("RHAH_WaitFood"));
             toFood.AddPostAction(new TransitionAction_EndAllJobs());
+
+            Transition arrived;
+            if (IsPasserby)
+            {
+                arrived = new Transition(travel, leave, false, true);
+                arrived.AddTrigger(new Trigger_Memo("TravelArrived"));
+                arrived.AddPostAction(new TransitionAction_Custom((System.Action)(() =>
+                {
+                    if (lord?.ownedPawns == null)
+                    {
+                        return;
+                    }
+                    for (int i = 0; i < lord.ownedPawns.Count; i++)
+                    {
+                        Verse.Pawn pawn = lord.ownedPawns[i];
+                        if (RHAH_BatchAttitude.CanOrderLeave(pawn))
+                        {
+                            RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
+                        }
+                    }
+                })));
+            }
+            else
+            {
+                arrived = new Transition(travel, seek, false, true);
+                arrived.AddTrigger(new Trigger_Memo("TravelArrived"));
+            }
+            graph.AddTransition(arrived, false);
             graph.AddTransition(toFood, false);
             Transition toLeave = new Transition(seek, leave, false, true);
             toLeave.AddSource(travel);
@@ -159,6 +260,7 @@ namespace HungerAndHavoc.Pawn
             Transition foodDone = new Transition(waitFood, seek, false, true);
             foodDone.AddTrigger(new Trigger_Custom(_ => FoodFilled()));
             foodDone.AddTrigger(new Trigger_Custom(_ => FoodWaitExpired()));
+            foodDone.AddPostAction(new TransitionAction_EndAllJobs());
             graph.AddTransition(foodDone, false);
 
 
@@ -173,6 +275,7 @@ namespace HungerAndHavoc.Pawn
             }
             Scribe_References.Look(ref faction, "faction");
             Scribe_Values.Look(ref waitSpot, "waitSpot", IntVec3.Invalid);
+            Scribe_Values.Look(ref passerbyExitCell, "passerbyExitCell", IntVec3.Invalid);
             Scribe_Values.Look(ref familyRole, "familyRole", RHAH_PawnRole.Unspecified);
             Scribe_Collections.Look(ref foodReceivers, "foodReceivers", LookMode.Reference);
             Scribe_Defs.Look(ref foodDef, "foodDef");
@@ -465,15 +568,16 @@ namespace HungerAndHavoc.Pawn
 
         public override void UpdateAllDuties()
         {
-            SetDestination(job.WaitSpot);
+            SetDestination(job.IsPasserby && job.PasserbyExitCell.IsValid ? job.PasserbyExitCell : job.WaitSpot);
             dutiesReady = true;
-            // TravelOrLeave 到不了点就出图 入场点在边缘时会立刻离开
             for (int i = 0; i < lord.ownedPawns.Count; i++)
             {
                 Verse.Pawn pawn = lord.ownedPawns[i];
                 PawnDuty duty = RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving
                     ? new PawnDuty(RHAH_DefOf.RHAH_VisitorLeave)
-                    : new PawnDuty(RimWorld.DutyDefOf.TravelOrWait, Data.dest, -1f);
+                    : HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.HasEdgeHold(pawn)
+                        ? new PawnDuty(RHAH_DefOf.RHAH_VisitorSeek, pawn.Position, 0f)
+                        : new PawnDuty(RimWorld.DutyDefOf.TravelOrWait, Data.dest, -1f);
                 pawn.mindState.duty = duty;
             }
         }
@@ -495,7 +599,8 @@ namespace HungerAndHavoc.Pawn
                 Verse.Pawn pawn = lord.ownedPawns[i];
                 // 倒地和不能自走的幼年来客留在照护组 不阻挡其他人寻食
                 if (!pawn.Spawned || !Compat.RHAH_ChildMovement.CanWalkOut(pawn) ||
-                    RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving)
+                    RHAH_Api.Get(pawn)?.Lifecycle == RHAH_Lifecycle.Leaving ||
+                    HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.HasEdgeHold(pawn))
                 {
                     continue;
                 }
@@ -503,6 +608,27 @@ namespace HungerAndHavoc.Pawn
                     !pawn.CanReach(Data.dest, PathEndMode.ClosestTouch, Danger.Deadly))
                 {
                     return;
+                }
+            }
+            if (job.IsPasserby)
+            {
+                for (int i = 0; i < lord.ownedPawns.Count; i++)
+                {
+                    Verse.Pawn pawn = lord.ownedPawns[i];
+                    if (RHAH_BatchAttitude.CanOrderLeave(pawn))
+                    {
+                        RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Leaving);
+                    }
+                }
+
+                for (int i = 0; i < lord.Graph.lordToils.Count; i++)
+                {
+                    LordToil_RHAH_VisitorLeave leave = lord.Graph.lordToils[i] as LordToil_RHAH_VisitorLeave;
+                    if (leave != null)
+                    {
+                        lord.GotoToil(leave);
+                        return;
+                    }
                 }
             }
             lord.ReceiveMemo("TravelArrived");
@@ -521,6 +647,11 @@ namespace HungerAndHavoc.Pawn
 
         public override void UpdateAllDuties()
         {
+            if (job.TryRedirectLegacyPasserby())
+            {
+                return;
+            }
+
             IntVec3 waitSpot = job.WaitSpot;
             dutiesReady = true;
             for (int i = 0; i < lord.ownedPawns.Count; i++)

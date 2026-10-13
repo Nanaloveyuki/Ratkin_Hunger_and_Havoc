@@ -14,6 +14,59 @@ namespace HungerAndHavoc.Tests
 {
     public class RHAH_RequestRulesTests
     {
+        [Theory]
+        [InlineData(1, 0.9f, 3)]
+        [InlineData(3, 0.9f, 9)]
+        [InlineData(1, 0.05f, 54)]
+        [InlineData(3, 0.05f, 100)]
+        [InlineData(1, 0.8f, 4)]
+        [InlineData(0, 0.9f, 0)]
+        [InlineData(3, 0f, 0)]
+        public void TransactionQuoteRoundsNutritionWithoutBoundaryOvershoot(int people, float nutrition, int expected)
+        {
+            Assert.Equal(expected, RHAH_RequestRules.RequiredFoodUnits(people, nutrition));
+        }
+
+        [Fact]
+        public void LargestFoodUsesTotalStockAndStableTieBreak()
+        {
+            ThingDef meals = (ThingDef)FormatterServices.GetUninitializedObject(typeof(ThingDef));
+            meals.defName = "MealSimple";
+            ThingDef potatoes = (ThingDef)FormatterServices.GetUninitializedObject(typeof(ThingDef));
+            potatoes.defName = "RawPotatoes";
+            Dictionary<ThingDef, int> counts = new Dictionary<ThingDef, int> { [meals] = 30, [potatoes] = 60 };
+            Assert.Same(potatoes, RHAH_RequestRules.LargestFood(counts));
+            counts[meals] = 60;
+            Assert.Same(meals, RHAH_RequestRules.LargestFood(counts));
+            counts.Clear();
+            Assert.Null(RHAH_RequestRules.LargestFood(counts));
+        }
+
+        [Fact]
+        public void RewardValueUsesCappedActualFoodNotVisitorCount()
+        {
+            int count = RHAH_RequestRules.RequiredFoodUnits(200, 0.05f);
+            Assert.Equal(100, count);
+            Assert.Equal(200, RHAH_RequestRules.RewardUnits(count, 2f, 1f, 1f));
+            Assert.Equal(0, RHAH_RequestRules.RewardUnits(0, 2f, 1f, 1f));
+        }
+
+        [Fact]
+        public void ChildOutcomeKeepsLegacyAndExplicitFoodAlternativesDistinct()
+        {
+            RHAH_ChoiceRecord record = new RHAH_ChoiceRecord { Choice = RHAH_ChoiceKind.ChildExchange,
+                Kind = RHAH_RequestKind.SimpleMeal, Settled = RHAH_ChoiceAction.Deliver };
+            Assert.True(RHAH_ChildExchange.FoodAlternative(record));
+            record.Kind = RHAH_RequestKind.Baby;
+            Assert.False(RHAH_ChildExchange.FoodAlternative(record));
+            record.ChildExchangeVersion = 1;
+            record.ChildFoodAlternative = true;
+            Assert.True(RHAH_ChildExchange.FoodAlternative(record));
+            record.ChildFoodAlternative = false;
+            record.OutgoingChildThingId = 17;
+            Assert.False(RHAH_ChildExchange.FoodAlternative(record));
+        }
+
         [Fact]
         public void AidAndIntelKeepOldAmountsAndSites()
         {
@@ -84,6 +137,18 @@ namespace HungerAndHavoc.Tests
                 Scribe.loader.FinalizeLoading();
                 Assert.Equal(expected, loaded.Settled);
                 Assert.Equal(expected == RHAH_ChoiceAction.None, loaded.Open);
+                Assert.Equal(0, loaded.TransactionVersion);
+                Assert.Equal(0, loaded.ChildExchangeVersion);
+                loaded.TransactionVersion = 1;
+                loaded.QuotedFoodDefName = "RawPotatoes";
+                loaded.QuotedFoodCount = 100;
+                loaded.RewardDefNames.Add("Silver");
+                loaded.RewardCounts.Add(200);
+                loaded.RewardThingIds.Add(41);
+                loaded.OutgoingChildThingId = 17;
+                loaded.ResponsibleAdultThingId = 19;
+                loaded.ChildExchangeVersion = 1;
+                loaded.ChildFoodAlternative = false;
 
                 Scribe.saver.InitSaving(path, "record");
                 loaded.ExposeData();
@@ -101,6 +166,16 @@ namespace HungerAndHavoc.Tests
                 Scribe.loader.FinalizeLoading();
                 Assert.Equal(expected, reloaded.Settled);
                 Assert.Equal(expected == RHAH_ChoiceAction.None, reloaded.Open);
+                Assert.Equal(1, reloaded.TransactionVersion);
+                Assert.Equal("RawPotatoes", reloaded.QuotedFoodDefName);
+                Assert.Equal(100, reloaded.QuotedFoodCount);
+                Assert.Equal(new[] { "Silver" }, reloaded.RewardDefNames);
+                Assert.Equal(new[] { 200 }, reloaded.RewardCounts);
+                Assert.Equal(new[] { 41 }, reloaded.RewardThingIds);
+                Assert.Equal(17, reloaded.OutgoingChildThingId);
+                Assert.Equal(19, reloaded.ResponsibleAdultThingId);
+                Assert.Equal(1, reloaded.ChildExchangeVersion);
+                Assert.False(reloaded.ChildFoodAlternative);
             }
             finally
             {
@@ -291,8 +366,8 @@ namespace HungerAndHavoc.Tests
             Assert.Equal(3, RHAH_BroadcastRules.ClampDays(3));
             Assert.Equal(10, RHAH_BroadcastRules.ClampDays(40));
             Assert.Contains("I-011", candidates);
-            Assert.Equal(candidates[0], RHAH_BroadcastRules.Pick(candidates, 0));
-            Assert.Equal(candidates[candidates.Count - 1], RHAH_BroadcastRules.Pick(candidates, 99));
+            Assert.Equal("I-005", RHAH_BroadcastRules.Pick(candidates, 0f));
+            Assert.Null(RHAH_BroadcastRules.Pick(candidates, RHAH_BroadcastRules.GroupCount(candidates)));
         }
     }
 }

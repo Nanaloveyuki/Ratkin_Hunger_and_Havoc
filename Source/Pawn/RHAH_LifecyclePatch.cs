@@ -40,13 +40,15 @@ namespace HungerAndHavoc.Pawn
     [HarmonyPatch(typeof(Verse.Pawn), nameof(Verse.Pawn.Kill))]
     internal static class RHAH_DeathPatch
     {
-        static void Postfix(Verse.Pawn __instance)
+        static void Postfix(Verse.Pawn __instance, DamageInfo? dinfo)
         {
             if (__instance == null || !__instance.Dead)
             {
                 return;
             }
 
+            HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.NotifyDeath(__instance, dinfo?.Instigator?.Faction == Faction.OfPlayer ||
+                (!dinfo.HasValue && HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.PlayerFatalBleeding(__instance)));
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(__instance);
             if (comp == null || !comp.State.IsActiveVisitor)
             {
@@ -80,6 +82,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
+            HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.NotifyPawnChanged(__instance);
             if (__instance.IsPrisoner || __instance.IsSlave)
             {
                 return;
@@ -112,6 +115,7 @@ namespace HungerAndHavoc.Pawn
         static void Postfix(Verse.Pawn ___pawn, int birthdayAge)
         {
             HungerAndHavoc.EventMgr.RHAH_EventFollowMood.OnBirthday(___pawn, birthdayAge);
+            HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.NotifyPawnChanged(___pawn);
         }
     }
 }

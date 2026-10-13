@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <FactionDef Name="RHAH_AttitudeFactionBase" Abstract="True">
-    <pawnSingular>ratkin</pawnSingular>
-    <pawnsPlural>ratkin</pawnsPlural>
+    <pawnSingular>鼠族</pawnSingular>
+    <pawnsPlural>鼠族</pawnsPlural>
     <categoryTag>RHAH_Famine</categoryTag>
     <humanlikeFaction>true</humanlikeFaction>
     <hidden>true</hidden>
@@ -43,41 +43,41 @@
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
     <defName>RHAH_Faction_Hostile</defName>
-    <label>hostile famine ratkin</label>
-    <fixedName>Hostile famine ratkin</fixedName>
-    <description>Ratkin driven out of a ruined settlement. They have no tools and little food left, and they take what they can reach.\n\nThey are hostile to the colony. Hurting them still brings no raid from them.</description>
+    <label>敌对的饥荒鼠族</label>
+    <fixedName>敌对的饥荒鼠族</fixedName>
+    <description>这些鼠族逃离了被灾荒毁掉的定居点，存粮所剩无几。他们对殖民地抱有敌意，可能攻击殖民者。</description>
     <naturalEnemy>true</naturalEnemy>
   </FactionDef>
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
     <defName>RHAH_Faction_LeaningHostile</defName>
-    <label>wary famine ratkin</label>
-    <fixedName>Wary famine ratkin</fixedName>
-    <description>Ratkin driven out of a ruined settlement. They watch the colony and keep their distance.\n\nThey are not hostile yet. If a colonist hurts one of them, that whole group turns hostile, but they still send no raid.</description>
+    <label>警惕的饥荒鼠族</label>
+    <fixedName>警惕的饥荒鼠族</fixedName>
+    <description>这些鼠族逃离了被灾荒毁掉的定居点。他们警惕地观察殖民地；殖民者伤害其中一人，同行的来客可能一起转为敌对。</description>
     <naturalEnemy>false</naturalEnemy>
   </FactionDef>
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
     <defName>RHAH_Faction_Neutral</defName>
-    <label>famine ratkin</label>
-    <fixedName>Famine ratkin</fixedName>
-    <description>Ratkin driven out of a ruined settlement. They beg, steal, or pass through, depending on the group.\n\nThey stay neutral if a colonist hurts one of them. Forcing the group out makes them hostile. Even then, they send no raid.</description>
+    <label>饥荒鼠族</label>
+    <fixedName>饥荒鼠族</fixedName>
+    <description>这些鼠族逃离了被灾荒毁掉的定居点。有的来乞讨，有的偷窃，有的只是路过。他们目前对殖民地保持中立；强行驱逐可能使同行的来客一起转为敌对。</description>
     <naturalEnemy>false</naturalEnemy>
   </FactionDef>
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
     <defName>RHAH_Faction_LeaningFriendly</defName>
-    <label>approachable famine ratkin</label>
-    <fixedName>Approachable famine ratkin</fixedName>
-    <description>Ratkin driven out of a ruined settlement. They will come to the gate for food.\n\nIf a colonist hurts one of them, that whole group leaves. They keep their current attitude, and they send no raid.</description>
+    <label>愿意靠近的饥荒鼠族</label>
+    <fixedName>愿意靠近的饥荒鼠族</fixedName>
+    <description>这些鼠族逃离了被灾荒毁掉的定居点，愿意接近殖民地寻求食物。殖民者伤害其中一人时，同行的来客可能一起离开。</description>
     <naturalEnemy>false</naturalEnemy>
   </FactionDef>
 
   <FactionDef ParentName="RHAH_AttitudeFactionBase">
     <defName>RHAH_Faction_Friendly</defName>
-    <label>friendly famine ratkin</label>
-    <fixedName>Friendly famine ratkin</fixedName>
-    <description>Ratkin driven out of a ruined settlement. Once colonists mark a relief area, they take food only from there.\n\nIf a colonist hurts one of them, that whole group leaves. They stay friendly, and they send no raid.</description>
+    <label>友善的饥荒鼠族</label>
+    <fixedName>友善的饥荒鼠族</fixedName>
+    <description>这些鼠族逃离了被灾荒毁掉的定居点，对殖民地抱有善意。你划出赈灾区后，他们会在那里寻找食物。殖民者伤害其中一人时，同行的来客可能一起离开。</description>
     <naturalEnemy>false</naturalEnemy>
   </FactionDef>
 </Defs>

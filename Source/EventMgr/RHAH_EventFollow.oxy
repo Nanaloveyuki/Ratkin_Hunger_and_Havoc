@@ -6,7 +6,7 @@ fn evaluate(ctx) {
     }
     if ctx.stage == 1 {
         if ctx.long_ready {
-            return event.action("notify_long", next_tick: -1)
+            return event.action("notify_long", next_tick: ctx.next_long_tick, stage: 3)
         }
         return event.wait(ctx.next_long_tick)
     }

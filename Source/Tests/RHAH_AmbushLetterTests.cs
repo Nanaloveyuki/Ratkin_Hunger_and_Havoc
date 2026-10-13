@@ -94,7 +94,7 @@ namespace HungerAndHavoc.Tests
                 .SetValue(language, true);
             language.keyedReplacements = new Dictionary<string, LoadedLanguage.KeyedReplacement>();
             XmlDocument document = new XmlDocument();
-            document.Load(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testFile), "../../Languages/English/Keyed/RHAH_Incidents.xml")));
+            document.Load(Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testFile), "../../Languages/English/Keyed/Incidents/RHAH_Incidents.xml")));
             foreach (XmlNode node in document.DocumentElement.ChildNodes)
             {
                 if (node.NodeType == XmlNodeType.Element)

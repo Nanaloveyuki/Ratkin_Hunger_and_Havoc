@@ -19,11 +19,6 @@ namespace HungerAndHavoc.Core
         List<int> begCooldownTicks = new List<int>();
         List<int> beggedPawnIds = new List<int>();
         List<int> beggedColonistIds = new List<int>();
-        int plagueReturnLoadId;
-        int plagueReturnMapId;
-        int plagueReturnPhase;
-        int plagueReturnDueTick = -1;
-        int plagueReturnLeaveTick = -1;
         List<RHAH_ChoiceRecord> openChoices = new List<RHAH_ChoiceRecord>();
         int nextChoiceId = 1;
         int broadcastCooldownUntilTick = -1;
@@ -33,15 +28,12 @@ namespace HungerAndHavoc.Core
         string eventChainMigrationStatus = "";
         bool eventChainsLoaded;
         bool newContentDisabled;
+        List<RHAH_LongFollowRecord> longFollows = new List<RHAH_LongFollowRecord>();
+        int longClaimChainId;
 
         public IReadOnlyList<string> ActiveGenerationBatches => activeGenerationBatches;
         public IReadOnlyList<string> PendingIncidentDisplayIds => pendingIncidentDisplayIds;
         public IReadOnlyList<int> PendingIncidentTargetIds => pendingIncidentTargetIds;
-        public int PlagueReturnLoadId { get => plagueReturnLoadId; set => plagueReturnLoadId = value; }
-        public int PlagueReturnMapId { get => plagueReturnMapId; set => plagueReturnMapId = value; }
-        public int PlagueReturnPhase { get => plagueReturnPhase; set => plagueReturnPhase = value; }
-        public int PlagueReturnDueTick { get => plagueReturnDueTick; set => plagueReturnDueTick = value; }
-        public int PlagueReturnLeaveTick { get => plagueReturnLeaveTick; set => plagueReturnLeaveTick = value; }
         public IReadOnlyList<RHAH_ChoiceRecord> OpenChoices => openChoices;
         public int BroadcastCooldownUntilTick { get => broadcastCooldownUntilTick; set => broadcastCooldownUntilTick = value; }
         internal int NextChoiceId { get => nextChoiceId; set => nextChoiceId = value; }
@@ -50,6 +42,8 @@ namespace HungerAndHavoc.Core
         internal string EventChainMigrationStatus { get => eventChainMigrationStatus; set => eventChainMigrationStatus = value; }
         internal bool EventChainsLoaded => eventChainsLoaded;
         internal bool NewContentDisabled => newContentDisabled;
+        internal List<RHAH_LongFollowRecord> LongFollows => longFollows;
+        internal int LongClaimChainId { get => longClaimChainId; set => longClaimChainId = value; }
 
 
         public GameComponent_RHAH_Game(Game game)
@@ -75,7 +69,7 @@ namespace HungerAndHavoc.Core
 
             HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.Tick(tick);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_EntrustCare.Tick(tick);
-            HungerAndHavoc.Storyteller.Suiyin.RHAH_Quarantine.Tick(Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>(), tick);
+            HungerAndHavoc.Storyteller.Suiyin.RHAH_Revisit.Tick(tick);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_JournalRuntime.Tick(tick);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_Envoy.Tick(tick);
             HungerAndHavoc.Storyteller.Suiyin.RHAH_RecordSite.Tick(tick);
@@ -432,11 +426,6 @@ namespace HungerAndHavoc.Core
             Scribe_Collections.Look(ref pendingIncidentTargetIds, "pendingIncidentTargetIds", LookMode.Value);
             Scribe_Collections.Look(ref pendingIncidentDisplayIds, "pendingIncidentDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref pendingIncidentPoints, "pendingIncidentPoints", LookMode.Value);
-            Scribe_Values.Look(ref plagueReturnLoadId, "plagueReturnLoadId", 0);
-            Scribe_Values.Look(ref plagueReturnMapId, "plagueReturnMapId", 0);
-            Scribe_Values.Look(ref plagueReturnPhase, "plagueReturnPhase", 0);
-            Scribe_Values.Look(ref plagueReturnDueTick, "plagueReturnDueTick", -1);
-            Scribe_Values.Look(ref plagueReturnLeaveTick, "plagueReturnLeaveTick", -1);
             Scribe_Collections.Look(ref openChoices, "openChoices", LookMode.Deep);
             Scribe_Values.Look(ref nextChoiceId, "nextChoiceId", 1);
             Scribe_Values.Look(ref broadcastCooldownUntilTick, "broadcastCooldownUntilTick", -1);
@@ -457,6 +446,8 @@ namespace HungerAndHavoc.Core
 
             Scribe_Values.Look(ref eventChainMigrationStatus, "eventChainMigrationStatus", "");
             Scribe_Values.Look(ref newContentDisabled, "newContentDisabled", false);
+            Scribe_Collections.Look(ref longFollows, "longFollows", LookMode.Deep);
+            Scribe_Values.Look(ref longClaimChainId, "longClaimChainId", 0);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 activeGenerationBatches = activeGenerationBatches ?? new List<string>();
@@ -493,6 +484,11 @@ namespace HungerAndHavoc.Core
                 eventChains = eventChains ?? new List<RHAH_EventChainRecord>();
                 eventChainMigrationStatus = eventChainMigrationStatus ?? "";
                 eventChainsLoaded = true;
+                longFollows = longFollows ?? new List<RHAH_LongFollowRecord>();
+                for (int i = longFollows.Count - 1; i >= 0; i--)
+                {
+                    if (longFollows[i] == null) longFollows.RemoveAt(i);
+                }
                 for (int i = openChoices.Count - 1; i >= 0; i--)
                 {
                     if (openChoices[i] == null)
@@ -507,6 +503,7 @@ namespace HungerAndHavoc.Core
         }
         internal void DisableNewContent()
         {
+            Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>()?.Kingdom.Disable();
             newContentDisabled = true;
             OxygenEventChainHost.Runtime?.SetMode(RHAH_EventChainProvider.ProviderKey, EventChainMode.Disabled,
                 Find.TickManager == null ? 0 : Find.TickManager.TicksGame, "Current save new content disabled");
@@ -616,9 +613,6 @@ namespace HungerAndHavoc.Core
         List<Verse.Thing> cachedPlants;
         int foodListTick = -1;
         Dictionary<int, int> wallGnawCounts = new Dictionary<int, int>();
-        List<int> plagueQuarantineLoadIds = new List<int>();
-        int plagueRecovered;
-        int plagueDied;
         int plagueLastSpreadDay = -1;
         List<Verse.Pawn> predationPrey = new List<Verse.Pawn>();
         List<HungerAndHavoc.Incidents.RHAH_PredatorRecord> predators = new List<HungerAndHavoc.Incidents.RHAH_PredatorRecord>();
@@ -630,9 +624,6 @@ namespace HungerAndHavoc.Core
         int holeThingId;
 
         public IReadOnlyList<int> VisitorPawnLoadIds => visitorPawnLoadIds;
-        public List<int> PlagueQuarantineLoadIds => plagueQuarantineLoadIds;
-        public int PlagueRecovered { get => plagueRecovered; set => plagueRecovered = value; }
-        public int PlagueDied { get => plagueDied; set => plagueDied = value; }
         public int PlagueLastSpreadDay { get => plagueLastSpreadDay; set => plagueLastSpreadDay = value; }
         public bool PredationRolled { get => predationRolled; set => predationRolled = value; }
         public bool PredationSelected { get => predationSelected; set => predationSelected = value; }
@@ -722,19 +713,6 @@ namespace HungerAndHavoc.Core
         {
             HungerAndHavoc.Pawn.RHAH_GnawHealth.Forget(wallGnawCounts, pawnLoadId);
         }
-        public bool IsQuarantined(int pawnLoadId)
-        {
-            return Identity.RHAH_Plague.IsQuarantined(plagueQuarantineLoadIds, pawnLoadId);
-        }
-
-        public void Quarantine(int pawnLoadId)
-        {
-            if (pawnLoadId > 0 && !IsQuarantined(pawnLoadId))
-            {
-                plagueQuarantineLoadIds.Add(pawnLoadId);
-            }
-        }
-
         public void TickPlague()
         {
             Identity.RHAH_PlagueRuntime.TickMap(this, map);
@@ -798,10 +776,7 @@ namespace HungerAndHavoc.Core
         {
             Scribe_Collections.Look(ref visitorPawnLoadIds, "visitorPawnLoadIds", LookMode.Value);
             Scribe_Collections.Look(ref foodSearchTicks, "foodSearchTicks", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref plagueQuarantineLoadIds, "plagueQuarantineLoadIds", LookMode.Value);
             Scribe_Collections.Look(ref wallGnawCounts, "wallGnawCounts", LookMode.Value, LookMode.Value);
-            Scribe_Values.Look(ref plagueRecovered, "plagueRecovered", 0);
-            Scribe_Values.Look(ref plagueDied, "plagueDied", 0);
             Scribe_Values.Look(ref plagueLastSpreadDay, "plagueLastSpreadDay", -1);
             Scribe_Collections.Look(ref predationPrey, "predationPrey", LookMode.Reference);
             Scribe_Collections.Look(ref predators, "predators", LookMode.Deep);
@@ -820,7 +795,6 @@ namespace HungerAndHavoc.Core
             {
                 visitorPawnLoadIds = visitorPawnLoadIds ?? new List<int>();
                 foodSearchTicks = foodSearchTicks ?? new Dictionary<int, int>();
-                plagueQuarantineLoadIds = plagueQuarantineLoadIds ?? new List<int>();
                 wallGnawCounts = wallGnawCounts ?? new Dictionary<int, int>();
                 predationPrey = predationPrey ?? new List<Verse.Pawn>();
                 predators = predators ?? new List<HungerAndHavoc.Incidents.RHAH_PredatorRecord>();

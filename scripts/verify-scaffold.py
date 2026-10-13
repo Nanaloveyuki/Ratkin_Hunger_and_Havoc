@@ -205,10 +205,10 @@ def check_catalog():
 
 
 def check_incident_labels(defs):
-    zh_incidents = read("Languages/ChineseSimplified/Keyed/RHAH_Incidents.xml")
-    en_incidents = read("Languages/English/Keyed/RHAH_Incidents.xml")
+    zh_incidents = keyed_entries("Languages/ChineseSimplified/Keyed")
+    en_incidents = keyed_entries("Languages/English/Keyed")
     for display_def in defs:
-        key = "<RHAH_Incident_%s_Label>" % display_def[len("RHAH_"):]
+        key = "RHAH_Incident_%s_Label" % display_def[len("RHAH_"):]
         if key not in zh_incidents or key not in en_incidents:
             errors.append("missing label " + key)
 

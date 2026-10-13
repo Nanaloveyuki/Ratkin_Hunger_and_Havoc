@@ -3,7 +3,7 @@
   <HediffDef>
     <defName>RHAH_RefeedingSyndrome</defName>
     <label>再喂养综合征</label>
-    <description>长期挨饿后短时间吃进大量食物，体液里的盐失去了平衡。消化、血液滤毒和意识都会暂时下降。过几天会自己过去。</description>
+    <description>长期挨饿后，短时间内吃进大量食物，引起体液中的电解质失衡。消化、血液滤毒和意识都会暂时下降，几天后会自行恢复。</description>
     <hediffClass>HediffWithComps</hediffClass>
     <initialSeverity>1</initialSeverity>
     <isBad>true</isBad>

@@ -40,6 +40,8 @@ namespace HungerAndHavoc.Pawn
             {
                 return null;
             }
+            Job longWait = HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.EdgeJob(pawn);
+            if (longWait != null) return longWait;
 
             MarkSeekingFood(pawn);
 

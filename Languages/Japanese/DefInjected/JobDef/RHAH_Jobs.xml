@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_Beg.reportString>食べ物を乞う</RHAH_Beg.reportString>
-  <RHAH_Gnaw.reportString>樹皮をかじる</RHAH_Gnaw.reportString>
+  <RHAH_Gnaw.reportString>樹皮や壁をかじる</RHAH_Gnaw.reportString>
   <RHAH_DropChild.reportString>子供を下ろす</RHAH_DropChild.reportString>
   <RHAH_MotherFeed.reportString>子供に食べさせる</RHAH_MotherFeed.reportString>
   <RHAH_Scavenge.reportString>地面で食べられる物を探す</RHAH_Scavenge.reportString>

@@ -83,7 +83,8 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
             List<string> candidates = RHAH_BroadcastRules.Candidates(RHAH_IncidentCatalog.All, Disabled(settings));
-            string displayId = RHAH_BroadcastRules.Pick(candidates, candidates.Count == 0 ? 0 : Rand.Range(0, candidates.Count));
+            int groupCount = RHAH_BroadcastRules.GroupCount(candidates);
+            string displayId = RHAH_BroadcastRules.Pick(candidates, groupCount == 0 ? 0f : Rand.Range(0f, groupCount));
             int targetId = RHAH_IncidentSchedule.TargetId(false, console.Map.uniqueID);
             if (displayId != null && game.QueueIncident(displayId, GameComponent_RHAH_Game.PointsFor(displayId), targetId))
             {

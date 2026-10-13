@@ -46,18 +46,6 @@ namespace HungerAndHavoc.Tests
             Assert.False(typeof(RHAH_VisitorGroup).IsPublic);
         }
 
-        [Fact]
-        public void ReleaseToColonyCallsNotifyReleasedAfterSetLifecycle()
-        {
-            string source = File.ReadAllText(HostPath());
-            int release = source.IndexOf("public bool ReleaseToColony");
-            Assert.True(release >= 0, "RHAH_ApiHost.ReleaseToColony missing");
-            string body = source.Substring(release);
-            int set = body.IndexOf("SetLifecycle(pawn, RHAH_Lifecycle.Released)");
-            int notify = body.IndexOf("NotifyReleased");
-            Assert.True(set >= 0, "ReleaseToColony must SetLifecycle Released");
-            Assert.True(notify > set, "NotifyReleased must follow SetLifecycle Released");
-        }
 
 
         [Fact]
@@ -99,6 +87,7 @@ namespace HungerAndHavoc.Tests
             Assert.True(visitor >= 0 && allows > visitor);
             Assert.DoesNotContain("System.Linq", source);
         }
+
 
 
 

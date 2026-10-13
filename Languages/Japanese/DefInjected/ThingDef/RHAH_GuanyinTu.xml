@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_GuanyinTu.label>観音土</RHAH_GuanyinTu.label>
-  <RHAH_GuanyinTu.description>岩を砕いて固めた土の塊です。一時的に空腹を紛らわせますが、食事の代わりにはなりません。15日間で3個食べると、胃の中に固まりが残っている間は、それ以上食べられなくなります。</RHAH_GuanyinTu.description>
+  <RHAH_GuanyinTu.description>岩を砕いて固めた、わずかな栄養しかない土の塊です。食べると一時的に空腹の進みが遅くなります。摂取上限に達すると、次に観音土を食べるまで間隔を空ける必要があります。上限と間隔はMOD設定で調整できます。</RHAH_GuanyinTu.description>
 </LanguageData>

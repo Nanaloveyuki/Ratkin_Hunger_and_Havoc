@@ -57,11 +57,12 @@ namespace HungerAndHavoc.Core
         public bool outsidePredatorsFollowDifficulty;
         public bool pawnHistoriesEnabled = true;
         public bool pawnTraitsEnabled = true;
-        List<string> disabledIncidentDisplayIds = new List<string>();
-        Dictionary<string, float> incidentDebugPoints = new Dictionary<string, float>();
-        Dictionary<string, float> incidentWeights = new Dictionary<string, float>();
-        Dictionary<string, int> incidentAttitudes = new Dictionary<string, int>();
-        List<string> incidentLongChains = new List<string>();
+        List<string> disabledIncidentGroupIds = new List<string>();
+        Dictionary<string, float> incidentGroupPoints = new Dictionary<string, float>();
+        Dictionary<string, float> incidentGroupWeights = new Dictionary<string, float>();
+        Dictionary<string, int> incidentGroupAttitudes = new Dictionary<string, int>();
+        List<string> incidentGroupLongChains = DefaultIncidentLongChains();
+        internal bool ObsoleteIncidentSettingsLoaded;
         List<string> disabledHistoryDisplayIds = new List<string>();
         List<string> disabledTraitDisplayIds = new List<string>();
         Dictionary<string, float> traitWeights = new Dictionary<string, float>();
@@ -94,6 +95,7 @@ namespace HungerAndHavoc.Core
         List<string> disabledTemperatureApparelDefNames = new List<string>();
         public float minimumEventTemperature = -35f;
         public float maximumEventTemperature = 70f;
+        // 退休普通结局设置仅保留已发布键和值 不再暴露操作或参与行为
         public bool countEndingsWithoutNarrator = true;
         public bool endingsWithoutNarrator = true;
         public int endingAidGoal = 99;
@@ -113,9 +115,6 @@ namespace HungerAndHavoc.Core
         public int plagueSpreadDayInterval = 3;
         public int plagueSpreadHour = 6;
         public float plagueBloodPumpingSkipPercent = 120f;
-        public bool plagueReturnEnabled = true;
-        public int plagueReturnDelayDays = 15;
-        public int plagueReturnStayDays = 1;
         public bool beggingEnabled = true;
         public bool begAutoGiveEnabled = false;
         public int begFailCooldownHours = 3;
@@ -204,6 +203,7 @@ namespace HungerAndHavoc.Core
         public int followMoodScalePercent = 100;
         public int endingTrustFloor = 50;
         public int endingHopeTrust = 75;
+        // 以下三项仅存读退休结局的已发布值
         public int endingHaltTrust = -75;
         public int endingLowKinds = 6;
         public float endingThreatDays = 13f;
@@ -218,9 +218,6 @@ namespace HungerAndHavoc.Core
         public int trustHoleOpen = 1;
         public int trustHoleIgnore = -1;
         public int trustHoleBait = 3;
-        public int trustQuarantineStay = 1;
-        public int trustQuarantineRecover = 2;
-        public int trustQuarantineFail = -2;
         public int trustEnvoyFail = -2;
         public int trustRelicFail = -2;
         public int trustHold = -1;
@@ -240,7 +237,6 @@ namespace HungerAndHavoc.Core
         public int narrativeEnvoyWaitDays = 3;
         public int narrativeEnvoyCheckDays = 1;
         public int narrativeRelicDays = 15;
-        public int narrativeReturnDays = 15;
         public int narrativeRevisitYears = 4;
         public int narrativeAsideCooldownDays = 3;
         public int narrativeAsideCutoff = -75;
@@ -250,6 +246,11 @@ namespace HungerAndHavoc.Core
         public int narrativeRewardKinds = 8;
         public int narrativeEnvoyKinds = 5;
         public int narrativeRelicKinds = 8;
+
+        static List<string> DefaultIncidentLongChains()
+        {
+            return new List<string> { "I-002", "I-012" };
+        }
 
         internal void ResetToDefaults()
         {
@@ -268,6 +269,13 @@ namespace HungerAndHavoc.Core
 
         public override void ExposeData()
         {
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                System.Xml.XmlNode parent = Scribe.loader.curXmlParent;
+                ObsoleteIncidentSettingsLoaded = parent?["disabledIncidentDisplayIds"] != null ||
+                    parent?["incidentDebugPoints"] != null || parent?["incidentWeights"] != null ||
+                    parent?["incidentAttitudes"] != null || parent?["incidentLongChains"] != null;
+            }
             Scribe_Values.Look(ref enableNewContent, "enableNewContent", true);
             Scribe_Values.Look(ref optimizeGeneration, "optimizeGeneration", true);
             Scribe_Values.Look(ref positiveIncidentDays, "positiveIncidentDays", 15f);
@@ -318,11 +326,16 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref outsidePredatorsFollowDifficulty, "outsidePredatorsFollowDifficulty", false);
             Scribe_Values.Look(ref pawnHistoriesEnabled, "pawnHistoriesEnabled", true);
             Scribe_Values.Look(ref pawnTraitsEnabled, "pawnTraitsEnabled", true);
-            Scribe_Collections.Look(ref disabledIncidentDisplayIds, "disabledIncidentDisplayIds", LookMode.Value);
-            Scribe_Collections.Look(ref incidentDebugPoints, "incidentDebugPoints", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref incidentWeights, "incidentWeights", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref incidentAttitudes, "incidentAttitudes", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref incidentLongChains, "incidentLongChains", LookMode.Value);
+            Scribe_Collections.Look(ref disabledIncidentGroupIds, "disabledIncidentGroupIds", LookMode.Value);
+            Scribe_Collections.Look(ref incidentGroupPoints, "incidentGroupPoints", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref incidentGroupWeights, "incidentGroupWeights", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref incidentGroupAttitudes, "incidentGroupAttitudes", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref incidentGroupLongChains, "incidentGroupLongChains", LookMode.Value);
+            if (Scribe.mode == LoadSaveMode.LoadingVars &&
+                Scribe.loader.curXmlParent?["incidentGroupLongChains"] == null)
+            {
+                incidentGroupLongChains = DefaultIncidentLongChains();
+            }
             Scribe_Collections.Look(ref disabledHistoryDisplayIds, "disabledHistoryDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref disabledTraitDisplayIds, "disabledTraitDisplayIds", LookMode.Value);
             Scribe_Collections.Look(ref traitWeights, "traitWeights", LookMode.Value, LookMode.Value);
@@ -373,9 +386,6 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref plagueSpreadDayInterval, "plagueSpreadDayInterval", 3);
             Scribe_Values.Look(ref plagueSpreadHour, "plagueSpreadHour", 6);
             Scribe_Values.Look(ref plagueBloodPumpingSkipPercent, "plagueBloodPumpingSkipPercent", 120f);
-            Scribe_Values.Look(ref plagueReturnEnabled, "plagueReturnEnabled", true);
-            Scribe_Values.Look(ref plagueReturnDelayDays, "plagueReturnDelayDays", 15);
-            Scribe_Values.Look(ref plagueReturnStayDays, "plagueReturnStayDays", 1);
             Scribe_Values.Look(ref beggingEnabled, "beggingEnabled", true);
             Scribe_Values.Look(ref begAutoGiveEnabled, "begAutoGiveEnabled", false);
             Scribe_Values.Look(ref begFailCooldownHours, "begFailCooldownHours", 3);
@@ -483,9 +493,6 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref trustHoleOpen, "trustHoleOpen", 1);
             Scribe_Values.Look(ref trustHoleIgnore, "trustHoleIgnore", -1);
             Scribe_Values.Look(ref trustHoleBait, "trustHoleBait", 3);
-            Scribe_Values.Look(ref trustQuarantineStay, "trustQuarantineStay", 1);
-            Scribe_Values.Look(ref trustQuarantineRecover, "trustQuarantineRecover", 2);
-            Scribe_Values.Look(ref trustQuarantineFail, "trustQuarantineFail", -2);
             Scribe_Values.Look(ref trustEnvoyFail, "trustEnvoyFail", -2);
             Scribe_Values.Look(ref trustRelicFail, "trustRelicFail", -2);
             Scribe_Values.Look(ref trustHold, "trustHold", -1);
@@ -505,7 +512,6 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref narrativeEnvoyWaitDays, "narrativeEnvoyWaitDays", 3);
             Scribe_Values.Look(ref narrativeEnvoyCheckDays, "narrativeEnvoyCheckDays", 1);
             Scribe_Values.Look(ref narrativeRelicDays, "narrativeRelicDays", 15);
-            Scribe_Values.Look(ref narrativeReturnDays, "narrativeReturnDays", 15);
             Scribe_Values.Look(ref narrativeRevisitYears, "narrativeRevisitYears", 4);
             Scribe_Values.Look(ref narrativeAsideCooldownDays, "narrativeAsideCooldownDays", 3);
             Scribe_Values.Look(ref narrativeAsideCutoff, "narrativeAsideCutoff", -75);
@@ -526,11 +532,11 @@ namespace HungerAndHavoc.Core
                 disabledRefugeeApparelDefNames = disabledRefugeeApparelDefNames ?? new List<string>();
                 temperatureApparelInsulation = temperatureApparelInsulation ?? new Dictionary<string, float>();
                 disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();
-                disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
-                incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
-                incidentWeights = incidentWeights ?? new Dictionary<string, float>();
-                incidentAttitudes = incidentAttitudes ?? new Dictionary<string, int>();
-                incidentLongChains = incidentLongChains ?? new List<string>();
+                disabledIncidentGroupIds = disabledIncidentGroupIds ?? new List<string>();
+                incidentGroupPoints = incidentGroupPoints ?? new Dictionary<string, float>();
+                incidentGroupWeights = incidentGroupWeights ?? new Dictionary<string, float>();
+                incidentGroupAttitudes = incidentGroupAttitudes ?? new Dictionary<string, int>();
+                incidentGroupLongChains = incidentGroupLongChains ?? new List<string>();
                 disabledTraitDisplayIds = disabledTraitDisplayIds ?? new List<string>();
                 traitWeights = traitWeights ?? new Dictionary<string, float>();
                 broadcastCooldownDays = HungerAndHavoc.Incidents.RHAH_BroadcastRules.ClampDays(broadcastCooldownDays);
@@ -541,7 +547,7 @@ namespace HungerAndHavoc.Core
                 negativeIncidentPace = HungerAndHavoc.Incidents.RHAH_IncidentPace.Normalize(negativeIncidentPace);
                 frequencyWindowDays = HungerAndHavoc.Incidents.RHAH_IncidentSchedule.ClampWindowDays(frequencyWindowDays);
                 ClampVisitorRules();
-                ClampEndingGoals();
+                ClampIdentityThresholds();
                 ClampTunables();
                 refugeePredationChancePercent = HungerAndHavoc.Incidents.RHAH_PredationRules.ClampChance(refugeePredationChancePercent);
                 ClampPlagueRules();
@@ -907,10 +913,10 @@ namespace HungerAndHavoc.Core
         void Normalize()
         {
             xenotypeWeights = ClampWeights(xenotypeWeights, RHAH_XenotypeWeightTable.Clamp);
-            incidentDebugPoints = ClampWeights(incidentDebugPoints, ClampDebugPoints);
-            incidentWeights = ClampWeights(incidentWeights, ClampIncidentWeight);
-            incidentAttitudes = ClampAttitudes(incidentAttitudes);
-            incidentLongChains = Clean(incidentLongChains);
+            incidentGroupPoints = ClampWeights(incidentGroupPoints, ClampDebugPoints);
+            incidentGroupWeights = ClampWeights(incidentGroupWeights, ClampIncidentWeight);
+            incidentGroupAttitudes = ClampAttitudes(incidentGroupAttitudes);
+            incidentGroupLongChains = Clean(incidentGroupLongChains);
             traitWeights = ClampWeights(traitWeights, ClampTraitWeight);
             enabledXenotypeDefNames = Clean(enabledXenotypeDefNames);
             enabledGeneDefNames = Clean(enabledGeneDefNames);
@@ -920,7 +926,7 @@ namespace HungerAndHavoc.Core
             disabledRefugeeApparelDefNames = Clean(disabledRefugeeApparelDefNames);
             temperatureApparelInsulation = ClampWeights(temperatureApparelInsulation, ClampStoredInsulation);
             disabledTemperatureApparelDefNames = Clean(disabledTemperatureApparelDefNames);
-            disabledIncidentDisplayIds = Clean(disabledIncidentDisplayIds);
+            disabledIncidentGroupIds = Clean(disabledIncidentGroupIds);
             disabledHistoryDisplayIds = Clean(disabledHistoryDisplayIds);
             disabledTraitDisplayIds = Clean(disabledTraitDisplayIds);
         }
@@ -1089,24 +1095,33 @@ namespace HungerAndHavoc.Core
             disabledRefugeeApparelDefNames = disabledRefugeeApparelDefNames ?? new List<string>();
             temperatureApparelInsulation = temperatureApparelInsulation ?? new Dictionary<string, float>();
             disabledTemperatureApparelDefNames = disabledTemperatureApparelDefNames ?? new List<string>();
-            disabledIncidentDisplayIds = disabledIncidentDisplayIds ?? new List<string>();
-            incidentDebugPoints = incidentDebugPoints ?? new Dictionary<string, float>();
-            incidentWeights = incidentWeights ?? new Dictionary<string, float>();
-            incidentAttitudes = incidentAttitudes ?? new Dictionary<string, int>();
-            incidentLongChains = incidentLongChains ?? new List<string>();
+            disabledIncidentGroupIds = disabledIncidentGroupIds ?? new List<string>();
+            incidentGroupPoints = incidentGroupPoints ?? new Dictionary<string, float>();
+            incidentGroupWeights = incidentGroupWeights ?? new Dictionary<string, float>();
+            incidentGroupAttitudes = incidentGroupAttitudes ?? new Dictionary<string, int>();
+            incidentGroupLongChains = incidentGroupLongChains ?? new List<string>();
             disabledHistoryDisplayIds = disabledHistoryDisplayIds ?? new List<string>();
             disabledTraitDisplayIds = disabledTraitDisplayIds ?? new List<string>();
             traitWeights = traitWeights ?? new Dictionary<string, float>();
         }
+
+        static string IncidentGroupId(string displayId)
+        {
+            int group = HungerAndHavoc.Incidents.RHAH_IncidentGroups.GroupOf(displayId);
+            return group < 0 ? null : HungerAndHavoc.Incidents.RHAH_IncidentGroups.Scenarios(group)[0].DisplayId;
+        }
+
         public bool IsIncidentEnabled(string displayId)
         {
             EnsureCollections();
-            return !string.IsNullOrEmpty(displayId) && !disabledIncidentDisplayIds.Contains(displayId);
+            string groupId = IncidentGroupId(displayId);
+            return !string.IsNullOrEmpty(displayId) && (groupId == null || !disabledIncidentGroupIds.Contains(groupId));
         }
 
         public void SetIncidentEnabled(string displayId, bool enabled)
         {
             EnsureCollections();
+            displayId = IncidentGroupId(displayId);
             if (string.IsNullOrEmpty(displayId))
             {
                 return;
@@ -1114,21 +1129,22 @@ namespace HungerAndHavoc.Core
 
             if (enabled)
             {
-                disabledIncidentDisplayIds.Remove(displayId);
+                disabledIncidentGroupIds.Remove(displayId);
                 return;
             }
 
-            if (!disabledIncidentDisplayIds.Contains(displayId))
+            if (!disabledIncidentGroupIds.Contains(displayId))
             {
-                disabledIncidentDisplayIds.Add(displayId);
+                disabledIncidentGroupIds.Add(displayId);
             }
         }
 
         public float IncidentDebugPoints(string displayId, float catalogPoints)
         {
             EnsureCollections();
+            displayId = IncidentGroupId(displayId);
             float stored;
-            if (!string.IsNullOrEmpty(displayId) && incidentDebugPoints.TryGetValue(displayId, out stored))
+            if (!string.IsNullOrEmpty(displayId) && incidentGroupPoints.TryGetValue(displayId, out stored))
             {
                 return ClampDebugPoints(stored);
             }
@@ -1138,20 +1154,22 @@ namespace HungerAndHavoc.Core
 
         public void SetIncidentDebugPoints(string displayId, float points)
         {
+            displayId = IncidentGroupId(displayId);
             if (string.IsNullOrEmpty(displayId))
             {
                 return;
             }
 
             EnsureCollections();
-            incidentDebugPoints[displayId] = ClampDebugPoints(points);
+            incidentGroupPoints[displayId] = ClampDebugPoints(points);
         }
 
         public float IncidentWeight(string displayId)
         {
             EnsureCollections();
+            displayId = IncidentGroupId(displayId);
             float stored;
-            if (!string.IsNullOrEmpty(displayId) && incidentWeights.TryGetValue(displayId, out stored))
+            if (!string.IsNullOrEmpty(displayId) && incidentGroupWeights.TryGetValue(displayId, out stored))
             {
                 return ClampIncidentWeight(stored);
             }
@@ -1161,20 +1179,22 @@ namespace HungerAndHavoc.Core
 
         public void SetIncidentWeight(string displayId, float weight)
         {
+            displayId = IncidentGroupId(displayId);
             if (string.IsNullOrEmpty(displayId))
             {
                 return;
             }
 
             EnsureCollections();
-            incidentWeights[displayId] = ClampIncidentWeight(weight);
+            incidentGroupWeights[displayId] = ClampIncidentWeight(weight);
         }
 
         public HungerAndHavoc.Api.RHAH_Attitude IncidentAttitude(string displayId, HungerAndHavoc.Api.RHAH_Attitude catalog)
         {
             EnsureCollections();
+            displayId = IncidentGroupId(displayId);
             int stored;
-            if (!string.IsNullOrEmpty(displayId) && incidentAttitudes.TryGetValue(displayId, out stored) && stored >= 0 && stored <= 4)
+            if (!string.IsNullOrEmpty(displayId) && incidentGroupAttitudes.TryGetValue(displayId, out stored) && stored >= 0 && stored <= 4)
             {
                 return (HungerAndHavoc.Api.RHAH_Attitude)stored;
             }
@@ -1184,6 +1204,7 @@ namespace HungerAndHavoc.Core
 
         public void SetIncidentAttitude(string displayId, HungerAndHavoc.Api.RHAH_Attitude attitude)
         {
+            displayId = IncidentGroupId(displayId);
             if (string.IsNullOrEmpty(displayId))
             {
                 return;
@@ -1191,31 +1212,33 @@ namespace HungerAndHavoc.Core
 
             EnsureCollections();
             int stored = (int)attitude;
-            incidentAttitudes[displayId] = stored < 0 ? 0 : (stored > 4 ? 4 : stored);
+            incidentGroupAttitudes[displayId] = stored < 0 ? 0 : (stored > 4 ? 4 : stored);
         }
 
         public bool IncidentUsesLongChain(string displayId)
         {
             EnsureCollections();
-            return !string.IsNullOrEmpty(displayId) && incidentLongChains.Contains(displayId);
+            displayId = IncidentGroupId(displayId);
+            return !string.IsNullOrEmpty(displayId) && incidentGroupLongChains.Contains(displayId);
         }
 
         public void SetIncidentLongChain(string displayId, bool longChain)
         {
+            displayId = IncidentGroupId(displayId);
             if (string.IsNullOrEmpty(displayId))
             {
                 return;
             }
 
             EnsureCollections();
-            bool present = incidentLongChains.Contains(displayId);
+            bool present = incidentGroupLongChains.Contains(displayId);
             if (longChain && !present)
             {
-                incidentLongChains.Add(displayId);
+                incidentGroupLongChains.Add(displayId);
             }
             else if (!longChain && present)
             {
-                incidentLongChains.Remove(displayId);
+                incidentGroupLongChains.Remove(displayId);
             }
         }
 
@@ -1362,28 +1385,6 @@ namespace HungerAndHavoc.Core
             return visitorChoicesEnabled;
         }
 
-        internal HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingGoals EndingGoals()
-        {
-            return new HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingGoals(
-                endingAidGoal,
-                endingBroadcastGoal,
-                endingExpulsionLimit,
-                endingAdultGoal,
-                endingWaitDays,
-                countEndingsWithoutNarrator,
-                endingsWithoutNarrator,
-                endingE01,
-                endingE02,
-                endingE03,
-                endingE04,
-                endingE05,
-                endingIdentity,
-                endingTrustFloor,
-                endingHopeTrust,
-                endingHaltTrust,
-                endingLowKinds,
-                endingThreatDays);
-        }
 
         internal void CopyNarrative(HungerAndHavoc.Storyteller.Suiyin.SuiyinConfig config)
         {
@@ -1409,7 +1410,6 @@ namespace HungerAndHavoc.Core
             config.EnvoyWaitDays = narrativeEnvoyWaitDays;
             config.EnvoyCheckDays = narrativeEnvoyCheckDays;
             config.RelicDays = narrativeRelicDays;
-            config.ReturnDays = narrativeReturnDays;
             config.RevisitYears = narrativeRevisitYears;
             config.AsideCooldownDays = narrativeAsideCooldownDays;
             config.TrustAsideCutoff = narrativeAsideCutoff;
@@ -1466,25 +1466,6 @@ namespace HungerAndHavoc.Core
                 plagueBloodPumpingSkipPercent = 300f;
             }
 
-            if (plagueReturnDelayDays < 0)
-            {
-                plagueReturnDelayDays = 0;
-            }
-
-            if (plagueReturnDelayDays > 60)
-            {
-                plagueReturnDelayDays = 60;
-            }
-
-            if (plagueReturnStayDays < 0)
-            {
-                plagueReturnStayDays = 0;
-            }
-
-            if (plagueReturnStayDays > 15)
-            {
-                plagueReturnStayDays = 15;
-            }
         }
 
         void ClampFamilyWeights()
@@ -1521,18 +1502,10 @@ namespace HungerAndHavoc.Core
             return value > 5f ? 5f : value;
         }
 
-        void ClampEndingGoals()
+        void ClampIdentityThresholds()
         {
-            endingAidGoal = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampAid(endingAidGoal);
-            endingBroadcastGoal = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampBroadcasts(endingBroadcastGoal);
-            endingExpulsionLimit = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampExpulsions(endingExpulsionLimit);
-            endingAdultGoal = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampAdults(endingAdultGoal);
-            endingWaitDays = HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRules.ClampWait(endingWaitDays);
             endingTrustFloor = ClampSigned(endingTrustFloor, -100, 100);
             endingHopeTrust = ClampSigned(endingHopeTrust, endingTrustFloor, 100);
-            endingHaltTrust = ClampSigned(endingHaltTrust, -100, 0);
-            endingLowKinds = ClampSigned(endingLowKinds, 1, 14);
-            endingThreatDays = ClampFloat(endingThreatDays, 1f, 60f, 13f);
         }
 
         void ClampTunables()
@@ -1604,9 +1577,6 @@ namespace HungerAndHavoc.Core
             trustHoleOpen = ClampSigned(trustHoleOpen, -100, 100);
             trustHoleIgnore = ClampSigned(trustHoleIgnore, -100, 100);
             trustHoleBait = ClampSigned(trustHoleBait, -100, 100);
-            trustQuarantineStay = ClampSigned(trustQuarantineStay, -100, 100);
-            trustQuarantineRecover = ClampSigned(trustQuarantineRecover, -100, 100);
-            trustQuarantineFail = ClampSigned(trustQuarantineFail, -100, 100);
             trustEnvoyFail = ClampSigned(trustEnvoyFail, -100, 100);
             trustRelicFail = ClampSigned(trustRelicFail, -100, 100);
             trustHold = ClampSigned(trustHold, -100, 100);
@@ -1626,7 +1596,6 @@ namespace HungerAndHavoc.Core
             narrativeEnvoyWaitDays = ClampSigned(narrativeEnvoyWaitDays, 0, 30);
             narrativeEnvoyCheckDays = ClampSigned(narrativeEnvoyCheckDays, 0, 30);
             narrativeRelicDays = ClampSigned(narrativeRelicDays, 0, 120);
-            narrativeReturnDays = ClampSigned(narrativeReturnDays, 0, 120);
             narrativeRevisitYears = ClampSigned(narrativeRevisitYears, 0, 20);
             narrativeAsideCooldownDays = ClampSigned(narrativeAsideCooldownDays, 0, 30);
             narrativeAsideCutoff = ClampSigned(narrativeAsideCutoff, -100, 0);

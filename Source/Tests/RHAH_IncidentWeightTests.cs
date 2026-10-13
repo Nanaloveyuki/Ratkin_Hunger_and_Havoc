@@ -1,3 +1,6 @@
+using System.IO;
+using System.Reflection;
+using System.Xml;
 using HungerAndHavoc.Api;
 using Verse;
 using RimWorld;
@@ -128,6 +131,101 @@ namespace HungerAndHavoc.Tests
             Assert.False(settings.IsIncidentEnabled("I-001"));
             settings.SetIncidentEnabled("I-001", true);
             Assert.True(settings.IsIncidentEnabled("I-001"));
+        }
+
+        [Theory]
+        [InlineData("I-001", "I-042")]
+        [InlineData("I-002", "I-037")]
+        [InlineData("I-011", "I-040")]
+        [InlineData("I-012", "I-038")]
+        [InlineData("I-020", "I-028")]
+        public void ClassSettingsApplyToEveryScenario(string primary, string variant)
+        {
+            RHAH_Settings settings = new RHAH_Settings();
+            settings.SetIncidentEnabled(variant, false);
+            settings.SetIncidentDebugPoints(variant, 450f);
+            settings.SetIncidentWeight(variant, 30f);
+            settings.SetIncidentAttitude(variant, RHAH_Attitude.Friendly);
+            settings.SetIncidentLongChain(variant, true);
+            Assert.False(settings.IsIncidentEnabled(primary));
+            Assert.Equal(450f, settings.IncidentDebugPoints(primary, 700f));
+            Assert.Equal(30f, settings.IncidentWeight(primary));
+            Assert.Equal(RHAH_Attitude.Friendly, settings.IncidentAttitude(primary, RHAH_Attitude.Neutral));
+            Assert.True(settings.IncidentUsesLongChain(primary));
+            settings.SetIncidentEnabled(primary, true);
+            settings.SetIncidentLongChain(primary, false);
+            Assert.True(settings.IsIncidentEnabled(variant));
+            Assert.False(settings.IncidentUsesLongChain(variant));
+            Assert.True(settings.IsIncidentEnabled("I-004"));
+        }
+
+        [Theory]
+        [InlineData(null, true, true, false)]
+        [InlineData("<incidentGroupLongChains />", false, false, false)]
+        [InlineData("<incidentGroupLongChains IsNull=\"True\" />", false, false, false)]
+        [InlineData("<incidentGroupLongChains><li>I-002</li></incidentGroupLongChains>", true, false, false)]
+        [InlineData("<incidentGroupLongChains><li>I-001</li></incidentGroupLongChains>", false, false, true)]
+        public void LongChainLoadingDistinguishesMissingFieldFromPlayerOverrides(
+            string savedField, bool childLongChain, bool traderLongChain, bool refugeeLongChain)
+        {
+            ScribeSaver previousSaver = Scribe.saver;
+            ScribeLoader previousLoader = Scribe.loader;
+            LoadSaveMode previousMode = Scribe.mode;
+            bool previousProfiling = DeepProfiler.enabled;
+            FieldInfo prefsField = typeof(Prefs).GetField("data", BindingFlags.NonPublic | BindingFlags.Static);
+            object previousPrefs = prefsField.GetValue(null);
+            string path = Path.GetTempFileName();
+            try
+            {
+                Scribe.saver = new ScribeSaver();
+                Scribe.loader = new ScribeLoader();
+                Scribe.mode = LoadSaveMode.Inactive;
+                DeepProfiler.enabled = false;
+                prefsField.SetValue(null, new PrefsData { devMode = false });
+
+                XmlDocument fixture = new XmlDocument();
+                fixture.LoadXml("<settings>" + savedField + "</settings>");
+                fixture.Save(path);
+
+                RHAH_Settings loaded = LoadSettings(path);
+                AssertLongChains(loaded, childLongChain, traderLongChain, refugeeLongChain);
+
+                Scribe.saver.InitSaving(path, "settings");
+                loaded.ExposeData();
+                Scribe.saver.FinalizeSaving();
+                AssertLongChains(LoadSettings(path), childLongChain, traderLongChain, refugeeLongChain);
+            }
+            finally
+            {
+                Scribe.ForceStop();
+                Scribe.saver = previousSaver;
+                Scribe.loader = previousLoader;
+                Scribe.mode = previousMode;
+                DeepProfiler.enabled = previousProfiling;
+                prefsField.SetValue(null, previousPrefs);
+                File.Delete(path);
+            }
+        }
+
+        static RHAH_Settings LoadSettings(string path)
+        {
+            Scribe.loader.InitLoading(path);
+            RHAH_Settings settings = new RHAH_Settings();
+            Scribe.loader.curParent = settings;
+            settings.ExposeData();
+            Scribe.loader.initer.RegisterForPostLoadInit(settings);
+            Scribe.loader.FinalizeLoading();
+            return settings;
+        }
+
+        static void AssertLongChains(RHAH_Settings settings, bool childLongChain, bool traderLongChain, bool refugeeLongChain)
+        {
+            Assert.Equal(childLongChain, settings.IncidentUsesLongChain("I-002"));
+            Assert.Equal(childLongChain, settings.IncidentUsesLongChain("I-037"));
+            Assert.Equal(traderLongChain, settings.IncidentUsesLongChain("I-012"));
+            Assert.Equal(traderLongChain, settings.IncidentUsesLongChain("I-038"));
+            Assert.Equal(refugeeLongChain, settings.IncidentUsesLongChain("I-001"));
+            Assert.False(settings.IncidentUsesLongChain("I-999"));
         }
 
         [Fact]

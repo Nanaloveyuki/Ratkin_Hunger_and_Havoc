@@ -5,64 +5,54 @@ namespace HungerAndHavoc.Storyteller.Suiyin
     internal enum SuiyinLetter
     {
         None = 0,
-        N001,
-        N002,
-        N003,
-        N004Entry,
-        N004ChildAlone,
-        N004FamilyHere,
-        N004Captive,
-        N004Story,
-        N004Banished,
-        N004Revisit,
-        N004RescuePaid,
-        N004Killed,
-        N004Regret,
-        N005Accepted,
-        N005Cared,
-        N005Dead,
-        N005Left,
-        N005Missing,
-        N005Rejected,
-        N005TimedOut,
-        N005Broken,
-        N006Entry,
-        N006Sealed,
-        N006BaitSet,
-        N006BaitGone,
-        N006Traced,
-        N006Stopped,
-        N006Cleaned,
-        N006Gone,
-        N007Opened,
-        N007Quarantine,
-        N007Release,
-        N007Defer,
-        N007Broken,
-        N007Recovered,
-        N007Stayed,
-        N007AllDead,
-        N007Return,
-        N008Arrive,
-        N008Trade,
-        N008Proof,
-        N008NoProof,
-        N008Refuse,
-        N008Drive,
-        N008Dead,
-        N008Left,
-        N008Missing,
-        N008Timeout,
-        N009Arrive,
-        N009Take,
-        N009Leave,
-        N009Hand,
-        N009Share,
-        N009Destroy,
-        N009Empty,
-        Journal,
-        Aside,
-        N007Missing
+        N001 = 1,
+        N002 = 2,
+        N003 = 3,
+        N004Entry = 4,
+        N004ChildAlone = 5,
+        N004FamilyHere = 6,
+        N004Captive = 7,
+        N004Story = 8,
+        N004Banished = 9,
+        N004Revisit = 10,
+        N004RescuePaid = 11,
+        N004Killed = 12,
+        N004Regret = 13,
+        N005Accepted = 14,
+        N005Cared = 15,
+        N005Dead = 16,
+        N005Left = 17,
+        N005Missing = 18,
+        N005Rejected = 19,
+        N005TimedOut = 20,
+        N005Broken = 21,
+        N006Entry = 22,
+        N006Sealed = 23,
+        N006BaitSet = 24,
+        N006BaitGone = 25,
+        N006Traced = 26,
+        N006Stopped = 27,
+        N006Cleaned = 28,
+        N006Gone = 29,
+        N008Arrive = 39,
+        N008Trade = 40,
+        N008Proof = 41,
+        N008NoProof = 42,
+        N008Refuse = 43,
+        N008Drive = 44,
+        N008Dead = 45,
+        N008Left = 46,
+        N008Missing = 47,
+        N008Timeout = 48,
+        N009Arrive = 49,
+        N009Take = 50,
+        N009Leave = 51,
+        N009Hand = 52,
+        N009Share = 53,
+        N009Destroy = 54,
+        N009Empty = 55,
+        Journal = 56,
+        Aside = 57
     }
 
     internal enum SuiyinAside
@@ -70,7 +60,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         None = 0,
         ChildToExchange = 1,
         GranaryToRelic = 2,
-        QuarantineToEnvoy = 3,
         EnvoyToRelic = 4
     }
 
@@ -146,27 +135,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         Gone = 6
     }
 
-    internal enum SuiyinN007Action
-    {
-        None = 0,
-        Quarantine = 1,
-        Release = 2,
-        Defer = 3,
-        AcceptRecovered = 4
-    }
-
-    internal enum SuiyinN007Outcome
-    {
-        Pending = 0,
-        Quarantine = 1,
-        Release = 2,
-        Defer = 3,
-        Broken = 4,
-        RecoveredLeft = 5,
-        RecoveredStayed = 6,
-        AllDead = 7,
-        Missing = 8
-    }
 
     internal enum SuiyinN008Action
     {
@@ -257,7 +225,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal int EnvoyWaitDays = 3;
         internal int EnvoyCheckDays = 1;
         internal int RelicDays = 15;
-        internal int ReturnDays = 15;
         internal int RevisitYears = 4;
         internal int AsideCooldownDays = 3;
         internal int TrustAsideCutoff = -75;
@@ -387,33 +354,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         }
     }
 
-    public sealed class SuiyinN007Case : IExposable
-    {
-        internal int MapId;
-        internal int StartedTick;
-        internal SuiyinN007Outcome Outcome;
-        internal bool ChoiceOpen;
-        internal int ReturnDueTick = -1;
-        internal int ReturnPawnId;
-        internal bool ReturnDone;
-        internal List<SuiyinMember> Visitors = new List<SuiyinMember>();
-
-        public void ExposeData()
-        {
-            Scribe_Values.Look(ref MapId, "mapId", 0);
-            Scribe_Values.Look(ref StartedTick, "startedTick", 0);
-            Scribe_Values.Look(ref Outcome, "outcome", SuiyinN007Outcome.Pending);
-            Scribe_Values.Look(ref ChoiceOpen, "choiceOpen", false);
-            Scribe_Values.Look(ref ReturnDueTick, "returnDueTick", -1);
-            Scribe_Values.Look(ref ReturnPawnId, "returnPawnId", 0);
-            Scribe_Values.Look(ref ReturnDone, "returnDone", false);
-            Scribe_Collections.Look(ref Visitors, "visitors", LookMode.Deep);
-            if (Scribe.mode == LoadSaveMode.PostLoadInit)
-            {
-                Visitors = Visitors ?? new List<SuiyinMember>();
-            }
-        }
-    }
 
     public sealed class SuiyinN008Case : IExposable
     {
@@ -517,7 +457,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal List<SuiyinN004Case> N004 = new List<SuiyinN004Case>();
         internal List<SuiyinN005Case> N005 = new List<SuiyinN005Case>();
         internal List<SuiyinN006Case> N006 = new List<SuiyinN006Case>();
-        internal List<SuiyinN007Case> N007 = new List<SuiyinN007Case>();
         internal List<SuiyinN008Case> N008 = new List<SuiyinN008Case>();
         internal SuiyinN009Case N009;
         internal List<SuiyinJournalCase> Journals = new List<SuiyinJournalCase>();
@@ -598,17 +537,13 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         }
 
 
-        internal void Note(string displayId, int mapId, int tick, bool plague, bool enabled)
-        {
-            Note(displayId, mapId, tick, plague, enabled, 0, null);
-        }
 
         void PullConfig()
         {
             Core.RHAH_Mod.Settings?.CopyNarrative(Config);
         }
 
-        internal void Note(string displayId, int mapId, int tick, bool plague, bool enabled, int batchId, IList<int> visitorIds)
+        internal void Note(string displayId, int mapId, int tick, bool enabled)
         {
             PullConfig();
             if (string.IsNullOrEmpty(displayId))
@@ -645,17 +580,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 Queue(SuiyinLetter.N003, RewardPaid, true);
             }
 
-            if (plague && Allows(SuiyinNode.N007) && OpenN007(mapId) == null)
-            {
-                SuiyinN007Case quarantine = new SuiyinN007Case
-                {
-                    MapId = mapId,
-                    StartedTick = tick,
-                    ChoiceOpen = true
-                };
-                RememberVisitors(quarantine, visitorIds);
-                N007.Add(quarantine);
-            }
 
             if (IsTheft(displayId))
             {
@@ -667,25 +591,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             TryAsides(tick);
         }
 
-        internal void NotePlague(int mapId, int recovered, int died)
-        {
-            SuiyinN007Case open = OpenN007(mapId);
-            if (open == null)
-            {
-                return;
-            }
-
-            if (recovered > 0 && !Has(SuiyinLetter.N007Recovered))
-            {
-                Queue(SuiyinLetter.N007Recovered, recovered, false);
-            }
-
-            if (died > 0 && recovered <= 0 && open.Visitors.Count > 0 && AllDead(open))
-            {
-                open.Outcome = SuiyinN007Outcome.AllDead;
-                Queue(SuiyinLetter.N007AllDead, died, false);
-            }
-        }
 
         internal bool OpenEntrust(int motherId, int mapId, int tick, IList<int> childIds)
         {
@@ -724,7 +629,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             N004.Add(record);
-            Queue(SuiyinLetter.N004Entry, record.Id, true);
             return true;
         }
 
@@ -1058,7 +962,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             record.Hole = true;
-            Queue(SuiyinLetter.N006Entry, record.MapId, false);
             return true;
         }
 
@@ -1161,107 +1064,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return true;
         }
 
-        internal bool ChooseQuarantine(SuiyinN007Case record, SuiyinN007Action action)
-        {
-            PullConfig();
-            if (record == null || record.Outcome != SuiyinN007Outcome.Pending)
-            {
-                return false;
-            }
 
-            if (action == SuiyinN007Action.Quarantine)
-            {
-                record.Outcome = SuiyinN007Outcome.Quarantine;
-                Queue(SuiyinLetter.N007Quarantine, record.MapId, false);
-                return true;
-            }
 
-            if (action == SuiyinN007Action.Release)
-            {
-                record.Outcome = SuiyinN007Outcome.Release;
-                Queue(SuiyinLetter.N007Release, record.MapId, false);
-                return true;
-            }
-
-            if (action == SuiyinN007Action.Defer)
-            {
-                record.Outcome = SuiyinN007Outcome.Defer;
-                Queue(SuiyinLetter.N007Defer, record.MapId, false);
-                return true;
-            }
-
-            if (action == SuiyinN007Action.AcceptRecovered && HasRecovered(record))
-            {
-                record.Outcome = SuiyinN007Outcome.RecoveredStayed;
-                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 1 : Core.RHAH_Mod.Settings.trustQuarantineStay));
-                Queue(SuiyinLetter.N007Stayed, record.MapId, false);
-                return true;
-            }
-
-            return false;
-        }
-
-        internal bool CloseQuarantine(SuiyinN007Case record, SuiyinN007Outcome outcome, int tick, int returnPawnId)
-        {
-            PullConfig();
-            if (record == null || record.Outcome == SuiyinN007Outcome.AllDead || record.Outcome == SuiyinN007Outcome.RecoveredLeft || record.Outcome == SuiyinN007Outcome.RecoveredStayed || record.Outcome == SuiyinN007Outcome.Missing || record.Outcome == SuiyinN007Outcome.Broken)
-            {
-                return false;
-            }
-
-            record.Outcome = outcome;
-            if (outcome == SuiyinN007Outcome.RecoveredLeft)
-            {
-                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 2 : Core.RHAH_Mod.Settings.trustQuarantineRecover));
-                EnvoyClue = true;
-                if (returnPawnId > 0 && record.ReturnDueTick < 0)
-                {
-                    record.ReturnPawnId = returnPawnId;
-                    record.ReturnDueTick = tick + Days(Config.ReturnDays);
-                }
-
-                Queue(SuiyinLetter.N007Recovered, record.MapId, false);
-                TryEnvoy(tick);
-            }
-            else if (outcome == SuiyinN007Outcome.RecoveredStayed)
-            {
-                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? 1 : Core.RHAH_Mod.Settings.trustQuarantineStay));
-                Queue(SuiyinLetter.N007Stayed, record.MapId, false);
-            }
-            else if (outcome == SuiyinN007Outcome.Broken)
-            {
-                Trust = SuiyinNodes.ClampTrust(Trust + (Core.RHAH_Mod.Settings == null ? -2 : Core.RHAH_Mod.Settings.trustQuarantineFail));
-                Queue(SuiyinLetter.N007Broken, record.MapId, false);
-            }
-            else if (outcome == SuiyinN007Outcome.AllDead)
-            {
-                Queue(SuiyinLetter.N007AllDead, record.MapId, false);
-            }
-            else if (outcome == SuiyinN007Outcome.Missing)
-            {
-                Queue(SuiyinLetter.N007Missing, record.MapId, false);
-            }
-
-            TryAsides(tick);
-            return true;
-        }
-
-        internal bool ClaimReturn(SuiyinN007Case record, int tick, bool alive)
-        {
-            if (record == null || record.ReturnDone || record.ReturnDueTick < 0 || tick < record.ReturnDueTick || record.ReturnPawnId <= 0)
-            {
-                return false;
-            }
-
-            record.ReturnDone = true;
-            if (!alive)
-            {
-                return false;
-            }
-
-            Queue(SuiyinLetter.N007Return, record.ReturnPawnId, false);
-            return true;
-        }
 
         internal bool ArriveEnvoy(int mapId, int pawnId, int tick)
         {
@@ -1285,7 +1089,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 HoldMigrated = true,
                 Outcome = SuiyinN008Outcome.Waiting
             });
-            Queue(SuiyinLetter.N008Arrive, pawnId, false);
             return true;
         }
 
@@ -1521,7 +1324,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             if (!JournalNoted.Contains(journal))
             {
                 JournalNoted.Add(journal);
-                Queue(SuiyinLetter.Journal, journal, true);
             }
 
             return true;
@@ -1695,10 +1497,20 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return 0;
             }
 
-            int count = Pending.Count;
+            int count = 0;
             for (int i = 0; i < Pending.Count; i++)
             {
-                destination.Add(Pending[i]);
+                SuiyinNotice notice = Pending[i];
+                // 旧档待发的到来复述交给原选择信 观察记录继续保留
+                if (notice == null || notice.Letter == SuiyinLetter.Journal ||
+                    notice.Letter == SuiyinLetter.N004Entry || notice.Letter == SuiyinLetter.N006Entry ||
+                    notice.Letter == SuiyinLetter.N008Arrive)
+                {
+                    continue;
+                }
+
+                destination.Add(notice);
+                count++;
             }
 
             Pending.Clear();
@@ -1843,7 +1655,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             SuiyinAside next = SuiyinAside.None;
             if (HasOutcomeN004() && HasN005() && !AsidesSent.Contains(1)) next = SuiyinAside.ChildToExchange;
             else if (HasTracedHole() && N009 != null && !AsidesSent.Contains(2)) next = SuiyinAside.GranaryToRelic;
-            else if (HasRecoveredLeave() && FindN008() != null && !AsidesSent.Contains(3)) next = SuiyinAside.QuarantineToEnvoy;
             else if (HasTradedEnvoy() && N009 != null && N009.Outcome != SuiyinN009Outcome.Pending && N009.Outcome != SuiyinN009Outcome.Empty && !AsidesSent.Contains(4)) next = SuiyinAside.EnvoyToRelic;
             if (next == SuiyinAside.None)
             {
@@ -1890,18 +1701,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return false;
         }
 
-        bool HasRecoveredLeave()
-        {
-            for (int i = 0; i < N007.Count; i++)
-            {
-                if (N007[i].Outcome == SuiyinN007Outcome.RecoveredLeft)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
 
         bool HasTradedEnvoy()
         {
@@ -1909,36 +1708,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return envoy != null && envoy.Outcome == SuiyinN008Outcome.Traded;
         }
 
-        bool HasRecovered(SuiyinN007Case record)
-        {
-            for (int i = 0; i < record.Visitors.Count; i++)
-            {
-                if (record.Visitors[i].Presence == SuiyinPresence.Here && record.Visitors[i].Care != SuiyinCare.Plague)
-                {
-                    return true;
-                }
-            }
 
-            return false;
-        }
-
-        static bool AllDead(SuiyinN007Case record)
-        {
-            if (record.Visitors.Count == 0)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < record.Visitors.Count; i++)
-            {
-                if (record.Visitors[i].Presence != SuiyinPresence.Dead)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
 
         SuiyinN005Case FindN005(int id)
         {
@@ -1966,42 +1736,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return null;
         }
 
-        static void RememberVisitors(SuiyinN007Case record, IList<int> visitorIds)
-        {
-            if (record == null || visitorIds == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < visitorIds.Count; i++)
-            {
-                int id = visitorIds[i];
-                if (id <= 0)
-                {
-                    continue;
-                }
-
-                bool known = false;
-                for (int j = 0; j < record.Visitors.Count; j++)
-                {
-                    if (record.Visitors[j] != null && record.Visitors[j].LoadId == id)
-                    {
-                        known = true;
-                        break;
-                    }
-                }
-
-                if (!known)
-                {
-                    record.Visitors.Add(new SuiyinMember
-                    {
-                        LoadId = id,
-                        Presence = SuiyinPresence.Here,
-                        Care = SuiyinCare.Plague
-                    });
-                }
-            }
-        }
 
         SuiyinN008Case FindN008()
         {
@@ -2021,35 +1755,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return null;
         }
 
-        bool Has(SuiyinLetter letter)
-        {
-            for (int i = 0; i < Pending.Count; i++)
-            {
-                if (Pending[i].Letter == letter)
-                {
-                    return true;
-                }
-            }
 
-            return false;
-        }
-
-        SuiyinN007Case OpenN007(int mapId)
-        {
-            for (int i = 0; i < N007.Count; i++)
-            {
-                if (N007[i].MapId == mapId && N007[i].Outcome == SuiyinN007Outcome.Pending)
-                {
-                    return N007[i];
-                }
-            }
-
-            return null;
-        }
-        internal void QueueOpened(int mapId)
-        {
-            Queue(SuiyinLetter.N007Opened, mapId, false);
-        }
 
 
         bool Allows(SuiyinNode node)
@@ -2086,15 +1792,14 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         }
         internal static string LetterKey(SuiyinLetter letter, int arg)
         {
-            if (letter == SuiyinLetter.None || letter == SuiyinLetter.N007Opened)
+            if (letter == SuiyinLetter.None || letter == SuiyinLetter.Journal || letter == SuiyinLetter.N004Entry)
             {
                 return null;
             }
 
-
             if (letter == SuiyinLetter.Aside)
             {
-                if (arg < 1 || arg > 4)
+                if (arg < 1 || arg > 4 || arg == 3)
                 {
                     return null;
                 }
@@ -2104,6 +1809,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
             return "RHAH_Suiyin_" + letter;
         }
+
+
 
         static int Days(int days)
         {

@@ -174,11 +174,10 @@ namespace HungerAndHavoc.Incidents
             bool mapHome,
             bool playerCaravan)
         {
-            IReadOnlyList<RHAH_IncidentEntry> entries = RHAH_IncidentCatalog.All;
             float total = 0f;
-            for (int i = 0; i < entries.Count; i++)
+            for (int i = 0; i < RHAH_IncidentGroups.Count; i++)
             {
-                total += WeightOf(entries[i], pool, trust, season, mapHome, playerCaravan);
+                total += GroupWeight(i, pool, trust, season, mapHome, playerCaravan, out _);
             }
 
             return total;
@@ -192,15 +191,73 @@ namespace HungerAndHavoc.Incidents
             bool playerCaravan,
             float roll)
         {
-            IReadOnlyList<RHAH_IncidentEntry> entries = RHAH_IncidentCatalog.All;
-            float[] weights = new float[entries.Count];
-            for (int i = 0; i < entries.Count; i++)
+            if (float.IsNaN(roll) || float.IsInfinity(roll) || roll < 0f)
             {
-                weights[i] = WeightOf(entries[i], pool, trust, season, mapHome, playerCaravan);
+                return null;
             }
+            float cursor = 0f;
+            for (int i = 0; i < RHAH_IncidentGroups.Count; i++)
+            {
+                float weight = GroupWeight(i, pool, trust, season, mapHome, playerCaravan, out int count);
+                if (weight <= 0f)
+                {
+                    continue;
+                }
+                float next = cursor + weight;
+                if (roll < next)
+                {
+                    float scenarioRoll = (roll - cursor) * count;
+                    RHAH_IncidentEntry last = null;
+                    IReadOnlyList<RHAH_IncidentEntry> scenarios = RHAH_IncidentGroups.Scenarios(i);
+                    for (int j = 0; j < scenarios.Count; j++)
+                    {
+                        float scenarioWeight = WeightOf(scenarios[j], pool, trust, season, mapHome, playerCaravan);
+                        if (scenarioWeight <= 0f)
+                        {
+                            continue;
+                        }
+                        last = scenarios[j];
+                        if (scenarioRoll < scenarioWeight)
+                        {
+                            return scenarios[j].DisplayId;
+                        }
+                        scenarioRoll -= scenarioWeight;
+                    }
+                    return last?.DisplayId;
+                }
+                cursor = next;
+            }
+            return null;
+        }
 
-            int index = RHAH_IncidentWeight.Select(weights, roll);
-            return index < 0 ? null : entries[index].DisplayId;
+        static float GroupWeight(
+            int group,
+            RHAH_AttitudePool pool,
+            int trust,
+            RHAH_IncidentSeason season,
+            bool mapHome,
+            bool playerCaravan,
+            out int count)
+        {
+            IReadOnlyList<RHAH_IncidentEntry> scenarios = RHAH_IncidentGroups.Scenarios(group);
+            float total = 0f;
+            count = 0;
+            if (RHAH_IncidentGroups.PoolOf(group) != pool)
+            {
+                return 0f;
+            }
+            for (int i = 0; i < scenarios.Count; i++)
+            {
+                RHAH_IncidentEntry entry = scenarios[i];
+                if (!RHAH_IncidentWeight.TargetMatches(entry.Target, mapHome, playerCaravan))
+                {
+                    continue;
+                }
+                count++;
+                total += WeightOf(entry, pool, trust, season, mapHome, playerCaravan);
+            }
+            // 场景数量不增加同类事件的抽取份额 关闭场景仍保留零权重
+            return count == 0 ? 0f : total / count;
         }
 
         static float WeightOf(
@@ -211,7 +268,7 @@ namespace HungerAndHavoc.Incidents
             bool mapHome,
             bool playerCaravan)
         {
-            if (entry.DefaultAttitudePool != pool)
+            if (RHAH_IncidentGroups.PoolOf(entry.DisplayId) != pool)
             {
                 return 0f;
             }
@@ -222,7 +279,7 @@ namespace HungerAndHavoc.Incidents
                 entry.Family,
                 entry.Category,
                 entry.Target,
-                entry.DefaultAttitudePool,
+                pool,
                 season,
                 trust,
                 mapHome,
