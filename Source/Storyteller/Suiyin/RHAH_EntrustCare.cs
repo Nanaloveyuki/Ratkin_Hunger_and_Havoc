@@ -257,7 +257,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     ReadMember(record.Children[childIndex], tick, true);
                 }
 
-                state.Commit(item => item.AdvanceCare(record, tick, CheckInterval));
+                state.Commit(item => item.AdvanceCare(record, tick));
             }
         }
 
@@ -276,28 +276,9 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 member.Child = false;
             }
 
-            if (!care || member.Presence != SuiyinPresence.Here || pawn == null)
+            if (care)
             {
-                return;
-            }
-
-            bool plague = RHAH_Plague.HasActive(pawn);
-            bool hungry = pawn.needs?.food != null && pawn.needs.food.CurLevelPercentage < 0.15f;
-            if (plague)
-            {
-                member.Care = SuiyinCare.Plague;
-            }
-            else if (hungry)
-            {
-                member.Care = SuiyinCare.Hungry;
-            }
-            else if (pawn.IsPrisoner || pawn.IsSlaveOfColony)
-            {
-                member.Care = SuiyinCare.Captive;
-            }
-            else
-            {
-                member.Care = SuiyinCare.Free;
+                member.ObserveSettlement(tick, SuiyinMember.HasMalnutrition(pawn));
             }
         }
 

@@ -2,6 +2,7 @@ extern alias iris;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
 using HungerAndHavoc.Data;
@@ -93,6 +94,9 @@ namespace HungerAndHavoc.Pawn.Compat
         readonly HashSet<string> collapsedContentGroups = new HashSet<string>();
 
         string selectedPawnLabel = string.Empty;
+        IReadOnlyList<RHAH_SettlementGroup> settlementModel;
+        object settlementLanguage;
+        readonly List<SettlementRow> settlementRows = new List<SettlementRow>();
 
         internal RHAH_IrisMenusPages(string irisVersion)
         {
@@ -115,6 +119,7 @@ namespace HungerAndHavoc.Pawn.Compat
             RegisterPage(owner, "events", "RHAH_Menu_Events", DrawEvents, SearchCatalogEvents);
             RegisterPage(owner, "pawns", "RHAH_Menu_Pawns", DrawPawns, SearchPawns);
             RegisterPage(owner, "narrative", "RHAH_Menu_Narrative", DrawNarrative, SearchNarrative);
+            RegisterPage(owner, "settlement-progress", "RHAH_Menu_Settlement", DrawSettlement, SearchSettlement);
             RegisterPage(owner, "other", "RHAH_Menu_Other", DrawOther, SearchOther);
             RegisterPage(owner, "environment", "RHAH_Menu_Environment", DrawEnvironment, SearchEnvironment);
             RegisterPage(owner, "compat-diagnostics", "RHAH_Menu_CompatDiagnostics", DrawCompatDiagnostics, SearchCompatDiagnostics);
@@ -680,6 +685,241 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("identity-partial", "RHAH_Settings_IdentityPartialTrust");
             yield return Entry("identity-full", "RHAH_Settings_IdentityFullTrust");
             yield return Entry("narrative-journals", "RHAH_Menu_Narrative_Journals");
+        }
+
+        void DrawSettlement(Listing_Standard list)
+        {
+            MenuControls.Anchor(list, "settlement-progress-overview");
+            Section(list, "RHAH_Menu_Settlement");
+            Note(list, "RHAH_Settlement_Note");
+            NarrativeState state = Current.ProgramState == ProgramState.Playing
+                ? Current.Game?.GetComponent<NarrativeState>()
+                : null;
+            if (state == null)
+            {
+                settlementModel = null;
+                settlementRows.Clear();
+                Empty(list, "RHAH_Settlement_NoGame");
+                return;
+            }
+
+            Note(list, "RHAH_Settlement_UpdateNote");
+            string refreshLabel = "RHAH_Settlement_Refresh".Translate();
+            float refreshHeight = Mathf.Max(30f, Text.CalcHeight(refreshLabel, Mathf.Max(1f, list.ColumnWidth - 16f)) + 8f);
+            MenuControls.Anchor(list, "settlement-progress-refresh", refreshHeight);
+            Rect refresh = list.GetRect(refreshHeight);
+            list.Gap(4f);
+            if (RHAH_IrisMenusWidgets.IsVisible(refresh) && Widgets.ButtonText(refresh, refreshLabel))
+            {
+                RHAH_SettlementProgress.Invalidate(state);
+            }
+
+            int tick = Find.TickManager?.TicksGame ?? 0;
+            IReadOnlyList<RHAH_SettlementGroup> groups = RHAH_SettlementProgress.Read(state, tick);
+            CacheSettlementRows(groups);
+            if (groups.Count == 0)
+            {
+                Empty(list, "RHAH_Settlement_None");
+                return;
+            }
+
+            for (int i = 0; i < settlementRows.Count; i++)
+            {
+                SettlementRow row = settlementRows[i];
+                list.Gap(row.GapBefore);
+                RHAH_IrisMenusWidgets.Quote(list, row.Anchor, row.Text);
+            }
+        }
+
+        IEnumerable<MenuSearchEntry> SearchSettlement()
+        {
+            yield return new MenuSearchEntry("settlement-progress-overview",
+                () => "RHAH_Menu_Settlement".Translate(),
+                () => "RHAH_Settlement_SearchTerms".Translate(),
+                context: () => "RHAH_Settlement_Note".Translate());
+        }
+
+        void CacheSettlementRows(IReadOnlyList<RHAH_SettlementGroup> groups)
+        {
+            if (ReferenceEquals(settlementModel, groups) &&
+                ReferenceEquals(settlementLanguage, LanguageDatabase.activeLanguage))
+            {
+                return;
+            }
+
+            settlementModel = groups;
+            settlementLanguage = LanguageDatabase.activeLanguage;
+            settlementRows.Clear();
+            for (int groupIndex = 0; groupIndex < groups.Count; groupIndex++)
+            {
+                RHAH_SettlementGroup group = groups[groupIndex];
+                string anchor = "settlement-progress-group-" + groupIndex;
+                settlementRows.Add(new SettlementRow(anchor, BuildSettlementGroupText(group), 8f));
+                if (group.Kind == RHAH_SettlementKind.Entrust)
+                {
+                    settlementRows.Add(new SettlementRow(anchor + "-mother", BuildSettlementMotherText(group)));
+                }
+
+                for (int memberIndex = 0; memberIndex < group.Members.Count; memberIndex++)
+                {
+                    settlementRows.Add(new SettlementRow(anchor + "-member-" + memberIndex,
+                        BuildSettlementMemberText(group, group.Members[memberIndex])));
+                }
+            }
+        }
+
+        static string BuildSettlementGroupText(RHAH_SettlementGroup group)
+        {
+            StringBuilder text = new StringBuilder();
+            switch (group.Kind)
+            {
+                case RHAH_SettlementKind.Relief:
+                    text.Append("RHAH_Settlement_ReliefSource".Translate(group.Id, group.BatchId).ToString());
+                    text.AppendLine().Append("RHAH_Settlement_ReliefTimerNote".Translate().ToString());
+                    break;
+                case RHAH_SettlementKind.Exchange:
+                    text.Append("RHAH_Settlement_ExchangeSource".Translate(group.Id).ToString());
+                    text.AppendLine().Append("RHAH_Settlement_ExchangeTimerNote".Translate().ToString());
+                    break;
+                case RHAH_SettlementKind.Entrust:
+                    text.Append("RHAH_Settlement_EntrustSource".Translate(group.Id).ToString());
+                    text.AppendLine().Append("RHAH_Settlement_EntrustGrowthNote".Translate().ToString());
+                    break;
+            }
+
+            if (group.RemainingObservationTicks >= 0)
+            {
+                string key = group.Kind == RHAH_SettlementKind.Entrust
+                    ? "RHAH_Settlement_GrowthObservationRemaining"
+                    : "RHAH_Settlement_ObservationRemaining";
+                text.AppendLine().Append(key.Translate(FormatSettlementDays(group.RemainingObservationTicks)).ToString());
+            }
+
+            if (group.Failed)
+            {
+                text.AppendLine().Append("RHAH_Settlement_GroupFailed".Translate().ToString());
+            }
+
+            if (group.Driven)
+            {
+                text.AppendLine().Append("RHAH_Settlement_GroupDriven".Translate().ToString());
+            }
+
+            if (group.Kind == RHAH_SettlementKind.Relief && !group.Delivered)
+            {
+                for (int i = 0; i < group.Members.Count; i++)
+                {
+                    if ((group.Members[i].Blockers & RHAH_SettlementBlocker.Left) != 0)
+                    {
+                        text.AppendLine().Append("RHAH_Settlement_FoodNotDelivered".Translate().ToString());
+                        break;
+                    }
+                }
+            }
+
+            return text.ToString();
+        }
+
+        static string BuildSettlementMotherText(RHAH_SettlementGroup group)
+        {
+            SuiyinPresence presence = SuiyinPresence.Unknown;
+            for (int i = 0; i < group.Members.Count; i++)
+            {
+                if (group.Members[i].MotherPresence.HasValue)
+                {
+                    presence = group.Members[i].MotherPresence.Value;
+                    break;
+                }
+            }
+
+            string presenceKey;
+            switch (presence)
+            {
+                case SuiyinPresence.Here: presenceKey = "RHAH_Settlement_PresenceHere"; break;
+                case SuiyinPresence.Dead: presenceKey = "RHAH_Settlement_Dead"; break;
+                case SuiyinPresence.Left: presenceKey = "RHAH_Settlement_Left"; break;
+                case SuiyinPresence.Missing: presenceKey = "RHAH_Settlement_Missing"; break;
+                default: presenceKey = "RHAH_Settlement_Unknown"; break;
+            }
+
+            return "RHAH_Settlement_Mother".Translate(
+                SettlementName(group.MotherName, group.MotherLoadId), presenceKey.Translate());
+        }
+
+        static string BuildSettlementMemberText(RHAH_SettlementGroup group, RHAH_SettlementMember member)
+        {
+            StringBuilder text = new StringBuilder(SettlementName(member.Name, member.LoadId));
+            if (member.RemainingTicks >= 0 && group.Kind != RHAH_SettlementKind.Entrust)
+            {
+                text.AppendLine().Append("RHAH_Settlement_AccumulatedCareRemaining".Translate(
+                    FormatSettlementDays(member.RemainingTicks)).ToString());
+            }
+
+            StringBuilder conditions = new StringBuilder();
+            if (group.Kind == RHAH_SettlementKind.Entrust)
+            {
+                AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Hungry, "RHAH_Settlement_Hungry");
+                AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Plague, "RHAH_Settlement_Plague");
+                AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Captive, "RHAH_Settlement_Captive");
+            }
+            else
+            {
+                AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Malnutrition, "RHAH_Settlement_Malnutrition");
+            }
+            AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Unknown, "RHAH_Settlement_Unknown");
+            AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Missing, "RHAH_Settlement_Missing");
+            AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Dead, "RHAH_Settlement_Dead");
+            AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Left, "RHAH_Settlement_Left");
+            AppendSettlementCondition(conditions, member.Blockers, RHAH_SettlementBlocker.Growing, "RHAH_Settlement_Growing");
+            text.AppendLine().Append("RHAH_Settlement_Conditions".Translate(conditions.Length > 0
+                ? conditions.ToString()
+                : "RHAH_Settlement_NoConcerns".Translate().ToString()).ToString());
+
+            string statusKey = !member.Ready ? "RHAH_Settlement_Pending"
+                : group.Failed || group.Driven ? "RHAH_Settlement_ReadyFailedGroup"
+                : "RHAH_Settlement_ReadyWaiting";
+            text.AppendLine().Append(statusKey.Translate().ToString());
+            return text.ToString();
+        }
+
+        static void AppendSettlementCondition(StringBuilder text, RHAH_SettlementBlocker blockers,
+            RHAH_SettlementBlocker condition, string key)
+        {
+            if ((blockers & condition) == 0)
+            {
+                return;
+            }
+
+            if (text.Length > 0)
+            {
+                text.Append("RHAH_Settlement_ConditionSeparator".Translate().ToString());
+            }
+
+            text.Append(key.Translate().ToString());
+        }
+
+        static string SettlementName(string name, int loadId)
+        {
+            return string.IsNullOrEmpty(name) ? "RHAH_Settlement_UnknownPerson".Translate(loadId).ToString() : name;
+        }
+
+        static string FormatSettlementDays(int ticks)
+        {
+            return (Math.Ceiling(Math.Max(0, ticks) * 10d / GenDate.TicksPerDay) / 10d).ToString("0.0");
+        }
+
+        sealed class SettlementRow
+        {
+            internal readonly string Anchor;
+            internal readonly string Text;
+            internal readonly float GapBefore;
+
+            internal SettlementRow(string anchor, string text, float gapBefore = 0f)
+            {
+                Anchor = anchor;
+                Text = text;
+                GapBefore = gapBefore;
+            }
         }
 
         void DrawOther(Listing_Standard list)
@@ -2412,7 +2652,6 @@ namespace HungerAndHavoc.Pawn.Compat
             settings.narrativeRescueReward = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-reward-silver", "RHAH_Settings_NarrativeRescueReward".Translate(settings.narrativeRescueReward), settings.narrativeRescueReward, 0f, 20000f, "RHAH_Settings_NarrativeRescueReward_Tooltip".Translate());
             settings.narrativeRelicTake = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-take", "RHAH_Settings_NarrativeTake".Translate(settings.narrativeRelicTake), settings.narrativeRelicTake, 0f, 10000f, "RHAH_Settings_NarrativeTake_Tooltip".Translate());
             settings.narrativeRelicHand = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-hand", "RHAH_Settings_NarrativeHand".Translate(settings.narrativeRelicHand), settings.narrativeRelicHand, 0f, 10000f, "RHAH_Settings_NarrativeHand_Tooltip".Translate());
-            settings.narrativeCareDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-care", "RHAH_Settings_NarrativeCare".Translate(settings.narrativeCareDays), settings.narrativeCareDays, 0f, 120f, "RHAH_Settings_NarrativeCare_Tooltip".Translate());
             settings.narrativeMissingDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-missing", "RHAH_Settings_NarrativeMissing".Translate(settings.narrativeMissingDays), settings.narrativeMissingDays, 0f, 60f, "RHAH_Settings_NarrativeMissing_Tooltip".Translate());
             settings.narrativeObserveDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-observe", "RHAH_Settings_NarrativeObserve".Translate(settings.narrativeObserveDays), settings.narrativeObserveDays, 0f, 120f, "RHAH_Settings_NarrativeObserve_Tooltip".Translate());
             settings.narrativeHoleIgnoreDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "narrative-hole", "RHAH_Settings_NarrativeHole".Translate(settings.narrativeHoleIgnoreDays), settings.narrativeHoleIgnoreDays, 0f, 30f, "RHAH_Settings_NarrativeHole_Tooltip".Translate());

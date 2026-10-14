@@ -46,12 +46,10 @@
   <RHAH_Settings_NarrativeTake_Tooltip>Silver gained by taking the migration record. 0 to 10000, default 200.</RHAH_Settings_NarrativeTake_Tooltip>
   <RHAH_Settings_NarrativeHand>Hand over the record: {0}</RHAH_Settings_NarrativeHand>
   <RHAH_Settings_NarrativeHand_Tooltip>Silver gained by handing the migration record over. 0 to 10000, default 100.</RHAH_Settings_NarrativeHand_Tooltip>
-  <RHAH_Settings_NarrativeCare>Settlement days: {0}</RHAH_Settings_NarrativeCare>
-  <RHAH_Settings_NarrativeCare_Tooltip>Visitors count as settled after accumulating this many days at the colony while fed and free of plague. Range 0 to 120 days, default 5 days.</RHAH_Settings_NarrativeCare_Tooltip>
   <RHAH_Settings_NarrativeMissing>Missing days: {0}</RHAH_Settings_NarrativeMissing>
   <RHAH_Settings_NarrativeMissing_Tooltip>Suiyin considers a visitor missing after this many days without knowing their whereabouts. Range 0 to 60 days, default 1 day.</RHAH_Settings_NarrativeMissing_Tooltip>
   <RHAH_Settings_NarrativeObserve>Watch days: {0}</RHAH_Settings_NarrativeObserve>
-  <RHAH_Settings_NarrativeObserve_Tooltip>Suiyin waits up to this many days to learn the outcome of aid and entrusted children. If the visitors remain unsettled by the deadline, the aid does not count as successful. Range 0 to 120 days, default 30 days.</RHAH_Settings_NarrativeObserve_Tooltip>
+  <RHAH_Settings_NarrativeObserve_Tooltip>The deadline for clarifying ordinary relief visitors' whereabouts, and the observation window for entrusted children to reach the child stage. Relief visitors who are still present can continue accumulating time alive. Range 0 to 120 days, default 30 days.</RHAH_Settings_NarrativeObserve_Tooltip>
   <RHAH_Settings_NarrativeHole>Grain hole disappears after: {0} days</RHAH_Settings_NarrativeHole>
   <RHAH_Settings_NarrativeHole_Tooltip>If you leave a grain hole alone, it disappears after this many days and the trail is lost. Range 0 to 30 days, default 3 days.</RHAH_Settings_NarrativeHole_Tooltip>
   <RHAH_Settings_NarrativeEnvoyWait>Envoy wait: {0} days</RHAH_Settings_NarrativeEnvoyWait>

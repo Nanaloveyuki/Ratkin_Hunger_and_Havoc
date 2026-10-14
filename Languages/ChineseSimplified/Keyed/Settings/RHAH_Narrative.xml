@@ -46,12 +46,10 @@
   <RHAH_Settings_NarrativeTake_Tooltip>把迁徙记录拿走时得到的白银。0 到 10000，默认 200。</RHAH_Settings_NarrativeTake_Tooltip>
   <RHAH_Settings_NarrativeHand>交出记录：{0}</RHAH_Settings_NarrativeHand>
   <RHAH_Settings_NarrativeHand_Tooltip>把迁徙记录交出去时得到的白银。0 到 10000，默认 100。</RHAH_Settings_NarrativeHand_Tooltip>
-  <RHAH_Settings_NarrativeCare>安置天数：{0}</RHAH_Settings_NarrativeCare>
-  <RHAH_Settings_NarrativeCare_Tooltip>来客在据点吃饱且没有鼠疫的时间累计达到这么多天，才算安顿下来。范围 0 到 120 天，默认 5 天。</RHAH_Settings_NarrativeCare_Tooltip>
   <RHAH_Settings_NarrativeMissing>失踪天数：{0}</RHAH_Settings_NarrativeMissing>
   <RHAH_Settings_NarrativeMissing_Tooltip>来客持续失联这么多天后，穗音会认为对方失踪。范围 0 到 60 天，默认 1 天。</RHAH_Settings_NarrativeMissing_Tooltip>
   <RHAH_Settings_NarrativeObserve>观察天数：{0}</RHAH_Settings_NarrativeObserve>
-  <RHAH_Settings_NarrativeObserve_Tooltip>穗音最多等待这么多天，了解救济和托孤的结果。如果期限内来客仍未安顿下来，这次援助就不算成功。范围 0 到 120 天，默认 30 天。</RHAH_Settings_NarrativeObserve_Tooltip>
+  <RHAH_Settings_NarrativeObserve_Tooltip>普通救济等待来客去向明确的期限，也是托付家庭等待孩子长到儿童阶段的观察期限。仍在场的救济来客可以继续累计存活时间。范围 0 到 120 天，默认 30 天。</RHAH_Settings_NarrativeObserve_Tooltip>
   <RHAH_Settings_NarrativeHole>粮洞消失时间：{0} 天</RHAH_Settings_NarrativeHole>
   <RHAH_Settings_NarrativeHole_Tooltip>如果你一直放着粮洞不管，洞口会在这么多天后消失，追踪线索也会中断。范围 0 到 30 天，默认 3 天。</RHAH_Settings_NarrativeHole_Tooltip>
   <RHAH_Settings_NarrativeEnvoyWait>使者等待：{0} 天</RHAH_Settings_NarrativeEnvoyWait>

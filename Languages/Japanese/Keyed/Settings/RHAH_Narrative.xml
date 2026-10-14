@@ -46,12 +46,10 @@
   <RHAH_Settings_NarrativeTake_Tooltip>移住記録を持ち去った時に得るシルバーです。範囲は0～10000、初期値は200。</RHAH_Settings_NarrativeTake_Tooltip>
   <RHAH_Settings_NarrativeHand>記録を渡す報酬：{0}</RHAH_Settings_NarrativeHand>
   <RHAH_Settings_NarrativeHand_Tooltip>移住記録を引き渡した時に得るシルバーです。範囲は0～10000、初期値は100。</RHAH_Settings_NarrativeHand_Tooltip>
-  <RHAH_Settings_NarrativeCare>定着に必要な日数：{0}</RHAH_Settings_NarrativeCare>
-  <RHAH_Settings_NarrativeCare_Tooltip>訪問者がコロニーで満腹かつペストのない日をこれだけ重ねると、落ち着いたとみなします。範囲は0～120日、初期値は5日。</RHAH_Settings_NarrativeCare_Tooltip>
   <RHAH_Settings_NarrativeMissing>行方不明とみなすまでの日数：{0}</RHAH_Settings_NarrativeMissing>
   <RHAH_Settings_NarrativeMissing_Tooltip>これだけの日数、訪問者の行方を知れないと、スイインはその人を行方不明とみなします。範囲は0～60日、初期値は1日。</RHAH_Settings_NarrativeMissing_Tooltip>
   <RHAH_Settings_NarrativeObserve>観察期間：{0}日</RHAH_Settings_NarrativeObserve>
-  <RHAH_Settings_NarrativeObserve_Tooltip>スイインは、援助と託された子供の結果が分かるまで、最長これだけの日数を待ちます。期限までに訪問者が落ち着かなければ、その援助は成功になりません。範囲は0～120日、初期値は30日。</RHAH_Settings_NarrativeObserve_Tooltip>
+  <RHAH_Settings_NarrativeObserve_Tooltip>通常の救済で来訪者の所在を確認する期限と、託された子供が児童の段階に達するのを待つ観察期間です。その場にいる救済中の来訪者は、引き続き生存時間を累積できます。範囲は0～120日、初期値は30日。</RHAH_Settings_NarrativeObserve_Tooltip>
   <RHAH_Settings_NarrativeHole>食糧庫の穴が消えるまで：{0}日</RHAH_Settings_NarrativeHole>
   <RHAH_Settings_NarrativeHole_Tooltip>食糧庫の穴を放っておくと、これだけの日数で消え、痕跡も途切れます。範囲は0～30日、初期値は3日。</RHAH_Settings_NarrativeHole_Tooltip>
   <RHAH_Settings_NarrativeEnvoyWait>使者の待ち時間：{0}日</RHAH_Settings_NarrativeEnvoyWait>

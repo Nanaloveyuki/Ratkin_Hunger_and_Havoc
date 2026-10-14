@@ -188,11 +188,13 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
             for (int i = 0; i < record.People.Count; i++)
             {
-                Note(record, record.People[i], tick, mugging);
+                SuiyinMember person = record.People[i];
+                Note(record, person, tick);
+                person?.ObserveSettlement(tick, SuiyinMember.HasMalnutrition(Member(person)));
             }
         }
 
-        static void Note(SuiyinJournalCase record, SuiyinMember person, int tick, bool mugging)
+        static void Note(SuiyinJournalCase record, SuiyinMember person, int tick)
         {
             if (person == null || person.Presence == SuiyinPresence.Dead || person.Presence == SuiyinPresence.Left || person.Presence == SuiyinPresence.Missing)
             {
@@ -218,22 +220,9 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return;
             }
 
-            if (pawn.IsPrisoner || pawn.IsSlave)
-            {
-                person.Care = SuiyinCare.Captive;
-                person.Presence = SuiyinPresence.Here;
-                return;
-            }
 
             Map home = MapOf(record.MapId);
             bool onHome = home != null && pawn.MapHeld == home;
-            bool kept = onHome && pawn.Faction == Faction.OfPlayer && !HungryOrSick(pawn);
-            if (kept && !mugging && tick - record.StartedTick >= Days(5))
-            {
-                person.Presence = SuiyinPresence.Here;
-                person.Care = SuiyinCare.Free;
-                return;
-            }
 
             if (!onHome && pawn.MapHeld != null)
             {
@@ -253,7 +242,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             }
 
             person.Presence = SuiyinPresence.Here;
-            person.Care = HungryOrSick(pawn) ? SuiyinCare.Hungry : SuiyinCare.Free;
         }
 
         static bool Fighting(SuiyinJournalCase record)
@@ -275,20 +263,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return false;
         }
 
-        static bool HungryOrSick(Verse.Pawn pawn)
-        {
-            if (pawn.needs?.food != null && pawn.needs.food.CurLevelPercentage <= 0.15f)
-            {
-                return true;
-            }
-
-            if (HediffDefOf.Malnutrition != null && pawn.health?.hediffSet?.HasHediff(HediffDefOf.Malnutrition) == true)
-            {
-                return true;
-            }
-
-            return RHAH_Plague.HasActive(pawn);
-        }
 
         static Map MapOf(int mapId)
         {

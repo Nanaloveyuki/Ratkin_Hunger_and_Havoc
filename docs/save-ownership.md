@@ -32,6 +32,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 1.0.3（简称 1.3）到 1.0.4（简称 1.4）：`LordJob_RHAH_Visitor.ExposeData` 在 `LoadingVars` 读取字段前，仅预处理当前 Lord 的 XML。旧单人 `foodReceiver` 引用转为 `foodReceivers/li`；旧键为空、`null` 或 `IsNull="True"` 时转为空列表。新键已存在时以新键为准，包括显式空列表；不合并旧引用。转换幂等，之后由原版 Scribe 解析 Pawn 引用，保存只写新键。不修改磁盘原档、不改 `foodDef`、`foodCount` 或 Pawn 的 `foodWaitUntilTick`，不受当前存档停用新内容影响，不增加 tick 扫描。旧键只作加载迁移输入，不再作运行时字段；卸载随整个访客 Lord Remove。
 
+1.1.0 安置观察改为在场累计存活超过三天，仅营养不良暂停。`SuiyinMember.careTicks` 保留既有累计值；新增 `lastCareTick` 默认 -1，旧档首次观察只建立时间基准，不从批次到达时间倒推有效存活时间。新记录以创建 tick 建立基准；未知去向时清除基准，返回后的首次观察不补算失联期间。`care` 保留旧 Free/Captive/Hungry/Plague 编号，追加 Malnutrition=4，首次观察改写当前状态，保存后使用当前值。已关闭的结果不重新结算。旧全局 `narrativeCareDays` 设置不再读取或写出，统一使用三天条件；IrisMenus 进度快照只在内存中缓存，不进入存档。
+
 事件链切换到 Oxygen DSL Framework（ODF）：只读本模组旧 `eventChains`、`nextEventChainId` 和地图 `predationPendingTick`，不读旧鼠灾数据。所有引用解析完成后、ODF Activate 之前自动整批导入，保留实例 ID、`siteId`、`startedTick`、payload 和合法结局，不重抽随机结果。开放 stage 0 的下次检查是加载 tick + 1；受支持的开放 stage 1 长链在激活前转为 stage 3，旧 `deadlineTick` 只补入尚未设置的长链 `dueTick`，ODF deadline 置 -1，下次检查严格晚于加载 tick 且与 `id % 2500` 同相位。1.0.6 可通过设置生成无具体长后续的合法 stage 1；这些实例保留原阶段、期限并休眠，不使整个分区迁移失败。stage 2 保持 `NextTick=-1`，只保留原期限，不重跑已完成短阶段。时间计算溢出时不能回绕。`closed=true` 且 end=0 映射 Completed，其它 end 按 1 完成、2 失败、3 到期、4 取消映射。
 
 迁移包含地图尚未到达的捕食者，保留旧 pending tick、猎物引用和已选结果；新地图键 `predationArrivalInstanceId` 引用 ODF 内部到达定义实例。安居点和事件后续共用该定义，新请求在选中结果后 120 tick 执行，每图只留一个待到达实例，重复请求按旧规则合并。地图的捕食者 AI 状态不转交 ODF。
@@ -539,7 +541,7 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。A
 | RHAH_ChildExchange | IncidentDef | Remove |
 | RHAH_MouseSwarm, RHAH_PleadingJoin, RHAH_BanditAttack | IncidentDef | Remove。I-052/I-053/I-054；保留真实鼠族 Pawn、原版特质、技能与原版装备 |
 | HungerAndHavoc.Narrative.NarrativeState | revealedCount, trust, rescued, lost, failed, suiyinEnabled, suiyinStarted, suiyinDeadlineTick, seenKinds, theftMaps, theftCounts, journalNoted, asidesSent, openingSent, progressSent, rewardClaimed, rewardPaid, rewardDue, envoyClue, relicClue, lastAsideTick, nextCaseId, aidCount, broadcastCount, expulsionCount, adultCount, completedKindCount, completedJournals, firstFactTick, nextAdultCheckTick, relicDone, endingE01, endingE02, endingE03, endingE04, endingE05, identityTier, identityRefused, entrustCases, exchangeCases, holeCases, envoyCases, relicCase, journalCases, pendingNotices | 同上 | Remove。1.0.4 停用普通 E-01..E-05 判定、触发与预览；`endingE01..endingE05`、`adultCount`、`firstFactTick`、`nextAdultCheckTick` 等已发布字段仍按原键与默认值存读，不改写、不清空。无新旧键迁移。`trust`、N 节点、通知与奖励不变；`relicDone`、`identityTier`、`identityRefused` 继续控制身份来信。`rewardDue` 默认 0，读档后小于 0 归 0。`completedJournals` 保留已完成记录编号，空集合与 null 相同，读档后 `completedKindCount` 仍以它的数量为准 |
-| HungerAndHavoc.Storyteller.Suiyin.SuiyinMember | loadId, presence, care, child, careTicks, missingSince | 嵌在案子里 | Remove。随叙事组件删除 |
+| HungerAndHavoc.Storyteller.Suiyin.SuiyinMember | loadId, presence, care, child, careTicks, missingSince, lastCareTick | 嵌在案子里 | Remove。随叙事组件删除；`lastCareTick` 默认 -1，旧累计保留，首次观察不补算未记录时间 |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN004Case | id, motherId, mapId, startedTick, outcome, mother, missingSince, revisit, revisitSeen, revisitDeadline, meetingCaravanId, rescueDueTick, rescuePaid, breakUntil, breakTrait, effectsApplied, children | 嵌在 entrustCases | Remove |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN005Case | id, mapId, startedTick, outcome, careClosed, children | 嵌在 exchangeCases | Remove |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN006Case | mapId, thefts, startedTick, ignoreUntil, baitUntil, hole, foodPresent, wood, baitStock, outcome, losses, nextLossTick | 嵌在 holeCases | Remove |
@@ -884,9 +886,8 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。A
 | RHAH_Settings.narrativeRelicTake | 全局 ModSettings，默认 200。取走记录 |
 | RHAH_Settings.narrativeRelicHand | 全局 ModSettings，默认 100。交出记录 |
 | RHAH_Settings.narrativeTrustBonusPercent | 全局 ModSettings，默认 25。信任满值时的银两加成 |
-| RHAH_Settings.narrativeCareDays | 全局 ModSettings，默认 5。安置天数 |
 | RHAH_Settings.narrativeMissingDays | 全局 ModSettings，默认 1。失踪天数 |
-| RHAH_Settings.narrativeObserveDays | 全局 ModSettings，默认 30。救济观察上限 |
+| RHAH_Settings.narrativeObserveDays | 全局 ModSettings，默认 30。去向不明的救济观察上限及托付成长观察期限；在场者可继续累计三天存活时间 |
 | RHAH_Settings.narrativeHoleIgnoreDays | 全局 ModSettings，默认 3。粮洞忽视天数 |
 | RHAH_Settings.narrativeEnvoyWaitDays | 全局 ModSettings，默认 3。使者等待 |
 | RHAH_Settings.narrativeEnvoyCheckDays | 全局 ModSettings，默认 1。使者核对 |

@@ -250,7 +250,6 @@ namespace HungerAndHavoc.Core
         public int narrativeRelicTake = 200;
         public int narrativeRelicHand = 100;
         public int narrativeTrustBonusPercent = 25;
-        public int narrativeCareDays = 5;
         public int narrativeMissingDays = 1;
         public int narrativeObserveDays = 30;
         public int narrativeHoleIgnoreDays = 3;
@@ -545,7 +544,6 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref narrativeRelicTake, "narrativeRelicTake", 200);
             Scribe_Values.Look(ref narrativeRelicHand, "narrativeRelicHand", 100);
             Scribe_Values.Look(ref narrativeTrustBonusPercent, "narrativeTrustBonusPercent", 25);
-            Scribe_Values.Look(ref narrativeCareDays, "narrativeCareDays", 5);
             Scribe_Values.Look(ref narrativeMissingDays, "narrativeMissingDays", 1);
             Scribe_Values.Look(ref narrativeObserveDays, "narrativeObserveDays", 30);
             Scribe_Values.Look(ref narrativeHoleIgnoreDays, "narrativeHoleIgnoreDays", 3);
@@ -1446,7 +1444,6 @@ namespace HungerAndHavoc.Core
             config.RescueReward = narrativeRescueReward;
             config.RelicTakeSilver = narrativeRelicTake;
             config.RelicHandSilver = narrativeRelicHand;
-            config.CareDays = narrativeCareDays;
             config.MissingDays = narrativeMissingDays;
             config.ObserveDays = narrativeObserveDays;
             config.HoleIgnoreDays = narrativeHoleIgnoreDays;
@@ -1642,7 +1639,6 @@ namespace HungerAndHavoc.Core
             narrativeRelicTake = ClampSigned(narrativeRelicTake, 0, 10000);
             narrativeRelicHand = ClampSigned(narrativeRelicHand, 0, 10000);
             narrativeTrustBonusPercent = ClampSigned(narrativeTrustBonusPercent, 0, 100);
-            narrativeCareDays = ClampSigned(narrativeCareDays, 0, 120);
             narrativeMissingDays = ClampSigned(narrativeMissingDays, 0, 60);
             narrativeObserveDays = ClampSigned(narrativeObserveDays, 0, 120);
             narrativeHoleIgnoreDays = ClampSigned(narrativeHoleIgnoreDays, 0, 30);

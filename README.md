@@ -111,6 +111,10 @@ The five ordinary-event endings have been retired, along with their settings and
 
 原版模组设置页和 IrisMenus 总览页都有“重置本模组配置”。确认后恢复全部默认配置并保存；存档中的剧情进度、来客和仅此存档停用状态保留。
 
+IrisMenus 在“叙事”旁新增“安置进度”：按批次列出仍在追踪的来客、换来的孩子和托付家庭，显示姓名、剩余时间、营养不良暂停及失踪等情况，并可手动刷新。普通救济与换来的孩子按在场累计存活超过 3 天判定安置；营养不良暂停累计，康复后继续，普通饥饿、鼠疫等其它疾病及囚禁不阻断。在场者可继续等待，母子托付仍按成长和去向推进。旧档保留已有照护累计和已完成结果；普通来客过去未记录的有效时间从升级后的首次观察起累计。
+
+IrisMenus now has a Settlement progress subpage beside Narrative, listing tracked visitors, exchanged children and entrusted families with names, time remaining, malnutrition pauses and whereabouts. Ordinary relief and exchanged children settle after more than 3 accumulated days alive at the colony. Malnutrition pauses the timer; recovery resumes it. Hunger alone, plague, other illnesses and captivity do not block it. Present visitors can keep waiting; entrusted families retain their growth and whereabouts rules. Existing care progress and completed results are preserved. Unrecorded effective time for ordinary visitors starts accumulating after the first post-upgrade observation.
+
 开发者事件页保留原场景的“即时刷新”，退出新池的婴儿索取除外。直接生成到当前地图，跳过排队和世界地图行进，窗口暂停时也可用。商队劫掠直接生成袭击者，危险的鼠族安居点直接生成居民，不要求派出远行队。原有“触发”仍走正常流程；新内容和类开关仍生效。
 
 新增“母爱本能”“父爱本能”和“同类相食”基因，可在 IrisMenus 的基因页选择追加给新来客。母爱仅在哺乳期生效：默认产奶速度与储奶上限均为150%，饥饿速度115%，营养上限125%。父爱在同图有活着的直接亲生子女时生效，子女年龄不限：默认工作速度120%、饥饿速度110%、全局学习速度110%、承伤90%。七项数值均可调整；普通倍率范围1%至1000%，承伤范围1%至100%。同时携带父母两种基因时，雌性保留母爱，雄性保留父爱；单独携带时不受性别限制。

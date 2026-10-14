@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Menu_Settlement>Settlement progress</RHAH_Menu_Settlement>
+  <RHAH_Settlement_Note>Visitors receiving relief, exchanged children and entrusted families still awaiting an outcome are listed here, alongside their progress toward relief and Suiyin's letters.</RHAH_Settlement_Note>
+  <RHAH_Settlement_UpdateNote>Progress is observed about once per game hour. Refresh shows the last observation and any conditions that can currently be checked; accumulated time follows progress already observed.</RHAH_Settlement_UpdateNote>
+  <RHAH_Settlement_Refresh>Refresh progress</RHAH_Settlement_Refresh>
+  <RHAH_Settlement_NoGame>Load a game to see visitors and children awaiting an outcome.</RHAH_Settlement_NoGame>
+  <RHAH_Settlement_None>No visitors receiving relief, exchanged children or entrusted families are currently awaiting an outcome.</RHAH_Settlement_None>
+  <RHAH_Settlement_SearchTerms>settlement relief survival cumulative progress remaining days three days malnutrition journal batch exchanged children entrusted family Suiyin missing growth</RHAH_Settlement_SearchTerms>
+  <RHAH_Settlement_ReliefSource>Ordinary relief · Journal {0} · Visitor batch {1}</RHAH_Settlement_ReliefSource>
+  <RHAH_Settlement_ExchangeSource>Exchanged children · Group {0}</RHAH_Settlement_ExchangeSource>
+  <RHAH_Settlement_EntrustSource>Entrusted family · Group {0}</RHAH_Settlement_EntrustSource>
+  <RHAH_Settlement_ReliefTimerNote>Ordinary relief uses accumulated time alive. More than 3 game days meets individual conditions. Only malnutrition pauses accumulation; ordinary hunger, plague and other illnesses, and captivity still count. The group's outcome also awaits the other visitors' situations.</RHAH_Settlement_ReliefTimerNote>
+  <RHAH_Settlement_ExchangeTimerNote>Exchanged children use accumulated time alive. More than 3 game days meets individual conditions. Only malnutrition pauses accumulation; ordinary hunger, plague and other illnesses, and captivity still count. The group's outcome awaits all children's situations.</RHAH_Settlement_ExchangeTimerNote>
+  <RHAH_Settlement_EntrustGrowthNote>Entrusted families wait for children to reach the child or adult stage, while the mother's and children's whereabouts are checked. The observation limit applies only while children have yet to reach the child stage.</RHAH_Settlement_EntrustGrowthNote>
+  <RHAH_Settlement_ObservationRemaining>Time to clarify whereabouts: {0} days; present visitors can keep awaiting accumulated time alive</RHAH_Settlement_ObservationRemaining>
+  <RHAH_Settlement_GrowthObservationRemaining>Growth observation time remaining: {0} days</RHAH_Settlement_GrowthObservationRemaining>
+  <RHAH_Settlement_GroupFailed>This relief group has failed and cannot count as successful relief.</RHAH_Settlement_GroupFailed>
+  <RHAH_Settlement_GroupDriven>These visitors were driven away and cannot count as successful relief.</RHAH_Settlement_GroupDriven>
+  <RHAH_Settlement_FoodNotDelivered>Some visitors have left, but the promised food handoff has not been completed.</RHAH_Settlement_FoodNotDelivered>
+  <RHAH_Settlement_Mother>Mother: {0}\nLast observation: {1}</RHAH_Settlement_Mother>
+  <RHAH_Settlement_AccumulatedCareRemaining>Time still needed to exceed 3 accumulated days alive: {0} days</RHAH_Settlement_AccumulatedCareRemaining>
+  <RHAH_Settlement_Conditions>Currently known conditions: {0}</RHAH_Settlement_Conditions>
+  <RHAH_Settlement_NoConcerns>No listed concerns found</RHAH_Settlement_NoConcerns>
+  <RHAH_Settlement_Hungry>Hungry; not yet fed</RHAH_Settlement_Hungry>
+  <RHAH_Settlement_Plague>Plague has not cleared</RHAH_Settlement_Plague>
+  <RHAH_Settlement_Captive>Still a prisoner or slave</RHAH_Settlement_Captive>
+  <RHAH_Settlement_Malnutrition>Malnutrition; accumulated time alive is paused</RHAH_Settlement_Malnutrition>
+  <RHAH_Settlement_Unknown>Whereabouts not yet known</RHAH_Settlement_Unknown>
+  <RHAH_Settlement_Missing>Missing</RHAH_Settlement_Missing>
+  <RHAH_Settlement_Dead>Dead</RHAH_Settlement_Dead>
+  <RHAH_Settlement_Left>Has left</RHAH_Settlement_Left>
+  <RHAH_Settlement_Growing>Has yet to reach the child stage</RHAH_Settlement_Growing>
+  <RHAH_Settlement_PresenceHere>Present</RHAH_Settlement_PresenceHere>
+  <RHAH_Settlement_Pending>Individual conditions not yet met.</RHAH_Settlement_Pending>
+  <RHAH_Settlement_ReadyWaiting>Individual conditions met; awaiting the group's outcome.</RHAH_Settlement_ReadyWaiting>
+  <RHAH_Settlement_ReadyFailedGroup>Individual conditions met, but this group cannot count as successful relief.</RHAH_Settlement_ReadyFailedGroup>
+  <RHAH_Settlement_ConditionSeparator>; </RHAH_Settlement_ConditionSeparator>
+  <RHAH_Settlement_UnknownPerson>Unknown person ({0})</RHAH_Settlement_UnknownPerson>
+</LanguageData>

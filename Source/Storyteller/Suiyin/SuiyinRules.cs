@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Verse;
+using RimWorld;
 namespace HungerAndHavoc.Storyteller.Suiyin
 {
     internal enum SuiyinLetter
@@ -77,7 +78,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         Free = 0,
         Captive = 1,
         Hungry = 2,
-        Plague = 3
+        Plague = 3,
+        Malnutrition = 4
     }
 
     internal enum SuiyinN004Outcome
@@ -218,7 +220,6 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal int RescueReward = 2500;
         internal int RelicTakeSilver = 200;
         internal int RelicHandSilver = 100;
-        internal int CareDays = 5;
         internal int MissingDays = 1;
         internal int ObserveDays = 30;
         internal int HoleIgnoreDays = 3;
@@ -240,6 +241,28 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal bool Child;
         internal int CareTicks;
         internal int MissingSince = -1;
+        internal int LastCareTick = -1;
+
+        internal const int SettlementTicks = 3 * GenDate.TicksPerDay;
+        internal bool IsSettled => CareTicks > SettlementTicks;
+
+        internal void ObserveSettlement(int tick, bool malnutrition)
+        {
+            if (LastCareTick >= 0 && tick > LastCareTick && Presence == SuiyinPresence.Here &&
+                !malnutrition && Care != SuiyinCare.Malnutrition)
+            {
+                CareTicks = (int)System.Math.Min(SettlementTicks + 1L, (long)CareTicks + tick - LastCareTick);
+            }
+
+            LastCareTick = Presence == SuiyinPresence.Here ? tick : -1;
+            Care = malnutrition ? SuiyinCare.Malnutrition : SuiyinCare.Free;
+        }
+
+        internal static bool HasMalnutrition(Verse.Pawn pawn)
+        {
+            return RimWorld.HediffDefOf.Malnutrition != null &&
+                pawn?.health?.hediffSet?.HasHediff(RimWorld.HediffDefOf.Malnutrition) == true;
+        }
 
         public void ExposeData()
         {
@@ -249,6 +272,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             Scribe_Values.Look(ref Child, "child", false);
             Scribe_Values.Look(ref CareTicks, "careTicks", 0);
             Scribe_Values.Look(ref MissingSince, "missingSince", -1);
+            Scribe_Values.Look(ref LastCareTick, "lastCareTick", -1);
         }
     }
 
@@ -794,7 +818,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 {
                     if (childIds[i] > 0)
                     {
-                        record.Children.Add(new SuiyinMember { LoadId = childIds[i], Child = true });
+                        record.Children.Add(new SuiyinMember { LoadId = childIds[i], Child = true, LastCareTick = tick });
                     }
                 }
             }
@@ -807,7 +831,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             return true;
         }
 
-        internal SuiyinN005Outcome AdvanceCare(SuiyinN005Case record, int tick, int delta)
+        internal SuiyinN005Outcome AdvanceCare(SuiyinN005Case record, int tick)
         {
             if (record == null || record.Outcome != SuiyinN005Outcome.Accepted || record.CareClosed)
             {
@@ -842,14 +866,10 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                     }
                 }
 
-                if (child.Presence == SuiyinPresence.Here && child.Care != SuiyinCare.Hungry && child.Care != SuiyinCare.Plague)
-                {
-                    child.CareTicks += delta;
-                }
 
                 if (child.Presence == SuiyinPresence.Here)
                 {
-                    if (child.CareTicks < Days(Config.CareDays))
+                    if (!child.IsSettled)
                     {
                         pending = true;
                         allSettled = false;
@@ -1317,7 +1337,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             };
             for (int i = 0; i < ids.Count; i++)
             {
-                record.People.Add(new SuiyinMember { LoadId = ids[i] });
+                record.People.Add(new SuiyinMember { LoadId = ids[i], LastCareTick = tick });
             }
 
             Journals.Add(record);
@@ -1353,6 +1373,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             int left = 0;
             int settled = 0;
             int pending = 0;
+            bool present = false;
             for (int i = 0; i < record.People.Count; i++)
             {
                 SuiyinMember person = record.People[i];
@@ -1375,9 +1396,10 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 }
 
                 living++;
-                if (person.Presence == SuiyinPresence.Here && person.Care != SuiyinCare.Hungry && person.Care != SuiyinCare.Plague && person.Care != SuiyinCare.Captive)
+                if (person.Presence == SuiyinPresence.Here)
                 {
-                    if (tick - record.StartedTick >= Days(Config.CareDays))
+                    present = true;
+                    if (person.IsSettled)
                     {
                         settled++;
                     }
@@ -1404,7 +1426,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return false;
             }
 
-            if (pending > 0 && tick - record.StartedTick < Days(Config.ObserveDays))
+            if (pending > 0 && (present || tick - record.StartedTick < Days(Config.ObserveDays)))
             {
                 return false;
             }

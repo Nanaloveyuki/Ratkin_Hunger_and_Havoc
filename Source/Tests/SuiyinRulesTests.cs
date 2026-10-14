@@ -171,28 +171,34 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
-        public void CarePausesWhileHungryOrSickAndMissingIsNotDeath()
+        public void CarePausesForMalnutritionResumesAndMissingIsNotDeath()
         {
             SuiyinBook book = new SuiyinBook();
             Assert.True(book.AcceptExchange(4, 1, 0, new[] { 9 }));
             Assert.False(book.AcceptExchange(4, 1, 1, new[] { 9 }));
             SuiyinN005Case record = book.N005[0];
-            record.Children[0].Care = SuiyinCare.Hungry;
-            book.AdvanceCare(record, 1000, 60000 * 5);
-            Assert.Equal(SuiyinN005Outcome.Accepted, record.Outcome);
-            Assert.Equal(0, record.Children[0].CareTicks);
+            SuiyinMember child = record.Children[0];
+            child.ObserveSettlement(60000, false);
+            child.ObserveSettlement(120000, true);
+            child.ObserveSettlement(180000, true);
+            Assert.Equal(SuiyinN005Outcome.Accepted, book.AdvanceCare(record, 180000));
+            Assert.Equal(60000, child.CareTicks);
 
-            record.Children[0].Care = SuiyinCare.Free;
-            Assert.Equal(SuiyinN005Outcome.Cared, book.AdvanceCare(record, 2000, 60000 * 5));
+            child.ObserveSettlement(240000, false);
+            child.ObserveSettlement(360000, false);
+            Assert.Equal(SuiyinN005Outcome.Accepted, book.AdvanceCare(record, 360000));
+            Assert.Equal(180000, child.CareTicks);
+            child.ObserveSettlement(360001, false);
+            Assert.Equal(SuiyinN005Outcome.Cared, book.AdvanceCare(record, 360001));
             Assert.Equal(3, book.Trust);
-            book.AdvanceCare(record, 3000, 60000);
+            book.AdvanceCare(record, 360002);
             Assert.Equal(1, Count(book, SuiyinLetter.N005Cared));
 
             SuiyinBook missing = new SuiyinBook();
             missing.AcceptExchange(5, 1, 0, new[] { 9 });
             missing.N005[0].Children[0].Presence = SuiyinPresence.Unknown;
-            Assert.Equal(SuiyinN005Outcome.Accepted, missing.AdvanceCare(missing.N005[0], 100, 0));
-            Assert.Equal(SuiyinN005Outcome.Missing, missing.AdvanceCare(missing.N005[0], 100 + 60000, 0));
+            Assert.Equal(SuiyinN005Outcome.Accepted, missing.AdvanceCare(missing.N005[0], 100));
+            Assert.Equal(SuiyinN005Outcome.Missing, missing.AdvanceCare(missing.N005[0], 100 + 60000));
             Assert.NotEqual(SuiyinN005Outcome.Dead, missing.N005[0].Outcome);
         }
 
