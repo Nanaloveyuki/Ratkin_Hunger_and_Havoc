@@ -140,15 +140,50 @@ namespace HungerAndHavoc.EventMgr
 
         internal static void PrepareGame(EventChainRuntime runtime)
         {
+            GameComponent_RHAH_Game game = Game;
             EventChainProviderState state = runtime.GetProviderState(RHAH_EventChainProvider.ProviderKey);
-            for (int i = 0; state != null && i < state.Instances.Count; i++)
+            if (game == null || state == null || state.SchemaVersion != EventChainRuntime.SchemaVersion || state.StateVersion != 1 ||
+                (state.MigrationStatus ?? "").StartsWith("failed:", StringComparison.Ordinal)) return;
+            List<RHAH_LongFollowRecord> recovered = new List<RHAH_LongFollowRecord>();
+            for (int i = 0; i < state.Instances.Count; i++)
             {
                 EventChainInstance instance = state.Instances[i];
-                if (instance.End != EventChainEnd.None || (instance.Stage != 1 && instance.Stage != 3)) continue;
-                if (!RHAH_EventFollowRules.ReadPayload(instance.Payload, out string id, out int batch, out int site)) continue;
+                if (instance == null || instance.End != EventChainEnd.None || (instance.Stage != 1 && instance.Stage != 3) || !RHAH_EventFollowRules.HasLongFollow(instance.DefinitionId)) continue;
+                if (instance.Id <= 0 || instance.Id == int.MaxValue || instance.DeadlineTick < -1 || instance.DefinitionVersion != 1 ||
+                    !RHAH_EventFollowRules.ReadPayload(instance.Payload, out string id, out int batch, out int site) || id != instance.DefinitionId || site != instance.SiteId)
+                    throw new FormatException("Invalid RHAH long-chain migration payload.");
+            }
+            for (int i = 0; i < state.Instances.Count; i++)
+            {
+                EventChainInstance instance = state.Instances[i];
+                if (instance == null || instance.End != EventChainEnd.None || (instance.Stage != 1 && instance.Stage != 3) || !RHAH_EventFollowRules.HasLongFollow(instance.DefinitionId)) continue;
+                RHAH_EventFollowRules.ReadPayload(instance.Payload, out string id, out int batch, out int site);
+                if (BatchRecord(id, batch) == null)
+                {
+                    bool staged = false;
+                    for (int j = 0; j < recovered.Count; j++) staged |= recovered[j].DisplayId == id && recovered[j].BatchId == batch;
+                    if (!staged)
+                    {
+                        RHAH_LongFollowRecord record = new RHAH_LongFollowRecord { DisplayId = id, BatchId = batch, MapId = site };
+                        RecoverOriginalIds(record);
+                        recovered.Add(record);
+                    }
+                }
+            }
+            game.LongFollows.AddRange(recovered);
+            for (int i = 0; i < state.Instances.Count; i++)
+            {
+                EventChainInstance instance = state.Instances[i];
+                if (instance == null || instance.End != EventChainEnd.None || (instance.Stage != 1 && instance.Stage != 3) || !RHAH_EventFollowRules.HasLongFollow(instance.DefinitionId)) continue;
+                RHAH_EventFollowRules.ReadPayload(instance.Payload, out string id, out int batch, out int site);
                 RegisterChain(instance.Id, id, batch, site, instance.DeadlineTick);
-                // 旧期限是返访起点 不能把成年等待当作到期删除
-                if (instance.Stage == 1) runtime.SetStage(RHAH_EventChainProvider.ProviderKey, instance.Id, 3, -1, instance.Payload, RHAH_EventChainMigration.NextLongTick(Now, instance.Id));
+                // ODF 持久化 setter 是激活前迁移边界 旧期限只作返访起点
+                if (instance.Stage == 1)
+                {
+                    instance.Stage = 3;
+                    instance.DeadlineTick = -1;
+                    instance.NextTick = RHAH_EventChainMigration.NextLongTick(Now, instance.Id);
+                }
             }
         }
 
@@ -271,33 +306,29 @@ namespace HungerAndHavoc.EventMgr
             return AddTicks(tick, GenDate.TicksPerHour);
         }
 
-        internal static string Dispatch(int chainId, string id, int batchId, int mapId, int tick)
+        internal static EventChainDecision Evaluate(int chainId, int mapId, int tick)
         {
             RHAH_LongFollowRecord record = FindRecord(chainId);
-            if (record == null) { RegisterChain(chainId, id, batchId, mapId, -1); record = FindRecord(chainId); }
-            if (record == null || record.Completed) return "completed";
+            if (record != null && record.Completed) return EventChainDecision.Finish(EventChainEnd.Completed);
+            int nextTick = NextTick(chainId, tick);
+            if (record == null) return EventChainDecision.Action("advance_long", nextTick);
             Map map = RHAH_EventFollowRuntime.FindMap(mapId);
-            if (map == null)
-            {
-                Complete(record);
-                return "map_unavailable";
-            }
+            if (map == null) return EventChainDecision.Action("advance_long", nextTick);
             if (map.mapPawns == null || map.Parent == null || map.Parent.Destroyed)
             {
                 record.LastTick = tick;
-                return "map_waiting";
+                return EventChainDecision.Wait(nextTick);
             }
+            UpdateClock(record, map, tick);
+            bool ready = RHAH_LongMotherFollow.Handles(record.DisplayId) ? RHAH_LongMotherFollow.Ready(record, map, tick) :
+                RHAH_LongClaimFollow.Handles(record.DisplayId) ? RHAH_LongClaimFollow.Ready(record, map, tick) :
+                RHAH_LongAdoptionFollow.Ready(record, map, tick);
+            return ready ? EventChainDecision.Action("advance_long", nextTick) : EventChainDecision.Wait(nextTick);
+        }
+
+        static void UpdateClock(RHAH_LongFollowRecord record, Map map, int tick)
+        {
             Verse.Pawn subject = Pawn(record.SubjectId, tick);
-            dispatchingChainId = record.ChainId;
-            try
-            {
-                if (RHAH_LongClaimFollow.Handles(record.DisplayId)) RHAH_LongClaimFollow.ResolvePending(record, map, tick);
-            }
-            finally
-            {
-                dispatchingChainId = 0;
-            }
-            if (record.Completed) return "completed";
             bool paused = record.Opened && MedicallyPaused(subject);
             if (RHAH_LongMotherFollow.Handles(record.DisplayId) && record.AskedEarly && !record.MedicalHold)
             {
@@ -317,6 +348,35 @@ namespace HungerAndHavoc.EventMgr
                 if (record.DueTick >= 0) record.DueTick = AddTicks(record.DueTick, elapsed);
                 if (record.DeadlineTick >= 0) record.DeadlineTick = AddTicks(record.DeadlineTick, elapsed);
             }
+        }
+
+        internal static string Dispatch(int chainId, string id, int batchId, int mapId, int tick)
+        {
+            RHAH_LongFollowRecord record = FindRecord(chainId);
+            if (record == null) { RegisterChain(chainId, id, batchId, mapId, -1); record = FindRecord(chainId); }
+            if (record == null || record.Completed) return "completed";
+            Map map = RHAH_EventFollowRuntime.FindMap(mapId);
+            if (map == null)
+            {
+                Complete(record);
+                return "map_unavailable";
+            }
+            if (map.mapPawns == null || map.Parent == null || map.Parent.Destroyed)
+            {
+                record.LastTick = tick;
+                return "map_waiting";
+            }
+            dispatchingChainId = record.ChainId;
+            try
+            {
+                if (RHAH_LongClaimFollow.Handles(record.DisplayId)) RHAH_LongClaimFollow.ResolvePending(record, map, tick);
+            }
+            finally
+            {
+                dispatchingChainId = 0;
+            }
+            if (record.Completed) return "completed";
+            UpdateClock(record, map, tick);
             dispatchingChainId = record.ChainId;
             try
             {
@@ -680,6 +740,20 @@ namespace HungerAndHavoc.EventMgr
                 if (changed) Wake(record);
             }
         }
+        internal static bool CanMeetAtEdge(Verse.Pawn mother, Verse.Pawn child, Map map)
+        {
+            if (!Alive(mother) || !Alive(child) || mother.MapHeld != map || child.MapHeld != map || !child.Spawned) return false;
+            if (HungerAndHavoc.Pawn.Compat.RHAH_ChildMovement.CanWalkOut(child))
+                return child.CurJobDef?.defName != "RHAH_LongMeetWalk" && child.CanReach(mother, PathEndMode.Touch, Danger.Some);
+            foreach (Verse.Pawn carrier in map.mapPawns.FreeColonistsSpawned)
+            {
+                if (!Adult(carrier) || carrier.Downed || carrier.Drafted || !carrier.CanReach(child, PathEndMode.Touch, Danger.Some) || !carrier.CanReach(mother, PathEndMode.Touch, Danger.Some)) continue;
+                if (carrier.CurJobDef?.defName == "RHAH_LongMeeting") return false;
+                return true;
+            }
+            return false;
+        }
+
         internal static bool MeetAtEdge(Verse.Pawn mother, Verse.Pawn child, Map map)
         {
             if (!Alive(mother) || !Alive(child) || mother.MapHeld != map || child.MapHeld != map || !child.Spawned) return false;

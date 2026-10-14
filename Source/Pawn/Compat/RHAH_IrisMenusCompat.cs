@@ -635,6 +635,7 @@ namespace HungerAndHavoc.Pawn.Compat
             if (narrative != null)
             {
                 DrawNarrativeNumbers(list, narrative);
+                MenuControls.Anchor(list, "narrative-identity");
                 RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Ending_Identity".Translate(), ref narrative.endingIdentity, "RHAH_Ending_Identity_Tooltip".Translate());
                 narrative.endingTrustFloor = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "identity-partial", "RHAH_Settings_IdentityPartialTrust".Translate(narrative.endingTrustFloor), narrative.endingTrustFloor, -100f, 100f, "RHAH_Settings_IdentityPartialTrust_Tooltip".Translate());
                 narrative.endingHopeTrust = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "identity-full", "RHAH_Settings_IdentityFullTrust".Translate(narrative.endingHopeTrust), narrative.endingHopeTrust, narrative.endingTrustFloor, 100f, "RHAH_Settings_IdentityFullTrust_Tooltip".Translate());
@@ -675,7 +676,7 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("narrative-outcome", "RHAH_Menu_Narrative_Outcome");
             yield return Entry("narrative-nodes", "RHAH_Menu_Narrative_Nodes");
             yield return Entry("narrative-thresholds", "RHAH_Menu_Narrative_Thresholds");
-            yield return Entry("narrative-thresholds", "RHAH_Ending_Identity");
+            yield return Entry("narrative-identity", "RHAH_Ending_Identity");
             yield return Entry("identity-partial", "RHAH_Settings_IdentityPartialTrust");
             yield return Entry("identity-full", "RHAH_Settings_IdentityFullTrust");
             yield return Entry("narrative-journals", "RHAH_Menu_Narrative_Journals");

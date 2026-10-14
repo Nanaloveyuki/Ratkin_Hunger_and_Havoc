@@ -32,13 +32,13 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 1.0.3（简称 1.3）到 1.0.4（简称 1.4）：`LordJob_RHAH_Visitor.ExposeData` 在 `LoadingVars` 读取字段前，仅预处理当前 Lord 的 XML。旧单人 `foodReceiver` 引用转为 `foodReceivers/li`；旧键为空、`null` 或 `IsNull="True"` 时转为空列表。新键已存在时以新键为准，包括显式空列表；不合并旧引用。转换幂等，之后由原版 Scribe 解析 Pawn 引用，保存只写新键。不修改磁盘原档、不改 `foodDef`、`foodCount` 或 Pawn 的 `foodWaitUntilTick`，不受当前存档停用新内容影响，不增加 tick 扫描。旧键只作加载迁移输入，不再作运行时字段；卸载随整个访客 Lord Remove。
 
-事件链切换到 Oxygen DSL Framework（ODF）：只读本模组旧 `eventChains`、`nextEventChainId` 和地图 `predationPendingTick`，不读旧鼠灾数据。所有引用解析完成后、ODF Activate 之前自动整批导入。实例 ID、`siteId`、stage、`startedTick`、`deadlineTick`、payload 和合法结局保持原值，不重抽随机结果。开放 stage 0 的下次检查是加载 tick + 1；stage 1 取严格晚于加载 tick 且与 `id % 2500` 同相位的首次 tick；stage 2 保持 `NextTick=-1`，只保留原期限，不重跑已完成短阶段。时间计算溢出时不能回绕。`closed=true` 且 end=0 映射 Completed，其它 end 按 1 完成、2 失败、3 到期、4 取消映射。
+事件链切换到 Oxygen DSL Framework（ODF）：只读本模组旧 `eventChains`、`nextEventChainId` 和地图 `predationPendingTick`，不读旧鼠灾数据。所有引用解析完成后、ODF Activate 之前自动整批导入，保留实例 ID、`siteId`、`startedTick`、payload 和合法结局，不重抽随机结果。开放 stage 0 的下次检查是加载 tick + 1；受支持的开放 stage 1 长链在激活前转为 stage 3，旧 `deadlineTick` 只补入尚未设置的长链 `dueTick`，ODF deadline 置 -1，下次检查严格晚于加载 tick 且与 `id % 2500` 同相位。1.0.6 可通过设置生成无具体长后续的合法 stage 1；这些实例保留原阶段、期限并休眠，不使整个分区迁移失败。stage 2 保持 `NextTick=-1`，只保留原期限，不重跑已完成短阶段。时间计算溢出时不能回绕。`closed=true` 且 end=0 映射 Completed，其它 end 按 1 完成、2 失败、3 到期、4 取消映射。
 
 迁移包含地图尚未到达的捕食者，保留旧 pending tick、猎物引用和已选结果；新地图键 `predationArrivalInstanceId` 引用 ODF 内部到达定义实例。安居点和事件后续共用该定义，新请求在选中结果后 120 tick 执行，每图只留一个待到达实例，重复请求按旧规则合并。地图的捕食者 AI 状态不转交 ODF。
 
 地图 `uniqueID=0` 是合法首图 ID，迁移和到达 payload 接受非负地图 ID；负站点继续表示商队。失败保留使用原 Scribe 默认值语义，保存时可能省略默认 XML 字段，但不修正、丢弃或重编号原记录值。
 
-原子导入成功后清空旧记录和 pending tick，后续保存不写旧键。若有非法或重复 ID、非法 stage/end、未知定义或错误 payload，整个导入失败，不丢弃记录、不重新抽取、不执行旧引擎；原 `eventChains`、`nextEventChainId` 和各地图 `predationPendingTick` 只在失败时原样存回。`eventChainMigrationStatus` 保存诊断；ODF provider 分区保持 Paused，在日志与 ODF 运行检查显示原因。
+整批导入和激活前长链迁移成功后才清空旧记录和 pending tick，后续保存不写旧键。迁移先验证整批长链 payload，再恢复身份并提交；已有 ODF 分区同样在 Activate 前迁移。若有非法或重复 ID、非法 stage/end、未知定义或错误 payload，整个导入失败，不丢弃记录、不重新抽取、不执行旧引擎；原 `eventChains`、`nextEventChainId` 和各地图 `predationPendingTick` 只在失败时原样存回。`eventChainMigrationStatus` 保存诊断；ODF provider 分区保持 Paused，在日志与 ODF 运行检查显示原因。失败分区不新增长链记录或改写阶段。
 
 已经存在的 ODF provider 分区是权威格式，包括明确为空的分区；忽略旧输入，不再次导入。唯一失败保留例外：分区 `MigrationStatus` 以 `failed:` 开头时，继续保留原失败迁移输入，不将该诊断分区视为成功迁移。停用新内容不阻止读档迁移；迁移完成后 provider 设为 Disabled，保留所有实例和世界事实。
 
@@ -50,6 +50,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 2026-10-13 普通结局 E-01..E-05 退休：删除判定、触发、谢幕与开发预览，不增加替代终局。已发布叙事状态的旧 E 标记、成年计数与检查 tick 等字段保留原键、默认值和 Scribe 存读；无清空、改键或加载迁移。全局退休结局设置也保留原值，但退出菜单与行为消费，不再归一化。信任、普通通知、奖励、N 节点和身份来信消费仍走现行路径。
 
 历史旧结局信由原版 `PositiveEvent` 保存翻译后文本，没有本模组持久唯一身份。因此不按标题、正文、语言或本模组前缀猜删，不改历史档案与信件队列；原版历史信保留。身份信与普通通知同样保留。此限制只关乎既有信件的精确识别，不恢复旧结局触发。
+
+2026-10-14 母子关系补齐：I-003 耗子分妈、I-004 母亲乞讨的初次生成保留现有 `parentPawnLoadId` / `childPawnLoadIds`，同时使用原版 `Parent` 关系。`GameComponent_RHAH_Game.FinalizeInit` 在引用解析完成后，一次性遍历地图、世界、商队及临时角色；仅当双方已存 ID 相互确认、来源事件/批次/关系组一致且母亲为女性时补关系。已有另一位女性 Parent 时保留现状；缺失身份不猜补，不按姓名、年龄或同批来客推断。停用新内容不阻止补齐，重复加载不增加重复关系，下一次保存由原版 relations 写入；原 ID 字段和默认值不变，不增加 tick 扫描。
 
 
 
@@ -78,8 +80,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | carriesPlague | carriesPlague | false | 否 | |
 | attitudeAtArrival | attitudeAtArrival | Neutral | 否 | `RHAH_Attitude` |
 | attitude | attitude | Neutral | 否 | 当前 `RHAH_Attitude`，forceSave 保留明确 Neutral 停战。仅旧档缺键时回退到 `attitudeAtArrival`；键、类型和默认值不变 |
-| parentPawnLoadId | parentPawnLoadId | 0 | 否 | |
-| childPawnLoadIds | childPawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
+| parentPawnLoadId | parentPawnLoadId | 0 | 否 | 明确的原父母身份；I-003/I-004 与母亲 childPawnLoadIds 双向确认后补齐原版 Parent |
+| childPawnLoadIds | childPawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同。I-003/I-004 生成时同时建立原版 Parent，不重复登记孩子 |
 | gateOverrides | gateOverrides | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同 |
 | extraData | extraData | 空集合 | 是 | `PostLoadInit` 补字典；null 与空集合语义相同；`SetExtra(key, null)` 删除键 |
 | droppedChildLoadIds | droppedChildLoadIds | 空集合 | 是 | 已放下的孩子 Load ID。`PostLoadInit` 补空列表 |
@@ -494,7 +496,7 @@ ODF 定义 `RHAH_KingdomInvitation` 版本 1，stage=0、payload 为空、无期
 
 原 Comp 的 `extraData` 新增 `rhah:longHold`（暂存 Leave/Join 闸门，沿用叙事留驻格式）和 `rhah:longEdge`（边缘停留格 `x,z`）。治疗时保留原停留格，`medicalHold` 暂停边缘职责；康复后回到原格再恢复选择。解除留驻时归还闸门并删除键，卸载随身份 Remove。新 I-002/I-037 初次事件会建立原母亲和真实亲子关系，并保留世界 Pawn；旧档只按原批次身份与已存 parent ID 恢复，历史上未生成的母亲无法还原。
 
-ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。加载后开放 stage 1 长链转 stage 3，原 deadline 作为记录 dueTick，ODF deadline 置 -1，保持实例 ID/开始时间/人物；终态实例不改、不重复行动。stage 3 调度仍归 ODF，人物生日、死亡、离图及相关来客通知只唤醒该实例；医学暂停只推进记录期限，婴儿年龄导致的 alwaysDowned 不算患病。
+ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。Activate 前受支持的开放 stage 1 长链转 stage 3，旧 deadline 只补入未设置的记录 dueTick，ODF deadline 置 -1，保持实例 ID/开始时间/人物；终态实例不改、不重复行动，停用存档也完成迁移。stage 3 调度仍归 ODF，人物生日、死亡、离图及相关来客通知只唤醒该实例；医学暂停只推进记录期限，婴儿年龄导致的 alwaysDowned 不算患病。地图未准备、成年等待、返访未到期和无可执行互动返回 Wait，不追加 receipt；Wait 仍更新 LastTick 和医疗暂停期限。实际行动继续写 receipt。王国 Response 已发出结果且无其它计时事项时休眠。
 
 
 ## Def

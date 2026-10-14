@@ -68,6 +68,85 @@ namespace HungerAndHavoc.EventMgr
             }
         }
 
+        internal static bool Ready(RHAH_LongFollowRecord record, Map map, int tick)
+        {
+            Verse.Pawn child = RHAH_LongFollowRuntime.Pawn(record.SubjectId, tick);
+            if (record.Phase == Returning)
+            {
+                if (record.DueTick >= 0 && tick < record.DueTick) return false;
+                Verse.Pawn source = RHAH_LongFollowRuntime.Pawn(record.SourceAdultId, tick);
+                if (source == null || source.Dead) return true;
+                if (record.DisplayId == "I-002" && MeetingDisabled(record, map, tick) != null)
+                {
+                    bool found = false;
+                    for (int i = 0; i < record.ChildIds.Count; i++)
+                    {
+                        Verse.Pawn candidate = RHAH_LongFollowRuntime.Pawn(record.ChildIds[i], tick);
+                        if (RHAH_LongFollowRuntime.AtHome(candidate, map) && RHAH_LongFollowRuntime.Adult(candidate)) { found = true; break; }
+                    }
+                    if (!found) return false;
+                }
+                if (record.DisplayId == "I-037")
+                {
+                    if (record.SubjectId <= 0 && record.ChildIds.Count > 0) record.SubjectId = record.ChildIds[0];
+                    if (ChildStatus(record, map, tick) == ChildUnknown) return false;
+                }
+                return RHAH_LongFollowRuntime.CanBring(source, map);
+            }
+            if (record.Phase == DeathMemory) return child != null && (child.Dead || RHAH_LongFollowRuntime.Adult(child));
+            if (record.Phase == InquiryDelay)
+                return tick >= record.DueTick && !Present(RHAH_LongFollowRuntime.Pawn(record.SourceAdultId, tick), map);
+            if (record.Phase == Inquiry) return AllVisitorsGone(record, map, tick) || tick >= record.DeadlineTick;
+            if (record.Phase == Theft)
+            {
+                if (AllVisitorsGone(record, map, tick)) return true;
+                for (int i = 0; i < record.VisitorIds.Count; i++)
+                {
+                    if (record.SelectedIds.Contains(record.VisitorIds[i])) continue;
+                    Verse.Pawn visitor = RHAH_LongFollowRuntime.Pawn(record.VisitorIds[i], tick);
+                    if (!Present(visitor, map) || !RHAH_LongFollowRuntime.MedicallyPaused(visitor)) return true;
+                }
+                return false;
+            }
+            Verse.Pawn mother = RHAH_LongFollowRuntime.Pawn(record.SourceAdultId, tick);
+            if (mother == null) return false;
+            if (mother.Dead) return true;
+            if (record.Phase == BegDelay)
+                return tick >= record.DueTick && child != null && (child.Dead || record.RevisitCount >= 2 ||
+                    RHAH_LongFollowRuntime.CanBring(mother, map) && RHAH_LongFollowRuntime.CanBring(child, map));
+            if (record.Phase == Leaving) return !Present(mother, map);
+            if (record.Phase == PairLeaving) return !Present(mother, map) && child != null && !Present(child, map);
+            if (record.MedicalHold)
+                return !RHAH_LongFollowRuntime.MedicallyPaused(mother) && (record.DisplayId != "I-037" || !RHAH_LongFollowRuntime.Sick(mother));
+            if (RHAH_LongFollowRuntime.MedicallyPaused(mother)) return !record.AskedEarly && !record.LetterOpen;
+            if (!RHAH_LongFollowRuntime.AtOriginalEdge(mother, map)) return false;
+            if (record.DisplayId == "I-037")
+            {
+                int status = ChildStatus(record, map, tick);
+                if (status == ChildUnknown) return false;
+                if (status != record.Branch) return true;
+            }
+            if (record.AskedEarly) return true;
+            if (record.Phase == Meeting)
+                return !RHAH_LongFollowRuntime.AtHome(child, map) || RHAH_LongFollowRuntime.HasMetAtEdge(mother, child, map) || RHAH_LongFollowRuntime.CanMeetAtEdge(mother, child, map);
+            if (record.Phase == LivingChild && (!record.ClaimAcknowledged || record.DeadlineTick < 0))
+                return record.ClaimAcknowledged || RHAH_LongFollowRuntime.HasMetAtEdge(mother, child, map) || RHAH_LongFollowRuntime.CanMeetAtEdge(mother, child, map);
+            if (record.Phase == PaidStay) return tick >= record.DueTick;
+            switch (record.Phase)
+            {
+                case RefusedWait:
+                case Recognition:
+                case TakeChild:
+                case LivingChild:
+                case CalledMother:
+                case Burial:
+                case DuskWait:
+                case TransferredChild:
+                case Begging: return tick >= record.DeadlineTick;
+                default: return false;
+            }
+        }
+
         internal static bool Tick(RHAH_LongFollowRecord record, Map map, int tick)
         {
             if (record.Completed || map == null || !Handles(record.DisplayId))

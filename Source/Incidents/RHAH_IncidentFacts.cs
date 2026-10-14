@@ -137,7 +137,33 @@ namespace HungerAndHavoc.Incidents
                 }
 
                 child.State.parentPawnLoadId = arrived[0].thingIDNumber;
-                mother.State.childPawnLoadIds.Add(arrived[i].thingIDNumber);
+                if (!mother.State.childPawnLoadIds.Contains(arrived[i].thingIDNumber))
+                    mother.State.childPawnLoadIds.Add(arrived[i].thingIDNumber);
+                RHAH_Fertility.LinkParent(arrived[i], arrived[0]);
+            }
+        }
+
+        internal static void RestoreFamilyRelations(IList<Verse.Pawn> pawns)
+        {
+            Dictionary<int, Verse.Pawn> byId = new Dictionary<int, Verse.Pawn>(pawns.Count);
+            for (int i = 0; i < pawns.Count; i++)
+                if (pawns[i] != null) byId[pawns[i].thingIDNumber] = pawns[i];
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Verse.Pawn child = pawns[i];
+                Identity.RHAH_PawnState state = Identity.CompRHAH_Pawn.TryGet(child)?.State;
+                if (state == null || (state.sourceIncidentDisplayId != "I-003" && state.sourceIncidentDisplayId != "I-004") ||
+                    state.parentPawnLoadId <= 0 || !byId.TryGetValue(state.parentPawnLoadId, out Verse.Pawn mother)) continue;
+                Identity.RHAH_PawnState parent = Identity.CompRHAH_Pawn.TryGet(mother)?.State;
+                if (parent == null || mother.gender != Gender.Female || parent.sourceIncidentDisplayId != state.sourceIncidentDisplayId ||
+                    parent.spawnBatchId != state.spawnBatchId || parent.relationshipGroupId != state.relationshipGroupId ||
+                    !parent.childPawnLoadIds.Contains(child.thingIDNumber) || child.relations == null) continue;
+                bool otherMother = false;
+                List<DirectPawnRelation> relations = child.relations.DirectRelations;
+                for (int j = 0; j < relations.Count; j++)
+                    if (relations[j].def == PawnRelationDefOf.Parent && relations[j].otherPawn != mother &&
+                        relations[j].otherPawn?.gender == Gender.Female) otherMother = true;
+                if (!otherMother) RHAH_Fertility.LinkParent(child, mother);
             }
         }
 

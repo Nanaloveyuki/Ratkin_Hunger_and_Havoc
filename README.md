@@ -89,12 +89,19 @@ Plague arrivals describe their illness, care needs, and transmission risk in the
 - 灾民收齐食物后会结束等待，优先吃自己背包里的合格食物。背包食物仍受取食种类和饮食限制。
 - 广播回应固定前往广播所在据点，包括最早建立的地图。切换查看另一据点不会改变目的地。
 - IrisMenus 1.1.1 可正常显示本模组的分类设置。
+- 1.0.6 的旧长后续会在事件链激活前迁移，旧返访期限不会被误判为事件到期；停用新内容的存档也会迁移，保存后只写新格式。旧设置产生的无具体长后续记录保留，不阻塞其它事件。
+- 等待孩子成年、返访或地图准备时不再累积行动记录；关闭武装索粮后，历史请求不再反复解析来客名单。
+- 卸载导出时，王国站点剩余粮食会进入接收者背包，保留原有堆叠数量。
+- “耗子分妈”和母亲乞讨事件会建立真实母子关系；旧档按双方已保存的母子 ID 补齐，已有母亲关系保留。
+- IrisMenus 穗音搜索中的身份开关使用独立条目 ID 和定位锚点，不再使搜索索引失败；王国文书贴图路径改为原版资源的实际路径。
 
 Removal exports clear Hunger and Havoc thought references from other mods' speech caches while keeping their other records. Caravan attacks send a red threat letter targeting the attackers on the encounter map. Hostile visitors become neutral when they accept a food handoff, and each recipient waits for their own share. Combat-capable hostile adult ratkin can attack colonists.
 
 Temporary stays expire for children who cannot walk because of their age; an eligible adult in their group carries them away. Injury or illness still pauses the stay. Permanent joining clears the temporary deadline. Broadcast responses keep the broadcasting colony as their destination, including the first map. IrisMenus 1.1.1 displays the categorized settings again.
 
 Meals preserve temporary workers' contract deadlines, and workers can continue their assigned work. Permanently joined colonists can work even if an old save retains an expired temporary contract. After a food handoff, visitors stop waiting and look for an acceptable meal in their own inventory. Food settings and dietary restrictions still apply.
+
+Legacy long follow-ups migrate before event-chain activation, including disabled saves, and subsequent saves use only the new format. Waiting no longer accumulates action receipts; settled armed requests no longer repeatedly resolve visitors. Removal exports preserve remaining kingdom-site food stacks in recipients' inventories. Mother-and-child incidents establish real parent relations, and saved reciprocal family IDs repair missing relations without replacing an existing mother. Suiyin's identity toggle has a unique IrisMenus search ID, and kingdom documents use the correct base-game texture path.
 
 原来的五条普通事件结局已停用，旧结局设置和预览入口移除。穗音信任、普通来信、奖励与身份揭示保留；旧档中的历史结局和已经收到的信件继续保存。王国篇 K1～K5 用于背景与初步合作，远期政治结局仍在规划中。
 

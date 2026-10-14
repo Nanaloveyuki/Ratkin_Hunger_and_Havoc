@@ -75,18 +75,7 @@ namespace HungerAndHavoc.Core
 
             foreach (XElement site in ContentNodes(game).Where(item => ClassName(item) == "HungerAndHavoc.Storyteller.Suiyin.WorldObject_RHAH_KingdomSite").ToList())
             {
-                XElement pawns = game.Element("world")?.Element("worldPawns")?.Element("pawnsAlive");
-                foreach (XElement recipient in site.Element("kingdomRecipients")?.Elements("li") ?? Enumerable.Empty<XElement>())
-                {
-                    string reference = recipient.Value;
-                    XElement pawn = pawns?.Elements().FirstOrDefault(item => "Thing_" + (string)item.Element("id") == reference);
-                    XElement inventory = pawn?.Element("inventory")?.Element("innerContainer");
-                    if (inventory == null) continue;
-                    XElement supply = site.Element("kingdomSupply")?.Elements().FirstOrDefault(item => !plan.ThingDefs.Contains((string)item.Element("def") ?? ""));
-                    if (supply == null) continue;
-                    supply.Remove();
-                    inventory.Add(supply);
-                }
+                TransferKingdomSupply(game, site);
             }
             foreach (XElement site in ContentNodes(game).Where(IsMappedCamp).ToList())
             {
@@ -213,6 +202,55 @@ namespace HungerAndHavoc.Core
                 throw new InvalidOperationException("Unresolved mod references: " + string.Join(", ", unresolved));
             }
             StripPackage(document.Root.Element("meta"));
+        }
+
+        void TransferKingdomSupply(XElement game, XElement site)
+        {
+            List<XElement> supplies = (site.Element("kingdomSupply")?.Elements("li") ?? Enumerable.Empty<XElement>())
+                .Where(item => !plan.ThingDefs.Contains((string)item.Element("def") ?? string.Empty)).ToList();
+            if (supplies.Count == 0)
+            {
+                return;
+            }
+
+            XElement pawns = game.Element("world")?.Element("worldPawns")?.Element("pawnsAlive");
+            List<XElement> inventories = new List<XElement>();
+            foreach (XElement recipient in site.Element("kingdomRecipients")?.Elements("li") ?? Enumerable.Empty<XElement>())
+            {
+                XElement pawn = pawns?.Elements("li").FirstOrDefault(item => "Thing_" + (string)item.Element("id") == recipient.Value);
+                XElement inventory = pawn?.Element("inventory");
+                XElement container = inventory?.Element("innerContainer");
+                XElement innerList = container?.Element("innerList");
+                if (IsSerializedNull(pawns) || IsSerializedNull(pawn) || IsSerializedNull(inventory) ||
+                    IsSerializedNull(container) || IsSerializedNull(innerList) || IsOwnedClass(pawn) ||
+                    plan.ThingDefs.Contains((string)pawn.Element("def") ?? string.Empty))
+                {
+                    continue;
+                }
+
+                if (!inventories.Contains(innerList))
+                {
+                    inventories.Add(innerList);
+                }
+            }
+
+            if (inventories.Count == 0)
+            {
+                throw new InvalidOperationException("Cannot preserve kingdomSupply at " + PathOf(site) +
+                    " (ID " + (string)site.Element("ID") + "): no safe world pawn inventory/innerContainer/innerList.");
+            }
+
+            for (int i = 0; i < supplies.Count; i++)
+            {
+                XElement supply = supplies[i];
+                supply.Remove();
+                inventories[i % inventories.Count].Add(supply);
+            }
+        }
+
+        static bool IsSerializedNull(XElement node)
+        {
+            return node == null || string.Equals((string)node.Attribute("IsNull"), "True", StringComparison.OrdinalIgnoreCase);
         }
 
         void RequireKnownTypes(XElement game)

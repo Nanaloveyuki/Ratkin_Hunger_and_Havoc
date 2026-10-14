@@ -53,6 +53,7 @@ namespace HungerAndHavoc.Core
         public override void FinalizeInit()
         {
             Pawn.RHAH_AttitudeFactions.LockGoodwill();
+            RHAH_IncidentFacts.RestoreFamilyRelations(PawnsFinder.All_AliveOrDead);
         }
 
         public override void GameComponentTick()

@@ -40,8 +40,11 @@ namespace HungerAndHavoc.Tests
             {
                 Current.Game = (Game)FormatterServices.GetUninitializedObject(typeof(Game));
                 Current.Game.components = new List<GameComponent>();
+                typeof(Game).GetField("maps", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(Current.Game, new List<Map>());
                 World world = (World)FormatterServices.GetUninitializedObject(typeof(World));
                 world.factionManager = new FactionManager();
+                world.worldPawns = new WorldPawns();
+                world.worldObjects = new WorldObjectsHolder();
                 Current.Game.World = world;
                 Faction player = new Faction
                 {

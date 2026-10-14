@@ -121,6 +121,7 @@ namespace HungerAndHavoc.Incidents
                 if (RHAH_MouseSwarm.IsSource(record.DisplayId)) continue;
                 if (RHAH_ArmedDemand.IsRequest(record))
                 {
+                    if (!record.Open) continue;
                     if (!RHAH_ArmedDemand.Enabled)
                     {
                         RHAH_ArmedDemand.Resolve(record, RHAH_ChoiceAction.Ignore);

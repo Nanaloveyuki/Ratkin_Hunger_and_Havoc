@@ -53,7 +53,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
 
         internal static bool NeedsClock(KingdomArcProgress p)
         {
-            return p.PendingLetter || p.ConsentDue >= 0 || p.Due >= 0 || p.Deadline >= 0 || p.Stage == KingdomStage.Response || p.Stage == KingdomStage.Action || p.ActorId != 0;
+            return p.PendingLetter || p.ConsentDue >= 0 || p.Due >= 0 || p.Deadline >= 0 || (p.Stage == KingdomStage.Response && !p.ResultSent) || p.Stage == KingdomStage.Action || p.ActorId != 0;
         }
 
         internal static void Wake()

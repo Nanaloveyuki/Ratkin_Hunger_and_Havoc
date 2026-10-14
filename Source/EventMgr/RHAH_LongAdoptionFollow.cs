@@ -9,6 +9,80 @@ namespace HungerAndHavoc.EventMgr
 {
     internal static class RHAH_LongAdoptionFollow
     {
+        internal static bool Ready(RHAH_LongFollowRecord r, Map map, int tick)
+        {
+            string id = RHAH_LongFollowRuntime.ParentId(r.DisplayId);
+            Verse.Pawn subject = RHAH_LongFollowRuntime.Pawn(r.SubjectId, tick);
+            Verse.Pawn visitor = r.VisitorIds.Count == 0 ? null : RHAH_LongFollowRuntime.Pawn(r.VisitorIds[0], tick);
+            if (id == "I-013" || id == "I-019")
+            {
+                if (r.FoodAlternative) return true;
+                if (r.Phase == 0)
+                {
+                    if (r.DepartedIds.Count == 0) return r.DueTick >= 0 && tick >= r.DueTick;
+                    if (!RHAH_LongFollowRuntime.Alive(subject)) return true;
+                    return tick >= r.DueTick && (id == "I-013" ? RHAH_LongFollowRuntime.Adult(subject) :
+                        subject.DevelopmentalStage != DevelopmentalStage.Baby && RHAH_LongFollowRuntime.CanBring(subject, map));
+                }
+                if (id == "I-013")
+                {
+                    if (!RHAH_LongFollowRuntime.Alive(visitor) && r.Phase < 7) return true;
+                    if (r.Phase == 5) return true;
+                    return (r.Phase == 2 || r.Phase == 3 || r.Phase == 4 || r.Phase == 7) && tick >= r.DueTick;
+                }
+                if (!RHAH_LongFollowRuntime.Alive(subject)) return true;
+                if (subject.MapHeld != map && subject.Faction != Faction.OfPlayer && r.Phase >= 6) return true;
+                if (r.Phase == 5) return subject.MapHeld != map;
+                return (r.Phase == 3 || r.Phase == 4 || r.Phase == 6 && !RHAH_LongFollowRuntime.MedicallyPaused(subject)) && tick >= r.DueTick;
+            }
+            if (id == "I-032")
+            {
+                if (r.Phase == 0)
+                {
+                    if (tick < r.DueTick) return false;
+                    for (int i = 0; i < r.ChildIds.Count; i++)
+                        if (RHAH_LongFollowRuntime.AtHome(RHAH_LongFollowRuntime.Pawn(r.ChildIds[i], tick), map)) return true;
+                    return false;
+                }
+                if (r.Phase == 4) return RHAH_LongFollowRuntime.Adult(subject);
+                if (r.Phase == 5) return tick >= r.DueTick && (!r.FollowupSelected || !RHAH_LongFollowRuntime.Alive(subject) || subject.MapHeld != map);
+                if (r.Phase == 8) return tick >= r.DueTick && (!RHAH_LongFollowRuntime.Alive(subject) || RHAH_LongFollowRuntime.CanBring(subject, map));
+                return false;
+            }
+            if (id != "I-033") return true;
+            Verse.Pawn original = RHAH_LongFollowRuntime.Pawn(r.SourceAdultId == 0 ? r.ResponsibleId : r.SourceAdultId, tick);
+            if (r.SourceAdultId == 0 && original != null) r.SourceAdultId = original.thingIDNumber;
+            if (!RHAH_LongFollowRuntime.Alive(subject) || !RHAH_LongFollowRuntime.Alive(original)) return true;
+            if (r.Phase == 0) return RHAH_LongFollowRuntime.AtHome(subject, map) && subject.DevelopmentalStage != DevelopmentalStage.Baby;
+            if (r.Phase == 1 || r.Phase == 2)
+            {
+                if (!RHAH_LongFollowRuntime.AtHome(subject, map) || subject.IsPrisoner || subject.IsSlave || RHAH_LongFollowRuntime.Adult(subject)) return true;
+                if (tick >= r.DueTick && (r.Phase == 2 || !r.LetterOpen)) return true;
+                Verse.Pawn caregiver = r.RehomeCount >= 2 || r.Phase == 2 ? RHAH_LongFollowRuntime.Pawn(r.ResponsibleId, tick) : original;
+                if (FollowReady(subject, caregiver, map)) return true;
+                List<Thought_Memory> memories = subject.needs?.mood?.thoughts?.memories?.Memories;
+                if (subject.needs?.food?.CurLevelPercentage >= 0.9f && memories != null)
+                    for (int i = 0; i < memories.Count; i++)
+                        if (memories[i].def.defName == "RHAH_LongBiteForFood") return true;
+                return false;
+            }
+            if (r.Phase == 3) return tick >= r.DueTick && (subject.MapHeld == map || !r.FollowupSelected || RHAH_LongFollowRuntime.CanBring(subject, map));
+            return r.Phase == 4 && tick >= r.DueTick;
+        }
+
+        static bool FollowReady(Verse.Pawn child, Verse.Pawn adult, Map map)
+        {
+            if (!RHAH_LongFollowRuntime.Alive(adult) || !child.Spawned || adult.MapHeld != map || child.Drafted || child.IsPrisoner || child.IsSlave || RHAH_LongFollowRuntime.MedicallyPaused(child)) return false;
+            if (child.CurJobDef == JobDefOf.Ingest || child.CurJobDef == JobDefOf.Steal || child.CurJobDef == JobDefOf.TakeFromOtherInventory) return false;
+            if (child.needs?.food?.CurLevelPercentage < 0.5f && adult.inventory != null)
+            {
+                ThingOwner<Thing> inventory = adult.inventory.innerContainer;
+                for (int i = 0; i < inventory.Count; i++)
+                    if (inventory[i].def.IsNutritionGivingIngestible && FoodUtility.WillEat(child, inventory[i])) return true;
+            }
+            return adult.InBed() && GenLocalDate.HourInteger(map) >= 20 || adult.Position.DistanceToSquared(child.Position) > 16 && child.CanReach(adult, PathEndMode.Touch, Danger.Some);
+        }
+
         internal static bool Tick(RHAH_LongFollowRecord r, Map map, int tick)
         {
             switch (RHAH_LongFollowRuntime.ParentId(r.DisplayId))

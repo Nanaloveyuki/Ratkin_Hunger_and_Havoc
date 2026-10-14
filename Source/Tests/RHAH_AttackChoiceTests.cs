@@ -107,6 +107,39 @@ namespace HungerAndHavoc.Tests
             }
         }
 
+        [Fact]
+        public void DisablingArmedDemandClosesOrphanRequestWithoutChangingSettledHistory()
+        {
+            RHAH_ChoiceRecord orphan = new RHAH_ChoiceRecord
+            {
+                Id = 1,
+                DisplayId = "I-014",
+                Kind = RHAH_RequestKind.SimpleMeal,
+                ExpireTick = 500
+            };
+            RHAH_ChoiceRecord delivered = new RHAH_ChoiceRecord
+            {
+                Id = 2,
+                DisplayId = "I-030",
+                Kind = RHAH_RequestKind.SimpleMeal,
+                Settled = RHAH_ChoiceAction.Deliver
+            };
+            List<RHAH_ChoiceRecord> records = (List<RHAH_ChoiceRecord>)choices.OpenChoices;
+            records.Add(orphan);
+            records.Add(delivered);
+            RHAH_Mod.Settings.armedDemandEnabled = false;
+
+            RHAH_ChoiceRuntime.Tick(choices, 1);
+
+            Assert.Equal(RHAH_ChoiceAction.Ignore, orphan.Settled);
+            Assert.Equal(RHAH_ChoiceAction.Deliver, delivered.Settled);
+            RHAH_Mod.Settings.armedDemandEnabled = true;
+            RHAH_ChoiceRuntime.Tick(choices, 500);
+            Assert.Equal(RHAH_ChoiceAction.None,
+                RHAH_ChoiceRuntime.TrySettleRequest(choices, orphan.Id, RHAH_ChoiceAction.Deliver, 500, true));
+            Assert.Equal(RHAH_ChoiceAction.Ignore, orphan.Settled);
+        }
+
         [Theory]
         [InlineData(RHAH_ChoiceAction.Reject)]
         [InlineData(RHAH_ChoiceAction.Attack)]

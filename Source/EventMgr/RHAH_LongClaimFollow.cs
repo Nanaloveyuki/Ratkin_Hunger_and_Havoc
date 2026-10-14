@@ -47,6 +47,45 @@ namespace HungerAndHavoc.EventMgr
             }
         }
 
+        internal static bool Ready(RHAH_LongFollowRecord record, Map map, int tick)
+        {
+            if (PendingReady(record, map, tick)) return true;
+            Verse.Pawn child = Subject(record, map, tick);
+            if (!RHAH_LongFollowRuntime.Alive(child)) return record.SubjectId != 0 && record.Opened;
+            if (record.Phase == 0)
+            {
+                if (record.DisplayId == "I-041" && RHAH_Plague.HasActive(child)) { record.MedicalHold = true; return false; }
+                if (!AtPlayerHome(record, child, map) || !CanExplain(child) || RHAH_LongFollowRuntime.MedicallyPaused(child)) return false;
+                if (record.DisplayId != "I-041") return child.inventory != null && RHAH_Api.TryGetExtra(child, RHAH_EventFollowMood.BoughtKey, out string _);
+                HediffDef plague = RHAH_Plague.Def;
+                return record.MedicalHold || plague != null && child.health?.immunity != null && child.health.immunity.GetImmunity(plague) >= 1f;
+            }
+            if (!AtPlayerHome(record, child, map) || RHAH_LongFollowRuntime.MedicallyPaused(child)) return false;
+            switch (record.Phase)
+            {
+                case SellingStigma:
+                case ClaimTitle: return SocialReady(record, map, child, tick);
+                case KeepsakeClosedCustody: return InInventory(record.Keepsake, child) || !record.LetterOpen;
+                case KeepsakeCustody: return InInventory(record.Keepsake, child) || RHAH_LongFollowRuntime.Adult(child);
+                case KeepsakeOpening:
+                case KeepsakeWaiting: return RHAH_LongFollowRuntime.Adult(child);
+                case KeepsakeArrival:
+                case ClaimArrival:
+                case ClaimRevengeWaiting: return tick >= record.DueTick;
+                default: return false;
+            }
+        }
+
+        static bool PendingReady(RHAH_LongFollowRecord record, Map map, int tick)
+        {
+            if (record.SubjectId != 0 && record.DepartedIds.Contains(record.SubjectId)) return true;
+            Verse.Pawn child = RHAH_LongFollowRuntime.Pawn(record.SubjectId, tick);
+            if (!RHAH_LongFollowRuntime.Alive(child)) return false;
+            return PlayerKilledClaimant(record, tick) || record.Opened && record.DisplayId != "I-041" && (record.Keepsake == null || record.Keepsake.Destroyed) ||
+                (record.Phase == ClaimLegacy || record.Phase == ClaimRevenge || record.Phase == KeepsakeClaimant) && Scattered(record, map, tick) ||
+                record.Phase == ClaimRevengeWaiting && OriginalPartyDefeated(record, tick);
+        }
+
         internal static bool ResolvePending(RHAH_LongFollowRecord record, Map map, int tick)
         {
             if (record.Completed || map == null)
@@ -704,6 +743,25 @@ namespace HungerAndHavoc.EventMgr
                     RHAH_LongFollowRuntime.Leave(visitor);
                 }
             }
+        }
+
+        static bool SocialReady(RHAH_LongFollowRecord record, Map map, Verse.Pawn child, int tick)
+        {
+            for (int i = 0; i < record.SelectedIds.Count; i++)
+            {
+                int id = record.SelectedIds[i];
+                Verse.Pawn visitor = RHAH_LongFollowRuntime.Pawn(id, tick);
+                if (!RHAH_LongFollowRuntime.Alive(visitor) || visitor.MapHeld != map || visitor.IsPrisonerOfColony || visitor.HostileTo(child) ||
+                    record.VisitorIds.Contains(id) && record.DeadlineTick >= 0 && tick >= record.DeadlineTick) return true;
+                Verse.Pawn initiator = record.Phase == SellingStigma ? visitor : child;
+                Verse.Pawn recipient = record.Phase == SellingStigma ? child : visitor;
+                InteractionDef interaction = record.Phase == SellingStigma ? InteractionDefOf.Insult : InteractionDefOf.Chitchat;
+                if (initiator.interactions?.CanInteractNowWith(recipient, interaction) == true) return true;
+                if (initiator.Spawned && recipient.Spawned && !initiator.Drafted && !initiator.Downed && initiator.Awake() && initiator.jobs != null &&
+                    initiator.CurJob?.playerForced != true && initiator.Position.DistanceToSquared(recipient.Position) > 4f && initiator.CurJobDef != JobDefOf.Goto &&
+                    initiator.CanReach(recipient, PathEndMode.Touch, Danger.Some)) return true;
+            }
+            return false;
         }
 
         static bool SocialTick(RHAH_LongFollowRecord record, Map map, Verse.Pawn child, int tick)

@@ -25,7 +25,7 @@ MOD_NAME = "RatkinHungerAndHavoc"
 FORBIDDEN_TARGET = "RatkinGreatFamineYearContinued"
 FOLDERS = {
     "About": {".xml", ".png", ".jpg", ".jpeg", ".txt", ".md"},
-    "Languages": {".xml"},
+    "Languages": {".xml", ".txt"},
     "Guard/Languages": {".xml"},
     "1.6/Defs": {".xml"},
     "1.6/Patches": {".xml"},
@@ -112,6 +112,8 @@ def release_version(root, tag=None):
 def publishable(relative):
     path = Path(relative)
     if any(part.lower() in EXCLUDED_DIRS or part.startswith(".") for part in path.parts):
+        return False
+    if path.parts[0] == "Languages" and path.suffix.lower() == ".txt" and (len(path.parts) < 4 or path.parts[2] != "Strings"):
         return False
     if any(SENSITIVE_NAME.search(part) for part in path.parts) or path.suffix.lower() in {".pdb", ".cs", ".ps1", ".py", ".dll", ".rws", ".pem", ".key", ".pfx"}:
         return str(path.as_posix()) in DLLS

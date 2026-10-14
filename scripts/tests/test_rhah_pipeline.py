@@ -48,7 +48,9 @@ class ReleaseTests(unittest.TestCase):
         fixture(self.root)
 
     def test_package_is_strict_whitelist_and_hashes(self):
-        excluded = ("1.6/Assemblies/0Harmony.dll", "Guard/Assemblies/ThirdParty.dll", "About/secret.txt", "About/token.xml", "About/.env", "Textures/Source/code.cs", "Textures/bin/fake.png", "Textures/image.pdb", "Languages/English/credentials/key.xml", "tmp/automation/private.json", "Source/private.cs")
+        flowers = "Languages/ChineseSimplified/Strings/Names/Noun/RHAH_FlowerNames.txt"
+        write(self.root, flowers, "牡丹\n芍药\n")
+        excluded = ("1.6/Assemblies/0Harmony.dll", "Guard/Assemblies/ThirdParty.dll", "About/secret.txt", "About/token.xml", "About/.env", "Textures/Source/code.cs", "Textures/bin/fake.png", "Textures/image.pdb", "Languages/English/credentials/key.xml", "Languages/English/notes.txt", "Languages/English/Strings/secret.txt", "tmp/automation/private.json", "Source/private.cs")
         for path in excluded:
             write(self.root, path)
         archive, manifest_path, manifest = pipeline.make_package(self.root, self.base / "package", "v1.2.3")
@@ -57,6 +59,7 @@ class ReleaseTests(unittest.TestCase):
             self.assertEqual(names, {pipeline.MOD_NAME + "/" + path for path in pipeline.release_files(self.root)})
             for path in excluded:
                 self.assertNotIn(pipeline.MOD_NAME + "/" + path, names)
+            self.assertEqual(bundle.read(pipeline.MOD_NAME + "/" + flowers).decode("utf-8"), "牡丹\n芍药\n")
         self.assertEqual(json.loads(manifest_path.read_text()), manifest)
         self.assertEqual(manifest["archive_sha256"], pipeline.sha256(archive))
         for relative, digest in manifest["files"].items():

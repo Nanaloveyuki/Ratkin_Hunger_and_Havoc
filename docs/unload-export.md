@@ -26,6 +26,8 @@
 
 清理会保留角色身份 ID、鼠族种族以及需要保留的已生成地点地图和居民；无法安全替换时中止，不通过改成人类或删除地图来完成导出。附着在本模组自有数据上的外部扩展数据可能一并丢失。
 
+王国站点尚存的粮食会转入接收者背包的 `inventory/innerContainer/innerList`，保留每个堆的物品身份和数量，再移除站点；不把物品写在容器外层。
+
 ODF 仍需保留。副本中只移除 RHAH 自己的事件分区，保留框架根数据和其它模组分区；不会清理正在运行的 ODF 状态。
 
 所有权和卸载动作以 [save-ownership.md](save-ownership.md) 为唯一登记依据；实际行为见 [导出源文件](../Source/Core/RHAH_SaveExport.cs) 和 [清理源文件](../Source/Core/RHAH_SaveCleanup.cs)，本页不重复维护对象或代码符号清单。

@@ -58,9 +58,10 @@ namespace HungerAndHavoc.Pawn
 
         internal static void Resolve(RHAH_ChoiceRecord record, RHAH_ChoiceAction action)
         {
+            if (record == null || !record.Open) return;
             List<Verse.Pawn> members = RHAH_ChoiceRuntime.Present(record);
-            if (members.Count == 0) return;
-            LordJob_RHAH_Visitor job = members[0].GetLord()?.LordJob as LordJob_RHAH_Visitor;
+            LordJob_RHAH_Visitor job = members.Count == 0 ? null : members[0].GetLord()?.LordJob as LordJob_RHAH_Visitor;
+            if (!Enabled) record.Settled = RHAH_ChoiceAction.Ignore;
             if (job == null || job.ArmedChoiceId != record.Id) return;
             if (!Enabled || action == RHAH_ChoiceAction.Deliver)
             {

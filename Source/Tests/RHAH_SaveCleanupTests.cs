@@ -212,6 +212,103 @@ namespace HungerAndHavoc.Tests
             Assert.Empty(map.Element("lordManager").Element("lords").Elements());
         }
 
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void KingdomSiteExportKeepsEverySupplyStackInWorldPawnInventories(bool multipleRecipients)
+        {
+            XDocument original = KingdomSupplySave();
+            XElement recipients = WorldObject(original, "201").Element("kingdomRecipients");
+            if (!multipleRecipients)
+            {
+                recipients.Elements("li").Last().Remove();
+            }
+            string originalXml = original.ToString();
+            XDocument document = new XDocument(original);
+            XElement worldPawns = document.Root.Element("game").Element("world").Element("worldPawns").Element("pawnsAlive");
+            XElement unrelated = Pawn(document, "53");
+            string unrelatedXml = unrelated.ToString();
+            XElement[] supplies = WorldObject(document, "201").Element("kingdomSupply").Elements("li")
+                .Where(item => (string)item.Element("def") == "RawRice").ToArray();
+            string[] supplyXml = supplies.Select(item => item.ToString()).ToArray();
+
+            new RHAH_SaveCleanup(Plan()).Clean(document);
+
+            Assert.Equal(originalXml, original.ToString());
+            Assert.Equal(new[] { "51", "52", "53" }, worldPawns.Elements("li").Select(item => (string)item.Element("id")));
+            Assert.Equal(unrelatedXml, unrelated.ToString());
+            Assert.Null(FindBareId(document, "201"));
+            Assert.DoesNotContain(document.Descendants("def"), item => item.Value == "RHAH_KingdomMaterial");
+            XElement[] inventories = worldPawns.Elements("li").Select(item => item.Element("inventory").Element("innerContainer")).ToArray();
+            Assert.All(inventories, item => Assert.Empty(item.Elements("li")));
+            XElement[] grain = inventories.SelectMany(item => item.Element("innerList").Elements("li"))
+                .Where(item => (string)item.Element("def") == "RawRice").ToArray();
+            Assert.Equal(3, grain.Length);
+            Assert.Equal(200, grain.Sum(item => (int)item.Element("stackCount")));
+            for (int i = 0; i < supplies.Length; i++)
+            {
+                XElement stack = document.Descendants("id").Single(item => item.Value == (string)supplies[i].Element("id")).Parent;
+                Assert.Same(supplies[i], stack);
+                Assert.Equal(supplyXml[i], stack.ToString());
+                string recipientId = multipleRecipients && i % 2 == 1 ? "52" : "51";
+                Assert.Same(Pawn(document, recipientId).Element("inventory").Element("innerContainer").Element("innerList"), stack.Parent);
+            }
+            Assert.Equal("10", (string)Pawn(document, "51").Descendants("stackCount").First());
+            string once = document.ToString();
+            new RHAH_SaveCleanup(Plan()).Clean(document);
+            Assert.Equal(once, document.ToString());
+        }
+
+        [Theory]
+        [InlineData("worldPawn")]
+        [InlineData("inventory")]
+        [InlineData("innerContainer")]
+        [InlineData("innerList")]
+        [InlineData("nullInnerList")]
+        [InlineData("nullInventory")]
+        [InlineData("nullInnerContainer")]
+        public void KingdomSiteExportSkipsUnsafeRecipientsOrAbortsWithoutLosingSupply(string unavailable)
+        {
+            XDocument document = KingdomSupplySave();
+            XElement first = Pawn(document, "51");
+            if (unavailable == "worldPawn")
+            {
+                first.Remove();
+            }
+            else
+            {
+                string element = unavailable == "nullInnerList" ? "innerList" :
+                    unavailable == "nullInventory" ? "inventory" : unavailable == "nullInnerContainer" ? "innerContainer" : unavailable;
+                XElement target = first.Descendants(element).Single();
+                if (unavailable.StartsWith("null", StringComparison.Ordinal))
+                {
+                    target.SetAttributeValue("IsNull", "True");
+                    target.RemoveNodes();
+                }
+                else
+                {
+                    target.Remove();
+                }
+            }
+            XDocument withoutSafeRecipient = new XDocument(document);
+            WorldObject(withoutSafeRecipient, "201").Element("kingdomRecipients").Elements("li").Last().Remove();
+            string supplyBefore = WorldObject(withoutSafeRecipient, "201").Element("kingdomSupply").ToString();
+
+            InvalidOperationException error = Assert.Throws<InvalidOperationException>(
+                () => new RHAH_SaveCleanup(Plan()).Clean(withoutSafeRecipient));
+
+            Assert.Contains("kingdomSupply", error.Message);
+            Assert.Contains("201", error.Message);
+            Assert.Equal(supplyBefore, WorldObject(withoutSafeRecipient, "201").Element("kingdomSupply").ToString());
+
+            new RHAH_SaveCleanup(Plan()).Clean(document);
+
+            XElement[] grain = Pawn(document, "52").Element("inventory").Element("innerContainer").Element("innerList").Elements("li").ToArray();
+            Assert.Equal(new[] { "701", "702", "703" }, grain.Select(item => (string)item.Element("id")));
+            Assert.Equal(200, grain.Sum(item => (int)item.Element("stackCount")));
+            Assert.Null(FindBareId(document, "201"));
+        }
+
         [Fact]
         public void SecondPassDoesNotChangeTheDocument()
         {
@@ -262,6 +359,28 @@ namespace HungerAndHavoc.Tests
             Assert.Equal("RHAH_PawnKind_Ratkin", Pawn(document, "11").Element("kindDef").Value);
         }
 
+        static XDocument KingdomSupplySave()
+        {
+            return XDocument.Parse(@"<savegame><game><world>
+<worldPawns><pawnsAlive>
+<li Class=""Verse.Pawn""><def>Ratkin</def><id>51</id><kindDef>RatkinColonist</kindDef>
+<inventory><innerContainer><innerList><li><def>Silver</def><id>700</id><stackCount>10</stackCount></li></innerList></innerContainer></inventory></li>
+<li Class=""Verse.Pawn""><def>Ratkin</def><id>52</id><kindDef>RatkinColonist</kindDef>
+<inventory><innerContainer><innerList /></innerContainer></inventory></li>
+<li Class=""Verse.Pawn""><def>Human</def><id>53</id><kindDef>Tribal</kindDef>
+<inventory><innerContainer><innerList /></innerContainer></inventory></li>
+</pawnsAlive></worldPawns>
+<worldObjects><worldObjects><li Class=""HungerAndHavoc.Storyteller.Suiyin.WorldObject_RHAH_KingdomSite""><def>RHAH_KingdomSite</def><ID>201</ID>
+<kingdomRecipients><li>Thing_999</li><li>Thing_51</li><li>Thing_51</li><li>Thing_52</li></kingdomRecipients>
+<kingdomSupply>
+<li><def>RHAH_KingdomMaterial</def><id>704</id><stackCount>1</stackCount></li>
+<li><def>RawRice</def><id>701</id><stackCount>100</stackCount></li>
+<li><def>RawRice</def><id>702</id><stackCount>60</stackCount></li>
+<li><def>RawRice</def><id>703</id><stackCount>40</stackCount></li>
+</kingdomSupply></li></worldObjects></worldObjects>
+</world></game></savegame>");
+        }
+
         static RHAH_SaveCleanupPlan Plan()
         {
             RHAH_SaveCleanupPlan plan = new RHAH_SaveCleanupPlan
@@ -273,7 +392,8 @@ namespace HungerAndHavoc.Tests
                 "RHAH_PawnKind_Ratkin", "RHAH_Faction_Neutral", "RHAH_History_A001", "RHAH_History_Y001",
                 "RHAH_Xenotype_Ratkin", "RHAH_Suiyin", "RHAH_HungerMark", "RHAH_Trait_HardyLabor",
                 "RHAH_Gene_ThinRations", "RHAH_GuanyinTu", "RHAH_Beg", "RHAH_RefugeeMassacre",
-                "RHAH_RefugeeCamp", "RHAH_RecordSite", "RHAH_Approach", "RHAH_Interception", "RHAH_ChoiceRequest"
+                "RHAH_RefugeeCamp", "RHAH_RecordSite", "RHAH_Approach", "RHAH_Interception", "RHAH_ChoiceRequest",
+                "RHAH_KingdomSite", "RHAH_KingdomMaterial"
             };
             for (int i = 0; i < defs.Length; i++)
             {
@@ -281,6 +401,8 @@ namespace HungerAndHavoc.Tests
             }
 
             plan.ThingDefs.Add("RHAH_GuanyinTu");
+            plan.ThingDefs.Add("RHAH_KingdomMaterial");
+            plan.OwnedClasses.Add("HungerAndHavoc.Storyteller.Suiyin.WorldObject_RHAH_KingdomSite");
             plan.OwnedClasses.Add("HungerAndHavoc.Core.GameComponent_RHAH_Game");
             plan.OwnedClasses.Add("HungerAndHavoc.Narrative.NarrativeState");
             plan.OwnedClasses.Add("HungerAndHavoc.Core.MapComponent_RHAH_Map");

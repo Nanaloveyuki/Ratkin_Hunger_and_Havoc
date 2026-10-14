@@ -74,6 +74,10 @@ namespace HungerAndHavoc.EventMgr
                     throw new FormatException("Invalid RHAH chain definition, version or stage.");
                 }
 
+                if (instance.End == EventChainEnd.None && instance.Stage == 3 && !RHAH_EventFollowRules.HasLongFollow(Id))
+                {
+                    throw new FormatException("Invalid RHAH interactive long-chain stage.");
+                }
                 Facts cached = instance.PreparedState as Facts;
                 if (cached != null && cached.Source == instance.Payload && cached.DefinitionId == Id && cached.SiteId == instance.SiteId)
                 {
@@ -97,8 +101,7 @@ namespace HungerAndHavoc.EventMgr
                 }
                 else
                 {
-                    if (!RHAH_EventFollowRules.ReadPayload(instance.Payload, out string displayId, out batchId, out siteId) || displayId != Id || siteId != instance.SiteId ||
-                        ((instance.Stage == 1 || instance.Stage == 3) && !RHAH_EventFollowRules.HasLongFollow(Id)))
+                    if (!RHAH_EventFollowRules.ReadPayload(instance.Payload, out string displayId, out batchId, out siteId) || displayId != Id || siteId != instance.SiteId)
                     {
                         throw new FormatException("Invalid RHAH follow payload or long-chain stage.");
                     }
@@ -117,9 +120,11 @@ namespace HungerAndHavoc.EventMgr
 
                 if (Id != ArrivalId && instance.Stage == 3)
                 {
-                    RHAH_LongFollowRecord record = RHAH_LongFollowRuntime.FindRecord(instance.Id);
-                    if (record != null && record.Completed) return EventChainDecision.Finish(EventChainEnd.Completed);
-                    return EventChainDecision.Action("advance_long", RHAH_LongFollowRuntime.NextTick(instance.Id, tick));
+                    return RHAH_LongFollowRuntime.Evaluate(instance.Id, facts.SiteId, tick);
+                }
+                if (Id != ArrivalId && instance.Stage == 1 && !RHAH_EventFollowRules.HasLongFollow(Id))
+                {
+                    return EventChainDecision.Wait(-1);
                 }
                 facts.Stage = instance.Stage;
                 facts.Tick = tick;

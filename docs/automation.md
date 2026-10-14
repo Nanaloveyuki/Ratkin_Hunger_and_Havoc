@@ -47,6 +47,8 @@ python3 scripts/rhah.py logs --match 'HungerAndHavoc.*Exception|RHAH_' --limit 5
 
 发布与部署共用本地门禁。发布产物只包含 `About`、语言、Guard、`1.6`、Biotech、纹理、加载配置与许可证等白名单内容；三个本模组 DLL 必须存在。第三方程序集、PDB、源码、存档、发现令牌和原始测试日志不得入包或公共 artifact。私有游戏文件、登录凭据及玩家存档只留在本机，不上传 CI 或 Release。需要 Steam Workshop 发布时，仍通过游戏的 Workshop 上传流程，不在 CI 中保存 Steam 登录凭据。
 
+语言发布内容包括 XML 和 `Languages/<语言>/Strings/**/*.txt` 姓名库；其它语言目录中的文本文件不入包。漏发 `Strings` 文本会导致姓名规则找不到词库，不能只同步语言 XML。
+
 部署只写 `Mods/RatkinHungerAndHavoc` 对应的目标，拒绝游戏运行中、进程检查失败、链接目标、未知身份或其它模组身份。同步前再次检查进程，逐文件核对 SHA-256；清理范围限于本模组的白名单发布内容。不会自动退出游戏或写入旧鼠灾目录。原来的 `scripts/deploy.sh` 与 `scripts/build-and-deploy.ps1` 转发到同一实现，不维护第二套复制清单。
 
 ### 王国篇部署图片压缩

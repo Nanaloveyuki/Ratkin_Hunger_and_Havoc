@@ -39,7 +39,6 @@ namespace HungerAndHavoc.EventMgr
                 if (record == null || record.id <= 0 || record.id == int.MaxValue || !ids.Add(record.id) ||
                     !IsIncidentId(record.displayId) || record.stage < 0 || record.stage > 2 || record.startedTick < 0 ||
                     record.deadlineTick < -1 || record.end < 0 || record.end > 4 || (!record.closed && record.end != 0) ||
-                    (record.stage == 1 && !RHAH_EventFollowRules.HasLongFollow(record.displayId)) ||
                     !RHAH_EventFollowRules.ReadPayload(record.payload, out string payloadId, out int batch, out int site) ||
                     payloadId != record.displayId || site != record.siteId)
                 {
@@ -118,6 +117,19 @@ namespace HungerAndHavoc.EventMgr
                     return;
                 }
 
+                try
+                {
+                    RHAH_LongFollowRuntime.PrepareGame(runtime);
+                }
+                catch (Exception exception)
+                {
+                    string reason = "failed: " + exception.Message;
+                    existing.MigrationStatus = reason;
+                    game.EventChainMigrationStatus = reason;
+                    runtime.SetMode(RHAH_EventChainProvider.ProviderKey, EventChainMode.Paused, tick, reason);
+                    Log.Error("[RHAH] Event chain migration " + reason + ". Original chains and map arrivals remain saved and never execute.");
+                    return;
+                }
                 ClearOriginals(game);
                 if (game.NewContentDisabled)
                 {
@@ -174,6 +186,7 @@ namespace HungerAndHavoc.EventMgr
                     throw new FormatException(error);
                 }
 
+                RHAH_LongFollowRuntime.PrepareGame(runtime);
                 foreach (KeyValuePair<MapComponent_RHAH_Map, int> pair in arrivals)
                 {
                     pair.Key.PredationArrivalInstanceId = pair.Value;
@@ -194,6 +207,7 @@ namespace HungerAndHavoc.EventMgr
                     runtime.Import(RHAH_EventChainProvider.ProviderKey, new List<EventChainInstance>(), 1, reason, out string ignored);
                 }
 
+                runtime.GetProviderState(RHAH_EventChainProvider.ProviderKey).MigrationStatus = reason;
                 runtime.SetMode(RHAH_EventChainProvider.ProviderKey, EventChainMode.Paused, tick, reason);
                 Log.Error("[RHAH] Event chain migration " + reason + ". Original chains and map arrivals remain saved and never execute.");
             }

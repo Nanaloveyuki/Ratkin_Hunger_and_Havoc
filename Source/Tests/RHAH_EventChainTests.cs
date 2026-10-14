@@ -118,7 +118,6 @@ namespace HungerAndHavoc.Tests
         [InlineData("null-definition")]
         [InlineData("negative-stage")]
         [InlineData("unknown-stage")]
-        [InlineData("unsupported-long")]
         [InlineData("unknown-end")]
         [InlineData("negative-end")]
         [InlineData("open-terminal")]
@@ -141,11 +140,10 @@ namespace HungerAndHavoc.Tests
                 case "negative-id": broken.id = -8; break;
                 case "duplicate-id": broken.id = 3; break;
                 case "exhausted-id": broken.id = int.MaxValue; break;
-                case "unknown-definition": broken = Record(8, "I-052", 4, 0, 10, -1); break;
+                case "unknown-definition": broken = Record(8, "I-055", 4, 0, 10, -1); break;
                 case "null-definition": broken.displayId = null; break;
                 case "negative-stage": broken.stage = -1; break;
                 case "unknown-stage": broken.stage = 3; break;
-                case "unsupported-long": broken = Record(8, "I-001", 4, 1, 10, -1); break;
                 case "unknown-end": broken.closed = true; broken.end = 5; break;
                 case "negative-end": broken.closed = true; broken.end = -1; break;
                 case "open-terminal": broken.end = 1; break;
@@ -195,6 +193,35 @@ namespace HungerAndHavoc.Tests
                 Assert.Equal(id % 2500, expected % 2500);
                 Assert.True((long)expected - tick <= 2500);
             }
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(10000)]
+        public void PublishedLongOverrideWithoutFollowupStaysDormantOrExpiresWithoutBlockingTheProvider(int deadline)
+        {
+            List<RHAH_EventChainRecord> records = new List<RHAH_EventChainRecord>
+            {
+                Record(7, "I-001", 4, 1, 10, deadline),
+                Record(8, "I-002", 4, 2, 10, -1)
+            };
+            List<EventChainInstance> imported = RHAH_EventChainMigration.Convert(records, 9, 5000, out int nextId);
+            EventChainRuntime runtime = new EventChainRuntime(new List<EventChainProviderState>());
+            runtime.Register(new RHAH_EventChainProvider());
+            Assert.True(runtime.Import(RHAH_EventChainProvider.ProviderKey, imported, nextId, "completed", out string error), error);
+            runtime.Activate(5000);
+            runtime.Tick(5007);
+            runtime.Tick(10000);
+            EventChainInstance instance = runtime.Find(RHAH_EventChainProvider.ProviderKey, 7);
+            Assert.Equal(1, instance.Stage);
+            Assert.Equal(deadline, instance.DeadlineTick);
+            Assert.Equal(deadline < 0 ? EventChainEnd.None : EventChainEnd.Expired, instance.End);
+            Assert.Equal(-1, instance.NextTick);
+            Assert.Empty(instance.Receipts);
+            Assert.Equal("", instance.PauseReason);
+            Assert.Equal(EventChainEnd.None, runtime.Find(RHAH_EventChainProvider.ProviderKey, 8).End);
+            Assert.Equal(1, records[0].stage);
+            Assert.Equal(deadline, records[0].deadlineTick);
         }
 
         [Fact]
