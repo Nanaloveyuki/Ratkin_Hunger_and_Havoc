@@ -12,6 +12,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import tempfile
 import time
 import traceback
 import uuid
@@ -188,34 +189,83 @@ def validate_target(rimworld, target):
     return target
 
 
+def deployment_ffmpeg():
+    executable = shutil.which("ffmpeg")
+    if not executable:
+        raise PipelineError("FFmpeg is required for KingdomArc deployment compression; install ffmpeg and add it to PATH")
+    return executable
+
+
+def compress_kingdom_textures(sources, staging):
+    # PNG has no lossy quality knob: retain full color, reduce dimensions only if needed.
+    maximum = 750 * 1024
+    target_size = 700 * 1024
+    images = {relative: source for relative, source in sources.items()
+              if Path(relative).is_relative_to("Textures/KingdomArc") and Path(relative).suffix.lower() == ".png"}
+    oversized = {relative: source for relative, source in images.items() if source.stat().st_size > maximum}
+    executable = deployment_ffmpeg() if oversized else None
+    before = sum(source.stat().st_size for source in images.values())
+    for relative, source in oversized.items():
+        destination = Path(staging) / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        with source.open("rb") as stream:
+            header = stream.read(24)
+        original_width = int.from_bytes(header[16:20], "big")
+        original_height = int.from_bytes(header[20:24], "big")
+        width, height = original_width, original_height
+        while True:
+            command = [executable, "-hide_banner", "-loglevel", "error", "-nostdin", "-y", "-i", str(source)]
+            if (width, height) != (original_width, original_height):
+                command += ["-vf", f"scale={width}:{height}:flags=lanczos"]
+            command += ["-frames:v", "1", "-c:v", "png", "-compression_level", "9", "-pred", "mixed", "-threads", "1", "-update", "1", str(destination)]
+            try:
+                result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=120, check=False)
+            except (OSError, subprocess.SubprocessError) as exc:
+                raise PipelineError("KingdomArc PNG compression failed: " + relative) from exc
+            if result.returncode:
+                raise PipelineError("KingdomArc PNG compression failed: " + relative + "\n" + result.stderr[-2000:])
+            size = destination.stat().st_size
+            if size <= maximum:
+                break
+            if width <= 1:
+                raise PipelineError("Cannot compress KingdomArc PNG below 750 KiB: " + relative)
+            width = max(1, min(width - 1, int(width * (target_size / size) ** 0.5)))
+            height = max(1, round(original_height * width / original_width))
+        sources[relative] = destination
+    after = sum(sources[relative].stat().st_size for relative in images)
+    return {"images": len(images), "compressed": len(oversized), "source_bytes": before, "deployed_bytes": after}
+
+
 def synchronize(root, rimworld, target, process_check=probe_processes):
     process_check()
     sources = release_files(root)
     target = validate_target(rimworld, target)
-    manifest = {relative: sha256(source) for relative, source in sources.items()}
-    process_check()
-    target = validate_target(rimworld, target)
-    target.mkdir(parents=True, exist_ok=True)
-    for relative, source in sources.items():
-        destination = assert_plain_path(target / relative)
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
-        if sha256(destination) != manifest[relative]:
-            raise PipelineError("Deployment SHA-256 mismatch: " + relative)
-    removed = []
-    for folder in FOLDERS:
-        base = target / folder
-        if not base.is_dir():
-            continue
-        for destination in sorted(base.rglob("*"), reverse=True):
-            if destination.is_file():
-                relative = destination.relative_to(target).as_posix()
-                if relative not in sources:
-                    destination.unlink()
-                    removed.append(relative)
-            elif destination.is_dir() and not any(destination.iterdir()):
-                destination.rmdir()
-    return {"files": manifest, "removed": removed, "count": len(manifest)}
+    with tempfile.TemporaryDirectory(prefix="rhah-deploy-") as staging:
+        compression = compress_kingdom_textures(sources, staging)
+        manifest = {relative: sha256(source) for relative, source in sources.items()}
+        process_check()
+        target = validate_target(rimworld, target)
+        target.mkdir(parents=True, exist_ok=True)
+        for relative, source in sources.items():
+            destination = assert_plain_path(target / relative)
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
+            if sha256(destination) != manifest[relative]:
+                raise PipelineError("Deployment SHA-256 mismatch: " + relative)
+        removed = []
+        for folder in FOLDERS:
+            base = target / folder
+            if not base.is_dir():
+                continue
+            for destination in sorted(base.rglob("*"), reverse=True):
+                if destination.is_file():
+                    relative = destination.relative_to(target).as_posix()
+                    if relative not in sources:
+                        destination.unlink()
+                        removed.append(relative)
+                elif destination.is_dir() and not any(destination.iterdir()):
+                    destination.rmdir()
+        return {"files": manifest, "removed": removed, "count": len(manifest), "kingdom_textures": compression}
 
 
 def make_package(root, output, tag=None):
@@ -402,13 +452,13 @@ class Pipeline:
 
     def deploy(self):
         target = Path(self.args.target).expanduser().absolute() if self.args.target else self.rimworld / "Mods" / MOD_NAME
-        self.operation("deployment-preflight", lambda: (probe_processes(), validate_target(self.rimworld, target)))
+        self.operation("deployment-preflight", lambda: (probe_processes(), validate_target(self.rimworld, target), deployment_ffmpeg()))
         self.ci()
         self.operation("deploy", lambda: synchronize(self.root, self.rimworld, target))
 
     def doctor(self):
         problems = []
-        for name, callback in (("dependencies", self.dependencies), ("versions", lambda: self.operation("versions", lambda: {"release": release_version(self.root)})), ("game-processes", lambda: self.operation("game-processes", probe_processes))):
+        for name, callback in (("dependencies", self.dependencies), ("versions", lambda: self.operation("versions", lambda: {"release": release_version(self.root)})), ("game-processes", lambda: self.operation("game-processes", probe_processes)), ("deployment-ffmpeg", lambda: self.operation("deployment-ffmpeg", deployment_ffmpeg))):
             try:
                 callback()
             except Exception:
