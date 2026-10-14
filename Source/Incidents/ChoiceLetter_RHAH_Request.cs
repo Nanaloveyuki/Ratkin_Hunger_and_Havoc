@@ -52,9 +52,11 @@ namespace HungerAndHavoc.Incidents
                     record != null && record.TransactionVersion == RHAH_RequestRules.TransactionVersion ? "RHAH_Transaction_Accept" : "RHAH_Choice_Deliver").Translate());
                 bool enough = record != null && (record.TransactionVersion == RHAH_RequestRules.TransactionVersion
                     ? RHAH_FoodTransaction.CanDeliver(record)
+                    : Pawn.RHAH_ArmedDemand.IsRequest(record) ? Pawn.RHAH_ArmedDemand.CanPay(record)
                     : foodAlternative ? RHAH_ChildExchange.CanDeliver(record, null, true)
                     : map != null && RHAH_ChoiceRuntime.Stock(map, kind) >= amount);
-                if (!enough) deliver.Disable((foodAlternative ? "RHAH_ChildExchange_Unavailable" :
+                if (!enough) deliver.Disable((Pawn.RHAH_ArmedDemand.IsRequest(record) ? "RHAH_ArmedDemand_Unavailable" :
+                    foodAlternative ? "RHAH_ChildExchange_Unavailable" :
                     record != null && record.TransactionVersion == RHAH_RequestRules.TransactionVersion ? "RHAH_Transaction_Unavailable" : "RHAH_Choice_Short").Translate(amount));
                 else
                 {
@@ -115,7 +117,7 @@ namespace HungerAndHavoc.Incidents
             if (settled == RHAH_ChoiceAction.Deliver)
                 Messages.Message((record.TransactionVersion == RHAH_RequestRules.TransactionVersion ? "RHAH_Transaction_Completed" :
                     record.Kind == RHAH_RequestKind.Baby ? "RHAH_ChildExchange_Completed" : "RHAH_Choice_Delivered").Translate(), MessageTypeDefOf.PositiveEvent);
-            Find.LetterStack.RemoveLetter(this);
+            if (!record.Open) Find.LetterStack.RemoveLetter(this);
         }
 
         bool StillOpen()

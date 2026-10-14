@@ -91,6 +91,24 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_TraderIgnoreEnvironment_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_TraderIgnoreEnclosed".Translate(), ref Settings.traderIgnoresEnclosedSpace,
                 "RHAH_Settings_TraderIgnoreEnclosed_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_FamineArrival".Translate(), ref Settings.famineArrivalEnabled,
+                "RHAH_Settings_FamineArrival_Tooltip".Translate());
+            listing.Label("RHAH_Settings_FamineMalnutrition".Translate(Settings.famineArrivalMalnutrition.ToString("0.00")));
+            Settings.famineArrivalMalnutrition = listing.Slider(Settings.famineArrivalMalnutrition, 0.01f, 0.5f);
+            listing.CheckboxLabeled("RHAH_Settings_FamineMood".Translate(), ref Settings.famineMoodEnabled,
+                "RHAH_Settings_FamineMood_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_ClayMood".Translate(), ref Settings.clayMoodEnabled,
+                "RHAH_Settings_ClayMood_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_FamineTrade".Translate(), ref Settings.famineTradeEnabled,
+                "RHAH_Settings_FamineTrade_Tooltip".Translate());
+            listing.Label("RHAH_Settings_FoodSaleFactor".Translate(Settings.famineFoodSaleFactor.ToString("0.00")));
+            Settings.famineFoodSaleFactor = listing.Slider(Settings.famineFoodSaleFactor, 1f, 3f);
+            listing.Label("RHAH_Settings_GoodsBuyFactor".Translate(Settings.famineGoodsBuyFactor.ToString("0.00")));
+            Settings.famineGoodsBuyFactor = listing.Slider(Settings.famineGoodsBuyFactor, 0.1f, 1f);
+            listing.CheckboxLabeled("RHAH_Settings_ArmedDemand".Translate(), ref Settings.armedDemandEnabled,
+                "RHAH_Settings_ArmedDemand_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_ArmedWeapons".Translate(), ref Settings.armedWeaponsEnabled,
+                "RHAH_Settings_ArmedWeapons_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_SpaceApproach".Translate(), ref Settings.spaceApproachEnabled,
                 "RHAH_Settings_SpaceApproach_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_ChildExchangeFood".Translate(), ref Settings.childExchangeFoodSubstitution,

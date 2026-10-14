@@ -154,6 +154,7 @@ namespace HungerAndHavoc.Core
             plan.Replacements.Add("RHAH_Suiyin", RequireDef<StorytellerDef>("Randy").defName);
             plan.Replacements.Add("RHAH_Xenotype_Ratkin", RequireDef<XenotypeDef>("Baseliner").defName);
             plan.Replacements.Add("RHAH_LongKeepsake", RequireDef<ThingDef>("Cloth").defName);
+            plan.Replacements.Add("RHAH_Trader_Famine", RequireDef<TraderKindDef>("Visitor_Outlander_Standard").defName);
             FactionDef ancients = RequireDef<FactionDef>("Ancients");
             if (content.AllDefs.Contains(ancients))
             {

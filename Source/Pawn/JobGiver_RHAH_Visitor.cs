@@ -23,6 +23,7 @@ namespace HungerAndHavoc.Pawn
         internal static bool CanFight(Verse.Pawn pawn)
         {
             LordJob_RHAH_Visitor visitor = pawn?.GetLord()?.LordJob as LordJob_RHAH_Visitor;
+            if (visitor?.ArmedChoiceId > 0 && !RHAH_ArmedDemand.Enabled) return false;
             if (visitor != null && pawn.GetLord().CurLordToil is LordToil_RHAH_WaitFood && visitor.ListedForFood(pawn))
             {
                 return false;
@@ -50,6 +51,8 @@ namespace HungerAndHavoc.Pawn
             {
                 return attack;
             }
+            // 索粮进攻只走原版进攻 duty 不再回落啃食或乞讨
+            if (pawn.GetLord()?.CurLordToil is LordToil_RHAH_ArmedAssault) return null;
 
             Job departure = JobGiver_RHAH_Leave.TryCreate(pawn);
             if (departure != null || RHAH_Api.Get(pawn).Lifecycle == RHAH_Lifecycle.Leaving)

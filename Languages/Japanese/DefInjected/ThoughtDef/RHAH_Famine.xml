@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <RHAH_Thought_ClaySatiety.stages.0.label>観音土を食べた</RHAH_Thought_ClaySatiety.stages.0.label>
+  <RHAH_Thought_ClaySatiety.stages.0.description>観音土を飲み込んだ。胃には何か入ったけれど、やっぱりご飯が食べたい。</RHAH_Thought_ClaySatiety.stages.0.description>
+  <RHAH_Thought_ClaySatiety.stages.1.label>また観音土を食べた</RHAH_Thought_ClaySatiety.stages.1.label>
+  <RHAH_Thought_ClaySatiety.stages.1.description>また土を一つ飲み込んで、お腹が張って苦しい。食べたいのはこんなものじゃない。</RHAH_Thought_ClaySatiety.stages.1.description>
+  <RHAH_Thought_ClaySatiety.stages.2.label>観音土はもうたくさん</RHAH_Thought_ClaySatiety.stages.2.label>
+  <RHAH_Thought_ClaySatiety.stages.2.description>もう何個も土を食べた。口の中にはまだ土の味が残っている。もうこれを食べさせないで。</RHAH_Thought_ClaySatiety.stages.2.description>
+  <RHAH_Thought_FamineHunger.stages.0.label>まだ空腹</RHAH_Thought_FamineHunger.stages.0.label>
+  <RHAH_Thought_FamineHunger.stages.0.description>お腹が空いた。空腹でお腹がつらい。</RHAH_Thought_FamineHunger.stages.0.description>
+  <RHAH_Thought_FamineHunger.stages.1.label>食べ物を求めても届かなかった</RHAH_Thought_FamineHunger.stages.1.label>
+  <RHAH_Thought_FamineHunger.stages.1.description>お腹が空いた。食べ物を求めたのに、一口ももらえなかった。</RHAH_Thought_FamineHunger.stages.1.description>
+  <RHAH_Thought_FamineFed.stages.0.label>やっと満腹</RHAH_Thought_FamineFed.stages.0.label>
+  <RHAH_Thought_FamineFed.stages.0.description>この食事でお腹がいっぱいになった。やっと空腹のことばかり考えずに済む。</RHAH_Thought_FamineFed.stages.0.description>
+</LanguageData>

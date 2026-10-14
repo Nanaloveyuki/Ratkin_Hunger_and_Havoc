@@ -29,6 +29,15 @@ namespace HungerAndHavoc.Tests
         readonly Map map;
         readonly GameComponent_RHAH_Game choices;
 
+
+        static RHAH_AttackChoiceTests()
+        {
+            using (Log.LockMessages())
+            {
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(Need).TypeHandle);
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(Pawn_InventoryTracker).TypeHandle);
+            }
+        }
         public RHAH_AttackChoiceTests()
         {
             FieldInfo binding = Field(typeof(DefOfHelper), "bindingNow");
@@ -38,6 +47,10 @@ namespace HungerAndHavoc.Tests
                 binding.SetValue(null, true);
                 System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(RHAH_DefOf).TypeHandle);
                 System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(JobDefOf).TypeHandle);
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(HediffDefOf).TypeHandle);
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(ThingDefOf).TypeHandle);
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(DutyDefOf).TypeHandle);
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(MessageTypeDefOf).TypeHandle);
             }
             finally
             {
@@ -293,6 +306,109 @@ namespace HungerAndHavoc.Tests
             Field(typeof(MapPawns), "pawnsSpawned").SetValue(map.mapPawns, new List<Verse.Pawn> { pawn });
             RHAH_BatchAttitude.AcceptFood(pawn);
             Assert.Equal(RHAH_Attitude.Friendly, RHAH_Api.Get(pawn).Attitude);
+        }
+
+        [Fact]
+        public void ClayFourthIngestionIsRejectedBeforeConsumption()
+        {
+            HediffDef previous = RHAH_DefOf.RHAH_ClaySatiety;
+            ThingDef previousFood = RHAH_DefOf.RHAH_GuanyinTu;
+            try
+            {
+                RHAH_DefOf.RHAH_ClaySatiety = new HediffDef();
+                RHAH_DefOf.RHAH_GuanyinTu = Uninitialized<ThingDef>();
+                Verse.Pawn pawn = Visitor(1);
+                Hediff_RHAH_ClaySatiety clay = new Hediff_RHAH_ClaySatiety { pawn = pawn, def = RHAH_DefOf.RHAH_ClaySatiety };
+                pawn.health.hediffSet.hediffs.Add(clay);
+                Assert.True(clay.RegisterBite(0));
+                Assert.True(clay.RegisterBite(1));
+                Assert.True(clay.RegisterBite(2));
+                Thing food = new Thing { def = RHAH_DefOf.RHAH_GuanyinTu, stackCount = 4 };
+                float nutrition = 1f;
+                Assert.False(RHAH_ClayIngestPatch.Prefix(food, pawn, ref nutrition));
+                Assert.Equal(0f, nutrition);
+                Assert.Equal(4, food.stackCount);
+                Assert.False(clay.RegisterBite(3));
+                Assert.True(clay.RegisterBite(15 * 60000));
+            }
+            finally
+            {
+                RHAH_DefOf.RHAH_ClaySatiety = previous;
+                RHAH_DefOf.RHAH_GuanyinTu = previousFood;
+            }
+        }
+
+        [Fact]
+        public void NewFamineArrivalZerosFoodOnlyForNewMarkedNonPlayerPawn()
+        {
+            HediffDef previous = HediffDefOf.Malnutrition;
+            try
+            {
+                HediffDefOf.Malnutrition = new HediffDef { hediffClass = typeof(Hediff), initialSeverity = 0.001f };
+                Verse.Pawn pawn = Visitor(1);
+                pawn.health.hediffSet.hediffs.Add(new Hediff { pawn = pawn, def = HediffDefOf.Malnutrition });
+                LifeStageAge age = Uninitialized<LifeStageAge>();
+                age.def = new LifeStageDef { developmentalStage = DevelopmentalStage.Adult, bodySizeFactor = 1f, foodMaxFactor = 1f };
+                pawn.def.race.baseBodySize = 1f;
+                pawn.def.race.lifeStageAges = new List<LifeStageAge> { age };
+                pawn.ageTracker = new Pawn_AgeTracker(pawn);
+                Field(typeof(Pawn_AgeTracker), "cachedLifeStageIndex").SetValue(pawn.ageTracker, 0);
+                pawn.needs = new Pawn_NeedsTracker();
+                pawn.needs.food = Uninitialized<Need_Food>();
+                Field(typeof(Need), "pawn").SetValue(pawn.needs.food, pawn);
+                Field(typeof(Need), "curLevelInt").SetValue(pawn.needs.food, 0.6f);
+                CompRHAH_Pawn.TryGet(pawn).ApplySeed(new RHAH_PawnSeed("I-005", 7, 0, RHAH_PawnRole.Refugee, RHAH_Lifecycle.Arriving));
+                Generation.RHAH_FamineArrival.Initialize(pawn);
+                Assert.Equal(0f, pawn.needs.food.CurLevel);
+                Assert.Equal(0.25f, pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Malnutrition).Severity);
+                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.SeekingFood);
+                RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed);
+                pawn.needs.food.CurLevel = 0.8f;
+                Generation.RHAH_FamineArrival.Initialize(pawn);
+                Assert.Equal(0.8f, pawn.needs.food.CurLevel);
+            }
+            finally
+            {
+                HediffDefOf.Malnutrition = previous;
+            }
+        }
+        [Fact]
+        public void PatchedTradeableUsesActualVanillaPriceCacheAndScopesIdentity()
+        {
+            ITrader previousTrader = TradeSession.trader;
+            HarmonyLib.Harmony harmony = new HarmonyLib.Harmony("rhah.famine.price.test");
+            MethodInfo target = typeof(Tradeable).GetMethod("GetPriceFor");
+            try
+            {
+                harmony.Patch(target, postfix: new HarmonyLib.HarmonyMethod(typeof(Trade.RHAH_FaminePricePatch).GetMethod("Postfix", BindingFlags.Static | BindingFlags.NonPublic)));
+                Verse.Pawn trader = Visitor(1);
+                CompRHAH_Pawn.TryGet(trader).ApplySeed(new RHAH_PawnSeed("I-012", 7, 7, RHAH_PawnRole.Trader, RHAH_Lifecycle.SeekingFood));
+                trader.trader = new Pawn_TraderTracker(trader);
+                trader.trader.traderKind = new TraderKindDef();
+                TradeSession.trader = trader;
+                Tradeable trade = new Tradeable();
+                ThingDef food = Uninitialized<ThingDef>();
+                food.category = ThingCategory.Item;
+                food.ingestible = new IngestibleProperties();
+                Field(typeof(IngestibleProperties), "cachedNutrition").SetValue(food.ingestible, 0.9f);
+                trade.thingsColony.Add(new Thing { def = food });
+                Field(typeof(Tradeable), "pricePlayerBuy").SetValue(trade, 14f);
+                Field(typeof(Tradeable), "pricePlayerSell").SetValue(trade, 6f);
+                Assert.Equal(9f, trade.GetPriceFor(TradeAction.PlayerSells));
+                Assert.Equal(14f, trade.GetPriceFor(TradeAction.PlayerBuys));
+                food.ingestible = null;
+                Assert.Equal(10.5f, trade.GetPriceFor(TradeAction.PlayerBuys));
+                RHAH_Mod.Settings.famineTradeEnabled = false;
+                Assert.Equal(14f, trade.GetPriceFor(TradeAction.PlayerBuys));
+                RHAH_Mod.Settings.famineTradeEnabled = true;
+                RHAH_Api.SetLifecycle(trader, RHAH_Lifecycle.Released);
+                Assert.Equal(6f, trade.GetPriceFor(TradeAction.PlayerSells));
+            }
+            finally
+            {
+                harmony.Unpatch(target, HarmonyLib.HarmonyPatchType.All, harmony.Id);
+                TradeSession.trader = previousTrader;
+            }
         }
 
         [Fact]

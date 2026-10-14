@@ -35,6 +35,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             RHAH_Api.SetLifecycle(pawn, RHAH_Lifecycle.Fed);
+            RHAH_FamineMood.NotifyFed(pawn);
             ScheduleStay(pawn);
             TryAddRefeeding(pawn);
 
@@ -49,6 +50,7 @@ namespace HungerAndHavoc.Pawn
                 return;
             }
 
+            if (RHAH_ArmedDemand.Holds(pawn)) return;
             if (settings != null && !settings.leaveAfterFed)
             {
                 return;

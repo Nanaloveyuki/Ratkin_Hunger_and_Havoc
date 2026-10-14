@@ -95,6 +95,18 @@ namespace HungerAndHavoc.Incidents
             for (int i = 0; i < records.Count; i++)
             {
                 RHAH_ChoiceRecord record = records[i];
+                if (RHAH_ArmedDemand.IsRequest(record))
+                {
+                    if (!RHAH_ArmedDemand.Enabled)
+                    {
+                        RHAH_ArmedDemand.Resolve(record, RHAH_ChoiceAction.Ignore);
+                    }
+                    else if (record.Open && record.ExpireTick >= 0 && tick >= record.ExpireTick)
+                    {
+                        RHAH_ArmedDemand.Resolve(record, RHAH_ChoiceAction.Timeout);
+                    }
+                    continue;
+                }
                 if (!record.Open || record.ExpireTick < 0 || tick < record.ExpireTick)
                 {
                     continue;
@@ -121,6 +133,18 @@ namespace HungerAndHavoc.Incidents
         {
             RHAH_ChoiceRecord record = FindRecord(game, choiceId);
             if (record == null || !record.Open) return RHAH_ChoiceAction.None;
+            if (RHAH_ArmedDemand.IsRequest(record))
+            {
+                if (!RHAH_ArmedDemand.Enabled)
+                {
+                    RHAH_ArmedDemand.Resolve(record, RHAH_ChoiceAction.Ignore);
+                    return RHAH_ChoiceAction.Ignore;
+                }
+                if (requested == RHAH_ChoiceAction.Deliver && !RHAH_ArmedDemand.TryPay(record))
+                    return RHAH_ChoiceAction.None;
+                RHAH_ArmedDemand.Resolve(record, requested);
+                return requested;
+            }
             if (record.ExpireTick >= 0 && tick >= record.ExpireTick) requested = RHAH_ChoiceAction.Timeout;
             bool canDeliver = requested != RHAH_ChoiceAction.Deliver;
             Map map = FindMap(record.MapId);

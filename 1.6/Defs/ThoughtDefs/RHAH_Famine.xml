@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThoughtDef>
+    <defName>RHAH_Thought_ClaySatiety</defName>
+    <workerClass>HungerAndHavoc.Pawn.ThoughtWorker_RHAH_ClaySatiety</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>吃了观音土</label>
+        <description>我吞下了观音土。肚子里有东西了，可我还是想吃饭。</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+      </li>
+      <li>
+        <label>又吃了观音土</label>
+        <description>又吞了一份土，肚子撑得难受。我想吃的不是这个。</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+      <li>
+        <label>吃够了观音土</label>
+        <description>我已经吃了好几份土，嘴里到现在还有土腥味。别再让我吃这个了吱。</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_FamineHunger</defName>
+    <workerClass>HungerAndHavoc.Pawn.ThoughtWorker_RHAH_FamineHunger</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>还在挨饿</label>
+        <description>我饿了吱，肚子饿得难受。</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+      <li>
+        <label>求食落空</label>
+        <description>我饿了吱，求过吃的也没等来一口饭。</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>RHAH_Thought_FamineFed</defName>
+    <thoughtClass>HungerAndHavoc.Pawn.Thought_Memory_RHAH_FamineFed</thoughtClass>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>总算吃饱了</label>
+        <description>这顿饭让我吃饱了。总算不用一直惦记着空肚子了吱。</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

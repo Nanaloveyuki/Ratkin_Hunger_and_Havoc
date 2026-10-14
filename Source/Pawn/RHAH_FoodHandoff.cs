@@ -62,7 +62,7 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
 
-            RHAH_BatchAttitude.AcceptFood(receiver);
+            if (job.ArmedChoiceId == 0) RHAH_BatchAttitude.AcceptFood(receiver);
             return true;
         }
 

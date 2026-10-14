@@ -22,6 +22,8 @@ namespace HungerAndHavoc.Pawn
         internal const float DecayPerDay = 0.1f;
         internal const float MinimumSeverity = 0.001f;
         internal const float HungerRateFactor = 0f;
+        internal static int Limit => System.Math.Max(1, System.Math.Min(MaxBites,
+            Core.RHAH_Mod.Settings == null ? MaxBites : Core.RHAH_Mod.Settings.clayMaxBites));
 
         internal static int WindowTicks(int ticksPerDay)
         {
@@ -38,7 +40,7 @@ namespace HungerAndHavoc.Pawn
         {
             int start = FreshStart(tick, windowStart, ticksPerDay);
             int used = start == windowStart ? count : 0;
-            int maxBites = Core.RHAH_Mod.Settings == null ? MaxBites : Core.RHAH_Mod.Settings.clayMaxBites;
+            int maxBites = Limit;
             if (used >= maxBites)
             {
                 return new ClayBite(false, used, severity);
@@ -72,7 +74,7 @@ namespace HungerAndHavoc.Pawn
                 return -1;
             }
 
-            if (tick >= windowStart + window)
+            if ((long)tick >= (long)windowStart + window)
             {
                 return -1;
             }

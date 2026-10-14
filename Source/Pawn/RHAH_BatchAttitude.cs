@@ -102,6 +102,10 @@ namespace HungerAndHavoc.Pawn
             }
             return true;
         }
+        internal static void StartArmedAssault(List<Verse.Pawn> members)
+        {
+            SetHostile(Eligible(members));
+        }
 
         static void SetHostile(List<Verse.Pawn> members)
         {

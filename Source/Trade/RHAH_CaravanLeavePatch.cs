@@ -50,6 +50,8 @@ namespace HungerAndHavoc.Trade
             {
                 return;
             }
+            // 专用买粮 generator 已限定 Sellable 不用旧双向禁售覆盖买方
+            if (TradeSession.trader?.TraderKind?.defName == "RHAH_Trader_Famine") return;
 
             Verse.Pawn trader = TradeSession.trader as Verse.Pawn;
             if (trader != null && RHAH_CaravanStay.IsTradeCaravan(trader) &&

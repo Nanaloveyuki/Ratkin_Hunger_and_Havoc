@@ -841,6 +841,21 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
+            MenuControls.Anchor(list, "famine-arrival");
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_FamineArrival".Translate(), ref settings.famineArrivalEnabled, "RHAH_Settings_FamineArrival_Tooltip".Translate());
+            settings.famineArrivalMalnutrition = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "famine-malnutrition", "RHAH_Settings_FamineMalnutrition".Translate(settings.famineArrivalMalnutrition.ToString("0.00")), settings.famineArrivalMalnutrition, 0.01f, 0.5f, "0.00", "RHAH_Settings_FamineMalnutrition_Tooltip".Translate());
+            MenuControls.Anchor(list, "famine-mood");
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_FamineMood".Translate(), ref settings.famineMoodEnabled, "RHAH_Settings_FamineMood_Tooltip".Translate());
+            MenuControls.Anchor(list, "clay-mood");
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_ClayMood".Translate(), ref settings.clayMoodEnabled, "RHAH_Settings_ClayMood_Tooltip".Translate());
+            MenuControls.Anchor(list, "famine-trade");
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_FamineTrade".Translate(), ref settings.famineTradeEnabled, "RHAH_Settings_FamineTrade_Tooltip".Translate());
+            settings.famineFoodSaleFactor = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "famine-food-sale", "RHAH_Settings_FoodSaleFactor".Translate(settings.famineFoodSaleFactor.ToString("0.00")), settings.famineFoodSaleFactor, 1f, 3f, "0.00", "RHAH_Settings_FoodSaleFactor_Tooltip".Translate());
+            settings.famineGoodsBuyFactor = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "famine-goods-buy", "RHAH_Settings_GoodsBuyFactor".Translate(settings.famineGoodsBuyFactor.ToString("0.00")), settings.famineGoodsBuyFactor, 0.1f, 1f, "0.00", "RHAH_Settings_GoodsBuyFactor_Tooltip".Translate());
+            MenuControls.Anchor(list, "armed-demand");
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_ArmedDemand".Translate(), ref settings.armedDemandEnabled, "RHAH_Settings_ArmedDemand_Tooltip".Translate());
+            MenuControls.Anchor(list, "armed-weapons");
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_ArmedWeapons".Translate(), ref settings.armedWeaponsEnabled, "RHAH_Settings_ArmedWeapons_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_Begging".Translate(), ref settings.beggingEnabled, "RHAH_Settings_Begging_Tooltip".Translate());
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_BegAutoGive".Translate(), ref settings.begAutoGiveEnabled, "RHAH_Settings_BegAutoGive_Tooltip".Translate());
             string begChance = Buffer(weightBuffers, "beg-chance", settings.begSuccessChancePercent, "0");
@@ -880,6 +895,15 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("visitors-beg-give", "RHAH_Settings_BegAutoGive");
             yield return Entry("visitors-broadcast", "RHAH_Settings_Broadcast");
             yield return Entry("visitors-camp", "RHAH_Settings_RefugeeCamp");
+            yield return Entry("famine-arrival", "RHAH_Settings_FamineArrival");
+            yield return Entry("famine-malnutrition", "RHAH_Settings_FamineMalnutrition");
+            yield return Entry("famine-mood", "RHAH_Settings_FamineMood");
+            yield return Entry("clay-mood", "RHAH_Settings_ClayMood");
+            yield return Entry("famine-trade", "RHAH_Settings_FamineTrade");
+            yield return Entry("famine-food-sale", "RHAH_Settings_FoodSaleFactor");
+            yield return Entry("famine-goods-buy", "RHAH_Settings_GoodsBuyFactor");
+            yield return Entry("armed-demand", "RHAH_Settings_ArmedDemand");
+            yield return Entry("armed-weapons", "RHAH_Settings_ArmedWeapons");
         }
 
         void DrawPlague(Listing_Standard list)
@@ -2373,7 +2397,7 @@ namespace HungerAndHavoc.Pawn.Compat
             settings.barkDamage = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "gnaw-bark-damage", "RHAH_Settings_GnawBarkDamage".Translate(settings.barkDamage.ToString("0")), settings.barkDamage, 0f, 50f, "0", "RHAH_Settings_GnawBarkDamage_Tooltip".Translate());
             settings.wallNutrition = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "gnaw-wall", "RHAH_Settings_GnawWall".Translate(settings.wallNutrition.ToString("0.00")), settings.wallNutrition, 0f, 2f, "0.00", "RHAH_Settings_GnawWall_Tooltip".Translate());
             settings.wallDamage = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "gnaw-wall-damage", "RHAH_Settings_GnawWallDamage".Translate(settings.wallDamage.ToString("0")), settings.wallDamage, 0f, 50f, "0", "RHAH_Settings_GnawWallDamage_Tooltip".Translate());
-            settings.clayMaxBites = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "clay-bites", "RHAH_Settings_ClayBites".Translate(settings.clayMaxBites), settings.clayMaxBites, 0f, 12f, "RHAH_Settings_ClayBites_Tooltip".Translate());
+            settings.clayMaxBites = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "clay-bites", "RHAH_Settings_ClayBites".Translate(settings.clayMaxBites), settings.clayMaxBites, 1f, 3f, "RHAH_Settings_ClayBites_Tooltip".Translate());
             settings.clayWindowDays = RHAH_IrisMenusWidgets.TuneInt(list, weightBuffers, "clay-days", "RHAH_Settings_ClayDays".Translate(settings.clayWindowDays), settings.clayWindowDays, 1f, 60f, "RHAH_Settings_ClayDays_Tooltip".Translate());
             settings.claySeverityPerBite = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "clay-severity", "RHAH_Settings_ClaySeverity".Translate(settings.claySeverityPerBite.ToString("0.00")), settings.claySeverityPerBite, 0f, 1f, "0.00", "RHAH_Settings_ClaySeverity_Tooltip".Translate());
             settings.childHungryPercent = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "child-hungry", "RHAH_Settings_ChildHungry".Translate(settings.childHungryPercent.ToString("0")), settings.childHungryPercent, 0f, 100f, "0", "RHAH_Settings_ChildHungry_Tooltip".Translate());

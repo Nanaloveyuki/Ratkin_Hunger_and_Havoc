@@ -2,6 +2,7 @@ using System;
 using HarmonyLib;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Trade;
+using HungerAndHavoc.Core;
 using RimWorld;
 using Verse;
 using Verse.AI.Group;
@@ -186,7 +187,7 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
-            TraderKindDef kind = DefDatabase<TraderKindDef>.GetNamedSilentFail("Visitor_Outlander_Standard");
+            TraderKindDef kind = DefDatabase<TraderKindDef>.GetNamedSilentFail("RHAH_Trader_Famine");
             if (kind == null)
             {
                 return;

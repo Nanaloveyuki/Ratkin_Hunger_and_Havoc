@@ -53,6 +53,9 @@ namespace HungerAndHavoc.Generation
                 Cleanup(created);
                 return RHAH_PawnCreationResult.Failed(RHAH_PawnCreationFailure.MarkingFailed);
             }
+            // 只在新角色登记来源后初始化 不挂入场或读档钩子
+            RHAH_FamineArrival.Initialize(pawn);
+            RHAH_FamineWeapons.Apply(pawn);
 
             if (!TryApplyRelationships(pawn, request))
             {

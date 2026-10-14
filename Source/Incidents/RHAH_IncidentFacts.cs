@@ -18,6 +18,8 @@ namespace HungerAndHavoc.Incidents
                 return false;
             }
 
+            bool armedDemand = Pawn.RHAH_ArmedDemand.Enabled && Pawn.RHAH_ArmedDemand.IsSiege(context.DisplayId);
+            RHAH_Attitude arrivalAttitude = armedDemand ? RHAH_Attitude.Neutral : context.Attitude;
             List<RHAH_PawnCreationResult> created = new List<RHAH_PawnCreationResult>();
             for (int i = 0; i < context.PawnCount; i++)
             {
@@ -28,11 +30,11 @@ namespace HungerAndHavoc.Incidents
                     SpawnBatchId = context.SpawnBatchId,
                     RelationshipGroupId = context.RelationshipGroupId,
                     Role = role,
-                    AttitudeAtArrival = context.Attitude,
+                    AttitudeAtArrival = arrivalAttitude,
                     CarriesPlague = context.CarriesPlague,
                     Map = context.Map,
                     PawnKind = Core.RHAH_DefOf.RHAH_PawnKind_Ratkin,
-                    Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(context.Attitude),
+                    Faction = HungerAndHavoc.Pawn.RHAH_AttitudeFactions.Require(arrivalAttitude),
                     SpawnCell = context.SpawnCell,
                     Gender = RHAH_IncidentRoster.GenderAt(context.DisplayId, i),
                     BiologicalAge = GenerationAge(role, context.DisplayId),
@@ -159,14 +161,10 @@ namespace HungerAndHavoc.Incidents
                 }
             }
 
-            if (carrier == trader)
-            {
-                return;
-            }
-
             Verse.Pawn seller = trader ?? arrived[0];
-            Pawn.Compat.RHAH_RatEggCuisine.Stock(seller, carrier);
             Pawn.Compat.RHAH_RatEggCuisine.OpenTrade(seller);
+            if (carrier != seller) Pawn.Compat.RHAH_RatEggCuisine.Stock(seller, carrier);
+            Trade.RHAH_FamineTrade.Stock(seller, carrier ?? seller);
         }
 
         static float? GenerationAge(RHAH_PawnRole role, string displayId)
@@ -209,7 +207,13 @@ namespace HungerAndHavoc.Incidents
             }
 
             RHAH_Settings settings = RHAH_Mod.Settings;
-            if (choice == RHAH_ChoiceKind.None || (settings != null && !settings.AllowsRequest(choice) && choice != RHAH_ChoiceKind.Visitors))
+            bool armedDemand = Pawn.RHAH_ArmedDemand.Enabled && Pawn.RHAH_ArmedDemand.IsSiege(context.DisplayId);
+            if (armedDemand)
+            {
+                spec = new RHAH_RequestSpec(RHAH_RequestKind.SimpleMeal, RHAH_IntelSiteKind.None, RHAH_ChoiceKind.Aid);
+                choice = spec.Choice;
+            }
+            if (choice == RHAH_ChoiceKind.None || (!armedDemand && settings != null && !settings.AllowsRequest(choice) && choice != RHAH_ChoiceKind.Visitors))
             {
                 return;
             }
@@ -250,14 +254,17 @@ namespace HungerAndHavoc.Incidents
             }
             if (RHAH_RequestRules.IsFoodTransaction(record.DisplayId))
                 RHAH_FoodTransaction.Prepare(record, context.Map, arrived);
+            if (armedDemand) Pawn.RHAH_ArmedDemand.Initialize(record, arrived);
 
             SendLetter(context, record, Targets(created), arrived);
         }
 
         static void SendLetter(RHAH_IncidentContext context, RHAH_ChoiceRecord record, LookTargets targets, List<Verse.Pawn> arrived)
         {
-            string label = LetterLabel(record);
-            string text = LetterText(record, arrived);
+            bool armedDemand = Pawn.RHAH_ArmedDemand.IsRequest(record);
+            string label = armedDemand ? "RHAH_ArmedDemand_LetterTitle".Translate().ToString() : LetterLabel(record);
+            string text = armedDemand ? "RHAH_ArmedDemand_LetterText".Translate(record.Amount,
+                (record.ExpireTick - Find.TickManager.TicksGame) / (float)GenDate.TicksPerDay).ToString() : LetterText(record, arrived);
             ChoiceLetter letter;
             if (record.Kind == RHAH_RequestKind.None)
             {

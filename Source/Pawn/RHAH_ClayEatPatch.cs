@@ -28,4 +28,16 @@ namespace HungerAndHavoc.Pawn
             }
         }
     }
+
+    // 强制命令和直接调用同样在消耗前拒绝第四次
+    [HarmonyPatch(typeof(Thing), nameof(Thing.Ingested))]
+    internal static class RHAH_ClayIngestPatch
+    {
+        internal static bool Prefix(Thing __instance, Verse.Pawn ingester, ref float __result)
+        {
+            if (Hediff_RHAH_ClaySatiety.CanEat(ingester, __instance)) return true;
+            __result = 0f;
+            return false;
+        }
+    }
 }

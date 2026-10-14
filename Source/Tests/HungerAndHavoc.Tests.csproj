@@ -17,6 +17,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.4.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Api\HungerAndHavoc.Api.csproj" />
     <ProjectReference Include="..\HungerAndHavoc.csproj" />
   </ItemGroup>

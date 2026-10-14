@@ -22,6 +22,10 @@ namespace HungerAndHavoc.Pawn
         int foodCount;
         IntVec3 passerbyExitCell = IntVec3.Invalid;
         bool waitSpotResolved;
+        int armedChoiceId;
+        bool armedAssault;
+        internal int ArmedChoiceId { get => armedChoiceId; set => armedChoiceId = value; }
+        internal bool ArmedAssault { get => armedAssault; set => armedAssault = value; }
 
         internal bool IsPasserby
         {
@@ -262,9 +266,30 @@ namespace HungerAndHavoc.Pawn
             foodDone.AddTrigger(new Trigger_Custom(_ => FoodWaitExpired()));
             foodDone.AddPostAction(new TransitionAction_EndAllJobs());
             graph.AddTransition(foodDone, false);
+            // 追加 toil 保持已发布访客图的旧索引不变
+            LordToil assault = new LordToil_RHAH_ArmedAssault();
+            graph.AddToil(assault);
+            Transition toAssault = new Transition(seek, assault, false, true);
+            toAssault.AddSource(travel);
+            toAssault.AddSource(waitFood);
+            toAssault.AddTrigger(new Trigger_Memo("RHAH_ArmedAssault"));
+            toAssault.AddPostAction(new TransitionAction_EndAllJobs());
+            graph.AddTransition(toAssault, false);
+            Transition assaultLeave = new Transition(assault, leave, false, true);
+            assaultLeave.AddTrigger(new Trigger_Memo("RHAH_Leave"));
+            assaultLeave.AddPostAction(new TransitionAction_EndAllJobs());
+            graph.AddTransition(assaultLeave, false);
 
 
             return graph;
+        }
+        public override void LordJobTick()
+        {
+            if (ArmedChoiceId > 0 && !RHAH_ArmedDemand.Enabled && Find.TickManager.TicksGame % 250 == 0)
+            {
+                RHAH_ChoiceRecord record = RHAH_ArmedDemand.Find(ArmedChoiceId);
+                if (record != null) RHAH_ArmedDemand.Resolve(record, RHAH_ChoiceAction.Ignore);
+            }
         }
 
         public override void ExposeData()
@@ -280,6 +305,8 @@ namespace HungerAndHavoc.Pawn
             Scribe_Collections.Look(ref foodReceivers, "foodReceivers", LookMode.Reference);
             Scribe_Defs.Look(ref foodDef, "foodDef");
             Scribe_Values.Look(ref foodCount, "foodCount", 0);
+            Scribe_Values.Look(ref armedChoiceId, "armedChoiceId", 0);
+            Scribe_Values.Look(ref armedAssault, "armedAssault", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit && foodReceivers == null)
             {
                 foodReceivers = new List<Verse.Pawn>();
@@ -502,6 +529,7 @@ namespace HungerAndHavoc.Pawn
 
             Lord lord = pawn.GetLord();
             LordJob_RHAH_Visitor visitor = lord?.LordJob as LordJob_RHAH_Visitor;
+            if (RHAH_ArmedDemand.Holds(pawn)) return false;
             if (lord?.CurLordToil is LordToil_RHAH_WaitFood && visitor.ListedForFood(pawn))
             {
                 if (visitor.WaitingForFood(pawn))

@@ -104,6 +104,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | foodDef | foodDef | null | 否 | 第一次交货后锁定的食物 |
 | foodCount | foodCount | 0 | 否 | 需要的份数。0 表示没有在等 |
 | passerbyExitCell | passerbyExitCell | IntVec3.Invalid | 否 | I-031/I-039 对边可达出口。旧 Lord 首次按原来源识别后选择，保存重读保持；卸载随 Lord Remove |
+| armedChoiceId | armedChoiceId | 0 | 否 | 对应本批 I-014/I-030/I-045 的既有 RHAH_ChoiceRecord；0 无索粮政策。旧 Lord 缺键继续原行为，不自动启动倒计时 |
+| armedAssault | armedAssault | false | 否 | 本请求真实拒绝/逾期后进入索粮进攻；足额交付或关闭索粮设置清除并中立离场。旧图索引 0..3 保持，进攻 toil 追加为 4；卸载随 Lord Remove |
 
 
 ### ChoiceLetter_RHAH_Request
@@ -268,6 +270,9 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Storyteller.Suiyin.Comp_RHAH_KingdomMaterial | 物品 Comp | Remove，随文书物品删除 |
 | HungerAndHavoc.Pawn.ThinkNode_ConditionalRHAH_Visitor | ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
+| HungerAndHavoc.Pawn.ThoughtWorker_RHAH_ClaySatiety, HungerAndHavoc.Pawn.ThoughtWorker_RHAH_FamineHunger | ThoughtDef `workerClass`，situational 无独立存档字段 | 不单独出现在 `.rws`；思想 Def 引用 Remove |
+| HungerAndHavoc.Pawn.Thought_Memory_RHAH_FamineFed | ThoughtDef `thoughtClass`，memories 内沿用原版记忆字段 | Remove，随该记忆删除 |
+| HungerAndHavoc.Trade.StockGenerator_RHAH_Food | TraderKindDef stockGenerators XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.Area_RHAH_Relief | AreaManager `areas` | Remove。卸载后区域节点消失，格子不迁到家区 |
 | HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety | Hediff `Class` / `hediffClass` | Remove，随饱腹 Hediff 删除 |
 | HungerAndHavoc.Storyteller.Suiyin.Building_RHAH_RecordBox | Thing `Class` / `thingClass` | Remove。随旧箱子删除，不替换成原版建筑 |
@@ -585,9 +590,11 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_RatkinTraderCaravan | IncidentDef | Remove |
 | RHAH_PrisonerNeeds | ThinkTreeDef | Remove |
 | RHAH_Thought_LeftAlone, RHAH_Thought_CaptiveYear, RHAH_Thought_FamilyHere, RHAH_Thought_Regret | ThoughtDef | Remove |
+| RHAH_Thought_ClaySatiety, RHAH_Thought_FamineHunger, RHAH_Thought_FamineFed | ThoughtDef | Remove。前两项 situational，后一项真实吃饱记忆 |
+| RHAH_Trader_Famine | TraderKindDef | Replace。改成已加载原版 `Visitor_Outlander_Standard`，保留 trader Tracker 和真实原版库存 |
 | RHAH_PawnKind_Ratkin | PawnKindDef | Replace。保留 pawn 的 thingID。`kindDef` 改成仍会随 NewRatkinPlus 加载、种族同为 `Ratkin`、不属于本模组的 PawnKind。按 defName 序选第一个。没有这种种类就中止，不换成人类 |
 
-替代 Def 必须已经加载，且不属于本模组。写死的目标是 `Ancients`、`Baseliner`、`Randy`、`Site`。种类和背景的具体 defName 在导出时按上表从已加载 Def 里选，不写进本页。尚无 TraderKind。
+替代 Def 必须已经加载，且不属于本模组。写死的目标是 `Ancients`、`Baseliner`、`Randy`、`Site`、`Visitor_Outlander_Standard`。种类和背景的具体 defName 在导出时按上表从已加载 Def 里选，不写进本页。
 
 ### Hediff_RHAH_ClaySatiety
 
@@ -637,6 +644,15 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_Settings.foodGiveHintDismissed | 全局 ModSettings，默认 false。第一次投喂后玩家选择不再提示 |
 | RHAH_Settings.traderIgnoresHarshEnvironment | 全局 ModSettings，默认 true。商队不因恶劣环境离图 |
 | RHAH_Settings.traderIgnoresEnclosedSpace | 全局 ModSettings，默认 true。商队在封闭房间里不挖路离开 |
+| RHAH_Settings.famineArrivalEnabled | 全局 ModSettings，默认 true。只在新角色来源登记后初始化饱食零与营养不良；不用于重入图、读档或已加入玩家的角色 |
+| RHAH_Settings.famineArrivalMalnutrition | 全局 ModSettings，默认 0.25，范围 0.01..0.5 |
+| RHAH_Settings.famineMoodEnabled | 全局 ModSettings，默认 true。关闭饥饿思想及吃饱记忆效果 |
+| RHAH_Settings.clayMoodEnabled | 全局 ModSettings，默认 true。窗口实际次数对应三阶段思想，关闭后 Inactive；不改观音土累计 |
+| RHAH_Settings.famineTradeEnabled | 全局 ModSettings，默认 true。只控制活跃商队定向价格；关闭后保留专用商人库存、买粮能力与通常报价 |
+| RHAH_Settings.famineFoodSaleFactor | 全局 ModSettings，默认 1.5，范围 1..3；玩家卖食物倍率，同项原买价封顶 |
+| RHAH_Settings.famineGoodsBuyFactor | 全局 ModSettings，默认 0.75，范围 0.1..1；玩家买非食物倍率，同项原卖价托底 |
+| RHAH_Settings.armedDemandEnabled | 全局 ModSettings，默认 true。仅 Siege 三场景建立带数量期限的请求，不受援助/访客信开关；关闭已有请求停止该 Lord 的索粮进攻并离场，不改其它袭击 |
+| RHAH_Settings.armedWeaponsEnabled | 全局 ModSettings，默认 true。只装备新 Siege 成年且可战者；原版低级武器品质普通及以下 |
 | RHAH_Settings.spaceApproachEnabled | 全局 ModSettings，默认 false。关闭时太空层家园不生成远行队。缺键保持关闭 |
 | RHAH_Settings.childExchangeFoodSubstitution | 全局 ModSettings，默认 true。易子而食玩家侧可用简单餐代替婴幼儿 |
 | RHAH_Settings.familyDropEnabled | 全局 ModSettings，默认 true |
@@ -778,7 +794,7 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_Settings.barkDamage | 全局 ModSettings，默认 12。啃树皮一次扣除的固定耐久，不受材料、建筑或伤害倍率影响。已保存的自定义值保留，缺键才用新默认 |
 | RHAH_Settings.wallNutrition | 全局 ModSettings，默认 0.20。啃墙营养。已保存的自定义值保留，缺键才用新默认 |
 | RHAH_Settings.wallDamage | 全局 ModSettings，默认 10。啃墙一次扣除的固定耐久，不受材料、建筑或伤害倍率影响。已保存的自定义值保留，缺键才用新默认 |
-| RHAH_Settings.clayMaxBites | 全局 ModSettings，默认 3。观音土窗口口数 |
+| RHAH_Settings.clayMaxBites | 全局 ModSettings，默认 3，范围 1..3。观音土窗口口数；不因加载较低设置削减已存实际累计 |
 | RHAH_Settings.clayWindowDays | 全局 ModSettings，默认 15。观音土窗口天数 |
 | RHAH_Settings.claySeverityPerBite | 全局 ModSettings，默认 0.33。每口饱腹 |
 | RHAH_Settings.childHungryPercent | 全局 ModSettings，默认 30。母亲喂食的饥饿线 |

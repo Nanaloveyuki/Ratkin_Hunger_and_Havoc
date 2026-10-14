@@ -76,7 +76,7 @@
   <RHAH_Settings_GnawWallDamage>壁をかじった時のダメージ：{0}</RHAH_Settings_GnawWallDamage>
   <RHAH_Settings_GnawWallDamage_Tooltip>壁を1回かじるごとに差し引く固定耐久です。素材、建築、ダメージ倍率はこの1回を変えません。範囲は0～50、初期値は10。</RHAH_Settings_GnawWallDamage_Tooltip>
   <RHAH_Settings_ClayBites>観音土を食べられる口数：{0}</RHAH_Settings_ClayBites>
-  <RHAH_Settings_ClayBites_Tooltip>一定期間に食べられる口数の上限です。範囲は0～12、初期値は3。0では一口も食べられません。</RHAH_Settings_ClayBites_Tooltip>
+  <RHAH_Settings_ClayBites_Tooltip>一度の満腹期間に食べられる観音土の口数の上限です。範囲は1～3、初期値は3。</RHAH_Settings_ClayBites_Tooltip>
   <RHAH_Settings_ClayDays>観音土の集計期間：{0}日</RHAH_Settings_ClayDays>
   <RHAH_Settings_ClayDays_Tooltip>この日数が過ぎると、食べた口数を数え直します。範囲は1～60日、初期値は15日。</RHAH_Settings_ClayDays_Tooltip>
   <RHAH_Settings_ClaySeverity>観音土による満腹感：{0}</RHAH_Settings_ClaySeverity>
@@ -93,4 +93,22 @@
   <RHAH_Settings_TailFood_Tooltip>尾をかみ切ると補える栄養です。範囲は0～2、初期値は0.35。</RHAH_Settings_TailFood_Tooltip>
   <RHAH_Settings_TailFail>尾をかみ切れなかった時のダメージ：{0}</RHAH_Settings_TailFail>
   <RHAH_Settings_TailFail_Tooltip>尾をかみ切れなかった場合に与えるダメージです。範囲は0～50、初期値は4。</RHAH_Settings_TailFail_Tooltip>
+  <RHAH_Settings_FamineArrival>飢饉の訪問者が空腹で到着</RHAH_Settings_FamineArrival>
+  <RHAH_Settings_FamineArrival_Tooltip>初期設定はオン。このMODのプレイヤー所属ではない飢饉の訪問者は、食欲ゲージが空で、「到着時の栄養失調」の設定に応じた栄養失調を抱えて到着します。調整は到着時にだけ適用されます。オフの場合、新しい訪問者は通常の食欲と健康状態を保ちます。</RHAH_Settings_FamineArrival_Tooltip>
+  <RHAH_Settings_FamineMalnutrition>到着時の栄養失調：{0}</RHAH_Settings_FamineMalnutrition>
+  <RHAH_Settings_FamineMalnutrition_Tooltip>空腹での到着が有効な場合、このMODのプレイヤー所属ではない飢饉の訪問者が到着時に抱える栄養失調の重症度です。範囲は0.01～0.5、初期値は0.25。</RHAH_Settings_FamineMalnutrition_Tooltip>
+  <RHAH_Settings_FamineMood>飢饉の訪問者の心情を有効化</RHAH_Settings_FamineMood>
+  <RHAH_Settings_FamineMood_Tooltip>初期設定はオン。このMODのプレイヤー所属ではない飢饉の訪問者は、飢餓状態で心情低下を受けます。実際に食べ物を断られたか食料要求の期限が過ぎ、まだ飢餓状態なら、心情はさらに悪化します。実際に満腹まで食べると、1日続く良い記憶を得ます。オフにすると、これらの心情への影響は止まります。</RHAH_Settings_FamineMood_Tooltip>
+  <RHAH_Settings_ClayMood>観音土による心情を有効化</RHAH_Settings_ClayMood>
+  <RHAH_Settings_ClayMood_Tooltip>初期設定はオン。心情を持つ人物が現在の満腹期間に観音土を1個、2個、3個食べると、心情にそれぞれ-2、-4、-6の影響を受けます。現在の段階だけが適用され、期間が終わると消えます。</RHAH_Settings_ClayMood_Tooltip>
+  <RHAH_Settings_FamineTrade>飢饉キャラバンの特別価格を有効化</RHAH_Settings_FamineTrade>
+  <RHAH_Settings_FamineTrade_Tooltip>初期設定はオン。このMODの飢饉キャラバンは、下の倍率でプレイヤーの食料を高く買い取り、食料以外の商品を安く売ります。オフの場合も通常の価格で取引を続けます。</RHAH_Settings_FamineTrade_Tooltip>
+  <RHAH_Settings_FoodSaleFactor>プレイヤーの食料売却価格倍率：{0}</RHAH_Settings_FoodSaleFactor>
+  <RHAH_Settings_FoodSaleFactor_Tooltip>飢饉キャラバンの特別価格が有効な場合、このMODのキャラバンがプレイヤーの食料を買い取る価格に掛ける倍率です。プレイヤーが同じ食料を通常買う価格を上限とします。範囲は1～3、初期値は1.5。1では通常の買取価格になります。</RHAH_Settings_FoodSaleFactor_Tooltip>
+  <RHAH_Settings_GoodsBuyFactor>プレイヤーの食料以外の購入価格倍率：{0}</RHAH_Settings_GoodsBuyFactor>
+  <RHAH_Settings_GoodsBuyFactor_Tooltip>飢饉キャラバンの特別価格が有効な場合、プレイヤーがこのMODのキャラバンから食料以外の商品を買う価格に掛ける倍率です。プレイヤーが同じ商品を通常売る価格を下限とします。範囲は0.1～1、初期値は0.75。1では通常の販売価格になります。</RHAH_Settings_GoodsBuyFactor_Tooltip>
+  <RHAH_Settings_ArmedDemand>食料要求が満たされなければ攻撃</RHAH_Settings_ArmedDemand>
+  <RHAH_Settings_ArmedDemand_Tooltip>初期設定はオン。物乞い包囲、強力な包囲、ペストを抱えた強力な包囲の訪問者は、要求の期限まで簡単な食事を待ちます。断るか期限が過ぎると攻撃しますが、必要な量を渡せば攻撃をやめて立ち去ります。オフの場合、新しい包囲の訪問者は通常の訪問者の選択肢で扱われ、既存の食料要求者は中立になって立ち去ります。</RHAH_Settings_ArmedDemand_Tooltip>
+  <RHAH_Settings_ArmedWeapons>食料を要求する訪問者に粗末な武器を装備</RHAH_Settings_ArmedWeapons>
+  <RHAH_Settings_ArmedWeapons_Tooltip>初期設定はオン。新たな物乞い包囲、強力な包囲、ペストを抱えた強力な包囲の成人の訪問者は、反撃が許可され武器を使える場合、バニラの木製棍棒や低技術の銃器などの粗末な武器を持ちます。品質の上限は標準です。オフの場合、新しい食料要求者は素手のままです。</RHAH_Settings_ArmedWeapons_Tooltip>
 </LanguageData>
