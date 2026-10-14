@@ -20,6 +20,14 @@ namespace HungerAndHavoc.Incidents
             {
                 return RHAH_Attitude.Neutral;
             }
+            if (entry.DisplayId == "I-052")
+            {
+                return RHAH_Attitude.Neutral;
+            }
+            if (entry.DisplayId == "I-054")
+            {
+                return RHAH_Attitude.Hostile;
+            }
 
             RHAH_Settings settings = RHAH_Mod.Settings;
             RHAH_Attitude configured = settings == null

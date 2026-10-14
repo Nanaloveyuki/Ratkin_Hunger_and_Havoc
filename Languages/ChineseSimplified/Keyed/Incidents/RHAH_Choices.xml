@@ -77,9 +77,17 @@
   <RHAH_Choice_Enslave>奴役（当场变成奴隶，反抗意志清零）</RHAH_Choice_Enslave>
   <RHAH_Choice_Capture>俘虏（当场变成囚犯，麻醉 12 小时）</RHAH_Choice_Capture>
   <RHAH_Choice_Attack>攻击（整批转为敌对）</RHAH_Choice_Attack>
+  <RHAH_Choice_ChooseAlly>送往盟友…</RHAH_Choice_ChooseAlly>
   <RHAH_Choice_Ally>送到{0}</RHAH_Choice_Ally>
+  <RHAH_Choice_AllyPageText>选择接纳他们的盟友（第{0}/{1}页）。\n\n来客成功离开地图后，才会按他们的市场价值增加盟友好感：每500价值约+1，本次转送合计最高+10。工业及以上的盟友有50%概率在三天内空投少量物资作为回礼。</RHAH_Choice_AllyPageText>
+  <RHAH_Choice_AllyPrevious>上一页</RHAH_Choice_AllyPrevious>
+  <RHAH_Choice_AllyNext>下一页</RHAH_Choice_AllyNext>
+  <RHAH_Choice_AllyBack>返回</RHAH_Choice_AllyBack>
   <RHAH_Choice_NoAlly>没有盟友派系能接收他们。</RHAH_Choice_NoAlly>
-  <RHAH_Choice_AllySent>{0}人已开始前往{1}，离开这张地图后会成为该派系的成员。对方据点里无法直接找到他们；盟友的好感变化取决于他们受到的救治，以及是否顺利离开。</RHAH_Choice_AllySent>
+  <RHAH_Choice_AllySent>{0}人已开始前往{1}，成功离开这张地图后才会成为该派系的成员，并按离场者的市场价值增加盟友好感。本次转送合计最高+10好感。对方据点里无法直接找到他们。</RHAH_Choice_AllySent>
+  <RHAH_Choice_AllyGiftLabel>盟友的回礼</RHAH_Choice_AllyGiftLabel>
+  <RHAH_Choice_AllyGiftText>{0}已经空投了一些物资，答谢我们将这批来客送给他们接纳。</RHAH_Choice_AllyGiftText>
+  <RHAH_Choice_AllyGoodwillReason>接纳来客</RHAH_Choice_AllyGoodwillReason>
   <RHAH_Choice_NoCustodyTarget>当前没有可以俘虏或奴役的来客。他们可能正在精神崩溃、已经离开，或受到囚禁限制。</RHAH_Choice_NoCustodyTarget>
   <RHAH_Choice_NoPresent>来客已经离开，现场无人可以接受这项安排。</RHAH_Choice_NoPresent>
   <RHAH_Choice_NoRecruit>这些来客都不能被收留、雇佣或加入殖民地。</RHAH_Choice_NoRecruit>
@@ -100,4 +108,8 @@
   <RHAH_Choice_Delivered>物资已经交出。</RHAH_Choice_Delivered>
   <RHAH_Choice_SiteUnavailable>对方没能提供地点，物资仍在你手里。你可以在信中重新选择。</RHAH_Choice_SiteUnavailable>
   <RHAH_Choice_Fed>来客吃过了。</RHAH_Choice_Fed>
+  <RHAH_Choice_MouseSwarm_Label>鼠潮</RHAH_Choice_MouseSwarm_Label>
+  <RHAH_Choice_MouseSwarm_Text>据观测，有一大批鼠族因为荒年流离失所，正在朝我们赶来，如果不想被这些鼠族吃完粮仓里所有的粮食，那么需要尽快做出选择。</RHAH_Choice_MouseSwarm_Text>
+  <RHAH_Choice_PleadingJoin_Label>祈求加入</RHAH_Choice_PleadingJoin_Label>
+  <RHAH_Choice_PleadingJoin_Text>一只精神萎靡的鼠族跌跌撞撞的来到了这里，看起来是长途奔波导致的。\n\n“请问可以收留我吗？我很能干的！只需要一点点食物，非常感谢！”</RHAH_Choice_PleadingJoin_Text>
 </LanguageData>

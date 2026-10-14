@@ -13,7 +13,7 @@ namespace HungerAndHavoc.Incidents
             Resolve("I-015", "I-016", "I-017", "I-018"),
             Resolve("I-020", "I-021", "I-022", "I-023", "I-024", "I-025", "I-026", "I-027", "I-028"),
             Resolve("I-006", "I-007", "I-043"),
-            Resolve("I-008", "I-009", "I-010", "I-036", "I-041"),
+            Resolve("I-008", "I-009", "I-010", "I-036", "I-041", "I-008-01", "I-009-01", "I-010-01"),
             Resolve("I-002", "I-037"),
             Resolve("I-003"),
             Resolve("I-012", "I-038"),
@@ -26,7 +26,10 @@ namespace HungerAndHavoc.Incidents
             Resolve("I-034", "I-048"),
             Resolve("I-035", "I-050"),
             Resolve("I-049"),
-            Resolve("I-051")
+            Resolve("I-051"),
+            Resolve("I-052"),
+            Resolve("I-053"),
+            Resolve("I-054")
         };
         static readonly Dictionary<string, int> groupByDisplayId = IndexGroups();
         static readonly string[] labelKeys = BuildLabelKeys();

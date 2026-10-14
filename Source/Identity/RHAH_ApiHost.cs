@@ -140,6 +140,23 @@ namespace HungerAndHavoc.Identity
             return allowed;
         }
 
+        internal static bool CanTransfer(Verse.Pawn pawn)
+        {
+            if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Transfer)) return false;
+            CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+            if (comp == null) return false;
+            bool? exitOverride = comp.State.GetGateOverride(RHAH_BehaviorGate.ExitMap);
+            if (exitOverride.HasValue) return exitOverride.Value;
+            IRHAH_Pawn current = comp.ToSnapshot();
+            // 转送先下离场令，预检其后的离图权限，保留外部留驻政策。
+            IRHAH_Pawn leaving = new RHAH_PawnSnapshot(current.SourceIncidentDisplayId,
+                current.SpawnBatchId, current.RelationshipGroupId, current.Role, RHAH_Lifecycle.Leaving,
+                current.HasBeenFed, current.LeaveAfterGameTick, current.CarriesPlague,
+                current.AttitudeAtArrival, current.Attitude, current.ParentPawnLoadId, current.ChildPawnLoadIds);
+            bool? behavior = RHAH_PawnBehaviors.Query(handler => handler.Allows(pawn, leaving, RHAH_BehaviorGate.ExitMap));
+            return behavior ?? RHAH_PawnDefaults.Allows(leaving, RHAH_BehaviorGate.ExitMap);
+        }
+
         public void SetGate(Verse.Pawn pawn, RHAH_BehaviorGate gate, bool? allowed)
         {
             CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);

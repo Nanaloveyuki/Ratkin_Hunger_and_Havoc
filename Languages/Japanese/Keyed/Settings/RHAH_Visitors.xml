@@ -93,12 +93,24 @@
   <RHAH_Settings_TailFood_Tooltip>尾をかみ切ると補える栄養です。範囲は0～2、初期値は0.35。</RHAH_Settings_TailFood_Tooltip>
   <RHAH_Settings_TailFail>尾をかみ切れなかった時のダメージ：{0}</RHAH_Settings_TailFail>
   <RHAH_Settings_TailFail_Tooltip>尾をかみ切れなかった場合に与えるダメージです。範囲は0～50、初期値は4。</RHAH_Settings_TailFail_Tooltip>
+  <RHAH_Settings_FamineYear>年ごとの飢饉を有効化</RHAH_Settings_FamineYear>
+  <RHAH_Settings_FamineYear_Tooltip>初期設定はオフ。選ばれた拠点の現地暦で毎年初日の午前6時に、その年が飢饉の年かを決めます。初回の判定時に年初を過ぎていれば、その年の判定を補います。飢饉の年はこのMODの訪問者集団と放送への応答が増え、大きな災害が1回追加で起きることがあります。オフにすると年ごとの飢饉の影響が止まります。</RHAH_Settings_FamineYear_Tooltip>
+  <RHAH_Settings_FamineYearChance>毎年の飢饉発生率：{0}%</RHAH_Settings_FamineYearChance>
+  <RHAH_Settings_FamineYearChance_Tooltip>その年が飢饉の年になる確率です。範囲は0～100%、初期値は40%。</RHAH_Settings_FamineYearChance_Tooltip>
+  <RHAH_Settings_FamineYearMultiplier>飢饉の年の訪問者人数倍率：{0}</RHAH_Settings_FamineYearMultiplier>
+  <RHAH_Settings_FamineYearMultiplier_Tooltip>飢饉の年は、このMODの通常の複数人集団について、通常の人数上限を適用した後にこの倍率を掛け、端数を切り上げます。単独の訪問者、人数固定の母子家族、出産間近の二人組は通常の人数を保ちます。ネズミの大群は常に15～50人です。放送では倍率を切り上げた数まで、異なる集団を呼び寄せます。範囲は1～4、初期値は3。</RHAH_Settings_FamineYearMultiplier_Tooltip>
+  <RHAH_Settings_FamineYearDisasterChance>飢饉の年の毎日の追加災害発生率：{0}%</RHAH_Settings_FamineYearDisasterChance>
+  <RHAH_Settings_FamineYearDisasterChance_Tooltip>飢饉の年の毎日、現地時刻の午前6時に、この確率で寒波、熱波、有毒な降灰、火山の冬の発生を試みます。追加の災害は飢饉の年ごとに最大1回発生します。範囲は0～100%、初期値は20%。</RHAH_Settings_FamineYearDisasterChance_Tooltip>
+  <RHAH_FamineYear_Label>{0}年の見通し</RHAH_FamineYear_Label>
+  <RHAH_FamineYear_Famine>{0}年は飢饉の年です。飢えたラットキンがいつもより大きな集団で訪れ、放送にも多くの一団が助けを求めて応じます。寒波、熱波、有毒な降灰、火山の冬が、この年をさらに厳しくするかもしれません。\n\n訪問者とコロニーのために、食料を多めに蓄えてください。</RHAH_FamineYear_Famine>
+  <RHAH_FamineYear_Normal>{0}年は平年です。このMODの訪問者集団の人数と放送への応答数は通常どおりです。</RHAH_FamineYear_Normal>
+  <RHAH_FamineYear_Catchup>年初はすでに過ぎています。今年の見通しをお知らせします。</RHAH_FamineYear_Catchup>
   <RHAH_Settings_FamineArrival>飢饉の訪問者が空腹で到着</RHAH_Settings_FamineArrival>
   <RHAH_Settings_FamineArrival_Tooltip>初期設定はオン。このMODのプレイヤー所属ではない飢饉の訪問者は、食欲ゲージが空で、「到着時の栄養失調」の設定に応じた栄養失調を抱えて到着します。調整は到着時にだけ適用されます。オフの場合、新しい訪問者は通常の食欲と健康状態を保ちます。</RHAH_Settings_FamineArrival_Tooltip>
   <RHAH_Settings_FamineMalnutrition>到着時の栄養失調：{0}</RHAH_Settings_FamineMalnutrition>
   <RHAH_Settings_FamineMalnutrition_Tooltip>空腹での到着が有効な場合、このMODのプレイヤー所属ではない飢饉の訪問者が到着時に抱える栄養失調の重症度です。範囲は0.01～0.5、初期値は0.25。</RHAH_Settings_FamineMalnutrition_Tooltip>
   <RHAH_Settings_FamineMood>飢饉の訪問者の心情を有効化</RHAH_Settings_FamineMood>
-  <RHAH_Settings_FamineMood_Tooltip>初期設定はオン。このMODのプレイヤー所属ではない飢饉の訪問者は、飢餓状態で心情低下を受けます。実際に食べ物を断られたか食料要求の期限が過ぎ、まだ飢餓状態なら、心情はさらに悪化します。実際に満腹まで食べると、1日続く良い記憶を得ます。オフにすると、これらの心情への影響は止まります。</RHAH_Settings_FamineMood_Tooltip>
+  <RHAH_Settings_FamineMood_Tooltip>初期設定はオン。このMODの訪問者は飢餓状態で心情が低下し、食べ物を断られたか食料要求の期限が過ぎると、さらに悪化します。実際に満腹まで食べると、1日間 +6。このMODから来たラットキンは、保護、捕縛、奴隷化、追放、食事によっても心情が変わり、コロニー加入後も適用されます。食事は1個あたりの栄養を手の込んだ食事と比べ、1日間 +6 または +12。オフにすると、これらの心情への影響は止まります。</RHAH_Settings_FamineMood_Tooltip>
   <RHAH_Settings_ClayMood>観音土による心情を有効化</RHAH_Settings_ClayMood>
   <RHAH_Settings_ClayMood_Tooltip>初期設定はオン。心情を持つ人物が現在の満腹期間に観音土を1個、2個、3個食べると、心情にそれぞれ-2、-4、-6の影響を受けます。現在の段階だけが適用され、期間が終わると消えます。</RHAH_Settings_ClayMood_Tooltip>
   <RHAH_Settings_FamineTrade>飢饉キャラバンの特別価格を有効化</RHAH_Settings_FamineTrade>

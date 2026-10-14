@@ -30,4 +30,18 @@
   <RHAH_Menu_Genes_FertilityTip>Pregnancy chance compared with normal. Range 100% to 1000%.</RHAH_Menu_Genes_FertilityTip>
   <RHAH_Menu_Genes_GestationTip>The shortest pregnancy is 3 days. It cannot run longer than the vanilla lower bound.</RHAH_Menu_Genes_GestationTip>
   <RHAH_Menu_Genes_LovinPregnancyTip>Chance of pregnancy after lovin' finishes. Range 0% to 100%. Each partner's own pregnancy chance is still applied.</RHAH_Menu_Genes_LovinPregnancyTip>
+  <RHAH_Settings_MaternalMilk>Maternal instinct: milk production and storage {0}%</RHAH_Settings_MaternalMilk>
+  <RHAH_Settings_MaternalHunger>Maternal instinct: hunger rate {0}%</RHAH_Settings_MaternalHunger>
+  <RHAH_Settings_MaternalNutrition>Maternal instinct: maximum food need {0}%</RHAH_Settings_MaternalNutrition>
+  <RHAH_Settings_PaternalWork>Paternal instinct: work speed {0}%</RHAH_Settings_PaternalWork>
+  <RHAH_Settings_PaternalHunger>Paternal instinct: hunger rate {0}%</RHAH_Settings_PaternalHunger>
+  <RHAH_Settings_PaternalLearning>Paternal instinct: global learning speed {0}%</RHAH_Settings_PaternalLearning>
+  <RHAH_Settings_PaternalDamage>Paternal instinct: incoming damage {0}%</RHAH_Settings_PaternalDamage>
+  <RHAH_Menu_Genes_MaternalMilkTip>While maternal instinct is active and the carrier is lactating, milk production rate and milk storage capacity are both multiplied by this value. 100% keeps the original rate and capacity; default 150%. Range 1% to 1000%.</RHAH_Menu_Genes_MaternalMilkTip>
+  <RHAH_Menu_Genes_MaternalHungerTip>While maternal instinct is active and the carrier is lactating, hunger rate is multiplied by this value. 100% keeps the original rate; default 115%. Range 1% to 1000%.</RHAH_Menu_Genes_MaternalHungerTip>
+  <RHAH_Menu_Genes_MaternalNutritionTip>While maternal instinct is active and the carrier is lactating, maximum food need is multiplied by this value. 100% keeps the original capacity; default 125%. Range 1% to 1000%.</RHAH_Menu_Genes_MaternalNutritionTip>
+  <RHAH_Menu_Genes_PaternalWorkTip>While paternal instinct is active and a living biological son or daughter is on the same map, work speed is multiplied by this value. Children of any age qualify. 100% keeps the original rate; default 120%. Range 1% to 1000%.</RHAH_Menu_Genes_PaternalWorkTip>
+  <RHAH_Menu_Genes_PaternalHungerTip>While paternal instinct is active and a living biological son or daughter is on the same map, hunger rate is multiplied by this value. Children of any age qualify. 100% keeps the original rate; default 110%. Range 1% to 1000%.</RHAH_Menu_Genes_PaternalHungerTip>
+  <RHAH_Menu_Genes_PaternalLearningTip>While paternal instinct is active and a living biological son or daughter is on the same map, global learning speed is multiplied by this value. Children of any age qualify. 100% keeps the original rate; default 110%. Range 1% to 1000%.</RHAH_Menu_Genes_PaternalLearningTip>
+  <RHAH_Menu_Genes_PaternalDamageTip>While paternal instinct is active and a living biological son or daughter is on the same map, incoming damage is multiplied by this value. Children of any age qualify. 100% keeps the original damage; default 90%. Range 1% to 100%.</RHAH_Menu_Genes_PaternalDamageTip>
 </LanguageData>

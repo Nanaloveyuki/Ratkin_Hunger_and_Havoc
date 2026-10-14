@@ -83,7 +83,7 @@
   <RHAH_Settings_SpaceApproach>Allow incidents at orbital homes</RHAH_Settings_SpaceApproach>
   <RHAH_Settings_SpaceApproach_Tooltip>Off by default. Orbital homes, asteroids, and SOS2 ships then receive no ratkin who walk in, and map incidents stay out of the draw. Turn this on to allow both. A group already on an Odyssey orbit layer still leaves the shuttle launch clear.</RHAH_Settings_SpaceApproach_Tooltip>
   <RHAH_Settings_ChildExchangeFood>Allow food in place of children</RHAH_Settings_ChildExchangeFood>
-  <RHAH_Settings_ChildExchangeFood_Tooltip>On, child exchange accepts simple meals instead of handing over a child. The cost follows Simple meals per child. Traders still sell no food. Off, this letter cannot be delivered, and handing over a child is not one of the choices either.</RHAH_Settings_ChildExchangeFood_Tooltip>
+  <RHAH_Settings_ChildExchangeFood_Tooltip>Allows simple meals instead of handing over a child in child exchange and old baby requests. Child exchange charges per visiting child; a baby request costs twice the single-child amount. Turning this off still allows you to hand over a child.</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_GreenLetters>Green famine letters</RHAH_Settings_GreenLetters>
   <RHAH_Settings_GreenLetters_Tooltip>On by default. Off, famine incident letters use the ordinary blue.</RHAH_Settings_GreenLetters_Tooltip>
   <RHAH_Settings_Stagger>Visitors arrive in batches</RHAH_Settings_Stagger>
@@ -124,7 +124,7 @@
   <RHAH_Settings_RequestPoints>Request points: {0}</RHAH_Settings_RequestPoints>
   <RHAH_Settings_RequestPoints_Tooltip>Requests scale against this point value. 1 to 10000, default 300.</RHAH_Settings_RequestPoints_Tooltip>
   <RHAH_Settings_FoodPerChild>Simple meals per child: {0}</RHAH_Settings_FoodPerChild>
-  <RHAH_Settings_FoodPerChild_Tooltip>Simple meals that replace one child. 0 to 100, default 10.</RHAH_Settings_FoodPerChild_Tooltip>
+  <RHAH_Settings_FoodPerChild_Tooltip>Simple meals per visiting child in child exchange. Old baby requests cost twice this amount. 0 to 100, default 10.</RHAH_Settings_FoodPerChild_Tooltip>
   <RHAH_Settings_FoodPerVisitor>Food per visitor: {0}</RHAH_Settings_FoodPerVisitor>
   <RHAH_Settings_FoodPerVisitor_Tooltip>Portions requested per visitor when feeding them. 0 to 20, default 1.</RHAH_Settings_FoodPerVisitor_Tooltip>
   <RHAH_Settings_FoodRequestCap>Feeding cap: {0}</RHAH_Settings_FoodRequestCap>

@@ -108,6 +108,78 @@ namespace HungerAndHavoc.Tests
         }
 
         [Theory]
+        [InlineData(RHAH_ChoiceAction.Reject)]
+        [InlineData(RHAH_ChoiceAction.Attack)]
+        [InlineData(RHAH_ChoiceAction.Capture)]
+        [InlineData(RHAH_ChoiceAction.Enslave)]
+        public void SwarmProvocationOverridesDepartureAndCannotBeReversedByStaleFood(RHAH_ChoiceAction requested)
+        {
+            RHAH_Mod.Settings.fightingEnabled = false;
+            RHAH_Mod.Settings.batchTurnsHostile = false;
+            Verse.Pawn first = Visitor(1);
+            Verse.Pawn second = Visitor(2);
+            foreach (Verse.Pawn pawn in new[] { first, second })
+            {
+                CompRHAH_Pawn comp = CompRHAH_Pawn.TryGet(pawn);
+                comp.ApplySeed(new RHAH_PawnSeed("I-052", 7, 0, RHAH_PawnRole.Thief, RHAH_Lifecycle.SeekingFood));
+                comp.State.foodWaitUntilTick = 20;
+                comp.State.leaveAfterGameTick = 20;
+            }
+            map.mapPawns = Uninitialized<MapPawns>();
+            Field(typeof(MapPawns), "pawnsSpawned").SetValue(map.mapPawns, new List<Verse.Pawn> { first, second });
+            RHAH_ChoiceRecord record = new RHAH_ChoiceRecord
+            {
+                DisplayId = "I-052", Choice = RHAH_ChoiceKind.Visitors,
+                BatchId = 7, MapId = map.uniqueID, ExpireTick = 10
+            };
+            record.PawnLoadIds.Add(first.thingIDNumber);
+            record.PawnLoadIds.Add(second.thingIDNumber);
+            RHAH_ChoiceRuntime.Open(choices, record);
+            RHAH_ChoiceRuntime.Tick(choices, 100);
+            Assert.True(record.Open);
+            Assert.Equal(RHAH_Attitude.Neutral, RHAH_Api.Get(first).Attitude);
+
+            Assert.Equal(requested, RHAH_ChoiceRuntime.TrySettle(choices, record.Id, requested, 100, true, false));
+            RHAH_ChoiceRuntime.Apply(record);
+            foreach (Verse.Pawn pawn in new[] { first, second })
+            {
+                Assert.Equal(RHAH_Attitude.Hostile, RHAH_Api.Get(pawn).Attitude);
+                Assert.Equal(RHAH_Lifecycle.SeekingFood, RHAH_Api.Get(pawn).Lifecycle);
+                Assert.True(RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Fight));
+                Assert.False(RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap));
+                Assert.False(RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Steal));
+                Assert.Equal(-1, CompRHAH_Pawn.TryGet(pawn).State.foodWaitUntilTick);
+                Assert.Equal(-1, CompRHAH_Pawn.TryGet(pawn).State.leaveAfterGameTick);
+                Assert.False(pawn.IsPrisoner);
+                Assert.False(pawn.IsSlave);
+            }
+            RHAH_ChoiceRecord stale = new RHAH_ChoiceRecord
+            {
+                DisplayId = "I-052", Choice = RHAH_ChoiceKind.Visitors,
+                BatchId = 7, MapId = map.uniqueID
+            };
+            stale.PawnLoadIds.Add(first.thingIDNumber);
+            RHAH_ChoiceRuntime.Open(choices, stale);
+            Assert.Equal(RHAH_ChoiceAction.None,
+                RHAH_ChoiceRuntime.TrySettle(choices, stale.Id, RHAH_ChoiceAction.Feed, 100, true, true));
+            RHAH_BatchAttitude.AcceptFood(first);
+            Assert.Equal(RHAH_Attitude.Hostile, RHAH_Api.Get(first).Attitude);
+        }
+
+        [Fact]
+        public void PleadingJoinCannotAcceptDirectFoodDispatch()
+        {
+            RHAH_ChoiceRecord record = new RHAH_ChoiceRecord
+            {
+                DisplayId = "I-053", Choice = RHAH_ChoiceKind.Visitors, MapId = map.uniqueID
+            };
+            RHAH_ChoiceRuntime.Open(choices, record);
+            Assert.Equal(RHAH_ChoiceAction.None,
+                RHAH_ChoiceRuntime.TrySettle(choices, record.Id, RHAH_ChoiceAction.Feed, 0, true, true));
+            Assert.True(record.Open);
+        }
+
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void AttackDoesNotOrderFightersToLeave(bool leaveTogether)

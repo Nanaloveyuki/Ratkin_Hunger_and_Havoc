@@ -110,6 +110,8 @@ namespace HungerAndHavoc.Incidents
                 case "I-046": return new RHAH_RequestSpec(RHAH_RequestKind.None, RHAH_IntelSiteKind.None, RHAH_ChoiceKind.Airdrop);
                 case "I-033":
                 case "I-047": return new RHAH_RequestSpec(RHAH_RequestKind.None, RHAH_IntelSiteKind.None, RHAH_ChoiceKind.Kinship);
+                case "I-052": return new RHAH_RequestSpec(RHAH_RequestKind.None, RHAH_IntelSiteKind.None, RHAH_ChoiceKind.Visitors);
+                case "I-053": return new RHAH_RequestSpec(RHAH_RequestKind.None, RHAH_IntelSiteKind.None, RHAH_ChoiceKind.Refugees);
                 default: return new RHAH_RequestSpec(RHAH_RequestKind.None, RHAH_IntelSiteKind.None, RHAH_ChoiceKind.None);
             }
         }
@@ -148,6 +150,8 @@ namespace HungerAndHavoc.Incidents
                 case "I-043":
                 case "I-044":
                 case "I-045":
+                case "I-052":
+                case "I-053":
                     return true;
                 default:
                     return false;
@@ -435,6 +439,8 @@ namespace HungerAndHavoc.Incidents
                 case "I-043":
                 case "I-044":
                 case "I-045":
+                case "I-052":
+                case "I-053":
                     return true;
                 default:
                     return false;
@@ -478,6 +484,11 @@ namespace HungerAndHavoc.Incidents
         internal static bool IsAllyDestination(bool player, bool hidden, bool defeated, bool temporary, bool humanlike, bool hostile, bool ally, bool hasSettlement, bool attitudeFaction)
         {
             return !player && !hidden && !defeated && !temporary && humanlike && !hostile && ally && hasSettlement && !attitudeFaction;
+        }
+
+        internal static bool ShowsFoodGive(string displayId, RHAH_ChoiceKind choice)
+        {
+            return displayId != "I-053" && ShowsFoodGive(choice);
         }
 
         internal static bool ShowsFoodGive(RHAH_ChoiceKind choice)
@@ -543,6 +554,10 @@ namespace HungerAndHavoc.Incidents
         internal List<int> PawnLoadIds = new List<int>();
         internal int AllyFactionId;
         internal List<int> AllyPawnIds = new List<int>();
+        internal float AllyTransferredValue;
+        internal int AllyGoodwillGranted;
+        internal bool AllyGiftChecked;
+        internal int AllyGiftDueTick = -1;
         internal int TransactionVersion;
         internal string QuotedFoodDefName = string.Empty;
         internal int QuotedFoodCount;
@@ -585,6 +600,10 @@ namespace HungerAndHavoc.Incidents
             Scribe_Collections.Look(ref PawnLoadIds, "pawnLoadIds", LookMode.Value);
             Scribe_Values.Look(ref AllyFactionId, "allyFactionId", 0);
             Scribe_Collections.Look(ref AllyPawnIds, "allyPawnIds", LookMode.Value);
+            Scribe_Values.Look(ref AllyTransferredValue, "allyTransferredValue", 0f);
+            Scribe_Values.Look(ref AllyGoodwillGranted, "allyGoodwillGranted", 0);
+            Scribe_Values.Look(ref AllyGiftChecked, "allyGiftChecked", false);
+            Scribe_Values.Look(ref AllyGiftDueTick, "allyGiftDueTick", -1);
             Scribe_Values.Look(ref TransactionVersion, "transactionVersion", 0);
             Scribe_Values.Look(ref QuotedFoodDefName, "quotedFoodDefName", string.Empty);
             Scribe_Values.Look(ref QuotedFoodCount, "quotedFoodCount", 0);

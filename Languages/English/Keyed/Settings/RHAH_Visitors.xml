@@ -93,12 +93,24 @@
   <RHAH_Settings_TailFood_Tooltip>Nutrition from a successful tail bite. 0 to 2, default 0.35.</RHAH_Settings_TailFood_Tooltip>
   <RHAH_Settings_TailFail>Failed bite damage: {0}</RHAH_Settings_TailFail>
   <RHAH_Settings_TailFail_Tooltip>Damage when the bite does not take the tail. 0 to 50, default 4.</RHAH_Settings_TailFail_Tooltip>
+  <RHAH_Settings_FamineYear>Enable annual famines</RHAH_Settings_FamineYear>
+  <RHAH_Settings_FamineYear_Tooltip>Off by default. Each year, at 6 AM on the first day of the selected home's local calendar, decide whether it is a famine year. The first judgment catches up with the current year if New Year's Day has passed. Famine years increase this mod's visitor groups and broadcast responses and may bring one extra major disaster. Disabling this option stops annual famine effects.</RHAH_Settings_FamineYear_Tooltip>
+  <RHAH_Settings_FamineYearChance>Yearly famine chance: {0}%</RHAH_Settings_FamineYearChance>
+  <RHAH_Settings_FamineYearChance_Tooltip>Chance that a year is a famine year. Range 0 to 100%, default 40%.</RHAH_Settings_FamineYearChance_Tooltip>
+  <RHAH_Settings_FamineYearMultiplier>Famine-year visitor multiplier: {0}</RHAH_Settings_FamineYearMultiplier>
+  <RHAH_Settings_FamineYearMultiplier_Tooltip>During famine years, this mod's ordinary multi-person groups are multiplied after their usual population cap, rounding up. Single visitors, fixed mother-and-child families and laboring pairs retain their usual size. Mouse swarms always number 15 to 50. Broadcasts can call up to this multiplier rounded up in distinct groups. Range 1 to 4, default 3.</RHAH_Settings_FamineYearMultiplier_Tooltip>
+  <RHAH_Settings_FamineYearDisasterChance>Daily extra disaster chance in famine years: {0}%</RHAH_Settings_FamineYearDisasterChance>
+  <RHAH_Settings_FamineYearDisasterChance_Tooltip>At 6 AM local time each day of a famine year, this chance applies to an attempt to cause a cold snap, heat wave, toxic fallout or volcanic winter. At most one extra disaster succeeds per famine year. Range 0 to 100%, default 20%.</RHAH_Settings_FamineYearDisasterChance_Tooltip>
+  <RHAH_FamineYear_Label>{0}: The year's outlook</RHAH_FamineYear_Label>
+  <RHAH_FamineYear_Famine>{0} is a famine year. More hungry ratkin will arrive together, and broadcasts will draw more groups seeking help. A cold snap, heat wave, toxic fallout or volcanic winter may make the year harder still.\n\nKeep extra food for the visitors and your colony.</RHAH_FamineYear_Famine>
+  <RHAH_FamineYear_Normal>{0} is an ordinary year. This mod's visitor groups and broadcast responses retain their usual size.</RHAH_FamineYear_Normal>
+  <RHAH_FamineYear_Catchup>New Year's Day has already passed. Here is the outlook for the rest of this year.</RHAH_FamineYear_Catchup>
   <RHAH_Settings_FamineArrival>Famine visitors arrive hungry</RHAH_Settings_FamineArrival>
   <RHAH_Settings_FamineArrival_Tooltip>Enabled by default. This mod's non-player famine visitors arrive with an empty food need and malnutrition at the severity set by Arrival malnutrition. This adjustment applies on arrival only. When disabled, new visitors retain their usual food need and health.</RHAH_Settings_FamineArrival_Tooltip>
   <RHAH_Settings_FamineMalnutrition>Arrival malnutrition: {0}</RHAH_Settings_FamineMalnutrition>
   <RHAH_Settings_FamineMalnutrition_Tooltip>Malnutrition severity given to this mod's non-player famine visitors when hungry arrivals are enabled. 0.01 to 0.5, default 0.25.</RHAH_Settings_FamineMalnutrition_Tooltip>
   <RHAH_Settings_FamineMood>Enable famine visitor moods</RHAH_Settings_FamineMood>
-  <RHAH_Settings_FamineMood_Tooltip>Enabled by default. This mod's non-player famine visitors suffer a mood penalty while starving. Their mood worsens while still starving after a real refusal of food or an expired food demand. Actually eating their fill gives a positive memory lasting 1 day. Disabling this option stops these mood effects.</RHAH_Settings_FamineMood_Tooltip>
+  <RHAH_Settings_FamineMood_Tooltip>Enabled by default. This mod's visitors lose mood while starving, with a stronger penalty after food is refused or a demand expires. Actually eating their fill gives +6 for 1 day. Ratkin originating from this mod also gain memories from shelter, capture, enslavement, expulsion and eating, including after joining the colony. Eating gives +6 or +12 for 1 day based on per-unit nutrition compared with a fine meal. Disabling this option stops these mood effects.</RHAH_Settings_FamineMood_Tooltip>
   <RHAH_Settings_ClayMood>Enable guanyin clay moods</RHAH_Settings_ClayMood>
   <RHAH_Settings_ClayMood_Tooltip>Enabled by default. Characters with a mood need suffer a -2, -4, or -6 mood effect after their first, second, or third lump of guanyin clay in the current satiety window. Only the current stage applies; it ends when the window expires.</RHAH_Settings_ClayMood_Tooltip>
   <RHAH_Settings_FamineTrade>Enable famine caravan prices</RHAH_Settings_FamineTrade>

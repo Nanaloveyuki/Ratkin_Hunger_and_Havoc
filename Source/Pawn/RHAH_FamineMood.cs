@@ -48,7 +48,7 @@ namespace HungerAndHavoc.Pawn
     }
 
     // XML 反射入口 关闭设置时已保存的心情也立即失效
-    public sealed class Thought_Memory_RHAH_FamineFed : Thought_Memory
+    public class Thought_Memory_RHAH_FamineFed : Thought_Memory
     {
         public override float MoodOffset()
         {

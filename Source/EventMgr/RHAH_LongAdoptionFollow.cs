@@ -307,6 +307,7 @@ namespace HungerAndHavoc.EventMgr
 
         static bool TickTaken(RHAH_LongFollowRecord r, Map map, int tick)
         {
+            if (r.FoodAlternative) { RHAH_LongFollowRuntime.Complete(r); return true; }
             Verse.Pawn child = RHAH_LongFollowRuntime.Pawn(r.SubjectId, tick);
             if (r.Phase == 0)
             {

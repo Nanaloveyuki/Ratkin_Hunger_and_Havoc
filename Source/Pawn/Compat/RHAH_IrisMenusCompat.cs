@@ -841,6 +841,12 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
+            MenuControls.Anchor(list, "famine-year");
+            RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_FamineYear".Translate(), ref settings.famineYearEnabled, "RHAH_Settings_FamineYear_Tooltip".Translate());
+            settings.famineYearChancePercent = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "famine-year-chance", "RHAH_Settings_FamineYearChance".Translate(settings.famineYearChancePercent.ToString("0.0")), GameComponent_RHAH_FamineYear.ClampPercent(settings.famineYearChancePercent, 40f), 0f, 100f, "0.0", "RHAH_Settings_FamineYearChance_Tooltip".Translate());
+            settings.famineYearPawnMultiplier = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "famine-year-multiplier", "RHAH_Settings_FamineYearMultiplier".Translate(settings.famineYearPawnMultiplier.ToString("0.00")), GameComponent_RHAH_FamineYear.ClampMultiplier(settings.famineYearPawnMultiplier), 1f, 4f, "0.00", "RHAH_Settings_FamineYearMultiplier_Tooltip".Translate());
+            settings.famineYearDisasterChancePercent = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "famine-year-disaster", "RHAH_Settings_FamineYearDisasterChance".Translate(settings.famineYearDisasterChancePercent.ToString("0.0")), GameComponent_RHAH_FamineYear.ClampPercent(settings.famineYearDisasterChancePercent, 20f), 0f, 100f, "0.0", "RHAH_Settings_FamineYearDisasterChance_Tooltip".Translate());
+
             MenuControls.Anchor(list, "famine-arrival");
             RHAH_IrisMenusWidgets.Checkbox(list, "RHAH_Settings_FamineArrival".Translate(), ref settings.famineArrivalEnabled, "RHAH_Settings_FamineArrival_Tooltip".Translate());
             settings.famineArrivalMalnutrition = RHAH_IrisMenusWidgets.TuneFloat(list, weightBuffers, "famine-malnutrition", "RHAH_Settings_FamineMalnutrition".Translate(settings.famineArrivalMalnutrition.ToString("0.00")), settings.famineArrivalMalnutrition, 0.01f, 0.5f, "0.00", "RHAH_Settings_FamineMalnutrition_Tooltip".Translate());
@@ -895,6 +901,10 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("visitors-beg-give", "RHAH_Settings_BegAutoGive");
             yield return Entry("visitors-broadcast", "RHAH_Settings_Broadcast");
             yield return Entry("visitors-camp", "RHAH_Settings_RefugeeCamp");
+            yield return Entry("famine-year", "RHAH_Settings_FamineYear");
+            yield return Entry("famine-year-chance", "RHAH_Settings_FamineYearChance");
+            yield return Entry("famine-year-multiplier", "RHAH_Settings_FamineYearMultiplier");
+            yield return Entry("famine-year-disaster", "RHAH_Settings_FamineYearDisasterChance");
             yield return Entry("famine-arrival", "RHAH_Settings_FamineArrival");
             yield return Entry("famine-malnutrition", "RHAH_Settings_FamineMalnutrition");
             yield return Entry("famine-mood", "RHAH_Settings_FamineMood");
@@ -1627,6 +1637,7 @@ namespace HungerAndHavoc.Pawn.Compat
                     settings.SetGeneEnabled(genes[i].defName, enabled);
                 }
                 DrawFertility(list, settings, genes[i].defName);
+                DrawParentalInstinct(list, settings, genes[i].defName);
             }
         }
         void DrawFertility(Listing_Standard list, RHAH_Settings settings, string defName)
@@ -1681,6 +1692,51 @@ namespace HungerAndHavoc.Pawn.Compat
                 string days = Buffer(weightBuffers, "gestation-days", settings.gestationDays, "0.0");
                 settings.gestationDays = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_GestationDays".Translate(settings.gestationDays.ToString("0.0")), settings.gestationDays, ref days, RHAH_FertilityRules.MinGestationDays, RHAH_FertilityRules.VanillaGestationFloorDays, "0.0", "RHAH_Menu_Genes_GestationTip".Translate());
                 weightBuffers["gestation-days"] = days;
+            }
+        }
+
+        void DrawParentalInstinct(Listing_Standard list, RHAH_Settings settings, string defName)
+        {
+            if (!settings.IsGeneEnabled(defName))
+            {
+                return;
+            }
+
+            if (defName == RHAH_ParentalGenes.MaternalInstinct)
+            {
+                MenuControls.Anchor(list, "maternal-milk");
+                string milk = Buffer(weightBuffers, "maternal-milk", settings.maternalMilkPercent, "0");
+                settings.maternalMilkPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaternalMilk".Translate(settings.maternalMilkPercent.ToString("0")), settings.maternalMilkPercent, ref milk, RHAH_ParentalGenes.MinPercent, RHAH_ParentalGenes.MaxPercent, "0", "RHAH_Menu_Genes_MaternalMilkTip".Translate());
+                weightBuffers["maternal-milk"] = milk;
+                MenuControls.Anchor(list, "maternal-hunger");
+                string hunger = Buffer(weightBuffers, "maternal-hunger", settings.maternalHungerPercent, "0");
+                settings.maternalHungerPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaternalHunger".Translate(settings.maternalHungerPercent.ToString("0")), settings.maternalHungerPercent, ref hunger, RHAH_ParentalGenes.MinPercent, RHAH_ParentalGenes.MaxPercent, "0", "RHAH_Menu_Genes_MaternalHungerTip".Translate());
+                weightBuffers["maternal-hunger"] = hunger;
+                MenuControls.Anchor(list, "maternal-nutrition");
+                string nutrition = Buffer(weightBuffers, "maternal-nutrition", settings.maternalNutritionPercent, "0");
+                settings.maternalNutritionPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_MaternalNutrition".Translate(settings.maternalNutritionPercent.ToString("0")), settings.maternalNutritionPercent, ref nutrition, RHAH_ParentalGenes.MinPercent, RHAH_ParentalGenes.MaxPercent, "0", "RHAH_Menu_Genes_MaternalNutritionTip".Translate());
+                weightBuffers["maternal-nutrition"] = nutrition;
+                return;
+            }
+
+            if (defName == RHAH_ParentalGenes.PaternalInstinct)
+            {
+                MenuControls.Anchor(list, "paternal-work");
+                string work = Buffer(weightBuffers, "paternal-work", settings.paternalWorkPercent, "0");
+                settings.paternalWorkPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PaternalWork".Translate(settings.paternalWorkPercent.ToString("0")), settings.paternalWorkPercent, ref work, RHAH_ParentalGenes.MinPercent, RHAH_ParentalGenes.MaxPercent, "0", "RHAH_Menu_Genes_PaternalWorkTip".Translate());
+                weightBuffers["paternal-work"] = work;
+                MenuControls.Anchor(list, "paternal-hunger");
+                string hunger = Buffer(weightBuffers, "paternal-hunger", settings.paternalHungerPercent, "0");
+                settings.paternalHungerPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PaternalHunger".Translate(settings.paternalHungerPercent.ToString("0")), settings.paternalHungerPercent, ref hunger, RHAH_ParentalGenes.MinPercent, RHAH_ParentalGenes.MaxPercent, "0", "RHAH_Menu_Genes_PaternalHungerTip".Translate());
+                weightBuffers["paternal-hunger"] = hunger;
+                MenuControls.Anchor(list, "paternal-learning");
+                string learning = Buffer(weightBuffers, "paternal-learning", settings.paternalLearningPercent, "0");
+                settings.paternalLearningPercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PaternalLearning".Translate(settings.paternalLearningPercent.ToString("0")), settings.paternalLearningPercent, ref learning, RHAH_ParentalGenes.MinPercent, RHAH_ParentalGenes.MaxPercent, "0", "RHAH_Menu_Genes_PaternalLearningTip".Translate());
+                weightBuffers["paternal-learning"] = learning;
+                MenuControls.Anchor(list, "paternal-damage");
+                string damage = Buffer(weightBuffers, "paternal-damage", settings.paternalDamagePercent, "0");
+                settings.paternalDamagePercent = RHAH_IrisMenusWidgets.TunedValue(list, "RHAH_Settings_PaternalDamage".Translate(settings.paternalDamagePercent.ToString("0")), settings.paternalDamagePercent, ref damage, RHAH_ParentalGenes.MinPercent, RHAH_ParentalGenes.MaxDamagePercent, "0", "RHAH_Menu_Genes_PaternalDamageTip".Translate());
+                weightBuffers["paternal-damage"] = damage;
             }
         }
 
@@ -2262,6 +2318,13 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("fertility-percent", "RHAH_Settings_FertilityPercent");
             yield return Entry("gestation-days", "RHAH_Settings_GestationDays");
             yield return Entry("lovin-pregnancy", "RHAH_Settings_LovinPregnancy");
+            yield return Entry("maternal-milk", "RHAH_Settings_MaternalMilk");
+            yield return Entry("maternal-hunger", "RHAH_Settings_MaternalHunger");
+            yield return Entry("maternal-nutrition", "RHAH_Settings_MaternalNutrition");
+            yield return Entry("paternal-work", "RHAH_Settings_PaternalWork");
+            yield return Entry("paternal-hunger", "RHAH_Settings_PaternalHunger");
+            yield return Entry("paternal-learning", "RHAH_Settings_PaternalLearning");
+            yield return Entry("paternal-damage", "RHAH_Settings_PaternalDamage");
         }
 
         IEnumerable<MenuSearchEntry> SearchPawnHistory()

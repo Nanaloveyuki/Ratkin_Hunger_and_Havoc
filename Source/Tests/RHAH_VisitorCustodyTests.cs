@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
@@ -148,6 +149,21 @@ namespace HungerAndHavoc.Tests
         }
 
         [Fact]
+        public void TransferPreflightAllowsWaitingVisitorsButPreservesExplicitHolds()
+        {
+            Verse.Pawn pawn = Visitor(map);
+            Assert.False(RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap));
+            Assert.True(RHAH_ApiHost.CanTransfer(pawn));
+            Assert.Equal(RHAH_Lifecycle.Arriving, RHAH_Api.Get(pawn).Lifecycle);
+            RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.ExitMap, false);
+            Assert.False(RHAH_ApiHost.CanTransfer(pawn));
+            RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.ExitMap, true);
+            Assert.True(RHAH_ApiHost.CanTransfer(pawn));
+            RHAH_Api.SetGate(pawn, RHAH_BehaviorGate.Transfer, false);
+            Assert.False(RHAH_ApiHost.CanTransfer(pawn));
+        }
+
+        [Fact]
         public void MentalStateOverridesOtherwiseValidCustodyEligibility()
         {
             Verse.Pawn pawn = Visitor(map);
@@ -186,6 +202,86 @@ namespace HungerAndHavoc.Tests
 
             Assert.True(RHAH_VisitorBatch.CanConvert(pawn, map.uniqueID, false));
             Assert.True(RHAH_VisitorBatch.HasEligible(new List<Verse.Pawn> { pawn }, map.uniqueID, false));
+        }
+
+        [Theory]
+        [InlineData("I-013", 1, 10)]
+        [InlineData("I-013", 2, 20)]
+        [InlineData("I-019", 1, 20)]
+        [InlineData("I-019", 2, 20)]
+        public void FoodReplacementNeedsItsOwnStockNotAnOutgoingChild(string displayId, int visitorCount, int required)
+        {
+            FieldInfo binding = Field(typeof(DefOfHelper), "bindingNow");
+            bool previousBinding = (bool)binding.GetValue(null);
+            try
+            {
+                binding.SetValue(null, true);
+                RuntimeHelpers.RunClassConstructor(typeof(ThingDefOf).TypeHandle);
+            }
+            finally
+            {
+                binding.SetValue(null, previousBinding);
+            }
+            RHAH_Settings previousSettings = RHAH_Mod.Settings;
+            List<ThingDef> previousDefs = new List<ThingDef>(DefDatabase<ThingDef>.AllDefsListForReading);
+            ThingDef previousMeal = DefDatabase<ThingDef>.GetNamedSilentFail("MealSimple");
+            ThingDef meal = previousMeal ?? Uninitialized<ThingDef>();
+            if (previousMeal == null) meal.defName = "MealSimple";
+            if (previousMeal == null) DefDatabase<ThingDef>.Add(meal);
+            try
+            {
+                RHAH_Mod.Settings = new RHAH_Settings { foodPerChild = 10, childExchangeFoodSubstitution = true };
+                Verse.Pawn[] pawns = new Verse.Pawn[visitorCount];
+                for (int i = 0; i < pawns.Length; i++)
+                {
+                    pawns[i] = Visitor(map);
+                    pawns[i].def.race = new RaceProperties { intelligence = Intelligence.Humanlike };
+                    pawns[i].ageTracker = new Pawn_AgeTracker(pawns[i]);
+                }
+                RHAH_ChoiceRecord record = Open(pawns);
+                record.DisplayId = displayId;
+                record.Kind = RHAH_RequestKind.Baby;
+                record.Choice = displayId == "I-013" ? RHAH_ChoiceKind.ChildExchange : RHAH_ChoiceKind.Aid;
+                map.listerThings = new ListerThings(ListerThingsUse.Global, null);
+                Thing stock = new Thing { def = meal, stackCount = required - 1 };
+                Field(typeof(Thing), "mapIndexOrState").SetValue(stock, (sbyte)Find.Maps.IndexOf(map));
+                ((Dictionary<ThingDef, List<Thing>>)Field(typeof(ListerThings), "listsByDef").GetValue(map.listerThings))[meal] = new List<Thing> { stock };
+
+                Assert.False(RHAH_ChildExchange.CanDeliver(record, null, true));
+                Assert.Equal(required - 1, stock.stackCount);
+                Assert.False(RHAH_ChildExchange.TryExchange(record, null, true));
+                Assert.Equal(required - 1, stock.stackCount);
+                stock.stackCount = required;
+                Assert.True(RHAH_ChildExchange.CanDeliver(record, null, true));
+                Assert.False(RHAH_ChildExchange.CanDeliver(record, null, false));
+                RHAH_Mod.Settings.childExchangeFoodSubstitution = false;
+                Assert.False(RHAH_ChildExchange.CanDeliver(record, null, true));
+                RHAH_Mod.Settings.childExchangeFoodSubstitution = true;
+                RHAH_Mod.Settings.foodPerChild = 7;
+                stock.stackCount = displayId == "I-019" ? 14 : visitorCount * 7;
+                Assert.True(RHAH_ChildExchange.CanDeliver(record, null, true));
+                stock.stackCount--;
+                Assert.False(RHAH_ChildExchange.CanDeliver(record, null, true));
+            }
+            finally
+            {
+                RHAH_Mod.Settings = previousSettings;
+                if (previousMeal == null)
+                {
+                    DefDatabase<ThingDef>.Clear();
+                    for (int i = 0; i < previousDefs.Count; i++) DefDatabase<ThingDef>.Add(previousDefs[i]);
+                }
+            }
+        }
+
+        [Fact]
+        public void NonChildRequestCannotTransferChildrenEvenWithStaleBabyKind()
+        {
+            RHAH_ChoiceRecord record = Open(Visitor(map));
+            record.Kind = RHAH_RequestKind.Baby;
+            Assert.False(RHAH_ChildExchange.CanDeliver(record, null, false));
+            Assert.False(RHAH_ChildExchange.CanDeliver(record, null, true));
+            Assert.Empty(RHAH_ChildExchange.Candidates(record));
         }
 
         [Fact]

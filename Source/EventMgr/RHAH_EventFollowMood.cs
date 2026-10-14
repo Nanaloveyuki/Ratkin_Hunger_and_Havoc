@@ -25,7 +25,7 @@ namespace HungerAndHavoc.EventMgr
             }
 
             List<Verse.Pawn> pawns = Present(record);
-            bool substitute = record.Choice == RHAH_ChoiceKind.ChildExchange && RHAH_ChildExchange.FoodAlternative(record) && record.Settled == RHAH_ChoiceAction.Deliver;
+            bool substitute = RHAH_ChildExchange.FoodAlternative(record);
             bool gave = (record.DisplayId == "I-013" || record.DisplayId == "I-019") && record.Settled == RHAH_ChoiceAction.Deliver && !substitute;
             bool bought = (record.DisplayId == "I-012" || record.DisplayId == "I-038") && record.Settled == RHAH_ChoiceAction.Deliver;
             for (int i = 0; i < pawns.Count; i++)

@@ -527,6 +527,7 @@ namespace HungerAndHavoc.Pawn
                 return true;
             }
 
+            if (RHAH_MouseSwarm.IsSource(snapshot.SourceIncidentDisplayId)) return false;
             Lord lord = pawn.GetLord();
             LordJob_RHAH_Visitor visitor = lord?.LordJob as LordJob_RHAH_Visitor;
             if (RHAH_ArmedDemand.Holds(pawn)) return false;

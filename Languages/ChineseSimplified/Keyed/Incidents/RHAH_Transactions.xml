@@ -12,8 +12,12 @@
   <RHAH_ChildExchange_Choose>交出{0}，换回鼠蛋</RHAH_ChildExchange_Choose>
   <RHAH_ChildExchange_ChooseNone>选择要交出的孩子</RHAH_ChildExchange_ChooseNone>
   <RHAH_ChildExchange_NoChild>地图上没有能交出的殖民地孩子。</RHAH_ChildExchange_NoChild>
-  <RHAH_ChildExchange_Food>用食物换回鼠蛋</RHAH_ChildExchange_Food>
+  <RHAH_ChildExchange_Food>给予食物：{0} 份简单餐，换回鼠蛋</RHAH_ChildExchange_Food>
   <RHAH_ChildExchange_SelectionHint>请在信中选择要交出的殖民地孩子。交换完成后，来客中的鼠蛋加入殖民地，成年来客准备离开。</RHAH_ChildExchange_SelectionHint>
-  <RHAH_ChildExchange_Unavailable>没有合适的孩子、食物不足，或来客中的鼠蛋还不能加入殖民地。</RHAH_ChildExchange_Unavailable>
+  <RHAH_ChildExchange_LegacyFood>给予食物：{0} 份简单餐，代替交出孩子</RHAH_ChildExchange_LegacyFood>
+  <RHAH_ChildExchange_LegacyFoodHint>也可交出 {1} 份简单餐代替孩子，数量是“易子而食”每个孩子所需 {0} 份的两倍。来客拿到食物后离开，不带走殖民地孩子。</RHAH_ChildExchange_LegacyFoodHint>
+  <RHAH_ChildExchange_NoIncoming>来客中的鼠蛋还不能加入殖民地。</RHAH_ChildExchange_NoIncoming>
+  <RHAH_ChildExchange_FoodDisabled>食物替代已在设置中关闭。</RHAH_ChildExchange_FoodDisabled>
+  <RHAH_ChildExchange_NoFood>需要 {0} 份简单餐，地图上的数量不足。</RHAH_ChildExchange_NoFood>
   <RHAH_ChildExchange_Completed>交换完成。</RHAH_ChildExchange_Completed>
 </LanguageData>

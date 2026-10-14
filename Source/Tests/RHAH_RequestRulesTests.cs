@@ -54,7 +54,7 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void ChildOutcomeKeepsLegacyAndExplicitFoodAlternativesDistinct()
         {
-            RHAH_ChoiceRecord record = new RHAH_ChoiceRecord { Choice = RHAH_ChoiceKind.ChildExchange,
+            RHAH_ChoiceRecord record = new RHAH_ChoiceRecord { DisplayId = "I-013", Choice = RHAH_ChoiceKind.ChildExchange,
                 Kind = RHAH_RequestKind.SimpleMeal, Settled = RHAH_ChoiceAction.Deliver };
             Assert.True(RHAH_ChildExchange.FoodAlternative(record));
             record.Kind = RHAH_RequestKind.Baby;
@@ -66,6 +66,18 @@ namespace HungerAndHavoc.Tests
             record.OutgoingChildThingId = 17;
             Assert.False(RHAH_ChildExchange.FoodAlternative(record));
         }
+
+        [Fact]
+        public void BabyRequestFoodPaymentDoesNotCountAsHandingOverAChild()
+        {
+            RHAH_ChoiceRecord record = new RHAH_ChoiceRecord { DisplayId = "I-019", Choice = RHAH_ChoiceKind.Aid,
+                Kind = RHAH_RequestKind.Baby, Settled = RHAH_ChoiceAction.Deliver, ChildExchangeVersion = 1,
+                ChildFoodAlternative = true };
+            Assert.True(RHAH_ChildExchange.FoodAlternative(record));
+            record.ChildFoodAlternative = false;
+            Assert.False(RHAH_ChildExchange.FoodAlternative(record));
+        }
+
 
         [Fact]
         public void AidAndIntelKeepOldAmountsAndSites()

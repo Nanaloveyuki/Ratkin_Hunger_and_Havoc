@@ -70,12 +70,8 @@ namespace HungerAndHavoc.Pawn
     [HarmonyPatch(typeof(Verse.Pawn), nameof(Verse.Pawn.ExitMap))]
     internal static class RHAH_ExitTrustPatch
     {
-        static void Prefix(Verse.Pawn __instance, out int __state)
-        {
-            __state = __instance?.mindState == null ? 0 : __instance.mindState.timesGuestTendedToByPlayer;
-        }
 
-        static void Postfix(Verse.Pawn __instance, int __state)
+        static void Postfix(Verse.Pawn __instance)
         {
             if (__instance == null || __instance.Spawned || __instance.Dead)
             {
@@ -99,7 +95,7 @@ namespace HungerAndHavoc.Pawn
             }
 
 
-            if (HungerAndHavoc.Incidents.RHAH_ChoiceRuntime.TryJoinAlly(__instance, __state, false))
+            if (HungerAndHavoc.Incidents.RHAH_ChoiceRuntime.TryJoinAlly(__instance))
             {
                 return;
             }

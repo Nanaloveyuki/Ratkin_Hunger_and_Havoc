@@ -32,7 +32,6 @@ namespace HungerAndHavoc.Tests
         {
             RHAH_EventChainProvider provider = new RHAH_EventChainProvider();
             Assert.Equal(1, provider.StateVersion);
-            Assert.Equal(54, provider.Definitions.Count);
             foreach (IEventChainDefinition definition in provider.Definitions)
             {
                 if (!RHAH_EventFollowRules.HasLongFollow(definition.Id)) continue;

@@ -11,10 +11,23 @@ namespace HungerAndHavoc.Incidents
 {
     internal static class RHAH_ChildExchange
     {
+        internal static bool AcceptsChild(RHAH_ChoiceRecord record)
+        {
+            return record != null && (record.DisplayId == "I-013" || record.DisplayId == "I-019");
+        }
+
+        internal static int FoodCost(RHAH_ChoiceRecord record)
+        {
+            if (!AcceptsChild(record)) return 0;
+            return RHAH_RequestRules.FoodForChildren(record.DisplayId == "I-019" ? 1 : IncomingCount(record)) *
+                (record.DisplayId == "I-019" ? 2 : 1);
+        }
+
         internal static bool FoodAlternative(RHAH_ChoiceRecord record)
         {
-            return record != null && record.Choice == RHAH_ChoiceKind.ChildExchange && record.Settled == RHAH_ChoiceAction.Deliver &&
-                (record.ChildExchangeVersion > 0 ? record.ChildFoodAlternative : record.Kind != RHAH_RequestKind.Baby);
+            return record != null && record.Settled == RHAH_ChoiceAction.Deliver &&
+                (record.ChildExchangeVersion > 0 ? AcceptsChild(record) && record.ChildFoodAlternative :
+                    record.Choice == RHAH_ChoiceKind.ChildExchange && record.Kind != RHAH_RequestKind.Baby);
         }
 
         internal static bool IsYoung(Verse.Pawn pawn)
@@ -34,7 +47,7 @@ namespace HungerAndHavoc.Incidents
         {
             List<Verse.Pawn> result = new List<Verse.Pawn>();
             Map map = RHAH_EventMap(record);
-            if (map == null) return result;
+            if (map == null || !AcceptsChild(record)) return result;
             IReadOnlyList<Verse.Pawn> pawns = map.mapPawns.FreeColonistsSpawned;
             for (int i = 0; i < pawns.Count; i++) if (Eligible(pawns[i], map)) result.Add(pawns[i]);
             result.Sort((left, right) => left.thingIDNumber.CompareTo(right.thingIDNumber));
@@ -73,22 +86,27 @@ namespace HungerAndHavoc.Incidents
 
         internal static bool CanDeliver(RHAH_ChoiceRecord record, Verse.Pawn outgoing, bool foodAlternative)
         {
+            return UnavailableReason(record, outgoing, foodAlternative) == null;
+        }
+
+        internal static string UnavailableReason(RHAH_ChoiceRecord record, Verse.Pawn outgoing, bool foodAlternative)
+        {
             Map map = RHAH_EventMap(record);
-            if (map == null || !record.Open) return false;
+            if (!AcceptsChild(record) || map == null || !record.Open) return "RHAH_Choice_Stale";
             List<Verse.Pawn> visitors = RHAH_ChoiceRuntime.Present(record);
-            if (visitors.Count == 0 || visitors[0].Faction == null || visitors[0].Faction == Faction.OfPlayer) return false;
-            if (record.DisplayId == "I-013")
+            if (visitors.Count == 0 || visitors[0].Faction == null || visitors[0].Faction == Faction.OfPlayer)
+                return "RHAH_Choice_NoPresent";
+            if (record.DisplayId == "I-013" && !Joinable(visitors.FindAll(IsYoung)))
+                return "RHAH_ChildExchange_NoIncoming";
+            if (foodAlternative)
             {
-                List<Verse.Pawn> incoming = visitors.FindAll(IsYoung);
-                if (!Joinable(incoming)) return false;
-                if (foodAlternative)
-                {
-                    int amount = RHAH_RequestRules.FoodForChildren(incoming.Count);
-                    return (RHAH_Mod.Settings == null || RHAH_Mod.Settings.childExchangeFoodSubstitution) &&
-                        RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= amount;
-                }
+                if (RHAH_Mod.Settings != null && !RHAH_Mod.Settings.childExchangeFoodSubstitution)
+                    return "RHAH_ChildExchange_FoodDisabled";
+                return RHAH_ChoiceRuntime.Stock(map, RHAH_RequestKind.SimpleMeal) >= FoodCost(record)
+                    ? null : "RHAH_ChildExchange_NoFood";
             }
-            return !foodAlternative && Eligible(outgoing, map) && ReleaseAllowed(outgoing, RHAH_ReleaseReason.ModRequest);
+            return Eligible(outgoing, map) && ReleaseAllowed(outgoing, RHAH_ReleaseReason.ModRequest)
+                ? null : "RHAH_ChildExchange_NoChild";
         }
 
         internal static bool TryExchange(RHAH_ChoiceRecord record, Verse.Pawn outgoing, bool foodAlternative)
@@ -100,12 +118,13 @@ namespace HungerAndHavoc.Incidents
             Faction counterpart = visitors[0].Faction;
             Verse.Pawn responsible = Responsible(map, outgoing);
             // All join and payment gates are checked before changing custody.
-            if (foodAlternative && !RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, RHAH_RequestRules.FoodForChildren(incoming.Count))) return false;
+            if (foodAlternative && !RHAH_ChoiceRuntime.TryConsume(map, RHAH_RequestKind.SimpleMeal, FoodCost(record))) return false;
             for (int i = 0; i < incoming.Count; i++)
             {
                 RHAH_ApiHost.CommitReleaseToColony(incoming[i], RHAH_ReleaseReason.JoinedPlayerFaction);
                 RHAH_VisitorRules.ApplyPlayerIdeo(incoming[i], RHAH_Mod.Settings == null ? 100 : RHAH_Mod.Settings.playerIdeoPercent, Rand.Value);
                 incoming[i].SetFaction(Faction.OfPlayer);
+                RHAH_VisitorMood.NotifySheltered(incoming[i]);
             }
             if (!foodAlternative)
             {

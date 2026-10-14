@@ -25,7 +25,7 @@
   <RHAH_Menu_Outcome_Failure>Failure</RHAH_Menu_Outcome_Failure>
   <RHAH_Menu_Outcome_Massacre>Massacre</RHAH_Menu_Outcome_Massacre>
   <RHAH_Settings_Broadcast>Allow hope broadcasts</RHAH_Settings_Broadcast>
-  <RHAH_Settings_Broadcast_Tooltip>Colonists can broadcast from a comms console and call famine ratkin here. Off, new broadcasts stop. Groups already on the road keep coming.</RHAH_Settings_Broadcast_Tooltip>
+  <RHAH_Settings_Broadcast_Tooltip>Colonists can broadcast from a comms console to call famine ratkin here. Normally one group responds; during famine years, broadcasts try to call more distinct groups, using the visitor multiplier rounded up. Incident settings, appearance limits and the cooldown below still apply. Disabling this option stops new broadcasts. Groups already traveling keep coming.</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_IdentityPartialTrust>Partial identity disclosure trust: {0}</RHAH_Settings_IdentityPartialTrust>
   <RHAH_Settings_IdentityPartialTrust_Tooltip>Minimum trust for Suiyin to describe palace life. The relic event must be complete. Range -100 to 100, default 50.</RHAH_Settings_IdentityPartialTrust_Tooltip>
   <RHAH_Settings_IdentityFullTrust>Full identity disclosure trust: {0}</RHAH_Settings_IdentityFullTrust>

@@ -180,6 +180,27 @@ namespace HungerAndHavoc.Tests
         }
 
 
+        [Fact]
+        public void BroadcastQueuesDistinctResponsesOnTheConsoleMapAndSkipsPendingCandidates()
+        {
+            GameComponent_RHAH_Game game = new GameComponent_RHAH_Game(Current.Game);
+            Current.Game.components.Add(game);
+            Assert.True(game.QueueIncident("I-005", 260f, 9));
+            int targetId = RHAH_IncidentSchedule.TargetId(false, 0);
+            List<string> candidates = new List<string> { "I-005", "I-004", "I-012" };
+
+            Assert.Equal(2, HungerAndHavoc.Pawn.RHAH_BroadcastMenu.QueueResponses(game, targetId, candidates, 3));
+            Assert.Empty(candidates);
+            Assert.Equal(3, game.PendingIncidentDisplayIds.Count);
+            Assert.Equal(9, game.PendingIncidentTargetIds[0]);
+            Assert.Equal(targetId, game.PendingIncidentTargetIds[1]);
+            Assert.Equal(targetId, game.PendingIncidentTargetIds[2]);
+            Assert.Contains("I-004", game.PendingIncidentDisplayIds);
+            Assert.Contains("I-012", game.PendingIncidentDisplayIds);
+            Assert.Equal(0, HungerAndHavoc.Pawn.RHAH_BroadcastMenu.QueueResponses(game, targetId,
+                new List<string> { "I-005", "I-004", "I-012" }, 3));
+        }
+
         void Save(IExposable value)
         {
             Scribe.saver.InitSaving(path, "record");

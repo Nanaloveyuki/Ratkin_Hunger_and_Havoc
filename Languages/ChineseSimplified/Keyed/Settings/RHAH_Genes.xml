@@ -30,4 +30,18 @@
   <RHAH_Menu_Genes_FertilityTip>相对常人的怀孕几率。范围 100% 到 1000%。</RHAH_Menu_Genes_FertilityTip>
   <RHAH_Menu_Genes_GestationTip>可设置的最短孕期为 3 天，上限为原版孕期下限。</RHAH_Menu_Genes_GestationTip>
   <RHAH_Menu_Genes_LovinPregnancyTip>爱爱正常结束后的受孕几率，范围 0% 到 100%。实际几率还会乘以双方各自的怀孕几率。</RHAH_Menu_Genes_LovinPregnancyTip>
+  <RHAH_Settings_MaternalMilk>母爱：产奶速度和储奶上限 {0}%</RHAH_Settings_MaternalMilk>
+  <RHAH_Settings_MaternalHunger>母爱：饥饿速度 {0}%</RHAH_Settings_MaternalHunger>
+  <RHAH_Settings_MaternalNutrition>母爱：食物需求上限 {0}%</RHAH_Settings_MaternalNutrition>
+  <RHAH_Settings_PaternalWork>父爱：工作速度 {0}%</RHAH_Settings_PaternalWork>
+  <RHAH_Settings_PaternalHunger>父爱：饥饿速度 {0}%</RHAH_Settings_PaternalHunger>
+  <RHAH_Settings_PaternalLearning>父爱：全局学习速度 {0}%</RHAH_Settings_PaternalLearning>
+  <RHAH_Settings_PaternalDamage>父爱：承受伤害 {0}%</RHAH_Settings_PaternalDamage>
+  <RHAH_Menu_Genes_MaternalMilkTip>母爱本能生效且处于哺乳期时，产奶速度和储奶上限均乘以此倍率。100%为原速度和原上限，默认150%。范围1%至1000%。</RHAH_Menu_Genes_MaternalMilkTip>
+  <RHAH_Menu_Genes_MaternalHungerTip>母爱本能生效且处于哺乳期时，饥饿速度乘以此倍率。100%为原速度，默认115%。范围1%至1000%。</RHAH_Menu_Genes_MaternalHungerTip>
+  <RHAH_Menu_Genes_MaternalNutritionTip>母爱本能生效且处于哺乳期时，食物需求上限乘以此倍率。100%为原上限，默认125%。范围1%至1000%。</RHAH_Menu_Genes_MaternalNutritionTip>
+  <RHAH_Menu_Genes_PaternalWorkTip>父爱本能生效且同一地图上有活着的直接亲生子女时，工作速度乘以此倍率。子女年龄不限。100%为原速度，默认120%。范围1%至1000%。</RHAH_Menu_Genes_PaternalWorkTip>
+  <RHAH_Menu_Genes_PaternalHungerTip>父爱本能生效且同一地图上有活着的直接亲生子女时，饥饿速度乘以此倍率。子女年龄不限。100%为原速度，默认110%。范围1%至1000%。</RHAH_Menu_Genes_PaternalHungerTip>
+  <RHAH_Menu_Genes_PaternalLearningTip>父爱本能生效且同一地图上有活着的直接亲生子女时，全局学习速度乘以此倍率。子女年龄不限。100%为原速度，默认110%。范围1%至1000%。</RHAH_Menu_Genes_PaternalLearningTip>
+  <RHAH_Menu_Genes_PaternalDamageTip>父爱本能生效且同一地图上有活着的直接亲生子女时，承受伤害乘以此倍率。子女年龄不限。100%为原伤害，默认90%。范围1%至100%。</RHAH_Menu_Genes_PaternalDamageTip>
 </LanguageData>

@@ -64,11 +64,12 @@ namespace HungerAndHavoc.Incidents
             bool broadcastEligible,
             RHAH_AttitudePool defaultAttitudePool,
             RHAH_Attitude defaultAttitude,
-            float debugPoints)
+            float debugPoints,
+            string labelKey = null)
         {
             DisplayId = displayId;
             DefName = defName;
-            LabelKey = "RHAH_Incident_" + defName.Substring("RHAH_".Length) + "_Label";
+            LabelKey = labelKey ?? "RHAH_Incident_" + defName.Substring("RHAH_".Length) + "_Label";
             Family = family;
             Origin = origin;
             Category = category;
@@ -139,6 +140,16 @@ namespace HungerAndHavoc.Incidents
 
         public static IReadOnlyList<RHAH_IncidentEntry> All => entries;
 
+        static RHAH_IncidentCatalog()
+        {
+            entries.Add(SubEvent("I-008-01", "RHAH_FeralRatkinWandersIn", "I-008"));
+            entries.Add(SubEvent("I-009-01", "RHAH_FeralRatkinChildWandersIn", "I-009"));
+            entries.Add(SubEvent("I-010-01", "RHAH_FeralRatkinGroupWandersIn", "I-010"));
+            entries.Add(Original("I-052", "RHAH_MouseSwarm", RHAH_IncidentFamily.Thief, true, RHAH_AttitudePool.Negative, 700f));
+            entries.Add(Original("I-053", "RHAH_PleadingJoin", RHAH_IncidentFamily.Beggar, true, RHAH_AttitudePool.Positive, 200f));
+            entries.Add(Original("I-054", "RHAH_BanditAttack", RHAH_IncidentFamily.Thief, false, RHAH_AttitudePool.Negative, 400f));
+        }
+
         public static RHAH_IncidentEntry GetByDisplayId(string displayId)
         {
             if (string.IsNullOrEmpty(displayId))
@@ -175,6 +186,14 @@ namespace HungerAndHavoc.Incidents
             return null;
         }
 
+        static RHAH_IncidentEntry SubEvent(string displayId, string defName, string parentId)
+        {
+            RHAH_IncidentEntry parent = GetByDisplayId(parentId);
+            return new RHAH_IncidentEntry(displayId, defName, parent.Family, parent.Origin,
+                parent.Category, parent.Target, parent.BroadcastEligible, parent.DefaultAttitudePool,
+                parent.DefaultAttitude, parent.DebugPoints, parent.LabelKey);
+        }
+
         static RHAH_IncidentEntry Original(
             string displayId,
             string defName,
@@ -204,11 +223,13 @@ namespace HungerAndHavoc.Incidents
                 case "I-006":
                 case "I-007":
                 case "I-014":
+                case "I-054":
                     return RHAH_Attitude.Hostile;
                 case "I-008":
                 case "I-009":
                 case "I-010":
                 case "I-012":
+                case "I-052":
                     return RHAH_Attitude.Neutral;
                 default:
                     return RHAH_Attitude.LeaningFriendly;

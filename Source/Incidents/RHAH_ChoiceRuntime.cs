@@ -27,6 +27,7 @@ namespace HungerAndHavoc.Incidents
                 }
             }
 
+            if (RHAH_MouseSwarm.IsSource(record.DisplayId)) record.ExpireTick = -1;
             record.Id = NextId(game);
             records.Add(record);
             return record;
@@ -38,16 +39,30 @@ namespace HungerAndHavoc.Incidents
             RHAH_ChoiceAction requested,
             int tick,
             bool enabled,
-            bool canDeliver)
+            bool canDeliver,
+            int allyFactionId = 0)
         {
             RHAH_ChoiceRecord record = FindRecord(game, choiceId);
             if (record == null)
             {
                 return RHAH_ChoiceAction.None;
             }
+            if (requested == RHAH_ChoiceAction.Feed &&
+                !RHAH_RequestRules.ShowsFoodGive(record.DisplayId, record.Choice)) return RHAH_ChoiceAction.None;
+            bool swarm = RHAH_MouseSwarm.IsSource(record.DisplayId);
+            if (swarm)
+            {
+                if (requested == RHAH_ChoiceAction.Timeout) return RHAH_ChoiceAction.None;
+                if (requested == RHAH_ChoiceAction.Feed)
+                {
+                    List<Verse.Pawn> present = Present(record);
+                    for (int i = 0; i < present.Count; i++)
+                        if (RHAH_MouseSwarm.IsProvoked(present[i])) return RHAH_ChoiceAction.None;
+                }
+            }
 
             RHAH_ChoiceAction action = requested;
-            if (record.ExpireTick >= 0 && tick >= record.ExpireTick && record.Open)
+            if (!swarm && record.ExpireTick >= 0 && tick >= record.ExpireTick && record.Open)
             {
                 action = RHAH_ChoiceAction.Timeout;
             }
@@ -58,6 +73,13 @@ namespace HungerAndHavoc.Incidents
                 return RHAH_ChoiceAction.None;
             }
 
+            if (swarm && (settled == RHAH_ChoiceAction.Reject || settled == RHAH_ChoiceAction.Attack ||
+                settled == RHAH_ChoiceAction.Capture || settled == RHAH_ChoiceAction.Enslave))
+            {
+                if (!RHAH_MouseSwarm.Provoke(Present(record))) return RHAH_ChoiceAction.None;
+                record.Settled = settled;
+                return settled;
+            }
             if (RHAH_RequestRules.Captures(settled) || RHAH_RequestRules.Enslaves(settled))
             {
                 List<Verse.Pawn> present = Present(record);
@@ -74,7 +96,7 @@ namespace HungerAndHavoc.Incidents
                 (RHAH_RequestRules.Hires(settled) && !Stay(record, RHAH_StayKind.Hire)) ||
                 (RHAH_RequestRules.Recruits(settled) && !Stay(record, RHAH_StayKind.Recruit)) ||
                 (RHAH_RequestRules.Attacks(settled) && !RHAH_BatchAttitude.Attack(Present(record))) ||
-                (RHAH_RequestRules.SendsToAlly(settled) && !SendToAlly(record, Present(record))))
+                (RHAH_RequestRules.SendsToAlly(settled) && !SendToAlly(record, Present(record), allyFactionId)))
             {
                 return RHAH_ChoiceAction.None;
             }
@@ -95,6 +117,8 @@ namespace HungerAndHavoc.Incidents
             for (int i = 0; i < records.Count; i++)
             {
                 RHAH_ChoiceRecord record = records[i];
+                RHAH_AllyTransfer.Tick(record, tick);
+                if (RHAH_MouseSwarm.IsSource(record.DisplayId)) continue;
                 if (RHAH_ArmedDemand.IsRequest(record))
                 {
                     if (!RHAH_ArmedDemand.Enabled)
@@ -133,6 +157,14 @@ namespace HungerAndHavoc.Incidents
         {
             RHAH_ChoiceRecord record = FindRecord(game, choiceId);
             if (record == null || !record.Open) return RHAH_ChoiceAction.None;
+            if (requested == RHAH_ChoiceAction.Feed &&
+                !RHAH_RequestRules.ShowsFoodGive(record.DisplayId, record.Choice)) return RHAH_ChoiceAction.None;
+            if (RHAH_MouseSwarm.IsSource(record.DisplayId))
+            {
+                RHAH_ChoiceAction swarmAction = TrySettle(game, choiceId, requested, tick, enabled, true);
+                if (swarmAction != RHAH_ChoiceAction.None) Apply(record);
+                return swarmAction;
+            }
             if (RHAH_ArmedDemand.IsRequest(record))
             {
                 if (!RHAH_ArmedDemand.Enabled)
@@ -152,7 +184,7 @@ namespace HungerAndHavoc.Incidents
             {
                 canDeliver = record.TransactionVersion == RHAH_RequestRules.TransactionVersion
                     ? RHAH_FoodTransaction.CanDeliver(record)
-                    : record.Kind == RHAH_RequestKind.Baby
+                    : RHAH_ChildExchange.AcceptsChild(record) || record.Kind == RHAH_RequestKind.Baby
                         ? RHAH_ChildExchange.CanDeliver(record, outgoingChild, foodAlternative)
                         : map != null && RHAH_RequestRules.CanDeliver(record.Kind, Stock(map, record.Kind), record.Amount, false);
             }
@@ -163,7 +195,7 @@ namespace HungerAndHavoc.Incidents
                 bool paid;
                 if (record.TransactionVersion == RHAH_RequestRules.TransactionVersion)
                     paid = RHAH_FoodTransaction.TryExchange(record);
-                else if (record.Kind == RHAH_RequestKind.Baby)
+                else if (RHAH_ChildExchange.AcceptsChild(record) || record.Kind == RHAH_RequestKind.Baby)
                     paid = RHAH_ChildExchange.TryExchange(record, outgoingChild, foodAlternative);
                 else
                     paid = RHAH_RequestRules.CreatesSite(settled, record.Site)
@@ -259,6 +291,8 @@ namespace HungerAndHavoc.Incidents
                 return;
             }
 
+            if (RHAH_MouseSwarm.IsSource(record.DisplayId) &&
+                (record.Settled == RHAH_ChoiceAction.Reject || record.Settled == RHAH_ChoiceAction.Timeout)) return;
             HungerAndHavoc.EventMgr.RHAH_EventFollowMood.OnChoice(record);
             if (record.Settled == RHAH_ChoiceAction.Deliver &&
                 (record.TransactionVersion == RHAH_RequestRules.TransactionVersion || record.ChildExchangeVersion > 0))
@@ -327,33 +361,22 @@ namespace HungerAndHavoc.Incidents
 
         internal static bool HasAllyDestination()
         {
-            return AllyDestination() != null;
+            if (Find.FactionManager == null || Find.WorldObjects == null) return false;
+            List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
+            for (int i = 0; i < factions.Count; i++)
+                if (AcceptsAlly(factions[i])) return true;
+            return false;
         }
 
-        internal static Faction AllyDestination()
+        internal static List<Faction> AllyDestinations()
         {
-            if (Find.FactionManager == null || Find.WorldObjects == null)
-            {
-                return null;
-            }
-
+            List<Faction> result = new List<Faction>();
+            if (Find.FactionManager == null || Find.WorldObjects == null) return result;
             List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
-            Faction chosen = null;
             for (int i = 0; i < factions.Count; i++)
-            {
-                Faction faction = factions[i];
-                if (!AcceptsAlly(faction))
-                {
-                    continue;
-                }
-
-                if (chosen == null || faction.loadID < chosen.loadID)
-                {
-                    chosen = faction;
-                }
-            }
-
-            return chosen;
+                if (AcceptsAlly(factions[i])) result.Add(factions[i]);
+            result.Sort((left, right) => left.loadID.CompareTo(right.loadID));
+            return result;
         }
 
         static bool AcceptsAlly(Faction faction)
@@ -390,10 +413,10 @@ namespace HungerAndHavoc.Incidents
             return false;
         }
 
-        static bool SendToAlly(RHAH_ChoiceRecord record, List<Verse.Pawn> pawns)
+        static bool SendToAlly(RHAH_ChoiceRecord record, List<Verse.Pawn> pawns, int allyFactionId)
         {
-            Faction faction = AllyDestination();
-            if (faction == null || record == null)
+            Faction faction = FindFaction(allyFactionId);
+            if (record == null || Find.WorldObjects == null || !AcceptsAlly(faction))
             {
                 return false;
             }
@@ -404,12 +427,7 @@ namespace HungerAndHavoc.Incidents
             for (int i = 0; i < pawns.Count; i++)
             {
                 Verse.Pawn pawn = pawns[i];
-                if (!RHAH_BatchAttitude.CanOrderLeave(pawn) || !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.ExitMap))
-                {
-                    continue;
-                }
-
-                if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Transfer))
+                if (!RHAH_BatchAttitude.CanOrderLeave(pawn) || !RHAH_ApiHost.CanTransfer(pawn))
                 {
                     continue;
                 }
@@ -428,7 +446,7 @@ namespace HungerAndHavoc.Incidents
             return true;
         }
 
-        internal static bool TryJoinAlly(Verse.Pawn pawn, int tended, bool freed)
+        internal static bool TryJoinAlly(Verse.Pawn pawn)
         {
             if (pawn == null || pawn.Spawned || pawn.Dead)
             {
@@ -452,16 +470,11 @@ namespace HungerAndHavoc.Incidents
 
                 Faction faction = FindFaction(record.AllyFactionId);
                 record.AllyPawnIds.Remove(pawn.thingIDNumber);
-                if (record.AllyPawnIds.Count == 0)
-                {
-                    record.AllyFactionId = 0;
-                }
 
                 if (faction != null)
                 {
                     pawn.SetFaction(faction);
-                    pawn.mindState.timesGuestTendedToByPlayer = tended;
-                    faction.Notify_MemberExitedMap(pawn, freed);
+                    RHAH_AllyTransfer.OnArrival(record, faction, pawn, Find.TickManager.TicksGame);
                 }
 
                 return faction != null;
@@ -502,6 +515,7 @@ namespace HungerAndHavoc.Incidents
                         Core.RHAH_Mod.Settings == null ? 100 : Core.RHAH_Mod.Settings.playerIdeoPercent,
                         Rand.Value);
                     pawns[i].SetFaction(Faction.OfPlayer);
+                    RHAH_VisitorMood.NotifySheltered(pawns[i]);
                     released = true;
                 }
             }

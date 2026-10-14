@@ -93,12 +93,24 @@
   <RHAH_Settings_TailFood_Tooltip>囚犯咬断他人尾巴后获得的营养。范围 0 到 2，默认 0.35。</RHAH_Settings_TailFood_Tooltip>
   <RHAH_Settings_TailFail>咬尾失败伤害：{0}</RHAH_Settings_TailFail>
   <RHAH_Settings_TailFail_Tooltip>囚犯咬尾巴失败时，对目标造成的伤害。范围 0 到 50，默认 4。</RHAH_Settings_TailFail_Tooltip>
+  <RHAH_Settings_FamineYear>启用年度饥荒</RHAH_Settings_FamineYear>
+  <RHAH_Settings_FamineYear_Tooltip>默认关闭。开启后，以选定家园的当地历法，在每年第一天早上 6 点决定这一年是否发生饥荒；首次开启时，已过年初会补判当前年份。饥荒年会增加本模组来客人数和广播回应，并可能出现一次重大天灾。关闭后，年度饥荒的影响停止。</RHAH_Settings_FamineYear_Tooltip>
+  <RHAH_Settings_FamineYearChance>每年发生饥荒的几率：{0}%</RHAH_Settings_FamineYearChance>
+  <RHAH_Settings_FamineYearChance_Tooltip>每年判为饥荒年的几率，范围 0 到 100%，默认 40%。</RHAH_Settings_FamineYearChance_Tooltip>
+  <RHAH_Settings_FamineYearMultiplier>饥荒年来客倍率：{0}</RHAH_Settings_FamineYearMultiplier>
+  <RHAH_Settings_FamineYearMultiplier_Tooltip>饥荒年中，本模组普通多人队伍先按原有上限确定人数，再乘以此倍率并向上取整。单人来客、固定母子家庭和待产双人队伍保持原人数；鼠潮始终为 15 到 50 人。广播最多召来向上取整后的倍率这么多支不同队伍。范围 1 到 4，默认 3。</RHAH_Settings_FamineYearMultiplier_Tooltip>
+  <RHAH_Settings_FamineYearDisasterChance>饥荒年每日额外天灾几率：{0}%</RHAH_Settings_FamineYearDisasterChance>
+  <RHAH_Settings_FamineYearDisasterChance_Tooltip>饥荒年每天当地早上 6 点，按此几率尝试引发寒流、热浪、毒尘或火山冬天。每个饥荒年最多成功引发其中一次；范围 0 到 100%，默认 20%。</RHAH_Settings_FamineYearDisasterChance_Tooltip>
+  <RHAH_FamineYear_Label>{0} 年：年景</RHAH_FamineYear_Label>
+  <RHAH_FamineYear_Famine>{0} 年是个饥荒年。缺粮的鼠族将以更大的队伍前来，广播也会引来更多求援的队伍。寒流、热浪、毒尘或火山冬天可能让这一年更加难熬。\n\n请为来客和你的殖民地多留些粮食。</RHAH_FamineYear_Famine>
+  <RHAH_FamineYear_Normal>{0} 年是个寻常年景。本模组来客的队伍规模和广播回应数量维持通常水平。</RHAH_FamineYear_Normal>
+  <RHAH_FamineYear_Catchup>今年已经过了年初，现在补报这一年的年景。</RHAH_FamineYear_Catchup>
   <RHAH_Settings_FamineArrival>饥荒来客空腹入场</RHAH_Settings_FamineArrival>
   <RHAH_Settings_FamineArrival_Tooltip>默认开启。本模组非玩家饥荒来客首次到达时，饱食度降为零，并按“入场营养不良”设置获得营养不良。调整只在入场时应用；关闭后，新来客保留通常的食物需求和健康状况。</RHAH_Settings_FamineArrival_Tooltip>
   <RHAH_Settings_FamineMalnutrition>入场营养不良：{0}</RHAH_Settings_FamineMalnutrition>
   <RHAH_Settings_FamineMalnutrition_Tooltip>启用空腹入场时，本模组非玩家饥荒来客到达时获得的营养不良严重度。范围 0.01 到 0.5，默认 0.25。</RHAH_Settings_FamineMalnutrition_Tooltip>
   <RHAH_Settings_FamineMood>启用饥荒来客心情</RHAH_Settings_FamineMood>
-  <RHAH_Settings_FamineMood_Tooltip>默认开启。本模组非玩家饥荒来客处于饥饿状态时，会产生负面心情；实际求食被拒或索粮逾期后仍饿着，心情会更差。来客实际吃饱后获得持续 1 天的正面心情。关闭后，这些心情影响停止生效。</RHAH_Settings_FamineMood_Tooltip>
+  <RHAH_Settings_FamineMood_Tooltip>默认开启。本模组来客挨饿时心情降低，求食被拒或索粮逾期后仍饿着，心情会更差。实际吃饱获得 +6，持续 1 天。来自本模组的鼠族还会因收留、拘捕、奴役、驱赶和进食获得心情；加入殖民地后仍适用。进食按单份营养值与精致餐比较，获得 +6 或 +12，持续 1 天。关闭后，这些心情停止生效。</RHAH_Settings_FamineMood_Tooltip>
   <RHAH_Settings_ClayMood>启用观音土心情</RHAH_Settings_ClayMood>
   <RHAH_Settings_ClayMood_Tooltip>默认开启。有心情需求的角色在当前饱腹周期内吃下第 1、2、3 份观音土后，分别产生 -2、-4、-6 的心情影响。只显示当前阶段，周期结束后消失。</RHAH_Settings_ClayMood_Tooltip>
   <RHAH_Settings_FamineTrade>启用饥荒商队特殊报价</RHAH_Settings_FamineTrade>

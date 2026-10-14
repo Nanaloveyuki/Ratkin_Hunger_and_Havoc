@@ -22,6 +22,12 @@ namespace HungerAndHavoc.Pawn
     {
         internal static bool TryShift(Verse.Pawn affected, RHAH_BatchReaction reaction)
         {
+            if (RHAH_MouseSwarm.TryProvoke(affected))
+            {
+                if (reaction == RHAH_BatchReaction.Harm)
+                    HungerAndHavoc.EventMgr.RHAH_EventFollowMood.NoteHurt(affected);
+                return true;
+            }
             if (!CanOrderLeave(affected))
             {
                 return false;
@@ -52,6 +58,13 @@ namespace HungerAndHavoc.Pawn
             {
                 SetHostile(members);
             }
+            if (reaction == RHAH_BatchReaction.Expel || reaction == RHAH_BatchReaction.Reject)
+            {
+                for (int i = 0; i < members.Count; i++)
+                {
+                    RHAH_VisitorMood.NotifyExpelled(members[i], turnHostile);
+                }
+            }
 
             int newlyLeaving = 0;
             if (leave)
@@ -81,6 +94,7 @@ namespace HungerAndHavoc.Pawn
 
         internal static bool Attack(List<Verse.Pawn> pawns)
         {
+            if (RHAH_MouseSwarm.Provoke(pawns)) return true;
             List<Verse.Pawn> members = Eligible(pawns);
             if (members.Count == 0)
             {
@@ -145,6 +159,7 @@ namespace HungerAndHavoc.Pawn
             }
             for (int i = 0; i < members.Count; i++)
             {
+                if (RHAH_MouseSwarm.IsProvoked(members[i])) continue;
                 if (CompRHAH_Pawn.TryGet(members[i]).State.attitude != RHAH_Attitude.Hostile)
                 {
                     continue;
@@ -282,7 +297,7 @@ namespace HungerAndHavoc.Pawn
             }
         }
 
-        static List<Verse.Pawn> Collect(Map map, int batchId)
+        internal static List<Verse.Pawn> Collect(Map map, int batchId)
         {
             List<Verse.Pawn> members = new List<Verse.Pawn>();
             IReadOnlyList<Verse.Pawn> spawned = map?.mapPawns?.AllPawnsSpawned;

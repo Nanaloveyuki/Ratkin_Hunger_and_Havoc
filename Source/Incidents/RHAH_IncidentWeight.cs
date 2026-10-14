@@ -91,7 +91,7 @@ namespace HungerAndHavoc.Incidents
         {
             int raw = RawCount(displayId, points);
             int minimum = Minimum(displayId);
-            return raw < minimum ? minimum : raw;
+            return FamineCount(displayId, raw < minimum ? minimum : raw);
         }
 
         internal static int Count(string displayId, float points, int cap, bool keepTogether)
@@ -99,12 +99,25 @@ namespace HungerAndHavoc.Incidents
             int raw = RawCount(displayId, points);
             int safeMinimum = Minimum(displayId);
             int requested = raw < safeMinimum ? safeMinimum : raw;
-            if (keepTogether || FixedGroup(displayId) || cap < safeMinimum)
+            if (!keepTogether && !FixedGroup(displayId) && displayId != "I-052" && cap >= safeMinimum)
             {
-                return requested;
+                requested = requested < cap ? requested : cap;
             }
 
-            return requested < cap ? requested : cap;
+            return FamineCount(displayId, requested);
+        }
+
+        static int FamineCount(string displayId, int count)
+        {
+            return MultiplyCount(displayId, count, Core.GameComponent_RHAH_FamineYear.Active,
+                Core.RHAH_Mod.Settings?.famineYearPawnMultiplier ?? 3f);
+        }
+
+        internal static int MultiplyCount(string displayId, int count, bool famine, float multiplier)
+        {
+            return !famine || count <= 1 || FixedGroup(displayId) || displayId == "I-052"
+                ? count
+                : (int)Math.Ceiling(count * Core.GameComponent_RHAH_FamineYear.ClampMultiplier(multiplier));
         }
 
         static int RawCount(string displayId, float points)
@@ -119,9 +132,12 @@ namespace HungerAndHavoc.Incidents
                 case "I-005":
                 case "I-042": return Spread(safe, 3, 20, 85f);
                 case "I-006":
+                case "I-054": return Spread(safe, 3, 20, 75f);
                 case "I-007": return Spread(safe, 3, 20, 75f);
                 case "I-008":
                 case "I-009":
+                case "I-008-01":
+                case "I-009-01":
                 case "I-013":
                 case "I-019":
                 case "I-033":
@@ -129,7 +145,8 @@ namespace HungerAndHavoc.Incidents
                 case "I-041":
                 case "I-047":
                 case "I-049": return 1;
-                case "I-010": return Fixed(safe, 2, 10, 120f);
+                case "I-010":
+                case "I-010-01": return Fixed(safe, 2, 10, 120f);
                 case "I-011":
                 case "I-040": return Linear(safe, 200f, 1, 4);
                 case "I-012":
@@ -162,6 +179,8 @@ namespace HungerAndHavoc.Incidents
                 case "I-050": return Spread(safe, 3, 10, 85f);
                 case "I-036": return Spread(safe, 2, 8, 90f);
                 case "I-043": return Spread(safe, 3, 18, 90f);
+                case "I-052": return Rand.RangeInclusive(15, 50);
+                case "I-053": return 1;
                 default: return 1;
             }
         }
@@ -234,6 +253,8 @@ namespace HungerAndHavoc.Incidents
             switch (displayId)
             {
                 case "I-001": return 10;
+                case "I-052": return 15;
+                case "I-054": return 3;
                 case "I-004":
                 case "I-005":
                 case "I-006":
@@ -243,6 +264,7 @@ namespace HungerAndHavoc.Incidents
                 case "I-003":
                 case "I-007":
                 case "I-010":
+                case "I-010-01":
                 case "I-014":
                 case "I-029":
                 case "I-035":

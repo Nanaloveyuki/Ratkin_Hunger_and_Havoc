@@ -28,6 +28,11 @@ namespace HungerAndHavoc.Incidents
             return tick + RHAH_RequestRules.TicksPerDay * ClampDays(days);
         }
 
+        internal static int ResponseCount(bool famine, float multiplier)
+        {
+            return famine ? (int)System.Math.Ceiling(Core.GameComponent_RHAH_FamineYear.ClampMultiplier(multiplier)) : 1;
+        }
+
         internal static List<string> Candidates(IReadOnlyList<RHAH_IncidentEntry> entries, ISet<string> disabled)
         {
             List<string> result = new List<string>();

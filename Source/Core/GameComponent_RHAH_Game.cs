@@ -230,13 +230,18 @@ namespace HungerAndHavoc.Core
         internal bool SpawnDebugOnMap(HungerAndHavoc.Incidents.RHAH_IncidentEntry entry, float points, Map map)
         {
             IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(entry.DefName);
-            if (def == null || def.Worker == null || map == null)
+            if (def == null || def.Worker == null || map == null || !GameComponent_RHAH_FamineYear.Available(entry.DisplayId))
             {
                 return false;
             }
 
             IncidentParms parms = new IncidentParms { target = map, points = points, forced = true };
-            return ExecutePending(-1, entry.DisplayId, entry, points, parms, map);
+            bool spawned = ExecutePending(-1, entry.DisplayId, entry, points, parms, map);
+            if (spawned)
+            {
+                GameComponent_RHAH_FamineYear.NoteQueued(entry.DisplayId);
+            }
+            return spawned;
         }
 
         bool ExecutePending(
@@ -345,7 +350,8 @@ namespace HungerAndHavoc.Core
 
         public bool QueueIncident(string displayId, float points, int targetId)
         {
-            if (string.IsNullOrEmpty(displayId) || pendingIncidentDisplayIds.Contains(displayId))
+            if (string.IsNullOrEmpty(displayId) || pendingIncidentDisplayIds.Contains(displayId) ||
+                !GameComponent_RHAH_FamineYear.Available(displayId))
             {
                 return false;
             }
@@ -353,6 +359,7 @@ namespace HungerAndHavoc.Core
             pendingIncidentDisplayIds.Add(displayId);
             pendingIncidentPoints.Add(RHAH_IncidentTuning.ClampPoints(points));
             pendingIncidentTargetIds.Add(targetId);
+            GameComponent_RHAH_FamineYear.NoteQueued(displayId);
             return true;
         }
 

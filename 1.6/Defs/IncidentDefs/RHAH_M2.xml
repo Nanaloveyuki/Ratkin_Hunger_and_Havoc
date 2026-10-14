@@ -37,6 +37,9 @@
   <IncidentDef><defName>RHAH_PlagueCaravanMuggers</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetTags><li>Caravan</li></targetTags><baseChance>0</baseChance></IncidentDef>
   <IncidentDef><defName>RHAH_PlagueRevenge</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetTags><li>Map_PlayerHome</li></targetTags><baseChance>0</baseChance></IncidentDef>
   <IncidentDef><defName>RHAH_RefugeeMassacre</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_Sequel</workerClass><category>ThreatBig</category><targetTags><li>Map_PlayerHome</li></targetTags><baseChance>0</baseChance></IncidentDef>
+  <IncidentDef><defName>RHAH_MouseSwarm</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_RHAH_MouseSwarm</workerClass><category>ThreatBig</category><targetTags><li>Map_PlayerHome</li></targetTags><baseChance>0</baseChance></IncidentDef>
+  <IncidentDef><defName>RHAH_PleadingJoin</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_RHAH_PleadingJoin</workerClass><category>Misc</category><targetTags><li>Map_PlayerHome</li></targetTags><baseChance>0</baseChance></IncidentDef>
+  <IncidentDef><defName>RHAH_BanditAttack</defName><workerClass>HungerAndHavoc.Incidents.IncidentWorker_RHAH_BanditAttack</workerClass><category>ThreatBig</category><targetTags><li>Map_PlayerHome</li></targetTags><baseChance>0</baseChance></IncidentDef>
   <QuestScriptDef>
     <defName>RHAH_RefugeeMassacre</defName>
     <root Class="HungerAndHavoc.Incidents.QuestNode_RHAH_RefugeeCamp" />

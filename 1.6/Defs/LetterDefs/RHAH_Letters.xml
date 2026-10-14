@@ -47,4 +47,8 @@
     <flashInterval>90</flashInterval>
     <arriveSound>LetterArrive</arriveSound>
   </LetterDef>
+  <LetterDef ParentName="ThreatBig">
+    <defName>RHAH_BanditAttackLetter</defName>
+    <letterClass>HungerAndHavoc.Incidents.ChoiceLetter_RHAH_BanditAttack</letterClass>
+  </LetterDef>
 </Defs>

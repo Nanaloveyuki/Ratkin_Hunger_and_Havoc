@@ -59,7 +59,7 @@ namespace HungerAndHavoc.Tests
             Assert.Equal("nanaloveyuki.ratkin.hungerandhavoc", provider.ProviderId);
             Assert.Equal(RHAH_EventChainProvider.ProviderKey, provider.ProviderId);
             HashSet<string> expected = new HashSet<string>(StringComparer.Ordinal);
-            for (int i = 1; i <= 51; i++)
+            for (int i = 1; i <= 54; i++)
             {
                 expected.Add("I-" + i.ToString("D3", CultureInfo.InvariantCulture));
             }
@@ -84,7 +84,7 @@ namespace HungerAndHavoc.Tests
             {
                 "I-002", "I-012", "I-013", "I-019", "I-032", "I-033", "I-037", "I-041", "I-038", "I-046", "I-047"
             };
-            for (int i = 1; i <= 51; i++)
+            for (int i = 1; i <= 54; i++)
             {
                 string id = "I-" + i.ToString("D3", CultureInfo.InvariantCulture);
                 bool hasLong = expected.Contains(id);

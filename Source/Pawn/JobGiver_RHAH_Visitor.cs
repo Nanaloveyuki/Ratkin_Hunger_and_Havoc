@@ -14,10 +14,30 @@ namespace HungerAndHavoc.Pawn
 
         internal class VisitorFight : JobGiver_AIFightEnemies
         {
+
+            protected override bool ExtraTargetValidator(Verse.Pawn pawn, Thing target)
+            {
+                return (!RHAH_MouseSwarm.IsProvoked(pawn) || target.Faction == Faction.OfPlayer) &&
+                    base.ExtraTargetValidator(pawn, target);
+            }
+
+            protected override bool ShouldLoseTarget(Verse.Pawn pawn)
+            {
+                return (RHAH_MouseSwarm.IsProvoked(pawn) && pawn.mindState.enemyTarget?.Faction != Faction.OfPlayer) ||
+                    base.ShouldLoseTarget(pawn);
+            }
             internal Job TryCreate(Verse.Pawn pawn)
             {
+                bool swarm = RHAH_MouseSwarm.IsProvoked(pawn);
+                targetAcquireRadius = swarm ? 9999f : 56f;
+                targetKeepRadius = swarm ? 9999f : 65f;
                 return CanFight(pawn) ? base.TryGiveJob(pawn) : null;
             }
+        }
+
+        internal static Job TryFight(Verse.Pawn pawn)
+        {
+            return fight.TryCreate(pawn);
         }
 
         internal static bool CanFight(Verse.Pawn pawn)
@@ -41,6 +61,12 @@ namespace HungerAndHavoc.Pawn
             {
                 return null;
             }
+            if (RHAH_MouseSwarm.IsProvoked(pawn))
+            {
+                if (pawn.Downed || pawn.jobs == null || !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Fight)) return null;
+                Job combat = fight.TryCreate(pawn);
+                return combat ?? JobMaker.MakeJob(JobDefOf.Wait_Combat, 120, true);
+            }
             Job longWait = HungerAndHavoc.EventMgr.RHAH_LongFollowRuntime.EdgeJob(pawn);
             if (longWait != null) return longWait;
 
@@ -59,6 +85,9 @@ namespace HungerAndHavoc.Pawn
             {
                 return departure;
             }
+            Job swarm = RHAH_MouseSwarm.TryCreateJob(pawn);
+            if (swarm != null) return swarm;
+
 
             Job feedChild = JobGiver_RHAH_MotherFeed.TryCreate(pawn);
             if (feedChild != null)

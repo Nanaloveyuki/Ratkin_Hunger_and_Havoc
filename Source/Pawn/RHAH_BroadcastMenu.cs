@@ -56,6 +56,7 @@ namespace HungerAndHavoc.Pawn
             }
 
             List<string> candidates = RHAH_BroadcastRules.Candidates(RHAH_IncidentCatalog.All, Disabled(settings));
+            RemoveUnavailable(candidates, game);
             if (candidates.Count == 0)
             {
                 return new FloatMenuOption("RHAH_Broadcast_Empty".Translate(), null);
@@ -83,10 +84,12 @@ namespace HungerAndHavoc.Pawn
                 return false;
             }
             List<string> candidates = RHAH_BroadcastRules.Candidates(RHAH_IncidentCatalog.All, Disabled(settings));
-            int groupCount = RHAH_BroadcastRules.GroupCount(candidates);
-            string displayId = RHAH_BroadcastRules.Pick(candidates, groupCount == 0 ? 0f : Rand.Range(0f, groupCount));
+            RemoveUnavailable(candidates, game);
+            bool famine = GameComponent_RHAH_FamineYear.Active;
+            int desired = RHAH_BroadcastRules.ResponseCount(famine, settings.famineYearPawnMultiplier);
             int targetId = RHAH_IncidentSchedule.TargetId(false, console.Map.uniqueID);
-            if (displayId != null && game.QueueIncident(displayId, GameComponent_RHAH_Game.PointsFor(displayId), targetId))
+            int queued = QueueResponses(game, targetId, candidates, desired);
+            if (queued > 0)
             {
                 game.BroadcastCooldownUntilTick = RHAH_BroadcastRules.NextCooldown(tick, settings.broadcastCooldownDays);
                 if (HungerAndHavoc.Storyteller.Suiyin.RHAH_EndingRuntime.CountsNow())
@@ -94,9 +97,63 @@ namespace HungerAndHavoc.Pawn
                     Current.Game?.GetComponent<HungerAndHavoc.Narrative.NarrativeState>()?.NoteBroadcast(tick);
                 }
 
-                Messages.Message("RHAH_Broadcast_Queued".Translate(), console, MessageTypeDefOf.NeutralEvent);
+                string key = famine ? "RHAH_Broadcast_FamineQueued" : "RHAH_Broadcast_Queued";
+                Messages.Message(key.Translate(queued), console, MessageTypeDefOf.NeutralEvent);
                 return true;
             }
+            return false;
+        }
+
+        internal static int QueueResponses(GameComponent_RHAH_Game game, int targetId, List<string> candidates, int count)
+        {
+            if (game == null || candidates == null || count <= 0)
+            {
+                return 0;
+            }
+
+            int queued = 0;
+            while (queued < count && candidates.Count > 0)
+            {
+                int groups = RHAH_BroadcastRules.GroupCount(candidates);
+                string displayId = RHAH_BroadcastRules.Pick(candidates, groups == 0 ? 0f : Rand.Range(0f, groups));
+                if (displayId == null)
+                {
+                    break;
+                }
+
+                candidates.Remove(displayId);
+                if (!Pending(game, displayId) && game.QueueIncident(displayId, GameComponent_RHAH_Game.PointsFor(displayId), targetId))
+                {
+                    queued++;
+                }
+            }
+
+            return queued;
+        }
+
+        static void RemoveUnavailable(List<string> candidates, GameComponent_RHAH_Game game)
+        {
+            for (int i = candidates.Count - 1; i >= 0; i--)
+            {
+                string displayId = candidates[i];
+                if (!GameComponent_RHAH_FamineYear.Available(displayId) || Pending(game, displayId))
+                {
+                    candidates.RemoveAt(i);
+                }
+            }
+        }
+
+        static bool Pending(GameComponent_RHAH_Game game, string displayId)
+        {
+            IReadOnlyList<string> pending = game.PendingIncidentDisplayIds;
+            for (int i = 0; i < pending.Count; i++)
+            {
+                if (pending[i] == displayId)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 

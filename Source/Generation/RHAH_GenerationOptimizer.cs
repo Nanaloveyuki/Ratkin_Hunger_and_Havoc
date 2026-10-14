@@ -23,6 +23,7 @@ namespace HungerAndHavoc.Generation
                 forceGenerateNewPawn: true,
                 allowDowned: StageFor(age) == DevelopmentalStage.Baby,
                 canGeneratePawnRelations: false,
+                mustBeCapableOfViolence: request.SourceIncidentDisplayId == "I-052" || request.SourceIncidentDisplayId == "I-054",
                 allowPregnant: false,
                 allowFood: false,
                 allowAddictions: false,

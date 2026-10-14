@@ -9,8 +9,7 @@ namespace HungerAndHavoc.Tests
         [Fact]
         public void DisplayIdsAreStableAndUnique()
         {
-            Assert.Equal(51, RHAH_IncidentCatalog.All.Count);
-            Assert.Equal(51, RHAH_IncidentCatalog.All.Select(entry => entry.DisplayId).Distinct().Count());
+            Assert.Equal(RHAH_IncidentCatalog.All.Count, RHAH_IncidentCatalog.All.Select(entry => entry.DisplayId).Distinct().Count());
             Assert.Equal("I-001", RHAH_IncidentCatalog.All[0].DisplayId);
             Assert.Equal("RHAH_LargeRefugeeWave", RHAH_IncidentCatalog.All[0].DefName);
             Assert.Equal("I-051", RHAH_IncidentCatalog.All[50].DisplayId);

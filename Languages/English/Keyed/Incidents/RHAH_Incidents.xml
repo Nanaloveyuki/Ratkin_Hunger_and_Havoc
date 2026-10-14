@@ -73,4 +73,8 @@
   <RHAH_Approach_LetterText>A group of ratkin is traveling toward {1}, still some way from our colony. The approaching group is: {0}.\n\nThey usually cover about 3 tiles a day, moving faster on good roads and slower over difficult terrain. If the sea lies between us, they cross from the far shore. They enter our map when they reach the colony.</RHAH_Approach_LetterText>
   <RHAH_Approach_Inspect>Ratkin coming to our colony: {0}.</RHAH_Approach_Inspect>
   <RHAH_Approach_Target>The travelers' destination: {0}</RHAH_Approach_Target>
+  <RHAH_Incident_MouseSwarm_Label>Mouse swarm</RHAH_Incident_MouseSwarm_Label>
+  <RHAH_Incident_PleadingJoin_Label>Pleading to join</RHAH_Incident_PleadingJoin_Label>
+  <RHAH_Incident_BanditAttack_Label>Bandit attack</RHAH_Incident_BanditAttack_Label>
+  <RHAH_BanditAttack_LetterText>A group of desperate ratkin has turned to banditry. They are coming to attack you and steal your supplies.</RHAH_BanditAttack_LetterText>
 </LanguageData>

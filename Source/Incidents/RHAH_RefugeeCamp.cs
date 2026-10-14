@@ -101,10 +101,10 @@ namespace HungerAndHavoc.Incidents
             slate.Set("site", site);
             slate.Set("sponsorName", sponsor.Name);
             RHAH_Settings settings = RHAH_Mod.Settings;
-            slate.Set("campMinAdults", settings == null ? RHAH_RefugeeCampRules.MinAdults : settings.campMinAdults);
-            slate.Set("campMaxAdults", settings == null ? RHAH_RefugeeCampRules.MaxAdults : settings.campMaxAdults);
-            slate.Set("campMinChildren", settings == null ? RHAH_RefugeeCampRules.MinChildren : settings.campMinChildren);
-            slate.Set("campMaxChildren", settings == null ? RHAH_RefugeeCampRules.MaxChildren : settings.campMaxChildren);
+            slate.Set("campMinAdults", GameComponent_RHAH_FamineYear.ScalePopulation(settings == null ? RHAH_RefugeeCampRules.MinAdults : settings.campMinAdults));
+            slate.Set("campMaxAdults", GameComponent_RHAH_FamineYear.ScalePopulation(settings == null ? RHAH_RefugeeCampRules.MaxAdults : settings.campMaxAdults));
+            slate.Set("campMinChildren", GameComponent_RHAH_FamineYear.ScalePopulation(settings == null ? RHAH_RefugeeCampRules.MinChildren : settings.campMinChildren));
+            slate.Set("campMaxChildren", GameComponent_RHAH_FamineYear.ScalePopulation(settings == null ? RHAH_RefugeeCampRules.MaxChildren : settings.campMaxChildren));
             quest.GetFirstOrAddPart<QuestPart_InvolvedFactions>().factions.Add(sponsor);
             quest.SpawnWorldObject(site);
             string cleared = QuestGenUtility.HardcodedSignalWithQuestID("site.ResidentsCleared");

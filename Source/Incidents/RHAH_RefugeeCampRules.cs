@@ -37,7 +37,8 @@ namespace HungerAndHavoc.Incidents
             int maxChildren = settings == null ? MaxChildren : settings.campMaxChildren;
             int goodwill = settings == null ? Goodwill : settings.campGoodwill;
             int days = settings == null ? Days : settings.campDays;
-            return new RHAH_CampPlan(Clamp(adultRoll, minAdults, maxAdults), Clamp(childRoll, minChildren, maxChildren), goodwill, days);
+            return new RHAH_CampPlan(Core.GameComponent_RHAH_FamineYear.ScalePopulation(Clamp(adultRoll, minAdults, maxAdults)),
+                Core.GameComponent_RHAH_FamineYear.ScalePopulation(Clamp(childRoll, minChildren, maxChildren)), goodwill, days);
         }
 
         internal static bool CanOffer(bool violentQuests, bool campEnabled, bool hasSponsor, bool tileValid)

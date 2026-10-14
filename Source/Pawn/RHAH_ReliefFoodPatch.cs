@@ -13,6 +13,12 @@ namespace HungerAndHavoc.Pawn
     {
         static void Postfix(Verse.Pawn pawn, ref Job __result)
         {
+            if (RHAH_MouseSwarm.IsProvoked(pawn))
+            {
+                __result = null;
+                return;
+            }
+
             if (__result == null || __result.def != JobDefOf.Ingest || !RHAH_Api.IsVisitor(pawn) ||
                 !RHAH_VisitorRules.AllowsModBehavior(RHAH_VisitorStay.Kind(pawn)))
             {

@@ -13,13 +13,14 @@ namespace HungerAndHavoc.Incidents
         {
             if (context == null || context.Map == null || context.PawnCount <= 0 ||
                 context.SpawnCell == IntVec3.Invalid || context.SpawnBatchId <= 0 ||
-                context.RelationshipGroupId <= 0 || context.Role == RHAH_PawnRole.Unspecified)
+                context.RelationshipGroupId <= 0 || context.Role == RHAH_PawnRole.Unspecified ||
+                (context.DisplayId == "I-052" && !GameComponent_RHAH_FamineYear.Active))
             {
                 return false;
             }
 
             bool armedDemand = Pawn.RHAH_ArmedDemand.Enabled && Pawn.RHAH_ArmedDemand.IsSiege(context.DisplayId);
-            RHAH_Attitude arrivalAttitude = armedDemand ? RHAH_Attitude.Neutral : context.Attitude;
+            RHAH_Attitude arrivalAttitude = context.DisplayId == "I-052" || armedDemand ? RHAH_Attitude.Neutral : context.Attitude;
             List<RHAH_PawnCreationResult> created = new List<RHAH_PawnCreationResult>();
             for (int i = 0; i < context.PawnCount; i++)
             {
@@ -49,6 +50,11 @@ namespace HungerAndHavoc.Incidents
                 }
 
                 created.Add(result);
+                if (context.DisplayId == "I-053" && !RHAH_PleadingJoin.Apply(result.Pawns[0]))
+                {
+                    Rollback(created);
+                    return false;
+                }
             }
 
             List<Verse.Pawn> arrived = new List<Verse.Pawn>();
@@ -71,6 +77,7 @@ namespace HungerAndHavoc.Incidents
                 Rollback(created);
                 return false;
             }
+            if (context.DisplayId == "I-052") Pawn.RHAH_MouseSwarm.Initialize(arrived);
             EventMgr.RHAH_LongFollowRuntime.NoteArrival(context.DisplayId, context.SpawnBatchId, context.Map, arrived);
             if (context.DropPod)
             {
@@ -167,7 +174,7 @@ namespace HungerAndHavoc.Incidents
             Trade.RHAH_FamineTrade.Stock(seller, carrier ?? seller);
         }
 
-        static float? GenerationAge(RHAH_PawnRole role, string displayId)
+        internal static float? GenerationAge(RHAH_PawnRole role, string displayId)
         {
             if (displayId == "I-032" || displayId == "I-046")
             {
@@ -178,6 +185,11 @@ namespace HungerAndHavoc.Incidents
             float min = settings == null ? 0f : settings.minGeneratedAge;
             float max = settings == null ? 50f : settings.maxGeneratedAge;
             bool youngFollows = settings != null && settings.youngAgeFollowsRange;
+            if (displayId == "I-052" || displayId == "I-053" || displayId == "I-054")
+            {
+                return RHAH_PleadingJoin.AdultAge(HungerAndHavoc.Pawn.RHAH_VisitorRules.GenerationAge(
+                    role, null, min, max, Rand.Value, youngFollows));
+            }
             float motherMin = settings == null ? HungerAndHavoc.Pawn.RHAH_VisitorRules.DefaultMotherMinAge : settings.minMotherAge;
             return HungerAndHavoc.Pawn.RHAH_VisitorRules.GenerationAge(role, null, min, max, Rand.Value, youngFollows, motherMin);
         }
@@ -373,7 +385,7 @@ namespace HungerAndHavoc.Incidents
             if (record.DisplayId == "I-013" || record.DisplayId == "I-019")
                 text += "\n\n" + (record.DisplayId == "I-019" ? "RHAH_ChildExchange_LegacyHint" : "RHAH_ChildExchange_SelectionHint").Translate();
 
-            if (record.Choice == RHAH_ChoiceKind.ChildExchange)
+            if (RHAH_ChildExchange.AcceptsChild(record))
             {
                 int each = RHAH_RequestRules.FoodForChildren(1);
                 if (settings != null && !settings.childExchangeFoodSubstitution)
@@ -386,7 +398,8 @@ namespace HungerAndHavoc.Incidents
                 }
                 else
                 {
-                    text += "\n\n" + "RHAH_Choice_ChildExchangeFoodHint".Translate(each, RHAH_RequestRules.FoodForChildren(RHAH_ChildExchange.IncomingCount(record)));
+                    text += "\n\n" + (record.DisplayId == "I-019" ? "RHAH_ChildExchange_LegacyFoodHint" : "RHAH_Choice_ChildExchangeFoodHint")
+                        .Translate(each, RHAH_ChildExchange.FoodCost(record));
                 }
             }
 
@@ -463,6 +476,8 @@ namespace HungerAndHavoc.Incidents
                 case "I-037": return "RHAH_Choice_PlagueAbandoned";
                 case "I-040": return "RHAH_Choice_Refugees";
                 case "I-041": return "RHAH_Choice_Orphan";
+                case "I-052": return "RHAH_Choice_MouseSwarm";
+                case "I-053": return "RHAH_Choice_PleadingJoin";
             }
 
             if (record.Kind == RHAH_RequestKind.Baby)

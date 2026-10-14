@@ -128,7 +128,7 @@ namespace HungerAndHavoc.Generation
             return null;
         }
 
-        static VersePawn Generate(RHAH_PawnRequest request)
+        internal static VersePawn Generate(RHAH_PawnRequest request)
         {
             RHAH_PawnProfile profile = request.Profile ?? new RHAH_PawnProfile();
             if (!RHAH_XenotypeResolver.TryResolve(profile, request.PawnKind, out XenotypeDef xenotype))

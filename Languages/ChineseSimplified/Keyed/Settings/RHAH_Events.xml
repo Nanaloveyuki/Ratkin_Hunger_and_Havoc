@@ -82,8 +82,8 @@
   <RHAH_Settings_TraderIgnoreEnclosed_Tooltip>开启后，灾荒商队会继续在封闭房间内停留；关闭后，到不了地图边缘时，他们会挖路离开。</RHAH_Settings_TraderIgnoreEnclosed_Tooltip>
   <RHAH_Settings_SpaceApproach>允许太空家园刷新事件</RHAH_Settings_SpaceApproach>
   <RHAH_Settings_SpaceApproach_Tooltip>默认关闭。开启后，轨道、小行星和 SOS2 轨道船等太空家园也可出现地图事件和步行而来的鼠族远行队。位于奥德赛轨道层的鼠族远行队允许穿梭机正常起飞。</RHAH_Settings_SpaceApproach_Tooltip>
-  <RHAH_Settings_ChildExchangeFood>允许用食物换孩子</RHAH_Settings_ChildExchangeFood>
-  <RHAH_Settings_ChildExchangeFood_Tooltip>开启后，“易子而食”除交出孩子外，还可以交出简单餐来完成交换，份数由“每个孩子的简单餐”决定。关闭后，只保留交出孩子的交换方式。</RHAH_Settings_ChildExchangeFood_Tooltip>
+  <RHAH_Settings_ChildExchangeFood>允许用食物代替交出孩子</RHAH_Settings_ChildExchangeFood>
+  <RHAH_Settings_ChildExchangeFood_Tooltip>开启后，“易子而食”和旧“索要婴儿”请求都可以交出简单餐代替孩子。“易子而食”按每个来客孩子计量，“索要婴儿”需要单个孩子基准量的两倍。关闭后仍可选择交出孩子。</RHAH_Settings_ChildExchangeFood_Tooltip>
   <RHAH_Settings_GreenLetters>鼠饥事件使用绿色信件</RHAH_Settings_GreenLetters>
   <RHAH_Settings_GreenLetters_Tooltip>默认开启。关闭后，鼠饥事件信恢复原版蓝色。</RHAH_Settings_GreenLetters_Tooltip>
   <RHAH_Settings_Stagger>分批到来</RHAH_Settings_Stagger>
@@ -124,7 +124,7 @@
   <RHAH_Settings_RequestPoints>索取点数：{0}</RHAH_Settings_RequestPoints>
   <RHAH_Settings_RequestPoints_Tooltip>索取量以此规模为基准，再按实际事件规模的比例增减。范围 1 到 10000，默认 300。</RHAH_Settings_RequestPoints_Tooltip>
   <RHAH_Settings_FoodPerChild>每个孩子的简单餐：{0}</RHAH_Settings_FoodPerChild>
-  <RHAH_Settings_FoodPerChild_Tooltip>“易子而食”请求中，每替代一个孩子需要交出的简单餐份数。范围 0 到 100，默认 10。</RHAH_Settings_FoodPerChild_Tooltip>
+  <RHAH_Settings_FoodPerChild_Tooltip>“易子而食”每个来客孩子所需的简单餐份数；旧“索要婴儿”请求需要此值的两倍。范围 0 到 100，默认 10。</RHAH_Settings_FoodPerChild_Tooltip>
   <RHAH_Settings_FoodPerVisitor>投喂每人份数：{0}</RHAH_Settings_FoodPerVisitor>
   <RHAH_Settings_FoodPerVisitor_Tooltip>每名来客需要的投喂份数，乘以来客人数得到总需求。范围 0 到 20，默认 1。</RHAH_Settings_FoodPerVisitor_Tooltip>
   <RHAH_Settings_FoodRequestCap>投喂上限：{0}</RHAH_Settings_FoodRequestCap>

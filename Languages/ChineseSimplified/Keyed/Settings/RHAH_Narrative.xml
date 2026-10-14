@@ -25,7 +25,7 @@
   <RHAH_Menu_Outcome_Failure>失败</RHAH_Menu_Outcome_Failure>
   <RHAH_Menu_Outcome_Massacre>屠杀</RHAH_Menu_Outcome_Massacre>
   <RHAH_Settings_Broadcast>允许广播希望</RHAH_Settings_Broadcast>
-  <RHAH_Settings_Broadcast_Tooltip>殖民者可在通讯台广播，召来饥荒鼠族。关闭后停止新的广播，已经上路的队伍继续赶来。</RHAH_Settings_Broadcast_Tooltip>
+  <RHAH_Settings_Broadcast_Tooltip>殖民者可在通讯台广播，召来饥荒鼠族。通常召来一支队伍；饥荒年会按来客倍率向上取整，尝试召来更多不同的队伍。广播遵循事件开关、出现限制和下方冷却。关闭后停止新的广播，已经上路的队伍继续赶来。</RHAH_Settings_Broadcast_Tooltip>
   <RHAH_Settings_IdentityPartialTrust>部分身份披露信任：{0}</RHAH_Settings_IdentityPartialTrust>
   <RHAH_Settings_IdentityPartialTrust_Tooltip>穗音愿意讲述宫廷生活所需的最低信任。遗物事件须已完成。范围 -100 到 100，默认 50。</RHAH_Settings_IdentityPartialTrust_Tooltip>
   <RHAH_Settings_IdentityFullTrust>完整身份披露信任：{0}</RHAH_Settings_IdentityFullTrust>

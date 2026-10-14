@@ -47,6 +47,7 @@ namespace HungerAndHavoc.Pawn
                         RHAH_Mod.Settings == null ? 100 : RHAH_Mod.Settings.playerIdeoPercent,
                         Rand.Value);
                     clickedPawn.SetFaction(Faction.OfPlayer);
+                    RHAH_VisitorMood.NotifySheltered(clickedPawn);
                 });
             }
 

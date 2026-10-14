@@ -24,6 +24,13 @@ namespace HungerAndHavoc.Core
         public float fertilityPercent = Generation.RHAH_FertilityRules.DefaultFertilityPercent;
         public float gestationDays = Generation.RHAH_FertilityRules.DefaultGestationDays;
         public float lovinPregnancyPercent = Generation.RHAH_FertilityRules.DefaultLovinPregnancyPercent;
+        public float maternalMilkPercent = Pawn.RHAH_ParentalGenes.DefaultMaternalMilkPercent;
+        public float maternalHungerPercent = Pawn.RHAH_ParentalGenes.DefaultMaternalHungerPercent;
+        public float maternalNutritionPercent = Pawn.RHAH_ParentalGenes.DefaultMaternalNutritionPercent;
+        public float paternalWorkPercent = Pawn.RHAH_ParentalGenes.DefaultPaternalWorkPercent;
+        public float paternalHungerPercent = Pawn.RHAH_ParentalGenes.DefaultPaternalHungerPercent;
+        public float paternalLearningPercent = Pawn.RHAH_ParentalGenes.DefaultPaternalLearningPercent;
+        public float paternalDamagePercent = Pawn.RHAH_ParentalGenes.DefaultPaternalDamagePercent;
         public bool reliefEnabled = true;
         public bool allowEatOutsideRelief;
         public bool ignoreReliefAfterFed;
@@ -39,6 +46,10 @@ namespace HungerAndHavoc.Core
         public bool foodGiveHintDismissed;
         public bool traderIgnoresHarshEnvironment = true;
         public bool traderIgnoresEnclosedSpace = true;
+        public bool famineYearEnabled;
+        public float famineYearChancePercent = 40f;
+        public float famineYearPawnMultiplier = 3f;
+        public float famineYearDisasterChancePercent = 20f;
         public bool famineArrivalEnabled = true;
         public float famineArrivalMalnutrition = 0.25f;
         public bool famineMoodEnabled = true;
@@ -302,6 +313,13 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref fertilityPercent, "fertilityPercent", Generation.RHAH_FertilityRules.DefaultFertilityPercent);
             Scribe_Values.Look(ref gestationDays, "gestationDays", Generation.RHAH_FertilityRules.DefaultGestationDays);
             Scribe_Values.Look(ref lovinPregnancyPercent, "lovinPregnancyPercent", Generation.RHAH_FertilityRules.DefaultLovinPregnancyPercent);
+            Scribe_Values.Look(ref maternalMilkPercent, "maternalMilkPercent", Pawn.RHAH_ParentalGenes.DefaultMaternalMilkPercent);
+            Scribe_Values.Look(ref maternalHungerPercent, "maternalHungerPercent", Pawn.RHAH_ParentalGenes.DefaultMaternalHungerPercent);
+            Scribe_Values.Look(ref maternalNutritionPercent, "maternalNutritionPercent", Pawn.RHAH_ParentalGenes.DefaultMaternalNutritionPercent);
+            Scribe_Values.Look(ref paternalWorkPercent, "paternalWorkPercent", Pawn.RHAH_ParentalGenes.DefaultPaternalWorkPercent);
+            Scribe_Values.Look(ref paternalHungerPercent, "paternalHungerPercent", Pawn.RHAH_ParentalGenes.DefaultPaternalHungerPercent);
+            Scribe_Values.Look(ref paternalLearningPercent, "paternalLearningPercent", Pawn.RHAH_ParentalGenes.DefaultPaternalLearningPercent);
+            Scribe_Values.Look(ref paternalDamagePercent, "paternalDamagePercent", Pawn.RHAH_ParentalGenes.DefaultPaternalDamagePercent);
             Scribe_Values.Look(ref reliefEnabled, "reliefEnabled", true);
             Scribe_Values.Look(ref allowEatOutsideRelief, "allowEatOutsideRelief", false);
             Scribe_Values.Look(ref ignoreReliefAfterFed, "ignoreReliefAfterFed", false);
@@ -317,6 +335,10 @@ namespace HungerAndHavoc.Core
             Scribe_Values.Look(ref foodGiveHintDismissed, "foodGiveHintDismissed", false);
             Scribe_Values.Look(ref traderIgnoresHarshEnvironment, "traderIgnoresHarshEnvironment", true);
             Scribe_Values.Look(ref traderIgnoresEnclosedSpace, "traderIgnoresEnclosedSpace", true);
+            Scribe_Values.Look(ref famineYearEnabled, "famineYearEnabled", false);
+            Scribe_Values.Look(ref famineYearChancePercent, "famineYearChancePercent", 40f);
+            Scribe_Values.Look(ref famineYearPawnMultiplier, "famineYearPawnMultiplier", 3f);
+            Scribe_Values.Look(ref famineYearDisasterChancePercent, "famineYearDisasterChancePercent", 20f);
             Scribe_Values.Look(ref famineArrivalEnabled, "famineArrivalEnabled", true);
             Scribe_Values.Look(ref famineArrivalMalnutrition, "famineArrivalMalnutrition", 0.25f);
             Scribe_Values.Look(ref famineMoodEnabled, "famineMoodEnabled", true);
@@ -930,6 +952,9 @@ namespace HungerAndHavoc.Core
 
         void Normalize()
         {
+            famineYearChancePercent = GameComponent_RHAH_FamineYear.ClampPercent(famineYearChancePercent, 40f);
+            famineYearPawnMultiplier = GameComponent_RHAH_FamineYear.ClampMultiplier(famineYearPawnMultiplier);
+            famineYearDisasterChancePercent = GameComponent_RHAH_FamineYear.ClampPercent(famineYearDisasterChancePercent, 20f);
             xenotypeWeights = ClampWeights(xenotypeWeights, RHAH_XenotypeWeightTable.Clamp);
             incidentGroupPoints = ClampWeights(incidentGroupPoints, ClampDebugPoints);
             incidentGroupWeights = ClampWeights(incidentGroupWeights, ClampIncidentWeight);
@@ -1528,6 +1553,13 @@ namespace HungerAndHavoc.Core
 
         void ClampTunables()
         {
+            maternalMilkPercent = ClampFloat(maternalMilkPercent, Pawn.RHAH_ParentalGenes.MinPercent, Pawn.RHAH_ParentalGenes.MaxPercent, Pawn.RHAH_ParentalGenes.DefaultMaternalMilkPercent);
+            maternalHungerPercent = ClampFloat(maternalHungerPercent, Pawn.RHAH_ParentalGenes.MinPercent, Pawn.RHAH_ParentalGenes.MaxPercent, Pawn.RHAH_ParentalGenes.DefaultMaternalHungerPercent);
+            maternalNutritionPercent = ClampFloat(maternalNutritionPercent, Pawn.RHAH_ParentalGenes.MinPercent, Pawn.RHAH_ParentalGenes.MaxPercent, Pawn.RHAH_ParentalGenes.DefaultMaternalNutritionPercent);
+            paternalWorkPercent = ClampFloat(paternalWorkPercent, Pawn.RHAH_ParentalGenes.MinPercent, Pawn.RHAH_ParentalGenes.MaxPercent, Pawn.RHAH_ParentalGenes.DefaultPaternalWorkPercent);
+            paternalHungerPercent = ClampFloat(paternalHungerPercent, Pawn.RHAH_ParentalGenes.MinPercent, Pawn.RHAH_ParentalGenes.MaxPercent, Pawn.RHAH_ParentalGenes.DefaultPaternalHungerPercent);
+            paternalLearningPercent = ClampFloat(paternalLearningPercent, Pawn.RHAH_ParentalGenes.MinPercent, Pawn.RHAH_ParentalGenes.MaxPercent, Pawn.RHAH_ParentalGenes.DefaultPaternalLearningPercent);
+            paternalDamagePercent = ClampFloat(paternalDamagePercent, Pawn.RHAH_ParentalGenes.MinPercent, Pawn.RHAH_ParentalGenes.MaxDamagePercent, Pawn.RHAH_ParentalGenes.DefaultPaternalDamagePercent);
             Order(ref requestMinSimple, ref requestMaxSimple, 0, 200, 6, 28);
             Order(ref requestMinFine, ref requestMaxFine, 0, 200, 4, 18);
             Order(ref requestMinMedicine, ref requestMaxMedicine, 0, 100, 2, 10);

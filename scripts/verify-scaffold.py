@@ -178,27 +178,27 @@ def check_load_folders():
 
 
 def catalog_defs(catalog):
-    table = catalog.split("static readonly", 1)[-1].split("public static", 1)[0]
-    ids = re.findall(r'"(I-\d{3})"', table)
-    defs = re.findall(
-        r'(?:Original|Sequel)\(\s*"I-\d{3}",\s*"(RHAH_[A-Za-z0-9_]+)"',
+    entries = re.findall(
+        r'(?:Original|Sequel|SubEvent)\(\s*"(I-\d{3}(?:-\d{2})?)",\s*"(RHAH_[A-Za-z0-9_]+)"',
         catalog,
     )
+    ids = [display_id for display_id, _ in entries]
+    defs = [def_name for _, def_name in entries]
     return ids, defs
 
 
 def check_catalog():
     catalog = read("Source/Incidents/RHAH_IncidentCatalog.cs")
     ids, defs = catalog_defs(catalog)
-    if len(ids) != 51:
-        errors.append("catalog size %s, expected 51" % len(ids))
+    if len(ids) != 57:
+        errors.append("catalog size %s, expected 57" % len(ids))
     if len(set(ids)) != len(ids):
         errors.append("duplicate display ids")
-    expected = ["I-%03d" % i for i in range(1, 52)]
+    expected = ["I-%03d" % i for i in range(1, 52)] + ["I-008-01", "I-009-01", "I-010-01"] + ["I-052", "I-053", "I-054"]
     if ids != expected:
-        errors.append("display ids are not I-001..I-051 in order: %s" % ids[:8])
-    if len(defs) != 51:
-        errors.append("catalog def name count %s, expected 51" % len(defs))
+        errors.append("display ids differ from primary and wild subevent catalog: %s" % ids[:8])
+    if len(defs) != 57:
+        errors.append("catalog def name count %s, expected 57" % len(defs))
     if "RHH_" in catalog:
         errors.append("catalog still has RHH_")
     return defs
@@ -207,8 +207,18 @@ def check_catalog():
 def check_incident_labels(defs):
     zh_incidents = keyed_entries("Languages/ChineseSimplified/Keyed")
     en_incidents = keyed_entries("Languages/English/Keyed")
+    catalog = read("Source/Incidents/RHAH_IncidentCatalog.cs")
+    ids, def_names = catalog_defs(catalog)
+    by_id = dict(zip(ids, def_names))
+    aliases = {
+        def_name: by_id[parent_id]
+        for def_name, parent_id in re.findall(
+            r'SubEvent\(\s*"I-\d{3}-\d{2}",\s*"(RHAH_[A-Za-z0-9_]+)",\s*"(I-\d{3})"', catalog
+        )
+    }
     for display_def in defs:
-        key = "RHAH_Incident_%s_Label" % display_def[len("RHAH_"):]
+        label_def = aliases.get(display_def, display_def)
+        key = "RHAH_Incident_%s_Label" % label_def[len("RHAH_"):]
         if key not in zh_incidents or key not in en_incidents:
             errors.append("missing label " + key)
 
@@ -529,7 +539,7 @@ def main():
         for item in errors:
             print(" -", item)
         return 1
-    print("OK M0 scaffold: API assembly, Identity Comp, I-001..I-051, keyed symmetry, Japanese coverage/tokens/XML")
+    print("OK source contracts: API assembly, Identity Comp, I-001..I-054 and wild subevents, keyed symmetry, Japanese coverage/tokens/XML")
     return 0
 
 

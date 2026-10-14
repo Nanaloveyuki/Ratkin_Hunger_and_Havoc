@@ -51,9 +51,9 @@
   <RHAH_Choice_IntelHint>We have {0} days to answer. The visitor will reveal the site after we deliver the goods. If we refuse or the deadline passes, they will leave or turn hostile according to their attitude and the group reaction settings.</RHAH_Choice_IntelHint>
   <RHAH_Choice_PlagueHint>These visitors have ratkin plague and need treatment and care. Contact with them also risks spreading the disease. Use this letter to decide how to treat them.</RHAH_Choice_PlagueHint>
   <RHAH_Choice_PlagueDisabledHint>The plague is disabled, so this group arrives healthy.</RHAH_Choice_PlagueDisabledHint>
-  <RHAH_Choice_ChildExchangeFoodHint>We can fulfill this request with simple meals: {0} per child, {1} in total. A child cannot be handed over; taking the children into the colony requires a separate decision.</RHAH_Choice_ChildExchangeFoodHint>
-  <RHAH_Choice_ChildExchangeNoFoodHint>Food substitution is disabled, and a child cannot be handed over. We can refuse or leave the request unanswered.</RHAH_Choice_ChildExchangeNoFoodHint>
-  <RHAH_Choice_ChildExchangeZeroFoodHint>Meals per child is set to 0, so delivery is unavailable. To deliver meals, set the amount above 0; a child cannot be handed over.</RHAH_Choice_ChildExchangeZeroFoodHint>
+  <RHAH_Choice_ChildExchangeFoodHint>You can give simple meals instead of a child: {0} per visiting child, {1} in total. After the exchange, the visiting children join the colony.</RHAH_Choice_ChildExchangeFoodHint>
+  <RHAH_Choice_ChildExchangeNoFoodHint>Food substitution is disabled. To fulfill the request, choose an eligible colony child to hand over.</RHAH_Choice_ChildExchangeNoFoodHint>
+  <RHAH_Choice_ChildExchangeZeroFoodHint>Simple meals per child is set to 0, so food substitution requires no meals. You can also choose to hand over a colony child.</RHAH_Choice_ChildExchangeZeroFoodHint>
   <RHAH_Choice_AbandonedGrown_Text>A ratkin mother has left her children near our colony for reasons unknown. Perhaps she could no longer feed them, but could not bear to abandon them completely, so she brought them here. It seems she wants us to take them in.\n\nWithout anyone looking out for them, they will probably struggle to survive. What should we do?</RHAH_Choice_AbandonedGrown_Text>
   <RHAH_Choice_ChildExchangeGrown_Text>A ratkin mother has brought one of her children near our colony. Before leaving, she says haltingly, "I really can't feed my child anymore, squeak. Could you give me some food? Or... could we make a trade?"\n\nShe wants food in exchange for her child. Or perhaps a different child who would count as 'food'. What should we do?</RHAH_Choice_ChildExchangeGrown_Text>
   <RHAH_Choice_BeggarFamilyGrown_Text>{0} has arrived.\n\nFamine has driven a ratkin mother and her {1} children near our colony. She begs us for food while they stand beside her.\n\n"Please, squeak. Give me and my children some food."\n\nShe pauses. "We wouldn't complain even if you worked us like beasts."\n\nWhat should we do?</RHAH_Choice_BeggarFamilyGrown_Text>
@@ -77,9 +77,17 @@
   <RHAH_Choice_Enslave>Enslave (become slaves where they stand, will cleared)</RHAH_Choice_Enslave>
   <RHAH_Choice_Capture>Capture (become prisoners where they stand, asleep for 12 hours)</RHAH_Choice_Capture>
   <RHAH_Choice_Attack>Attack (the whole group turns hostile)</RHAH_Choice_Attack>
+  <RHAH_Choice_ChooseAlly>Send to an ally…</RHAH_Choice_ChooseAlly>
   <RHAH_Choice_Ally>Send to {0}</RHAH_Choice_Ally>
+  <RHAH_Choice_AllyPageText>Choose an ally to take them in (page {0}/{1}).\n\nGoodwill increases only after visitors successfully leave the map, based on their market value: about +1 per 500 value, up to +10 for this whole transfer. Allies with industrial or higher technology have a 50% chance of sending a small thank-you gift by drop pod within three days.</RHAH_Choice_AllyPageText>
+  <RHAH_Choice_AllyPrevious>Previous page</RHAH_Choice_AllyPrevious>
+  <RHAH_Choice_AllyNext>Next page</RHAH_Choice_AllyNext>
+  <RHAH_Choice_AllyBack>Back</RHAH_Choice_AllyBack>
   <RHAH_Choice_NoAlly>No allied faction can take them.</RHAH_Choice_NoAlly>
-  <RHAH_Choice_AllySent>{0} people are on their way to {1} and will become members of that faction after leaving this map. They cannot be found directly at its settlement; goodwill changes depend on their treatment and whether they leave safely.</RHAH_Choice_AllySent>
+  <RHAH_Choice_AllySent>{0} people are on their way to {1}. They will become members of that faction only after successfully leaving this map, increasing its goodwill based on the market value of those who leave. This whole transfer can grant up to +10 goodwill. They cannot be found directly at its settlement.</RHAH_Choice_AllySent>
+  <RHAH_Choice_AllyGiftLabel>A gift from an ally</RHAH_Choice_AllyGiftLabel>
+  <RHAH_Choice_AllyGiftText>{0} has sent supplies by drop pod to thank us for sending these visitors to join them.</RHAH_Choice_AllyGiftText>
+  <RHAH_Choice_AllyGoodwillReason>Taking in visitors</RHAH_Choice_AllyGoodwillReason>
   <RHAH_Choice_NoCustodyTarget>No visitor can currently be captured or enslaved. They may be in a mental break, have already left, or be protected from imprisonment.</RHAH_Choice_NoCustodyTarget>
   <RHAH_Choice_NoPresent>The visitors have left. Nobody remains to receive this arrangement.</RHAH_Choice_NoPresent>
   <RHAH_Choice_NoRecruit>None of these visitors can be taken in, hired, or joined to the colony.</RHAH_Choice_NoRecruit>
@@ -100,4 +108,8 @@
   <RHAH_Choice_Delivered>The goods have been handed over.</RHAH_Choice_Delivered>
   <RHAH_Choice_SiteUnavailable>The visitor could not provide a site. You still have the goods and can choose again in the letter.</RHAH_Choice_SiteUnavailable>
   <RHAH_Choice_Fed>The visitors have eaten.</RHAH_Choice_Fed>
+  <RHAH_Choice_MouseSwarm_Label>Mouse swarm</RHAH_Choice_MouseSwarm_Label>
+  <RHAH_Choice_MouseSwarm_Text>A large group of ratkin displaced by famine has been spotted heading our way. If we do not want them eating every last scrap in our food stores, we need to make a choice quickly.</RHAH_Choice_MouseSwarm_Text>
+  <RHAH_Choice_PleadingJoin_Label>Pleading to join</RHAH_Choice_PleadingJoin_Label>
+  <RHAH_Choice_PleadingJoin_Text>A dejected ratkin has stumbled into our colony, apparently worn out by a long journey.\n\n“Could you please take me in? I can work hard! I only need a little food. Thank you so much!”</RHAH_Choice_PleadingJoin_Text>
 </LanguageData>

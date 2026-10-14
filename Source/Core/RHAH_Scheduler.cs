@@ -94,7 +94,8 @@ namespace HungerAndHavoc.Core
             bool targetReady)
         {
             return RHAH_Runtime.AllowsNewContent && entry != null && gameLoaded && targetReady &&
-                (settings == null || settings.IsIncidentEnabled(entry.DisplayId));
+                (settings == null || settings.IsIncidentEnabled(entry.DisplayId)) &&
+                GameComponent_RHAH_FamineYear.Available(entry.DisplayId);
         }
 
         static IIncidentTarget ResolveTarget(RHAH_IncidentEntry entry)

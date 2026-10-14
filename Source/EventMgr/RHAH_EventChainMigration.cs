@@ -72,7 +72,7 @@ namespace HungerAndHavoc.EventMgr
         static bool IsIncidentId(string value)
         {
             return value != null && value.Length == 5 && value[0] == 'I' && value[1] == '-' &&
-                int.TryParse(value.Substring(2), NumberStyles.None, CultureInfo.InvariantCulture, out int number) && number >= 1 && number <= 51;
+                int.TryParse(value.Substring(2), NumberStyles.None, CultureInfo.InvariantCulture, out int number) && number >= 1 && number <= 54;
         }
 
         internal static int SiteTile(int siteId)

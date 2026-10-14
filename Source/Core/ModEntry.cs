@@ -91,6 +91,14 @@ namespace HungerAndHavoc.Core
                 "RHAH_Settings_TraderIgnoreEnvironment_Tooltip".Translate());
             listing.CheckboxLabeled("RHAH_Settings_TraderIgnoreEnclosed".Translate(), ref Settings.traderIgnoresEnclosedSpace,
                 "RHAH_Settings_TraderIgnoreEnclosed_Tooltip".Translate());
+            listing.CheckboxLabeled("RHAH_Settings_FamineYear".Translate(), ref Settings.famineYearEnabled,
+                "RHAH_Settings_FamineYear_Tooltip".Translate());
+            listing.Label("RHAH_Settings_FamineYearChance".Translate(Settings.famineYearChancePercent.ToString("0.0")));
+            Settings.famineYearChancePercent = listing.Slider(GameComponent_RHAH_FamineYear.ClampPercent(Settings.famineYearChancePercent, 40f), 0f, 100f);
+            listing.Label("RHAH_Settings_FamineYearMultiplier".Translate(Settings.famineYearPawnMultiplier.ToString("0.00")));
+            Settings.famineYearPawnMultiplier = listing.Slider(GameComponent_RHAH_FamineYear.ClampMultiplier(Settings.famineYearPawnMultiplier), 1f, 4f);
+            listing.Label("RHAH_Settings_FamineYearDisasterChance".Translate(Settings.famineYearDisasterChancePercent.ToString("0.0")));
+            Settings.famineYearDisasterChancePercent = listing.Slider(GameComponent_RHAH_FamineYear.ClampPercent(Settings.famineYearDisasterChancePercent, 20f), 0f, 100f);
             listing.CheckboxLabeled("RHAH_Settings_FamineArrival".Translate(), ref Settings.famineArrivalEnabled,
                 "RHAH_Settings_FamineArrival_Tooltip".Translate());
             listing.Label("RHAH_Settings_FamineMalnutrition".Translate(Settings.famineArrivalMalnutrition.ToString("0.00")));
@@ -141,6 +149,9 @@ namespace HungerAndHavoc.Core
             Settings.playerIdeoPercent = UnityEngine.Mathf.RoundToInt(listing.Slider(Settings.playerIdeoPercent, 0f, 100f));
             listing.CheckboxLabeled("RHAH_Settings_Broadcast".Translate(), ref Settings.broadcastEnabled,
                 "RHAH_Settings_Broadcast_Tooltip".Translate());
+            listing.Label("RHAH_Settings_BroadcastCooldown".Translate(Settings.broadcastCooldownDays));
+            Settings.broadcastCooldownDays = Mathf.RoundToInt(listing.Slider(Settings.broadcastCooldownDays,
+                Incidents.RHAH_BroadcastRules.MinCooldownDays, Incidents.RHAH_BroadcastRules.MaxCooldownDays));
             listing.CheckboxLabeled("RHAH_Settings_Stagger".Translate(), ref Settings.staggerGeneration,
                 "RHAH_Settings_Stagger_Tooltip".Translate());
             listing.Label("RHAH_Settings_ShelterDays".Translate(Pawn.RHAH_VisitorRules.StayLabel(Settings.shelterDays)));

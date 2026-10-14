@@ -29,12 +29,42 @@ namespace HungerAndHavoc.Generation
                 pawn.equipment == null || !RHAH_Api.Allows(pawn, RHAH_BehaviorGate.Fight)) return;
             ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(Weapons[Rand.Range(0, Weapons.Length)]);
             if (def == null || def.modContentPack?.IsCoreMod != true || !def.IsWeapon) return;
+            Equip(pawn, def);
+        }
+
+        internal static bool TryEquipRequired(Verse.Pawn pawn)
+        {
+            if (pawn?.equipment == null || !pawn.DevelopmentalStage.Adult() || pawn.WorkTagIsDisabled(WorkTags.Violent))
+            {
+                return false;
+            }
+            ThingOwner<Thing> inventory = pawn.inventory?.innerContainer;
+            if (inventory != null)
+            {
+                for (int i = inventory.Count - 1; i >= 0; i--)
+                {
+                    if (inventory[i].def.IsWeapon) inventory[i].Destroy(DestroyMode.Vanish);
+                }
+            }
+            int start = Rand.Range(0, Weapons.Length);
+            for (int i = 0; i < Weapons.Length; i++)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(Weapons[(start + i) % Weapons.Length]);
+                if (def?.modContentPack?.IsCoreMod == true && def.IsWeapon) return Equip(pawn, def);
+            }
+            Log.Error("[RHAH] I-054 requires a vanilla weapon from the famine weapon pool");
+            return false;
+        }
+
+        static bool Equip(Verse.Pawn pawn, ThingDef def)
+        {
             ThingDef stuff = def.MadeFromStuff ? (def.defName == "MeleeWeapon_Club" ? ThingDefOf.WoodLog : ThingDefOf.Steel) : null;
             ThingWithComps weapon = ThingMaker.MakeThing(def, stuff) as ThingWithComps;
-            if (weapon == null) return;
+            if (weapon == null) return false;
             weapon.TryGetComp<CompQuality>()?.SetQuality(Quality(Rand.RangeInclusive(0, (int)QualityCategory.Normal)), ArtGenerationContext.Outsider);
             pawn.equipment.DestroyAllEquipment();
             pawn.equipment.AddEquipment(weapon);
+            return pawn.equipment.Primary == weapon;
         }
     }
 }

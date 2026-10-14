@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HungerAndHavoc.Api;
 using HungerAndHavoc.Core;
+using HungerAndHavoc.Identity;
 using HungerAndHavoc.Pawn;
 using RimWorld;
 using Verse;
@@ -41,7 +42,7 @@ namespace HungerAndHavoc.Incidents
                 {
                     yield return Gated("RHAH_Choice_Hire", RHAH_ChoiceAction.Hire, HasAllowed(present, RHAH_BehaviorGate.Hire), durationDays: StayDays(true));
                 }
-                if (RHAH_RequestRules.ShowsFoodGive(choice))
+                if (RHAH_RequestRules.ShowsFoodGive(displayId, choice))
                 {
                     yield return Action("RHAH_Choice_Feed", RHAH_ChoiceAction.Feed);
                 }
@@ -92,25 +93,54 @@ namespace HungerAndHavoc.Incidents
 
         DiaOption AllyOption(List<Verse.Pawn> present)
         {
-            RimWorld.Faction faction = RHAH_ChoiceRuntime.AllyDestination();
-            string name = faction == null ? string.Empty : faction.Name;
-            string label = "RHAH_Choice_Ally".Translate(name).ToString();
-            DiaOption option = new DiaOption(label);
-
-            if (faction == null)
-            {
-                option.Disable("RHAH_Choice_NoAlly".Translate());
-                return option;
-            }
-
+            DiaOption option = new DiaOption("RHAH_Choice_ChooseAlly".Translate());
             if (!HasAllowed(present, RHAH_BehaviorGate.Transfer))
             {
                 option.Disable("RHAH_Choice_NoTransfer".Translate());
-                return option;
+            }
+            else
+            {
+                option.linkLateBind = () => AllyPage(0);
+            }
+            return option;
+        }
+
+        internal DiaNode AllyPage(int page)
+        {
+            const int pageSize = 6;
+            List<Faction> factions = RHAH_ChoiceRuntime.AllyDestinations();
+            int pages = System.Math.Max(1, (factions.Count + pageSize - 1) / pageSize);
+            page = System.Math.Max(0, System.Math.Min(page, pages - 1));
+            DiaNode node = new DiaNode("RHAH_Choice_AllyPageText".Translate(page + 1, pages));
+            string unavailable = UnavailableReason(RHAH_ChoiceAction.Ally);
+            int end = System.Math.Min(factions.Count, (page + 1) * pageSize);
+            for (int i = page * pageSize; i < end; i++)
+            {
+                Faction faction = factions[i];
+                DiaOption option = new DiaOption("RHAH_Choice_Ally".Translate(faction.Name));
+                if (unavailable != null) option.Disable(unavailable.Translate());
+                else Bind(option, RHAH_ChoiceAction.Ally, faction.loadID);
+                node.options.Add(option);
             }
 
-            Bind(option, RHAH_ChoiceAction.Ally);
-            return option;
+            DiaOption previous = new DiaOption("RHAH_Choice_AllyPrevious".Translate());
+            if (page == 0) previous.Disable(null);
+            else previous.linkLateBind = () => AllyPage(page - 1);
+            node.options.Add(previous);
+            DiaOption next = new DiaOption("RHAH_Choice_AllyNext".Translate());
+            if (page + 1 == pages) next.Disable(null);
+            else next.linkLateBind = () => AllyPage(page + 1);
+            node.options.Add(next);
+            node.options.Add(new DiaOption("RHAH_Choice_AllyBack".Translate())
+            {
+                linkLateBind = () =>
+                {
+                    DiaNode parent = new DiaNode(Text);
+                    parent.options.AddRange(Choices);
+                    return parent;
+                }
+            });
+            return node;
         }
 
         DiaOption Gated(string key, RHAH_ChoiceAction action, bool allowed, string emptyKey = "RHAH_Choice_NoRecruit", int durationDays = 0)
@@ -128,12 +158,12 @@ namespace HungerAndHavoc.Incidents
             return option;
         }
 
-        void Bind(DiaOption option, RHAH_ChoiceAction action)
+        void Bind(DiaOption option, RHAH_ChoiceAction action, int allyFactionId = 0)
         {
             option.resolveTree = false;
             option.action = () =>
             {
-                if (Settle(action))
+                if (Settle(action, allyFactionId))
                 {
                     option.dialog?.Close();
                 }
@@ -153,7 +183,7 @@ namespace HungerAndHavoc.Incidents
             return Gated(key, action, true);
         }
 
-        bool Settle(RHAH_ChoiceAction action)
+        bool Settle(RHAH_ChoiceAction action, int allyFactionId = 0)
         {
             GameComponent_RHAH_Game game = Current.Game?.GetComponent<GameComponent_RHAH_Game>();
             RHAH_Settings settings = RHAH_Mod.Settings;
@@ -171,7 +201,8 @@ namespace HungerAndHavoc.Incidents
                 action,
                 Find.TickManager.TicksGame,
                 enabled,
-                true);
+                true,
+                allyFactionId);
             if (settled == RHAH_ChoiceAction.None)
             {
                 RHAH_ChoiceRecord current = FindRecord();
@@ -240,7 +271,16 @@ namespace HungerAndHavoc.Incidents
                 return "RHAH_Choice_Stale";
             }
 
+            if (action == RHAH_ChoiceAction.Feed &&
+                !RHAH_RequestRules.ShowsFoodGive(record.DisplayId, record.Choice)) return "RHAH_Choice_Stale";
+
             List<Verse.Pawn> present = RHAH_ChoiceRuntime.Present(record);
+            if (action == RHAH_ChoiceAction.Feed)
+            {
+                for (int i = 0; i < present.Count; i++)
+                    if (RHAH_MouseSwarm.IsProvoked(present[i])) return "RHAH_Choice_Stale";
+            }
+
             if (RHAH_RequestRules.Captures(action) || RHAH_RequestRules.Enslaves(action))
             {
                 bool enslave = RHAH_RequestRules.Enslaves(action);
@@ -304,7 +344,7 @@ namespace HungerAndHavoc.Incidents
         {
             for (int i = 0; i < pawns.Count; i++)
             {
-                if (RHAH_Api.Allows(pawns[i], gate) && (gate != RHAH_BehaviorGate.Transfer || RHAH_Api.Allows(pawns[i], RHAH_BehaviorGate.ExitMap)))
+                if (gate == RHAH_BehaviorGate.Transfer ? RHAH_ApiHost.CanTransfer(pawns[i]) : RHAH_Api.Allows(pawns[i], gate))
                 {
                     return true;
                 }

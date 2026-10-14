@@ -268,7 +268,8 @@ namespace HungerAndHavoc.Incidents
             bool mapHome,
             bool playerCaravan)
         {
-            if (RHAH_IncidentGroups.PoolOf(entry.DisplayId) != pool)
+            if (RHAH_IncidentGroups.PoolOf(entry.DisplayId) != pool ||
+                !GameComponent_RHAH_FamineYear.Available(entry.DisplayId))
             {
                 return 0f;
             }

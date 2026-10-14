@@ -83,6 +83,11 @@ namespace HungerAndHavoc.Pawn
                 return "RHAH_Choice_FeedNoVisitor";
             }
 
+            if (RHAH_Api.Get(pawn)?.SourceIncidentDisplayId == "I-053" || RHAH_MouseSwarm.IsProvoked(pawn))
+            {
+                return "RHAH_Choice_FeedBlocked";
+            }
+
             if (!RHAH_Api.Allows(pawn, RHAH_BehaviorGate.FeedFromRelief))
             {
                 return "RHAH_Choice_FeedBlocked";

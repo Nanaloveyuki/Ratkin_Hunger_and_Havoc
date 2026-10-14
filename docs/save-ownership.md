@@ -177,8 +177,12 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | ExpireTick | expireTick | -1 | 否 | |
 | Settled | settled | None | 否 | `RHAH_ChoiceAction`。旧文本 `Prison` 和旧数值 `12` 读取为 `Capture`（关闭状态）；再存档写 `Capture`。其它名称和编号保持原有枚举存读，缺键仍为 `None` |
 | PawnLoadIds | pawnLoadIds | 空集合 | 是 | `PostLoadInit` 补 `List<int>`；null 与空集合语义相同 |
-| AllyFactionId | allyFactionId | 0 | 否 | 发配目标派系 loadID。0 表示没有待入籍的人。旧档缺键为 0 |
+| AllyFactionId | allyFactionId | 0 | 否 | 转送目标派系 loadID，0 表示没有记录目标。转送完成后仍保留，作为回礼来源；待入籍成员以 AllyPawnIds 判断。旧档缺键为 0 |
 | AllyPawnIds | allyPawnIds | 空集合 | 是 | 已下令离场、离图后才改入盟友的 pawn thingID。`PostLoadInit` 补空列表；null 与空集合语义相同。人离图或死亡后移除 |
+| AllyTransferredValue | allyTransferredValue | 0 | 否 | 本批成功离场来客的累计市场价值；仅成功转送时累加，旧档缺键为 0 |
+| AllyGoodwillGranted | allyGoodwillGranted | 0 | 否 | 本批已发放的转送好感；每次按累计目标 `min(10, ceil(AllyTransferredValue / 500))` 减去此值补发，非正价值目标为 0。旧档缺键为 0 |
+| AllyGiftChecked | allyGiftChecked | false | 否 | 首名来客成功离场时置 true，只判定一次工业及以上盟友的 50% 回礼；旧档缺键为 false |
+| AllyGiftDueTick | allyGiftDueTick | -1 | 否 | 回礼投递到期 tick；-1 表示无待投递回礼，旧档缺键为 -1。到期投递或无家园取消后恢复 -1，不追加重试 |
 | TransactionVersion | transactionVersion | 0 | 否 | 0 是已存在情报请求；1 是新食物换实物报价，旧信不重新报价、不改回报 |
 | QuotedFoodDefName | quotedFoodDefName | 空字符串 | 否 | 新交易锁定一种库存食物，null 加载后补空 |
 | QuotedFoodCount | quotedFoodCount | 0 | 否 | 锁定报价份数，选库存总数量最多的同种有效食物，按实际到达人数每人 2.7 营养换算并向上取整，最多 100 份；旧信保留原 Amount |
@@ -191,6 +195,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | ChildFoodAlternative | childFoodAlternative | false | 否 | true 表示确实用食物替代，不能启动“换出去的孩子”长链 |
 
 `settled` 在同键内迁移，不增加持久化字段或枚举别名；`Prison = 12` 已删除，`Capture = 10`、`Ally = 13` 与其它显式编号不变。除旧 `Prison` / `12` 外仍交由原版枚举 Scribe 读取，未知数值保留，非法文本沿用原版失败处理（记录错误并回退 `None`）。本次不恢复旧送监狱操作已脱图的角色，卸载动作不变。
+
+盟友转送的累计价值、已发放好感、回礼判定与待投递时间均归本批 `RHAH_ChoiceRecord` 所有，随 `openChoices` 删除，不建立独立回礼队列。目标选择分页是临时对话节点，没有新增分页存档字段。
 
 ### WorldObject_RHAH_RefugeeCamp
 
@@ -272,6 +278,7 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | HungerAndHavoc.Pawn.JobGiver_RHAH_* | Duty / ThinkTree XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.ThoughtWorker_RHAH_ClaySatiety, HungerAndHavoc.Pawn.ThoughtWorker_RHAH_FamineHunger | ThoughtDef `workerClass`，situational 无独立存档字段 | 不单独出现在 `.rws`；思想 Def 引用 Remove |
 | HungerAndHavoc.Pawn.Thought_Memory_RHAH_FamineFed | ThoughtDef `thoughtClass`，memories 内沿用原版记忆字段 | Remove，随该记忆删除 |
+| HungerAndHavoc.Pawn.Thought_Memory_RHAH_EnslavedServing | ThoughtDef `thoughtClass`，沿用原版记忆字段；无新增存档键，`ShouldDiscard=false` 保证读档后仍不过期 | Remove，随该记忆删除 |
 | HungerAndHavoc.Trade.StockGenerator_RHAH_Food | TraderKindDef stockGenerators XML `Class` | 不单独出现在 `.rws` |
 | HungerAndHavoc.Pawn.Area_RHAH_Relief | AreaManager `areas` | Remove。卸载后区域节点消失，格子不迁到家区 |
 | HungerAndHavoc.Pawn.Hediff_RHAH_ClaySatiety | Hediff `Class` / `hediffClass` | Remove，随饱腹 Hediff 删除 |
@@ -314,6 +321,25 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 | end | end | 0 | 否 | 0 未结束，1 完成，2 失败，3 到期，4 取消 |
 
 Letter 与 Quest 的类型见上表。WorldObject `RHAH_RefugeeCamp`、`RHAH_Approach` 与 `RHAH_Interception` 已登记。GameComponent 与 MapComponent 的键在下一节。
+
+### GameComponent_RHAH_FamineYear
+
+类型名：`HungerAndHavoc.Core.GameComponent_RHAH_FamineYear`。所有字段随组件 Remove；旧档缺组件由 Verse 建立默认状态，不读取旧鼠灾年度键。鼠潮次数按年重置，两个冷却 tick 不随跨年重置；成功接受入队或即时触发时消费限额，赶路失败不返还。
+
+| 字段 / 存档键 | 默认值 | 说明 |
+| --- | --- | --- |
+| calendarMapId | -1 | 年度日历采用的家园 ID |
+| calendarLongitude | 0 | 对应当地日历经度 |
+| judgedYear | -1 | 已判定年份；首次年中开启允许补判 |
+| famineYear | false | 已判定荒年，仅在开关开启且年份仍匹配时生效 |
+| disasterSucceeded | false | 本年已成功触发一次额外天灾 |
+| lastDisasterAttemptDay | -1 | 去重每日 06:00 天灾尝试 |
+| swarmCount | 0 | 本年度已接受鼠潮次数，最多两次 |
+| lastSwarmTick | -1 | 上次鼠潮接受 tick，15 天冷却 |
+| lastPleadingTick | -1 | 上次祈求加入接受 tick，180 天冷却 |
+
+鼠潮反抗复用已有 `RHAH_PawnState` 的态度、生命周期、等待/离场 tick 和保存的行为闸门覆盖，不新增第二套敌对状态。卸载时身份标记与闸门随本模组清除，原版 Pawn 保留。
+
 ### Generation runtime
 
 | 类型 | 字段 | 存档键 | 卸载 |
@@ -496,6 +522,7 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_WildRatkinWandersIn | IncidentDef | Remove |
 | RHAH_WildRatkinChildWandersIn | IncidentDef | Remove |
 | RHAH_WildRatkinGroupWandersIn | IncidentDef | Remove |
+| RHAH_FeralRatkinWandersIn, RHAH_FeralRatkinChildWandersIn, RHAH_FeralRatkinGroupWandersIn | IncidentDef | Remove。生成成员使用原版 WildMan PawnKind，不附加饥荒来源标记；导出时保留鼠族 Pawn 和原版野人状态 |
 | RHAH_FamineRefugees | IncidentDef | Remove |
 | RHAH_AidSimpleMeal, RHAH_AidFineMeal, RHAH_AidMedicine, RHAH_AidSilver, RHAH_AidBaby | IncidentDef | Remove |
 | RHAH_IntelTreasureSimpleMeal, RHAH_IntelTreasureHerbal, RHAH_IntelTreasureSilver | IncidentDef | Remove |
@@ -508,6 +535,7 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_PlagueStrongSiege, RHAH_PlagueAirdropMistake, RHAH_PlagueMisguidedKinship, RHAH_PlagueGreatFamine, RHAH_PlagueRevenge | IncidentDef | Remove |
 | RHAH_RefugeeMassacre | IncidentDef | Remove |
 | RHAH_ChildExchange | IncidentDef | Remove |
+| RHAH_MouseSwarm, RHAH_PleadingJoin, RHAH_BanditAttack | IncidentDef | Remove。I-052/I-053/I-054；保留真实鼠族 Pawn、原版特质、技能与原版装备 |
 | HungerAndHavoc.Narrative.NarrativeState | revealedCount, trust, rescued, lost, failed, suiyinEnabled, suiyinStarted, suiyinDeadlineTick, seenKinds, theftMaps, theftCounts, journalNoted, asidesSent, openingSent, progressSent, rewardClaimed, rewardPaid, rewardDue, envoyClue, relicClue, lastAsideTick, nextCaseId, aidCount, broadcastCount, expulsionCount, adultCount, completedKindCount, completedJournals, firstFactTick, nextAdultCheckTick, relicDone, endingE01, endingE02, endingE03, endingE04, endingE05, identityTier, identityRefused, entrustCases, exchangeCases, holeCases, envoyCases, relicCase, journalCases, pendingNotices | 同上 | Remove。1.0.4 停用普通 E-01..E-05 判定、触发与预览；`endingE01..endingE05`、`adultCount`、`firstFactTick`、`nextAdultCheckTick` 等已发布字段仍按原键与默认值存读，不改写、不清空。无新旧键迁移。`trust`、N 节点、通知与奖励不变；`relicDone`、`identityTier`、`identityRefused` 继续控制身份来信。`rewardDue` 默认 0，读档后小于 0 归 0。`completedJournals` 保留已完成记录编号，空集合与 null 相同，读档后 `completedKindCount` 仍以它的数量为准 |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinMember | loadId, presence, care, child, careTicks, missingSince | 嵌在案子里 | Remove。随叙事组件删除 |
 | HungerAndHavoc.Storyteller.Suiyin.SuiyinN004Case | id, motherId, mapId, startedTick, outcome, mother, missingSince, revisit, revisitSeen, revisitDeadline, meetingCaravanId, rescueDueTick, rescuePaid, breakUntil, breakTrait, effectsApplied, children | 嵌在 entrustCases | Remove |
@@ -578,6 +606,7 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_GreenIncident | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_EnvoyLetter, RHAH_GrainHoleLetter, RHAH_RevisitLetter | LetterDef | Remove。选择信随本模组删除，不替换成原版信 |
 | RHAH_LongFollowLetter | LetterDef | Remove。交互长链选择信 |
+| RHAH_BanditAttackLetter | LetterDef | Remove。历史档案与信件队列中的 `HungerAndHavoc.Incidents.ChoiceLetter_RHAH_BanditAttack` 一并删除；无新增信件字段 |
 | RHAH_KingdomArcLetter | LetterDef | Remove。王国篇插图选择信，历史档案与待到达信件一并删除 |
 | RHAH_KingdomMaterial | ThingDef | Remove。文书实物及其 Comp |
 | RHAH_KingdomSite | WorldObjectDef | Remove。原版 worldPawns 人员与已交粮背包保留 |
@@ -591,6 +620,7 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_PrisonerNeeds | ThinkTreeDef | Remove |
 | RHAH_Thought_LeftAlone, RHAH_Thought_CaptiveYear, RHAH_Thought_FamilyHere, RHAH_Thought_Regret | ThoughtDef | Remove |
 | RHAH_Thought_ClaySatiety, RHAH_Thought_FamineHunger, RHAH_Thought_FamineFed | ThoughtDef | Remove。前两项 situational，后一项真实吃饱记忆 |
+| RHAH_Thought_Sheltered, RHAH_Thought_Captured, RHAH_Thought_EnslavedFed, RHAH_Thought_EnslavedServing, RHAH_Thought_Expelled, RHAH_Thought_AteFood | ThoughtDef，行为记忆 | Remove。奴役两种记忆互斥；永久负面分支没有期限，进食及驱赶同 Def 的两档互相替换 |
 | RHAH_Trader_Famine | TraderKindDef | Replace。改成已加载原版 `Visitor_Outlander_Standard`，保留 trader Tracker 和真实原版库存 |
 | RHAH_PawnKind_Ratkin | PawnKindDef | Replace。保留 pawn 的 thingID。`kindDef` 改成仍会随 NewRatkinPlus 加载、种族同为 `Ratkin`、不属于本模组的 PawnKind。按 defName 序选第一个。没有这种种类就中止，不换成人类 |
 
@@ -629,6 +659,13 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_Settings.fertilityPercent | 全局 ModSettings，默认 300。高育相对常人的怀孕几率，范围 100 到 1000 |
 | RHAH_Settings.gestationDays | 全局 ModSettings，默认 5.661。速产最短孕期天数，范围 3 到原版下限 5.661 |
 | RHAH_Settings.lovinPregnancyPercent | 全局 ModSettings，默认 50。乱起爱爱成功后的基础受孕几率，范围 0 到 100。旧档缺键用默认 |
+| RHAH_Settings.maternalMilkPercent | 全局 ModSettings，默认 150。母爱本能在哺乳期的产奶速度与储奶上限倍率，单位 %，范围 1 到 1000。旧配置缺键用默认 |
+| RHAH_Settings.maternalHungerPercent | 全局 ModSettings，默认 115。母爱本能在哺乳期的饥饿速度倍率，单位 %，范围 1 到 1000。旧配置缺键用默认 |
+| RHAH_Settings.maternalNutritionPercent | 全局 ModSettings，默认 125。母爱本能在哺乳期的食物需求上限倍率，单位 %，范围 1 到 1000。旧配置缺键用默认 |
+| RHAH_Settings.paternalWorkPercent | 全局 ModSettings，默认 120。父爱本能在同图有活着的直接亲生子女时的工作速度倍率，子女年龄不限。单位 %，范围 1 到 1000。旧配置缺键用默认 |
+| RHAH_Settings.paternalHungerPercent | 全局 ModSettings，默认 110。父爱本能在同图有活着的直接亲生子女时的饥饿速度倍率，子女年龄不限。单位 %，范围 1 到 1000。旧配置缺键用默认 |
+| RHAH_Settings.paternalLearningPercent | 全局 ModSettings，默认 110。父爱本能在同图有活着的直接亲生子女时的全局学习速度倍率，子女年龄不限。单位 %，范围 1 到 1000。旧配置缺键用默认 |
+| RHAH_Settings.paternalDamagePercent | 全局 ModSettings，默认 90。父爱本能在同图有活着的直接亲生子女时的承受伤害倍率，子女年龄不限。单位 %，范围 1 到 100。旧配置缺键用默认 |
 | RHAH_Settings.reliefEnabled | 全局 ModSettings，默认 true。关闭后访客不受赈灾区限制 |
 | RHAH_Settings.allowEatOutsideRelief | 全局 ModSettings，默认 false。空值不是允许区外取食 |
 | RHAH_Settings.ignoreReliefAfterFed | 全局 ModSettings，默认 false |
@@ -651,6 +688,10 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_Settings.famineTradeEnabled | 全局 ModSettings，默认 true。只控制活跃商队定向价格；关闭后保留专用商人库存、买粮能力与通常报价 |
 | RHAH_Settings.famineFoodSaleFactor | 全局 ModSettings，默认 1.5，范围 1..3；玩家卖食物倍率，同项原买价封顶 |
 | RHAH_Settings.famineGoodsBuyFactor | 全局 ModSettings，默认 0.75，范围 0.1..1；玩家买非食物倍率，同项原卖价托底 |
+| RHAH_Settings.famineYearEnabled | 全局 ModSettings，默认 false。停用后人数倍率、额外天灾与鼠潮新触发停止；已有状态保留 |
+| RHAH_Settings.famineYearChancePercent | 全局 ModSettings，默认 40，范围 0..100 |
+| RHAH_Settings.famineYearPawnMultiplier | 全局 ModSettings，默认 3，范围 1..4；非有限值回默认。普通多人事件与营地人数乘倍，单人、固定家庭及鼠潮不乘 |
+| RHAH_Settings.famineYearDisasterChancePercent | 全局 ModSettings，默认 20，范围 0..100；每日尝试、本年最多成功一次 |
 | RHAH_Settings.armedDemandEnabled | 全局 ModSettings，默认 true。仅 Siege 三场景建立带数量期限的请求，不受援助/访客信开关；关闭已有请求停止该 Lord 的索粮进攻并离场，不改其它袭击 |
 | RHAH_Settings.armedWeaponsEnabled | 全局 ModSettings，默认 true。只装备新 Siege 成年且可战者；原版低级武器品质普通及以下 |
 | RHAH_Settings.spaceApproachEnabled | 全局 ModSettings，默认 false。关闭时太空层家园不生成远行队。缺键保持关闭 |
@@ -665,7 +706,7 @@ ODF 的 51 个 definition ID、Version=1、StateVersion=1 和 payload 保持。�
 | RHAH_Settings.broadcastEnabled | 全局 ModSettings，默认 true |
 | RHAH_Settings.broadcastCooldownDays | 全局 ModSettings，默认 3，范围 0 到 10 |
 | RHAH_Settings.staggerGeneration | 全局 ModSettings，默认 true |
-| RHAH_Settings.disabledIncidentGroupIds | 全局 ModSettings，默认空。按 20 类首个场景显示 ID 为键，关闭同类全部场景 |
+| RHAH_Settings.disabledIncidentGroupIds | 全局 ModSettings，默认空。按 23 类首个场景显示 ID 为键，关闭同类全部场景 |
 | RHAH_Settings.incidentGroupPoints | 全局 ModSettings，默认空字典。同类共用规模，缺键用场景目录点数，范围 1 到 10000 |
 | RHAH_Settings.incidentGroupWeights | 全局 ModSettings，默认空字典。同类共用出现权重，缺键 100，范围 0 到 100；0 关闭整类 |
 | RHAH_Settings.incidentGroupAttitudes | 全局 ModSettings，默认空字典。同类共用玩家选定态度，缺键沿用具体场景的目录态度，值 0 到 4 |
