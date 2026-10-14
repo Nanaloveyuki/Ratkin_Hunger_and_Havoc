@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_Menu_Settlement>Settlement progress</RHAH_Menu_Settlement>
-  <RHAH_Settlement_Note>Visitors receiving relief, exchanged children and entrusted families still awaiting an outcome are listed here, alongside their progress toward relief and Suiyin's letters.</RHAH_Settlement_Note>
+  <RHAH_Settlement_Note>The sidebar lists visitors receiving relief, exchanged children and entrusted families awaiting an outcome by recorded day, incident and group. Expand the tree and select a group to see progress toward relief and Suiyin's letters.</RHAH_Settlement_Note>
   <RHAH_Settlement_UpdateNote>Progress is observed about once per game hour. Refresh shows the last observation and any conditions that can currently be checked; accumulated time follows progress already observed.</RHAH_Settlement_UpdateNote>
   <RHAH_Settlement_Refresh>Refresh progress</RHAH_Settlement_Refresh>
   <RHAH_Settlement_NoGame>Load a game to see visitors and children awaiting an outcome.</RHAH_Settlement_NoGame>
   <RHAH_Settlement_None>No visitors receiving relief, exchanged children or entrusted families are currently awaiting an outcome.</RHAH_Settlement_None>
-  <RHAH_Settlement_SearchTerms>settlement relief survival cumulative progress remaining days three days malnutrition journal batch exchanged children entrusted family Suiyin missing growth</RHAH_Settlement_SearchTerms>
-  <RHAH_Settlement_ReliefSource>Ordinary relief · Journal {0} · Visitor batch {1}</RHAH_Settlement_ReliefSource>
-  <RHAH_Settlement_ExchangeSource>Exchanged children · Group {0}</RHAH_Settlement_ExchangeSource>
-  <RHAH_Settlement_EntrustSource>Entrusted family · Group {0}</RHAH_Settlement_EntrustSource>
+  <RHAH_Settlement_SearchTerms>settlement relief survival cumulative progress remaining days three days malnutrition recorded day incident group exchanged children entrusted family Suiyin missing growth</RHAH_Settlement_SearchTerms>
+  <RHAH_Settlement_ReliefKind>Ordinary relief</RHAH_Settlement_ReliefKind>
+  <RHAH_Settlement_ExchangeKind>Exchanged children</RHAH_Settlement_ExchangeKind>
+  <RHAH_Settlement_EntrustKind>Entrusted family</RHAH_Settlement_EntrustKind>
+  <RHAH_Settlement_TreeHeading>Recorded day → Incident → Group</RHAH_Settlement_TreeHeading>
+  <RHAH_Settlement_DetailHeading>Selected group</RHAH_Settlement_DetailHeading>
+  <RHAH_Settlement_RecordedDay>Recorded day: day {0}</RHAH_Settlement_RecordedDay>
+  <RHAH_Settlement_RecordDateNote>The recorded day is when this group's progress began to be tracked; their visit may have begun earlier.</RHAH_Settlement_RecordDateNote>
+  <RHAH_Settlement_UnknownSource>Unknown source incident</RHAH_Settlement_UnknownSource>
+  <RHAH_Settlement_GroupSource>{0} · {1}</RHAH_Settlement_GroupSource>
+  <RHAH_Settlement_GroupLeaf>{0} · {1} people\n{2}</RHAH_Settlement_GroupLeaf>
+  <RHAH_Settlement_SelectGroup>Expand a recorded day and incident in the sidebar, then select a group of visitors or children to see their details.</RHAH_Settlement_SelectGroup>
   <RHAH_Settlement_ReliefTimerNote>Ordinary relief uses accumulated time alive. More than 3 game days meets individual conditions. Only malnutrition pauses accumulation; ordinary hunger, plague and other illnesses, and captivity still count. The group's outcome also awaits the other visitors' situations.</RHAH_Settlement_ReliefTimerNote>
   <RHAH_Settlement_ExchangeTimerNote>Exchanged children use accumulated time alive. More than 3 game days meets individual conditions. Only malnutrition pauses accumulation; ordinary hunger, plague and other illnesses, and captivity still count. The group's outcome awaits all children's situations.</RHAH_Settlement_ExchangeTimerNote>
   <RHAH_Settlement_EntrustGrowthNote>Entrusted families wait for children to reach the child or adult stage, while the mother's and children's whereabouts are checked. The observation limit applies only while children have yet to reach the child stage.</RHAH_Settlement_EntrustGrowthNote>

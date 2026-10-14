@@ -34,6 +34,8 @@ Scribe 默认值必须等于字段默认值。集合在 `PostLoadInit` 补空集
 
 1.1.0 安置观察改为在场累计存活超过三天，仅营养不良暂停。`SuiyinMember.careTicks` 保留既有累计值；新增 `lastCareTick` 默认 -1，旧档首次观察只建立时间基准，不从批次到达时间倒推有效存活时间。新记录以创建 tick 建立基准；未知去向时清除基准，返回后的首次观察不补算失联期间。`care` 保留旧 Free/Captive/Hungry/Plague 编号，追加 Malnutrition=4，首次观察改写当前状态，保存后使用当前值。已关闭的结果不重新结算。旧全局 `narrativeCareDays` 设置不再读取或写出，统一使用三天条件；IrisMenus 进度快照只在内存中缓存，不进入存档。
 
+安置记录和批次保护由当前 `Game` 的组件写入各自 `.rws`，不共用外部记录文件。`spawnBatchId` / `BatchId` 是生成时游戏 tick 加避重得到的内部标识，不是累计来访次数。安置页以已有 `startedTick` 显示记录日，从成员身份中的 `sourceIncidentDisplayId` 读取实际事件；缺失或冲突时显示来源不详，不从多对一的日记类别反推事件。日期、事件树、选中项和折叠状态只在内存中存在，切换存档后清空；角色查询缓存同时按 `Game` 和 tick 隔离。
+
 事件链切换到 Oxygen DSL Framework（ODF）：只读本模组旧 `eventChains`、`nextEventChainId` 和地图 `predationPendingTick`，不读旧鼠灾数据。所有引用解析完成后、ODF Activate 之前自动整批导入，保留实例 ID、`siteId`、`startedTick`、payload 和合法结局，不重抽随机结果。开放 stage 0 的下次检查是加载 tick + 1；受支持的开放 stage 1 长链在激活前转为 stage 3，旧 `deadlineTick` 只补入尚未设置的长链 `dueTick`，ODF deadline 置 -1，下次检查严格晚于加载 tick 且与 `id % 2500` 同相位。1.0.6 可通过设置生成无具体长后续的合法 stage 1；这些实例保留原阶段、期限并休眠，不使整个分区迁移失败。stage 2 保持 `NextTick=-1`，只保留原期限，不重跑已完成短阶段。时间计算溢出时不能回绕。`closed=true` 且 end=0 映射 Completed，其它 end 按 1 完成、2 失败、3 到期、4 取消映射。
 
 迁移包含地图尚未到达的捕食者，保留旧 pending tick、猎物引用和已选结果；新地图键 `predationArrivalInstanceId` 引用 ODF 内部到达定义实例。安居点和事件后续共用该定义，新请求在选中结果后 120 tick 执行，每图只留一个待到达实例，重复请求按旧规则合并。地图的捕食者 AI 状态不转交 ODF。

@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <RHAH_Menu_Settlement>受け入れの進捗</RHAH_Menu_Settlement>
-  <RHAH_Settlement_Note>救済中の来訪者、交換で引き取った子供、託された家族のうち、まだ結果を待っている人たちを一覧で確認できます。救済と穂音からの手紙に関する進捗を表示します。</RHAH_Settlement_Note>
+  <RHAH_Settlement_Note>結果を待っている救済中の来訪者、交換で引き取った子供、託された家族を、左側に記録日、事件、グループの順で表示します。項目を展開してグループを選ぶと、救済と穂音からの手紙に関する進捗を確認できます。</RHAH_Settlement_Note>
   <RHAH_Settlement_UpdateNote>進捗はゲーム内で約1時間ごとに確認されます。更新すると、最後に確認された結果と現在確認できる状況を表示します。累積時間は、すでに確認された進捗に基づきます。</RHAH_Settlement_UpdateNote>
   <RHAH_Settlement_Refresh>進捗を更新</RHAH_Settlement_Refresh>
   <RHAH_Settlement_NoGame>ゲームをロードすると、結果を待っている来訪者や子供を確認できます。</RHAH_Settlement_NoGame>
   <RHAH_Settlement_None>現在、結果を待っている救済中の来訪者、交換で引き取った子供、託された家族はいません。</RHAH_Settlement_None>
-  <RHAH_Settlement_SearchTerms>受け入れ 救済 生存 累積 進捗 残り日数 三日 栄養失調 日記 一団 交換 子供 託された家族 穂音 行方不明 成長</RHAH_Settlement_SearchTerms>
-  <RHAH_Settlement_ReliefSource>通常の救済 · 日記 {0} · 来訪者の一団 {1}</RHAH_Settlement_ReliefSource>
-  <RHAH_Settlement_ExchangeSource>交換で引き取った子供 · グループ {0}</RHAH_Settlement_ExchangeSource>
-  <RHAH_Settlement_EntrustSource>託された家族 · グループ {0}</RHAH_Settlement_EntrustSource>
+  <RHAH_Settlement_SearchTerms>受け入れ 救済 生存 累積 進捗 残り日数 三日 栄養失調 記録日 事件 グループ 交換 子供 託された家族 穂音 行方不明 成長</RHAH_Settlement_SearchTerms>
+  <RHAH_Settlement_ReliefKind>通常の救済</RHAH_Settlement_ReliefKind>
+  <RHAH_Settlement_ExchangeKind>交換で引き取った子供</RHAH_Settlement_ExchangeKind>
+  <RHAH_Settlement_EntrustKind>託された家族</RHAH_Settlement_EntrustKind>
+  <RHAH_Settlement_TreeHeading>記録日 → 事件 → グループ</RHAH_Settlement_TreeHeading>
+  <RHAH_Settlement_DetailHeading>選択中のグループ</RHAH_Settlement_DetailHeading>
+  <RHAH_Settlement_RecordedDay>記録日：{0}日目</RHAH_Settlement_RecordedDay>
+  <RHAH_Settlement_RecordDateNote>記録日は、このグループの進捗を追い始めた日です。実際の来訪は、それより前の場合があります。</RHAH_Settlement_RecordDateNote>
+  <RHAH_Settlement_UnknownSource>発生元の事件は不明</RHAH_Settlement_UnknownSource>
+  <RHAH_Settlement_GroupSource>{0} · {1}</RHAH_Settlement_GroupSource>
+  <RHAH_Settlement_GroupLeaf>{0} · {1}人\n{2}</RHAH_Settlement_GroupLeaf>
+  <RHAH_Settlement_SelectGroup>左側の記録日と事件を展開し、来訪者や子供のグループを選ぶと詳細を確認できます。</RHAH_Settlement_SelectGroup>
   <RHAH_Settlement_ReliefTimerNote>通常の救済は、生存した累積時間で判断されます。ゲーム内で3日を超えると個人の条件を満たします。栄養失調の間だけ累積が止まり、普通の空腹、疫病などの病気、拘束中も加算されます。一団の結果は、他の来訪者の状況が確定するまで待ちます。</RHAH_Settlement_ReliefTimerNote>
   <RHAH_Settlement_ExchangeTimerNote>交換で引き取った子供は、生存した累積時間で判断されます。ゲーム内で3日を超えると個人の条件を満たします。栄養失調の間だけ累積が止まり、普通の空腹、疫病などの病気、拘束中も加算されます。子供たちの状況が確定してから、一団の結果が出ます。</RHAH_Settlement_ExchangeTimerNote>
   <RHAH_Settlement_EntrustGrowthNote>託された家族は、子供が乳児から児童または成人の段階に成長するのを待ち、母親と子供たちの所在を確認します。観察期限が適用されるのは、まだ児童の段階に達していない子供を待っている間だけです。</RHAH_Settlement_EntrustGrowthNote>

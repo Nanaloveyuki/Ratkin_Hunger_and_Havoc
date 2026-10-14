@@ -111,9 +111,9 @@ The five ordinary-event endings have been retired, along with their settings and
 
 原版模组设置页和 IrisMenus 总览页都有“重置本模组配置”。确认后恢复全部默认配置并保存；存档中的剧情进度、来客和仅此存档停用状态保留。
 
-IrisMenus 在“叙事”旁新增“安置进度”：按批次列出仍在追踪的来客、换来的孩子和托付家庭，显示姓名、剩余时间、营养不良暂停及失踪等情况，并可手动刷新。普通救济与换来的孩子按在场累计存活超过 3 天判定安置；营养不良暂停累计，康复后继续，普通饥饿、鼠疫等其它疾病及囚禁不阻断。在场者可继续等待，母子托付仍按成长和去向推进。旧档保留已有照护累计和已完成结果；普通来客过去未记录的有效时间从升级后的首次观察起累计。
+IrisMenus 在“叙事”旁新增“安置进度”：左栏按记录日和事件展开来客队伍，选中后右侧显示该队伍的姓名、剩余时间、营养不良暂停及失踪等情况，并可手动刷新。记录日是开始追踪的日期；来源缺失时显示不详。各存档独立保存记录，队伍标签不再把内部标识显示成“第几批”。普通救济与换来的孩子按在场累计存活超过 3 天判定安置；营养不良暂停累计，康复后继续，普通饥饿、鼠疫等其它疾病及囚禁不阻断。在场者可继续等待，母子托付仍按成长和去向推进。旧档保留已有照护累计和已完成结果；普通来客过去未记录的有效时间从升级后的首次观察起累计。
 
-IrisMenus now has a Settlement progress subpage beside Narrative, listing tracked visitors, exchanged children and entrusted families with names, time remaining, malnutrition pauses and whereabouts. Ordinary relief and exchanged children settle after more than 3 accumulated days alive at the colony. Malnutrition pauses the timer; recovery resumes it. Hunger alone, plague, other illnesses and captivity do not block it. Present visitors can keep waiting; entrusted families retain their growth and whereabouts rules. Existing care progress and completed results are preserved. Unrecorded effective time for ordinary visitors starts accumulating after the first post-upgrade observation.
+IrisMenus has a Settlement progress subpage beside Narrative. Expand recorded days and events in the left sidebar, then select a group to see its names, time remaining, malnutrition pauses and whereabouts on the right. Refresh is available. The recorded day marks the start of tracking; missing sources are shown as unknown. Records belong to each save, and internal group identifiers are no longer presented as visit counts. Ordinary relief and exchanged children settle after more than 3 accumulated days alive at the colony. Malnutrition pauses the timer; recovery resumes it. Hunger alone, plague, other illnesses and captivity do not block it. Present visitors can keep waiting; entrusted families retain their growth and whereabouts rules. Existing care progress and completed results are preserved. Unrecorded effective time for ordinary visitors starts accumulating after the first post-upgrade observation.
 
 开发者事件页保留原场景的“即时刷新”，退出新池的婴儿索取除外。直接生成到当前地图，跳过排队和世界地图行进，窗口暂停时也可用。商队劫掠直接生成袭击者，危险的鼠族安居点直接生成居民，不要求派出远行队。原有“触发”仍走正常流程；新内容和类开关仍生效。
 

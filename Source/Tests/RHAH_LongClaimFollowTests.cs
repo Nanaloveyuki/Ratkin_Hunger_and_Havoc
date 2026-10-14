@@ -17,6 +17,7 @@ namespace HungerAndHavoc.Tests
         readonly Dictionary<int, Verse.Pawn> indexed;
         readonly Dictionary<int, Verse.Pawn> previousIndex;
         readonly int previousBuiltTick;
+        readonly Game previousBuiltGame;
         readonly Map map;
         const int Tick = 741;
 
@@ -36,6 +37,8 @@ namespace HungerAndHavoc.Tests
             indexed = (Dictionary<int, Verse.Pawn>)Field(typeof(RHAH_PawnIndex), "byId").GetValue(null);
             previousIndex = new Dictionary<int, Verse.Pawn>(indexed);
             previousBuiltTick = (int)Field(typeof(RHAH_PawnIndex), "builtTick").GetValue(null);
+            previousBuiltGame = (Game)Field(typeof(RHAH_PawnIndex), "builtGame").GetValue(null);
+            Field(typeof(RHAH_PawnIndex), "builtGame").SetValue(null, Current.Game);
             indexed.Clear();
             Field(typeof(RHAH_PawnIndex), "builtTick").SetValue(null, Tick);
         }
@@ -45,6 +48,7 @@ namespace HungerAndHavoc.Tests
             indexed.Clear();
             foreach (KeyValuePair<int, Verse.Pawn> entry in previousIndex) indexed.Add(entry.Key, entry.Value);
             Field(typeof(RHAH_PawnIndex), "builtTick").SetValue(null, previousBuiltTick);
+            Field(typeof(RHAH_PawnIndex), "builtGame").SetValue(null, previousBuiltGame);
             Current.Game = previousGame;
         }
 

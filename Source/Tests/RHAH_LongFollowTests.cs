@@ -173,8 +173,10 @@ namespace HungerAndHavoc.Tests
             Dictionary<int, Verse.Pawn> index = (Dictionary<int, Verse.Pawn>)Field(typeof(RHAH_PawnIndex), "byId").GetValue(null);
             Dictionary<int, Verse.Pawn> previous = new Dictionary<int, Verse.Pawn>(index);
             int previousTick = (int)Field(typeof(RHAH_PawnIndex), "builtTick").GetValue(null);
+            Game previousBuiltGame = (Game)Field(typeof(RHAH_PawnIndex), "builtGame").GetValue(null);
             try
             {
+                Field(typeof(RHAH_PawnIndex), "builtGame").SetValue(null, Current.Game);
                 index.Clear();
                 index.Add(child.thingIDNumber, child);
                 Map map = Find.Maps[0];
@@ -196,6 +198,7 @@ namespace HungerAndHavoc.Tests
                 index.Clear();
                 foreach (KeyValuePair<int, Verse.Pawn> pair in previous) index.Add(pair.Key, pair.Value);
                 Field(typeof(RHAH_PawnIndex), "builtTick").SetValue(null, previousTick);
+                Field(typeof(RHAH_PawnIndex), "builtGame").SetValue(null, previousBuiltGame);
             }
         }
 

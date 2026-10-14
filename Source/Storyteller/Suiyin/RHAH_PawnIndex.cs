@@ -7,6 +7,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
     internal static class RHAH_PawnIndex
     {
         static int builtTick = -1;
+        static Game builtGame;
         static readonly Dictionary<int, Verse.Pawn> byId = new Dictionary<int, Verse.Pawn>();
         internal static Verse.Pawn Find(int loadId, int tick)
         {
@@ -15,7 +16,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 return null;
             }
 
-            if (builtTick != tick)
+            if (builtTick != tick || !ReferenceEquals(builtGame, Current.Game))
             {
                 Rebuild(tick);
             }
@@ -27,6 +28,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal static void Clear()
         {
             builtTick = -1;
+            builtGame = null;
             byId.Clear();
         }
 
@@ -34,6 +36,12 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         {
             byId.Clear();
             builtTick = tick;
+            builtGame = Current.Game;
+            if (Current.Game == null)
+            {
+                return;
+            }
+
             List<Verse.Pawn> pawns = PawnsFinder.AllMapsWorldAndTemporary_AliveOrDead;
             if (pawns == null)
             {

@@ -1,3 +1,9 @@
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.Serialization;
+using HungerAndHavoc.Api;
+using HungerAndHavoc.Identity;
+using Verse;
 using HungerAndHavoc.Storyteller.Suiyin;
 using Xunit;
 
@@ -124,6 +130,83 @@ namespace HungerAndHavoc.Tests
             member.Presence = SuiyinPresence.Here;
             member.ObserveSettlement(1200000, false);
             Assert.Equal(62500, member.CareTicks);
+        }
+
+        [Fact]
+        public void EventSourceUsesPawnProvenanceAndDoesNotGuessFromJournalCategory()
+        {
+            SuiyinBook book = new SuiyinBook();
+            book.Journals.Add(new SuiyinJournalCase
+            {
+                Id = 5, StartedTick = 60000,
+                People = { new SuiyinMember { LoadId = 1, Presence = SuiyinPresence.Unknown }, new SuiyinMember { LoadId = 2, Presence = SuiyinPresence.Unknown } }
+            });
+            Verse.Pawn first = SourcePawn(1, "I-006");
+            Verse.Pawn second = SourcePawn(2, "I-007");
+            Assert.Null(RHAH_SettlementProgress.Build(book, 120000, 30)[0].SourceDisplayId);
+            var ambiguous = RHAH_SettlementProgress.Build(book, 120000, 30, id => id == 1 ? first : second)[0];
+            Assert.Null(ambiguous.SourceDisplayId);
+            Assert.Equal(60000, ambiguous.StartedTick);
+            CompRHAH_Pawn.TryGet(second).ApplySeed(new RHAH_PawnSeed("I-006"));
+            Assert.Equal("I-006", RHAH_SettlementProgress.Build(book, 120000, 30, id => id == 1 ? first : second)[0].SourceDisplayId);
+        }
+
+        [Fact]
+        public void SwitchingSavesAtTheSameTickDoesNotReuseThePreviousPawn()
+        {
+            Game previousGame = Current.Game;
+            BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Static;
+            FieldInfo tickField = typeof(RHAH_PawnIndex).GetField("builtTick", flags);
+            FieldInfo gameField = typeof(RHAH_PawnIndex).GetField("builtGame", flags);
+            Dictionary<int, Verse.Pawn> index = (Dictionary<int, Verse.Pawn>)typeof(RHAH_PawnIndex).GetField("byId", flags).GetValue(null);
+            Dictionary<int, Verse.Pawn> previousIndex = new Dictionary<int, Verse.Pawn>(index);
+            int previousTick = (int)tickField.GetValue(null);
+            Game previousOwner = (Game)gameField.GetValue(null);
+            try
+            {
+                Game first = (Game)FormatterServices.GetUninitializedObject(typeof(Game));
+                Current.Game = first;
+                index.Clear();
+                index.Add(392, SourcePawn(392, "I-006"));
+                tickField.SetValue(null, 120000);
+                gameField.SetValue(null, first);
+                Game second = (Game)FormatterServices.GetUninitializedObject(typeof(Game));
+                typeof(Game).GetField("maps", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(second, new List<Map>());
+                second.World = (RimWorld.Planet.World)FormatterServices.GetUninitializedObject(typeof(RimWorld.Planet.World));
+                second.World.worldPawns = new RimWorld.Planet.WorldPawns();
+                second.World.worldObjects = new RimWorld.Planet.WorldObjectsHolder();
+                Current.Game = second;
+                Assert.Null(RHAH_PawnIndex.Find(392, 120000));
+            }
+            finally
+            {
+                index.Clear();
+                foreach (KeyValuePair<int, Verse.Pawn> entry in previousIndex)
+                {
+                    index.Add(entry.Key, entry.Value);
+                }
+                tickField.SetValue(null, previousTick);
+                gameField.SetValue(null, previousOwner);
+                Current.Game = previousGame;
+            }
+        }
+
+        static Verse.Pawn SourcePawn(int id, string displayId)
+        {
+            Verse.Pawn pawn = new Verse.Pawn
+            {
+                thingIDNumber = id,
+                Name = new NameSingle("Visitor " + id),
+                def = (ThingDef)FormatterServices.GetUninitializedObject(typeof(ThingDef))
+            };
+            pawn.health = (Pawn_HealthTracker)FormatterServices.GetUninitializedObject(typeof(Pawn_HealthTracker));
+            pawn.health.hediffSet = new HediffSet(pawn);
+            Hediff_RHAH_Mark mark = new Hediff_RHAH_Mark { pawn = pawn };
+            CompRHAH_Pawn comp = new CompRHAH_Pawn { parent = mark };
+            mark.comps = new List<HediffComp> { comp };
+            pawn.health.hediffSet.hediffs.Add(mark);
+            comp.ApplySeed(new RHAH_PawnSeed(displayId));
+            return pawn;
         }
     }
 }

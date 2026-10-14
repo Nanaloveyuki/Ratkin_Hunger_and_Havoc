@@ -59,6 +59,8 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal int Id { get; }
         internal int BatchId { get; }
         internal int MapId { get; }
+        internal int StartedTick { get; }
+        internal string SourceDisplayId { get; }
         internal int RemainingObservationTicks { get; }
         internal bool Failed { get; }
         internal bool Driven { get; }
@@ -68,13 +70,15 @@ namespace HungerAndHavoc.Storyteller.Suiyin
         internal IReadOnlyList<RHAH_SettlementMember> Members { get; }
 
         internal RHAH_SettlementGroup(RHAH_SettlementKind kind, int id, int batchId, int mapId,
-            int remainingObservationTicks, bool failed, bool driven, bool delivered,
+            int startedTick, int remainingObservationTicks, bool failed, bool driven, bool delivered,
             IReadOnlyList<RHAH_SettlementMember> members, int motherLoadId = 0, string motherName = null)
         {
             Kind = kind;
             Id = id;
             BatchId = batchId;
             MapId = mapId;
+            StartedTick = startedTick;
+            SourceDisplayId = SourceOf(members);
             RemainingObservationTicks = remainingObservationTicks;
             Failed = failed;
             Driven = driven;
@@ -82,6 +86,28 @@ namespace HungerAndHavoc.Storyteller.Suiyin
             MotherLoadId = motherLoadId;
             MotherName = motherName;
             Members = members;
+        }
+
+        static string SourceOf(IReadOnlyList<RHAH_SettlementMember> members)
+        {
+            string source = null;
+            for (int i = 0; i < members.Count; i++)
+            {
+                string candidate = Identity.CompRHAH_Pawn.TryGet(members[i].Pawn)?.State.sourceIncidentDisplayId;
+                if (string.IsNullOrEmpty(candidate))
+                {
+                    continue;
+                }
+
+                if (source != null && source != candidate)
+                {
+                    return null;
+                }
+
+                source = candidate;
+            }
+
+            return source;
         }
     }
 
@@ -149,7 +175,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 }
 
                 groups.Add(new RHAH_SettlementGroup(RHAH_SettlementKind.Relief, record.Id, record.BatchId,
-                    record.MapId, Remaining(observeDays, tick - record.StartedTick), record.Failed,
+                    record.MapId, record.StartedTick, Remaining(observeDays, tick - record.StartedTick), record.Failed,
                     record.Driven, record.Delivered,
                     Members(record.People, RHAH_SettlementKind.Relief, null, resolve)));
             }
@@ -162,7 +188,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 }
 
                 groups.Add(new RHAH_SettlementGroup(RHAH_SettlementKind.Exchange, record.Id, 0,
-                    record.MapId, -1, false, false, true,
+                    record.MapId, record.StartedTick, -1, false, false, true,
                     Members(record.Children, RHAH_SettlementKind.Exchange, null, resolve)));
             }
 
@@ -174,7 +200,7 @@ namespace HungerAndHavoc.Storyteller.Suiyin
                 }
 
                 groups.Add(new RHAH_SettlementGroup(RHAH_SettlementKind.Entrust, record.Id, 0,
-                    record.MapId, Remaining(observeDays, tick - record.StartedTick), false, false, false,
+                    record.MapId, record.StartedTick, Remaining(observeDays, tick - record.StartedTick), false, false, false,
                     Members(record.Children, RHAH_SettlementKind.Entrust, record.Mother, resolve),
                     record.MotherId, resolve?.Invoke(record.MotherId)?.LabelShort));
             }

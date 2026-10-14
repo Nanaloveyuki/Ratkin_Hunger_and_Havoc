@@ -94,13 +94,21 @@ namespace HungerAndHavoc.Pawn.Compat
         readonly HashSet<string> collapsedContentGroups = new HashSet<string>();
 
         string selectedPawnLabel = string.Empty;
+        Game settlementGame;
         IReadOnlyList<RHAH_SettlementGroup> settlementModel;
         object settlementLanguage;
+        readonly List<SettlementDay> settlementDays = new List<SettlementDay>();
+        readonly HashSet<int> expandedSettlementDays = new HashSet<int>();
+        readonly HashSet<SettlementEventKey> expandedSettlementEvents = new HashSet<SettlementEventKey>();
+        RHAH_SettlementGroup selectedSettlementGroup;
         readonly List<SettlementRow> settlementRows = new List<SettlementRow>();
+        RHAH_IrisMenusWidgets.Viewport settlementTreeViewport;
+        RHAH_IrisMenusWidgets.Viewport settlementDetailViewport;
 
         internal RHAH_IrisMenusPages(string irisVersion)
         {
             this.irisVersion = irisVersion;
+            ResetSettlementViewports();
             RHAH_Mod.SettingsReset += ResetBuffers;
         }
 
@@ -119,7 +127,8 @@ namespace HungerAndHavoc.Pawn.Compat
             RegisterPage(owner, "events", "RHAH_Menu_Events", DrawEvents, SearchCatalogEvents);
             RegisterPage(owner, "pawns", "RHAH_Menu_Pawns", DrawPawns, SearchPawns);
             RegisterPage(owner, "narrative", "RHAH_Menu_Narrative", DrawNarrative, SearchNarrative);
-            RegisterPage(owner, "settlement-progress", "RHAH_Menu_Settlement", DrawSettlement, SearchSettlement);
+            MenuRegistry.RegisterSubItem(owner, "settlement-progress", () => "RHAH_Menu_Settlement".Translate(), DrawSettlement);
+            MenuRegistry.RegisterSearchProvider(owner, "settlement-progress", SearchSettlement, FocusSettlement);
             RegisterPage(owner, "other", "RHAH_Menu_Other", DrawOther, SearchOther);
             RegisterPage(owner, "environment", "RHAH_Menu_Environment", DrawEnvironment, SearchEnvironment);
             RegisterPage(owner, "compat-diagnostics", "RHAH_Menu_CompatDiagnostics", DrawCompatDiagnostics, SearchCompatDiagnostics);
@@ -687,59 +696,116 @@ namespace HungerAndHavoc.Pawn.Compat
             yield return Entry("narrative-journals", "RHAH_Menu_Narrative_Journals");
         }
 
-        void DrawSettlement(Listing_Standard list)
+        void DrawSettlement(Rect rect)
         {
-            MenuControls.Anchor(list, "settlement-progress-overview");
-            Section(list, "RHAH_Menu_Settlement");
-            Note(list, "RHAH_Settlement_Note");
+            SyncSettlementGame();
             NarrativeState state = Current.ProgramState == ProgramState.Playing
                 ? Current.Game?.GetComponent<NarrativeState>()
                 : null;
-            if (state == null)
+            GameFont previousFont = Text.Font;
+            TextAnchor previousAnchor = Text.Anchor;
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+            try
             {
-                settlementModel = null;
-                settlementRows.Clear();
-                Empty(list, "RHAH_Settlement_NoGame");
-                return;
-            }
+                string title = "RHAH_Menu_Settlement".Translate();
+                string refreshLabel = "RHAH_Settlement_Refresh".Translate();
+                bool stackedHeader = rect.width < 420f;
+                float refreshWidth = stackedHeader ? rect.width : Mathf.Min(210f, rect.width * 0.36f);
+                float titleWidth = stackedHeader ? rect.width : rect.width - refreshWidth - 12f;
+                float titleHeight = Text.CalcHeight(title, Mathf.Max(1f, titleWidth));
+                float refreshHeight = Mathf.Max(34f, Text.CalcHeight(refreshLabel, Mathf.Max(1f, refreshWidth - 16f)) + 8f);
+                float headerHeight = stackedHeader ? titleHeight + 4f + refreshHeight : Mathf.Max(titleHeight, refreshHeight);
+                Widgets.Label(new Rect(rect.x, rect.y, titleWidth, titleHeight), title);
+                Rect refresh = new Rect(stackedHeader ? rect.x : rect.xMax - refreshWidth,
+                    stackedHeader ? rect.y + titleHeight + 4f : rect.y, refreshWidth, refreshHeight);
+                if (state != null && Widgets.ButtonText(refresh, refreshLabel))
+                {
+                    RHAH_SettlementProgress.Invalidate(state);
+                }
 
-            Note(list, "RHAH_Settlement_UpdateNote");
-            string refreshLabel = "RHAH_Settlement_Refresh".Translate();
-            float refreshHeight = Mathf.Max(30f, Text.CalcHeight(refreshLabel, Mathf.Max(1f, list.ColumnWidth - 16f)) + 8f);
-            MenuControls.Anchor(list, "settlement-progress-refresh", refreshHeight);
-            Rect refresh = list.GetRect(refreshHeight);
-            list.Gap(4f);
-            if (RHAH_IrisMenusWidgets.IsVisible(refresh) && Widgets.ButtonText(refresh, refreshLabel))
-            {
-                RHAH_SettlementProgress.Invalidate(state);
-            }
+                if (state != null)
+                {
+                    CacheSettlementTree(RHAH_SettlementProgress.Read(state, Find.TickManager?.TicksGame ?? 0));
+                }
+                else if (settlementModel != null)
+                {
+                    ClearSettlementNavigation();
+                }
 
-            int tick = Find.TickManager?.TicksGame ?? 0;
-            IReadOnlyList<RHAH_SettlementGroup> groups = RHAH_SettlementProgress.Read(state, tick);
-            CacheSettlementRows(groups);
-            if (groups.Count == 0)
-            {
-                Empty(list, "RHAH_Settlement_None");
-                return;
+                float bodyY = rect.y + headerHeight + 8f;
+                float bodyHeight = Mathf.Max(0f, rect.yMax - bodyY);
+                float gap = Mathf.Min(12f, rect.width * 0.04f);
+                float availableWidth = Mathf.Max(2f, rect.width - gap);
+                float sidebarWidth = availableWidth >= 480f
+                    ? Mathf.Clamp(availableWidth * 0.34f, 180f, 330f)
+                    : availableWidth * 0.4f;
+                Rect sidebar = new Rect(rect.x, bodyY, sidebarWidth, bodyHeight);
+                Rect detail = new Rect(sidebar.xMax + gap, bodyY, availableWidth - sidebarWidth, bodyHeight);
+                string treeHeading = "RHAH_Settlement_TreeHeading".Translate();
+                string detailHeading = "RHAH_Settlement_DetailHeading".Translate();
+                float paneHeadingHeight = Mathf.Max(30f, Mathf.Max(
+                    Text.CalcHeight(treeHeading, Mathf.Max(1f, sidebar.width)),
+                    Text.CalcHeight(detailHeading, Mathf.Max(1f, detail.width))) + 6f);
+                Widgets.Label(new Rect(sidebar.x, sidebar.y, sidebar.width, paneHeadingHeight), treeHeading);
+                Widgets.Label(new Rect(detail.x, detail.y, detail.width, paneHeadingHeight), detailHeading);
+                Widgets.DrawLineVertical(sidebar.xMax + gap * 0.5f, bodyY, bodyHeight);
+                float viewportHeight = Mathf.Max(0f, bodyHeight - paneHeadingHeight);
+                if (viewportHeight > 0f)
+                {
+                    settlementTreeViewport.Draw(new Rect(sidebar.x, sidebar.y + paneHeadingHeight, sidebar.width, viewportHeight));
+                    settlementDetailViewport.Draw(new Rect(detail.x, detail.y + paneHeadingHeight, detail.width, viewportHeight));
+                }
             }
-
-            for (int i = 0; i < settlementRows.Count; i++)
+            finally
             {
-                SettlementRow row = settlementRows[i];
-                list.Gap(row.GapBefore);
-                RHAH_IrisMenusWidgets.Quote(list, row.Anchor, row.Text);
+                Text.Font = previousFont;
+                Text.Anchor = previousAnchor;
             }
         }
 
         IEnumerable<MenuSearchEntry> SearchSettlement()
         {
-            yield return new MenuSearchEntry("settlement-progress-overview",
+            yield return new MenuSearchEntry("settlement-progress-tree",
                 () => "RHAH_Menu_Settlement".Translate(),
                 () => "RHAH_Settlement_SearchTerms".Translate(),
                 context: () => "RHAH_Settlement_Note".Translate());
         }
 
-        void CacheSettlementRows(IReadOnlyList<RHAH_SettlementGroup> groups)
+        void SyncSettlementGame()
+        {
+            if (!ReferenceEquals(settlementGame, Current.Game))
+            {
+                settlementGame = Current.Game;
+                ClearSettlementNavigation();
+            }
+        }
+
+        void ClearSettlementNavigation()
+        {
+            settlementModel = null;
+            settlementLanguage = null;
+            settlementDays.Clear();
+            expandedSettlementDays.Clear();
+            expandedSettlementEvents.Clear();
+            selectedSettlementGroup = null;
+            settlementRows.Clear();
+            ResetSettlementViewports();
+        }
+
+        void ResetSettlementViewports()
+        {
+            settlementTreeViewport = new RHAH_IrisMenusWidgets.Viewport(DrawSettlementTree);
+            settlementDetailViewport = new RHAH_IrisMenusWidgets.Viewport(DrawSettlementDetails);
+        }
+
+        void FocusSettlement(string anchor)
+        {
+            SyncSettlementGame();
+            settlementTreeViewport.Focus(anchor);
+        }
+
+        void CacheSettlementTree(IReadOnlyList<RHAH_SettlementGroup> groups)
         {
             if (ReferenceEquals(settlementModel, groups) &&
                 ReferenceEquals(settlementLanguage, LanguageDatabase.activeLanguage))
@@ -747,42 +813,276 @@ namespace HungerAndHavoc.Pawn.Compat
                 return;
             }
 
+            RHAH_SettlementGroup selection = FindSettlementSelection(groups, selectedSettlementGroup);
+            bool selectionRemoved = selectedSettlementGroup != null && selection == null;
             settlementModel = groups;
             settlementLanguage = LanguageDatabase.activeLanguage;
-            settlementRows.Clear();
-            for (int groupIndex = 0; groupIndex < groups.Count; groupIndex++)
+            settlementDays.Clear();
+            Dictionary<int, SettlementDay> days = new Dictionary<int, SettlementDay>();
+            Dictionary<SettlementEventKey, SettlementEvent> events = new Dictionary<SettlementEventKey, SettlementEvent>();
+            for (int i = 0; i < groups.Count; i++)
             {
-                RHAH_SettlementGroup group = groups[groupIndex];
-                string anchor = "settlement-progress-group-" + groupIndex;
-                settlementRows.Add(new SettlementRow(anchor, BuildSettlementGroupText(group), 8f));
-                if (group.Kind == RHAH_SettlementKind.Entrust)
+                RHAH_SettlementGroup group = groups[i];
+                int day = SettlementRecordedDay(group.StartedTick);
+                if (!days.TryGetValue(day, out SettlementDay date))
                 {
-                    settlementRows.Add(new SettlementRow(anchor + "-mother", BuildSettlementMotherText(group)));
+                    date = new SettlementDay(day);
+                    days.Add(day, date);
+                    settlementDays.Add(date);
                 }
 
-                for (int memberIndex = 0; memberIndex < group.Members.Count; memberIndex++)
+                SettlementEventKey eventKey = new SettlementEventKey(day,
+                    RHAH_IncidentCatalog.GetByDisplayId(group.SourceDisplayId)?.DisplayId);
+                if (!events.TryGetValue(eventKey, out SettlementEvent incident))
                 {
-                    settlementRows.Add(new SettlementRow(anchor + "-member-" + memberIndex,
-                        BuildSettlementMemberText(group, group.Members[memberIndex])));
+                    incident = new SettlementEvent(eventKey, BuildSettlementSourceText(group));
+                    events.Add(eventKey, incident);
+                    date.Events.Add(incident);
+                }
+
+                incident.Groups.Add(new SettlementLeaf(group, BuildSettlementLeafText(group)));
+            }
+
+            settlementDays.Sort((left, right) => right.Day.CompareTo(left.Day));
+            expandedSettlementDays.RemoveWhere(day => !days.ContainsKey(day));
+            expandedSettlementEvents.RemoveWhere(key => !events.ContainsKey(key));
+            selectedSettlementGroup = selection;
+            CacheSelectedSettlementRows();
+            if (selectionRemoved)
+            {
+                settlementDetailViewport = new RHAH_IrisMenusWidgets.Viewport(DrawSettlementDetails);
+            }
+        }
+
+        static int SettlementRecordedDay(int startedTick)
+        {
+            return Math.Max(0, startedTick) / GenDate.TicksPerDay + 1;
+        }
+
+        static RHAH_SettlementGroup FindSettlementSelection(IReadOnlyList<RHAH_SettlementGroup> groups,
+            RHAH_SettlementGroup selected)
+        {
+            if (selected != null)
+            {
+                for (int i = 0; i < groups.Count; i++)
+                {
+                    if (SameSettlementGroup(groups[i], selected))
+                    {
+                        return groups[i];
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        static bool SameSettlementGroup(RHAH_SettlementGroup left, RHAH_SettlementGroup right)
+        {
+            return left != null && right != null && left.Kind == right.Kind && left.Id == right.Id &&
+                left.BatchId == right.BatchId && left.MapId == right.MapId;
+        }
+
+        void SelectSettlementGroup(RHAH_SettlementGroup group)
+        {
+            if (SameSettlementGroup(group, selectedSettlementGroup))
+            {
+                return;
+            }
+
+            selectedSettlementGroup = group;
+            CacheSelectedSettlementRows();
+            settlementDetailViewport = new RHAH_IrisMenusWidgets.Viewport(DrawSettlementDetails);
+        }
+
+        void CacheSelectedSettlementRows()
+        {
+            settlementRows.Clear();
+            RHAH_SettlementGroup group = selectedSettlementGroup;
+            if (group == null)
+            {
+                return;
+            }
+
+            settlementRows.Add(new SettlementRow("settlement-detail-group", BuildSettlementGroupText(group)));
+            if (group.Kind == RHAH_SettlementKind.Entrust)
+            {
+                settlementRows.Add(new SettlementRow("settlement-detail-mother", BuildSettlementMotherText(group), 8f));
+            }
+
+            for (int i = 0; i < group.Members.Count; i++)
+            {
+                settlementRows.Add(new SettlementRow("settlement-detail-member-" + i,
+                    BuildSettlementMemberText(group, group.Members[i]), 8f));
+            }
+        }
+
+        void DrawSettlementTree(Listing_Standard list)
+        {
+            MenuControls.Anchor(list, "settlement-progress-tree");
+            if (settlementModel == null || settlementModel.Count == 0)
+            {
+                RHAH_IrisMenusWidgets.Quote(list, "settlement-tree-empty",
+                    (settlementModel == null ? "RHAH_Settlement_NoGame" : "RHAH_Settlement_None").Translate());
+                return;
+            }
+
+            for (int dayIndex = 0; dayIndex < settlementDays.Count; dayIndex++)
+            {
+                SettlementDay day = settlementDays[dayIndex];
+                bool dayOpen = expandedSettlementDays.Contains(day.Day);
+                if (DrawSettlementTreeRow(list, day.Label, 0, dayOpen, false, true))
+                {
+                    if (dayOpen) expandedSettlementDays.Remove(day.Day);
+                    else expandedSettlementDays.Add(day.Day);
+                    dayOpen = !dayOpen;
+                }
+
+                if (!dayOpen)
+                {
+                    continue;
+                }
+
+                for (int eventIndex = 0; eventIndex < day.Events.Count; eventIndex++)
+                {
+                    SettlementEvent incident = day.Events[eventIndex];
+                    bool eventOpen = expandedSettlementEvents.Contains(incident.Key);
+                    if (DrawSettlementTreeRow(list, incident.Label, 1, eventOpen, false, true))
+                    {
+                        if (eventOpen) expandedSettlementEvents.Remove(incident.Key);
+                        else expandedSettlementEvents.Add(incident.Key);
+                        eventOpen = !eventOpen;
+                    }
+
+                    if (!eventOpen)
+                    {
+                        continue;
+                    }
+
+                    for (int groupIndex = 0; groupIndex < incident.Groups.Count; groupIndex++)
+                    {
+                        SettlementLeaf leaf = incident.Groups[groupIndex];
+                        if (DrawSettlementTreeRow(list, leaf.Label, 2, false,
+                            SameSettlementGroup(leaf.Group, selectedSettlementGroup), false))
+                        {
+                            SelectSettlementGroup(leaf.Group);
+                        }
+                    }
                 }
             }
         }
 
+        static bool DrawSettlementTreeRow(Listing_Standard list, SettlementTreeLabel label, int depth,
+            bool open, bool selected, bool fold)
+        {
+            float indent = Mathf.Min(depth * 14f, list.ColumnWidth * 0.12f);
+            float markerWidth = Mathf.Min(24f, list.ColumnWidth * 0.15f);
+            float labelWidth = Mathf.Max(1f, list.ColumnWidth - indent - markerWidth - 8f);
+            float height = label.Height(labelWidth);
+            Rect row = list.GetRect(height);
+            list.Gap(2f);
+            if (!RHAH_IrisMenusWidgets.IsVisible(row))
+            {
+                return false;
+            }
+
+            if (selected)
+            {
+                Widgets.DrawHighlightSelected(row);
+            }
+            Widgets.DrawHighlightIfMouseover(row);
+            Rect marker = new Rect(row.x + indent, row.y + 4f, markerWidth, 24f);
+            if (fold)
+            {
+                Widgets.DrawTextureFitted(marker, open ? TexButton.Collapse : TexButton.Reveal, 0.7f);
+            }
+            else if (selected)
+            {
+                Widgets.DrawBox(marker.ContractedBy(6f));
+            }
+            Widgets.Label(new Rect(row.x + indent + markerWidth + 4f, row.y + 4f, labelWidth, height - 8f), label.Text);
+            return Widgets.ButtonInvisible(row);
+        }
+
+        void DrawSettlementDetails(Listing_Standard list)
+        {
+            if (settlementModel == null || settlementModel.Count == 0 || selectedSettlementGroup == null)
+            {
+                string key = settlementModel == null ? "RHAH_Settlement_NoGame"
+                    : settlementModel.Count == 0 ? "RHAH_Settlement_None" : "RHAH_Settlement_SelectGroup";
+                RHAH_IrisMenusWidgets.Quote(list, "settlement-detail-empty", key.Translate());
+            }
+            else
+            {
+                for (int i = 0; i < settlementRows.Count; i++)
+                {
+                    SettlementRow row = settlementRows[i];
+                    list.Gap(row.GapBefore);
+                    RHAH_IrisMenusWidgets.Quote(list, row.Anchor, row.Text);
+                }
+            }
+
+            list.Gap(12f);
+            RHAH_IrisMenusWidgets.Quote(list, "settlement-detail-note", "RHAH_Settlement_Note".Translate());
+            RHAH_IrisMenusWidgets.Quote(list, "settlement-detail-updates", "RHAH_Settlement_UpdateNote".Translate());
+        }
+
+        static string BuildSettlementSourceText(RHAH_SettlementGroup group)
+        {
+            RHAH_IncidentEntry source = RHAH_IncidentCatalog.GetByDisplayId(group.SourceDisplayId);
+            return source == null ? "RHAH_Settlement_UnknownSource".Translate().ToString() : source.LabelKey.Translate().ToString();
+        }
+
+        static string SettlementKindKey(RHAH_SettlementKind kind)
+        {
+            switch (kind)
+            {
+                case RHAH_SettlementKind.Exchange: return "RHAH_Settlement_ExchangeKind";
+                case RHAH_SettlementKind.Entrust: return "RHAH_Settlement_EntrustKind";
+                default: return "RHAH_Settlement_ReliefKind";
+            }
+        }
+
+        static string BuildSettlementLeafText(RHAH_SettlementGroup group)
+        {
+            string name = null;
+            int loadId = group.MotherLoadId;
+            for (int i = 0; i < group.Members.Count; i++)
+            {
+                RHAH_SettlementMember member = group.Members[i];
+                if (i == 0 && string.IsNullOrEmpty(name))
+                {
+                    loadId = member.LoadId;
+                }
+                if (!string.IsNullOrEmpty(member.Name))
+                {
+                    name = member.Name;
+                    break;
+                }
+            }
+            if (string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(group.MotherName))
+            {
+                name = group.MotherName;
+            }
+
+            return "RHAH_Settlement_GroupLeaf".Translate(SettlementName(name, loadId),
+                group.Members.Count, SettlementKindKey(group.Kind).Translate()).ToString();
+        }
+
         static string BuildSettlementGroupText(RHAH_SettlementGroup group)
         {
-            StringBuilder text = new StringBuilder();
+            StringBuilder text = new StringBuilder("RHAH_Settlement_GroupSource".Translate(
+                BuildSettlementSourceText(group), SettlementKindKey(group.Kind).Translate()).ToString());
+            text.AppendLine().Append("RHAH_Settlement_RecordedDay".Translate(SettlementRecordedDay(group.StartedTick)).ToString());
+            text.AppendLine().Append("RHAH_Settlement_RecordDateNote".Translate().ToString());
             switch (group.Kind)
             {
                 case RHAH_SettlementKind.Relief:
-                    text.Append("RHAH_Settlement_ReliefSource".Translate(group.Id, group.BatchId).ToString());
                     text.AppendLine().Append("RHAH_Settlement_ReliefTimerNote".Translate().ToString());
                     break;
                 case RHAH_SettlementKind.Exchange:
-                    text.Append("RHAH_Settlement_ExchangeSource".Translate(group.Id).ToString());
                     text.AppendLine().Append("RHAH_Settlement_ExchangeTimerNote".Translate().ToString());
                     break;
                 case RHAH_SettlementKind.Entrust:
-                    text.Append("RHAH_Settlement_EntrustSource".Translate(group.Id).ToString());
                     text.AppendLine().Append("RHAH_Settlement_EntrustGrowthNote".Translate().ToString());
                     break;
             }
@@ -906,6 +1206,94 @@ namespace HungerAndHavoc.Pawn.Compat
         static string FormatSettlementDays(int ticks)
         {
             return (Math.Ceiling(Math.Max(0, ticks) * 10d / GenDate.TicksPerDay) / 10d).ToString("0.0");
+        }
+
+        sealed class SettlementDay
+        {
+            internal readonly int Day;
+            internal readonly SettlementTreeLabel Label;
+            internal readonly List<SettlementEvent> Events = new List<SettlementEvent>();
+
+            internal SettlementDay(int day)
+            {
+                Day = day;
+                Label = new SettlementTreeLabel("RHAH_Settlement_RecordedDay".Translate(day).ToString());
+            }
+        }
+
+        struct SettlementEventKey : IEquatable<SettlementEventKey>
+        {
+            readonly int day;
+            readonly string source;
+
+            internal SettlementEventKey(int day, string source)
+            {
+                this.day = day;
+                this.source = source;
+            }
+
+            public bool Equals(SettlementEventKey other)
+            {
+                return day == other.day && string.Equals(source, other.source, StringComparison.Ordinal);
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is SettlementEventKey other && Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                return unchecked(day * 397 ^ (source == null ? 0 : StringComparer.Ordinal.GetHashCode(source)));
+            }
+        }
+
+        sealed class SettlementEvent
+        {
+            internal readonly SettlementEventKey Key;
+            internal readonly SettlementTreeLabel Label;
+            internal readonly List<SettlementLeaf> Groups = new List<SettlementLeaf>();
+
+            internal SettlementEvent(SettlementEventKey key, string label)
+            {
+                Key = key;
+                Label = new SettlementTreeLabel(label);
+            }
+        }
+
+        sealed class SettlementLeaf
+        {
+            internal readonly RHAH_SettlementGroup Group;
+            internal readonly SettlementTreeLabel Label;
+
+            internal SettlementLeaf(RHAH_SettlementGroup group, string label)
+            {
+                Group = group;
+                Label = new SettlementTreeLabel(label);
+            }
+        }
+
+        sealed class SettlementTreeLabel
+        {
+            internal readonly string Text;
+            float measuredWidth = -1f;
+            float measuredHeight;
+
+            internal SettlementTreeLabel(string text)
+            {
+                Text = text;
+            }
+
+            internal float Height(float width)
+            {
+                if (measuredWidth != width)
+                {
+                    measuredWidth = width;
+                    measuredHeight = Mathf.Max(32f, Verse.Text.CalcHeight(Text, width) + 8f);
+                }
+
+                return measuredHeight;
+            }
         }
 
         sealed class SettlementRow
